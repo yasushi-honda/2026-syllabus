@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI活用プログラミング基礎 | 2026年度 前期シラバス</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--orange">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="index.html">シラバス一覧</a>
+        <span>/</span>
+        <span>AI活用プログラミング基礎</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">AI活用プログラミング基礎</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">木曜 3・4限</span>
+            <span class="page-badge">情報系学科 1年次</span>
+          </div>
+        </div>
+        <button class="copy-md-btn" data-md-source="md-source">
+          <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Markdownをコピー
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="syllabus-section">
+      <h2>共通シラバス</h2>
+      <p>本科目は<strong>「AIコミュニケーション基礎」と共通の内容</strong>をベースに、1年次のペースに合わせて運営します。</p>
+      <p>詳細なシラバス内容は <a href="ai-communication.html" style="color:var(--c-orange);text-decoration:underline;">AIコミュニケーション基礎のページ</a> をご参照ください。</p>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>AIコミュニケーション基礎との違い</h2>
+      <ul>
+        <li><strong>対象:</strong> 情報系学科 1年次（入学直後の学生）</li>
+        <li><strong>ペース:</strong> より丁寧な導入と基礎固めに重点を置きます</li>
+        <li><strong>配慮:</strong> ITリテラシーの前提知識が少ないことを考慮し、基本操作の説明を手厚くします</li>
+        <li><strong>共通点:</strong> NotebookLMを使った「自分だけのAI」構築、毎回の学習データ投入、コミュニケーション力の育成は同一です</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>1年次向けの補足事項</h2>
+      <ul>
+        <li>Googleアカウントの基本操作（ドキュメント作成、ファイル管理等）を初回で丁寧に確認します。</li>
+        <li>PCの基本操作（タイピング、ブラウザ操作等）に不安がある場合も、授業内でサポートします。</li>
+        <li>専門学校生活への適応も大切にし、仲間づくりやコミュニケーションの機会を意識的に設けます。</li>
+        <li>学習ペースは柔軟に調整します。分からないことは遠慮なく質問してください。</li>
+      </ul>
+    </div>
+
+  </main>
+
+  <pre id="md-source" style="display:none"></pre>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    fetch('content/ai-communication.md')
+      .then(r => r.text())
+      .then(t => { document.getElementById('md-source').textContent = t; });
+  </script>
+</body>
+</html>

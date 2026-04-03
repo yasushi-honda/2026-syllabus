@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>自然言語開発 | 2026年度 前期シラバス</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="index.html">シラバス一覧</a>
+        <span>/</span>
+        <span>自然言語開発</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">自然言語開発</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">新設科目</span>
+            <span class="page-badge">木曜 1・2限</span>
+            <span class="page-badge">IT・情報処理専攻(システム) 3年次</span>
+          </div>
+        </div>
+        <button class="copy-md-btn" data-md-source="md-source">
+          <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+          Markdownをコピー
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="syllabus-section">
+      <h2>担当教員</h2>
+      <p><strong>本田 康志</strong></p>
+      <p>非常勤講師 / ヤススシステム代表 / NPO法人タダカヨ常務理事・CTO / 株式会社279 取締役・CTO</p>
+      <div class="message-box">
+        「3年次のみなさん、ようこそ。この授業では、2026年現在の最前線——<strong>自然言語でソフトウェアを開発する技術</strong>を学びます。プロンプトエンジニアリングを超えた『コンテキストエンジニアリング』、AIエージェントを制御する『ハーネスエンジニアリング』、そして仕様を起点にした『Spec-Driven Development（SDD）』。これらは、AIと協働する開発者に求められる新しい専門スキルです。同時に大切にしたいのが <strong>『責任あるコード』</strong> という考え方。AIが高速にコードを生成できる時代だからこそ、<strong>何を作るか・なぜ作るか・どう検証するか</strong>を自分で判断できる開発者が求められています。まずは進級制作のレビューから始めましょう。みなさんの作品を一緒に振り返り、そこから新しい開発手法の旅を始めます。」
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業概要</h2>
+      <ul>
+        <li>AIエージェント（Claude Code, Gemini CLI等）を活用した<strong>自然言語による本格的なソフトウェア開発手法</strong>を学ぶ、実践中心の専門科目です。</li>
+        <li>「Vibe Coding（直感的AI開発）」から始まり、<strong>Spec-Driven Development（SDD：仕様駆動開発）</strong>へと段階的にレベルアップ。プロトタイプ段階ではAIと自由に対話しながら素早く形にし、プロダクション段階では仕様書を起点に品質を担保する——この使い分けを体得します。</li>
+        <li><strong>コンテキストエンジニアリング</strong>（プロンプトを超えた全体的な情報設計）、<strong>ハーネスエンジニアリング</strong>（テスト・lint・レビューによるAI出力の制御基盤）など、2026年現在のAI開発の最前線を学びます。</li>
+        <li>進級制作のレビューを起点に、自身のコードを客観的に評価し改善する力を養います。</li>
+        <li><strong>「責任あるコード」</strong>を貫くテーマとし、AIが生成するコードに対する検証・品質管理・倫理的判断の重要性を学びます。</li>
+        <li>PRD（製品要求仕様書）、ADR（アーキテクチャ決定記録）、TDD（テスト駆動開発）など、ソフトウェアエンジニアリングの基礎的なセオリーも実践の中で身につけます。</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>到達目標</h2>
+
+      <h3>知識・理解</h3>
+      <ol>
+        <li>プロンプトエンジニアリング、コンテキストエンジニアリング、ハーネスエンジニアリングの違いと関係を説明できる。</li>
+        <li>Spec-Driven Development（SDD）の概念と、TDD・BDD・PRD・ADRとの関係を理解している。</li>
+        <li>AIエージェント（Claude Code, Gemini CLI等）の仕組みと、ガイド（事前制御）・センサー（事後検証）の概念を説明できる。</li>
+        <li>「責任あるコード」の原則（検証可能性、説明責任、倫理的配慮）を理解している。</li>
+        <li>Git/GitHub Flowを用いたチーム開発プロセス（Issue, Branch, PR, Review, Merge）を説明できる。</li>
+      </ol>
+
+      <h3>思考・判断</h3>
+      <ol>
+        <li>Vibe Codingが適切な場面とSDDが必要な場面を判断できる。</li>
+        <li>AIが生成したコードの品質・安全性・保守性を批判的に評価できる。</li>
+        <li>仕様の曖昧さや矛盾を検出し、明確化するための質問を構築できる。</li>
+        <li>テスト観点（正常系・異常系・境界値）を自ら設計できる。</li>
+      </ol>
+
+      <h3>スキル・表現</h3>
+      <ol>
+        <li>AIエージェントを活用して、仕様に基づいたWebアプリケーションを開発できる。</li>
+        <li>PRD・ADRを作成し、設計判断を文書化できる。</li>
+        <li>テストを先に書き、実装を後から行うTDDの基本サイクルを実践できる。</li>
+        <li>GitHub Flow（Issue→Branch→PR→Review→Merge）で開発を進められる。</li>
+        <li>コードレビューにおいて、建設的なフィードバックを提供できる。</li>
+        <li>自身の設計判断とAI活用プロセスをプレゼンテーションで説明できる。</li>
+      </ol>
+
+      <h3>関心・意欲・態度</h3>
+      <ol>
+        <li>AI開発の最前線の手法に興味を持ち、自ら調査・試行する姿勢を持つ。</li>
+        <li>コードの品質と責任に対する意識を持ち、「動けばいい」で終わらせない姿勢を持つ。</li>
+        <li>チーム開発において、他のメンバーのコードや意見を尊重し協力できる。</li>
+        <li>技術の急速な変化に対して、継続的に学び続ける意欲を持つ。</li>
+      </ol>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業計画（全15回）</h2>
+      <div class="table-wrap">
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>週</th>
+              <th>テーマ</th>
+              <th>主な内容・活動</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="week-num">1</td><td class="week-theme">オリエンテーション＆進級制作レビュー</td><td>授業の目的・進め方・評価方法。進級制作の相互レビュー（コードの可読性、設計、改善点を議論）。「責任あるコード」の導入——AIの時代に開発者に求められる資質。</td></tr>
+            <tr><td class="week-num">2</td><td class="week-theme">コンテキストエンジニアリング入門</td><td>プロンプトエンジニアリングからコンテキストエンジニアリングへの進化。コンテキストウィンドウの仕組み、U字型精度カーブ、情報配置の戦略。実践：同じ課題をプロンプトのみ vs コンテキスト設計で比較。</td></tr>
+            <tr><td class="week-num">3</td><td class="week-theme">AIエージェント開発環境構築</td><td>Claude Code / Gemini CLI の導入と基本操作。エージェントの動作原理（ツール呼び出し、思考チェーン）。Vibe Coding体験：自然言語だけでWebアプリを作る。</td></tr>
+            <tr><td class="week-num">4</td><td class="week-theme">Vibe Codingの実践と限界</td><td>Vibe Codingで小規模アプリを高速開発。生成されたコードの品質分析（動くけど保守できない問題、セキュリティリスク等）。「なぜVibe Codingだけでは不十分か」の体験的理解。</td></tr>
+            <tr><td class="week-num">5</td><td class="week-theme">PRD（製品要求仕様書）とADR</td><td>PRDの書き方：ユーザーストーリー、機能要件、非機能要件。ADR（アーキテクチャ決定記録）：なぜその技術選択をしたかを記録する文化。AIにPRD/ADRのドラフトを作成させ、人間がレビュー・修正する演習。</td></tr>
+            <tr><td class="week-num">6</td><td class="week-theme">Spec-Driven Development入門</td><td>SDDの概念：仕様が実行可能な成果物になる。SDDライフサイクル（定義→計画→分解→実行→デバッグ）。Vibe Coding → SDD への移行を体験。仕様ファイルの書き方。</td></tr>
+            <tr><td class="week-num">7</td><td class="week-theme">テスト駆動開発（TDD）基礎</td><td>TDDの基本サイクル：Red → Green → Refactor。テスト観点の設計（正常系・異常系・境界値）。AIにテストを書かせ、人間がテスト観点を検証する演習。テストファーストの思考法。</td></tr>
+            <tr><td class="week-num">8</td><td class="week-theme">ハーネスエンジニアリング入門</td><td>ハーネスの概念：AIの出力を制御する基盤。ガイド（CLAUDE.md、アーキテクチャルール等の事前制御）とセンサー（テスト、lint、コードレビュー等の事後検証）。自分のプロジェクトにハーネスを構築する実践。</td></tr>
+            <tr><td class="week-num">9</td><td class="week-theme">中間レビュー＆コードレビュー実践</td><td>ここまでの成果を相互レビュー。GitHub PR を使ったコードレビューの実践。建設的なフィードバックの書き方。AIレビューと人間レビューの違いと使い分け。</td></tr>
+            <tr><td class="week-num">10</td><td class="week-theme">SDD実践プロジェクト①：設計</td><td>チームまたは個人でSDD実践プロジェクト開始。仕様書の作成（AIと協働）。テスト計画の策定。アーキテクチャの決定とADR作成。Issue分解とGitHub Project活用。</td></tr>
+            <tr><td class="week-num">11</td><td class="week-theme">SDD実践プロジェクト②：実装</td><td>仕様に基づくAIエージェント活用開発。TDDサイクルの実践。ハーネス（テスト・lint）による品質チェック。GitHub Flow（Branch→PR→Review→Merge）の実践。</td></tr>
+            <tr><td class="week-num">12</td><td class="week-theme">SDD実践プロジェクト③：検証と改善</td><td>テスト結果に基づく品質評価。仕様と実装の差異分析。リファクタリングと技術的負債の管理。セキュリティ観点でのコードチェック。</td></tr>
+            <tr><td class="week-num">13</td><td class="week-theme">責任あるAI開発</td><td>Anthropic Claude Constitution（CC0公開文書）を教材にした倫理ディスカッション。EU AI Act等の規制動向。AI生成コードの著作権・ライセンス問題。「開発者の責任」とは何かを考える。</td></tr>
+            <tr><td class="week-num">14</td><td class="week-theme">プロジェクト最終仕上げ</td><td>最終調整・テスト・ドキュメント整備。発表準備。プロジェクト全体のADR・振り返りの記録。</td></tr>
+            <tr><td class="week-num">15</td><td class="week-theme">成果発表＆総括</td><td>プロジェクト成果発表（技術選択の根拠、AI活用プロセス、品質管理の工夫を含む）。相互評価。前期の振り返り：「プロンプト→コンテキスト→ハーネス」の進化を実感。後期への接続。</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>※授業計画は、学生の理解度や興味、AI技術の進展に応じて柔軟に変更する可能性があります。<br>※毎回の授業冒頭で、AI開発関連の最新ニュース・ツールアップデートを共有します。</p>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>使用テキスト・参考文献</h2>
+      <p>特定のテキストは使用しません。授業内で適宜、資料や公式ドキュメント、技術ブログ等を紹介します。</p>
+      <p>主な参考資料（随時更新）：</p>
+      <ul>
+        <li>Anthropic Engineering Blog — "Effective Context Engineering for AI Agents"</li>
+        <li>Martin Fowler / ThoughtWorks — "Harness Engineering"</li>
+        <li>GitHub Spec Kit — Spec-Driven Development ガイド</li>
+        <li>Anthropic — "Claude's New Constitution"（CC0）</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>予習・復習</h2>
+      <ul>
+        <li><strong>予習:</strong> 次回テーマに関連する公式ドキュメントやブログ記事に目を通すと理解が深まります。</li>
+        <li><strong>復習:</strong> 授業で実践した内容をGitHubリポジトリに整理し、ADRやREADMEに学びを記録しましょう。</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>評価方法・基準</h2>
+      <p>AIエージェントを効果的に活用しつつ、<strong>コードの品質と設計判断に責任を持てるか</strong>を重視します。</p>
+
+      <div class="eval-item"><span class="eval-pct" style="color:var(--c-green)">25%</span><span class="eval-label"><strong>仕様・設計の品質</strong> — PRD/ADR/仕様書の明確さ、テスト設計の網羅性、設計判断の妥当性。</span></div>
+      <div class="eval-item"><span class="eval-pct" style="color:var(--c-green)">25%</span><span class="eval-label"><strong>実装・コードの品質</strong> — コードの動作、可読性、保守性、セキュリティ配慮。テストの充実度。</span></div>
+      <div class="eval-item"><span class="eval-pct" style="color:var(--c-green)">20%</span><span class="eval-label"><strong>AI活用の高度さ</strong> — コンテキスト設計の工夫、ハーネスの構築、AIへの効果的な指示、出力の検証プロセス。</span></div>
+      <div class="eval-item"><span class="eval-pct" style="color:var(--c-green)">15%</span><span class="eval-label"><strong>開発プロセス</strong> — GitHub Flowの実践（Issue/PR/Review）、継続的な進捗管理、チームでの協働。</span></div>
+      <div class="eval-item"><span class="eval-pct" style="color:var(--c-green)">15%</span><span class="eval-label"><strong>「責任あるコード」の実践</strong> — AI生成コードの検証姿勢、倫理的配慮、設計判断の説明責任。</span></div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>その他（履修上の注意点）</h2>
+      <ul>
+        <li>GitHubアカウント（既存のものを使用）と各種AIツールのアカウントが必要です。</li>
+        <li>AIエージェントの利用には各サービスのアカウント設定が必要です（授業内でサポートします）。</li>
+        <li>進級制作のコード・成果物を第1回で使用します。アクセスできる状態にしておいてください。</li>
+        <li>体調やメンタル面で不安がある場合は、無理せず担当教員または学校の相談窓口に相談してください。</li>
+        <li>この授業で学ぶスキルは、現在のIT業界で急速に需要が高まっている分野です。授業外でも積極的に実践し、ポートフォリオとして活用してください。</li>
+      </ul>
+    </div>
+
+  </main>
+
+  <pre id="md-source" style="display:none"></pre>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    fetch('content/natural-language-dev.md')
+      .then(r => r.text())
+      .then(t => { document.getElementById('md-source').textContent = t; });
+  </script>
+</body>
+</html>
