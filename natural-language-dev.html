@@ -50,8 +50,10 @@
     <div class="syllabus-section">
       <h2>授業概要</h2>
       <ul>
-        <li>GitHub Copilot Studentを活用した<strong>自然言語による本格的なソフトウェア開発手法</strong>を学ぶ、実践中心の専門科目です。</li>
+        <li><strong>GitHub Codespaces × Gemini CLI</strong> による完全クラウドベースの開発環境で、<strong>自然言語による本格的なソフトウェア開発手法</strong>を学ぶ、実践中心の専門科目です。ブラウザだけで受講でき、ローカルPCへのインストールは一切不要です。</li>
+        <li>個人のGoogleアカウントだけで <strong>Gemini CLI の無料枠</strong>（60リクエスト/分・1,000リクエスト/日、Gemini 3 モデル、1Mトークンのコンテキスト）を使って学習します。追加課金は不要です。</li>
         <li>「Vibe Coding（直感的AI開発）」から始まり、<strong>Spec-Driven Development（SDD：仕様駆動開発）</strong>へと段階的にレベルアップ。プロトタイプ段階ではAIと自由に対話しながら素早く形にし、プロダクション段階では仕様書を起点に品質を担保する——この使い分けを体得します。</li>
+        <li>Gemini CLI の主要機能（<strong><code>GEMINI.md</code></strong>（プロジェクト別コンテキスト）、<strong>Plan Mode</strong>、<strong>MCP（Model Context Protocol）</strong>、<strong>Hooks</strong>（<code>BeforeTool</code>/<code>AfterTool</code> イベントによるエージェント制御）、<strong>Agent Skills</strong>、<strong>サンドボックス</strong>、<strong>カスタムコマンド</strong>）を実際に触りながら、AIエージェントの仕組みと制御方法を学びます。</li>
         <li><strong>コンテキストエンジニアリング</strong>（プロンプトを超えた全体的な情報設計）、<strong>ハーネスエンジニアリング</strong>（テスト・lint・レビューによるAI出力の制御基盤）など、2026年現在のAI開発の最前線を学びます。</li>
         <li>進級制作のレビューを起点に、自身のコードを客観的に評価し改善する力を養います。</li>
         <li><strong>「責任あるコード」</strong>を貫くテーマとし、AIが生成するコードに対する検証・品質管理・倫理的判断の重要性を学びます。</li>
@@ -66,7 +68,7 @@
       <ol>
         <li>プロンプトエンジニアリング、コンテキストエンジニアリング、ハーネスエンジニアリングの違いと関係を説明できる。</li>
         <li>Spec-Driven Development（SDD）の概念と、TDD・PRD・ADRとの関係を理解している。</li>
-        <li>GitHub Copilot（Chat / Agent mode等）の仕組みと、ガイド（事前制御）・センサー（事後検証）の概念を説明できる。</li>
+        <li>AIコーディングエージェント（Gemini CLI 等）の仕組みと、ガイド（<code>GEMINI.md</code> 等の事前制御）・センサー（自動テスト等の事後検証）の概念を説明できる。</li>
         <li>「責任あるコード」の原則（検証可能性、説明責任、倫理的配慮）を理解している。</li>
         <li>Git/GitHub Flowを用いたチーム開発プロセス（Issue, Branch, PR, Review, Merge）を説明できる。</li>
       </ol>
@@ -112,15 +114,15 @@
           <tbody>
             <tr><td class="week-num">1</td><td class="week-theme">オリエンテーション＆進級制作レビュー</td><td>授業の目的・進め方・評価方法。進級制作の相互レビュー（コードの可読性、設計、改善点を議論）。「責任あるコード」の導入——AIの時代に開発者に求められる資質。</td></tr>
             <tr><td class="week-num">2</td><td class="week-theme">コンテキストエンジニアリング入門</td><td>プロンプトエンジニアリングからコンテキストエンジニアリングへの進化。コンテキストウィンドウの仕組み、U字型精度カーブ、情報配置の戦略。実践：同じ課題をプロンプトのみ vs コンテキスト設計で比較。</td></tr>
-            <tr><td class="week-num">3</td><td class="week-theme">AIエージェント開発環境構築</td><td>GitHub Copilot Studentの導入と基本操作。Chat・補完・Agent modeの使い分け。動作原理（ツール呼び出し、思考チェーン）。Vibe Coding体験：自然言語だけでWebアプリを作る。</td></tr>
+            <tr><td class="week-num">3</td><td class="week-theme">Gemini CLI × Codespaces 環境構築</td><td>GitHub Codespaces 上で <code>npx @google/gemini-cli</code> を起動。個人Googleアカウント（OAuth）で認証。無料枠の仕組みを理解（60 req/min、1,000 req/日、Gemini 3、1Mコンテキスト）。<code>GEMINI.md</code> 初体験。動作原理（ReActループ、ツール呼び出し）。Vibe Coding体験：自然言語だけでWebアプリを作る。</td></tr>
             <tr><td class="week-num">4</td><td class="week-theme">Vibe Codingの実践と限界</td><td>Vibe Codingで小規模アプリを高速開発。生成されたコードの品質分析（動くけど保守できない問題、セキュリティリスク等）。「なぜVibe Codingだけでは不十分か」の体験的理解。</td></tr>
             <tr><td class="week-num">5</td><td class="week-theme">PRD（製品要求仕様書）とADR</td><td>PRDの書き方：ユーザーストーリー、機能要件、非機能要件。ADR（アーキテクチャ決定記録）：なぜその技術選択をしたかを記録する文化。AIにPRD/ADRのドラフトを作成させ、人間がレビュー・修正する演習。</td></tr>
-            <tr><td class="week-num">6</td><td class="week-theme">Spec-Driven Development入門</td><td>SDDの概念：仕様が実行可能な成果物になる。SDDライフサイクル（定義→計画→分解→実行→デバッグ）。Vibe Coding → SDD への移行を体験。仕様ファイルの書き方。</td></tr>
+            <tr><td class="week-num">6</td><td class="week-theme">Spec-Driven Development入門</td><td>SDDの概念：仕様が実行可能な成果物になる。SDDライフサイクル（定義→計画→分解→実行→デバッグ）。Gemini CLI の <strong>Plan Mode</strong> を使って「実行前に計画を立てる」サイクルを体験。Vibe Coding → SDD への移行。仕様ファイルの書き方。</td></tr>
             <tr><td class="week-num">7</td><td class="week-theme">テスト駆動開発（TDD）基礎</td><td>TDDの基本サイクル：Red → Green → Refactor。テスト観点の設計（正常系・異常系・境界値）。AIにテストを書かせ、人間がテスト観点を検証する演習。テストファーストの思考法。</td></tr>
-            <tr><td class="week-num">8</td><td class="week-theme">ハーネスエンジニアリング入門</td><td>ハーネスの概念：AIの出力を制御する基盤。ガイド（CLAUDE.md、アーキテクチャルール等の事前制御）とセンサー（テスト、lint、コードレビュー等の事後検証）。自分のプロジェクトにハーネスを構築する実践。</td></tr>
+            <tr><td class="week-num">8</td><td class="week-theme">ハーネスエンジニアリング入門</td><td>ハーネスの概念：AIの出力を制御する基盤。ガイド（<code>GEMINI.md</code>、<code>.geminiignore</code>、サンドボックス、ブランチ保護等の事前制御）とセンサー（GitHub Actions によるテスト・lint・ビルド、PRレビュー等の事後検証）。Gemini CLI の <strong>Hooks</strong> 機能（<code>BeforeTool</code>/<code>AfterTool</code>）で機密情報コミット阻止・ツール引数検証・監査ログを実装する実践。</td></tr>
             <tr><td class="week-num">9</td><td class="week-theme">中間レビュー＆コードレビュー実践</td><td>ここまでの成果を相互レビュー。GitHub PR を使ったコードレビューの実践。建設的なフィードバックの書き方。AIレビューと人間レビューの違いと使い分け。</td></tr>
             <tr><td class="week-num">10</td><td class="week-theme">SDD実践プロジェクト①：設計</td><td>チームまたは個人でSDD実践プロジェクト開始。仕様書の作成（AIと協働）。テスト計画の策定。アーキテクチャの決定とADR作成。Issue分解とGitHub Project活用。</td></tr>
-            <tr><td class="week-num">11</td><td class="week-theme">SDD実践プロジェクト②：実装</td><td>仕様に基づくAIエージェント活用開発。TDDサイクルの実践。ハーネス（テスト・lint）による品質チェック。GitHub Flow（Branch→PR→Review→Merge）の実践。</td></tr>
+            <tr><td class="week-num">11</td><td class="week-theme">SDD実践プロジェクト②：実装</td><td>仕様に基づくAIエージェント活用開発。Gemini CLI の <strong>MCP サーバー</strong> 連携で外部ツール（DB・API等）と接続する体験。TDDサイクルの実践。ハーネス（テスト・lint）による品質チェック。GitHub Flow（Branch→PR→Review→Merge）の実践。</td></tr>
             <tr><td class="week-num">12</td><td class="week-theme">SDD実践プロジェクト③：検証と改善</td><td>テスト結果に基づく品質評価。仕様と実装の差異分析。リファクタリングと技術的負債の管理。セキュリティ観点でのコードチェック。</td></tr>
             <tr><td class="week-num">13</td><td class="week-theme">責任あるAI開発</td><td>Anthropic Claude Constitution（CC0公開文書）を教材にした倫理ディスカッション。EU AI Act等の規制動向。AI生成コードの著作権・ライセンス問題。「開発者の責任」とは何かを考える。</td></tr>
             <tr><td class="week-num">14</td><td class="week-theme">プロジェクト最終仕上げ</td><td>最終調整・テスト・ドキュメント整備。発表準備。プロジェクト全体のADR・振り返りの記録。</td></tr>
@@ -136,6 +138,8 @@
       <p>特定のテキストは使用しません。授業内で適宜、資料や公式ドキュメント、技術ブログ等を紹介します。</p>
       <p>主な参考資料（随時更新）：</p>
       <ul>
+        <li>Google — Gemini CLI 公式リポジトリ・ドキュメント（github.com/google-gemini/gemini-cli、geminicli.com/docs）</li>
+        <li>Google Developers Blog — Gemini CLI 発表記事・最新リリースノート</li>
         <li>Anthropic Engineering Blog — "Effective Context Engineering for AI Agents"</li>
         <li>Martin Fowler / ThoughtWorks — "Harness Engineering"</li>
         <li>GitHub Spec Kit — Spec-Driven Development ガイド</li>
@@ -165,8 +169,8 @@
     <div class="syllabus-section">
       <h2>その他（履修上の注意点）</h2>
       <ul>
-        <li>GitHubアカウント（既存のものを使用）と各種AIツールのアカウントが必要です。</li>
-        <li>AIエージェントの利用には各サービスのアカウント設定が必要です（授業内でサポートします）。</li>
+        <li><strong>GitHubアカウント</strong> と <strong>個人のGoogleアカウント</strong>（Gemini CLI OAuth認証用）が必要です。Googleアカウントは無料枠で利用するため追加費用は発生しません。</li>
+        <li>開発環境は <strong>GitHub Codespaces</strong> を使用するため、学生のデバイスはブラウザが使えれば何でも構いません（Chromebook・iPad・古いノートPC可）。</li>
         <li>進級制作のコード・成果物を第1回で使用します。アクセスできる状態にしておいてください。</li>
         <li>体調やメンタル面で不安がある場合は、無理せず担当教員または学校の相談窓口に相談してください。</li>
         <li>この授業で学ぶスキルは、現在のIT業界で急速に需要が高まっている分野です。授業外でも積極的に実践し、ポートフォリオとして活用してください。</li>
