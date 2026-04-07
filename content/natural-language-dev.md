@@ -33,7 +33,7 @@
 
 ### (知識・理解)
 1. プロンプトエンジニアリング、コンテキストエンジニアリング、ハーネスエンジニアリングの違いと関係を説明できる。
-2. Spec-Driven Development（SDD）の概念と、TDD・BDD・PRD・ADRとの関係を理解している。
+2. Spec-Driven Development（SDD）の概念と、TDD・PRD・ADRとの関係を理解している。
 3. AIエージェント（Claude Code, Gemini CLI等）の仕組みと、ガイド（事前制御）・センサー（事後検証）の概念を説明できる。
 4. 「責任あるコード」の原則（検証可能性、説明責任、倫理的配慮）を理解している。
 5. Git/GitHub Flowを用いたチーム開発プロセス（Issue, Branch, PR, Review, Merge）を説明できる。
