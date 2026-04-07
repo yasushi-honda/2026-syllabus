@@ -55,7 +55,7 @@
         <li>「Vibe Coding（直感的AI開発）」から始まり、<strong>Spec-Driven Development（SDD：仕様駆動開発）</strong>へと段階的にレベルアップ。プロトタイプ段階ではAIと自由に対話しながら素早く形にし、プロダクション段階では仕様書を起点に品質を担保する——この使い分けを体得します。</li>
         <li>Gemini CLI の主要機能（<strong><code>GEMINI.md</code></strong>（プロジェクト別コンテキスト）、<strong>Plan Mode</strong>、<strong>MCP（Model Context Protocol）</strong>、<strong>Hooks</strong>（<code>BeforeTool</code>/<code>AfterTool</code> イベントによるエージェント制御）、<strong>Agent Skills</strong>、<strong>サンドボックス</strong>、<strong>カスタムコマンド</strong>）を実際に触りながら、AIエージェントの仕組みと制御方法を学びます。</li>
         <li><strong>コンテキストエンジニアリング</strong>（プロンプトを超えた全体的な情報設計）、<strong>ハーネスエンジニアリング</strong>（テスト・lint・レビューによるAI出力の制御基盤）など、2026年現在のAI開発の最前線を学びます。</li>
-        <li>進級制作のレビューを起点に、自身のコードを客観的に評価し改善する力を養います。</li>
+        <li><strong>前年度（2年次）の進級制作を通年の素材として振り返り</strong>、自分が当時書いたコードに新しい技術を積み上げていきます。学期末には「4月の自分のコード」と「前期末のコード」を比較でき、自分自身の成長が可視化されます。</li>
         <li><strong>「責任あるコード」</strong>を貫くテーマとし、AIが生成するコードに対する検証・品質管理・倫理的判断の重要性を学びます。</li>
         <li>PRD（製品要求仕様書）、ADR（アーキテクチャ決定記録）、TDD（テスト駆動開発）など、ソフトウェアエンジニアリングの基礎的なセオリーも実践の中で身につけます。</li>
       </ul>
@@ -112,7 +112,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td class="week-num">1</td><td class="week-theme">オリエンテーション＆進級制作の再起動</td><td>授業の目的・進め方・評価方法。<strong>進級制作を通年の素材として使う</strong>ことの説明。Codespacesで進級制作リポジトリを開き直す。Gemini CLI を <code>npx @google/gemini-cli</code> で起動・OAuth認証。「前期末までに進級制作をどう育てたいか」を自分の言葉でメモ（後で振り返り用）。「責任あるコード」の導入。</td></tr>
+            <tr><td class="week-num">1</td><td class="week-theme">オリエンテーション＆前年度の進級制作を振り返る</td><td>授業の目的・進め方・評価方法。<strong>前年度（2年次）の進級制作を通年の素材として振り返りながら使う</strong>ことの説明。Codespacesで自分の進級制作リポジトリを開き直し、コードを久しぶりに読み返す。Gemini CLI を <code>npx @google/gemini-cli</code> で起動・OAuth認証。「当時の自分は何を考えてこう書いたか」「前期末までにこれをどう育てたいか」を自分の言葉でメモ。「責任あるコード」の導入。</td></tr>
             <tr><td class="week-num">2</td><td class="week-theme">コンテキストエンジニアリング入門</td><td>プロンプト→コンテキストへの進化。コンテキストウィンドウの仕組み、U字型精度カーブ、情報配置の戦略。<strong>自分の進級制作を題材に</strong>「AIに自分のコードをどう説明すれば正しく理解してもらえるか」を実験。</td></tr>
             <tr><td class="week-num">3</td><td class="week-theme">Gemini CLI × Codespaces 環境構築</td><td>進級制作リポジトリ上で <code>GEMINI.md</code> を書いてみる。動作原理（ReActループ、ツール呼び出し）。無料枠の仕組み（60 req/min、1,000 req/日、Gemini 3、1Mコンテキスト）の理解。Vibe Coding体験：自然言語だけで進級制作に小さな改善を加える。</td></tr>
             <tr><td class="week-num">4</td><td class="week-theme">Vibe Codingの実践と限界</td><td>進級制作にVibe Codingで<strong>新機能を1つ追加</strong>。生成されたコードの品質分析（動くけど保守できない問題、セキュリティリスク等）。「なぜVibe Codingだけでは不十分か」の体験的理解。</td></tr>
@@ -171,7 +171,7 @@
       <ul>
         <li><strong>GitHubアカウント</strong> と <strong>個人のGoogleアカウント</strong>（Gemini CLI OAuth認証用）が必要です。Googleアカウントは無料枠で利用するため追加費用は発生しません。</li>
         <li>開発環境は <strong>GitHub Codespaces</strong> を使用するため、学生のデバイスはブラウザが使えれば何でも構いません（Chromebook・iPad・古いノートPC可）。</li>
-        <li>進級制作のコード・成果物を第1回で使用します。アクセスできる状態にしておいてください。</li>
+        <li><strong>前年度（2年次）の進級制作のコード・成果物を通年で素材として使用します</strong>。第1回までにGitHubリポジトリ等にアクセスできる状態にしておいてください。</li>
         <li>体調やメンタル面で不安がある場合は、無理せず担当教員または学校の相談窓口に相談してください。</li>
         <li>この授業で学ぶスキルは、現在のIT業界で急速に需要が高まっている分野です。授業外でも積極的に実践し、ポートフォリオとして活用してください。</li>
       </ul>
