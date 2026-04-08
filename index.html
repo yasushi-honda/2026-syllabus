@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>2026年度 シラバス | 清風情報工科学院</title>
+  <title>2026年度 前期シラバス | 清風情報工科学院</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
   <header class="site-header">
     <div class="container">
       <div class="header-content">
-        <div class="header-badge">2026</div>
+        <div class="header-badge">2026 前期</div>
         <h1 class="site-title">シラバス</h1>
         <p class="site-subtitle">清風情報工科学院</p>
         <p class="site-instructor">担当教員：本田 康志</p>
@@ -50,13 +50,13 @@
         <div class="tg-cell">
           <a href="program-basics.html" class="tg-slot tg-slot--blue">
             <span class="tg-slot-name">プログラム基礎 I</span>
-            <span class="tg-slot-meta">通年</span>
+            <span class="tg-slot-meta">前期</span>
           </a>
         </div>
         <div class="tg-cell">
           <a href="natural-language-dev.html" class="tg-slot tg-slot--green">
             <span class="tg-slot-name">自然言語開発</span>
-            <span class="tg-slot-meta">3年・通年</span>
+            <span class="tg-slot-meta">3年・前期</span>
           </a>
         </div>
         <div class="tg-cell tg-cell--split">
@@ -81,7 +81,7 @@
         <div class="tg-cell">
           <a href="ai-communication.html" class="tg-slot tg-slot--purple">
             <span class="tg-slot-name">AIコミュニケーション基礎</span>
-            <span class="tg-slot-meta">通年</span>
+            <span class="tg-slot-meta">前期</span>
           </a>
         </div>
         <div class="tg-cell">
@@ -107,10 +107,10 @@
     </section>
 
     <section class="cards-section">
-      <h2 class="section-title">科目詳細</h2>
+      <h2 class="section-title">科目一覧</h2>
       <div class="card-grid">
 
-        <a href="program-basics.html" class="card card--blue">
+        <a href="#program-basics" class="card card--blue">
           <div class="card-accent"></div>
           <div class="card-body">
             <div class="card-meta">
@@ -129,7 +129,7 @@
           </div>
         </a>
 
-        <a href="ai-communication.html" class="card card--purple">
+        <a href="#ai-communication" class="card card--purple">
           <div class="card-accent"></div>
           <div class="card-body">
             <div class="card-meta">
@@ -147,7 +147,7 @@
           </div>
         </a>
 
-        <a href="natural-language-dev.html" class="card card--green">
+        <a href="#natural-language-dev" class="card card--green">
           <div class="card-accent"></div>
           <div class="card-body">
             <div class="card-meta">
@@ -166,7 +166,7 @@
           </div>
         </a>
 
-        <a href="ai-programming.html" class="card card--orange">
+        <a href="#ai-programming" class="card card--orange">
           <div class="card-accent"></div>
           <div class="card-body">
             <div class="card-meta">
@@ -184,7 +184,7 @@
           </div>
         </a>
 
-        <a href="java-basics-1.html" class="card card--red">
+        <a href="#java-basics-1" class="card card--red">
           <div class="card-accent"></div>
           <div class="card-body">
             <div class="card-meta">
@@ -203,7 +203,7 @@
           </div>
         </a>
 
-        <a href="java-basics-2.html" class="card card--pink">
+        <a href="#java-basics-2" class="card card--pink">
           <div class="card-accent"></div>
           <div class="card-body">
             <div class="card-meta">
@@ -221,7 +221,7 @@
           </div>
         </a>
 
-        <a href="java-spring.html" class="card card--teal">
+        <a href="#java-spring" class="card card--teal">
           <div class="card-accent"></div>
           <div class="card-body">
             <div class="card-meta">
@@ -240,7 +240,7 @@
           </div>
         </a>
 
-        <a href="java-teamdev.html" class="card card--indigo">
+        <a href="#java-teamdev" class="card card--indigo">
           <div class="card-accent"></div>
           <div class="card-body">
             <div class="card-meta">
@@ -262,6 +262,14 @@
       </div>
     </section>
 
+    <section class="subject-details">
+      <h2 class="section-title">科目詳細</h2>
+      <p class="sd-intro">各科目の授業概要・全回の授業計画・評価方法を展開しています。専用ページへは各ブロック右上の「詳細ページ →」から移動できます。</p>
+      <div id="subject-details-container" class="sd-container">
+        <!-- Loaded dynamically from each subject HTML file -->
+      </div>
+    </section>
+
     <section class="info-section">
       <div class="info-grid">
         <div class="info-box">
@@ -271,8 +279,8 @@
         </div>
         <div class="info-box">
           <h3>開講時期</h3>
-          <p class="info-name">2026年度 通年</p>
-          <p class="info-detail">前期 4月〜9月／後期 10月〜3月</p>
+          <p class="info-name">2026年度 前期</p>
+          <p class="info-detail">4月〜9月／土曜のみ後期も先行掲載</p>
         </div>
       </div>
     </section>
@@ -285,5 +293,70 @@
   </footer>
 
   <script src="app.js"></script>
+  <script>
+    // Subject details: load each subject's <main> content dynamically
+    const SUBJECTS = [
+      { id: 'program-basics',      file: 'program-basics.html',      color: 'blue',   time: '火曜 1・2限',       target: 'ITビジネスコース 2-4年次' },
+      { id: 'ai-communication',    file: 'ai-communication.html',    color: 'purple', time: '火曜 3・4限',       target: 'ITビジネスコース 2-4年次' },
+      { id: 'natural-language-dev',file: 'natural-language-dev.html',color: 'green',  time: '木曜 1・2限',       target: 'IT・情報処理専攻(システム) 3年次' },
+      { id: 'ai-programming',      file: 'ai-programming.html',      color: 'orange', time: '木曜 3・4限',       target: '情報系学科 1年次' },
+      { id: 'java-spring',         file: 'java-spring.html',         color: 'teal',   time: '土曜 9:20-12:30 前期', target: 'グローバルIT 2年次(留学生)' },
+      { id: 'java-teamdev',        file: 'java-teamdev.html',        color: 'indigo', time: '土曜 9:20-12:30 後期', target: 'グローバルIT 2年次(留学生)' },
+      { id: 'java-basics-1',       file: 'java-basics-1.html',       color: 'red',    time: '土曜 13:30-16:50 前期', target: 'グローバルIT 1年次(留学生)' },
+      { id: 'java-basics-2',       file: 'java-basics-2.html',       color: 'pink',   time: '土曜 13:30-16:50 後期', target: 'グローバルIT 1年次(留学生)' },
+    ];
+
+    const container = document.getElementById('subject-details-container');
+
+    const sectionHeadings = new Set(['授業概要','授業計画','授業計画(全15回)','評価方法・基準']);
+
+    function pickSections(mainEl) {
+      // Keep only 授業概要 / 授業計画 / 評価方法 sections for the LP
+      const keep = [];
+      const sections = mainEl.querySelectorAll('.syllabus-section');
+      sections.forEach(sec => {
+        const h2 = sec.querySelector('h2');
+        if (!h2) return;
+        const txt = h2.textContent.trim().replace(/\s+/g,'');
+        if (txt.startsWith('授業概要') || txt.startsWith('授業計画') || txt.startsWith('評価方法')) {
+          keep.push(sec.outerHTML);
+        }
+      });
+      return keep.join('\n');
+    }
+
+    function buildBlock(s, innerHTML, titleText) {
+      return `
+        <article id="${s.id}" class="subject-detail subject-detail--${s.color}">
+          <header class="sd-header">
+            <div class="sd-meta">
+              <span class="sd-chip sd-chip--${s.color}">${s.time}</span>
+              <span class="sd-target">${s.target}</span>
+            </div>
+            <h3 class="sd-title">${titleText}</h3>
+            <a href="${s.file}" class="sd-full-link">詳細ページ →</a>
+          </header>
+          <div class="sd-body">${innerHTML}</div>
+        </article>
+      `;
+    }
+
+    (async () => {
+      for (const s of SUBJECTS) {
+        try {
+          const r = await fetch(s.file);
+          const html = await r.text();
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+          const main = doc.querySelector('main');
+          const title = (doc.querySelector('.page-title')?.textContent || '').trim();
+          if (!main) continue;
+          const innerHTML = pickSections(main);
+          container.insertAdjacentHTML('beforeend', buildBlock(s, innerHTML, title));
+        } catch (e) {
+          console.error('Failed to load', s.file, e);
+        }
+      }
+    })();
+  </script>
 </body>
 </html>
