@@ -30,6 +30,18 @@
   --c-orange: #c2530c;
   --c-orange-soft: #fbeadb;
   --c-orange-border: #f1cfae;
+  --c-red: #c4302b;
+  --c-red-soft: #fbe6e4;
+  --c-red-border: #f1c4c0;
+  --c-pink: #c43670;
+  --c-pink-soft: #fbe6ee;
+  --c-pink-border: #f1c4d5;
+  --c-teal: #0d7a7a;
+  --c-teal-soft: #def0f0;
+  --c-teal-border: #b8dede;
+  --c-indigo: #3741b8;
+  --c-indigo-soft: #e6e8f7;
+  --c-indigo-border: #c4c8ea;
 
   /* Type */
   --font-sans: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -342,6 +354,10 @@ img { max-width: 100%; display: block; }
 .slot--purple { color: var(--c-purple); background: var(--c-purple-soft); border-color: var(--c-purple-border); }
 .slot--green  { color: var(--c-green);  background: var(--c-green-soft);  border-color: var(--c-green-border); }
 .slot--orange { color: var(--c-orange); background: var(--c-orange-soft); border-color: var(--c-orange-border); }
+.slot--red    { color: var(--c-red);    background: var(--c-red-soft);    border-color: var(--c-red-border); }
+.slot--pink   { color: var(--c-pink);   background: var(--c-pink-soft);   border-color: var(--c-pink-border); }
+.slot--teal   { color: var(--c-teal);   background: var(--c-teal-soft);   border-color: var(--c-teal-border); }
+.slot--indigo { color: var(--c-indigo); background: var(--c-indigo-soft); border-color: var(--c-indigo-border); }
 
 .slot-time {
   font-family: var(--font-mono);
@@ -430,6 +446,10 @@ img { max-width: 100%; display: block; }
 .card--purple .card-accent { background: var(--c-purple); }
 .card--green  .card-accent { background: var(--c-green); }
 .card--orange .card-accent { background: var(--c-orange); }
+.card--red    .card-accent { background: var(--c-red); }
+.card--pink   .card-accent { background: var(--c-pink); }
+.card--teal   .card-accent { background: var(--c-teal); }
+.card--indigo .card-accent { background: var(--c-indigo); }
 
 .card-body {
   padding: var(--sp-6) var(--sp-6) var(--sp-5);
@@ -473,6 +493,10 @@ img { max-width: 100%; display: block; }
 .card--purple .card-title { border-bottom: 2px solid var(--c-purple); display: inline-block; padding-bottom: 2px; }
 .card--green  .card-title { border-bottom: 2px solid var(--c-green);  display: inline-block; padding-bottom: 2px; }
 .card--orange .card-title { border-bottom: 2px solid var(--c-orange); display: inline-block; padding-bottom: 2px; }
+.card--red    .card-title { border-bottom: 2px solid var(--c-red);    display: inline-block; padding-bottom: 2px; }
+.card--pink   .card-title { border-bottom: 2px solid var(--c-pink);   display: inline-block; padding-bottom: 2px; }
+.card--teal   .card-title { border-bottom: 2px solid var(--c-teal);   display: inline-block; padding-bottom: 2px; }
+.card--indigo .card-title { border-bottom: 2px solid var(--c-indigo); display: inline-block; padding-bottom: 2px; }
 
 .card-target {
   font-size: 0.82rem;
@@ -596,6 +620,10 @@ img { max-width: 100%; display: block; }
 .page-header--purple::before { background: radial-gradient(circle, rgba(107,55,201,0.10) 0%, transparent 60%); }
 .page-header--green::before  { background: radial-gradient(circle, rgba(14,138,95,0.10) 0%, transparent 60%); }
 .page-header--orange::before { background: radial-gradient(circle, rgba(194,83,12,0.10) 0%, transparent 60%); }
+.page-header--red::before    { background: radial-gradient(circle, rgba(196,48,43,0.10) 0%, transparent 60%); }
+.page-header--pink::before   { background: radial-gradient(circle, rgba(196,54,112,0.10) 0%, transparent 60%); }
+.page-header--teal::before   { background: radial-gradient(circle, rgba(13,122,122,0.10) 0%, transparent 60%); }
+.page-header--indigo::before { background: radial-gradient(circle, rgba(55,65,184,0.10) 0%, transparent 60%); }
 
 .breadcrumb {
   display: flex;
@@ -654,6 +682,10 @@ img { max-width: 100%; display: block; }
 .page-header--purple .page-title::after { background: var(--c-purple); }
 .page-header--green  .page-title::after { background: var(--c-green); }
 .page-header--orange .page-title::after { background: var(--c-orange); }
+.page-header--red    .page-title::after { background: var(--c-red); }
+.page-header--pink   .page-title::after { background: var(--c-pink); }
+.page-header--teal   .page-title::after { background: var(--c-teal); }
+.page-header--indigo .page-title::after { background: var(--c-indigo); }
 
 .page-meta-badges {
   display: flex;
