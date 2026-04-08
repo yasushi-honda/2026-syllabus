@@ -27,86 +27,75 @@
   <main class="container">
     <section class="schedule-overview">
       <h2 class="section-title">時間割</h2>
-      <div class="timetable">
-        <div class="timetable-day">
-          <div class="day-label">
-            <span class="day-name">火曜日</span>
-            <span class="day-target">ITビジネスコース 2,3,4年次</span>
-          </div>
-          <div class="day-slots">
-            <a href="program-basics.html" class="slot slot--blue">
-              <span class="slot-time">1・2限</span>
-              <span class="slot-name">プログラム基礎 I</span>
-              <span class="slot-arrow">&rarr;</span>
-            </a>
-            <a href="ai-communication.html" class="slot slot--purple">
-              <span class="slot-time">3・4限</span>
-              <span class="slot-name">AIコミュニケーション基礎</span>
-              <span class="slot-arrow">&rarr;</span>
-            </a>
-          </div>
+      <div class="timetable-grid">
+        <div class="tg-corner"></div>
+        <div class="tg-day">
+          <span class="tg-day-name">火曜日</span>
+          <span class="tg-day-target">IT ビジネス 2-4年</span>
         </div>
-        <div class="timetable-day">
-          <div class="day-label">
-            <span class="day-name">木曜日</span>
-            <span class="day-target">IT・情報処理専攻(システム) 3年次</span>
-          </div>
-          <div class="day-slots">
-            <a href="natural-language-dev.html" class="slot slot--green">
-              <span class="slot-time">1・2限</span>
-              <span class="slot-name">自然言語開発</span>
-              <span class="slot-arrow">&rarr;</span>
-            </a>
-          </div>
+        <div class="tg-day">
+          <span class="tg-day-name">木曜日</span>
+          <span class="tg-day-target">1・2限: 3年 / 3・4限: 1年</span>
         </div>
-        <div class="timetable-day">
-          <div class="day-label">
-            <span class="day-name">木曜日</span>
-            <span class="day-target">情報系学科 1年次</span>
-          </div>
-          <div class="day-slots">
-            <a href="ai-programming.html" class="slot slot--orange">
-              <span class="slot-time">3・4限</span>
-              <span class="slot-name">AI活用プログラミング基礎</span>
-              <span class="slot-arrow">&rarr;</span>
-            </a>
-          </div>
+        <div class="tg-day">
+          <span class="tg-day-name">土曜日</span>
+          <span class="tg-day-target">グローバルIT 留学生</span>
         </div>
-        <div class="timetable-day">
-          <div class="day-label">
-            <span class="day-name">土曜日</span>
-            <span class="day-target">グローバルIT 2年次（留学生）</span>
-          </div>
-          <div class="day-slots">
-            <a href="java-spring.html" class="slot slot--teal">
-              <span class="slot-time">9:20-12:30 前期</span>
-              <span class="slot-name">Javaプログラミング</span>
-              <span class="slot-arrow">&rarr;</span>
-            </a>
-            <a href="java-teamdev.html" class="slot slot--indigo">
-              <span class="slot-time">9:20-12:30 後期</span>
-              <span class="slot-name">システム開発B</span>
-              <span class="slot-arrow">&rarr;</span>
-            </a>
-          </div>
+
+        <div class="tg-time">
+          <span class="tg-time-period">午前</span>
+          <span class="tg-time-num">1・2限</span>
+          <span class="tg-time-hours">9:20<br>12:30</span>
         </div>
-        <div class="timetable-day">
-          <div class="day-label">
-            <span class="day-name">土曜日</span>
-            <span class="day-target">グローバルIT 1年次（留学生）</span>
-          </div>
-          <div class="day-slots">
-            <a href="java-basics-1.html" class="slot slot--red">
-              <span class="slot-time">13:30-16:50 前期</span>
-              <span class="slot-name">プログラミング基礎(Java)</span>
-              <span class="slot-arrow">&rarr;</span>
-            </a>
-            <a href="java-basics-2.html" class="slot slot--pink">
-              <span class="slot-time">13:30-16:50 後期</span>
-              <span class="slot-name">プログラミング基礎II(Java)</span>
-              <span class="slot-arrow">&rarr;</span>
-            </a>
-          </div>
+        <div class="tg-cell">
+          <a href="program-basics.html" class="tg-slot tg-slot--blue">
+            <span class="tg-slot-name">プログラム基礎 I</span>
+            <span class="tg-slot-meta">通年</span>
+          </a>
+        </div>
+        <div class="tg-cell">
+          <a href="natural-language-dev.html" class="tg-slot tg-slot--green">
+            <span class="tg-slot-name">自然言語開発</span>
+            <span class="tg-slot-meta">3年・通年</span>
+          </a>
+        </div>
+        <div class="tg-cell tg-cell--split">
+          <a href="java-spring.html" class="tg-slot tg-slot--teal">
+            <span class="tg-slot-name">Javaプログラミング</span>
+            <span class="tg-slot-meta">2年・前期</span>
+          </a>
+          <a href="java-teamdev.html" class="tg-slot tg-slot--indigo">
+            <span class="tg-slot-name">システム開発 B</span>
+            <span class="tg-slot-meta">2年・後期</span>
+          </a>
+        </div>
+
+        <div class="tg-time">
+          <span class="tg-time-period">午後</span>
+          <span class="tg-time-num">3・4限</span>
+          <span class="tg-time-hours">13:30<br>16:50</span>
+        </div>
+        <div class="tg-cell">
+          <a href="ai-communication.html" class="tg-slot tg-slot--purple">
+            <span class="tg-slot-name">AIコミュニケーション基礎</span>
+            <span class="tg-slot-meta">通年</span>
+          </a>
+        </div>
+        <div class="tg-cell">
+          <a href="ai-programming.html" class="tg-slot tg-slot--orange">
+            <span class="tg-slot-name">AI活用プログラミング基礎</span>
+            <span class="tg-slot-meta">1年・前期</span>
+          </a>
+        </div>
+        <div class="tg-cell tg-cell--split">
+          <a href="java-basics-1.html" class="tg-slot tg-slot--red">
+            <span class="tg-slot-name">プログラミング基礎(Java)</span>
+            <span class="tg-slot-meta">1年・前期</span>
+          </a>
+          <a href="java-basics-2.html" class="tg-slot tg-slot--pink">
+            <span class="tg-slot-name">プログラミング基礎II(Java)</span>
+            <span class="tg-slot-meta">1年・後期</span>
+          </a>
         </div>
       </div>
     </section>
