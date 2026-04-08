@@ -359,6 +359,206 @@ img { max-width: 100%; display: block; }
 .slot--teal   { color: var(--c-teal);   background: var(--c-teal-soft);   border-color: var(--c-teal-border); }
 .slot--indigo { color: var(--c-indigo); background: var(--c-indigo-soft); border-color: var(--c-indigo-border); }
 
+/* ========================================
+   Timetable Grid — weekly matrix
+   ======================================== */
+
+.timetable-grid {
+  display: grid;
+  grid-template-columns: minmax(72px, auto) repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--c-border-strong);
+  border: 1px solid var(--c-border-strong);
+  border-radius: var(--r-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.tg-corner,
+.tg-day,
+.tg-time,
+.tg-cell {
+  background: var(--c-surface);
+  padding: var(--sp-4);
+}
+
+.tg-corner {
+  background: var(--c-bg-alt);
+}
+
+.tg-day {
+  background: var(--c-bg-alt);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  text-align: center;
+  border-bottom: 2px solid var(--c-rule);
+}
+
+.tg-day-name {
+  font-family: var(--font-serif);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--c-text);
+  letter-spacing: 0.04em;
+}
+
+.tg-day-target {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--c-text-muted);
+  letter-spacing: 0.02em;
+}
+
+.tg-time {
+  background: var(--c-bg-alt);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+  border-right: 2px solid var(--c-rule);
+}
+
+.tg-time-period {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--c-orange);
+}
+
+.tg-time-num {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--c-text);
+  line-height: 1.2;
+}
+
+.tg-time-hours {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--c-text-muted);
+  line-height: 1.35;
+}
+
+.tg-cell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  min-height: 108px;
+}
+
+.tg-cell--split {
+  gap: var(--sp-2);
+}
+
+.tg-slot {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  flex: 1;
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-md);
+  border: 1px solid var(--c-border);
+  background: var(--c-surface);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  min-height: 52px;
+}
+
+.tg-slot::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: currentColor;
+}
+
+.tg-slot:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.tg-slot-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--c-text);
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+}
+
+.tg-slot-meta {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  color: var(--c-text-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.tg-slot--blue   { color: var(--c-blue);   background: var(--c-blue-soft);   border-color: var(--c-blue-border); }
+.tg-slot--purple { color: var(--c-purple); background: var(--c-purple-soft); border-color: var(--c-purple-border); }
+.tg-slot--green  { color: var(--c-green);  background: var(--c-green-soft);  border-color: var(--c-green-border); }
+.tg-slot--orange { color: var(--c-orange); background: var(--c-orange-soft); border-color: var(--c-orange-border); }
+.tg-slot--red    { color: var(--c-red);    background: var(--c-red-soft);    border-color: var(--c-red-border); }
+.tg-slot--pink   { color: var(--c-pink);   background: var(--c-pink-soft);   border-color: var(--c-pink-border); }
+.tg-slot--teal   { color: var(--c-teal);   background: var(--c-teal-soft);   border-color: var(--c-teal-border); }
+.tg-slot--indigo { color: var(--c-indigo); background: var(--c-indigo-soft); border-color: var(--c-indigo-border); }
+
+/* Tablet: tighten grid */
+@media (max-width: 900px) {
+  .timetable-grid {
+    grid-template-columns: minmax(56px, auto) repeat(3, minmax(0, 1fr));
+  }
+  .tg-corner,
+  .tg-day,
+  .tg-time,
+  .tg-cell {
+    padding: var(--sp-3);
+  }
+  .tg-day-name { font-size: 0.95rem; }
+  .tg-day-target { font-size: 0.6rem; }
+  .tg-slot { padding: var(--sp-2) var(--sp-3); }
+  .tg-slot-name { font-size: 0.78rem; }
+  .tg-slot-meta { font-size: 0.58rem; }
+}
+
+/* Mobile: tighter matrix, allow content wrap */
+@media (max-width: 640px) {
+  .timetable-grid {
+    grid-template-columns: 48px repeat(3, minmax(0, 1fr));
+  }
+  .tg-corner,
+  .tg-day,
+  .tg-time,
+  .tg-cell {
+    padding: var(--sp-2);
+  }
+  .tg-day-name { font-size: 0.78rem; }
+  .tg-day-target { display: none; }
+  .tg-time-period { font-size: 0.55rem; letter-spacing: 0.08em; }
+  .tg-time-num { font-size: 0.82rem; }
+  .tg-time-hours { font-size: 0.55rem; }
+  .tg-slot {
+    padding: var(--sp-2);
+    min-height: 44px;
+  }
+  .tg-slot-name {
+    font-size: 0.68rem;
+    line-height: 1.3;
+    word-break: break-all;
+  }
+  .tg-slot-meta { font-size: 0.52rem; }
+  .tg-cell { min-height: 80px; }
+}
+
 .slot-time {
   font-family: var(--font-mono);
   font-size: 0.72rem;
