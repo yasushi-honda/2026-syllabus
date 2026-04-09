@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第1回 オリエンテーション＆前年度の進級制作を振り返る | 自然言語開発</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev.html">自然言語開発</a>
+        <span>/</span>
+        <span>第1回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">オリエンテーション＆<wbr>前年度の進級制作を振り返る</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 1</span>
+            <span class="page-badge">木曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">ガイダンス＋進級制作の再発見</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">GitHub Codespaces / Gemini CLI / 責任あるコード / 振り返り</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">GitHubアカウント（ログイン可能な状態）・進級制作リポジトリへのアクセス</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>授業の全体像（目的・進め方・評価方法）を理解する</li>
+        <li><strong>前年度（2年次）の進級制作を、今期の通年素材として使う</strong>ことを理解する</li>
+        <li>Codespaces上で進級制作のコードを開き、<strong>久しぶりに自分のコードを読み返す</strong></li>
+        <li>Gemini CLIの起動・OAuth認証を完了する</li>
+        <li>「当時の自分」と「今の自分」の差を言語化する</li>
+        <li><strong>「責任あるコード」</strong>という概念に出会う</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>オリエンテーション</h3>
+          <div class="timeline-body">
+            <p><strong>教員自己紹介・授業の位置づけ</strong></p>
+            <ul>
+              <li>本田の自己紹介（CTO経験、AI活用の実務、なぜこの授業を作ったか）</li>
+              <li>「自然言語開発」という科目名の意味——コードを書く言語から、人間の言葉で開発する時代へ</li>
+            </ul>
+            <p><strong>シラバスの説明</strong></p>
+            <ul>
+              <li>全15回の流れを俯瞰（Vibe Coding → SDD → ハーネスエンジニアリング）</li>
+              <li>評価方法の確認（仕様・設計25%、実装・品質25%、AI活用20%、プロセス15%、責任15%）</li>
+              <li>「この授業で学ぶスキルは、今のIT業界で最も需要が高まっている分野です」</li>
+            </ul>
+            <p><strong>通年素材の説明</strong></p>
+            <ul>
+              <li>前年度（2年次）の進級制作を、<strong>今期の授業を通じて「育て直す」素材</strong>として使う</li>
+              <li>同じコードベースを題材にすることで、成長が可視化される</li>
+              <li>「壊してもいい、作り直してもいい。大事なのは "なぜそうしたか" を説明できること」</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>環境セットアップ＆コードとの再会</h3>
+          <div class="timeline-body">
+            <p><strong>GitHub Codespacesで進級制作を開く</strong></p>
+            <ul>
+              <li>進級制作のリポジトリをCodespacesで起動</li>
+              <li>久しぶりに自分のコードを開き、読み返す</li>
+              <li>「何がどこにあるか」「なぜこう書いたか」を思い出しながらファイルを辿る</li>
+            </ul>
+            <p><strong>Gemini CLIのセットアップ</strong></p>
+            <ul>
+              <li>ターミナルで <code>npx @google/gemini-cli</code> を実行</li>
+              <li>OAuth認証の完了（ブラウザでGoogleアカウントを認証）</li>
+              <li>Gemini CLIの基本操作を確認（質問する、ファイルを読ませる）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>Gemini CLIを選ぶ理由:</strong> Googleアカウントさえあれば無料で使えるため、全員が同じスタートラインに立てます。後の回でClaude Code等の有料ツールも扱いますが、まずはここから。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>進級制作の振り返り——過去の自分と対話する</h3>
+          <div class="timeline-body">
+            <p><strong>個人ワーク: コードリーディング＆メモ</strong></p>
+            <p>以下の問いに対して、自分の言葉でメモを書く（Markdown、手書き、どちらでも可）。</p>
+            <div class="lesson-questions">
+              <div class="lesson-question">
+                <span class="lesson-question-num">Q1</span>
+                <span>当時の自分は何を考えて、こう書いたのか？</span>
+              </div>
+              <div class="lesson-question">
+                <span class="lesson-question-num">Q2</span>
+                <span>今読み返して「よく書けている」と思う部分はどこか？</span>
+              </div>
+              <div class="lesson-question">
+                <span class="lesson-question-num">Q3</span>
+                <span>今読み返して「ここは改善したい」と思う部分はどこか？</span>
+              </div>
+              <div class="lesson-question">
+                <span class="lesson-question-num">Q4</span>
+                <span>前期末（9月）までに、これをどう育てたいか？</span>
+              </div>
+            </div>
+            <p>Gemini CLIにコードを読ませて対話してもOK。ただし<strong>AIの回答を鵜呑みにせず、自分の判断でメモを書く</strong>こと。</p>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>「責任あるコード」の導入</h3>
+          <div class="timeline-body">
+            <p><strong>なぜ「責任」がテーマなのか</strong></p>
+            <ul>
+              <li>AIがコードを大量に生成できる時代に、開発者に求められるのは<strong>「何を作るか」「なぜ作るか」「どう検証するか」を判断する力</strong></li>
+              <li>「動く」と「正しい」は違う。「速い」と「良い」も違う</li>
+              <li>この授業の15回を通して、「責任あるコード」とは何かを一緒に考えていく</li>
+            </ul>
+            <p><strong>今日の振り返りを「責任」の視点で見直す</strong></p>
+            <ul>
+              <li>進級制作のコード——当時の自分は「責任ある」書き方をしていたか？</li>
+              <li>答えはYesでもNoでもいい。大事なのは<strong>「考えたこと」自体</strong></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告＆課題</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>次回（第2回）: <strong>コンテキストエンジニアリング入門</strong>——「AIにどう伝えるか」の技術を学ぶ</li>
+              <li>次回は「自分の進級制作のコードをAIに正しく理解してもらう」実験をします</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>振り返りメモの提出</strong>
+            <p>Q1〜Q4への回答を、進級制作リポジトリの <code>README.md</code> または新規ファイル <code>REVIEW.md</code> に記録し、pushする。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>Gemini CLIで遊んでみる</strong>
+            <p>自分のコードについてGemini CLIに質問してみる。「このコードの問題点は？」「リファクタリングするなら？」など。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://github.com/features/codespaces" target="_blank" rel="noopener">GitHub Codespaces</a> — ブラウザ上の開発環境</li>
+        <li><a href="https://github.com/google-gemini/gemini-cli" target="_blank" rel="noopener">Gemini CLI</a> — Googleの対話型AIツール（CLI版）</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <div class="lesson-nav-item lesson-nav-item--disabled">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">---</span>
+      </div>
+      <a href="../natural-language-dev.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">自然言語開発</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第2回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
