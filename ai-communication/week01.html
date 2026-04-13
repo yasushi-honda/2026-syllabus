@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第1回 オリエンテーションとAI概論 | AIコミュニケーション基礎</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication.html">AIコミュニケーション基礎</a>
+        <span>/</span>
+        <span>第1回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">オリエンテーションと<wbr>AI概論</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 1</span>
+            <span class="page-badge">火曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">ガイダンス＋生成AIと向き合うための土台づくり</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">自分だけのAI / 生成AI / NotebookLM / 倫理と心理的安全性</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">Googleアカウント（学校提供のWorkspace for Educationまたは個人）でログイン可能な状態</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>授業の全体像（目的・進め方・評価方法）を理解する</li>
+        <li>本授業の核である<strong>「自分だけのAIを育てる」</strong>というコンセプトを理解する</li>
+        <li>生成AIが「何ができて、何が苦手か」を自分の言葉で言えるようになる</li>
+        <li>AI利用における<strong>倫理と心理的安全性</strong>の基本を理解する</li>
+        <li>次回からNotebookLMに投入する<strong>【学習データ①】自己紹介シート</strong>の下書きを完成させる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約35分</span>
+          </div>
+          <h3>オリエンテーション</h3>
+          <div class="timeline-body">
+            <p><strong>教員自己紹介・授業の位置づけ</strong></p>
+            <ul>
+              <li>本田の自己紹介（実務でのAI活用、なぜこの授業を作ったか）</li>
+              <li>「AIコミュニケーション基礎」がITビジネスコースで担う役割</li>
+              <li>2〜4年次の混在クラスであること——<strong>各自のペースを尊重する</strong>方針</li>
+            </ul>
+            <p><strong>シラバスの説明</strong></p>
+            <ul>
+              <li>全15回の流れを俯瞰（NotebookLMで自分のAIを育てる → プロンプト力 → 検証力 → 個人課題）</li>
+              <li>毎回の<strong>【学習データ①〜⑬】</strong>を蓄積し、自分だけのAIに投入していく流れを説明</li>
+              <li>評価方法の確認（自分のAI育成30%、プロンプト設計25%、批判的評価20%、主体性15%、基本操作10%）</li>
+            </ul>
+            <p><strong>本授業の核となるコンセプト</strong></p>
+            <ul>
+              <li>「自分だけのAI」——<strong>みなさん一人ひとりが、自分専用のAIパートナーを育てる</strong></li>
+              <li>NotebookLMにデータを蓄積し、カスタム指示で性格や話し方を設定し、Audio Overviewで対話する</li>
+              <li>「正解を覚える授業」ではなく、<strong>「自分のAIと一緒に試行錯誤する授業」</strong></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>AI概論——生成AIとは何か、何ができて、何が苦手か</h3>
+          <div class="timeline-body">
+            <p><strong>生成AIの基本</strong></p>
+            <ul>
+              <li>「生成AI」と「これまでのAI」の違い——文章・画像・音声を<strong>新しく作り出す</strong>AI</li>
+              <li>大規模言語モデル（LLM）の仕組みのざっくりイメージ：<strong>「次に来る言葉の断片（トークン）を確率で予測する」</strong>機械</li>
+              <li>代表的な生成AI：Gemini（Google）、ChatGPT（OpenAI）、Claude（Anthropic）など</li>
+            </ul>
+            <p><strong>生成AIの得意・不得意</strong></p>
+            <ul>
+              <li><strong>得意</strong>: 文章作成、要約、翻訳、アイデア出し、コードの下書き、対話の壁打ち</li>
+              <li><strong>苦手</strong>: 最新情報、正確な計算、固有名詞・数値の事実、自分自身の能力の把握</li>
+              <li>「もっともらしい嘘」=<strong>ハルシネーション</strong>を起こすことがある——だから検証が必要</li>
+            </ul>
+            <p><strong>社会での使われ方を知る</strong></p>
+            <ul>
+              <li>ビジネス現場（議事録要約、企画書ドラフト、カスタマーサポート）</li>
+              <li>教育現場（個別学習支援、教材作成）</li>
+              <li>クリエイティブ（イラスト・音楽生成、シナリオ案）</li>
+              <li>「AIに仕事を奪われる」ではなく、<strong>「AIを使える人と使えない人で差がつく」</strong>時代</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>今日のキーフレーズ:</strong> 生成AIは「賢い相棒」だが「全能の神」ではない。能力と限界を知って付き合うことが、これから15回の出発点です。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>AI利用の倫理と心理的安全性</h3>
+          <div class="timeline-body">
+            <p><strong>個人情報・機密情報の取り扱い</strong></p>
+            <ul>
+              <li>AIに入力したデータは<strong>サービス提供者のサーバーに送信される</strong>——その意味を理解する</li>
+              <li>入力してはいけないもの：他人の個人情報、企業の機密情報、未公開のクレジットカード番号など</li>
+              <li>NotebookLMやGoogle Workspace for Education は、<strong>デフォルトでAIモデルの訓練に使われない</strong>（Core Serviceとして保護）。授業内で具体設定を確認</li>
+            </ul>
+            <p><strong>著作権・引用の基本</strong></p>
+            <ul>
+              <li>AI生成物の著作権はまだグレーゾーンが多い。「自分が書いた」と偽らない</li>
+              <li>授業の課題でAIを使った場合は、<strong>「どこまでAIに頼ったか」を記録</strong>する習慣をつける</li>
+              <li>これは責任ある学習姿勢。社会に出てからも問われるリテラシー</li>
+            </ul>
+            <p><strong>心理的安全性——失敗していい場であること</strong></p>
+            <ul>
+              <li>この授業では<strong>「変なプロンプト」「うまくいかなかった対話」も価値がある</strong>。むしろ歓迎</li>
+              <li>AIに恥ずかしい質問をしてもOK。AIは評価しない</li>
+              <li>クラスメイトのAIと比較して優劣を競う授業ではない。<strong>「自分のAI」が一番</strong></li>
+            </ul>
+            <p><strong>批判的に受け取る姿勢</strong></p>
+            <ul>
+              <li>AIが言うことを鵜呑みにしない。「本当？」と聞き返す癖をつける</li>
+              <!-- 親ページ ai-communication.html Week 9 「AI出力の検証と改善」と同期 -->
+              <li>後半の回でファクトチェック手順を本格的に学ぶが、今日から意識を始める</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>【学習データ①】自己紹介シートの作成</h3>
+          <div class="timeline-body">
+            <p><strong>次回への準備——「自分のAI」が最初に覚える情報</strong></p>
+            <ul>
+              <li>第2回でNotebookLMに投入する<strong>「自己紹介シート」</strong>を Googleドキュメントで作成</li>
+              <li>このシートが、自分のAIが最初に「あなたは誰か」を理解する材料になる</li>
+            </ul>
+            <p><strong>シートに書く項目（例）</strong></p>
+            <ul>
+              <li>名前（呼ばれたいニックネーム可）／学年</li>
+              <li>好きなもの・趣味・得意なこと</li>
+              <li>苦手なもの・避けたいこと</li>
+              <li>この授業で達成したいこと</li>
+              <li>AIに <strong>どんな話し方</strong> をしてほしいか（敬語／タメ口／関西弁／キャラ風…）</li>
+              <li>AIに <strong>どんな性格</strong> でいてほしいか（励ましてくれる／厳しく指摘する／淡々と…）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>正解はありません:</strong> 「自分のAIにどう接してほしいか」を自由に書きましょう。後から何度でも書き換えられます。今日は<strong>叩き台</strong>で十分。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告＆今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>次回（第2回）: <strong>「自分だけのAI」をつくろう</strong>——NotebookLMの操作・カスタム指示・自己紹介シート投入で初期版AIが誕生</li>
+              <li>今日作った自己紹介シートは<strong>必ず保存</strong>。次回そのまま使います</li>
+              <li>「今日一番印象に残ったこと」「気になったこと」を1つ言語化して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>【学習データ①】自己紹介シートを完成させる</strong>
+            <p>授業内で書ききれなかった項目を埋めて、Googleドキュメントとして保存しておく。次回 NotebookLM に投入します。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>Geminiに何か1つ質問してみる</strong>
+            <p><a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a> にアクセスして、自分の興味あることを質問してみる。「思っていた答え」と「返ってきた答え」のズレを観察しましょう。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>NotebookLMを開いてみる</strong>
+            <p>次回スムーズに入れるよう、<a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> にログインだけしておく（操作は次回授業で）。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> — 本授業の主軸となる「自分だけのAI」を育てる場所</li>
+        <li><a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a> — Googleの対話型生成AI</li>
+        <!-- 親ページ ai-communication.html Week 11 「Google AI Studio体験」と同期 -->
+        <li><a href="https://aistudio.google.com" target="_blank" rel="noopener">Google AI Studio</a> — プロンプトの細かい挙動を確認できる開発者向けツール（授業後半で扱う）</li>
+        <li><a href="https://edu.google.com/intl/ALL_jp/workspace-for-education/editions/overview/" target="_blank" rel="noopener">Google Workspace for Education</a> — 学校で使うアカウントの公式情報</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <div class="lesson-nav-item lesson-nav-item--disabled">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">---</span>
+      </div>
+      <a href="../ai-communication.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AIコミュニケーション基礎</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第2回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
