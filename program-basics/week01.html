@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第1回 オリエンテーション＆はじめてのHTML | プログラム基礎 I</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--blue">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../program-basics.html">プログラム基礎 I</a>
+        <span>/</span>
+        <span>第1回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">オリエンテーション＆<wbr>はじめてのHTML</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 1</span>
+            <span class="page-badge">火曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">ガイダンス＋はじめて手で書くHTML</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">GitHub Studentプラン / Codespaces / HTML基本タグ / 手で書く</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">GitHubアカウント（ログイン可能な状態）・学校のメールアドレス（Studentプラン申請用）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>授業の全体像（目的・進め方・評価方法）を理解する</li>
+        <li><strong>「まず手で書く」「AIは補助」</strong>という本授業の基本姿勢を理解する</li>
+        <li>GitHub Studentプランに申請し、GitHub Copilotが使える準備をする</li>
+        <li>GitHub Codespacesを起動し、ブラウザ上で開発環境を開けるようにする</li>
+        <li><strong>自分の手でHTMLの基本タグを1つずつ打ち込み</strong>、自己紹介ページを表示させる</li>
+        <li>「タグを書く → ブラウザで確認する」の最小サイクルを体験する</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>オリエンテーション</h3>
+          <div class="timeline-body">
+            <p><strong>教員自己紹介・授業の位置づけ</strong></p>
+            <ul>
+              <li>本田の自己紹介（実務でのAI活用、なぜこの授業を作ったか）</li>
+              <li>「プログラム基礎 I」がITビジネスコースでどんな役割を持つか</li>
+              <li>2〜4年次の混在クラスであること——<strong>各自のペースを尊重する</strong>方針</li>
+            </ul>
+            <p><strong>シラバスの説明</strong></p>
+            <ul>
+              <li>全15回の流れを俯瞰（HTML → CSS → JavaScript → ミニ完成 × 3）</li>
+              <li>評価方法の確認（理解と説明力30%、完成度25%、デバッグ力20%、AIの批判的活用15%、主体性10%）</li>
+              <li><strong>「動いた」だけでなく「なぜ動くかを自分の言葉で説明できる」</strong>ことを最重視する</li>
+            </ul>
+            <p><strong>この授業の基本姿勢</strong></p>
+            <ul>
+              <li><strong>「まず手で書く」</strong>——AIが何でも書いてくれる時代だからこそ、自分で一行ずつ書く時間を大切にする</li>
+              <li>AI（GitHub Copilot等）は<strong>補助</strong>として使う。使っていい時間・あえて使わない時間を意識的に切り替える</li>
+              <li>「バグ修正ワーク」で、AIに<strong>わざとバグ入りコードを生成させて直す</strong>練習もする</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>GitHub Studentプラン＆Codespacesを起動する</h3>
+          <div class="timeline-body">
+            <p><strong>GitHubアカウントの確認</strong></p>
+            <ul>
+              <li>アカウントを持っていない学生はその場で作成（教員がサポート）</li>
+              <li>ユーザー名は今後ずっと使うもの。<strong>本名に近い形</strong>が推奨（就職活動でも使える）</li>
+            </ul>
+            <p><strong>GitHub Studentプランの申請</strong></p>
+            <ul>
+              <li><a href="https://education.github.com/pack" target="_blank" rel="noopener">GitHub Student Developer Pack</a> にアクセス</li>
+              <li>学校のメールアドレス・学生証を使って申請</li>
+              <li>審査通過後、<strong>GitHub Copilot Student</strong>（学生向け無料プラン）や、<strong>Codespacesの月180コア時間枠</strong>が無料で使えるようになる</li>
+              <li>※審査に時間がかかる場合あり。通過するまでは無料枠で進める</li>
+            </ul>
+            <p><strong>GitHub Codespacesの起動</strong></p>
+            <ul>
+              <li>授業用リポジトリを各自フォーク</li>
+              <li>「Code」ボタン →「Codespaces」→「Create codespace on main」</li>
+              <li>ブラウザ上にVS Codeの画面が立ち上がることを確認</li>
+              <li>左側のファイルツリー、真ん中のエディタ、下のターミナルの位置を確認</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>Codespacesを選ぶ理由:</strong> ローカルPCに何もインストールせず、ブラウザだけで開発できるため、家でも学校でも同じ環境で作業できます。学校のPCが変わっても、自宅のPCが変わっても、GitHubにログインすれば続きから再開できます。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>はじめてのHTML——自己紹介ページを手で書く</h3>
+          <div class="timeline-body">
+            <p><strong><code>index.html</code> を空のファイルから作る</strong></p>
+            <ul>
+              <li>Codespacesで新規ファイル <code>index.html</code> を作成</li>
+              <li><strong>コピペせず、1文字ずつ自分で打ち込む</strong>——これが今日の一番のポイント</li>
+              <li>打ち間違いも含めて全部が学び。エラーが出たら「なぜ？」を考える</li>
+            </ul>
+            <p><strong>段階的に書くHTMLタグ</strong></p>
+            <ol>
+              <li><code>&lt;!DOCTYPE html&gt;</code> でHTMLであることを宣言</li>
+              <li><code>&lt;html&gt;</code>、<code>&lt;head&gt;</code>、<code>&lt;body&gt;</code> の骨組み</li>
+              <li><code>&lt;title&gt;</code> でブラウザのタブに表示される文字を書く</li>
+              <li><code>&lt;h1&gt;</code> で自分の名前を大見出しとして書く</li>
+              <li><code>&lt;p&gt;</code> で「はじめまして」などの自己紹介文を書く</li>
+            </ol>
+            <p><strong>ブラウザで表示してみる</strong></p>
+            <ul>
+              <li>Codespacesの<strong>ポート転送</strong>機能と <strong>Simple Browser</strong> でプレビュー表示</li>
+              <li>「自分が書いた文字が、ブラウザに表示されている！」——この感動を味わう</li>
+              <li>文字を変えて保存 → ブラウザが更新される、のサイクルを体験</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>タグを少し増やしてみる＆なぜこう動くかを考える</h3>
+          <div class="timeline-body">
+            <p><strong>もう少しタグを追加する</strong></p>
+            <ul>
+              <li><code>&lt;ul&gt;</code> と <code>&lt;li&gt;</code> で「好きなもの」をリストにする</li>
+              <li><code>&lt;a href="..."&gt;</code> で好きなサイトへのリンクを1つ追加</li>
+              <li>それぞれ「どのタグが何の役割をしているか」を自分の言葉で言えるようにする</li>
+            </ul>
+            <p><strong>自分の言葉でコメントを書く</strong></p>
+            <ul>
+              <li>HTMLのコメントは <code>&lt;!-- コメント --&gt;</code></li>
+              <li>自分が書いた各ブロックに「この部分は◯◯を表示している」とコメントを残す</li>
+              <li>このコメントが、次回以降の自分への手紙になる</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>AIとの付き合い方の最初の一歩:</strong> Copilotが使える状態になっていても、今日は<strong>できるだけ自分で書く</strong>ことを意識してください。Copilotの補完が表示される場合は、Escキーで消して自分で続きを打つ練習をしましょう（Studentプラン審査中でCopilotがまだ有効でない人は、そのまま手で書く時間として活用してください）。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告＆今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>次回（第2回）: <strong>HTMLの構造を学ぶ</strong>——見出し・段落・リスト・リンク・画像を使ってプロフィールページを拡張する</li>
+              <li>今日書いた <code>index.html</code> は次回もそのまま使います。消さないで！</li>
+              <li>「分からなかった所」「面白かった所」を1つずつ言語化して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>GitHub Studentプランの申請を完了させる</strong>
+            <p>授業内で完了できなかった場合、<a href="https://education.github.com/pack" target="_blank" rel="noopener">GitHub Student Developer Pack</a> から自宅で申請を完了させる。承認メールを確認。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>自己紹介ページを保存しておく</strong>
+            <p>今日書いた <code>index.html</code> を自分のリポジトリにcommit & pushしておく。次回の授業で使います。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>自宅のPC・スマホからCodespacesにアクセスしてみる</strong>
+            <p>「家でもつながる」ことを体験しておくと、授業外の学習がずっと楽になります。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://education.github.com/pack" target="_blank" rel="noopener">GitHub Student Developer Pack</a> — 学生向け無料特典の申請ページ</li>
+        <li><a href="https://github.com/features/codespaces" target="_blank" rel="noopener">GitHub Codespaces</a> — ブラウザ上の開発環境</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/HTML/Reference/Elements" target="_blank" rel="noopener">MDN — HTML要素リファレンス</a> — タグの意味を調べるならここ（辞書として使う）</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <div class="lesson-nav-item lesson-nav-item--disabled">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">---</span>
+      </div>
+      <a href="../program-basics.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">プログラム基礎 I</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第2回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
