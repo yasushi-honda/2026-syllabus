@@ -23,6 +23,8 @@ natural-language-dev.html # 自然言語開発（木1・2限）
 natural-language-dev/   # 自然言語開発の各回詳細ページ
   week01.html           #   第1回 オリエンテーション＆前年度の進級制作を振り返る
 ai-programming.html     # AI活用プログラミング基礎（木3・4限）※AIコミュ基礎と共通ベース
+ai-programming/         # AI活用プログラミング基礎の各回詳細ページ
+  week01.html           #   第1回 オリエンテーション＆AIってなんだろう？
 java-basics-1.html      # Java基礎I（土曜前期）
 java-basics-2.html      # Java基礎II（土曜前期）
 java-spring.html        # Javaフレームワーク（土曜後期）
