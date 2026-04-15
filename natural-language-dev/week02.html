@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第2回 コンテキストエンジニアリング入門 | 自然言語開発</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev.html">自然言語開発</a>
+        <span>/</span>
+        <span>第2回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">コンテキストエンジニアリング入門</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 2</span>
+            <span class="page-badge">木曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">プロンプトからコンテキストへ——AIに「伝える」技術</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">コンテキストウィンドウ / U字型精度カーブ / 情報配置の戦略 / 進級制作を題材にした実験</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">進級制作リポジトリがCodespacesで開ける状態・Gemini CLIが起動できる状態（第1回完了）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>「プロンプトエンジニアリング」と「<strong>コンテキストエンジニアリング</strong>」の違いを説明できる</li>
+        <li><strong>コンテキストウィンドウ</strong>の仕組み（トークン上限・入出力の両方を消費すること）を理解する</li>
+        <li>長い入力における<strong>U字型精度カーブ</strong>（途中の情報が落ちやすい現象）を知り、対策を考えられる</li>
+        <li>「重要情報は先頭と末尾に置く」など、<strong>情報配置の戦略</strong>を1つ以上言語化できる</li>
+        <li>自分の進級制作を題材に、「同じ質問でも<strong>渡す情報の整え方</strong>で回答の質が変わる」ことを体験する</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の振り返り＆「プロンプト→コンテキスト」への進化</h3>
+          <div class="timeline-body">
+            <p><strong>前回課題の共有（10分）</strong></p>
+            <ul>
+              <li>進級制作リポジトリに書いた <code>REVIEW.md</code> のQ1〜Q4から、1つだけ選んで口頭共有</li>
+              <li>「当時の自分」との対話で発見したことを相互にシェア</li>
+            </ul>
+            <p><strong>プロンプトエンジニアリングの限界（15分）</strong></p>
+            <ul>
+              <li>「プロンプトを上手く書けばAIはちゃんと動く」——初期のAI活用で広まった考え方</li>
+              <li>しかし実務では、<strong>1回のやり取りで完結しない</strong>問題が大半（大きなコードベース、長い仕様、複数ファイル）</li>
+              <li>「何を聞くか」だけでなく<strong>「AIの頭の中にどんな情報を、どう並べて置くか」</strong>を設計することが重要になってきた</li>
+            </ul>
+            <p><strong>コンテキストエンジニアリングとは何か（15分）</strong></p>
+            <ul>
+              <li>Anthropicの公式エンジニアリング記事 "Effective Context Engineering for AI Agents" を引用しながら紹介</li>
+              <li>定義: <strong>AIが高性能を発揮できるよう、コンテキストウィンドウに入れる情報の中身・配置・量を設計する技術</strong></li>
+              <li>プロンプト ⊂ コンテキスト。プロンプトはコンテキストの「一部」でしかない</li>
+              <li>コンテキストに含まれるもの: システム指示・過去のやり取り・ツール定義・添付ファイル・検索で引いた断片・RAGの結果……</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>合言葉:</strong> 「AIに質問する」のではなく「<strong>AIの作業環境を整える</strong>」。今期の授業全体を貫く視点です。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>コンテキストウィンドウとU字型精度カーブ</h3>
+          <div class="timeline-body">
+            <p><strong>コンテキストウィンドウの仕組み（15分）</strong></p>
+            <ul>
+              <li><strong>トークン</strong>: AIが扱う最小単位（おおむね英単語1個、日本語だと漢字1〜2文字に相当することが多い）</li>
+              <li><strong>コンテキストウィンドウ</strong>: 1回のやり取りでAIが一度に見られるトークンの上限</li>
+              <li>入力（指示＋資料）<strong>と</strong>出力（AIの回答）の<strong>両方</strong>がこの枠を使う</li>
+              <li>参考: Gemini 3 は1Mトークン（100万トークン）、Claude 4 系は200K〜1Mトークン級。数字は<strong>授業時点の目安</strong>で頻繁に更新される</li>
+            </ul>
+            <p><strong>U字型精度カーブ——「真ん中が忘れられる」問題（20分）</strong></p>
+            <ul>
+              <li>長い入力をAIに渡したとき、<strong>先頭</strong>と<strong>末尾</strong>の情報はよく使われるが、<strong>中央付近</strong>の情報は無視されやすい</li>
+              <li>この現象は "<strong>Lost in the Middle</strong>"（Liu et al., 2023）として研究で示されている</li>
+              <li>形としては「U字型」——精度をY軸、情報の位置をX軸に取ると両端が高く中央が低いカーブになる</li>
+              <li>「長く入れれば入れるほど賢くなる」は<strong>誤り</strong>。入れ方を設計しないと、むしろ精度が落ちることがある</li>
+            </ul>
+            <p><strong>情報配置の戦略（15分）</strong></p>
+            <ul>
+              <li><strong>重要情報は先頭か末尾に置く</strong>——指示・制約・評価基準は真ん中に埋めない</li>
+              <li><strong>不要な情報は削る</strong>——大は小を兼ねない。関係ないコードを貼ると逆にノイズになる</li>
+              <li><strong>構造化する</strong>——箇条書き・見出し・区切り線（<code>---</code>）を使い、AIが情報の境界を認識しやすくする</li>
+              <li><strong>指示を末尾に再掲する</strong>——長文の末尾で「先ほどの要件をもう一度言うと……」と繰り返すテクニック</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>実験: 自分の進級制作をAIに正しく理解させる</h3>
+          <div class="timeline-body">
+            <p><strong>今日の問い:</strong> <em>AIに自分のコードをどう説明すれば正しく理解してもらえるか？</em> ——同じ質問を、渡すコンテキストだけ変えて3回試します。</p>
+            <p><strong>お題（共通）</strong></p>
+            <p>自分の進級制作コードに対して、Gemini CLIで次の質問をする:</p>
+            <p class="lesson-note"><code>この機能はどう動いているか、初心者にもわかるように3行で説明してください。</code></p>
+            <p><strong>条件A: 雑に聞く（10分）</strong></p>
+            <ul>
+              <li>ファイルを指定せず、質問文だけ送る</li>
+              <li>回答をコピーしてメモに残す</li>
+            </ul>
+            <p><strong>条件B: 関係ファイルだけを渡す（15分）</strong></p>
+            <ul>
+              <li>該当機能のソースファイル1〜2本だけを <code>@ファイル名</code> などで明示的に参照させる</li>
+              <li>質問文の<strong>先頭</strong>に「あなたは学生向けの丁寧な解説者です」と役割を置き、<strong>末尾</strong>にもう一度「3行で」と再掲する</li>
+              <li>回答をメモ</li>
+            </ul>
+            <p><strong>条件C: 構造化＋関連コンテキスト（20分）</strong></p>
+            <ul>
+              <li>条件Bに加え、README・簡単な設計メモ・動作条件を<strong>見出し付きで</strong>まとめて渡す</li>
+              <li>無関係なファイルは<strong>渡さない</strong>（U字の真ん中に埋めない）</li>
+              <li>回答をメモ</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>観察ポイント:</strong> A→B→Cで、<em>どれくらい</em>・<em>どの方向に</em>回答が変わったか。正解・不正解の評価はAI側ではなく<strong>自分</strong>がする。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>結果の比較とディスカッション</h3>
+          <div class="timeline-body">
+            <p><strong>グループ共有（15分）</strong></p>
+            <ul>
+              <li>近くの人と2〜3人で組み、条件A/B/Cの回答を見せ合う</li>
+              <li>「AIの回答が変わった理由」を<strong>コンテキストの観点</strong>で言語化する</li>
+            </ul>
+            <p><strong>全体ディスカッション（15分）</strong></p>
+            <ul>
+              <li>条件Cでも間違えた/的外れになった例があれば共有</li>
+              <li>「AIが間違える典型パターン」を教員が整理: 情報不足 / ノイズ過多 / 指示の埋没 / 役割の未指定</li>
+              <li>次回以降で扱う <code>GEMINI.md</code> への伏線——「毎回コンテキストを整えるのは大変。それを自動化する仕組みがある」</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り＆次回予告</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>今日のキーワード: <strong>コンテキストウィンドウ / U字型精度カーブ / 情報配置の戦略</strong></li>
+              <li>次回（第3回）: <strong>Gemini CLI × Codespaces 環境構築</strong>——今日手で整えた「コンテキスト」を、<code>GEMINI.md</code> という設定ファイルで<strong>仕組みとして</strong>持てるようにする</li>
+              <li>次回までに、今日の実験で一番良かった条件（多くはC）の「コンテキストの作り方」を言語化しておくと接続がスムーズ</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>実験ログの提出</strong>
+            <p>進級制作リポジトリに <code>docs/context-experiment.md</code> を新規作成し、条件A/B/Cの質問内容・渡したコンテキスト・AIの回答・<strong>自分の評価</strong>を記録してpushする。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>Anthropic記事の通読</strong>
+            <p>下記「参考リンク」の "Effective Context Engineering for AI Agents" を読み、気になった用語・考え方を1つメモする。英語だがGemini CLIに要約させてもよい（それ自体がコンテキスト設計の練習）。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener">Anthropic Engineering — Effective Context Engineering for AI Agents</a> — 本回の理論的な下敷き</li>
+        <li><a href="https://arxiv.org/abs/2307.03172" target="_blank" rel="noopener">Liu et al., 2023 — Lost in the Middle: How Language Models Use Long Contexts</a> — U字型精度カーブの原典</li>
+        <li><a href="https://ai.google.dev/gemini-api/docs/long-context" target="_blank" rel="noopener">Google AI — Long context with Gemini</a> — Geminiの長コンテキスト公式ドキュメント</li>
+        <li><a href="https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview" target="_blank" rel="noopener">Anthropic Docs — Prompt Engineering Overview</a> — プロンプト設計の一般的ベストプラクティス</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week01.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第1回 オリエンテーション＆前年度の進級制作を振り返る</span>
+      </a>
+      <a href="../natural-language-dev.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">自然言語開発</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第3回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
