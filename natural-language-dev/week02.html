@@ -113,13 +113,13 @@
               <li><strong>トークン</strong>: AIが扱う最小単位（おおむね英単語1個、日本語だと漢字1〜2文字に相当することが多い）</li>
               <li><strong>コンテキストウィンドウ</strong>: 1回のやり取りでAIが一度に見られるトークンの上限</li>
               <li>入力（指示＋資料）<strong>と</strong>出力（AIの回答）の<strong>両方</strong>がこの枠を使う</li>
-              <li>参考: Gemini 3 は1Mトークン（100万トークン）、Claude 4 系は200K〜1Mトークン級。数字は<strong>授業時点の目安</strong>で頻繁に更新される</li>
+              <li>参考: Gemini 3 は1Mトークン（100万トークン）、Claude 4 系は<strong>標準200Kトークン</strong>で、Sonnet には<strong>1Mコンテキストのbeta機能</strong>がある。数字は<strong>授業時点の目安</strong>で、モデルごと・プランごとに異なり頻繁に更新される</li>
             </ul>
             <p><strong>U字型精度カーブ——「真ん中が忘れられる」問題（20分）</strong></p>
             <ul>
               <li>長い入力をAIに渡したとき、<strong>先頭</strong>と<strong>末尾</strong>の情報はよく使われるが、<strong>中央付近</strong>の情報は無視されやすい</li>
-              <li>この現象は "<strong>Lost in the Middle</strong>"（Liu et al., 2023）として研究で示されている</li>
-              <li>形としては「U字型」——精度をY軸、情報の位置をX軸に取ると両端が高く中央が低いカーブになる</li>
+              <li>この現象は "<strong>Lost in the Middle</strong>"（Liu et al., 2023）として研究で示されており、論文中の実験結果では<strong>精度がU字状のカーブを描く</strong>（先頭・末尾に重要情報があるほど正確、中央にあると大きく劣化）</li>
+              <li>授業では見た目のわかりやすさから「U字型精度カーブ」と呼ぶ（コミュニティ用語）。精度をY軸、情報の位置をX軸に取ると両端が高く中央が低くなる形</li>
               <li>「長く入れれば入れるほど賢くなる」は<strong>誤り</strong>。入れ方を設計しないと、むしろ精度が落ちることがある</li>
             </ul>
             <p><strong>情報配置の戦略（15分）</strong></p>
