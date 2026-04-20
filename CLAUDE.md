@@ -144,7 +144,7 @@ done
 | MDN 旧URL `/Web/HTML/Element` は301 | `/Web/HTML/Reference/Elements` を使う | PR #37 |
 | 「GitHub Copilot」曖昧 | 「**Copilot Student**」と正式名称で | PR #37 |
 | 「Codespacesの拡張枠」曖昧 | 「**月180コア時間枠**」と具体値 | PR #37 |
-| Live Server を Codespaces 標準機能のように書く | 「**`python3 -m http.server` → 自動ポート転送 → Simple Browser**」の3ステップで明記する。`file://` では Simple Browser がレンダリングしないため**サーバー起動手順の省略禁止**。詰まった場合のフォールバックとして「Copilot Chat に『index.html をブラウザで開いて』と頼む」を併記する | PR #37, 教室実地フィードバック |
+| Live Server を Codespaces 標準機能のように書く | 「**`python3 -m http.server` → 自動ポート転送 → Simple Browser**」の3ステップで明記する。`file://` は http(s) 前提の Simple Browser で扱えないため**サーバー起動手順の省略禁止**。「ポート」タブでは **「エディターでプレビュー」（画面アイコン）で Simple Browser**、**「ブラウザーで開く」（地球儀アイコン）は外部ブラウザ**と役割が分かれる点を明記。詰まった場合のフォールバックとして「Copilot Chat に『index.html を Simple Browser で開いて』と頼む」を併記する | PR #37, 教室実地フィードバック |
 | NotebookLM/WS Education を「設定可能」と書く | 「**Core Service としてデフォルトで学習に使われない**」 | PR #38 |
 | 「次に来る単語を予測」 | 「**次に来る言葉の断片（トークン）を予測**」 | PR #38 |
 | Workspace for Education URL が `ALL_us`（英語） | `ALL_jp` の日本語版を使う | PR #38 |
