@@ -93,7 +93,7 @@ content/                # Markdownソース（コピーボタン用）
   - 「ブラウザーで開く」（地球儀アイコン）は外部ブラウザなので学校環境では使わない点を必ず併記
   - 詰まった場合のフォールバック: Copilot Chat に「index.html を Simple Browser で開いて」と頼む（断定せず「〜することが多い」で記述、期待外れ時は講師へ）
 - **Week02+ の書き方**: 「第1回と同じ手順」と参照する短い1-2行に留める。手順の再説明を避け、時間配分を圧迫しない
-- **変更が必要な時**: Week01 を先に更新してから以降の週の参照箇所を同期。地雷リストに新しい罠が見つかれば同時に追記
+- **変更が必要な時**: Week01 を先に更新してから以降の週の参照箇所を同期。**地雷リストの `Live Server を Codespaces 標準機能のように書く` エントリ** と必ずセット更新（片方だけの更新禁止）
 - **他科目への流用禁止**: この手順は HTML/CSS を書く program-basics 固有。ai-communication / ai-programming / natural-language-dev は Gemini/NotebookLM/CLI 中心で HTML プレビュー不要
 
 ### 時間配分（固定・絶対厳守）
@@ -128,7 +128,7 @@ content/                # Markdownソース（コピーボタン用）
 □ 9. page-badge は2つのみ（Week番号 + 時限）。他情報はページタイトル・親ページで既出
 □ 10. タイムラインを固定配分（40/50/休/50/30/10）通りに設定
 □ 11. 外部リンクを curl で事前検証（下記「リンク検証コマンド」）
-□ 12. 本文を執筆（下記「既知の地雷リスト」を踏まないように）
+□ 12. 本文を執筆（下記「既知の地雷リスト」を踏まないように、該当科目は「科目別の反復表記ルール」で初出回参照に短縮）
 □ 13. **整合性検証**: ステップ4のメモの全項目が週ページに登場するか grep で確認
        例: `grep -F "【学習データ①】" {dir}/week{NN}.html`
 □ 14. 親ページの該当 Week セルを <a href="{dir}/week{NN}.html" class="week-link"> でリンク化
@@ -158,7 +158,7 @@ done
 | MDN 旧URL `/Web/HTML/Element` は301 | `/Web/HTML/Reference/Elements` を使う | PR #37 |
 | 「GitHub Copilot」曖昧 | 「**Copilot Student**」と正式名称で | PR #37 |
 | 「Codespacesの拡張枠」曖昧 | 「**月180コア時間枠**」と具体値 | PR #37 |
-| Live Server を Codespaces 標準機能のように書く | 「**`python3 -m http.server` → 自動ポート転送 → Simple Browser**」の3ステップで明記する。`file://` は http(s) 前提の Simple Browser で扱えないため**サーバー起動手順の省略禁止**。「ポート」タブでは **「エディターでプレビュー」（画面アイコン）で Simple Browser**、**「ブラウザーで開く」（地球儀アイコン）は外部ブラウザ**と役割が分かれる点を明記。詰まった場合のフォールバックとして「Copilot Chat に『index.html を Simple Browser で開いて』と頼む」を併記する | PR #37, 教室実地フィードバック |
+| Live Server を Codespaces 標準機能のように書く | 正本は **「科目別の反復表記ルール」→「program-basics: ブラウザプレビュー手順」** を参照。`python3 -m http.server` → 「エディターでプレビュー」→ Simple Browser の3ステップ。`file://` は Simple Browser で扱えないため**サーバー起動手順の省略禁止**。「ブラウザーで開く」（地球儀）は外部ブラウザで Simple Browser ではない点に注意。Copilot Chat フォールバックは「〜することが多い」と断定を避けて記述 | PR #37, 教室実地フィードバック |
 | NotebookLM/WS Education を「設定可能」と書く | 「**Core Service としてデフォルトで学習に使われない**」 | PR #38 |
 | 「次に来る単語を予測」 | 「**次に来る言葉の断片（トークン）を予測**」 | PR #38 |
 | Workspace for Education URL が `ALL_us`（英語） | `ALL_jp` の日本語版を使う | PR #38 |
