@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第2回 「自分だけのAI」をつくろう | AIコミュニケーション基礎</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication.html">AIコミュニケーション基礎</a>
+        <span>/</span>
+        <span>第2回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">「自分だけのAI」を<wbr>つくろう</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 2</span>
+            <span class="page-badge">火曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">NotebookLMに初めて触れ、カスタム指示で「自分のAI」の初期版をつくる</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">NotebookLM / ソース / カスタム指示機能 / 【学習データ①②】 / 自分だけのAI</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第1回で作成した<strong>【学習データ①】自己紹介シート</strong>（Googleドキュメント）が手元にあること・NotebookLMにログインできる状態</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>NotebookLMの基本操作（ノートブック作成・ソース追加・対話）ができる</li>
+        <li>NotebookLMの<strong>カスタム指示機能</strong>を使い、AIに「名前・性格・話し方」を設定できる</li>
+        <li><strong>【学習データ①】自己紹介シート</strong>を投入し、<strong>自分の初期版AI</strong>を誕生させる</li>
+        <li>授業内で <strong>【学習データ②】学習目標・興味関心シート</strong>を作成し、自分のAIに追加する</li>
+        <li>「今日からこのAIは自分だけのパートナー」という感覚を持って退出する</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の振り返りとNotebookLM初対面</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り（10分）</strong></p>
+            <ul>
+              <li>第1回のキーフレーズ「生成AIは賢い相棒だが全能ではない」を確認</li>
+              <li>宿題だった<strong>【学習データ①】自己紹介シート</strong>が手元にあるかチェック（書けていない人は後半で作成時間あり）</li>
+              <li>任意課題でGeminiに質問してみた人のエピソード共有（希望者のみ）</li>
+            </ul>
+            <p><strong>NotebookLMって何？（15分）</strong></p>
+            <ul>
+              <li>NotebookLMは <strong>「自分が入れた資料だけを根拠に答えるAI」</strong>——ネット検索AIとは別物</li>
+              <li>資料（ソース）として入れられるもの: Googleドキュメント、PDF、テキスト、WebページのURL、YouTube動画、音声ファイルなど</li>
+              <li>この授業の鍵: <strong>みなさんが蓄積する【学習データ①〜⑬】をソースとして入れていく</strong>ことで、自分専用に育っていく</li>
+              <li>プライバシー面の確認: Google Workspace for Education のアカウントで使う場合、<strong>Core Serviceとしてデフォルトで学習に使われない</strong>扱いになる</li>
+            </ul>
+            <p><strong>画面の見方ツアー（15分）</strong></p>
+            <ul>
+              <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> を開き、教員の画面をプロジェクタで共有しながら全員で操作</li>
+              <li>左: <strong>ソース</strong>（入れた資料の一覧）／中央: <strong>チャット</strong>／右: <strong>Studio</strong>（要約・マインドマップ・Audio Overviewなどの生成機能）</li>
+              <li>「新しいノートブック」を作成——名前は <code>自分だけのAI（自分の名前）</code> のように自分専用と分かる名前に</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>【学習データ①】自己紹介シートをソースに投入する</h3>
+          <div class="timeline-body">
+            <p><strong>ソース追加の手順</strong></p>
+            <ul>
+              <li>左の「ソースを追加」から、自分の<strong>自己紹介シート（Googleドキュメント）</strong>を選ぶ</li>
+              <li>ファイルが画面左側に並べば取り込み成功。AIが中身を読み込む（数秒〜十数秒）</li>
+              <li>取り込んだあとに自動で<strong>要約</strong>が表示される——これが「あなたのAIが、あなたをどう理解したか」の最初の写し絵</li>
+            </ul>
+            <p><strong>最初の対話——AIに自分のことを聞いてみる</strong></p>
+            <ul>
+              <li>チャット欄で「<strong>私の自己紹介を3行で言ってみて</strong>」と聞く</li>
+              <li>「<strong>私が苦手なことは？</strong>」「<strong>私にどんな話し方で接すればいい？</strong>」と続けて聞く</li>
+              <li>「意外と当たってる」「そこは違う」「書き忘れてた」——全部が次の材料になる</li>
+            </ul>
+            <p><strong>ズレを見つけたら即メモ</strong></p>
+            <ul>
+              <li>「AIが誤解している点」「自分が書き足りなかった点」を別のGoogleドキュメントにメモしておく</li>
+              <li>このメモが、後で自己紹介シートを書き直すときのヒントになる</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>なぜAIは的外れな答えを返すのか:</strong> NotebookLMは<strong>入れた資料に書いてあることしか知らない</strong>。AIの理解がズレるのは、AIが悪いのではなく<strong>入れた資料が足りない／曖昧だから</strong>です。「自分のAIを育てる」とは、このズレを埋めていく作業そのもの。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>カスタム指示機能で「話し方・性格」を設定する</h3>
+          <div class="timeline-body">
+            <p><strong>カスタム指示機能とは（10分）</strong></p>
+            <ul>
+              <li>NotebookLMには <strong>カスタム指示機能</strong>（ノートブック設定の「応答のカスタマイズ」欄など、画面上の入力欄）がある</li>
+              <li>ここに書いたことは <strong>全ての応答に自動的に反映</strong>される——「毎回プロンプトで書かなくていい」のが強み</li>
+              <li>例: 「敬語で話す」「結論から答える」「小学生にも分かる言葉で」「関西弁で」「厳しく添削する」など</li>
+            </ul>
+            <p><strong>設定してみる（25分）</strong></p>
+            <ul>
+              <li>第1回の自己紹介シートに書いた<strong>「どんな話し方をしてほしいか」「どんな性格でいてほしいか」</strong>をカスタム指示欄に書き写す</li>
+              <li>入力のコツ:
+                <ul>
+                  <li>あいまいな形容詞（「やさしく」「しっかり」）だけでなく、<strong>具体的な行動</strong>を書く（「最初に結論を1行で言う」「専門用語の後には必ず一言の解説をつける」など）</li>
+                  <li>2〜3個に絞る——欲張ると全部が中途半端になる</li>
+                </ul>
+              </li>
+              <li>設定を保存したら、同じ質問（「私の自己紹介を3行で」）をもう一度投げて、<strong>応答のトーンがどう変わったか</strong>を確認</li>
+            </ul>
+            <p><strong>名前をつける（15分）</strong></p>
+            <ul>
+              <li>自分のAIに<strong>呼び名</strong>をつけてみる（例: 「ノートくん」「アイコ」「Buddy」など）——カスタム指示に「自分のことを◯◯と呼んで」と書けば自称する</li>
+              <li>名前をつけると、<strong>「道具」から「相棒」に感覚が変わる</strong>——これが本授業のコンセプトの入り口</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>正解のないチューニング:</strong> カスタム指示は後から何度でも書き換えられます。今日の設定は<strong>初期値</strong>。使っていくうちに「もっとこうしてほしい」が出てきたら、すぐ書き換えましょう。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>【学習データ②】学習目標・興味関心シートを作成する</h3>
+          <div class="timeline-body">
+            <p><strong>今日の2つ目のデータを作る</strong></p>
+            <ul>
+              <li>Googleドキュメントを新規作成し、ファイル名を <strong><code>【学習データ②】学習目標・興味関心シート</code></strong> にする</li>
+              <li>書く項目（最低限）
+                <ul>
+                  <li>この授業で<strong>達成したいこと</strong>（3つまで、具体的に）</li>
+                  <li>今<strong>興味があるテーマ</strong>（趣味・進路・社会問題など、3つ以上）</li>
+                  <li>AIと一緒に<strong>やってみたいこと</strong>（調べ物の相棒／文章の壁打ち／アイデア出しなど）</li>
+                  <li>苦手・避けたい分野（AIに振らないでほしい話題があれば）</li>
+                </ul>
+              </li>
+              <li>「書けなかったら書けないと書く」——空欄より「まだ決めていない」と書く方が価値がある</li>
+            </ul>
+            <p><strong>ソースに追加する</strong></p>
+            <ul>
+              <li>完成したら、第1回の自己紹介シートと同じ手順で<strong>NotebookLMのソースに追加</strong></li>
+              <li>追加直後に「<strong>私の学習目標を踏まえて、最初に取り組むとよさそうなことを3つ提案して</strong>」と聞いてみる</li>
+              <li>ソース①だけの時と比べて、AIの応答がどう変わったかを観察</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告＆今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>次回（第3回）: <strong>プロンプトの基本</strong>——同じ質問を違う聞き方で投げて、応答がどう変わるかを観察する</li>
+              <li>次回に向け、<strong>【学習データ③】プロンプトのコツまとめ資料</strong>を授業内で扱う予定</li>
+              <li>「今日のAIの応答で一番印象に残ったこと」「カスタム指示でもっと足したいこと」を1つずつ言語化して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>【学習データ②】学習目標・興味関心シートを完成させる</strong>
+            <p>授業内で書き切れなかった項目を埋め、NotebookLMに投入済みの状態にする。投入済みかどうかは次回確認します。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>自分のAIと最低3回は対話してみる</strong>
+            <p>家で気軽に質問してOK（例: 「今日の気分に合う本を教えて」「私の興味に関連するニュースを要約して」）。<strong>応答のズレ</strong>があれば、別ドキュメントにメモしておく。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>Audio Overviewを1回試してみる</strong>
+            <p>Studio欄にある <strong>Audio Overview</strong> ボタンで、自分のソースから音声ダイジェストを生成してみる（日本語対応）。第5回で本格的に扱うので、今日は「ボタンを押す体験」だけで良い。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> — 本授業の主軸。自分だけのAIを育てる場所</li>
+        <li><a href="https://support.google.com/notebooklm/" target="_blank" rel="noopener">NotebookLM ヘルプ</a> — Google公式のヘルプセンター。困ったときの辞書</li>
+        <li><a href="https://edu.google.com/intl/ALL_jp/workspace-for-education/editions/overview/" target="_blank" rel="noopener">Google Workspace for Education</a> — 学校アカウントのデータ扱いに関する公式情報</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="../ai-communication/week01.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第1回 オリエンテーションとAI概論</span>
+      </a>
+      <a href="../ai-communication.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AIコミュニケーション基礎</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第3回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>

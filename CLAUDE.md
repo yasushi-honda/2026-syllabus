@@ -16,9 +16,11 @@ index.html              # トップページ（時間割＋4科目カード）
 program-basics.html     # プログラム基礎 I（火1・2限）
 program-basics/         # プログラム基礎 I の各回詳細ページ
   week01.html           #   第1回 オリエンテーション＆はじめてのHTML
+  week02.html           #   第2回 HTMLの構造を学ぶ
 ai-communication.html   # AIコミュニケーション基礎（火3・4限）
 ai-communication/       # AIコミュニケーション基礎の各回詳細ページ
   week01.html           #   第1回 オリエンテーションとAI概論
+  week02.html           #   第2回 「自分だけのAI」をつくろう
 natural-language-dev.html # 自然言語開発（木1・2限）
 natural-language-dev/   # 自然言語開発の各回詳細ページ
   week01.html           #   第1回 オリエンテーション＆前年度の進級制作を振り返る
