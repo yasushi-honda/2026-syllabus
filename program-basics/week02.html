@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第2回 HTMLの構造を学ぶ | プログラム基礎 I</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--blue">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../program-basics.html">プログラム基礎 I</a>
+        <span>/</span>
+        <span>第2回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">HTMLの<wbr>構造を<wbr>学ぶ</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 2</span>
+            <span class="page-badge">火曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">HTMLの骨組みを理解し、サンプルを読んで自分のページを拡張する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">head / body / 見出し / 段落 / リスト / リンク / 画像 / 読んで理解する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第1回で作成した <code>index.html</code>（自分のリポジトリに残っていること）・Codespacesが起動できる状態</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>HTMLの基本構造が <code>&lt;head&gt;</code> と <code>&lt;body&gt;</code> の2つに分かれていることを理解する</li>
+        <li>見出し・段落・リスト・リンク・画像、<strong>5つの基本タグの役割</strong>を自分の言葉で説明できる</li>
+        <li>配布されたサンプルコードを<strong>読んで理解する</strong>（コピペして動かす、ではない）</li>
+        <li>第1回の自己紹介ページを、今日学んだタグで<strong>プロフィールページに拡張</strong>する</li>
+        <li>「なぜこのタグを使ったのか」を自分のコメントで残せるようになる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の振り返りとHTMLの全体像</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り（10分）</strong></p>
+            <ul>
+              <li>第1回で書いた <code>index.html</code> をCodespacesで開き直す</li>
+              <li><strong>ポート転送 + Simple Browser</strong> でもう一度表示を確認</li>
+              <li>GitHub Studentプランの申請状況をクラス全体で共有（承認メール到着者は手を挙げる）</li>
+            </ul>
+            <p><strong>HTMLの骨組みを図で理解する（20分）</strong></p>
+            <ul>
+              <li>HTMLは大きく <code>&lt;head&gt;</code> と <code>&lt;body&gt;</code> の2つに分かれる</li>
+              <li><strong><code>&lt;head&gt;</code>：ブラウザへの指示書</strong>——タイトル、文字コード、スタイル指定など「画面には出ないけれど大事な情報」</li>
+              <li><strong><code>&lt;body&gt;</code>：画面に表示される中身</strong>——見出し、文章、リスト、画像、リンクなど</li>
+              <li>第1回で書いた <code>&lt;!DOCTYPE html&gt;</code>・<code>&lt;html&gt;</code>・<code>&lt;head&gt;</code>・<code>&lt;body&gt;</code> が「入れ物」で、中身はこれから増やしていく</li>
+            </ul>
+            <p><strong>今日覚える5つのタグ（10分）</strong></p>
+            <ul>
+              <li><code>&lt;h1&gt;〜&lt;h6&gt;</code>（見出し）——ページの章立てを作る</li>
+              <li><code>&lt;p&gt;</code>（段落）——文章のかたまり</li>
+              <li><code>&lt;ul&gt; / &lt;li&gt;</code>（箇条書きリスト）——「好きなもの」「できること」を並べる</li>
+              <li><code>&lt;a href="..."&gt;</code>（リンク）——他のページに飛ぶ</li>
+              <li><code>&lt;img src="..." alt="..."&gt;</code>（画像）——プロフィール写真やアイコンを表示する</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>サンプルコードを「読んで理解する」</h3>
+          <div class="timeline-body">
+            <p><strong>授業用サンプルHTMLを開く</strong></p>
+            <ul>
+              <li>配布するサンプル（<code>samples/profile-sample.html</code>）をCodespacesで開く</li>
+              <li><strong>まず「写経」ではなく「読む」</strong>——上から順に、どのタグが何を表示しているかを目で追う</li>
+              <li>「このタグで、ブラウザにこう表示されているはず」を頭の中で予想してから、実際の表示と照らし合わせる</li>
+            </ul>
+            <p><strong>タグと表示の対応を1行ずつ確認する</strong></p>
+            <ul>
+              <li><code>&lt;h1&gt;山田 太郎&lt;/h1&gt;</code> → ブラウザに大きな見出しが出る</li>
+              <li><code>&lt;p&gt;情報処理科の2年生です。&lt;/p&gt;</code> → 段落として表示される</li>
+              <li><code>&lt;ul&gt;&lt;li&gt;...&lt;/li&gt;&lt;/ul&gt;</code> → 箇条書きに変わる</li>
+              <li><code>&lt;a href="https://..."&gt;GitHub&lt;/a&gt;</code> → 青い下線付きのリンクになる</li>
+              <li><code>&lt;img src="..." alt="..."&gt;</code> → 画像が表示される（読み込めないと <code>alt</code> のテキストが出る）</li>
+            </ul>
+            <p><strong>ペアで説明し合う（最後の10分）</strong></p>
+            <ul>
+              <li>隣の人と、<strong>「この行は何をしているか」をお互いに言葉で説明する</strong></li>
+              <li>言葉に詰まったら、それがまだ理解しきれていない場所</li>
+              <li>お互いに聞き合うことで「分かっているつもり」が見つかる</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>読む力が書く力を育てる:</strong> プログラミングは「書く」より先に「読む」が上手になります。サンプルコードを「もしこの行を消したらどうなる？」「もしこの属性を変えたらどうなる？」と<strong>問いながら読む</strong>のがコツです。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>自分の <code>index.html</code> をプロフィールページに拡張する</h3>
+          <div class="timeline-body">
+            <p><strong>今日のミッション</strong></p>
+            <ul>
+              <li>第1回で書いた自己紹介ページを、<strong>今日学んだ5つのタグで拡張する</strong></li>
+              <li>サンプルを「コピペ」せず、サンプルの<strong>構造を真似て自分の内容で書く</strong></li>
+              <li>打ち間違いも含めて自分の手で打つ——先週と同じ方針</li>
+            </ul>
+            <p><strong>拡張する項目（最低限）</strong></p>
+            <ol>
+              <li><code>&lt;h1&gt;</code> で名前、<code>&lt;h2&gt;</code> で「自己紹介」「好きなもの」「リンク集」のような小見出しを3つ作る</li>
+              <li>自己紹介セクションに <code>&lt;p&gt;</code> で2〜3行の文章を書く</li>
+              <li>「好きなもの」セクションを <code>&lt;ul&gt;</code> と <code>&lt;li&gt;</code> で箇条書きにする（3つ以上）</li>
+              <li>「リンク集」に <code>&lt;a href="..."&gt;</code> で自分のGitHubプロフィールページへのリンクを1つ作る</li>
+              <li>プロフィール画像を <code>&lt;img src="..." alt="..."&gt;</code> で1つ入れる（アバター画像URLでOK）</li>
+            </ol>
+            <p><strong>進度差のある人へ</strong></p>
+            <ul>
+              <li>早く終わった人は<strong>自由に拡張</strong>——見出しを増やす、リストを入れ子にする、画像をもう1枚、など</li>
+              <li>手が止まった人は<strong>サンプルをもう一度読む</strong>ことから戻る。焦らなくて良い</li>
+              <li>クラス全体で同じ完成形を目指さない——<strong>各自のプロフィールが一番大事</strong></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>コメントで「構造」を自分の言葉で残す</h3>
+          <div class="timeline-body">
+            <p><strong>各セクションに「なぜこのタグか」を書く</strong></p>
+            <ul>
+              <li>第1回と同じ <code>&lt;!-- コメント --&gt;</code> 形式で、セクションごとに意図を残す</li>
+              <li>例: <code>&lt;!-- ここから好きなものリスト。ul は順序が関係ない箇条書きなので ol ではなく ul にした --&gt;</code></li>
+              <li>「同じ結果になる別のタグ」も意識する——なぜ <code>&lt;h1&gt;</code> を繰り返さず <code>&lt;h2&gt;</code> を使ったのか</li>
+            </ul>
+            <p><strong>ブラウザで最終確認</strong></p>
+            <ul>
+              <li>Simple Browserで自分のプロフィールが表示されることを確認</li>
+              <li>リンクをクリックしてGitHubに飛ぶか確認</li>
+              <li>画像が表示されない場合は <code>alt</code> のテキストが出ていればOK（URLの綴り確認は次回のデバッグ回で扱う）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>AIとの付き合い方（今週）:</strong> Copilotが補完を出してきたら、<strong>「自分が書こうとしていたもの」と比べる</strong>時間にしてください。内容が違うなら自分の意図を優先、同じなら一度はEscで消してから自分で打ってみる——これが「使う・使わない」を判断する練習です。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告＆今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>次回（第3回）: <strong>CSS入門：色とレイアウト</strong>——今日作ったプロフィールに色とフォントをつける</li>
+              <li>今日拡張した <code>index.html</code> は次回もそのまま使います。必ずcommit & push</li>
+              <li>「今日一番迷ったタグ」「今日一番納得したタグ」を1つずつ言語化して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>拡張した <code>index.html</code> をcommit & pushする</strong>
+            <p>授業内で拡張した内容を自分のリポジトリに保存しておく。次回の授業でCSSを追加します。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>5つのタグを1行ずつ説明できるようにしておく</strong>
+            <p><code>h1</code> / <code>p</code> / <code>ul</code>(<code>li</code>) / <code>a</code> / <code>img</code> の5つについて「何のためのタグか」を自分の言葉で言えるか、家で確認する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>MDNでタグの「他の使い方」を1つ調べる</strong>
+            <p>下記の参考リンクから好きなタグを1つ選び、授業で扱わなかった属性や使い方を1つだけ見つけて、ページに追加してみる。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/HTML/Reference/Elements" target="_blank" rel="noopener">MDN — HTML要素リファレンス</a> — 全タグの辞書</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/HTML/Reference/Elements/heading_elements" target="_blank" rel="noopener">MDN — 見出し要素（h1〜h6）</a></li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/HTML/Reference/Elements/p" target="_blank" rel="noopener">MDN — p（段落）</a></li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/HTML/Reference/Elements/ul" target="_blank" rel="noopener">MDN — ul（箇条書きリスト）</a></li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/HTML/Reference/Elements/a" target="_blank" rel="noopener">MDN — a（リンク）</a></li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/HTML/Reference/Elements/img" target="_blank" rel="noopener">MDN — img（画像）</a></li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week01.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第1回 オリエンテーション＆はじめてのHTML</span>
+      </a>
+      <a href="../program-basics.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">プログラム基礎 I</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第3回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
