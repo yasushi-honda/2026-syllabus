@@ -56,8 +56,8 @@
     <div class="syllabus-section">
       <h2>この回のゴール</h2>
       <ul>
-        <li>Gemini CLI の動作原理——<strong>ツール呼び出しによる Reasoning + Acting 風のループ</strong>——を自分の言葉で説明できる</li>
-        <li>GitHub Copilot CLI の動作原理——<strong>Explore / Task / General-purpose / Code-review の specialized agents と、別軸の Plan mode</strong>——を理解する</li>
+        <li>Gemini CLI の動作原理——<strong>AIエージェント + Built-in Tools（ファイル操作・シェル実行・Web Search・MCP など）で作業するループ</strong>——を自分の言葉で説明できる</li>
+        <li>GitHub Copilot CLI の動作原理——<strong>AIモデルが specialized agents (Explore / Task / General-purpose / Code-review) に subagent として委譲しながら作業する仕組みと、別軸の Plan mode</strong>——を理解する</li>
         <li>両CLI を自分の進級制作リポジトリで起動し、同じタスクを投げて挙動の違いを観察する</li>
         <li><code>GEMINI.md</code> と Copilot CLI の設定ファイルの役割・置き場所の違いを知る</li>
         <li>無料枠・モデル選択の違いを踏まえ、「どのタスクをどちらのCLIに任せるか」<strong>使い分けの方針</strong>を自分の言葉でメモする</li>
@@ -91,16 +91,18 @@
             </ul>
             <p><strong>Gemini CLI の動作原理（10分）</strong></p>
             <ul>
-              <li>Googleが公開しているオープンソースのAIエージェントCLI（<a href="https://github.com/google-gemini/gemini-cli" target="_blank" rel="noopener">google-gemini/gemini-cli</a>）</li>
-              <li>中核は<strong>ツール呼び出しによる Reasoning + Acting 風のループ</strong>——モデルが「次に何をすべきか」を考え（Reasoning）、ファイル読取・書込・シェル実行などの<strong>ツール</strong>を呼び出し（Acting）、結果を見てまた考える、を繰り返す</li>
-              <li>この発想はReActパターン（Yao et al., 2022）に近い系譜として読める（Gemini CLI 自身は ReAct を明示的には参照していない——あくまで学術的系譜としての類似）。モデル単体で答えを出すのではなく、ツールと環境を介して問題を解いていく</li>
+              <li>Googleが公開しているオープンソースの<strong>AIエージェント</strong>CLI（公式表記: "open-source AI agent"。<a href="https://github.com/google-gemini/gemini-cli" target="_blank" rel="noopener">google-gemini/gemini-cli</a>）</li>
+              <li>動作の骨格は <strong>AIエージェント + Built-in Tools</strong>。Gemini が依頼を読み、必要に応じて<strong>組み込みツール</strong>（ファイル読取・書込、シェル実行、Web Search、MCP 経由の外部接続 等）を呼び出して作業を進める（<a href="https://www.geminicli.com/docs/reference/tools" target="_blank" rel="noopener">Built-in Tools Overview</a>）</li>
+              <li>※学術的背景の補足: モデルが「考える→ツール呼び出し→結果観察→次の思考…」を繰り返す発想は、<strong>ReAct パターン</strong>（Yao et al., 2022）の系譜として読める。ただし <strong>Gemini CLI 公式は ReAct を名乗っていない</strong>ので、正しくは「<strong>公式表記は『AIエージェント』、裏側の考え方の学術系譜が ReAct</strong>」と覚える</li>
               <li>モデル・無料枠は<strong>授業時点の目安</strong>として説明。Google公式ページが一次情報なので、詳細は<a href="https://geminicli.com/docs/resources/quota-and-pricing/" target="_blank" rel="noopener">Quota & Pricing のドキュメント</a>で各自確認する習慣を付ける</li>
             </ul>
             <p><strong>GitHub Copilot CLI の動作原理（10分）</strong></p>
             <ul>
               <li>GitHubが提供するエージェントCLI（<code>@github/copilot</code>）。従来の <code>gh copilot</code> 拡張（シェルコマンド補完）とは別物で、こちらは<strong>コードベース全体を操作できるエージェント</strong></li>
-              <li>中核は <strong>Explore / Task / General-purpose / Code-review の specialized agents</strong> と、別軸の <strong>Plan mode</strong>——用途別に役割分担された内部エージェントがあり、キーボードの <kbd>Shift+Tab</kbd> で Plan mode のオン/オフを切り替えるとコード変更前に計画を提示してもらえる</li>
-              <li>無料枠は Copilot のプランに依存（<strong>Copilot Student</strong> に認証済みなら在学中は無償で <strong>Copilot Pro 相当</strong>の機能が使える。ただし 2026-04-20 以降は新規申請が一時停止中で、再開時期は未定）。詳細は<a href="https://docs.github.com/en/copilot/how-tos/use-copilot-agents/use-copilot-cli" target="_blank" rel="noopener">GitHub Copilot CLI の公式ドキュメント</a>と<a href="https://docs.github.com/en/copilot/get-started/plans" target="_blank" rel="noopener">Copilot プランの最新案内</a>を参照</li>
+              <li>動作原理の中核: <strong>AIモデル自身が判断して、タスクを specialized agent（custom agent）の subagent process に委譲する</strong>。公式表現を直訳すると「CLI が使う AI モデルは、得意分野を持つ custom agent の subagent process にタスクを委譲することで作業がより効率的に完了すると判断した場合、そうすることを選べる」（<a href="https://docs.github.com/en/copilot/how-tos/use-copilot-agents/use-copilot-cli" target="_blank" rel="noopener">公式docs</a>）。<strong>「どの agent を使うか」は人間が選ぶのではなく AI モデル側が判断する</strong>点がポイント</li>
+              <li>組み込みの specialized agents は4つ: <strong>Explore / Task / General-purpose / Code-review</strong>。用途別に得意分野が違い、メインモデルが必要に応じて呼び出す</li>
+              <li>別軸で <strong>Plan mode</strong> がある。agent ではなく<strong>対話モードのスイッチ</strong>で、コード変更を実行する前に計画を提示してレビューさせる仕組み。起動は <kbd>Shift+Tab</kbd> キーボードショートカット（オン/オフのトグル）</li>
+              <li>無料枠は Copilot のプランに依存（<strong>Copilot Student</strong> に認証済みなら在学中は無償で <strong>Copilot Pro 相当</strong>の機能が使える。ただし 2026-04-20 以降は新規申請が一時停止中で、再開時期は未定）。詳細は<a href="https://docs.github.com/en/copilot/get-started/plans" target="_blank" rel="noopener">Copilot プランの最新案内</a>を参照</li>
             </ul>
           </div>
         </div>
@@ -212,7 +214,7 @@
           <h3>振り返り＆次回予告</h3>
           <div class="timeline-body">
             <ul>
-              <li>今日のキーワード: <strong>Gemini CLI のツール呼び出しループ / Copilot CLI の specialized agents と Plan mode / GEMINI.md / 使い分け / Vibe Coding</strong></li>
+              <li>今日のキーワード: <strong>Gemini CLI の AIエージェント + Built-in Tools / Copilot CLI の subagent 委譲 と Plan mode / GEMINI.md / 使い分け / Vibe Coding</strong></li>
               <li>次回（第4回）: <strong>Vibe Codingの実践と限界</strong>——今日の「雑に動いた」感覚を、<strong>新機能を1つ追加</strong>する規模でやってみて、なぜそれだけでは不十分かを体験する</li>
               <li>次回までに、自分なりの「使い分け方針メモ」を<strong>1枚</strong>（箇条書き5行程度）にまとめておくと議論がスムーズ</li>
             </ul>
