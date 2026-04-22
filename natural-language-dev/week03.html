@@ -48,7 +48,7 @@
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
-          <div class="lesson-overview-value">進級制作リポジトリがCodespacesで開ける状態・Gemini CLIの認証が完了している状態（第1回完了）・Copilot Student申請済みまたは授業内で完了させる想定</div>
+          <div class="lesson-overview-value">進級制作リポジトリがCodespacesで開ける状態・Gemini CLIの認証が完了している状態（第1回完了）・Copilot Student に認証済みの学生は併用可（2026-04-20 以降は新規申請が一時停止中のため、未申請者は Gemini CLI 単体で演習を進める）</div>
         </div>
       </div>
     </div>
@@ -57,7 +57,7 @@
       <h2>この回のゴール</h2>
       <ul>
         <li>Gemini CLI の動作原理——<strong>ツール呼び出しによる Reasoning + Acting 風のループ</strong>——を自分の言葉で説明できる</li>
-        <li>GitHub Copilot CLI の動作原理——<strong>Explore / Task / Code Review / Plan の specialized agents と Plan mode</strong>——を理解する</li>
+        <li>GitHub Copilot CLI の動作原理——<strong>Explore / Task / General-purpose / Code-review の specialized agents と、別軸の Plan mode</strong>——を理解する</li>
         <li>両CLI を自分の進級制作リポジトリで起動し、同じタスクを投げて挙動の違いを観察する</li>
         <li><code>GEMINI.md</code> と Copilot CLI の設定ファイルの役割・置き場所の違いを知る</li>
         <li>無料枠・モデル選択の違いを踏まえ、「どのタスクをどちらのCLIに任せるか」<strong>使い分けの方針</strong>を自分の言葉でメモする</li>
@@ -87,20 +87,20 @@
             <ul>
               <li>AI CLI は1つに絞れば楽だが、得意分野・料金体系・認証基盤が違う</li>
               <li>実務では「<strong>このタスクにはこちら、別のタスクにはあちら</strong>」と複数ツールを併用するのが普通</li>
-              <li>今期は Gemini CLI と GitHub Copilot CLI の2本立てで、**使い分け**の判断を身につける</li>
+              <li>今期は Gemini CLI と GitHub Copilot CLI の2本立てで、<strong>使い分け</strong>の判断を身につける</li>
             </ul>
             <p><strong>Gemini CLI の動作原理（10分）</strong></p>
             <ul>
               <li>Googleが公開しているオープンソースのAIエージェントCLI（<a href="https://github.com/google-gemini/gemini-cli" target="_blank" rel="noopener">google-gemini/gemini-cli</a>）</li>
               <li>中核は<strong>ツール呼び出しによる Reasoning + Acting 風のループ</strong>——モデルが「次に何をすべきか」を考え（Reasoning）、ファイル読取・書込・シェル実行などの<strong>ツール</strong>を呼び出し（Acting）、結果を見てまた考える、を繰り返す</li>
-              <li>この発想はReActパターン（Yao et al., 2022）に近い系譜。モデル単体で答えを出すのではなく、ツールと環境を介して問題を解いていく</li>
+              <li>この発想はReActパターン（Yao et al., 2022）に近い系譜として読める（Gemini CLI 自身は ReAct を明示的には参照していない——あくまで学術的系譜としての類似）。モデル単体で答えを出すのではなく、ツールと環境を介して問題を解いていく</li>
               <li>モデル・無料枠は<strong>授業時点の目安</strong>として説明。Google公式ページが一次情報なので、詳細は<a href="https://geminicli.com/docs/resources/quota-and-pricing/" target="_blank" rel="noopener">Quota & Pricing のドキュメント</a>で各自確認する習慣を付ける</li>
             </ul>
             <p><strong>GitHub Copilot CLI の動作原理（10分）</strong></p>
             <ul>
               <li>GitHubが提供するエージェントCLI（<code>@github/copilot</code>）。従来の <code>gh copilot</code> 拡張（シェルコマンド補完）とは別物で、こちらは<strong>コードベース全体を操作できるエージェント</strong></li>
-              <li>中核は <strong>Explore / Task / Code Review / Plan の specialized agents と Plan mode</strong>——用途別に役割分担された内部エージェントがあり、<code>/plan</code> 等のスラッシュコマンドで明示的に計画フェーズに入れる</li>
-              <li>無料枠は Copilot のプランに依存（<strong>Copilot Student</strong> なら学生のうちは無償で有料枠相当が使える）。詳細は<a href="https://docs.github.com/en/copilot/how-tos/use-copilot-agents/use-copilot-cli" target="_blank" rel="noopener">GitHub Copilot CLI の公式ドキュメント</a>を参照</li>
+              <li>中核は <strong>Explore / Task / General-purpose / Code-review の specialized agents</strong> と、別軸の <strong>Plan mode</strong>——用途別に役割分担された内部エージェントがあり、キーボードの <kbd>Shift+Tab</kbd> で Plan mode のオン/オフを切り替えるとコード変更前に計画を提示してもらえる</li>
+              <li>無料枠は Copilot のプランに依存（<strong>Copilot Student</strong> に認証済みなら在学中は無償で <strong>Copilot Pro 相当</strong>の機能が使える。ただし 2026-04-20 以降は新規申請が一時停止中で、再開時期は未定）。詳細は<a href="https://docs.github.com/en/copilot/how-tos/use-copilot-agents/use-copilot-cli" target="_blank" rel="noopener">GitHub Copilot CLI の公式ドキュメント</a>と<a href="https://docs.github.com/en/copilot/get-started/plans" target="_blank" rel="noopener">Copilot プランの最新案内</a>を参照</li>
             </ul>
           </div>
         </div>
@@ -119,10 +119,10 @@
             </ul>
             <p><strong>GitHub Copilot CLI の導入（25分）</strong></p>
             <ul>
-              <li><strong>Copilot Student の状態確認</strong>——<a href="https://education.github.com/pack" target="_blank" rel="noopener">GitHub Student Developer Pack</a> 経由で Copilot が有効になっているか確認。未申請の人はこの時間で申請開始（審査に時間がかかるケースあり）</li>
+              <li><strong>Copilot Student の状態確認</strong>——<a href="https://education.github.com/pack" target="_blank" rel="noopener">GitHub Student Developer Pack</a> 経由で Copilot が有効になっているか確認。<strong>新規申請は 2026-04-20 以降一時停止中</strong>のため、未申請者は今日は Gemini CLI 単体で演習を進めてOK（再開時期は授業冒頭で都度アナウンス）</li>
               <li>Codespacesのターミナルで <code>npm install -g @github/copilot</code>（または公式ドキュメントの最新インストール手順）</li>
               <li>初回起動時に GitHub アカウントの認証フローを完了</li>
-              <li>動作確認: <code>copilot</code>（実コマンド名は公式ドキュメントの記載を優先）を起動して <code>/help</code> で specialized agents と Plan mode の存在を確認</li>
+              <li>動作確認: <code>copilot</code> を起動し、プロンプト内で <code>?</code>（またはターミナル側で <code>copilot help</code>）を実行してスラッシュコマンドの一覧を確認。Plan mode は <kbd>Shift+Tab</kbd> でオン/オフを切り替えられる</li>
             </ul>
             <p><strong>設定ファイルの違いを見る（15分）</strong></p>
             <ul>
@@ -161,10 +161,10 @@
               <li>依頼文の末尾に「どのファイルを読んだか列挙してから要約して」と付け、ツール呼び出しの足跡を見る</li>
               <li>何回ファイルを読みに行ったか、どんなツールを使ったかをメモ</li>
             </ul>
-            <p><strong>実験B: Copilot CLI でやる（15分）</strong></p>
+            <p><strong>実験B: Copilot CLI でやる（15分、Copilot Student 未認証の人は近くの人の画面を見る）</strong></p>
             <ul>
-              <li>まず <code>/plan</code>（または公式ドキュメントで指定される Plan mode 起動方法）で<strong>計画フェーズ</strong>に入り、実行前の計画を見せてもらう</li>
-              <li>計画を承認してから実行。Explore や Task 等の specialized agents がどのように切り替わるか観察</li>
+              <li><kbd>Shift+Tab</kbd> で <strong>Plan mode</strong> に切り替え、依頼を投げて実行前の計画を見せてもらう</li>
+              <li>計画を承認してから実行。Explore や Task 等の specialized agents がどのように呼び出されるか観察</li>
             </ul>
             <p><strong>観察比較（20分）</strong></p>
             <ul>
@@ -243,7 +243,7 @@
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
             <strong>Copilot CLI 公式ドキュメント通読</strong>
-            <p>specialized agents（Explore / Task / Code Review / Plan）それぞれの使い所を、公式ドキュメントで1パラグラフずつ読んでおく。次回以降の判断材料になる。</p>
+            <p>specialized agents（Explore / Task / General-purpose / Code-review）それぞれの使い所と Plan mode の使い分け（<kbd>Shift+Tab</kbd>）を、公式ドキュメントで1パラグラフずつ読んでおく。次回以降の判断材料になる。</p>
           </div>
         </div>
       </div>
