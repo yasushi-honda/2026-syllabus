@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第3回 Gemini CLI / GitHub Copilot CLI を使い分ける | 自然言語開発</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev.html">自然言語開発</a>
+        <span>/</span>
+        <span>第3回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">Gemini CLI / GitHub Copilot CLI<wbr>を使い分ける</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 3</span>
+            <span class="page-badge">木曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">2つのAI CLIを入れて動作原理を比べ、使い分けの方針を立てる</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">Gemini CLI / GitHub Copilot CLI / specialized agents / Plan mode / GEMINI.md / Vibe Coding</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">進級制作リポジトリがCodespacesで開ける状態・Gemini CLIの認証が完了している状態（第1回完了）・Copilot Student申請済みまたは授業内で完了させる想定</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>Gemini CLI の動作原理——<strong>ツール呼び出しによる Reasoning + Acting 風のループ</strong>——を自分の言葉で説明できる</li>
+        <li>GitHub Copilot CLI の動作原理——<strong>Explore / Task / Code Review / Plan の specialized agents と Plan mode</strong>——を理解する</li>
+        <li>両CLI を自分の進級制作リポジトリで起動し、同じタスクを投げて挙動の違いを観察する</li>
+        <li><code>GEMINI.md</code> と Copilot CLI の設定ファイルの役割・置き場所の違いを知る</li>
+        <li>無料枠・モデル選択の違いを踏まえ、「どのタスクをどちらのCLIに任せるか」<strong>使い分けの方針</strong>を自分の言葉でメモする</li>
+        <li><strong>Vibe Coding</strong>を体験する：自然言語だけで進級制作に小さな改善を加える</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の振り返り＆2つのCLIの全体像</h3>
+          <div class="timeline-body">
+            <p><strong>前回課題の共有（10分）</strong></p>
+            <ul>
+              <li>第2回の <code>docs/context-experiment.md</code>（条件A/B/Cの比較）から、一番差が大きかった発見を1つ口頭共有</li>
+              <li>「手でコンテキストを整える」疲労感を思い出しておく——それが今日の仕組み化の動機になる</li>
+            </ul>
+            <p><strong>なぜ2つのCLIを使い分けるのか（10分）</strong></p>
+            <ul>
+              <li>AI CLI は1つに絞れば楽だが、得意分野・料金体系・認証基盤が違う</li>
+              <li>実務では「<strong>このタスクにはこちら、別のタスクにはあちら</strong>」と複数ツールを併用するのが普通</li>
+              <li>今期は Gemini CLI と GitHub Copilot CLI の2本立てで、**使い分け**の判断を身につける</li>
+            </ul>
+            <p><strong>Gemini CLI の動作原理（10分）</strong></p>
+            <ul>
+              <li>Googleが公開しているオープンソースのAIエージェントCLI（<a href="https://github.com/google-gemini/gemini-cli" target="_blank" rel="noopener">google-gemini/gemini-cli</a>）</li>
+              <li>中核は<strong>ツール呼び出しによる Reasoning + Acting 風のループ</strong>——モデルが「次に何をすべきか」を考え（Reasoning）、ファイル読取・書込・シェル実行などの<strong>ツール</strong>を呼び出し（Acting）、結果を見てまた考える、を繰り返す</li>
+              <li>この発想はReActパターン（Yao et al., 2022）に近い系譜。モデル単体で答えを出すのではなく、ツールと環境を介して問題を解いていく</li>
+              <li>モデル・無料枠は<strong>授業時点の目安</strong>として説明。Google公式ページが一次情報なので、詳細は<a href="https://geminicli.com/docs/resources/quota-and-pricing/" target="_blank" rel="noopener">Quota & Pricing のドキュメント</a>で各自確認する習慣を付ける</li>
+            </ul>
+            <p><strong>GitHub Copilot CLI の動作原理（10分）</strong></p>
+            <ul>
+              <li>GitHubが提供するエージェントCLI（<code>@github/copilot</code>）。従来の <code>gh copilot</code> 拡張（シェルコマンド補完）とは別物で、こちらは<strong>コードベース全体を操作できるエージェント</strong></li>
+              <li>中核は <strong>Explore / Task / Code Review / Plan の specialized agents と Plan mode</strong>——用途別に役割分担された内部エージェントがあり、<code>/plan</code> 等のスラッシュコマンドで明示的に計画フェーズに入れる</li>
+              <li>無料枠は Copilot のプランに依存（<strong>Copilot Student</strong> なら学生のうちは無償で有料枠相当が使える）。詳細は<a href="https://docs.github.com/en/copilot/how-tos/use-copilot-agents/use-copilot-cli" target="_blank" rel="noopener">GitHub Copilot CLI の公式ドキュメント</a>を参照</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>両CLIを Codespaces に導入して動かす</h3>
+          <div class="timeline-body">
+            <p><strong>Gemini CLI の動作確認（10分）</strong></p>
+            <ul>
+              <li>第1回で認証済みの前提。Codespacesのターミナルで <code>npx @google/gemini-cli</code> を起動し、進級制作リポジトリに <code>cd</code> した状態で <code>@README.md この構成を3行で説明</code> 等を試す</li>
+              <li>認証が切れていたら再認証（Googleアカウントのブラウザ認証）</li>
+            </ul>
+            <p><strong>GitHub Copilot CLI の導入（25分）</strong></p>
+            <ul>
+              <li><strong>Copilot Student の状態確認</strong>——<a href="https://education.github.com/pack" target="_blank" rel="noopener">GitHub Student Developer Pack</a> 経由で Copilot が有効になっているか確認。未申請の人はこの時間で申請開始（審査に時間がかかるケースあり）</li>
+              <li>Codespacesのターミナルで <code>npm install -g @github/copilot</code>（または公式ドキュメントの最新インストール手順）</li>
+              <li>初回起動時に GitHub アカウントの認証フローを完了</li>
+              <li>動作確認: <code>copilot</code>（実コマンド名は公式ドキュメントの記載を優先）を起動して <code>/help</code> で specialized agents と Plan mode の存在を確認</li>
+            </ul>
+            <p><strong>設定ファイルの違いを見る（15分）</strong></p>
+            <ul>
+              <li>進級制作リポジトリのルートに、最小の <code>GEMINI.md</code> を作成（プロジェクトの目的・構成・守ってほしい規約を3〜5行でメモ）</li>
+              <li>Copilot CLI 側の設定は別ファイルで管理される——プロジェクトごとの指示は公式の指示ファイル（命名は公式ドキュメントに従う）に書く</li>
+              <li>「同じ "プロジェクトのメモ" でも、CLIが違えばファイルも違う」ことを実感。後で自動同期の仕組みを考えるための伏線</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>導入が詰まったら:</strong> 「Gemini CLI は動いたが Copilot CLI が詰まった（あるいは逆）」という状況は普通に起こります。今日は<strong>少なくとも片方が動く状態</strong>でこの先の演習に入れればOK。両方動かなかった人は講師に声をかけてください。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>同じタスクを両CLIに投げて比べる</h3>
+          <div class="timeline-body">
+            <p><strong>今日の問い:</strong> <em>同じ依頼でも、CLIが違えば「考え方」「出力」「手数」がどれくらい違うのか？</em></p>
+            <p><strong>共通のお題（例）</strong></p>
+            <ul>
+              <li>自分の進級制作から1つ機能を選び、それぞれのCLIに <code>この機能の主要なファイルを洗い出し、役割を200字程度で要約して</code> と依頼する</li>
+              <li>片方でしか動かない人は、動く方だけで実施してよい（比較は近くの人の画面を見せてもらう）</li>
+            </ul>
+            <p><strong>実験A: Gemini CLI でやる（15分）</strong></p>
+            <ul>
+              <li>依頼文の末尾に「どのファイルを読んだか列挙してから要約して」と付け、ツール呼び出しの足跡を見る</li>
+              <li>何回ファイルを読みに行ったか、どんなツールを使ったかをメモ</li>
+            </ul>
+            <p><strong>実験B: Copilot CLI でやる（15分）</strong></p>
+            <ul>
+              <li>まず <code>/plan</code>（または公式ドキュメントで指定される Plan mode 起動方法）で<strong>計画フェーズ</strong>に入り、実行前の計画を見せてもらう</li>
+              <li>計画を承認してから実行。Explore や Task 等の specialized agents がどのように切り替わるか観察</li>
+            </ul>
+            <p><strong>観察比較（20分）</strong></p>
+            <ul>
+              <li>「実行前に計画を見せる／見せない」の違いがUXにどう効くか</li>
+              <li>ツール呼び出しのトレース（Gemini CLI）と specialized agents の役割分担（Copilot CLI）、どちらが自分には分かりやすかったか</li>
+              <li>出力の質を主観で比較（事実誤認の有無、粒度の粗さ細かさ）——<strong>評価は自分がする</strong>。AIに「どっちが良いですか？」は聞かない</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>観察ポイント:</strong> 「どちらが優秀か」ではなく、「自分のこのタスクに<strong>どう合う／合わない</strong>か」。使い分けの方針は相対評価で決まります。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>Vibe Coding：自然言語だけで小さな改善を入れる</h3>
+          <div class="timeline-body">
+            <p><strong>Vibe Coding とは（5分）</strong></p>
+            <ul>
+              <li>Andrej Karpathy が提唱した言葉（2026年初頭）。<strong>自然言語で指示し、AIが書いたコードをほぼそのまま採用する</strong>開発スタイル</li>
+              <li>「雑でいい、動けばいい」の体験——後の回（第4回）で<strong>Vibe Coding の限界</strong>を扱うための下地</li>
+            </ul>
+            <p><strong>実践（20分）</strong></p>
+            <ul>
+              <li>進級制作に、<strong>小さな改善</strong>を1つ選ぶ（例: 文言の修正、軽微なUIの整理、関数名のリネーム、READMEへの使い方追記、小さなバリデーション追加 等）</li>
+              <li>選んだCLI（どちらでも可）に自然言語だけで依頼——コードは自分で書かない</li>
+              <li>変更が妥当なら <code>git add && git commit</code>。不安なら <code>git stash</code> で一旦置く</li>
+            </ul>
+            <p><strong>メモ（5分）</strong></p>
+            <ul>
+              <li>どのCLIを使ったか／なぜそちらを選んだか</li>
+              <li>AIが書いたコードを<strong>そのまま</strong>採用したか、どこを手直ししたか</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り＆次回予告</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>今日のキーワード: <strong>Gemini CLI のツール呼び出しループ / Copilot CLI の specialized agents と Plan mode / GEMINI.md / 使い分け / Vibe Coding</strong></li>
+              <li>次回（第4回）: <strong>Vibe Codingの実践と限界</strong>——今日の「雑に動いた」感覚を、<strong>新機能を1つ追加</strong>する規模でやってみて、なぜそれだけでは不十分かを体験する</li>
+              <li>次回までに、自分なりの「使い分け方針メモ」を<strong>1枚</strong>（箇条書き5行程度）にまとめておくと議論がスムーズ</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>使い分け方針メモの提出</strong>
+            <p>進級制作リポジトリに <code>docs/cli-comparison.md</code> を作成し、①両CLIで試したお題、②それぞれの挙動の違い（ツール呼び出しトレース／Plan mode／specialized agents）、③自分の使い分け方針を記録してpushする。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>GEMINI.md</code> の初版</strong>
+            <p>授業で作った最小版の <code>GEMINI.md</code> を自分の進級制作用に少し拡張してpush。最低限「プロジェクトの目的／主要なディレクトリ／守ってほしい規約」を書く。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>Copilot CLI 公式ドキュメント通読</strong>
+            <p>specialized agents（Explore / Task / Code Review / Plan）それぞれの使い所を、公式ドキュメントで1パラグラフずつ読んでおく。次回以降の判断材料になる。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://github.com/google-gemini/gemini-cli" target="_blank" rel="noopener">google-gemini/gemini-cli</a> — Gemini CLI 公式リポジトリ（インストール・コマンド一覧が一次情報）</li>
+        <li><a href="https://geminicli.com/docs/resources/quota-and-pricing/" target="_blank" rel="noopener">Gemini CLI — Quota & Pricing（公式ドキュメント）</a> — 無料枠・モデル・レート制限の公式説明</li>
+        <li><a href="https://docs.github.com/en/copilot/how-tos/use-copilot-agents/use-copilot-cli" target="_blank" rel="noopener">GitHub Docs — Use Copilot CLI</a> — Copilot CLI の導入と specialized agents / Plan mode の使い方（一次情報）</li>
+        <li><a href="https://education.github.com/pack" target="_blank" rel="noopener">GitHub Student Developer Pack</a> — Copilot Student を含む学生特典の申請窓口</li>
+        <li><a href="https://arxiv.org/abs/2210.03629" target="_blank" rel="noopener">Yao et al., 2022 — ReAct: Synergizing Reasoning and Acting</a> — Reasoning + Acting ループの原典</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week02.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第2回 コンテキストエンジニアリング入門</span>
+      </a>
+      <a href="../natural-language-dev.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">自然言語開発</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第4回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>

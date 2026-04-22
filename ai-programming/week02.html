@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第2回 はじめてのAI体験 | AI活用プログラミング基礎</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--orange">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-programming.html">AI活用プログラミング基礎</a>
+        <span>/</span>
+        <span>第2回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">はじめてのAI体験</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 2</span>
+            <span class="page-badge">木曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">Geminiに自分で質問を投げて、応答をじっくり観察する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">個人演習 / 質問のバリエーション / 応答のゆらぎ / 観察ノート</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">Googleアカウントでログインできる状態・授業用のメモ（紙でも Google Docs でも可）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>前回一緒にやった<strong>Geminiに最初の質問を投げる</strong>体験を、自分ひとりでもう一度できる</li>
+        <li>いろいろなタイプの質問（事実／意見／手順／相談）を自分で考えて投げてみる</li>
+        <li>同じ質問を何度か投げると<strong>答えがちょっと違う</strong>ことに気づく</li>
+        <li>聞き方を変えると<strong>応答の雰囲気も変わる</strong>ことを観察する</li>
+        <li>「自分が面白い／意外／便利」と感じた応答を<strong>言葉でメモ</strong>できる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。今日は<strong>自分のペース</strong>で進めることを大事にします。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の振り返り＆今日のゴール</h3>
+          <div class="timeline-body">
+            <p><strong>前回のおさらい（10分）</strong></p>
+            <ul>
+              <li>前回の「一番印象に残ったGeminiとの会話」を<strong>2〜3人</strong>に口頭で共有してもらう</li>
+              <li>「AIは毎回ちょっと違うことを言う」感触を思い出す</li>
+              <li>家でGeminiを触ってみた人の体験談もあれば歓迎（触ってない人でも大丈夫）</li>
+            </ul>
+            <p><strong>今日の進め方（10分）</strong></p>
+            <ul>
+              <li>今日は<strong>個人演習中心</strong>——自分のペースで質問を投げる時間</li>
+              <li>上手くいかなくても大丈夫。<strong>「変な応答が返ってきた」も立派な観察結果</strong></li>
+              <li>タイピングが不安な人は、短い質問から始めてOK。スマホの音声入力を使ってもOK</li>
+            </ul>
+            <p><strong>「観察する」ってどういうこと？（20分）</strong></p>
+            <ul>
+              <li>今日のキーワードは<strong>観察</strong>。答えを受け取って「はい次」ではなく、応答をじっくり読むこと</li>
+              <li>見るポイントの例:
+                <ul>
+                  <li>答えの<strong>長さ</strong>（1行？10行？）</li>
+                  <li>使っている<strong>言葉づかい</strong>（ていねい？くだけてる？）</li>
+                  <li>自信ありげか、「たぶん」「かもしれない」が多いか</li>
+                  <li>答えのなかに<strong>具体例</strong>が入っているか</li>
+                </ul>
+              </li>
+              <li>観察のためのメモ用紙（もしくはGoogle Docsの新規ファイル）を用意しておく</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>プログラミングとのつながり:</strong> この「観察する→気づく→メモする」という動きは、これからプログラムを書くときにも毎回やることです。今日はその筋トレだと思ってください。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>4種類の質問を投げてみる</h3>
+          <div class="timeline-body">
+            <p><strong>Geminiを開く（5分）</strong></p>
+            <ul>
+              <li><a href="https://gemini.google.com" target="_blank" rel="noopener">gemini.google.com</a> にアクセス</li>
+              <li>Googleアカウントでログインが切れていたら再ログイン</li>
+              <li>画面下部の入力欄が表示されていればOK（UIは変更される場合あり——迷ったら講師に声をかけてください）</li>
+            </ul>
+            <p><strong>パターン①: 事実を聞く（10分）</strong></p>
+            <ul>
+              <li>例: 「富士山の高さは？」「ラーメンの発祥はどこ？」「大阪から東京までの新幹線の所要時間は？」</li>
+              <li>自分で3つ考えて投げる。答えを<strong>そのままコピー</strong>してメモに貼る</li>
+            </ul>
+            <p><strong>パターン②: 意見を聞く（10分）</strong></p>
+            <ul>
+              <li>例: 「夏と冬、どっちがおすすめ？」「猫と犬、どっちが飼いやすい？」</li>
+              <li>AIは「どちらにも良さがあります」のように<strong>どっちつかず</strong>の答えをしがち。その癖を観察する</li>
+            </ul>
+            <p><strong>パターン③: 手順を聞く（10分）</strong></p>
+            <ul>
+              <li>例: 「カップ麺の上手な作り方を5ステップで」「自転車のパンク修理の流れを教えて」</li>
+              <li>番号付きで整理された応答になりやすい——その<strong>形式のちがい</strong>を観察する</li>
+            </ul>
+            <p><strong>パターン④: 相談する（15分）</strong></p>
+            <ul>
+              <li>例: 「朝どうしても起きられない、何をしたらいい？」「はじめて自炊するときの最初の一品は？」</li>
+              <li>AIが<strong>こちらの状況</strong>（生活リズム、予算、好み）を聞き返してくるか、決めつけて答えてくるかを観察</li>
+              <li>個人情報（本名・住所・電話番号・学校の正式名称など）は<strong>入れない</strong>——入力した内容はAI改善のために使われる可能性があるため、個人を特定できる情報は避ける</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>「ゆらぎ」と「聞き方」の実験</h3>
+          <div class="timeline-body">
+            <p><strong>実験A: 同じ質問を3回投げる（20分）</strong></p>
+            <ul>
+              <li>パターン①〜④の中から、自分が一番気に入った質問を<strong>1つだけ</strong>選ぶ</li>
+              <li>その質問を、<strong>新しいチャット</strong>で3回投げる（前の会話を閉じて毎回やり直すのがコツ——同じチャットの中で続けると、前の会話に引きずられる）</li>
+              <li>3つの答えを並べてメモ。<strong>どこが同じで、どこが違うか</strong>を観察</li>
+              <li>AIには<strong>「ゆらぎ」</strong>がある——同じ質問でも毎回少しずつ違う答えを返す。これを体感する</li>
+            </ul>
+            <p><strong>実験B: 聞き方を変える（25分）</strong></p>
+            <ul>
+              <li>同じ「聞きたいこと」を、3通りの聞き方で試す:
+                <ul>
+                  <li>ざっくり版: 「〜〜について教えて」</li>
+                  <li>ていねい版: 「〜〜について、小学生にもわかるように、例を2つ入れて5行くらいで教えてください」</li>
+                  <li>キャラ指定版: 「あなたは〜〜の先生です。〜〜について教えて」</li>
+                </ul>
+              </li>
+              <li>答えの<strong>長さ・語り口・具体例の数</strong>がどう変わるかをメモ</li>
+            </ul>
+            <p><strong>ミニ気づきメモ（5分）</strong></p>
+            <ul>
+              <li>実験A/Bで<strong>一番驚いたこと</strong>を、自分の言葉で1〜2行書く</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>共有タイム＆「不思議な応答」の扱い方</h3>
+          <div class="timeline-body">
+            <p><strong>近くの人と見せ合う（15分）</strong></p>
+            <ul>
+              <li>2〜3人で、今日の実験A/Bで<strong>面白かった応答</strong>をひとつずつ見せ合う</li>
+              <li>「自分なら違う聞き方にするかも」と思ったら、アイデアを交換する</li>
+            </ul>
+            <p><strong>変だった応答・間違っていた応答（10分）</strong></p>
+            <ul>
+              <li>今日のやり取りで<strong>「ん？ちょっと違うかも」</strong>と感じた応答があれば共有</li>
+              <li>AIの答えは<strong>堂々としているのに間違っている</strong>ことがある——これを今後は<strong>「ハルシネーション（もっともらしい作り話）」</strong>と呼ぶ。第9回で詳しく扱う予定</li>
+              <li>今日は「気づけた」ことを褒める。<strong>疑う力は大事なスキル</strong></li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>合言葉:</strong> 「AIはすごい、でも完璧じゃない」——この感覚を今日のうちに体で覚えてしまおう。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告＆今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>今日のキーワード: <strong>観察 / 4種類の質問 / ゆらぎ / 聞き方を変える</strong></li>
+              <li>次回（第3回）: <strong>NotebookLM入門</strong>——自分だけの資料を読み込ませて、<strong>「自分だけのAI」を育てる場所</strong>に初挑戦する。初回の学習データとして<strong>自己紹介シート</strong>を配布予定</li>
+              <li>今日のメモは次回以降も使います。捨てずに残しておくこと</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>観察メモの保管</strong>
+            <p>今日書いた「4種類の質問の応答」「実験A/Bの結果」「気づき」を捨てずに保管する。紙ならスマホで写真を撮っておくと安心。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>家でも質問を5つ投げてみる</strong>
+            <p>今日は学校で投げた質問と違う話題で、自分が気になるテーマを5つ投げてみる。個人情報は入れないこと。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>「ん？」と思った応答をスクショ</strong>
+            <p>明らかに変な答え／事実と違いそうな答えを見つけたら、スクリーンショットを残しておく。次回以降、「AIの限界」の教材として使えます。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a> — 今日も使ったGoogleの対話型生成AI</li>
+        <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> — 第3回から使い始める「自分だけのAI」の場所</li>
+        <li><a href="https://edu.google.com/intl/ALL_jp/workspace-for-education/editions/overview/" target="_blank" rel="noopener">Google Workspace for Education</a> — 学校で使うアカウントの公式情報</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week01.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第1回 オリエンテーション＆AIってなんだろう？</span>
+      </a>
+      <a href="../ai-programming.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AI活用プログラミング基礎</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第3回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
