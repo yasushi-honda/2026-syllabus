@@ -155,6 +155,19 @@ done
 - 200以外が返ったら原則差し替え
 - ただし **Gemini (`gemini.google.com`) は curl では 502** が返る（Google側のbot対策）。ブラウザでは正常動作するため例外として採用可
 
+### 公式用語抽出チェック（外部サービス紹介時）
+
+週ページで外部サービス（Gemini CLI / GitHub Copilot CLI / NotebookLM 等）の**仕組み・動作原理**を説明する場合、執筆前に以下を固定手順で行う（PR #55 教訓: 用語ズレ・断定表現が後工程まで生き残り、`specialized agents` vs `custom agents` / 「人間が選ぶのではなく」の不正確な断定を教材に混入させた）。
+
+1. **自己定義の抽出**: 公式docs トップまたは README の **subtitle / "What is X?" 冒頭文** から「そのサービスが自分を何と呼んでいるか」を逐語抽出する。
+   - 例: Gemini CLI は "open-source AI agent"（README subtitle）
+   - 例: Copilot CLI の内部エージェントは "custom agents"（`specialized` は1回のみ形容的に登場する副次語）
+2. **セクション見出し由来の用語統一**: 主要機能の説明は **公式セクション見出し (h2/h3) の用語をそのまま使う**。独自の意訳・業界用語への置換は禁止。
+3. **同義語判定は出現頻度で**: 候補が複数あるときは **公式docs内の出現頻度** で canonical を決定する。1箇所だけの形容用語を週ページのキーワードに据えない。
+4. **動作主体の記述は原文引用後に意訳**: 「モデルが X する」「人間が Y する」等の主体記述は、**公式原文を1文そのまま引用**してから意訳する。意訳だけだと細部が抜ける。
+   - 例: 「AIモデル自身が判断する」だけで止めず、`/agent` / プロンプト内明示 / `--agent` オプションで手動指定もできる旨を両論併記する（PR #55）
+5. **断定表現のセルフチェック**: 「X ではなく Y」「必ず Z」等の強い断定は、**公式docs に同等の断定があるか**を確認。なければ「既定では」「通常は」に弱める。
+
 ### 既知の地雷リスト（過去PRレビュー由来）
 
 | 地雷 | 正解 | 出典 |
@@ -180,6 +193,9 @@ done
 | Copilot CLI のヘルプを `/help` と案内 | 正は**プロンプト内 `?`** または**ターミナル側 `copilot help`**（公式 docs に明記されているのはこの2つ） | PR #53 |
 | 「Copilot Student 申請済みまたは授業内で申請」と書く | **2026-04-20 以降、Copilot Pro/Pro+/Student の新規申請が一時停止中**（既存認証済みユーザーは継続利用可）。未申請者は Gemini CLI 単体で進めるフォールバックを明記。再開時期は `docs.github.com/en/copilot/get-started/plans` の Important 掲示で都度確認 | PR #53 |
 | Markdown 強調 `**…**` が HTML に残留 | HTML 内は `<strong>…</strong>` で統一。コミット前に `grep -nE '\*\*[^*]+\*\*' *.html` で検出 | PR #53 |
+| Copilot CLI の内部エージェントを `specialized agents` と書く | 正は **`custom agents`**（公式の主要用語）。`specialized` は公式本文で1回のみ形容的に出る副次語。Explore / Task / General-purpose / Code-review は「**default custom agents**」と呼ぶ | PR #55 |
+| 「『どの agent を使うか』は人間が選ぶのではなく AI モデル側が判断する」等の断定 | 公式は `/agent` スラッシュコマンド・プロンプト内の agent 名明示・`--agent` コマンドラインオプションで**手動指定もサポート**。「**既定では AI が自動判断、明示指定もできる**」の両論併記で書く | PR #55 |
+| 参考リンクのテキストに存在しない固有名詞を作る（例: `Built-in Tools Overview`） | **公式ページの実際のタイトル**（例: `Tools reference`）を使う。README の該当セクション名（`🔧 Built-in tools` 等）は併記してよい | PR #55 |
 
 ### レビュー手順（必ず実行）
 
@@ -189,6 +205,15 @@ done
 - `pr-review-toolkit:comment-analyzer` — 事実の正確性・外部リンク生存・親ページ整合性
 
 Criticalは必ず修正、Importantは原則修正、Suggestionは判断して採否決定。マージ後は https URLで HTTP 200 と表示を目視確認。
+
+#### comment-analyzer への必須依頼項目（外部サービスを扱う週ページ）
+
+外部サービス（Gemini CLI / GitHub Copilot CLI / NotebookLM 等）の**仕組み・動作原理**を説明する週ページでは、comment-analyzer 起動時のプロンプトに以下を**必ず明示する**（PR #55 教訓: 自由記述依頼では用語ズレを見逃した）。
+
+- **公式用語突合**: 本文の技術用語が公式docs の同セクションの用語と**一致**するか検証。同義語の揺れ（例: `specialized` vs `custom`、`mode` vs `agent`、`feature` vs `tool`）を必ず拾う
+- **断定表現の裏付け**: 「X ではなく Y」「必ず Z」「人間が〜ではなく」等の**強い断定**が、公式docs に同等の明示があるか検証。明示がなければ「既定では」「通常は」への弱化を提案させる
+- **動作主体の引用確認**: 「モデルが X する」「人間が Y する」等の**主体記述**が、公式原文の1文引用で裏付けられているか検証。引用がなければ追加を提案させる
+- **参考リンクの固有名詞検証**: リンクテキストに書かれたページタイトル（例: `Built-in Tools Overview`）が、**公式ページの実タイトルと一致**するか検証
 
 ### 定期メンテナンス（半年〜1年に1回）
 
