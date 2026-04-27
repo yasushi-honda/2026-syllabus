@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第3回 CSS入門：色とレイアウト | プログラム基礎 I</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--blue">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../program-basics.html">プログラム基礎 I</a>
+        <span>/</span>
+        <span>第3回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">CSS入門：<wbr>色と<wbr>レイアウト</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 3</span>
+            <span class="page-badge">火曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">CSSセレクタの基本を手で書き、自分のプロフィールページに色・フォント・余白をつける</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">セレクタ / プロパティ / 値 / 色 / フォント / 余白(margin/padding) / Copilotの提案を採用するか・しないか</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第2回で拡張した <code>index.html</code>（自分のリポジトリ）・Codespacesが起動できる状態</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>CSSが「<strong>セレクタ</strong>・<strong>プロパティ</strong>・<strong>値</strong>」の3点セットでできていることを自分の言葉で説明できる</li>
+        <li>HTMLとCSSを別ファイルに分け、<code>&lt;link&gt;</code> で読み込めるようになる</li>
+        <li>色（<code>color</code> / <code>background-color</code>）、フォント（<code>font-family</code> / <code>font-size</code>）、余白（<code>margin</code> / <code>padding</code>）を<strong>自分の手で書ける</strong></li>
+        <li>Copilot が提案してきたCSSを、<strong>「採用するか・しないか」を自分の理由で判断する</strong>体験をする</li>
+        <li>第2回のプロフィールページに、<strong>自分らしい1色</strong>を加えてcommit & pushできる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の振り返りとCSSの全体像</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り（10分）</strong></p>
+            <ul>
+              <li>第2回で拡張した <code>index.html</code> を Codespaces で開き直す</li>
+              <li><code>python3 -m http.server 8000</code> → 「ポート」タブの<strong>「エディターでプレビュー」</strong>で Simple Browser 表示（第1回と同じ手順）</li>
+              <li>「先週覚えた5つのタグ（<code>h1</code> / <code>p</code> / <code>ul</code>(<code>li</code>) / <code>a</code> / <code>img</code>）が、いまの自分のページのどこに使われているか」をペアで指差し確認</li>
+            </ul>
+            <p><strong>CSSって何？（20分）</strong></p>
+            <ul>
+              <li>HTMLが「<strong>意味の構造</strong>」を表すなら、CSSは「<strong>見た目の指示書</strong>」</li>
+              <li>同じHTMLでも、CSSを変えれば<strong>まったく違うデザイン</strong>になる——「内容と見た目の分離」が現代Webの基本</li>
+              <li>CSSの基本パターンは <strong>セレクタ { プロパティ: 値; }</strong> の3点セット
+                <ul>
+                  <li><strong>セレクタ</strong>: どのHTML要素に対してか（例: <code>h1</code>、<code>p</code>、<code>body</code>）</li>
+                  <li><strong>プロパティ</strong>: 何を変えるか（例: <code>color</code>、<code>font-size</code>、<code>margin</code>）</li>
+                  <li><strong>値</strong>: どう変えるか（例: <code>red</code>、<code>20px</code>、<code>1em</code>）</li>
+                </ul>
+              </li>
+              <li>例: <code>h1 { color: navy; }</code> は「すべての <code>&lt;h1&gt;</code> の文字色を navy にする」という指示</li>
+            </ul>
+            <p><strong>CSSの「書く場所」3パターン（10分）</strong></p>
+            <ul>
+              <li><strong>① インライン</strong>: HTMLタグの <code>style</code> 属性に直書き（例: <code>&lt;h1 style="color:red"&gt;</code>）——最後の手段。乱用しない</li>
+              <li><strong>② <code>&lt;style&gt;</code> タグ内</strong>: HTMLの <code>&lt;head&gt;</code> 内に書く——お試しはこれが速い</li>
+              <li><strong>③ 別ファイル（外部CSS）</strong>: <code>style.css</code> を作って <code>&lt;link rel="stylesheet" href="style.css"&gt;</code> で読み込む——<strong>本授業では基本このやり方</strong></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3><code>style.css</code> をつくって読み込む</h3>
+          <div class="timeline-body">
+            <p><strong>新しいファイルを作る</strong></p>
+            <ul>
+              <li>Codespaces のエクスプローラーで <code>index.html</code> と同じ階層に <strong><code>style.css</code></strong> を新規作成</li>
+              <li><code>index.html</code> の <code>&lt;head&gt;</code> 内に <code>&lt;link rel="stylesheet" href="style.css"&gt;</code> を追加</li>
+              <li>これで <code>index.html</code> から <code>style.css</code> が読み込まれるようになる</li>
+            </ul>
+            <p><strong>最初の1行を手で書く</strong></p>
+            <ul>
+              <li><code>style.css</code> に次の1行を打つ:
+                <pre><code>h1 { color: navy; }</code></pre>
+              </li>
+              <li>保存して Simple Browser を更新——<code>&lt;h1&gt;</code> の文字色が変わるはず</li>
+              <li>変わらなかったら: ① <code>&lt;link&gt;</code> の <code>href</code> のスペル ② ファイルが保存されているか ③ Simple Browser を再読み込みしたか、を順に確認</li>
+            </ul>
+            <p><strong>セレクタを増やす（タグセレクタ中心）</strong></p>
+            <ul>
+              <li><code>body { background-color: #fafafa; }</code>——ページ全体の背景色を変える</li>
+              <li><code>p { color: #333; line-height: 1.7; }</code>——段落の文字色と行間を調整</li>
+              <li><code>a { color: teal; }</code>——リンクの色を変える</li>
+              <li><strong>1行ずつ書いて保存→ブラウザで確認</strong>を繰り返す。まとめて書かない</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>色の書き方は3種類:</strong> ① 名前（<code>red</code>、<code>navy</code>、<code>teal</code> など）／② <code>#</code> + 16進数（<code>#fafafa</code>、<code>#333</code>）／③ <code>rgb(255, 0, 0)</code>。今日は <strong>名前と <code>#</code> 16進数</strong>の2つを覚えればOK。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>フォント・余白で「読みやすさ」をつくる</h3>
+          <div class="timeline-body">
+            <p><strong>フォントを指定する</strong></p>
+            <ul>
+              <li><code>body { font-family: "Helvetica Neue", Arial, sans-serif; }</code>——半角英数のフォント指定</li>
+              <li>日本語を含む場合: <code>body { font-family: "Hiragino Sans", "Yu Gothic", sans-serif; }</code> のように<strong>複数候補をカンマで並べる</strong></li>
+              <li><strong>fallback（フォールバック）</strong>の考え方: 最初の候補が無ければ次、それも無ければ最後の <code>sans-serif</code>（ゴシック系）／<code>serif</code>（明朝系）に落ちる</li>
+              <li><code>font-size</code> も試す: <code>h1 { font-size: 36px; }</code> や <code>p { font-size: 16px; }</code></li>
+            </ul>
+            <p><strong>余白で「呼吸」を入れる</strong></p>
+            <ul>
+              <li>CSSの<strong>ボックスモデル</strong>: すべてのHTML要素は「<strong>内容 → padding → border → margin</strong>」の同心円構造で囲まれている</li>
+              <li><code>margin</code>: 要素の<strong>外側</strong>の余白（他の要素との距離）</li>
+              <li><code>padding</code>: 要素の<strong>内側</strong>の余白（枠線と内容との距離）</li>
+              <li>試す: <code>body { margin: 0; padding: 24px; }</code> / <code>h1 { margin-bottom: 16px; }</code> / <code>ul { padding-left: 24px; }</code></li>
+            </ul>
+            <p><strong>1色だけルール</strong></p>
+            <ul>
+              <li>今日のミッションは「<strong>自分らしい1色</strong>」を決めて、それを<strong>見出しとリンクの色に統一</strong>すること</li>
+              <li>カラフルにしすぎない——多色は混乱を生む。<strong>制約があると個性が出る</strong></li>
+              <li>色名で困ったら参考リンクの「MDN — color」で名前付きカラー一覧を見る</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>変化は最小単位で:</strong> CSSは「1行書いて、保存して、ブラウザで確認」が基本リズム。複数の変更をまとめてからブラウザで見ると、<strong>どれが効いてどれが効いてないかが分からなくなります</strong>。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>Copilotの提案を「採用するか・しないか」自分で判断する</h3>
+          <div class="timeline-body">
+            <p><strong>あえてCopilotに聞いてみる時間</strong></p>
+            <ul>
+              <li>これまでは「まず手で書く」だったが、今日は最後にCopilotの提案を<strong>意識的に観察する</strong>時間をとる</li>
+              <li><code>style.css</code> でコメントを書いて待つ:
+                <pre><code>/* h2 を青系の見出しっぽく見せたい */
+</code></pre>
+              </li>
+              <li>Copilotが補完を出してきたら、Tabで採用する前に <strong>提案の中身を読む</strong></li>
+            </ul>
+            <p><strong>判断の3ステップ</strong></p>
+            <ol>
+              <li><strong>読む</strong>: 提案されたプロパティと値を1つずつ見て、「これは何を変えるルールか」を自分の言葉で説明できるか確認</li>
+              <li><strong>比べる</strong>: 自分が書こうとしていた内容と、Copilotの提案はどう違うか</li>
+              <li><strong>決める</strong>: 採用なら Tab、不採用なら Esc。<strong>「迷ったら不採用」</strong>でOK——意味の分からないコードは入れない</li>
+            </ol>
+            <p><strong>採用/不採用の理由をコメントで残す</strong></p>
+            <ul>
+              <li>採用したら: <code>/* Copilot提案を採用: 青系で揃えたかったので */</code></li>
+              <li>不採用にしたら: <code>/* Copilot提案を却下: 値の意味が分からなかったので */</code></li>
+              <li>これが評価でいう <strong>「AIの批判的活用」</strong>の最初の一歩</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「動けば正解」ではない:</strong> Copilotの提案で見た目が良くなっても、<strong>意味の分からないコードを残すのは負債</strong>。後で修正できなくなります。今日は「分からないものは入れない」の練習日。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告＆今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ program-basics.html Week 4 「🎯ミニ完成① プロフィールサイト公開」と同期 -->
+              <li>次回（第4回）: <strong>🎯ミニ完成① プロフィールサイト公開</strong>——GitHub Pagesに自分の作品を公開し、<strong>世界に向けて発信</strong>する初体験</li>
+              <li>今日書いた <code>index.html</code> + <code>style.css</code> はそのまま使います。必ず commit & push</li>
+              <li>「今日採用したCopilotの提案」「却下した提案」を1つずつ言語化して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>index.html</code> + <code>style.css</code> を commit & push する</strong>
+            <p>授業内で書いた内容を自分のリポジトリに保存しておく。次回の公開作業でそのまま使います。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>「セレクタ・プロパティ・値」の3つを自分の言葉で説明できるようにする</strong>
+            <p>家で <code>h1 { color: navy; }</code> を例に、「<code>h1</code> がセレクタで、<code>color</code> がプロパティで、<code>navy</code> が値」と口に出して言えるか確認する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>MDNでプロパティを1つだけ追加調査する</strong>
+            <p>下記の参考リンクから好きなプロパティを1つ選び、授業で扱わなかった値を1つだけ自分のページで試してみる。<strong>採用/不採用の理由</strong>をコメントで残す。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://developer.mozilla.org/ja/docs/Learn_web_development/Core/Styling_basics" target="_blank" rel="noopener">MDN — CSS によるスタイル設定の基本</a> — 入門者向けの公式ガイド</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/CSS" target="_blank" rel="noopener">MDN — CSS: カスケーディングスタイルシート</a> — 全体トップ。リファレンスへの入口</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/CSS/CSS_selectors" target="_blank" rel="noopener">MDN — CSS セレクター</a></li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/CSS/color" target="_blank" rel="noopener">MDN — color</a>（CSS プロパティ）— 名前付きカラー一覧あり</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/CSS/font-family" target="_blank" rel="noopener">MDN — font-family</a>（CSS プロパティ）</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/CSS/CSS_box_model/Introduction_to_the_CSS_box_model" target="_blank" rel="noopener">MDN — CSS 基本ボックスモデル入門</a> — margin / padding の理解に</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week02.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第2回 HTMLの構造を学ぶ</span>
+      </a>
+      <a href="../program-basics.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">プログラム基礎 I</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第4回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
