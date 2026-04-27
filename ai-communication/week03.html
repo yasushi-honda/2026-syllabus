@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第3回 プロンプトの基本 | AIコミュニケーション基礎</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication.html">AIコミュニケーション基礎</a>
+        <span>/</span>
+        <span>第3回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">プロンプトの<wbr>基本</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 3</span>
+            <span class="page-badge">火曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">「明確かつ具体的な指示」を軸に、同じ質問を異なる聞き方で投げて応答の違いを観察する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">プロンプト / 明確かつ具体的な指示 / 役割設定 / 文脈 / 制約 / 【学習データ③】プロンプトのコツまとめ資料</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第2回で誕生させた「自分だけのAI」（NotebookLM）が <strong>【学習データ①②】</strong> を読み込んだ状態であること・Geminiにログインできる状態</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>プロンプトとは「<strong>AIへの指示文</strong>」のことだと自分の言葉で説明できる</li>
+        <li><strong>「明確かつ具体的」</strong>がなぜ大事か、あいまいな指示と比較して納得できる</li>
+        <li>AIに<strong>役割を設定する</strong>と応答のトーンや視点が変わることを体感する</li>
+        <li>同じ質問を<strong>3パターンの聞き方</strong>で投げて、応答の違いを記録できる</li>
+        <li>授業内で <strong>【学習データ③】プロンプトのコツまとめ資料</strong>を作成し、自分のAIに追加する</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の振り返りとプロンプトの全体像</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り（10分）</strong></p>
+            <ul>
+              <li>第2回で誕生させた「自分だけのAI」を NotebookLM で開き直す</li>
+              <li>宿題だった <strong>【学習データ②】学習目標・興味関心シート</strong>がソースに入っているかチェック</li>
+              <li>家で対話したエピソード共有（希望者のみ）——「カスタム指示で名前をつけたら愛着が湧いた」「応答がズレていた点を見つけた」など</li>
+            </ul>
+            <p><strong>プロンプトって何？（15分）</strong></p>
+            <ul>
+              <li><strong>プロンプト</strong> = AI への指示文。チャット欄に書く言葉、すべてがプロンプト</li>
+              <li>同じAIでも、<strong>プロンプトの書き方しだいで応答の質はまるで変わる</strong>——AI側の性能だけでなく、<strong>こちらの伝え方</strong>が結果を決める</li>
+              <li>本日のキーフレーズ: <strong>「あいまいな指示にはあいまいな答えが返ってくる」</strong></li>
+              <li>プロンプトは「魔法の呪文」ではなく、<strong>人間相手でも有効な伝え方</strong>とほぼ同じ。明確・具体的・文脈つき・制約つき</li>
+            </ul>
+            <p><strong>4つの基本要素（15分）</strong></p>
+            <ul>
+              <li><strong>① 役割（Role）</strong>: AIに「誰として答えてほしいか」を伝える（例: 「あなたは中学生向けの理科の先生です」）</li>
+              <li><strong>② 文脈（Context）</strong>: なぜ聞いているか、どんな状況か（例: 「明日の発表で5分で説明したい」）</li>
+              <li><strong>③ 指示（Instruction）</strong>: 何をしてほしいか動詞で（例: 「3つの例えを使って説明して」）</li>
+              <li><strong>④ 制約（Constraint）</strong>: 形式や分量の縛り（例: 「200字以内で」「箇条書きで」「敬語で」）</li>
+              <li>すべてを毎回入れる必要はない——<strong>足りないと思ったら足す、で十分</strong></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>あいまい vs 明確——同じ質問を3パターンで投げる</h3>
+          <div class="timeline-body">
+            <p><strong>個人比較演習（35分）</strong></p>
+            <ul>
+              <li>使うAI: <strong>Gemini</strong>（NotebookLMだと自分のソースに引きずられるため、今日の比較は<strong>素のGemini</strong>で行う）</li>
+              <li>テーマは何でもOK（例: 「プログラミング学習の始め方を教えて」「文化祭で人気が出る出し物を考えて」など、自分の興味で1つ選ぶ）</li>
+              <li>同じテーマを <strong>3パターン</strong>で投げる:
+                <ol>
+                  <li><strong>パターンA（あいまい）</strong>: 一言だけで投げる（例: <code>プログラミングを教えて</code>）</li>
+                  <li><strong>パターンB（明確化）</strong>: 役割＋文脈＋指示を加える（例: <code>あなたは初心者向けプログラミング講師です。情報系の高校3年生がはじめて学ぶとして、最初に取り組むべきことを3つ教えてください。</code>）</li>
+                  <li><strong>パターンC（制約追加）</strong>: パターンBに制約を加える（例: 末尾に <code>ただし、お金がかからない方法に限定し、それぞれ100字以内で紹介してください。</code>）</li>
+                </ol>
+              </li>
+              <li>3つの応答を<strong>並べて読み比べる</strong>——どれが「自分にとって役に立つ」と感じたか</li>
+            </ul>
+            <p><strong>観察ノート（15分）</strong></p>
+            <ul>
+              <li>Googleドキュメントを新規作成し、ファイル名を <strong><code>プロンプト比較メモ</code></strong> にする</li>
+              <li>各パターンの<strong>プロンプト全文</strong>と<strong>応答の最初の3行</strong>を貼り付ける</li>
+              <li>「<strong>パターンBで何が変わったか</strong>」「<strong>パターンCで何が削られたか</strong>」を1〜2行ずつ自分の言葉で書く</li>
+              <li>このメモは後半の <strong>【学習データ③】</strong> 作成の素材になる</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>応答の良し悪しは「自分にとって」で測る:</strong> AIの応答に客観的な正解はありません。<strong>自分の目的に対して使えるか</strong>が判定基準。「それっぽい長文」よりも「自分が次の一歩を踏み出せる答え」が良い応答です。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>役割設定で AI の視点を切り替える</h3>
+          <div class="timeline-body">
+            <p><strong>1つの質問・3つの役割（30分）</strong></p>
+            <ul>
+              <li>同じ質問を、AIに<strong>3つの異なる役割</strong>を与えて投げてみる演習</li>
+              <li>例題: <strong>「SNSとの付き合い方をどう考えるべきか？」</strong>
+                <ol>
+                  <li><strong>役割①</strong>: 「あなたは10代向けの<strong>心理カウンセラー</strong>です。」</li>
+                  <li><strong>役割②</strong>: 「あなたは広告代理店の<strong>マーケター</strong>です。」</li>
+                  <li><strong>役割③</strong>: 「あなたは情報セキュリティを専門とする<strong>大学教授</strong>です。」</li>
+                </ol>
+              </li>
+              <li>応答の <strong>視点・語彙・強調するポイント</strong>がどう変わるかを観察</li>
+              <li><strong>同じテーマでも、立場が違えば見え方が違う</strong>——これがAIに役割を与える意味</li>
+            </ul>
+            <p><strong>自分のテーマでも試す（15分）</strong></p>
+            <ul>
+              <li>「自分のいま気になっているテーマ」を1つ選び、<strong>異なる立場2つ</strong>から答えさせる</li>
+              <li>例: 進路の悩み → 「先生として」「同年代の友人として」</li>
+              <li>例: 趣味の選択 → 「初心者の視点で」「上級者の視点で」</li>
+              <li>応答の比較メモを先ほどの <code>プロンプト比較メモ</code> に追記</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>役割は「人格コスプレ」ではない:</strong> 役割設定の本質は <strong>「どの知識・どの語彙・どの視点を使うかをAIに伝えること」</strong>。「優しいおじいちゃん」「厳しい先輩」のような<strong>人格</strong>よりも、「中学生の理科教師」「人事担当者」のような<strong>立場と専門性</strong>の指定の方が応答の質が安定します。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>【学習データ③】プロンプトのコツまとめ資料を作成する</h3>
+          <div class="timeline-body">
+            <p><strong>今日の学びを「自分のAI」に教える</strong></p>
+            <ul>
+              <li>Googleドキュメントを新規作成し、ファイル名を <strong><code>【学習データ③】プロンプトのコツまとめ資料</code></strong> にする</li>
+              <li>書く項目（最低限）
+                <ul>
+                  <li>プロンプトの4要素（役割・文脈・指示・制約）を<strong>自分の言葉で1〜2行ずつ</strong>説明</li>
+                  <li>今日の比較演習で<strong>「効いた」と感じた工夫</strong>を3つ（実例つきで）</li>
+                  <li>「<strong>あいまいな指示の典型例</strong>」を2つ（自分が今日やってみたものでOK）</li>
+                  <li>「<strong>役割設定で応答が変わったエピソード</strong>」を1つ</li>
+                </ul>
+              </li>
+              <li>体裁は問わない——<strong>後で自分のAIに読ませて参照できれば十分</strong></li>
+            </ul>
+            <p><strong>NotebookLMのソースに追加する</strong></p>
+            <ul>
+              <li>第2回の手順と同じく、左の「ソースを追加」から <strong>【学習データ③】</strong>を投入</li>
+              <li>追加直後に「<strong>私が次に書くプロンプトを、より明確にするにはどう直せばいい？</strong>」と自分のAIに聞いてみる</li>
+              <li><strong>【学習データ①②】</strong>だけの時と比べて、応答にプロンプトのコツが反映されているか観察</li>
+              <li>このように、<strong>自分の学びを資料化してAIに教える</strong>——この行為そのものが「自分だけのAI」を育てる作業</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告＆今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ ai-communication.html Week 4 「AIの能力と限界を知る」と同期 -->
+              <li>次回（第4回）: <strong>AIの能力と限界を知る</strong>——AIに<strong>わざと事実誤認のある回答を作らせて</strong>、自分で誤りを見つける演習</li>
+              <li>次回に向け、<strong>【学習データ④】AI特性まとめ・エラー事例集</strong>を授業内で扱う予定</li>
+              <li>「今日いちばん『プロンプトで応答が変わった』と感じた瞬間」を1つ言語化して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>【学習データ③】プロンプトのコツまとめ資料を完成させてNotebookLMに投入する</strong>
+            <p>授業内で書き切れなかった項目を埋め、ソースに入れた状態にする。投入済みかどうかは次回確認します。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>家で「役割設定」を1回試す</strong>
+            <p>気になるテーマを1つ選び、Geminiまたは自分のAIに対して<strong>異なる役割</strong>を2つ与えて応答を比較する。応答の違いを <code>プロンプト比較メモ</code> に追記する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>Google公式の Gemini API プロンプト戦略ガイドを5分だけ眺める</strong>
+            <p>下記の参考リンクから「Gemini API — プロンプト戦略」を開き、<strong>気になった項目を1つだけメモする</strong>。全部読まなくてOK——興味のある章を1つ選ぶ習慣作り。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a> — 今日の比較演習で使うAI</li>
+        <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> — 自分だけのAIを育てる場所</li>
+        <li><a href="https://ai.google.dev/gemini-api/docs/prompting-strategies" target="_blank" rel="noopener">Gemini API — プロンプト戦略</a> — Google公式のプロンプト設計ガイド（英語、自動翻訳可）</li>
+        <li><a href="https://support.google.com/notebooklm/" target="_blank" rel="noopener">NotebookLM ヘルプ</a> — Google公式のヘルプセンター</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week02.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第2回 「自分だけのAI」をつくろう</span>
+      </a>
+      <a href="../ai-communication.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AIコミュニケーション基礎</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第4回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
