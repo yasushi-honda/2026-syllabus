@@ -28,6 +28,7 @@ natural-language-dev/   # 自然言語開発の各回詳細ページ
   week01.html           #   第1回 オリエンテーション＆前年度の進級制作を振り返る
   week02.html           #   第2回 コンテキストエンジニアリング入門
   week03.html           #   第3回 Gemini CLI / GitHub Copilot CLI を使い分ける
+  week04.html           #   第4回 Vibe Codingの限界とGEMINI.mdで落ち着かせる
 ai-programming.html     # AI活用プログラミング基礎（木3・4限）※AIコミュ基礎と共通ベース
 ai-programming/         # AI活用プログラミング基礎の各回詳細ページ
   week01.html           #   第1回 オリエンテーション＆AIってなんだろう？
@@ -139,6 +140,7 @@ content/                # Markdownソース（コピーボタン用）
        例: `grep -F "【学習データ①】" {dir}/week{NN}.html`
 □ 13b. **Markdown 残留チェック**: `grep -nE '\*\*[^*]+\*\*' {dir}/week{NN}.html` を実行し、Markdown 記法の強調が HTML に混入していないか確認。HTML 内では `<strong>…</strong>` で統一する（PR #53 教訓: `**使い分け**` が1箇所残留して code-reviewer に Important で指摘された）
 □ 14. 親ページの該当 Week セルを <a href="{dir}/week{NN}.html" class="week-link"> でリンク化
+□ 14b. **直前回の week ページの lesson-nav「次の回」リンクを有効化**: `week{NN-1}.html` 末尾の `<div class="lesson-nav-item lesson-nav-item--disabled">第{NN}回（準備中）</div>` を `<a href="week{NN}.html" class="lesson-nav-item">第{NN}回 {テーマ名}</a>` に置換（PR #58 教訓: code-reviewer から Critical 指摘を受けた漏れ。週ページ間のサイト内ナビが片方向破綻しないよう、新規週ページ追加時はセット更新）
 □ 15. このCLAUDE.mdの「ファイル構成」に新ファイルを追記
 □ 16. git add / commit / push / PR作成
 □ 17. レビュー実行: code-reviewer + comment-analyzer を並列で1回
