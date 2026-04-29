@@ -93,6 +93,8 @@
                 </ul>
               </li>
               <li>「これって自分が悪いの？AI が悪いの？」を一緒に考える——答えは <strong>「指示文だけだと AI が前提を知らないから」</strong></li>
+              <li>補足（時代背景）: 「Vibe Coding」の概念を提唱した Andrej Karpathy 自身、もともと <em>throwaway weekend projects</em>（使い捨ての週末プロジェクト）には向くが production には危険だと述べていた。2025 年以降は VeraCode（2025-10）や METR（2025-07）等の研究で「AI 生成コードの脆弱性率」「ベテラン開発者がむしろ遅くなる現象」が報告され、Karpathy 自身も <strong>2026 年初頭から後継概念として「agentic engineering」</strong>（エージェント監督型開発）を提唱している</li>
+              <li>今日の Before/After 体験は、その「Vibe → 監督型」へ進む最初の一歩。<code>GEMINI.md</code> は<strong>監督の手元メモ</strong>に当たる</li>
             </ul>
             <p><strong>今日のゴール提示（15分）</strong></p>
             <ul>
@@ -203,13 +205,15 @@
 - 文字列はシングルクォート
 - 関数名は camelCase
 
-## 守ってほしいこと
+## 守ってほしいこと（負の制約 = してほしくないこと）
 - 依頼されていないファイルは変更しない
 - 既存のテストを壊さない
+- npm/yarn でパッケージを勝手に追加しない
 </code></pre>
               </li>
               <li>長く書けば良いものではない。長くするほど<strong>毎プロンプトで送信される指示が膨らみ</strong>、第2回で扱った <strong>U字型精度カーブ</strong>の影響で AI が真ん中の指示を読み飛ばしやすくなる。まず3〜5 行・最大 1 画面で OK（教材としての経験則）</li>
               <li>公式ドキュメントにも例として「<em>When you generate new TypeScript code, follow the existing coding style</em>」「<em>Ensure all new functions and classes have JSDoc comments</em>」など、短い指示を箇条書きで積み重ねる書き方が<strong>例として示されている</strong>（公式は「推奨」とは書いていない、あくまで例）</li>
+              <li>公式 <em>extension best practices</em> ページが書き方のコツとして 3 点を挙げている: <strong>(a) Keep it focused</strong>（過剰な内容を入れない）／<strong>(b) Use negative constraints</strong>（「○○しないでください」型の<strong>禁止指示</strong>は、曖昧な肯定指示より効きやすい）／<strong>(c) Review often</strong>（古くなったルールは消す）。今日は特に <strong>(b)</strong> を意識する</li>
             </ul>
             <p><strong>各自が書く（30分）</strong></p>
             <ul>
@@ -274,8 +278,9 @@
               <li>今日のキーワード: <strong>裸の Vibe Coding / 出力のブレ / GEMINI.md / instructional context / Before / After</strong></li>
               <li>覚えてほしいこと: <code>GEMINI.md</code> は <strong>AI への置き手紙</strong>。短く始めて、効かなかったら 1 行ずつ足す</li>
               <li>「指示を毎回書かなくて済む状態」が少しでも作れたら、今日の目的は達成</li>
-              <li>次回（第5回）: <strong>PRD（製品要求仕様書）と ADR</strong>——今日は「AI にやってほしいこと」を書いた。次回は「人間に向けて、なぜそうしたかを書く」回</li>
+              <li>次回（第5回）: <strong>PRD（製品要求仕様書）と ADR</strong>——今日は「AI にやってほしいこと」を書いた。次回は「人間に向けて、なぜそうしたかを書く」回。<strong>Karpathy が 2026 年初頭に提唱した「agentic engineering」</strong>（エージェントを監督する開発）の中核は、人間が方針を文書化して AI に渡し続けることにある。今日の <code>GEMINI.md</code> はその監督メモの第一歩</li>
               <li>気が向いたら、ホームの <code>~/.gemini/GEMINI.md</code> に「全プロジェクト共通の自分の好み」を書いてみる（任意）</li>
+              <li>発展（時間が余ったら）: <code>GEMINI.md</code> が増えてきたら、公式の <strong>Memory Import Processor</strong>（<code>@file.md</code> 構文）で外部ファイルを取り込んで分割できる。例: <code>@docs/style.md</code> をルートの <code>GEMINI.md</code> 内に書くと、その内容が連結時に展開される</li>
             </ul>
           </div>
         </div>
@@ -321,11 +326,15 @@
       <h2>参考リンク</h2>
       <ul>
         <li><a href="https://www.geminicli.com/docs/cli/gemini-md/" target="_blank" rel="noopener">Gemini CLI Docs — Provide context with GEMINI.md files（公式）</a> — 配置場所・階層・記述例の一次情報</li>
+        <li><a href="https://www.geminicli.com/docs/extensions/best-practices/" target="_blank" rel="noopener">Gemini CLI Docs — Extension best practices（公式）</a> — Keep focused / Negative constraints / Review often の 3 原則</li>
+        <li><a href="https://www.geminicli.com/docs/reference/memport/" target="_blank" rel="noopener">Gemini CLI Docs — Memory Import Processor（公式）</a> — <code>@file.md</code> 構文で <code>GEMINI.md</code> を分割する公式機能</li>
+        <li><a href="https://www.geminicli.com/docs/cli/tutorials/memory-management/" target="_blank" rel="noopener">Gemini CLI Docs — Manage context and memory（公式チュートリアル）</a> — メモリ管理の実例</li>
         <li><a href="https://www.geminicli.com/docs/reference/configuration" target="_blank" rel="noopener">Gemini CLI Docs — Configuration reference（公式）</a> — <code>settings.json</code> の <code>context.fileName</code> 等の設定全般</li>
         <li><a href="https://www.geminicli.com/docs/reference/commands" target="_blank" rel="noopener">Gemini CLI Docs — Commands reference（公式）</a> — <code>/memory show</code> / <code>/memory reload</code> 等の slash commands 一覧</li>
-        <li><a href="https://github.com/google-gemini/gemini-cli" target="_blank" rel="noopener">google-gemini/gemini-cli</a> — Gemini CLI 公式リポジトリ（インストール・コマンド一覧）</li>
+        <li><a href="https://github.com/google-gemini/gemini-cli" target="_blank" rel="noopener">google-gemini/gemini-cli</a> — Gemini CLI 公式リポジトリ</li>
         <li><a href="https://www.geminicli.com/docs/resources/quota-and-pricing/" target="_blank" rel="noopener">Gemini CLI — Quotas and pricing（公式）</a> — 無料枠・モデル・レート制限の公式説明</li>
-        <li><a href="https://en.wikipedia.org/wiki/Vibe_coding" target="_blank" rel="noopener">Vibe coding — Wikipedia</a> — Andrej Karpathy が提唱した用語の経緯と批判の整理</li>
+        <li><a href="https://en.wikipedia.org/wiki/Vibe_coding" target="_blank" rel="noopener">Vibe coding — Wikipedia</a> — Andrej Karpathy が 2025-02-02 に X で提唱、2025年〜2026年の批判研究（VeraCode / METR / "Vibe Coding Kills Open Source"）も整理</li>
+        <li><a href="https://thenewstack.io/vibe-coding-is-passe/" target="_blank" rel="noopener">The New Stack — Vibe coding is passé. Karpathy has a new name for the future</a> — Karpathy が 2026 年初頭に「agentic engineering」を後継用語として提唱した経緯（教員向け補足）</li>
       </ul>
     </div>
 
