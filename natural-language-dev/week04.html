@@ -102,6 +102,7 @@
               <li>動作の核心は<strong>「見つけた全ファイルを連結し、毎プロンプトでモデルに送信する」</strong>こと（公式: <em>concatenates the contents of all found files, and sends them to the model with every prompt</em>）。一度書けば、各依頼の前段に毎回くっついて AI に渡る</li>
               <li>毎回チャット欄で「TypeScript で書いて」「インデントは2スペースで」と言わなくても、書いておけば毎回参照してくれる</li>
               <li>今日は <strong>裸で1回</strong> → <strong>GEMINI.md を書く</strong> → <strong>同じ依頼を再投入して比べる</strong> という Before/After 形式で進める</li>
+              <li>環境補足: 全部 <strong>Codespaces 上で完結</strong>する。<code>GEMINI.md</code> はリポジトリのルートに置けば <code>git commit</code> で永続化されるので、Codespace を作り直しても残る。一方 <code>~/.gemini/GEMINI.md</code>（グローバル）は <strong>Codespace ごとに別環境</strong>なので授業では深追いせず、ワークスペースの <code>GEMINI.md</code> に集中する</li>
             </ul>
             <div class="lesson-tip">
               <strong>今日の合言葉:</strong> 「<strong>AI への置き手紙</strong>」。難しいファイルではなく、書いておくと AI が毎回読んでくれるメモです。
@@ -192,7 +193,20 @@
               <li>ファイル名は <code>GEMINI.md</code> がデフォルト。<code>settings.json</code> の <code>context.fileName</code> で <code>AGENTS.md</code> 等に変更可能（配列で <code>["AGENTS.md", "CONTEXT.md", "GEMINI.md"]</code> のように複数指定もできる）だが、今日は標準のままで OK</li>
               <li>Gemini CLI 起動中は <code>/memory show</code> で<strong>いま AI に渡される指示文の全文</strong>（連結された階層的メモリ）を確認できる。読み込まれた GEMINI.md の<strong>個数</strong>は CLI のフッターにも表示される</li>
             </ul>
-            <p><strong>講師の最小サンプルを見る（10分）</strong></p>
+            <p><strong>GEMINI.md の作り方は 3 通りある（5分）</strong></p>
+            <ul>
+              <li><strong>A. <code>/init</code> コマンドで Gemini CLI に叩き台を作らせる</strong>（公式: <em>"this command analyzes the current directory and generates a tailored context file"</em>）。今日はこの方法で叩き台を作ってから自分で削る／足す</li>
+              <li><strong>B. 対話で「Remember that ○○」と頼む</strong>。AI が <code>save_memory</code> ツールで永続化する（公式チュートリアル例: <em>"Remember that I prefer using 'const' over 'let' wherever possible."</em>）。手早く 1 行ずつ育てたいときに便利</li>
+              <li><strong>C. テキストエディタで自分で全部書く</strong>。一番コントロールが効くが、最初の白紙が手強い</li>
+              <li>今日は <strong>A を主軸</strong>（Gemini CLI に叩き台を出させ、自分で削る）、補助で <strong>C</strong> を使う。B は紹介のみで、家で気が向いたら試す</li>
+            </ul>
+            <p><strong><code>/init</code> で叩き台を作る（10分）</strong></p>
+            <ul>
+              <li>進級制作リポジトリのルートに <code>cd</code> した状態で Gemini CLI を起動し、プロンプトで <code>/init</code> を入力</li>
+              <li>Gemini CLI が <code>README</code> や主要ファイルを読み、<strong>そのプロジェクト向けにカスタマイズされた <code>GEMINI.md</code></strong> をルートに自動生成する</li>
+              <li>生成された GEMINI.md を <strong>そのまま読む</strong>（多分長め・少し的外れ）。「自分のプロジェクトを AI はこう要約したのか」を観察する。<strong>この時点では commit しない</strong></li>
+            </ul>
+            <p><strong>叩き台の参考（講師の最小サンプル）（5分）</strong></p>
             <ul>
               <li>板書例（あえて短くする）:
                 <pre><code># このプロジェクトの前提
@@ -215,15 +229,17 @@
               <li>公式ドキュメントにも例として「<em>When you generate new TypeScript code, follow the existing coding style</em>」「<em>Ensure all new functions and classes have JSDoc comments</em>」など、短い指示を箇条書きで積み重ねる書き方が<strong>例として示されている</strong>（公式は「推奨」とは書いていない、あくまで例）</li>
               <li>公式 <em>extension best practices</em> ページが書き方のコツとして 3 点を挙げている: <strong>(a) Keep it focused</strong>（過剰な内容を入れない）／<strong>(b) Use negative constraints</strong>（「○○しないでください」型の<strong>禁止指示</strong>は、曖昧な肯定指示より効きやすい）／<strong>(c) Review often</strong>（古くなったルールは消す）。今日は特に <strong>(b)</strong> を意識する</li>
             </ul>
-            <p><strong>各自が書く（30分）</strong></p>
+            <p><strong>各自が「叩き台 → 3〜5 行に絞る」（20分）</strong></p>
             <ul>
-              <li>1 限後半でメモした「気になった点 ①②③」を <code>GEMINI.md</code> の文章に変換する
+              <li><code>/init</code> で生成された GEMINI.md を<strong>テキストエディタで開いて削る</strong>。残すのは「1 限後半でメモした気になった点 ①②③」に直接対応する 3〜5 行のみ</li>
+              <li>足りない指示は追記。1 限後半のメモを文章に変換する例:
                 <ul>
-                  <li>「言語が混ざった」→ <code>このプロジェクトは Python のみで書いています。他言語のコードを混ぜないでください。</code></li>
+                  <li>「言語が混ざった」→ <code>このプロジェクトは Python のみで書いています。他言語のコードを混ぜないでください。</code>（負の制約）</li>
                   <li>「インデントが違う」→ <code>インデントは半角スペース 4 つです。</code></li>
-                  <li>「関係ないファイルを触られた」→ <code>依頼されていないファイルは変更しないでください。</code></li>
+                  <li>「関係ないファイルを触られた」→ <code>依頼されていないファイルは変更しないでください。</code>（負の制約）</li>
                 </ul>
               </li>
+              <li>削れない／何を残すか迷う人へ: <strong>叩き台を全部捨てて、講師の最小サンプル（5 分前に提示）を雛形に書き直してもよい</strong>。「自分で書く（C）」でも全く問題ない</li>
               <li>進級制作のルートに <code>GEMINI.md</code> を保存。<strong>3〜5 行</strong>で十分（書き過ぎない）</li>
               <li>書き終わったら <code>git add GEMINI.md</code> しておく（commit はあとで）</li>
             </ul>
@@ -308,8 +324,15 @@
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
-            <strong>ホームの <code>~/.gemini/GEMINI.md</code> を書いてみる</strong>
-            <p>全プロジェクト共通の「自分の好み」（例: 「日本語で説明してください」「変更を加える前に計画を見せてください」等）を 2〜3 行で。書きすぎないのがコツ。</p>
+            <strong>ホームの <code>~/.gemini/GEMINI.md</code> を書いてみる（家のローカル PC で）</strong>
+            <p>全プロジェクト共通の「自分の好み」（例: 「日本語で説明してください」「変更を加える前に計画を見せてください」等）を 2〜3 行で。書きすぎないのがコツ。<strong>注意</strong>: Codespaces の <code>~/.gemini/GEMINI.md</code> は Codespace を作り直すと消えるため、永続化したい人は家のローカル PC または GitHub の dotfiles リポジトリで管理する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>「Remember that ○○」型を 1 回試す</strong>
+            <p>Gemini CLI に対話で <em>Remember that I prefer ○○</em> と頼んでみて、AI 自身が <code>save_memory</code> ツールでメモリに追記する動きを観察する（公式チュートリアル例の追体験）。<strong>挙動の違い</strong>: 「自分で GEMINI.md を編集する（C）」と「対話で書かせる（B）」の両方を経験すると、用途による使い分けが見えてくる。</p>
           </div>
         </div>
         <div class="lesson-task">
