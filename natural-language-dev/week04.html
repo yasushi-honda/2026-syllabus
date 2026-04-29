@@ -97,6 +97,7 @@
             <p><strong>今日のゴール提示（15分）</strong></p>
             <ul>
               <li>今日のキーワードは <code>GEMINI.md</code>。これは <strong>Gemini CLI が起動するときに自動で読む置き手紙</strong>。公式は「a powerful feature for providing <strong>instructional context</strong> to the Gemini model」（Gemini モデルに指示用のコンテキストを与えるための機能）と説明している</li>
+              <li>動作の核心は<strong>「見つけた全ファイルを連結し、毎プロンプトでモデルに送信する」</strong>こと（公式: <em>concatenates the contents of all found files, and sends them to the model with every prompt</em>）。一度書けば、各依頼の前段に毎回くっついて AI に渡る</li>
               <li>毎回チャット欄で「TypeScript で書いて」「インデントは2スペースで」と言わなくても、書いておけば毎回参照してくれる</li>
               <li>今日は <strong>裸で1回</strong> → <strong>GEMINI.md を書く</strong> → <strong>同じ依頼を再投入して比べる</strong> という Before/After 形式で進める</li>
             </ul>
@@ -177,16 +178,17 @@
           <div class="timeline-body">
             <p><strong>公式の最低限（10分）</strong></p>
             <ul>
-              <li><code>GEMINI.md</code> は Gemini CLI が起動時に自動で読む <strong>context file</strong>。公式用語では <strong>instructional context</strong>（指示用コンテキスト）と呼ばれ、複数ファイルが<strong>階層的に</strong>合成される（公式: <em>hierarchical memory</em>）</li>
+              <li><code>GEMINI.md</code> は Gemini CLI が起動時に自動で読む <strong>context file</strong>。中身は <strong>instructional context</strong>（指示用コンテキスト）と呼ばれ、複数ファイルが<strong>階層構造で読み込まれ、連結（concatenate）されて毎プロンプトでモデルに送られる</strong>。この合成された指示文の塊を公式は <em>hierarchical memory</em> と呼ぶ</li>
+              <li><strong>用語整理</strong>: <code>GEMINI.md</code> がファイル本体（<em>context file</em>）／その中身が指示用コンテキスト（<em>instructional context</em>）／全 GEMINI.md を連結したものが階層的メモリ（<em>hierarchical memory</em>）</li>
               <li>3 段階の階層が公式に定義されている:
                 <ol>
                   <li><strong>グローバル</strong>: <code>~/.gemini/GEMINI.md</code>（自分のホーム）。全プロジェクト共通の「自分の好み」を書く場所</li>
-                  <li><strong>ワークスペース</strong>: 開いているプロジェクトのルートに置いた <code>GEMINI.md</code>。<strong>今日書くのはここ</strong></li>
+                  <li><strong>ワークスペース</strong>: 開いているプロジェクトのルート（およびその親ディレクトリ）に置いた <code>GEMINI.md</code>。<strong>今日書くのはここ</strong></li>
                   <li><strong>Just-in-time</strong>: AI がツールでアクセスしたファイルの祖先ディレクトリにあるもの（自動で拾われる）</li>
                 </ol>
               </li>
-              <li>ファイル名は <code>GEMINI.md</code> がデフォルト。<code>settings.json</code> の <code>context.fileName</code> で <code>AGENTS.md</code> 等に変更可能だが、今日は標準のままで OK</li>
-              <li>Gemini CLI 起動中は <code>/memory show</code> で「いま読み込まれている context file 一覧」を確認できる</li>
+              <li>ファイル名は <code>GEMINI.md</code> がデフォルト。<code>settings.json</code> の <code>context.fileName</code> で <code>AGENTS.md</code> 等に変更可能（配列で <code>["AGENTS.md", "CONTEXT.md", "GEMINI.md"]</code> のように複数指定もできる）だが、今日は標準のままで OK</li>
+              <li>Gemini CLI 起動中は <code>/memory show</code> で<strong>いま AI に渡される指示文の全文</strong>（連結された階層的メモリ）を確認できる。読み込まれた GEMINI.md の<strong>個数</strong>は CLI のフッターにも表示される</li>
             </ul>
             <p><strong>講師の最小サンプルを見る（10分）</strong></p>
             <ul>
@@ -206,8 +208,8 @@
 - 既存のテストを壊さない
 </code></pre>
               </li>
-              <li>長く書けば良いものではない。<strong>長すぎると AI が読み流す</strong>ので、まず3〜5 行・最大 1 画面で OK</li>
-              <li>公式ドキュメントにも例として「<em>When you generate new TypeScript code, follow the existing coding style</em>」「<em>Ensure all new functions and classes have JSDoc comments</em>」など、短い指示の積み重ねが推奨されている</li>
+              <li>長く書けば良いものではない。長くするほど<strong>毎プロンプトで送信される指示が膨らみ</strong>、第2回で扱った <strong>U字型精度カーブ</strong>の影響で AI が真ん中の指示を読み飛ばしやすくなる。まず3〜5 行・最大 1 画面で OK（教材としての経験則）</li>
+              <li>公式ドキュメントにも例として「<em>When you generate new TypeScript code, follow the existing coding style</em>」「<em>Ensure all new functions and classes have JSDoc comments</em>」など、短い指示を箇条書きで積み重ねる書き方が<strong>例として示されている</strong>（公式は「推奨」とは書いていない、あくまで例）</li>
             </ul>
             <p><strong>各自が書く（30分）</strong></p>
             <ul>
@@ -236,8 +238,8 @@
           <div class="timeline-body">
             <p><strong>Gemini CLI を再起動（5分）</strong></p>
             <ul>
-              <li>新しい <code>GEMINI.md</code> を読み込ませるため、起動中の Gemini CLI を一度終了して再起動（または <code>/memory refresh</code> を実行）</li>
-              <li>起動後、<code>/memory show</code> で <code>GEMINI.md</code> がちゃんと読み込まれているかを確認する</li>
+              <li>新しい <code>GEMINI.md</code> を読み込ませるため、起動中の Gemini CLI を一度終了して再起動（または起動したまま <code>/memory reload</code> を実行。<code>refresh</code> もエイリアスで同じ動作だが、<strong>公式の正式名は <code>reload</code></strong>）</li>
+              <li>再起動後、<code>/memory show</code> で<strong>書いた指示が AI に渡る指示文に含まれているか</strong>を確認する（公式仕様: 連結された hierarchical memory の全文表示）</li>
             </ul>
             <p><strong>同じ依頼をもう一度投げる（15分）</strong></p>
             <ul>
@@ -318,10 +320,11 @@
     <div class="syllabus-section">
       <h2>参考リンク</h2>
       <ul>
-        <li><a href="https://www.geminicli.com/docs/cli/gemini-md/" target="_blank" rel="noopener">Gemini CLI Docs — GEMINI.md（公式）</a> — 配置場所・階層・記述例の一次情報</li>
-        <li><a href="https://www.geminicli.com/docs/get-started/configuration/" target="_blank" rel="noopener">Gemini CLI Docs — Configuration（公式）</a> — <code>settings.json</code> の <code>context.fileName</code> 等の設定全般</li>
+        <li><a href="https://www.geminicli.com/docs/cli/gemini-md/" target="_blank" rel="noopener">Gemini CLI Docs — Provide context with GEMINI.md files（公式）</a> — 配置場所・階層・記述例の一次情報</li>
+        <li><a href="https://www.geminicli.com/docs/reference/configuration" target="_blank" rel="noopener">Gemini CLI Docs — Configuration reference（公式）</a> — <code>settings.json</code> の <code>context.fileName</code> 等の設定全般</li>
+        <li><a href="https://www.geminicli.com/docs/reference/commands" target="_blank" rel="noopener">Gemini CLI Docs — Commands reference（公式）</a> — <code>/memory show</code> / <code>/memory reload</code> 等の slash commands 一覧</li>
         <li><a href="https://github.com/google-gemini/gemini-cli" target="_blank" rel="noopener">google-gemini/gemini-cli</a> — Gemini CLI 公式リポジトリ（インストール・コマンド一覧）</li>
-        <li><a href="https://geminicli.com/docs/resources/quota-and-pricing/" target="_blank" rel="noopener">Gemini CLI — Quota & Pricing</a> — 無料枠・モデル・レート制限の公式説明</li>
+        <li><a href="https://www.geminicli.com/docs/resources/quota-and-pricing/" target="_blank" rel="noopener">Gemini CLI — Quotas and pricing（公式）</a> — 無料枠・モデル・レート制限の公式説明</li>
         <li><a href="https://en.wikipedia.org/wiki/Vibe_coding" target="_blank" rel="noopener">Vibe coding — Wikipedia</a> — Andrej Karpathy が提唱した用語の経緯と批判の整理</li>
       </ul>
     </div>
