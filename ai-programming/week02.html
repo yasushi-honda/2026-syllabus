@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>第2回 はじめてのAI体験 | AI活用プログラミング基礎</title>
+  <title>第2回 自分だけのAIキャラをつくろう（Gem入門） | AI活用プログラミング基礎</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -24,7 +24,7 @@
       </nav>
       <div class="page-title-area">
         <div>
-          <h1 class="page-title">はじめてのAI体験</h1>
+          <h1 class="page-title">自分だけのAIキャラを<wbr>つくろう（Gem入門）</h1>
           <div class="page-meta-badges">
             <span class="page-badge">Week 2</span>
             <span class="page-badge">木曜 3・4限</span>
@@ -40,15 +40,15 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">Geminiとの初対話——自分のペースで質問をたくさん投げてみる</div>
+          <div class="lesson-overview-value">Gemini の <strong>Gem</strong> 機能で「自分だけのAIキャラ」を作り、Canvas でミニアプリを作ってもらう</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">Gemini / 質問のバリエーション / 応答の観察 / 自分の発見をメモする</div>
+          <div class="lesson-overview-value">Gem / カスタム指示 / 自分だけのAIキャラ / Canvas / 制御する側に回る</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
-          <div class="lesson-overview-value">Googleアカウントにログインできる状態（第1回完了）・メモ用のアプリ or ノート</div>
+          <div class="lesson-overview-value">第1回完了（Googleアカウントでログイン可・Gemini を開いたことがある）／第1回で気づいた「AIは時々間違える／万能じゃない」感覚を持って来る</div>
         </div>
       </div>
     </div>
@@ -56,17 +56,17 @@
     <div class="syllabus-section">
       <h2>この回のゴール</h2>
       <ul>
-        <li><strong>Geminiとの初対話</strong>を、自分のペースで落ち着いて楽しむ</li>
-        <li>短い質問・長い質問・丁寧な質問・ざっくりした質問——<strong>聞き方を変えると応答も変わる</strong>ことを体感する</li>
-        <li>AIの答えを<strong>じっくり観察する</strong>（「正しそう」「怪しい」「面白い」の3つに分けて見る）</li>
-        <li>自分の発見を<strong>自分の言葉でメモに残す</strong>習慣をつける（この授業の土台になる）</li>
-        <li>「AIは魔法ではなく道具」と感じられるようになる</li>
+        <li>Gemini の <strong>Gem</strong> 機能を初めて触り、「自分だけのAIキャラ」を1人作る</li>
+        <li>名前・性格・話し方・口調・得意分野・「やらないこと」を<strong>カスタム指示</strong>に書ける</li>
+        <li>作ったAIキャラと 5〜10 往復会話して、<strong>違和感があったらカスタム指示を直して再対話</strong>するループを体験する</li>
+        <li>自分のAIキャラに <strong>Canvas</strong> でミニアプリ（じゃんけん／占いカード／クイズ等）を1つ作ってもらう</li>
+        <li>「AIは使うもの」から<strong>「AIは自分が育てるもの」</strong>への意識転換</li>
       </ul>
     </div>
 
     <div class="syllabus-section">
       <h2>授業の流れ</h2>
-      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。先週ログインに不安があった人もゆっくり進めます。</p>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。前回ログインに不安があった人もゆっくり進めます。</p>
 
       <div class="timeline">
 
@@ -75,28 +75,29 @@
             <span class="timeline-time">1限 前半</span>
             <span class="timeline-duration">約40分</span>
           </div>
-          <h3>先週の振り返り＆今日のウォーミングアップ</h3>
+          <h3>前回の振り返り＆今日のゴール</h3>
           <div class="timeline-body">
-            <p><strong>前回課題の確認（10分）</strong></p>
+            <p><strong>前回の体験を思い出す（10分）</strong></p>
             <ul>
-              <li>Googleアカウントでログインできたか、全員確認</li>
-              <li>うまくいかなかった人は授業内で<strong>個別サポート</strong>——手を挙げてください</li>
-              <li>家からGeminiを触ってみた人の体験を数人ピックアップして共有</li>
+              <li>第1回で AI に質問を投げて<strong>「ちょっと違うかも」</strong>と感じた応答を、近くの人と1分シェア</li>
+              <li>「AIは自信たっぷりに間違える」体験を、今日の出発点として再確認</li>
             </ul>
-            <p><strong>今日やることの見取り図（15分）</strong></p>
+            <p><strong>みんなのアンケート結果を共有（10分）</strong></p>
             <ul>
-              <li>今日は<strong>Geminiにたくさん質問を投げる日</strong>です（1人あたり10〜20個を目標）</li>
-              <li>「正解」を出すのが目的ではなく、<strong>応答の違いを観察する</strong>のが目的</li>
-              <li>自分が「これ面白い」と思ったやり取りをメモに残していく</li>
+              <li>前回授業後アンケートでは <strong>約8割（80.8% ＝ 38.5% ＋ 42.3%）</strong>の人が「AI を使ってやってみたいことが見えてきた／見えてきたかな」と回答。残り <strong>19.2%</strong> は「まだ見えていない」——今日でその割合を一緒に減らしていく</li>
+              <li>自由記述で多かった声: <em>「ミニゲームをたくさん作りたい」「とんでもないものを作りたい」「アイデアを実現したい」</em></li>
+              <li>講師: 「<strong>その期待、今日と来週からどんどん回収していきます</strong>」と宣言</li>
             </ul>
-            <p><strong>ウォーミングアップ質問（15分）</strong></p>
+            <p><strong>今日のゴール提示（20分）</strong></p>
             <ul>
-              <li>講師と一緒に1つ目の質問を投げてみる（例: <em>「今日の天気に合うおすすめの飲み物は？」</em>）</li>
-              <li>画面下部の<strong>入力欄</strong>を使う。送信ボタンの位置をもう一度確認（UIが先週から変わっていたらその場で共有）</li>
-              <li>応答が返ってきたら、<strong>最後まで読む</strong>——途中で止めないで、1回だけでも全部読んでみる</li>
+              <li>今日のキーワードは <strong>Gem</strong>（ジェム）。Gemini の中に <strong>「自分専用のAIキャラ」を作って保存できる機能</strong>。<strong>2024 年 8 月</strong>に Gemini Advanced 向けに登場し、<strong>2025 年 3 月</strong>から無料プランや学校アカウントでも使えるようになった機能</li>
+              <li>これまでの第1回は「AIに質問を投げる」体験だったが、今日からは <strong>AIに『性格』『話し方』『得意分野』を最初に教えておく</strong>体験に進化する</li>
+              <li>例: <em>「めっちゃ褒めてくれる関西弁の先輩AI」</em>／<em>「ツンデレで毒舌なネコAI」</em>／<em>「敬語で丁寧に説明するベテラン先生AI」</em> など、性格は何でもアリ</li>
+              <li>仕上げに、自分のAIキャラに <strong>Canvas</strong>（Gemini に内蔵された「画面を作る」機能）でミニアプリを1個作ってもらう「ご褒美リクエスト」をする</li>
+              <li>大事なメッセージ: <strong>「AIは使うもの」→「AIは自分が育てるもの」</strong> への第一歩</li>
             </ul>
             <div class="lesson-tip">
-              <strong>この授業の合言葉:</strong> 「上手に使う」より「<strong>たくさん触る</strong>」が大事です。今日は量を優先します。
+              <strong>今日の合言葉:</strong> 「<strong>AIは育てて、自分のチームに迎える</strong>」。指示を書けば書くほど、自分にフィットする相棒になります。
             </div>
           </div>
         </div>
@@ -106,24 +107,58 @@
             <span class="timeline-time">1限 後半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>簡単な質問を投げてみる個人演習（前半）</h3>
+          <h3>Gem を作ってみる——自分だけのAIキャラ誕生</h3>
           <div class="timeline-body">
-            <p><strong>ラウンド1: 自分の好きな話題で3つ質問（20分）</strong></p>
+            <div class="lesson-tip">
+              <strong>用語のお守り:</strong> 「<strong>指示</strong>（カスタム指示）」とは、AI に最初に渡しておく<strong>長期的なキャラ設定書</strong>。普段の質問（プロンプト）が「お願いごと」なら、カスタム指示は「キャラ設定書」。両者は別物として使い分けます。
+            </div>
+            <p><strong>Gem の場所を確認（5分）</strong></p>
             <ul>
-              <li>音楽・アニメ・ゲーム・スポーツ・食べ物・趣味、なんでもOK</li>
-              <li>例: <em>「◯◯（アーティスト名）の代表曲を5つ教えて」</em>／<em>「スポーツの中で一番けが人が少ないのは？」</em></li>
-              <li>注意: <strong>自分の名前・住所・電話番号・学籍番号・友達の名前など個人情報は入力しない</strong>。理由は、<strong>入力した内容がAIの改善に使われたり、思わぬ形で保存されたりする可能性</strong>があるため</li>
+              <li><a href="https://gemini.google.com" target="_blank" rel="noopener">gemini.google.com</a> を開く</li>
+              <li>左サイドバーの「<strong>Gem を表示</strong>」（英語表示なら「<strong>Explore Gems</strong>」）をクリック</li>
+              <li>※学校アカウントでメニューが出ない場合 → 講師に挙手。<strong>個人 Google アカウントに切り替える</strong>か、後述のフォールバック手順に進む</li>
             </ul>
-            <p><strong>ラウンド2: 学習に関する質問を3つ（15分）</strong></p>
+            <p><strong>講師の見本を3つ実演（10分）</strong></p>
             <ul>
-              <li>例: <em>「HTMLって何？初めての人にもわかるように」</em>／<em>「プログラミングを覚えるコツ」</em></li>
-              <li>情報系学科の1年生として、<strong>これから学ぶことをAIにちょっと聞いてみる</strong>練習</li>
+              <li>講師がスクリーンで Gem を3パターン作って見せる:
+                <ol>
+                  <li><strong>めっちゃ褒める関西弁先輩AI</strong>: 「あんた天才やん！」を連発するタイプ</li>
+                  <li><strong>ツンデレ毒舌ネコAI</strong>: 「べ、別にあんたのために答えるんじゃないんだからね…ニャ」</li>
+                  <li><strong>真面目な研究者AI</strong>: 必ず「なぜそうなるのか」の理由付きで答える</li>
+                </ol>
+              </li>
+              <li>同じ質問（例: 「明日の予定の立て方を教えて」）を3つの Gem に投げて、<strong>同じ AI でもキャラ次第で出力がここまで違う</strong>を見せる</li>
             </ul>
-            <p><strong>ラウンド3: ちょっと変な質問を1つ（15分）</strong></p>
+            <p><strong>自分の AI キャラを設計する（10分）</strong></p>
             <ul>
-              <li>例: <em>「犬が二足歩行を覚えたら世の中どう変わる？」</em>／<em>「火星で焼きそばを作る手順」</em></li>
-              <li><strong>AIが戸惑う質問</strong>を投げると、AIの「できること・苦手なこと」が見えやすい</li>
+              <li>メモアプリかノートに、以下の <strong>5項目</strong>をまず書き出す（コードを書く前の「設計」）:
+                <ol>
+                  <li><strong>名前</strong>: 例「タロウ」「ニャー助」「先生」</li>
+                  <li><strong>性格</strong>: 例「優しい」「皮肉屋」「いつもポジティブ」「クール」</li>
+                  <li><strong>話し方・口調</strong>: 例「敬語」「タメ口」「関西弁」「語尾に『〜のだ』を付ける」</li>
+                  <li><strong>得意分野</strong>: 例「ゲーム」「料理」「勉強の質問」「相談を聞いてくれる」</li>
+                  <li><strong>やらないこと</strong>: 例「悪口を言わない」「むずかしい言葉を使わない」「個人情報を聞かない」</li>
+                </ol>
+              </li>
+              <li>5項目とも本気で詰める必要なし。<strong>1〜2項目だけ強くこだわる</strong>と個性が出る</li>
             </ul>
+            <p><strong>Gem を実際に作る（25分）</strong></p>
+            <ul>
+              <li>「Gem を表示」画面で <strong>「＋ 新しい Gem」</strong>（公式日本語ヘルプの表記は「Gem を作成」）をクリック</li>
+              <li>名前を入力、<strong>「指示」</strong>欄（公式日本語ヘルプの正式名。授業内では分かりやすく「カスタム指示」とも呼ぶ）に、メモした5項目を文章にして貼る。例:
+                <pre><code>あなたの名前は「ニャー助」です。
+ツンデレで毒舌なネコのキャラクターとして話してください。
+口調は「〜ニャ」「〜だニャ」を語尾に付けてください。
+得意分野はゲームと相談ごとです。
+ただし、悪口や差別的な発言は絶対にしないでください。
+</code></pre>
+              </li>
+              <li>保存できたら、その Gem との会話画面に入って <strong>1つだけ質問を投げる</strong>（動作確認）</li>
+              <li>動かない／メニューが出ない人へのフォローは講師が個別対応</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>うまく書けない人へ:</strong> 5項目のうち「<strong>名前と話し方</strong>」だけ書ければOK。残りは2限で対話しながら調整します。
+            </div>
           </div>
         </div>
 
@@ -139,32 +174,48 @@
             <span class="timeline-time">2限 前半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>応答をじっくり観察する——「3つの色」で仕分ける</h3>
+          <h3>AIキャラと対話して育てる——「育てる」体感</h3>
           <div class="timeline-body">
-            <p><strong>観察のフレームワーク（10分）</strong></p>
-            <p>今日は<strong>3つの色のラベル</strong>でAIの応答を仕分けします（メモに色付け or 印をつける）:</p>
+            <p><strong>5〜10 往復、自分のAIと話す（25分）</strong></p>
             <ul>
-              <li><strong>🟢 正しそう</strong>: 事実と合っていそう、役に立ちそう</li>
-              <li><strong>🟡 怪しい</strong>: 本当かな？と思った、出典を確認したい</li>
-              <li><strong>🔵 面白い</strong>: 思わず笑った、予想外だった、クリエイティブ</li>
-            </ul>
-            <p><strong>ラウンド4: 同じ質問を聞き方を変えて投げる（25分）</strong></p>
-            <ul>
-              <li>1つのテーマを選び、同じ内容を<strong>3通り</strong>の聞き方で投げてみる</li>
-              <li>例: 「ラーメンのおすすめは？」
+              <li>テーマは何でもOK。例:
                 <ul>
-                  <li>短く: <em>「ラーメンのおすすめ」</em></li>
-                  <li>丁寧に: <em>「大阪に住んでいる学生におすすめのラーメン店を3つ、理由つきで教えてください」</em></li>
-                  <li>ちょっと変化: <em>「ラーメンが苦手な人が初めて食べやすいラーメンは？」</em></li>
+                  <li>「自己紹介してくれる？」（最初に必ず1回投げる）</li>
+                  <li>「最近ハマってる○○について話したい」</li>
+                  <li>「明日の朝に困らないアドバイス3つ」</li>
+                  <li>「気分が落ち込んだときに言ってほしい言葉」</li>
+                  <li>個人情報・住所・本名・学籍番号は<strong>絶対に入れない</strong>（前回と同じルール）</li>
                 </ul>
               </li>
-              <li>3つの応答を<strong>横に並べて比べる</strong>——同じテーマでも答えの中身が変わることを発見する</li>
+              <li>5〜10 往復は意外と短い。気がついたら 25 分が経つ感覚を体験</li>
             </ul>
-            <p><strong>ラウンド5: 自由演習（15分）</strong></p>
+            <p><strong>違和感を見つけて、カスタム指示を直す（20分）</strong></p>
             <ul>
-              <li>自分の興味で好きに質問——時間いっぱい続ける</li>
-              <li>「🟢/🟡/🔵」のラベルをどんどんメモに付ける</li>
+              <li>会話していて「<strong>あれ、思ったキャラと違う</strong>」と感じた瞬間を 1 つ特定する。例:
+                <ul>
+                  <li>関西弁にしたつもりが標準語になる</li>
+                  <li>褒めてほしいのに普通に答えるだけ</li>
+                  <li>毒舌のはずが優しすぎる</li>
+                </ul>
+              </li>
+              <li>Gem の編集画面に戻って<strong>カスタム指示を1〜2行追加・修正</strong>する。例:
+                <ul>
+                  <li>「<strong>必ず</strong>関西弁で話してください。標準語は禁止」</li>
+                  <li>「ユーザーが何を言っても、まず最初に褒めてから本題に入ってください」</li>
+                  <li>「優しい言葉を使わず、皮肉と毒舌で答えてください」</li>
+                </ul>
+              </li>
+              <li>修正後、もう一度会話を投げて<strong>変化を確認</strong>。ここで「あ、AIが自分の言うことを聞き始めた！」を体験する</li>
+              <li>時間が余ったら 2 周目の修正に進む</li>
             </ul>
+            <p><strong>クラスでチラ見せタイム（5分）</strong></p>
+            <ul>
+              <li>近くの2〜3人組で「<strong>俺/私のAIに『自己紹介して』って言ったらどんなこと言った？</strong>」を見せ合う</li>
+              <li>面白かった応答に「いいね」のリアクションを送り合う（声でOK）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>大事な気づき:</strong> 「カスタム指示を直す → 会話する → また直す」のループそのものが、<strong>これから15回ずっと続く授業の中核</strong>です。
+            </div>
           </div>
         </div>
 
@@ -173,21 +224,41 @@
             <span class="timeline-time">2限 後半</span>
             <span class="timeline-duration">約30分</span>
           </div>
-          <h3>今日の発見を共有する</h3>
+          <h3>ご褒美リクエスト——AIに Canvas でミニアプリを作ってもらう</h3>
           <div class="timeline-body">
-            <p><strong>ペア共有（15分）</strong></p>
+            <p><strong>Canvas のおさらい（5分）</strong></p>
             <ul>
-              <li>近くの人と2人組になり、<strong>🟢🟡🔵のラベルから1つずつ</strong>選んで紹介し合う</li>
-              <li>「これは面白い応答だった」「これは怪しいと思った」など、<strong>自分の判断を口に出す</strong>練習</li>
+              <li>Gemini に内蔵された「画面右側にアプリやコードを生成して動かす」機能。<strong>Gem からも Canvas を呼び出せる</strong>（2025 年 7 月に Google が公式案内）</li>
+              <li>使い方: 自分の Gem との会話で「<strong>Canvas で○○を作って</strong>」と頼むだけ。AIが画面右側に動くアプリを生成する</li>
             </ul>
-            <p><strong>クラス共有（15分）</strong></p>
+            <p><strong>自分のAIにミニアプリを依頼する（20分）</strong></p>
             <ul>
-              <li>何人かに前に出てもらい、<strong>🟡（怪しい）</strong> の応答を1つ紹介してもらう</li>
-              <li>教員がコメント: 「AIは<strong>自信たっぷりに間違える</strong>ことがあります。これを見抜く力が、これから15回ずっと大事になります」</li>
-              <li>「🔵（面白い）」の応答で一番ウケたものをクラスで投票（軽く盛り上がる）</li>
+              <li>ミニアプリのアイデア（自分が作りたいものを1つ選ぶ）:
+                <ul>
+                  <li>「じゃんけんゲーム」</li>
+                  <li>「今日の運勢を占うカード」</li>
+                  <li>「3択クイズ（テーマ自由）」</li>
+                  <li>「タイマー付きカウントダウン」</li>
+                  <li>「気分に合う曲ジャンル提案ツール」</li>
+                  <li>「好きなアニメの名言ジェネレータ」</li>
+                  <li>その他、自分が「あったら楽しい」と思うもの何でも</li>
+                </ul>
+              </li>
+              <li>自分のAIキャラに自然な日本語で頼む。例:
+                <pre><code>Canvas でじゃんけんゲームを作ってくれない？
+グー・チョキ・パーのボタンを押すと、あなたが勝手に手を出して勝敗が出るやつ。
+キャラクターのセリフは、いつもの口調で頼むね。
+</code></pre>
+              </li>
+              <li>動かなかったら頼み直す。完璧じゃなくていい——<strong>「自分のAIが、自分のために動くものを作ってくれた」</strong>体験こそが今日のゴール</li>
+            </ul>
+            <p><strong>共有タイム（5分）</strong></p>
+            <ul>
+              <li>近くの人に <strong>「俺/私のAIキャラが作ってくれたコレ、見て！」</strong>とチラ見せ</li>
+              <li>「自分の AI が作った」 という感覚を、<strong>声に出して言う</strong>のが今日のフィナーレ</li>
             </ul>
             <div class="lesson-tip">
-              <strong>今日いちばん大事なこと:</strong> 「AIは完璧じゃない」を<strong>自分の目で確かめた</strong>——それが今日の最大の成果です。
+              <strong>動かなかった人へ:</strong> Canvas はまだ生成系の機能で、<strong>毎回完璧には動きません</strong>。動かなかったプロセスも体験のうち。「依頼して、動かなくて、頼み直す」も学びです。
             </div>
           </div>
         </div>
@@ -197,13 +268,13 @@
             <span class="timeline-time">まとめ</span>
             <span class="timeline-duration">約10分</span>
           </div>
-          <h3>次回予告＆今日の振り返り</h3>
+          <h3>振り返り＆次回予告</h3>
           <div class="timeline-body">
             <ul>
-              <li>次回（第3回）: <strong>NotebookLM入門</strong>——「自分だけのAI」を育て始める最初の一歩</li>
-              <li>第3回から<strong>【学習データ①】自己紹介シート</strong>が登場。自分用のAIノートを作ります</li>
-              <li>今日のメモ（🟢🟡🔵ラベル付き）は<strong>捨てないで残しておく</strong>——後で見返すと成長が見える</li>
-              <li>家で気が向いたら、Geminiにもう少し質問を投げてみる（推奨）</li>
+              <li>今日のキーワード: <strong>Gem / カスタム指示 / 育てる / Canvas / 自分のAIキャラ</strong></li>
+              <li>覚えてほしいこと: 「<strong>AIは使うもの</strong>」から「<strong>AIは育てるもの</strong>」へ。指示を直して再対話するループが、これから15回ずっと続く</li>
+              <li>次回（第3回）: <strong>NotebookLM入門</strong>。今日の Gem は便利だけど、家でログインし直すと消えたり、長い資料を全部覚えられなかったりする限界がある。NotebookLM は<strong>自分の資料を読み込ませて知識ごと育てられる</strong>場所。<strong>【学習データ①】自己紹介シート</strong>が初登場</li>
+              <li>家で気が向いたら、自分のAIキャラに別のミニアプリを作ってもらってみる（任意・推奨）</li>
             </ul>
           </div>
         </div>
@@ -212,27 +283,37 @@
     </div>
 
     <div class="syllabus-section">
+      <h2>もし Gem が学校アカウントで使えなかったら（フォールバック）</h2>
+      <p>公式: 「Deep Research and Gems are available in the Gemini app by default — there is no admin control for this feature」（Workspace Updates 2025-03-12）。<strong>Gem 機能自体には学校管理者の制御はありません</strong>。ただし、学校管理者が <strong>Gemini アプリ自体</strong>を無効化している場合は Gem も使えません。その場合は以下のどちらかで進めてください。</p>
+      <ul>
+        <li><strong>A. 個人 Google アカウントに切り替えてログイン</strong>（無料で Gem 機能を利用可能）</li>
+        <li><strong>B. 通常の Gemini チャットで「カスタム指示風」運用</strong>: 会話の最初に必ず「<em>あなたは○○というキャラクターです。性格は△△、口調は××で答えてください。</em>」を貼り付けてから本題に入る。<strong>保存はされない</strong>が、その回のチャット中はキャラとして振る舞ってくれる。Canvas の依頼も同じチャット内で可能</li>
+      </ul>
+      <p>どちらでも今日のゴール（自分のAIキャラを定義 → 対話 → Canvas でミニアプリ）は達成できます。</p>
+    </div>
+
+    <div class="syllabus-section">
       <h2>課題・次回までにやること</h2>
       <div class="lesson-tasks">
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>今日のメモを整理して保存</strong>
-            <p>授業中に取った 🟢🟡🔵 ラベル付きのメモを整理し、スマホやPCの<strong>見つけやすい場所</strong>に保存。紙のノートでも可。第3回でNotebookLMに入れる素材の候補になります。</p>
+            <strong>自分のAIキャラのカスタム指示をスクショ or テキスト保存</strong>
+            <p>授業で書いたカスタム指示を、自分の見つけやすい場所（メモアプリ・スマホのメモ・PCのテキストファイル等）に保存。第3回以降で <strong>NotebookLM 版「自分だけのAI」</strong>を作るときの素材になります。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
-            <strong>家で5問だけGeminiに質問</strong>
-            <p>授業以外の場面でAIに触る練習。「今日の晩ご飯」「今週末の過ごし方アイデア」など気軽な話題で。</p>
+            <strong>家で別のミニアプリを Canvas で1個作ってもらう</strong>
+            <p>授業で作ったAIキャラに、家から別のミニアプリを依頼してみる。「○○ジェネレータ」「○○占い」など、気軽な題材で。動かなかった話も次回の共有ネタになります。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
-            <strong>🟡（怪しい）応答を1つだけ検索で裏どり</strong>
-            <p>授業中に「怪しい」と感じた応答があれば、同じ内容をGoogle検索で確認してみる。「AIが間違えていた」を見つけられたら大収穫。</p>
+            <strong>「キャラじゃない自分のAI」も1つ作ってみる</strong>
+            <p>キャラを付けないバージョン（例: <em>「丁寧に専門用語を解説してくれるアシスタント」</em>）も作ってみる。<strong>用途で Gem を使い分ける</strong>感覚が身につきます。</p>
           </div>
         </div>
       </div>
@@ -241,9 +322,12 @@
     <div class="syllabus-section">
       <h2>参考リンク</h2>
       <ul>
-        <li><a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a> — 今日たくさん質問を投げた対話型AI</li>
-        <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> — 次回（第3回）から使う「自分だけのAI」の場所</li>
-        <li><a href="https://support.google.com/gemini/" target="_blank" rel="noopener">Gemini 公式ヘルプ</a> — 使い方で困ったときの公式マニュアル</li>
+        <li><a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a> — 今日 Gem を作った場所</li>
+        <li><a href="https://gemini.google/overview/gems/" target="_blank" rel="noopener">Gem でカスタム エキスパートを作成（公式）</a> — 「Gem は、どんなトピックにも対応できるあなた専用のカスタム AI エキスパートです」</li>
+        <li><a href="https://gemini.google/overview/canvas/" target="_blank" rel="noopener">Gemini Canvas — AI を活用して 1 か所で記述、コーディング、作成（公式）</a></li>
+        <li><a href="https://support.google.com/gemini/answer/15235603?hl=ja" target="_blank" rel="noopener">カスタム Gem 作成のヒント - Gemini アプリ ヘルプ（公式）</a> — 指示の書き方の公式マニュアル</li>
+        <li><a href="https://workspaceupdates.googleblog.com/2025/03/gemini-gems-deep-research-available-for-more-google-workspace-customers.html" target="_blank" rel="noopener">Workspace Updates — Gems available for more Google Workspace customers (2025-03-12)</a> — 学校アカウントで Gem が使える根拠（教員向け）</li>
+        <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> — 次回（第3回）から使う「自分だけのAI」を本格的に育てる場所</li>
       </ul>
     </div>
 
