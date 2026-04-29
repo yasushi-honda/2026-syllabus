@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第4回 Vibe Codingの限界とGEMINI.mdで落ち着かせる | 自然言語開発</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev.html">自然言語開発</a>
+        <span>/</span>
+        <span>第4回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">Vibe Codingの限界と<wbr>GEMINI.mdで落ち着かせる</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 4</span>
+            <span class="page-badge">木曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">Gemini CLI の出力のブレを体感し、<code>GEMINI.md</code> という置き手紙で落ち着かせる</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">Vibe Coding / 出力のブレ / GEMINI.md / instructional context / Before&nbsp;/&nbsp;After 比較</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">進級制作リポジトリがCodespacesで開ける状態・Gemini CLIの認証が完了している状態（第1回完了）・第3回の <code>docs/cli-comparison.md</code> を保存済み</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>Vibe Coding で実際にやらかしてもらい、Gemini CLI の<strong>出力のブレ</strong>（使用言語の混在・スタイル逸脱・関係ないファイルの変更）を自分の目で確認する</li>
+        <li><code>GEMINI.md</code> が「<strong>Gemini CLI が起動時に自動で読む置き手紙</strong>」であることを理解する</li>
+        <li>3〜5 行の最小 <code>GEMINI.md</code> を自分の進級制作に書ける</li>
+        <li>同じ依頼を <strong>Before/After</strong> で再実行し、出力が落ち着く瞬間を体感する</li>
+        <li>「指示を毎回書かなくても、ある程度言うことを聞いてくれる状態」を自分の手で作れるようになる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の振り返り＆「Gemini CLI、雑だなと思った瞬間」共有</h3>
+          <div class="timeline-body">
+            <p><strong>前回課題の共有（10分）</strong></p>
+            <ul>
+              <li>第3回の <code>docs/cli-comparison.md</code>（使い分け方針メモ）から、印象に残った発見を1つ口頭共有</li>
+              <li>Copilot CLI が動かなかった人は Gemini CLI 単体の所感でOK</li>
+            </ul>
+            <p><strong>「Gemini CLI、雑だなと思った瞬間」を出し合う（15分）</strong></p>
+            <ul>
+              <li>第3回 Vibe Coding で気になった出力を、近くの人とペアで2〜3個ずつ共有
+                <ul>
+                  <li>頼んでないファイルまで触られた</li>
+                  <li>使ってる言語と違う言語で書かれた</li>
+                  <li>インデント・命名がプロジェクトとズレた</li>
+                  <li>関係ないライブラリを勝手に追加された 等</li>
+                </ul>
+              </li>
+              <li>「これって自分が悪いの？AI が悪いの？」を一緒に考える——答えは <strong>「指示文だけだと AI が前提を知らないから」</strong></li>
+            </ul>
+            <p><strong>今日のゴール提示（15分）</strong></p>
+            <ul>
+              <li>今日のキーワードは <code>GEMINI.md</code>。これは <strong>Gemini CLI が起動するときに自動で読む置き手紙</strong>。公式は「a powerful feature for providing <strong>instructional context</strong> to the Gemini model」（Gemini モデルに指示用のコンテキストを与えるための機能）と説明している</li>
+              <li>毎回チャット欄で「TypeScript で書いて」「インデントは2スペースで」と言わなくても、書いておけば毎回参照してくれる</li>
+              <li>今日は <strong>裸で1回</strong> → <strong>GEMINI.md を書く</strong> → <strong>同じ依頼を再投入して比べる</strong> という Before/After 形式で進める</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>今日の合言葉:</strong> 「<strong>AI への置き手紙</strong>」。難しいファイルではなく、書いておくと AI が毎回読んでくれるメモです。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>裸の Vibe Coding：何も書かずに小機能を追加してみる</h3>
+          <div class="timeline-body">
+            <p><strong>準備（5分）</strong></p>
+            <ul>
+              <li>進級制作リポジトリで <code>git status</code> がクリーンな状態を確認。途中の変更があれば <code>git stash</code> しておく</li>
+              <li>これから1限後半と2限後半で<strong>同じ依頼を2回投げる</strong>ので、依頼内容は1つ決めて固定する</li>
+            </ul>
+            <p><strong>お題を決める（5分）</strong></p>
+            <ul>
+              <li>進級制作に「2〜10 行で済みそうな小さな改善」を 1 つ選ぶ。例:
+                <ul>
+                  <li>ヘッダーに「お問い合わせ」リンクを追加</li>
+                  <li>フォームに「名前」欄のバリデーションを追加</li>
+                  <li>READMEに「使い方」セクションを追記</li>
+                  <li>関数を 1 つリネームして呼び出し元を全部直す</li>
+                  <li>エラーメッセージを利用者向けの言葉に書き直す</li>
+                </ul>
+              </li>
+              <li>依頼文は短めの自然言語で OK（例: <em>「ヘッダーにお問い合わせリンクを追加してください」</em>）</li>
+            </ul>
+            <p><strong>Vibe Coding 実行：GEMINI.md を書かないまま依頼（25分）</strong></p>
+            <ul>
+              <li>Gemini CLI を起動（<code>npx @google/gemini-cli</code>）して、決めた依頼文を投げる</li>
+              <li>AI が書いたコードを<strong>そのまま</strong>受け入れる気持ちで進める。完璧を目指さない</li>
+              <li>動作確認は気が向いたらでOK——<strong>今日は出力のブレを観察するのが主目的</strong></li>
+            </ul>
+            <p><strong>ブレを記録する（15分）</strong></p>
+            <ul>
+              <li>進級制作リポジトリに <code>docs/vibe-before-after.md</code> を作り、以下のテンプレで <strong>Before</strong> セクションを書く:
+                <pre><code># Vibe Coding Before/After
+
+## 依頼文
+（実際に投げた依頼を貼る）
+
+## Before（GEMINI.md なしで投げた結果）
+- 気になった点①: 言語が混ざった（◯◯と書きたいのに △△ になった）
+- 気になった点②: スタイルが違う（インデント／クォート／命名）
+- 気になった点③: 関係ないファイルを触られた／余計なライブラリが入った
+- その他の発見:
+</code></pre>
+              </li>
+              <li>気になった点が <strong>3 つ以上</strong> 書ければOK。ここで書いた不満が、2 限で書く <code>GEMINI.md</code> の素材になる</li>
+              <li>変更を採用する／しないは自由。<code>git stash</code> で一旦置いておくと比較しやすい</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>うまくブレない人へ:</strong> AI が綺麗に書いてくれてしまった人は <strong>当たり回</strong>。日替わりで挙動が変わるので、別のお題で試すか、近くの人の「やらかし」を見学すれば OK です。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3><code>GEMINI.md</code> を書いてみる——3〜5 行から</h3>
+          <div class="timeline-body">
+            <p><strong>公式の最低限（10分）</strong></p>
+            <ul>
+              <li><code>GEMINI.md</code> は Gemini CLI が起動時に自動で読む <strong>context file</strong>。公式用語では <strong>instructional context</strong>（指示用コンテキスト）と呼ばれ、複数ファイルが<strong>階層的に</strong>合成される（公式: <em>hierarchical memory</em>）</li>
+              <li>3 段階の階層が公式に定義されている:
+                <ol>
+                  <li><strong>グローバル</strong>: <code>~/.gemini/GEMINI.md</code>（自分のホーム）。全プロジェクト共通の「自分の好み」を書く場所</li>
+                  <li><strong>ワークスペース</strong>: 開いているプロジェクトのルートに置いた <code>GEMINI.md</code>。<strong>今日書くのはここ</strong></li>
+                  <li><strong>Just-in-time</strong>: AI がツールでアクセスしたファイルの祖先ディレクトリにあるもの（自動で拾われる）</li>
+                </ol>
+              </li>
+              <li>ファイル名は <code>GEMINI.md</code> がデフォルト。<code>settings.json</code> の <code>context.fileName</code> で <code>AGENTS.md</code> 等に変更可能だが、今日は標準のままで OK</li>
+              <li>Gemini CLI 起動中は <code>/memory show</code> で「いま読み込まれている context file 一覧」を確認できる</li>
+            </ul>
+            <p><strong>講師の最小サンプルを見る（10分）</strong></p>
+            <ul>
+              <li>板書例（あえて短くする）:
+                <pre><code># このプロジェクトの前提
+
+## 言語
+- TypeScript で統一しています。JavaScript で書かないでください。
+
+## スタイル
+- インデントは半角スペース2つ
+- 文字列はシングルクォート
+- 関数名は camelCase
+
+## 守ってほしいこと
+- 依頼されていないファイルは変更しない
+- 既存のテストを壊さない
+</code></pre>
+              </li>
+              <li>長く書けば良いものではない。<strong>長すぎると AI が読み流す</strong>ので、まず3〜5 行・最大 1 画面で OK</li>
+              <li>公式ドキュメントにも例として「<em>When you generate new TypeScript code, follow the existing coding style</em>」「<em>Ensure all new functions and classes have JSDoc comments</em>」など、短い指示の積み重ねが推奨されている</li>
+            </ul>
+            <p><strong>各自が書く（30分）</strong></p>
+            <ul>
+              <li>1 限後半でメモした「気になった点 ①②③」を <code>GEMINI.md</code> の文章に変換する
+                <ul>
+                  <li>「言語が混ざった」→ <code>このプロジェクトは Python のみで書いています。他言語のコードを混ぜないでください。</code></li>
+                  <li>「インデントが違う」→ <code>インデントは半角スペース 4 つです。</code></li>
+                  <li>「関係ないファイルを触られた」→ <code>依頼されていないファイルは変更しないでください。</code></li>
+                </ul>
+              </li>
+              <li>進級制作のルートに <code>GEMINI.md</code> を保存。<strong>3〜5 行</strong>で十分（書き過ぎない）</li>
+              <li>書き終わったら <code>git add GEMINI.md</code> しておく（commit はあとで）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>書き方に迷ったら:</strong> 「自分が新人にプロジェクトを引き継ぐとき、最初に伝えること 3 つ」を書くつもりで。コードレビューで毎回指摘されたくないことが、一番効くルールです。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>同じ依頼を再投入して Before/After を比較する</h3>
+          <div class="timeline-body">
+            <p><strong>Gemini CLI を再起動（5分）</strong></p>
+            <ul>
+              <li>新しい <code>GEMINI.md</code> を読み込ませるため、起動中の Gemini CLI を一度終了して再起動（または <code>/memory refresh</code> を実行）</li>
+              <li>起動後、<code>/memory show</code> で <code>GEMINI.md</code> がちゃんと読み込まれているかを確認する</li>
+            </ul>
+            <p><strong>同じ依頼をもう一度投げる（15分）</strong></p>
+            <ul>
+              <li>1 限後半で固定した依頼文をそのまま投げ直す（コピペで OK）</li>
+              <li>1 限後半の <code>git stash</code> をしている人は、ここで diff を取ると比較しやすい</li>
+            </ul>
+            <p><strong>After を記録する（10分）</strong></p>
+            <ul>
+              <li><code>docs/vibe-before-after.md</code> に <strong>After</strong> セクションを追加:
+                <pre><code>## After（GEMINI.md ありで投げた結果）
+- ①は…… 改善した／変わらなかった
+- ②は…… 改善した／変わらなかった
+- ③は…… 改善した／変わらなかった
+- 新しく気づいたこと:
+- 効かなかった指示があれば、GEMINI.md にどう書き足したいか:
+</code></pre>
+              </li>
+              <li>「効かなかった指示」が見つかったら、<code>GEMINI.md</code> を 1〜2 行追記して<strong>もう一度</strong>同じ依頼を投げてもよい（時間が許す範囲で）</li>
+              <li>commit しておく: <code>git add docs/vibe-before-after.md GEMINI.md && git commit -m "Vibe Coding の Before/After を記録"</code></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り＆次回予告</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>今日のキーワード: <strong>裸の Vibe Coding / 出力のブレ / GEMINI.md / instructional context / Before / After</strong></li>
+              <li>覚えてほしいこと: <code>GEMINI.md</code> は <strong>AI への置き手紙</strong>。短く始めて、効かなかったら 1 行ずつ足す</li>
+              <li>「指示を毎回書かなくて済む状態」が少しでも作れたら、今日の目的は達成</li>
+              <li>次回（第5回）: <strong>PRD（製品要求仕様書）と ADR</strong>——今日は「AI にやってほしいこと」を書いた。次回は「人間に向けて、なぜそうしたかを書く」回</li>
+              <li>気が向いたら、ホームの <code>~/.gemini/GEMINI.md</code> に「全プロジェクト共通の自分の好み」を書いてみる（任意）</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>GEMINI.md</code> の初版を push</strong>
+            <p>進級制作リポジトリのルートに <code>GEMINI.md</code> を作成して push。3〜5 行で構わない。最低限「使用している言語」「守ってほしい書き方のルール」「触ってほしくない範囲」のうち 1 項目以上が書かれていること。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>docs/vibe-before-after.md</code> の提出</strong>
+            <p>Before（GEMINI.md なしの結果） / After（GEMINI.md ありの結果）の比較メモを push。気になった点が 3 つ以上記録されていること。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>ホームの <code>~/.gemini/GEMINI.md</code> を書いてみる</strong>
+            <p>全プロジェクト共通の「自分の好み」（例: 「日本語で説明してください」「変更を加える前に計画を見せてください」等）を 2〜3 行で。書きすぎないのがコツ。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>効かなかった指示を 1 つ追記して再挑戦</strong>
+            <p>After で「変わらなかった」と感じた点があれば、<code>GEMINI.md</code> に 1 行だけ追記して、家でもう一度同じ依頼を投げてみる。何が効いて何が効かないかの感覚は、回数を重ねないと身につかない。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://www.geminicli.com/docs/cli/gemini-md/" target="_blank" rel="noopener">Gemini CLI Docs — GEMINI.md（公式）</a> — 配置場所・階層・記述例の一次情報</li>
+        <li><a href="https://www.geminicli.com/docs/get-started/configuration/" target="_blank" rel="noopener">Gemini CLI Docs — Configuration（公式）</a> — <code>settings.json</code> の <code>context.fileName</code> 等の設定全般</li>
+        <li><a href="https://github.com/google-gemini/gemini-cli" target="_blank" rel="noopener">google-gemini/gemini-cli</a> — Gemini CLI 公式リポジトリ（インストール・コマンド一覧）</li>
+        <li><a href="https://geminicli.com/docs/resources/quota-and-pricing/" target="_blank" rel="noopener">Gemini CLI — Quota & Pricing</a> — 無料枠・モデル・レート制限の公式説明</li>
+        <li><a href="https://en.wikipedia.org/wiki/Vibe_coding" target="_blank" rel="noopener">Vibe coding — Wikipedia</a> — Andrej Karpathy が提唱した用語の経緯と批判の整理</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week03.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第3回 Gemini CLI / GitHub Copilot CLI を使い分ける</span>
+      </a>
+      <a href="../natural-language-dev.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">自然言語開発</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第5回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
