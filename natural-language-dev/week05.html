@@ -214,7 +214,7 @@ PRD のドラフトを書いてほしい。
           <div class="timeline-body">
             <p><strong>ADR の最小構成（5分）</strong></p>
             <ul>
-              <li>ADR は <strong>Michael Nygard（2011）</strong>が提唱した形式が広く使われている。今日は最小限で書く:
+              <li>ADR は <strong>Michael Nygard が 2011 年</strong>のブログ記事 <em>Documenting Architecture Decisions</em> で提唱した形式が広く使われている。今日は最小限で書く:
                 <pre><code># ADR-0001: ＜設計判断のタイトル＞
 
 ## ステータス
@@ -274,9 +274,10 @@ PRD のドラフトを書いてほしい。
               <li>公式ベストプラクティス（Memory Import）からの注意:
                 <ul>
                   <li>相対パスを優先する（移植性）</li>
-                  <li>import チェーンを浅く保つ（最大 5 階層、循環は自動で防がれる）</li>
+                  <li>import チェーンを浅く保つ（深くネストしない）</li>
                   <li>参照ファイルが存在することを確認</li>
                 </ul>
+                ※公式仕様として、import 深さの既定上限は 5 階層、循環参照は自動で検出される
               </li>
             </ul>
             <p><strong>ステージング（5分）</strong></p>
@@ -299,11 +300,12 @@ PRD のドラフトを書いてほしい。
             <p><strong>Plan Mode の使い方（5分）</strong></p>
             <ul>
               <li>公式: Plan Mode は <em>"a read-only environment for architecting robust solutions before implementation"</em>（実装前に堅実な解法を設計する読み取り専用環境）</li>
-              <li>Gemini CLI 起動中に Plan Mode に入る方法は <strong>3 通り</strong>（公式）:
+              <li>Gemini CLI 起動中に Plan Mode に入る方法は<strong>主に次の 4 通り</strong>（公式）:
                 <ul>
                   <li><strong>(a) <code>Shift+Tab</code></strong> で approval mode を循環させる</li>
-                  <li><strong>(b) <code>/plan ＜目標＞</code></strong> をプロンプトで実行</li>
-                  <li><strong>(c) 起動時に <code>gemini --approval-mode=plan</code></strong> を指定</li>
+                  <li><strong>(b) <code>/plan ＜目標＞</code></strong> をプロンプトで実行（<code>＜目標＞</code> は省略可）</li>
+                  <li><strong>(c) 自然言語で <em>"start a plan for ..."</em></strong> のように依頼する</li>
+                  <li><strong>(d) 起動時に <code>gemini --approval-mode=plan</code></strong> を指定</li>
                 </ul>
               </li>
               <li>授業では <strong>(b)</strong> を使う（一番分かりやすい）</li>
@@ -315,7 +317,7 @@ PRD のドラフトを書いてほしい。
 </code></pre>
               </li>
               <li>Plan Mode は<strong>ファイルを変更せず</strong>、計画 markdown を生成する</li>
-              <li>計画は<strong>エディタで直接編集</strong>できる（公式: <code>Ctrl+X</code>）。気になる箇所はその場でコメント追記</li>
+              <li>計画は <code>Ctrl+X</code> で<strong>外部エディタ（<code>$EDITOR</code> で指定したエディタ。Codespaces では既定で vim 等）に開いて直接編集できる</strong>（公式）。気になる箇所はその場でコメント追記</li>
             </ul>
             <p><strong>計画 markdown をレビューする（10分）</strong></p>
             <ul>
@@ -403,6 +405,7 @@ PRD のドラフトを書いてほしい。
         <li><a href="https://www.geminicli.com/docs/cli/plan-mode/" target="_blank" rel="noopener">Gemini CLI Docs — Plan Mode（公式）</a> — Plan Mode の起動方法（<code>Shift+Tab</code> / <code>/plan ＜goal＞</code> / <code>--approval-mode=plan</code>）と公式定義</li>
         <li><a href="https://www.geminicli.com/docs/cli/gemini-md/" target="_blank" rel="noopener">Gemini CLI Docs — Provide context with GEMINI.md files（公式）</a> — 第4回で扱った <code>GEMINI.md</code> の階層・連結の一次情報</li>
         <li><a href="https://www.geminicli.com/docs/reference/commands" target="_blank" rel="noopener">Gemini CLI Docs — Commands reference（公式）</a> — <code>/memory show</code> / <code>/memory reload</code> / <code>/plan</code> 等の slash commands 一覧</li>
+        <li><a href="https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions" target="_blank" rel="noopener">Michael Nygard — Documenting Architecture Decisions（2011, Cognitect）</a> — 本日扱った ADR 形式の原典</li>
         <li><a href="https://github.com/joelparkerhenderson/architecture-decision-record" target="_blank" rel="noopener">joelparkerhenderson/architecture-decision-record</a> — ADR の代表的なテンプレート集（Michael Nygard 形式を含む）</li>
         <li><a href="https://adr.github.io/" target="_blank" rel="noopener">Architectural Decision Records（adr.github.io）</a> — ADR コミュニティのハブ</li>
         <li><a href="https://github.com/github/spec-kit" target="_blank" rel="noopener">github/spec-kit — Spec-Driven Development</a> — 第6回で扱う SDD の参考実装。PRD/ADR は SDD の前提となる文書</li>
