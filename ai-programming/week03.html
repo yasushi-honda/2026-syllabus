@@ -40,11 +40,11 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value"><strong>NotebookLM</strong> をはじめて触り、自己紹介シート＋<strong>Fast Research</strong> で集めたソースに <strong>チャット</strong>で質問し、<strong>Studio の生成系機能</strong>を複数試す</div>
+          <div class="lesson-overview-value"><strong>NotebookLM</strong> をはじめて触り、<strong>2 つのノートブック</strong>（「自分専用 AI ノート」＝自己紹介シートで長期育成／「練習用ノート」＝<strong>Fast Research</strong> で集めたソースで Studio を体験）を使い分ける感覚を身につける</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">NotebookLM / ノートブック / ソース / Fast Research / チャット / 引用番号 / メモ / Studio（9機能）</div>
+          <div class="lesson-overview-value">NotebookLM / ノートブック（用途で 2 つ）/ ソース / Fast Research / チャット / 引用番号 / メモ / Studio（9機能）</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
@@ -57,8 +57,13 @@
       <h2>この回のゴール</h2>
       <ul>
         <li><strong>NotebookLM</strong> がどんなツールかを自分の言葉で1〜2行で言えるようになる</li>
-        <li>自分の<strong>ノートブック</strong>を1個作って、<strong>【学習データ①】自己紹介シート</strong>と <strong>Fast Research で集めたウェブ記事</strong>の<strong>両方</strong>を<strong>ソース</strong>として読み込ませられる</li>
-        <li><strong>チャット</strong>欄で集めたソースに 5 個以上質問を投げて、回答に<strong>引用番号</strong>が付くことを観察できる</li>
+        <li><strong>用途で異なる 2 つのノートブック</strong>を作り分けられる:
+          <ul>
+            <li>① <strong>「自分専用 AI ノート」</strong>: <strong>【学習データ①】自己紹介シート</strong>を入れて、今後の回で学習データ②③も足していく<strong>長期育成用</strong>のメインノート</li>
+            <li>② <strong>「練習用ノート」</strong>: <strong>Fast Research</strong> で自分の興味あるテーマのウェブ記事を 5〜10 件集めた、今回の Studio 体験用のサブノート</li>
+          </ul>
+        </li>
+        <li><strong>チャット</strong>欄で「練習用ノート」のソースに 5 個以上質問を投げて、回答に<strong>引用番号</strong>が付くことを観察できる</li>
         <li>気に入った回答を<strong>メモ</strong>として保存できる</li>
         <li><strong>Studio の 9 機能</strong>（音声解説／動画解説／スライド資料／マインドマップ／レポート／フラッシュカード／クイズ／インフォグラフィック／Data Table）を講師の説明で一通り把握し、<strong>気になった機能を実際に生成して試す</strong>（時間の許す限りいくつでも、1 つを深掘りしても OK）</li>
         <li>「チャットを設定」（デフォルト／学習ガイド／カスタム）の存在を知る（本格的な設定は第4回以降）</li>
@@ -140,18 +145,25 @@
             <span class="timeline-time">1限 後半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>ノートブックを作る → 自己紹介シート → Fast Research でソース集め</h3>
+          <h3>2 つのノートブックを使い分ける——「自分専用 AI ノート」と「練習用ノート」</h3>
           <div class="timeline-body">
-            <p><strong>NotebookLM にログイン＋ノートブック作成（5分）</strong></p>
+            <p><strong>なぜ 2 つに分けるか（5分・先に説明）</strong></p>
+            <ul>
+              <li>NotebookLM のチャット応答は<strong>そのノートブックに入っているソース全部</strong>を根拠にする。だから<strong>用途の違うソースを 1 つのノートに混ぜると応答が混線する</strong></li>
+              <li>Google 公式の初心者向けヒントでも「<strong>メインのノートブックを 1 つ作って、トピック別にノートを派生させる</strong>」が推奨されている</li>
+              <li>今日は次の 2 つに分ける:
+                <ul>
+                  <li>① <strong>「自分専用 AI ノート」</strong>: 自己紹介シートを入れて、今後の回で学習データ②③も足していく<strong>長期育成用</strong>のメインノート</li>
+                  <li>② <strong>「練習用ノート」</strong>: Fast Research で集めた興味テーマのウェブ記事を入れて、今日の Studio 体験に使うサブノート</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>① 「自分専用 AI ノート」を作る＋自己紹介シートを入れる（10分）</strong></p>
             <ul>
               <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">notebooklm.google.com</a> にアクセス、第1回と同じ Google アカウントでログイン</li>
-              <li>「＋ 新規作成」（または「新しいノートブック」）でノートブックを作って、名前を付ける。例: <strong>「○○の AI ノート」</strong>（○○は自分の名前やニックネーム）<br>※以降の説明で「左側」「右側」「右上」など画面位置を指す表現が出てくるが、<strong>NotebookLM の UI は更新で配置が変わることがある</strong>。見つからない場合は近くの講師に確認してOK</li>
+              <li>「＋ 新規作成」（または「新しいノートブック」）で 1 つ目のノートブックを作って、名前を <strong>「○○の AI ノート」</strong>（○○は自分の名前やニックネーム）に<br>※以降の説明で「左側」「右側」「右上」など画面位置を指す表現が出てくるが、<strong>NotebookLM の UI は更新で配置が変わることがある</strong>。見つからない場合は近くの講師に確認してOK</li>
               <li>※学校アカウントで NotebookLM が見えない人は<strong>個人 Google アカウントに切り替え</strong>。授業中サポート可</li>
-            </ul>
-            <p><strong>【学習データ①】自己紹介シートを書く＋ソースに追加（15分）</strong></p>
-            <ul>
-              <li>講師配布のテンプレ（Google ドキュメント）を「ファイル → コピーを作成」で自分のドライブに保存</li>
-              <li>テンプレの項目を埋める（書ける範囲で OK・<strong>個人情報は入れない</strong>のは第1回と同じ）:
+              <li>講師配布の<strong>【学習データ①】自己紹介シート</strong>テンプレ（Google ドキュメント）を「ファイル → コピーを作成」で自分のドライブに保存し、項目を埋める（書ける範囲で OK・<strong>個人情報は入れない</strong>のは第1回と同じ）:
                 <ol>
                   <li><strong>呼んでほしい名前</strong>（あだ名 OK）</li>
                   <li><strong>好きなこと・趣味</strong>（3 つくらい）</li>
@@ -160,12 +172,24 @@
                   <li><strong>AI に手伝ってほしいこと</strong>／<strong>してほしくないこと</strong></li>
                 </ol>
               </li>
-              <li>本名・住所・電話番号・学籍番号は<strong>絶対に入れない</strong>（第1回ルールの再確認・<strong>入力内容はサービス改善に使われ得る</strong>）</li>
-              <li>「ソースを追加」→「<strong>ドライブ</strong>」を選び、自己紹介シートを選択。読み込み完了で<strong>ソース 1 個</strong>に</li>
+              <li>本名・住所・電話番号・学籍番号は<strong>絶対に入れない</strong>（<strong>入力内容はサービス改善に使われ得る</strong>）</li>
+              <li>「自分専用 AI ノート」の「ソースを追加」→「<strong>ドライブ</strong>」→ 自己紹介シートを選択。読み込み完了で<strong>ソース 1 個</strong>に</li>
             </ul>
-            <p><strong>Fast Research で「自分が好きなもの」を5〜10件集める（30分）</strong></p>
+            <p><strong>① の動作確認だけ済ませる（5分）</strong></p>
             <ul>
-              <li>「ソースを追加」→「<strong>ウェブで新しいソースを検索</strong>」を選び、「<strong>Fast Research</strong>」モードで検索（公式: クエリを入れるとウェブから関連サイトを探してきて、自分で選んでまとめてソースに追加できる）</li>
+              <li>「自分専用 AI ノート」のチャット欄に<strong>1 問だけ</strong>投げる。例: <em>「ソースから読み取れる『私の好きなこと』を教えて」</em></li>
+              <li>引用番号付きで自己紹介シートから答えが返ってくることを確認できれば OK。本格的なチャット体験は<strong>第4回以降</strong>でこのノートを育てながら進める</li>
+              <li>※ このノートブックは今日のメイン体験には使わず、<strong>長期育成のためここで止める</strong>（Fast Research で趣味記事を混ぜてしまうと、後で学習データ②③を足したときに応答が混線する）</li>
+            </ul>
+            <p><strong>② 「練習用ノート」を別に作る（5分）</strong></p>
+            <ul>
+              <li>NotebookLM のホーム画面に戻り、<strong>もう 1 つ別の</strong>ノートブックを「＋ 新規作成」で作成</li>
+              <li>名前は <strong>「○○の練習ノート」</strong>（または「Studio 練習」など、用途が分かる名前）</li>
+              <li>このノートは<strong>今日限り使い倒す</strong>用。授業後は残しても消しても OK</li>
+            </ul>
+            <p><strong>② に Fast Research で「自分が好きなもの」を 5〜10 件集める（25分）</strong></p>
+            <ul>
+              <li>「練習用ノート」の「ソースを追加」→「<strong>ウェブで新しいソースを検索</strong>」を選び、「<strong>Fast Research</strong>」モードで検索（公式: クエリを入れるとウェブから関連サイトを探してきて、自分で選んでまとめてソースに追加できる）</li>
               <li>テーマは<strong>自分が興味のあるもの何でも</strong>。例:
                 <ul>
                   <li>好きなアニメ・漫画・キャラクター（例: 「我妻善逸」「初音ミク」「ピカチュウ」）</li>
@@ -179,7 +203,7 @@
               <li>検索結果から<strong>関連性が高そうなサイトを 5〜10 件</strong>選んでチェック→「追加」</li>
               <li>必要ならキーワードを変えて<strong>2〜3 回検索</strong>して、別の角度のソースも入れる</li>
               <li><strong>気をつけること</strong>: 公式サイト・Wikipedia・大手ニュースなど<strong>身元がはっきりしたサイト</strong>を選ぶ。怪しい広告ばかりのサイトは外す（AI が読み込んでしまうため）</li>
-              <li>合計で自己紹介シート 1 + Fast Research 5〜10 = <strong>6〜11 ソース</strong>くらいが目安。50 個まで OK だが今日は欲張らない</li>
+              <li>「練習用ノート」のソース数は<strong>5〜10 個</strong>くらいが目安。50 個まで OK だが今日は欲張らない</li>
             </ul>
             <div class="lesson-tip">
               <strong>「Deep Research」 のボタンが目につく人へ:</strong> Deep Research は何百サイトも参照して長いレポートを書いてくれる強力な機能ですが、<strong>現時点では 18 歳以上のみ</strong>・利用回数上限ありで、生成に数分〜十数分かかります。今日は使わず、後の回や家で気が向いたら（年齢条件を満たしていれば）試してみるのがおすすめ。
@@ -199,17 +223,18 @@
             <span class="timeline-time">2限 前半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>集めたソースに質問する→ Studio で生成系を体験する</h3>
+          <h3>「練習用ノート」のソースに質問する→ Studio で生成系を体験する</h3>
           <div class="timeline-body">
             <p><strong>提案された質問→自分で 5 問以上（20分）</strong></p>
             <ul>
+              <li>※ ここからは <strong>「練習用ノート」</strong>を開いた状態で進める（自分専用 AI ノートではない）</li>
               <li>NotebookLM のチャット欄に表示される「<strong>提案された質問</strong>」（公式 8 expert tips の Tip 4 <em>"Start with the suggested questions"</em> 該当）からまず 1〜2 問クリック</li>
-              <li>続けて自分で 5 問以上、集めたソースに質問してみる。例:
+              <li>続けて自分で 5 問以上、練習用ノートのソースに質問してみる。例:
                 <ul>
-                  <li>「私が集めたソースから、◯◯（推しキャラ／アーティスト等）の魅力を 3 つ挙げて」</li>
+                  <li>「集めたソースから、◯◯（推しキャラ／アーティスト等）の魅力を 3 つ挙げて」</li>
                   <li>「ソースから読み取れる ◯◯の代表的なエピソードを年代順に教えて」</li>
                   <li>「ソースの中で意見が分かれているところがあれば教えて」</li>
-                  <li>「私の自己紹介と組み合わせて、◯◯ をもっと楽しむための提案をして」</li>
+                  <li>「ソースを元に、◯◯ をもっと楽しむための提案をして」</li>
                 </ul>
               </li>
               <li>毎回、回答末尾の <strong>「[1]」「[2]」のような引用番号</strong>を観察。クリックするとソース内の根拠箇所がハイライトされる</li>
@@ -220,9 +245,9 @@
               <li>気に入った回答の「<strong>メモに保存</strong>」アイコンをクリック→右側「メモ」エリアに保存</li>
               <li>タイトルを「○○の魅力ベスト3」などに編集すると、後から見返しやすい</li>
             </ul>
-            <p><strong>Studio から気になる機能を選んで生成（25分）</strong></p>
+            <p><strong>「練習用ノート」の Studio から気になる機能を選んで生成（25分）</strong></p>
             <ul>
-              <li>右側「<strong>Studio</strong>」エリアの 9 機能から<strong>気になるものを選んで生成ボタンを押す</strong>。時間が許せば複数試しても、1 つを深掘りしても OK。最初の取っ掛かりとしておすすめ:
+              <li>「練習用ノート」の右側「<strong>Studio</strong>」エリアの 9 機能から<strong>気になるものを選んで生成ボタンを押す</strong>。時間が許せば複数試しても、1 つを深掘りしても OK。最初の取っ掛かりとしておすすめ:
                 <ul>
                   <li><strong>音声解説</strong>: 2 人のホストが自分の集めたソースについて語るラジオ番組（生成に数分かかる）</li>
                   <li><strong>マインドマップ</strong>: ソース全体を1枚の図に（生成は早い）</li>
@@ -245,9 +270,9 @@
             <span class="timeline-time">2限 後半</span>
             <span class="timeline-duration">約30分</span>
           </div>
-          <h3>Studio をもう少し体験＋チャット設定の存在紹介</h3>
+          <h3>「練習用ノート」で Studio をもう少し体験＋チャット設定の存在紹介</h3>
           <div class="timeline-body">
-            <p><strong>Studio の機能をもう少し体験する（15分）</strong></p>
+            <p><strong>「練習用ノート」で Studio の機能をもう少し体験する（15分）</strong></p>
             <ul>
               <li>2 限前半で試した機能と<strong>違うジャンル</strong>を選ぶと、同じソースでも見え方が変わって面白い（時間が許せばいくつでも、深掘りでも OK）:
                 <ul>
@@ -297,9 +322,9 @@
           <div class="timeline-body">
             <ul>
               <li>今日のキーワード: <strong>NotebookLM / ノートブック / ソース / Fast Research / チャット / 引用番号 / メモ / Studio 9 機能 / チャット設定</strong></li>
-              <li>覚えてほしいこと: NotebookLM は<strong>「自分が入れた資料の中から答えてくれる AI」</strong>＋<strong>「同じ素材を 9 通りに料理してくれる」</strong>。引用が出るので「本当かな？」がチェックしやすい</li>
-              <li>次回（第4回）: <strong>NotebookLMで「自分だけのAI」を本格化</strong>。今日紹介だけだった<strong>「チャットを設定」のカスタムモード</strong>に踏み込み、自分の AI の性格・話し方を仕込む。<strong>【学習データ②】学習目標シート</strong>が登場</li>
-              <li>家での発展（任意）: 集めたソースを 2〜3 件足す／触ってない Studio 機能をもう 1 つ試す</li>
+              <li>覚えてほしいこと: NotebookLM は<strong>「自分が入れた資料の中から答えてくれる AI」</strong>＋<strong>「同じ素材を 9 通りに料理してくれる」</strong>＋<strong>「ノートブックは用途で分ける」</strong>。引用が出るので「本当かな？」がチェックしやすい</li>
+              <li>次回（第4回）: <strong>NotebookLMで「自分だけのAI」を本格化</strong>。今日作った<strong>「自分専用 AI ノート」</strong>に <strong>【学習データ②】学習目標シート</strong>を足し、紹介だけだった<strong>「チャットを設定」のカスタムモード</strong>に踏み込んで自分の AI の性格・話し方を仕込む</li>
+              <li>家での発展（任意）: 「練習用ノート」のソースを 2〜3 件足す／触ってない Studio 機能をもう 1 つ試す</li>
             </ul>
           </div>
         </div>
@@ -323,36 +348,43 @@
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>自分のノートブックを保持する</strong>
-            <p>授業内で作ったノートブック（「○○の AI ノート」）と、その中の自己紹介シート + Fast Research で集めたソースを<strong>消さない</strong>。第4回以降で同じノートブックに学習データ②③を足していきます。</p>
+            <strong>「自分専用 AI ノート」を保持する</strong>
+            <p>「○○の AI ノート」（自己紹介シート入り）は、第4回以降で学習データ②③を足していく<strong>長期育成の中核</strong>。<strong>絶対に消さない</strong>。練習用ノートと混同しないよう、ノートブック一覧で名前を見て確認。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
             <strong>自己紹介シート（Google ドキュメント）の URL を記録</strong>
-            <p>自己紹介シートの URL（または Google ドライブの場所）を自分が分かる場所にメモ。第4回でソースの差し替え・追加をするときに使います。</p>
+            <p>自己紹介シートの URL（または Google ドライブの場所）を自分が分かる場所にメモ。第4回でソースの追加・更新をするときに使います。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>「練習用ノート」も残しておく</strong>
+            <p>家でも Studio 機能を試したい人や、Fast Research でさらにソースを足したい人は<strong>練習用ノートも残す</strong>。授業内で作りきりにしたい人は消しても OK（自分専用 AI ノートとは独立しているので影響なし）。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
             <strong>家から自分のノートブックを開いてみる</strong>
-            <p>家の PC・スマホから <a href="https://notebooklm.google.com" target="_blank" rel="noopener">notebooklm.google.com</a> にログインして、授業で作ったノートブックが開けるか確認。</p>
+            <p>家の PC・スマホから <a href="https://notebooklm.google.com" target="_blank" rel="noopener">notebooklm.google.com</a> にログインして、授業で作った 2 つのノートブック（自分専用 AI ノート／練習用ノート）が開けるか確認。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
-            <strong>Studio の他の機能を試す</strong>
+            <strong>「練習用ノート」で Studio の他の機能を試す</strong>
             <p>授業で試さなかった機能（動画解説／スライド資料／レポート／フラッシュカード／クイズ／インフォグラフィック／Data Table）を、気になるものから家で生成して試す。お気に入りの機能を見つけておく。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
-            <strong>Fast Research でソースをあと 2〜3 件足す</strong>
-            <p>授業で集めたソースに、別のキーワードや別の角度のソースを足してみる。ソースを増やすとチャットの応答や生成物がどう変わるかを観察。</p>
+            <strong>「練習用ノート」に Fast Research でソースをあと 2〜3 件足す</strong>
+            <p>練習用ノートに、別のキーワードや別の角度のソースを足してみる。ソースを増やすとチャットの応答や生成物がどう変わるかを観察。</p>
           </div>
         </div>
       </div>
