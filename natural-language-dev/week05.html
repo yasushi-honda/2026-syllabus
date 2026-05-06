@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第5回 PRDとADRで「なぜそうしたか」をAIに渡す | 自然言語開発</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev.html">自然言語開発</a>
+        <span>/</span>
+        <span>第5回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">PRDとADRで<wbr>「なぜそうしたか」を<wbr>AIに渡す</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 5</span>
+            <span class="page-badge">木曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value"><code>GEMINI.md</code>（指示）に加えて、<strong>PRD（要求の意図）</strong>と <strong>ADR（判断の理由）</strong>を書き、<strong>Memory Import</strong> と <strong>Plan Mode</strong> で AI に渡す</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">PRD / ADR / Memory Import（<code>@file.md</code>）/ Plan Mode / 責任あるコード</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第4回完了（<code>GEMINI.md</code> の初版がリポジトリにある／<code>docs/vibe-before-after.md</code> 提出済み）・進級制作リポジトリが Codespaces で開ける状態</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li><code>GEMINI.md</code> だけでは表現しづらい <strong>「なぜその要求か」「なぜその設計を選んだか」</strong> を、PRD と ADR という形で書き分けられる</li>
+        <li>進級制作の小機能 1 つについて、最小の <strong>PRD</strong>（要求仕様書）と <strong>ADR</strong>（設計判断記録）を書ける</li>
+        <li><code>GEMINI.md</code> に <code>@docs/prd/...</code> <code>@docs/adr/...</code> を書いて、<strong>Memory Import Processor</strong> で PRD/ADR を AI が毎回読む状態を作れる</li>
+        <li>Gemini CLI の <strong>Plan Mode</strong> を起動し、PRD を起点とした実装計画を AI に立てさせ、人間がレビューできる</li>
+        <li>「指示（GEMINI.md）」「意図（PRD）」「判断（ADR）」「計画（Plan Mode）」の 4 階層が、<strong>「責任あるコード」</strong>を支える文書セットであることを体感する</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の振り返り＆<code>GEMINI.md</code> だけでは届かないこと</h3>
+          <div class="timeline-body">
+            <p><strong>第4回課題の共有（10分）</strong></p>
+            <ul>
+              <li><code>GEMINI.md</code> 初版と <code>docs/vibe-before-after.md</code> から、<strong>「After で改善した点」「After でも変わらなかった点」</strong>を 1 つずつ口頭共有</li>
+              <li>家で「効かなかった指示を 1 行追記」を試した人がいれば、その追記内容と再実行結果を共有</li>
+            </ul>
+            <p><strong>「<code>GEMINI.md</code> に書きにくいこと」を出し合う（15分）</strong></p>
+            <ul>
+              <li><code>GEMINI.md</code> はあくまで <strong>「AI への指示文」</strong>。次のような情報は<strong>書きにくい・書いても効かない</strong>:
+                <ul>
+                  <li>「<strong>なぜ</strong>この機能が必要なのか」（要求の背景）</li>
+                  <li>「<strong>誰のため</strong>に作っているのか」（対象ユーザー）</li>
+                  <li>「他にも案 A・案 B があったが、<strong>なぜ案 C を選んだのか</strong>」（設計判断の理由）</li>
+                  <li>「<strong>これは意図的にやっていない</strong>」（非ゴール）</li>
+                </ul>
+              </li>
+              <li>これらは AI への指示というより<strong>「人間が後から読み返すための意図と判断の記録」</strong>。AI は副産物として読めるが、本来は<strong>未来の自分とチームメイト</strong>に向けて書く文書</li>
+              <li>業界では古くから 2 種類のフォーマットが定着している:
+                <ul>
+                  <li><strong>PRD</strong>（Product Requirements Document：製品要求仕様書）= 「<strong>何を、なぜ、誰のために</strong>」を書く</li>
+                  <li><strong>ADR</strong>（Architecture Decision Record：アーキテクチャ決定記録）= 「<strong>どう作るか、なぜその選択にしたか</strong>」を書く</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>今日のゴール提示（15分）</strong></p>
+            <ul>
+              <li>今日は進級制作の<strong>小機能 1 つ</strong>を題材に、<strong>PRD（1 限後半）</strong>と <strong>ADR（2 限前半）</strong>を 1 本ずつ書く。AI と協働で書き、人間がレビュー・編集する</li>
+              <li>書いた PRD/ADR を <strong><code>GEMINI.md</code> から <code>@docs/prd/...</code> <code>@docs/adr/...</code> 構文で取り込ませる</strong>（Gemini CLI 公式の <em>Memory Import Processor</em>）。これで AI は毎プロンプトで PRD/ADR まで読み込んだ状態で答える</li>
+              <li>仕上げに <strong>Plan Mode</strong>（Gemini CLI の読み取り専用設計モード。公式: <em>"a read-only environment for architecting robust solutions before implementation"</em>）で、PRD を起点に実装計画を AI に立てさせ、計画 markdown を読み返す</li>
+              <li>これにより、4 階層が揃う:
+                <ol>
+                  <li><strong>指示</strong>: <code>GEMINI.md</code>（第4回で作成）</li>
+                  <li><strong>意図</strong>: PRD（今日 1 限後半）</li>
+                  <li><strong>判断</strong>: ADR（今日 2 限前半）</li>
+                  <li><strong>計画</strong>: Plan Mode の出力 markdown（今日 2 限後半）</li>
+                </ol>
+              </li>
+              <li>通年テーマ <strong>「責任あるコード」</strong> の中心装置: 「動けばいい」で終わらせず、<strong>なぜそう動かすかを書き残す</strong></li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>今日の合言葉:</strong> 「<strong><code>GEMINI.md</code> は AI への指示書／PRD・ADR は未来の自分への申し送り</strong>」。両方を書いて、両方を AI に読ませます。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>PRD（要求の意図）を AI と一緒に書く</h3>
+          <div class="timeline-body">
+            <p><strong>題材を 1 つ決める（5分）</strong></p>
+            <ul>
+              <li>進級制作に追加したい <strong>小機能 1 つ</strong> を選ぶ。サイズ感は「2〜3 時間あれば実装できそう」程度。例:
+                <ul>
+                  <li>お問い合わせフォームに「ファイル添付」機能を追加</li>
+                  <li>記事一覧に「タグで絞り込み」機能を追加</li>
+                  <li>マイページに「編集履歴の表示」を追加</li>
+                  <li>ダーク/ライトテーマ切替を追加</li>
+                </ul>
+              </li>
+              <li>第8回「ハーネスエンジニアリング入門」、第10回「SDD実践プロジェクト①」でも使い回せる題材だと、後の回が楽になる</li>
+            </ul>
+            <p><strong>PRD の最小構成を理解する（5分）</strong></p>
+            <ul>
+              <li>業界には決定版テンプレートはなく、<strong>長すぎないこと</strong>が一番大事。今日は次の 5 セクションだけで書く:
+                <pre><code># PRD: ＜機能名＞
+
+## 1. 背景
+（なぜ今これが必要か。1〜3 行）
+
+## 2. 対象ユーザー
+（誰がこの機能を使うか。1〜2 行）
+
+## 3. 成功基準
+- 達成できたと判定できる、観測可能な条件を 2〜4 個
+
+## 4. 非ゴール（やらないこと）
+- 今回は意図的にやらないことを 1〜3 個
+
+## 5. 想定リスク・前提
+（書ける範囲で 1〜2 行）
+</code></pre>
+              </li>
+              <li><strong>3 と 4 が要</strong>。「成功基準」を観測可能に書けるか、「やらないこと」を明示できるかが PRD の腕の見せ所</li>
+            </ul>
+            <p><strong>AI にドラフトを作らせる（15分）</strong></p>
+            <ul>
+              <li>Gemini CLI を起動し、たとえばこう頼む:
+                <pre><code>＜機能名＞ という機能を進級制作に追加したい。
+PRD のドラフトを書いてほしい。
+セクションは「背景／対象ユーザー／成功基準／非ゴール／想定リスク」の5つ。
+各セクションは1〜3行で簡潔に。
+不明な点は私に質問してから書いてください。
+</code></pre>
+              </li>
+              <li>「<strong>不明な点は質問してから書いて</strong>」がポイント。これを書かないと AI は勝手に前提を埋めてしまう</li>
+              <li>AI からの質問に答えながら、ドラフトを生成させる</li>
+            </ul>
+            <p><strong>人間がレビュー・編集する（20分）</strong></p>
+            <ul>
+              <li>AI が作ったドラフトをそのまま採用しない。<strong>「自分が書きたかったこと」と違う部分</strong>を必ず直す。AI は世間一般的な PRD を書きがちで、自分の進級制作の文脈を取りこぼす</li>
+              <li>特にチェックする観点:
+                <ul>
+                  <li><strong>背景</strong>: 「なぜ自分はこれを作りたいのか」が自分の言葉で書かれているか</li>
+                  <li><strong>成功基準</strong>: 「動けばいい」で終わっていないか。「ファイルが 5MB まで添付できる」「タグで絞ると該当記事のみ表示される」など<strong>観測可能な条件</strong>になっているか</li>
+                  <li><strong>非ゴール</strong>: 1 つでいいので明示する。「画像のサムネイル生成は今回はやらない」など。これがあると AI が暴走しにくい</li>
+                </ul>
+              </li>
+              <li>進級制作リポジトリに <code>docs/prd/</code> ディレクトリを作って <code>docs/prd/&lt;feature-slug&gt;.md</code> として保存</li>
+            </ul>
+            <p><strong>記録（5分）</strong></p>
+            <ul>
+              <li><code>git add docs/prd/&lt;feature-slug&gt;.md</code>（commit はあとで PRD・ADR・GEMINI.md 更新をまとめて行う）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>書きすぎないコツ:</strong> PRD は <strong>1 画面に収まる長さ</strong>を目標に。長くなったら「自分が大事だと思う 5 行」だけ残して残りを削る。長い PRD は自分も AI も読まなくなります。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>ADR（設計判断）を書く＋ Memory Import で AI に取り込ませる</h3>
+          <div class="timeline-body">
+            <p><strong>ADR の最小構成（5分）</strong></p>
+            <ul>
+              <li>ADR は <strong>Michael Nygard が 2011 年</strong>のブログ記事 <em>Documenting Architecture Decisions</em> で提唱した形式が広く使われている。今日は最小限で書く:
+                <pre><code># ADR-0001: ＜設計判断のタイトル＞
+
+## ステータス
+提案 / 採用 / 却下 のどれか
+
+## コンテキスト
+（どういう状況で、何を判断する必要があったか。2〜4 行）
+
+## 決定
+（最終的に何を選んだか。1〜2 行）
+
+## 結果（影響）
+（この決定によって何が起きるか。良い影響と悪い影響を両方。2〜4 行）
+
+## 検討した代替案
+- 案 A: なぜ選ばなかったか（1 行）
+- 案 B: なぜ選ばなかったか（1 行）
+</code></pre>
+              </li>
+              <li><strong>「検討した代替案」</strong>こそ ADR の核。「他の選択肢と比べたうえでこれを選んだ」という<strong>判断のプロセスを残す</strong>のが目的</li>
+            </ul>
+            <p><strong>1 限後半の PRD から「設計判断ポイント」を 1 つ抽出（5分）</strong></p>
+            <ul>
+              <li>1 限後半で書いた PRD に対して、実装で<strong>判断が必要になりそうなポイント</strong>を 1 つ選ぶ。例:
+                <ul>
+                  <li>ファイル添付 → 「保存先は ローカル / クラウドストレージ / DB バイナリ のどれにするか」</li>
+                  <li>タグ絞り込み → 「タグの管理は 文字列カラム / 中間テーブル / NoSQL のどれにするか」</li>
+                  <li>テーマ切替 → 「設定の保存先は localStorage / Cookie / サーバ DB のどれにするか」</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>AI と「なぜを 5 回問う」役割分担で書く（20分）</strong></p>
+            <ul>
+              <li>Gemini CLI に次のように頼む:
+                <pre><code>これから ADR を書きます。
+題材は「＜設計判断ポイント＞」です。
+あなたは「なぜ？」を5回繰り返す質問役をしてください。
+私が答えるたびに、もう一段深い「なぜ？」を返してください。
+5 回終わったら、その対話を ADR の「コンテキスト」と「決定」と「検討した代替案」に整形してください。
+</code></pre>
+              </li>
+              <li>AI と対話しながら、自分の中で<strong>暗黙だった判断基準</strong>を言語化する。これが ADR の本来の価値</li>
+              <li>仕上げ: AI が整形したドラフトに、自分の言葉で<strong>「結果（影響）」</strong>セクションを書き足す（AI には書けない、自分のプロジェクト固有の影響）</li>
+              <li>進級制作リポジトリの <code>docs/adr/0001-&lt;slug&gt;.md</code> として保存</li>
+            </ul>
+            <p><strong>Memory Import で <code>GEMINI.md</code> から PRD/ADR を取り込む（15分）</strong></p>
+            <ul>
+              <li>Gemini CLI 公式の <strong>Memory Import Processor</strong> を使う。<code>GEMINI.md</code> 内に <code>@&lt;file&gt;</code> と書くと、その内容が連結時に展開される（公式: <em>"Use the <code>@</code> symbol followed by the path to the file you want to import"</em>）</li>
+              <li>第4回で作った <code>GEMINI.md</code> の末尾に次のような行を追加:
+                <pre><code>## 進行中の機能の意図と判断
+@./docs/prd/&lt;feature-slug&gt;.md
+@./docs/adr/0001-&lt;slug&gt;.md
+</code></pre>
+              </li>
+              <li>Gemini CLI 上で <code>/memory reload</code>（または再起動）→ <code>/memory show</code> で<strong>PRD と ADR の中身が AI に渡される指示文に含まれているか</strong>確認</li>
+              <li>これで AI は毎プロンプトで「指示（<code>GEMINI.md</code> 本体）＋ 意図（PRD）＋ 判断（ADR）」を読んでから応答する状態になる</li>
+              <li>公式ベストプラクティス（Memory Import）からの注意:
+                <ul>
+                  <li>相対パスを優先する（移植性）</li>
+                  <li>import チェーンを浅く保つ（深くネストしない）</li>
+                  <li>参照ファイルが存在することを確認</li>
+                </ul>
+                ※公式仕様として、import 深さの既定上限は 5 階層、循環参照は自動で検出される
+              </li>
+            </ul>
+            <p><strong>ステージング（5分）</strong></p>
+            <ul>
+              <li><code>git add docs/adr/ docs/prd/ GEMINI.md</code> しておく（commit はまとめて 2 限後半 or まとめパートで）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>ADR が複数になったら:</strong> ファイル名は <code>0001-</code>, <code>0002-</code> と番号をつけて時系列管理。<code>GEMINI.md</code> から <code>@./docs/adr/</code> 配下を1つずつ参照すると、AI が「過去にこれを決めた」を覚えてくれます。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>Plan Mode で「PRD を読んだうえでの実装計画」を立てさせる</h3>
+          <div class="timeline-body">
+            <p><strong>Plan Mode の使い方（5分）</strong></p>
+            <ul>
+              <li>公式: Plan Mode は <em>"a read-only environment for architecting robust solutions before implementation"</em>（実装前に堅実な解法を設計する読み取り専用環境）</li>
+              <li>Gemini CLI 起動中に Plan Mode に入る方法は<strong>主に次の 4 通り</strong>（公式）:
+                <ul>
+                  <li><strong>(a) <code>Shift+Tab</code></strong> で approval mode を循環させる</li>
+                  <li><strong>(b) <code>/plan ＜目標＞</code></strong> をプロンプトで実行（<code>＜目標＞</code> は省略可）</li>
+                  <li><strong>(c) 自然言語で <em>"start a plan for ..."</em></strong> のように依頼する</li>
+                  <li><strong>(d) 起動時に <code>gemini --approval-mode=plan</code></strong> を指定</li>
+                </ul>
+              </li>
+              <li>授業では <strong>(b)</strong> を使う（一番分かりやすい）</li>
+            </ul>
+            <p><strong>PRD を起点に実装計画を立てさせる（15分）</strong></p>
+            <ul>
+              <li>2 限前半で <code>GEMINI.md</code> から PRD/ADR を取り込んだ状態のまま、Gemini CLI で次のように依頼:
+                <pre><code>/plan PRDで定義した機能を実装するための計画を立ててください。ADR の決定事項に沿って進めてください。
+</code></pre>
+              </li>
+              <li>Plan Mode は<strong>ファイルを変更せず</strong>、計画 markdown を生成する</li>
+              <li>計画は <code>Ctrl+X</code> で<strong>外部エディタ（<code>$EDITOR</code> で指定したエディタ。Codespaces では既定で vim 等）に開いて直接編集できる</strong>（公式）。気になる箇所はその場でコメント追記</li>
+            </ul>
+            <p><strong>計画 markdown をレビューする（10分）</strong></p>
+            <ul>
+              <li>3 つの観点で計画を読む:
+                <ul>
+                  <li><strong>PRD の成功基準が漏れなく計画に反映されているか</strong>（PRD § 3 の 2〜4 個の条件すべてに対応するステップがあるか）</li>
+                  <li><strong>PRD の非ゴールに踏み込んでいないか</strong>（「やらない」と書いたものが計画に紛れ込んでいないか）</li>
+                  <li><strong>ADR の決定事項に沿っているか</strong>（採用した案が反映されているか・却下した案が紛れ込んでいないか）</li>
+                </ul>
+              </li>
+              <li>気になる点があれば、Plan Mode 内で<strong>追加の指示を投げて計画を更新させる</strong>（実装はまだしない）</li>
+              <li>納得できたら計画 markdown を <code>docs/plans/0001-&lt;feature-slug&gt;.md</code> として保存</li>
+              <li>commit: <code>git add docs/ GEMINI.md && git commit -m "PRD/ADR/Plan を整備し GEMINI.md から取り込み"</code></li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>実装は来週以降:</strong> 今日は <strong>計画まで</strong> で止める。Plan Mode から抜けて実装してしまうと「PRD/ADR を書いた価値」を実感する前に手が動いてしまいます。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り＆次回予告</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>今日のキーワード: <strong>PRD / ADR / Memory Import（<code>@file.md</code>）/ Plan Mode / 4 階層の文書セット</strong></li>
+              <li>覚えてほしいこと: <strong>「指示（<code>GEMINI.md</code>）」「意図（PRD）」「判断（ADR）」「計画（Plan Mode 出力）」</strong>が揃うと、自分も AI も同じ前提で動ける。これが<strong>「責任あるコード」</strong>の最小フォーマット</li>
+              <li>次回（第6回）: <strong>Spec-Driven Development（SDD）入門</strong>。今日書いた PRD/ADR/計画は、SDD でいう<strong>「仕様」が実行可能な成果物</strong>になる素材。GitHub Spec Kit の概念と Gemini CLI / Copilot CLI の Plan Mode 比較を扱う</li>
+              <li>家での発展（任意）: 今日 <code>GEMINI.md</code> に追加した <code>@</code> import 行を、ADR が増えたら 1 行ずつ足してみる。3 個目あたりで「<code>GEMINI.md</code> 本体は方針、詳細は ADR に分ける」分業が見えてくる</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>PRD と ADR を 1 本ずつ push</strong>
+            <p>進級制作リポジトリに <code>docs/prd/&lt;feature-slug&gt;.md</code> と <code>docs/adr/0001-&lt;slug&gt;.md</code> を作成して push。それぞれの最小セクション（PRD: 5 セクション／ADR: 5 セクション）が埋まっていればよい。1 画面に収まる長さに留めること。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>GEMINI.md</code> から PRD/ADR を <code>@</code> import</strong>
+            <p>第4回で作った <code>GEMINI.md</code> の末尾に <code>@./docs/prd/...</code> と <code>@./docs/adr/...</code> を 1 行ずつ追加。<code>/memory show</code> で取り込みを確認したスクショ or テキスト出力をあわせて push（任意の <code>docs/memory-show.txt</code> など）。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>Plan Mode の出力 markdown を push</strong>
+            <p>Plan Mode に立てさせた計画を <code>docs/plans/0001-&lt;feature-slug&gt;.md</code> として保存。PRD § 3「成功基準」の各項目に対応する計画ステップが入っていることを目視確認。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>ADR を 1 本追加（別の判断ポイントで）</strong>
+            <p>授業中に書いた ADR-0001 とは別の設計判断ポイントを 1 つ取り上げ、ADR-0002 として書いてみる。「2 本目を書くと『1 本目の書き方』が見えてくる」のが ADR の特徴。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>計画通りに実装してみる</strong>
+            <p>Plan Mode を抜けて、計画 markdown のステップに従って実装を進めてみる。途中で計画と現実がズレたら、PRD/ADR/計画のどれを直すべきかを意識する（→ 第6回 SDD で扱う本題）。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://www.geminicli.com/docs/reference/memport/" target="_blank" rel="noopener">Gemini CLI Docs — Memory Import Processor（公式）</a> — <code>@file.md</code> 構文・ベストプラクティス・循環防止の一次情報</li>
+        <li><a href="https://www.geminicli.com/docs/cli/plan-mode/" target="_blank" rel="noopener">Gemini CLI Docs — Plan Mode（公式）</a> — Plan Mode の起動方法（<code>Shift+Tab</code> / <code>/plan ＜goal＞</code> / <code>--approval-mode=plan</code>）と公式定義</li>
+        <li><a href="https://www.geminicli.com/docs/cli/gemini-md/" target="_blank" rel="noopener">Gemini CLI Docs — Provide context with GEMINI.md files（公式）</a> — 第4回で扱った <code>GEMINI.md</code> の階層・連結の一次情報</li>
+        <li><a href="https://www.geminicli.com/docs/reference/commands" target="_blank" rel="noopener">Gemini CLI Docs — Commands reference（公式）</a> — <code>/memory show</code> / <code>/memory reload</code> / <code>/plan</code> 等の slash commands 一覧</li>
+        <li><a href="https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions" target="_blank" rel="noopener">Michael Nygard — Documenting Architecture Decisions（2011, Cognitect）</a> — 本日扱った ADR 形式の原典</li>
+        <li><a href="https://github.com/joelparkerhenderson/architecture-decision-record" target="_blank" rel="noopener">joelparkerhenderson/architecture-decision-record</a> — ADR の代表的なテンプレート集（Michael Nygard 形式を含む）</li>
+        <li><a href="https://adr.github.io/" target="_blank" rel="noopener">Architectural Decision Records（adr.github.io）</a> — ADR コミュニティのハブ</li>
+        <li><a href="https://github.com/github/spec-kit" target="_blank" rel="noopener">github/spec-kit — Spec-Driven Development</a> — 第6回で扱う SDD の参考実装。PRD/ADR は SDD の前提となる文書</li>
+        <li><a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents" target="_blank" rel="noopener">Anthropic Engineering — Effective Context Engineering for AI Agents</a> — PRD/ADR を AI に渡す行為がなぜ効くかの理論背景</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week04.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第4回 Vibe Codingの限界とGEMINI.mdで落ち着かせる</span>
+      </a>
+      <a href="../natural-language-dev.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">自然言語開発</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第6回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
