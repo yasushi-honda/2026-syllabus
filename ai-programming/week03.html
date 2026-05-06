@@ -40,15 +40,15 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value"><strong>NotebookLM</strong> をはじめて触り、自分の<strong>ノートブック</strong>を作って、自分の資料（<strong>ソース</strong>）に <strong>チャット</strong>で質問する</div>
+          <div class="lesson-overview-value"><strong>NotebookLM</strong> をはじめて触り、自己紹介シート＋<strong>Fast Research</strong> で集めたソースに <strong>チャット</strong>で質問し、<strong>Studio の生成系機能</strong>を複数試す</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">NotebookLM / ノートブック / ソース / チャット / 引用番号 / メモ / 音声解説 / マインドマップ</div>
+          <div class="lesson-overview-value">NotebookLM / ノートブック / ソース / Fast Research / チャット / 引用番号 / メモ / Studio（9機能）</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
-          <div class="lesson-overview-value">第1回・第2回完了（Googleアカウントでログイン可）／<strong>【学習データ①】自己紹介シート</strong>のテンプレ（授業内で配布）</div>
+          <div class="lesson-overview-value">第1回・第2回完了（Googleアカウントでログイン可）／<strong>【学習データ①】自己紹介シート</strong>のテンプレ（授業内で配布）／自分が興味あるテーマの「キーワード」をいくつか考えてくる</div>
         </div>
       </div>
     </div>
@@ -57,11 +57,11 @@
       <h2>この回のゴール</h2>
       <ul>
         <li><strong>NotebookLM</strong> がどんなツールかを自分の言葉で1〜2行で言えるようになる</li>
-        <li>自分の<strong>ノートブック</strong>を1個作って名前を付けられる</li>
-        <li>講師配布の<strong>【学習データ①】自己紹介シート</strong>を<strong>ソース</strong>として読み込ませられる</li>
-        <li><strong>チャット</strong>欄で「自分の自己紹介シートに基づいた質問」を 5 個以上投げて、回答に<strong>引用番号</strong>が付くことを観察できる</li>
+        <li>自分の<strong>ノートブック</strong>を1個作って、<strong>【学習データ①】自己紹介シート</strong>と <strong>Fast Research で集めたウェブ記事</strong>の<strong>両方</strong>を<strong>ソース</strong>として読み込ませられる</li>
+        <li><strong>チャット</strong>欄で集めたソースに 5 個以上質問を投げて、回答に<strong>引用番号</strong>が付くことを観察できる</li>
         <li>気に入った回答を<strong>メモ</strong>として保存できる</li>
-        <li>余裕があれば<strong>音声解説</strong>または<strong>マインドマップ</strong>を 1 回試す</li>
+        <li><strong>Studio の 9 機能</strong>（音声解説／動画解説／スライド資料／マインドマップ／レポート／フラッシュカード／クイズ／インフォグラフィック／Data Table）を講師の説明で一通り把握し、<strong>そのうち 2 つを実際に生成して試す</strong></li>
+        <li>「チャットを設定」（デフォルト／学習ガイド／カスタム）の存在を知る（本格的な設定は第4回以降）</li>
       </ul>
     </div>
 
@@ -76,7 +76,7 @@
             <span class="timeline-time">1限 前半</span>
             <span class="timeline-duration">約40分</span>
           </div>
-          <h3>第2回の振り返り＆ NotebookLM ってなんだろう？</h3>
+          <h3>第2回振り返り＋ NotebookLM 全体ツアー</h3>
           <div class="timeline-body">
             <p><strong>第2回 Gem の振り返り（10分）</strong></p>
             <ul>
@@ -84,40 +84,53 @@
               <li>「自分の AI キャラ、家でも会えた？」を確認——人によっては<strong>家からだとログインし直し</strong>になったり、メニューが違ったりした体験を共有</li>
               <li>第2回のキャラ設計（性格・口調・得意分野）を<strong>そのままノートに見える形で持っておく</strong>と、今日の NotebookLM でも使えることを伝える</li>
             </ul>
-            <p><strong>「Gem だけじゃ足りないこと」を共有（5分）</strong></p>
-            <ul>
-              <li>Gem は便利だけど、こんなことが苦手:
-                <ul>
-                  <li>自分が書いた資料（テキスト・PDF など）を<strong>まるごと読ませて、それに基づいて答えてもらう</strong>のがちょっと面倒</li>
-                  <li>長い資料の<strong>どこからその答えを持ってきたか</strong>を確認しにくい</li>
-                  <li>同じ素材を<strong>あとからまた使い回す</strong>のが大変</li>
-                </ul>
-              </li>
-              <li>これらを得意とするのが、今日触る <strong>NotebookLM</strong></li>
-            </ul>
-            <p><strong>NotebookLM の紹介（25分）</strong></p>
+            <p><strong>NotebookLM とは何か（5分）</strong></p>
             <ul>
               <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">notebooklm.google.com</a> を開いて画面を一緒に見る（まだ操作はしない）</li>
               <li>NotebookLM は <strong>Google が作っている AI ノートブックツール</strong>:
                 <ul>
                   <li>「<strong>ノートブック</strong>」を作って、その中に「<strong>ソース</strong>（資料）」を入れる</li>
                   <li>そのノートブックの <strong>チャット</strong> に質問すると、<strong>入れた資料の中だけを根拠</strong>に答えてくれる</li>
-                  <li>答えには「資料のこの部分から答えました」という<strong>引用番号</strong>がつく（ここが第2回 Gem との大きな違い）</li>
+                  <li>答えには「資料のこの部分から答えました」という<strong>引用番号</strong>がつく（Gem と比べた大きな違い）</li>
                 </ul>
               </li>
               <li>イメージ: <strong>「自分専用の参考書を AI に読ませて、その参考書だけを見て答えてもらう」</strong></li>
-              <li>無料で使える主な制限（公式情報・2026年5月時点）:
+            </ul>
+            <p><strong>ソースの取り込み方を一通り知る（10分）</strong></p>
+            <ul>
+              <li>NotebookLM の左パネル「<strong>ソースを追加</strong>」から、いろんな形でソースを入れられる:
                 <ul>
-                  <li>1 ノートブックに入れられる<strong>ソースは最大 50 個</strong></li>
-                  <li>1 ソースの長さは<strong>最大 50 万単語</strong>（ファイルなら 1 個 200MB 以内）。普通の自己紹介シートなら大きく余裕がある</li>
-                  <li>対応する主な形式: PDF / Google ドキュメント・スライド・スプレッドシート / Microsoft Word・PowerPoint / プレーンテキスト・Markdown / 画像（JPEG/PNG など）/ ウェブサイト URL / YouTube 動画（公開・字幕あり）/ 音声ファイル など。詳細は<a href="https://support.google.com/notebooklm/answer/16215270" target="_blank" rel="noopener">公式ヘルプ</a>を参照</li>
+                  <li><strong>ファイルをアップロード</strong>: PDF / Microsoft Word・PowerPoint / プレーンテキスト・Markdown / 画像（JPEG・PNG など）/ 音声 など（1ファイル 200MB 以内・1ソース 50万語まで）</li>
+                  <li><strong>ウェブサイト</strong>: URL を貼り付け</li>
+                  <li><strong>ドライブ</strong>: Google ドキュメント・スライド・スプレッドシートを直接</li>
+                  <li><strong>コピーしたテキスト</strong>: メモを貼り付け</li>
+                  <li><strong>YouTube 動画</strong>: 公開・字幕ありの動画 URL</li>
+                  <li><strong>Fast Research</strong>: ウェブ検索→関連サイトの中から自分で選んでまとめて取り込み（今日メインで使う）</li>
+                  <li><strong>Deep Research</strong>: 何百サイトも参照して長いレポートを生成（重い・<strong>現時点では 18 歳以上のみ</strong>・利用上限あり。今日は紹介のみ）</li>
                 </ul>
               </li>
-              <li>今日は <strong>1 ソース（自己紹介シート）だけ</strong>から始める。Google 公式の初心者向けヒント（後述の参考リンク）でも「<strong>メインのノートブックを 1 つ作って、トピック別にノートを派生させる</strong>」が推奨されており、いきなり大量のソースを入れるよりも、少しずつ育てる方が扱いやすい</li>
-              <li>今日作ったノートブックを土台に、これからの授業で少しずつソースを足していき、<strong>「自分だけのAI」</strong>に育てる</li>
+              <li>制限: 1 ノートブック<strong>最大 50 ソース</strong>。今日は 5〜10 個くらい集めれば十分</li>
+            </ul>
+            <p><strong>Studio の 9 機能ツアー（15分）</strong></p>
+            <ul>
+              <li>NotebookLM 右側の <strong>Studio</strong> エリアには、ソースから何かを「生成」するボタンが <strong>9 種類</strong>並ぶ。講師がデモ画面で順番に紹介:
+                <ol>
+                  <li><strong>音声解説</strong>（Audio Overview）: 2 人のホストがラジオ番組のように話す音声を生成</li>
+                  <li><strong>動画解説</strong>: 図解付きの解説動画を生成</li>
+                  <li><strong>スライド資料</strong>（ベータ版）: ソースを元にしたプレゼン資料</li>
+                  <li><strong>マインドマップ</strong>: ソースの内容を図で構造化</li>
+                  <li><strong>レポート</strong>: 構造化された文章レポート</li>
+                  <li><strong>フラッシュカード</strong>: 暗記カード形式の学習教材</li>
+                  <li><strong>クイズ</strong>: ソース内容の理解度チェック問題</li>
+                  <li><strong>インフォグラフィック</strong>（ベータ版）: 視覚的なまとめ図</li>
+                  <li><strong>Data Table</strong>: ソースから抽出した情報を表形式で整理</li>
+                </ol>
+              </li>
+              <li>「<strong>同じソースから、9 種類の出力ができる</strong>」が NotebookLM の凄いところ</li>
+              <li>今日はこのうち <strong>自分で 2 つ選んで実際に生成</strong>する（2限前半・後半）。9 個全部を試す必要はない——気になったものから</li>
             </ul>
             <div class="lesson-tip">
-              <strong>今日の合言葉:</strong> 「<strong>自分のことを書いて、自分のAIに読んでもらう</strong>」。最初のソースは「自分自身」です。
+              <strong>今日の合言葉:</strong> 「<strong>自分の好きなものを集めて、AI に読ませて、9 通りに料理する</strong>」。同じ素材でも出力の形が変わると見え方が変わります。
             </div>
           </div>
         </div>
@@ -127,22 +140,15 @@
             <span class="timeline-time">1限 後半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>ノートブックを作る＋自己紹介シートをソースに入れる</h3>
+          <h3>ノートブックを作る → 自己紹介シート → Fast Research でソース集め</h3>
           <div class="timeline-body">
-            <p><strong>NotebookLM にログイン（5分）</strong></p>
+            <p><strong>NotebookLM にログイン＋ノートブック作成（5分）</strong></p>
             <ul>
-              <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">notebooklm.google.com</a> にアクセス</li>
-              <li>第1回と同じ Google アカウントでログイン</li>
-              <li>初回はサービスの説明画面が出ることがある——一緒に確認しながら進む</li>
-              <li>※学校アカウントでメニューが出ない人は<strong>個人 Google アカウントに切り替え</strong>。授業中サポート可</li>
+              <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">notebooklm.google.com</a> にアクセス、第1回と同じ Google アカウントでログイン</li>
+              <li>「＋ 新規作成」（または「新しいノートブック」）でノートブックを作って、名前を付ける。例: <strong>「○○の AI ノート」</strong>（○○は自分の名前やニックネーム）<br>※以降の説明で「左側」「右側」「右上」など画面位置を指す表現が出てくるが、<strong>NotebookLM の UI は更新で配置が変わることがある</strong>。見つからない場合は近くの講師に確認してOK</li>
+              <li>※学校アカウントで NotebookLM が見えない人は<strong>個人 Google アカウントに切り替え</strong>。授業中サポート可</li>
             </ul>
-            <p><strong>新しいノートブックを作る（5分）</strong></p>
-            <ul>
-              <li>画面の <strong>「＋ 新規作成」</strong>（または「新しいノートブック」）をクリック</li>
-              <li>※UI 表記は変更されることがあるため、その場で講師と一緒に位置を確認</li>
-              <li>ノートブックに名前を付ける。例: <strong>「○○（自分の名前）の AI ノート」</strong></li>
-            </ul>
-            <p><strong>【学習データ①】自己紹介シートを書く（15分）</strong></p>
+            <p><strong>【学習データ①】自己紹介シートを書く＋ソースに追加（15分）</strong></p>
             <ul>
               <li>講師配布のテンプレ（Google ドキュメント）を「ファイル → コピーを作成」で自分のドライブに保存</li>
               <li>テンプレの項目を埋める（書ける範囲で OK・<strong>個人情報は入れない</strong>のは第1回と同じ）:
@@ -150,33 +156,33 @@
                   <li><strong>呼んでほしい名前</strong>（あだ名 OK）</li>
                   <li><strong>好きなこと・趣味</strong>（3 つくらい）</li>
                   <li><strong>苦手なこと・避けたいこと</strong>（1〜2 つ）</li>
-                  <li><strong>今学期の目標</strong>（ざっくりでOK・「単位が取れたらいい」も可）</li>
-                  <li><strong>AI に手伝ってほしいこと</strong>（例: アイデア出し／長い文の要約／勉強の質問）</li>
-                  <li><strong>AI にしてほしくないこと</strong>（例: 上から目線・むずかしい言葉）</li>
+                  <li><strong>今学期の目標</strong>（ざっくりでOK）</li>
+                  <li><strong>AI に手伝ってほしいこと</strong>／<strong>してほしくないこと</strong></li>
                 </ol>
               </li>
-              <li>第2回 Gem の<strong>カスタム指示メモがあれば、それを参考に書ける項目もある</strong>（性格・話し方の好みなど）</li>
-              <li>本名・住所・電話番号・学籍番号は<strong>絶対に入れない</strong>（第1回ルールの再確認）</li>
+              <li>本名・住所・電話番号・学籍番号は<strong>絶対に入れない</strong>（第1回ルールの再確認・<strong>入力内容はサービス改善に使われ得る</strong>）</li>
+              <li>「ソースを追加」→「<strong>ドライブ</strong>」を選び、自己紹介シートを選択。読み込み完了で<strong>ソース 1 個</strong>に</li>
             </ul>
-            <p><strong>自己紹介シートを NotebookLM に「ソース」として追加（10分）</strong></p>
+            <p><strong>Fast Research で「自分が好きなもの」を5〜10件集める（30分）</strong></p>
             <ul>
-              <li>ノートブック画面の<strong>左側「ソース」エリア</strong>で「<strong>追加</strong>」または「<strong>＋</strong>」ボタンをクリック</li>
-              <li><strong>「Google ドライブ」</strong>を選び、さっき書いた自己紹介シートを選択</li>
-              <li>NotebookLM がソースを<strong>読み込み</strong>する（数十秒）</li>
-              <li>読み込みが終わると、左側に<strong>ソース 1 個</strong>として表示される</li>
-            </ul>
-            <p><strong>動作確認の1問だけ投げる（15分）</strong></p>
-            <ul>
-              <li>画面の<strong>真ん中（チャット欄）</strong>に最初の質問を打つ。例:
-                <pre><code>このソースに書いてある「呼んでほしい名前」と「趣味」を教えて。
-</code></pre>
+              <li>「ソースを追加」→「<strong>ウェブで新しいソースを検索</strong>」を選び、「<strong>Fast Research</strong>」モードで検索（公式: クエリを入れるとウェブから関連サイトを探してきて、自分で選んでまとめてソースに追加できる）</li>
+              <li>テーマは<strong>自分が興味のあるもの何でも</strong>。例:
+                <ul>
+                  <li>好きなアニメ・漫画・キャラクター（例: 「我妻善逸」「初音ミク」「ピカチュウ」）</li>
+                  <li>好きなアーティスト・バンド・YouTuber</li>
+                  <li>好きなゲーム・ゲームジャンル</li>
+                  <li>興味のあるスポーツ選手・チーム</li>
+                  <li>気になる職業・学びたいこと（例: 「Web デザイナー」「Python」）</li>
+                  <li>趣味（料理・カメラ・ファッション・旅行先 等）</li>
+                </ul>
               </li>
-              <li>NotebookLM が<strong>自己紹介シートの内容に基づいた</strong>回答を返してくれることを確認</li>
-              <li>回答の文末に<strong>「[1]」のような引用番号</strong>が付く——これが NotebookLM の特徴。「ソースのどこから答えたか」をクリックして確認できる</li>
-              <li>動かない／読み込みが終わらない人は挙手——個別にフォロー</li>
+              <li>検索結果から<strong>関連性が高そうなサイトを 5〜10 件</strong>選んでチェック→「追加」</li>
+              <li>必要ならキーワードを変えて<strong>2〜3 回検索</strong>して、別の角度のソースも入れる</li>
+              <li><strong>気をつけること</strong>: 公式サイト・Wikipedia・大手ニュースなど<strong>身元がはっきりしたサイト</strong>を選ぶ。怪しい広告ばかりのサイトは外す（AI が読み込んでしまうため）</li>
+              <li>合計で自己紹介シート 1 + Fast Research 5〜10 = <strong>6〜11 ソース</strong>くらいが目安。50 個まで OK だが今日は欲張らない</li>
             </ul>
             <div class="lesson-tip">
-              <strong>引用番号が大事な理由:</strong> Gem や一般のチャットでは出典が示されないことが多いけれど、NotebookLM は<strong>「あなたが入れた資料の中から」</strong>答えるので、根拠が見えます。「本当かな？」を引用先で確認できるのが安心ポイント。
+              <strong>「Deep Research」 のボタンが目につく人へ:</strong> Deep Research は何百サイトも参照して長いレポートを書いてくれる強力な機能ですが、<strong>現時点では 18 歳以上のみ</strong>・利用回数上限ありで、生成に数分〜十数分かかります。今日は使わず、後の回や家で気が向いたら（年齢条件を満たしていれば）試してみるのがおすすめ。
             </div>
           </div>
         </div>
@@ -193,42 +199,43 @@
             <span class="timeline-time">2限 前半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>チャットで色々質問する＋気に入った回答をメモに残す</h3>
+          <h3>集めたソースに質問する→ Studio から 1 つ目の機能を試す</h3>
           <div class="timeline-body">
-            <p><strong>「提案された質問」から始めてみる（10分）</strong></p>
+            <p><strong>提案された質問→自分で 5 問以上（20分）</strong></p>
             <ul>
-              <li>NotebookLM のチャット画面には<strong>「提案された質問」</strong>がいくつか表示されている（公式 beginner tip の1つ）</li>
-              <li>まずはその中から 1〜2 個を選んでクリック</li>
-              <li>自分の自己紹介シートをもとに、NotebookLM が「こういう質問できるよ」と提案してくれる——意外と自分では思いつかない切り口が出る</li>
-            </ul>
-            <p><strong>5 問以上、自分で質問する（20分）</strong></p>
-            <ul>
-              <li>例（自由に変えて OK）:
+              <li>NotebookLM のチャット欄に表示される「<strong>提案された質問</strong>」（公式 8 expert tips の Tip 4 <em>"Start with the suggested questions"</em> 該当）からまず 1〜2 問クリック</li>
+              <li>続けて自分で 5 問以上、集めたソースに質問してみる。例:
                 <ul>
-                  <li>「私の趣味から、空き時間に楽しめる新しいことを 3 つ提案して」</li>
-                  <li>「私の今学期の目標を達成するために、毎週やるといいことを教えて」</li>
-                  <li>「私が苦手なことを克服するヒントを、優しく教えて」</li>
-                  <li>「私の話し方の好みに合わせて、明日の朝の励ましメッセージを書いて」</li>
-                  <li>「ソースから読み取れる『私の性格』を3つ挙げて」</li>
+                  <li>「私が集めたソースから、◯◯（推しキャラ／アーティスト等）の魅力を 3 つ挙げて」</li>
+                  <li>「ソースから読み取れる ◯◯の代表的なエピソードを年代順に教えて」</li>
+                  <li>「ソースの中で意見が分かれているところがあれば教えて」</li>
+                  <li>「私の自己紹介と組み合わせて、◯◯ をもっと楽しむための提案をして」</li>
                 </ul>
               </li>
-              <li>5 問以上投げてみる。<strong>毎回引用番号が付くか</strong>を観察</li>
-              <li><strong>気づきポイント</strong>: 自己紹介シートに書いてないことを聞くと、NotebookLM は<strong>「ソースには書かれていません」</strong>のように正直に答えることが多い（ここも Gem と比べた安心ポイント）</li>
+              <li>毎回、回答末尾の <strong>「[1]」「[2]」のような引用番号</strong>を観察。クリックするとソース内の根拠箇所がハイライトされる</li>
+              <li>ソースに無いことを聞くと「ソースには書かれていません」のように正直に答えることが多い（Gem と比べた安心ポイント）</li>
             </ul>
-            <p><strong>気に入った回答を「メモ」として保存（15分）</strong></p>
+            <p><strong>気に入った回答を「メモ」に保存（5分）</strong></p>
             <ul>
-              <li>気に入った回答の右上にある<strong>「メモに保存」</strong>ボタン（または「保存」アイコン）をクリック</li>
-              <li>右側の<strong>「メモ」エリア</strong>に保存される</li>
-              <li>保存したメモは、<strong>あとから自分で見返せる</strong>。今日の体験を残すと、後の回で「あの時こう答えてたな」と振り返れる</li>
-              <li>メモは編集もできる。タイトルを「励ましメッセージ集」など分かりやすい名前に変更</li>
+              <li>気に入った回答の「<strong>メモに保存</strong>」アイコンをクリック→右側「メモ」エリアに保存</li>
+              <li>タイトルを「○○の魅力ベスト3」などに編集すると、後から見返しやすい</li>
             </ul>
-            <p><strong>近くの人と「私の AI、こんなこと言ってた」を共有（5分）</strong></p>
+            <p><strong>Studio から 1 つ目の機能を選んで生成（25分）</strong></p>
             <ul>
-              <li>同じ質問でも、自己紹介シートが違うので<strong>答えがまったく違う</strong>のを見せ合う</li>
-              <li>「面白い答え」「意外な答え」を1つ口頭シェア——声の小さい共有でOK</li>
+              <li>右側「<strong>Studio</strong>」エリアの 9 機能から<strong>1 つ選んで生成ボタンを押す</strong>。おすすめ:
+                <ul>
+                  <li><strong>音声解説</strong>: 2 人のホストが自分の集めたソースについて語るラジオ番組（生成に数分かかる）</li>
+                  <li><strong>マインドマップ</strong>: ソース全体を1枚の図に（生成は早い）</li>
+                  <li><strong>クイズ</strong>: ソースから自動で問題が作られる（自分の好きなテーマでクイズ番組気分）</li>
+                  <li><strong>フラッシュカード</strong>: 暗記カード形式</li>
+                  <li><strong>レポート</strong>: 構造化された文章レポート</li>
+                </ul>
+              </li>
+              <li>音声解説を選んだ人は生成中（数分）に、隣の人と「自分が選んだテーマ」を口頭シェア</li>
+              <li>生成されたものを眺めて、<strong>「自分が集めたソースが、ここまでの形に変わるんだ」</strong>を体感</li>
             </ul>
             <div class="lesson-tip">
-              <strong>引用先をクリックしてみる:</strong> 答えの「[1]」「[2]」をクリックすると、ソース内の<strong>その答えの根拠になった行</strong>が黄色くハイライトされます。「AI が勝手に作った答えではない」が一目で分かる体験です。
+              <strong>引用先をクリックしてみる:</strong> 答えの「[1]」「[2]」をクリックすると、ソース内の<strong>その答えの根拠になった行</strong>がハイライトされます。「AI が勝手に作った答えではない」が一目で分かる体験です。
             </div>
           </div>
         </div>
@@ -238,37 +245,45 @@
             <span class="timeline-time">2限 後半</span>
             <span class="timeline-duration">約30分</span>
           </div>
-          <h3>音声解説 or マインドマップを1回試す</h3>
+          <h3>Studio から 2 つ目の機能＋チャット設定の存在紹介</h3>
           <div class="timeline-body">
-            <p><strong>「音声解説」または「マインドマップ」を選んで生成（15分）</strong></p>
+            <p><strong>2 つ目の Studio 機能を試す（15分）</strong></p>
             <ul>
-              <li>ノートブック画面の右側（または「Studio」「生成」エリア）に、<strong>音声解説</strong>（Audio Overview）／<strong>マインドマップ</strong>などの生成ボタンが並んでいる（アカウントによっては<strong>動画解説</strong>・<strong>インフォグラフィック</strong>・<strong>スライド資料</strong>も表示される）</li>
-              <li>今日は次の 2 つから<strong>1 つ選ぶ</strong>:
+              <li>2 限前半で<strong>選ばなかった機能</strong>から 1 つを選んで生成。<strong>違うジャンル</strong>を選ぶと比較が面白い:
                 <ul>
-                  <li><strong>A. 音声解説</strong>（Audio Overview）— 自分の自己紹介シートを元に、<strong>2 人のホストがラジオ番組のように話す音声</strong>を生成（数分かかる）</li>
-                  <li><strong>B. マインドマップ</strong>— 自分の自己紹介シートの内容を<strong>図でまとめてくれる</strong>（生成は早い）</li>
+                  <li>1 つ目に音声解説 → 2 つ目はマインドマップやインフォグラフィック（視覚系）</li>
+                  <li>1 つ目にマインドマップ → 2 つ目は音声解説や動画解説（音/動画系）</li>
+                  <li>1 つ目にレポート → 2 つ目はクイズやフラッシュカード（学習系）</li>
                 </ul>
               </li>
-              <li>音声解説は生成に数分かかるので、<strong>生成中</strong>は隣の人と「もし他のソースを足したら、なに足したい？」を雑談</li>
+              <li>近くの人と「<strong>音声解説とマインドマップ、どっちが自分のテーマに合っていた？</strong>」を 1 分シェア</li>
             </ul>
-            <p><strong>体験する（10分）</strong></p>
+            <p><strong>「チャットを設定」の存在を見る（5分・第4回以降の予告）</strong></p>
             <ul>
-              <li><strong>音声解説の人</strong>: 生成された音声を再生（イヤホン推奨）。<strong>2 人のホストが自分の自己紹介について話している</strong>のは新鮮な体験</li>
-              <li><strong>マインドマップの人</strong>: 図を眺めて、自分が書いた項目がどう構造化されているか観察</li>
-              <li>生成された音声・マップは<strong>ノートブックに保存される</strong>ので、後でいつでも再生・閲覧できる</li>
-            </ul>
-            <p><strong>感想を 1 行メモに残す（5分）</strong></p>
-            <ul>
-              <li>右側「メモ」エリアに、自分の感想を 1 行追加。例:
+              <li>チャット欄の右上にある<strong>調整アイコン</strong>をクリック→「<strong>チャットを設定</strong>」パネルが開く</li>
+              <li>3 つのモードがあることだけ確認:
                 <ul>
-                  <li>「自分のことを他人が話してるみたいで不思議だった」</li>
-                  <li>「自分が書いた項目が図になると、関係性が見える」</li>
+                  <li><strong>デフォルト</strong>: 一般的なリサーチ・ブレインストーミング向け</li>
+                  <li><strong>学習ガイド</strong>: 学習用の問いかけスタイル</li>
+                  <li><strong>カスタム</strong>: 自分で「会話の目的・スタイル・役割」を最大 10,000 文字で書ける（公式: NotebookLM 公式アナウンス 2025-12）。第2回 Gem の「カスタム指示」に近い感覚</li>
+                </ul>
+              </li>
+              <li>今日は<strong>名前だけ覚える</strong>。本格的な「カスタム」設定は<strong>第4回以降</strong>で扱う</li>
+              <li>パネルは「×」または「閉じる」で閉じる</li>
+            </ul>
+            <p><strong>感想メモを残す（10分）</strong></p>
+            <ul>
+              <li>右側「メモ」エリアに、自分の感想を 2〜3 行追加。例:
+                <ul>
+                  <li>「ソースを 5 件集めただけで、こんなに違う形に変わるとは」</li>
+                  <li>「自分の好きなテーマを AI に読ませると会話が楽しい」</li>
+                  <li>「Studio の◯◯機能が一番好きだった」</li>
                 </ul>
               </li>
               <li>後の回で「最初の感想」と「成長した後の感想」を比べると面白い</li>
             </ul>
             <div class="lesson-tip">
-              <strong>動かなかった人へ:</strong> 音声解説は混雑時など生成に時間がかかったり失敗したりすることがあります。動かなかったら<strong>マインドマップに切り替え</strong>でOK。両方ダメなら、第4回の冒頭で再チャレンジします。
+              <strong>動かなかった人へ:</strong> Studio の機能は混雑時に生成に時間がかかったり失敗したりすることがあります。動かなかった機能は<strong>家から再チャレンジ</strong>でOK。第4回の冒頭でも触ります。
             </div>
           </div>
         </div>
@@ -281,10 +296,10 @@
           <h3>振り返り＆次回予告</h3>
           <div class="timeline-body">
             <ul>
-              <li>今日のキーワード: <strong>NotebookLM / ノートブック / ソース / チャット / 引用番号 / メモ / 音声解説 / マインドマップ</strong></li>
-              <li>覚えてほしいこと: NotebookLM は<strong>「自分が入れた資料の中から答えてくれる AI」</strong>。引用が出るので「本当かな？」がチェックしやすい</li>
-              <li>次回（第4回）: <strong>NotebookLMで「自分だけのAI」を本格化</strong>。Gem との違いを正面から比べたうえで、自分の興味や講師配布資料を NotebookLM に取り込んで「自分だけのAI」を育て始める。<strong>【学習データ②】学習目標シート</strong>が登場</li>
-              <li>家での発展（任意）: 自分のノートブックを開いて、別の質問を 2〜3 個投げてみる。学校で開いたノートが家からも開けるか確認</li>
+              <li>今日のキーワード: <strong>NotebookLM / ノートブック / ソース / Fast Research / チャット / 引用番号 / メモ / Studio 9 機能 / チャット設定</strong></li>
+              <li>覚えてほしいこと: NotebookLM は<strong>「自分が入れた資料の中から答えてくれる AI」</strong>＋<strong>「同じ素材を 9 通りに料理してくれる」</strong>。引用が出るので「本当かな？」がチェックしやすい</li>
+              <li>次回（第4回）: <strong>NotebookLMで「自分だけのAI」を本格化</strong>。今日紹介だけだった<strong>「チャットを設定」のカスタムモード</strong>に踏み込み、自分の AI の性格・話し方を仕込む。<strong>【学習データ②】学習目標シート</strong>が登場</li>
+              <li>家での発展（任意）: 集めたソースを 2〜3 件足す／触ってない Studio 機能をもう 1 つ試す</li>
             </ul>
           </div>
         </div>
@@ -297,7 +312,7 @@
       <p>学校アカウントで NotebookLM が表示されない場合、以下のどちらかで進めてください。</p>
       <ul>
         <li><strong>A. 個人 Google アカウントに切り替えてログイン</strong>（無料で利用可能）</li>
-        <li><strong>B. ペアでお互いのノートを見せ合いながら進める</strong>（学校アカウントで使える人と一緒に操作を見る）。今日のゴール（操作手順を理解する）は達成できる</li>
+        <li><strong>B. ペアでお互いのノートを見せ合いながら進める</strong>（学校アカウントで使える人と一緒に操作を見る）</li>
       </ul>
       <p>どちらの場合も、<strong>自己紹介シートは Google ドキュメントで作成しておく</strong>と、家から個人アカウントで開き直したときにすぐ使えます。</p>
     </div>
@@ -308,8 +323,8 @@
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>自分のノートブックに自己紹介シートが入った状態を維持する</strong>
-            <p>授業内で作ったノートブック（「○○のAIノート」）と、その中の自己紹介シートを<strong>消さない</strong>。第4回・第5回で同じノートブックに学習データ②③を足していきます。</p>
+            <strong>自分のノートブックを保持する</strong>
+            <p>授業内で作ったノートブック（「○○の AI ノート」）と、その中の自己紹介シート + Fast Research で集めたソースを<strong>消さない</strong>。第4回以降で同じノートブックに学習データ②③を足していきます。</p>
           </div>
         </div>
         <div class="lesson-task">
@@ -323,14 +338,21 @@
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
             <strong>家から自分のノートブックを開いてみる</strong>
-            <p>家の PC・スマホから <a href="https://notebooklm.google.com" target="_blank" rel="noopener">notebooklm.google.com</a> にログインして、授業で作ったノートブックが開けるか確認。質問を 1〜2 個追加してみる。</p>
+            <p>家の PC・スマホから <a href="https://notebooklm.google.com" target="_blank" rel="noopener">notebooklm.google.com</a> にログインして、授業で作ったノートブックが開けるか確認。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
-            <strong>「もう一方」も試す（音声解説／マインドマップ）</strong>
-            <p>授業で選ばなかった方（音声解説 or マインドマップ）を家で生成して試す。ついでに<strong>他の生成機能</strong>（インフォグラフィック・スライド資料・動画解説などが表示されている場合）もボタンを押してみる。</p>
+            <strong>Studio の他の機能をあと 1 〜2 個試す</strong>
+            <p>授業で試さなかった機能（動画解説／スライド資料／レポート／フラッシュカード／クイズ／インフォグラフィック／Data Table）を 1〜2 個、家から生成して試す。お気に入りの機能を見つけておく。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>Fast Research でソースをあと 2〜3 件足す</strong>
+            <p>授業で集めたソースに、別のキーワードや別の角度のソースを足してみる。ソースを増やすとチャットの応答や生成物がどう変わるかを観察。</p>
           </div>
         </div>
       </div>
@@ -340,7 +362,10 @@
       <h2>参考リンク</h2>
       <ul>
         <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> — 今日触ったツール本体</li>
-        <li><a href="https://support.google.com/notebooklm/?hl=ja" target="_blank" rel="noopener">NotebookLM ヘルプ（日本語公式）</a> — ノートブック・ソース・チャット・音声解説などの公式マニュアル</li>
+        <li><a href="https://support.google.com/notebooklm/?hl=ja" target="_blank" rel="noopener">NotebookLM ヘルプ（日本語公式）</a> — ノートブック・ソース・チャット・Studio 機能などの公式マニュアル</li>
+        <li><a href="https://support.google.com/notebooklm/answer/16215270?hl=ja" target="_blank" rel="noopener">NotebookLM ヘルプ — ソースを追加する（公式）</a> — Fast Research / Deep Research / 各形式の取り込み手順</li>
+        <li><a href="https://blog.google/innovation-and-ai/models-and-research/google-labs/notebooklm-deep-research-file-types/" target="_blank" rel="noopener">Google ブログ — NotebookLM adds Deep Research and support for more source types（公式・2025-11-13）</a> — Fast Research と Deep Research の公式アナウンス</li>
+        <li><a href="https://support.google.com/notebooklm/answer/16179559?hl=ja" target="_blank" rel="noopener">NotebookLM ヘルプ — チャットを使う（公式）</a> — 「チャットを設定」3 モード（デフォルト／学習ガイド／カスタム）の公式説明、カスタム最大 10,000 文字の根拠</li>
         <li><a href="https://blog.google/innovation-and-ai/products/notebooklm-beginner-tips/" target="_blank" rel="noopener">Google ブログ — 8 expert tips for getting started with NotebookLM（公式）</a> — 「メインのノートブックを 1 つ作って派生させる」「提案された質問から始める」「異なる素材を結びつける」など 8 つの初心者向け公式ヒント</li>
         <li><a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a> — 第2回で Gem を作った場所（NotebookLM とは違う場所）</li>
       </ul>
