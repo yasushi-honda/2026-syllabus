@@ -1293,6 +1293,23 @@ img { max-width: 100%; display: block; }
   stroke-linejoin: round;
 }
 
+/* Markdown preview block (copy source visible to learners) */
+.md-preview {
+  margin-top: var(--sp-4);
+  padding: var(--sp-4) var(--sp-5);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-sm);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--c-text);
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 420px;
+  overflow-y: auto;
+}
+
 /* Syllabus content */
 .syllabus-content {
   padding-bottom: var(--sp-16);
