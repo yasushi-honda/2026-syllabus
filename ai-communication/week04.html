@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第4回 AIの能力と限界を知る | AIコミュニケーション基礎</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication.html">AIコミュニケーション基礎</a>
+        <span>/</span>
+        <span>第4回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">AIの<wbr>能力と<wbr>限界を<wbr>知る</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 4</span>
+            <span class="page-badge">火曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">生成AIの「得意」と「不得意」を、わざと事実誤認の応答を引き出す個人演習で体験し、ファクトチェックの基本動作を身につける</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">生成AIの得意/不得意 / ハルシネーション / 事実誤認 / ファクトチェック / 回答を再確認(double-check) / 【学習データ④】AI特性まとめ・エラー事例集</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第3回までに <strong>【学習データ①②③】</strong> を投入した「自分だけのAI」(NotebookLM)・Gemini にログインできる状態</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>生成AIの「得意なこと」と「不得意なこと」を、自分の言葉で<strong>3つずつ</strong>挙げられる</li>
+        <li>ハルシネーション(事実誤認)が起きる仕組みを<strong>「次に来る言葉の断片(トークン)を予測する」</strong>観点から説明できる</li>
+        <li>Gemini の<strong>「回答を再確認」(double-check)</strong>機能を実行し、緑/オレンジのハイライトを読み分けられる</li>
+        <li>1つの応答に対して<strong>3段階の検証</strong>(ダブルチェック → 公式サイト確認 → 第三者ソース確認)を実行できる</li>
+        <li>授業内で <strong>【学習データ④】AI特性まとめ・エラー事例集</strong> を作成し、自分のAIに追加する</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続(90分 + 90分 = 計180分)。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の振り返りと生成AIの「得意/不得意」の全体像</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り(10分)</strong></p>
+            <ul>
+              <li>第3回で投入した <strong>【学習データ③】プロンプトのコツまとめ資料</strong> が NotebookLM のソースに入っているかチェック</li>
+              <li>家で試した「役割設定」のエピソード共有(希望者のみ)——「同じテーマで2つの立場から答えさせたら何が変わったか」を一人1〜2文で</li>
+            </ul>
+            <p><strong>生成AIが「得意なこと」(15分)</strong></p>
+            <ul>
+              <li><strong>言葉の組み立て</strong>: 文章を整える / 要点を抽出する / 別の言い方に書き換える</li>
+              <li><strong>発想の触媒</strong>: アイデア出しの相棒、ブレスト相手、視点切り替え</li>
+              <li><strong>構造化</strong>: バラバラの情報を表・箇条書き・見出し付き文書に整理</li>
+              <li><strong>言語の橋渡し</strong>: 翻訳、専門用語の言い換え、難易度調整(中学生にも分かるように、など)</li>
+              <li>これらは第3回までの体験で<strong>自分でも実感できているはず</strong>のもの</li>
+            </ul>
+            <p><strong>生成AIが「不得意なこと」(15分)</strong></p>
+            <ul>
+              <li><strong>正確な事実の保証</strong>: 学習データに含まれていない情報、最新情報、固有名詞の細部は誤りやすい</li>
+              <li><strong>計算と検算</strong>: 数字を扱う応答は要検証(電卓と違って計算ミスをする)</li>
+              <li><strong>存在しない情報の生成</strong>: 出典・URL・人物名などが<strong>もっともらしく見えるが実在しない</strong>ことがある——これを <strong>「ハルシネーション」</strong> と呼ぶ</li>
+              <li><strong>なぜ起きるか</strong>: 第1回で学んだ「<strong>次に来る言葉の断片(トークン)を予測する</strong>」仕組み上、AI は「事実かどうか」を判定していない。<strong>「それらしい言葉のつながり」</strong> を出力するのが本質</li>
+              <li>公式の表現: Google の Gemini Apps ヘルプも「Gemini Apps は不正確な情報を出すことがあり、ユーザー側での確認が重要」と明言している(参考リンクの「Gemini Apps からの応答について」を参照)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>「わざと誤らせる」個人演習でハルシネーションを体験する</h3>
+          <div class="timeline-body">
+            <p><strong>演習の意図(5分)</strong></p>
+            <ul>
+              <li>「AI は時々間違える」と聞いても実感しづらい——<strong>自分で誤りを引き起こす</strong>ことで初めて体感できる</li>
+              <li>今日のミッションは「AI に自信たっぷりに間違いを言わせて、それを自分で見つける」</li>
+              <li>使うAI: <strong>素の Gemini</strong>(ソース未投入の通常の Gemini チャット画面)。NotebookLM だと自分のソースに引きずられて誤りが出にくい</li>
+            </ul>
+            <p><strong>演習①: 固有名詞のディテール(15分)</strong></p>
+            <ul>
+              <li>自分が<strong>詳しい分野の固有名詞</strong>について聞く——好きなアニメ・ゲーム・スポーツチーム・地元の店など、<strong>正解を知っているテーマ</strong>を選ぶ</li>
+              <li>プロンプト例:
+                <ul>
+                  <li><code>『○○』というアニメの主要キャラクター3人の名前と性格を教えて</code></li>
+                  <li><code>△△駅前にある××というお店の営業時間と人気メニューを教えて</code></li>
+                </ul>
+              </li>
+              <li>応答を<strong>自分の知識</strong>と照合——もっともらしい名前が混ざっていないか、存在しない情報が混ざっていないか</li>
+            </ul>
+            <p><strong>演習②: 数字・統計(10分)</strong></p>
+            <ul>
+              <li>「2026年現在の日本の高校生の○○率」など、<strong>正確な数字が必要な質問</strong>を投げる</li>
+              <li>応答に出てきた数字に対して「<strong>いつのデータか</strong>」「<strong>出典はあるか</strong>」を追加質問で確認</li>
+              <li>多くの場合、AI は明確な出典を示せない or 古いデータを「現在」と表示する</li>
+            </ul>
+            <p><strong>演習③: 出典・URL の存在確認(10分)</strong></p>
+            <ul>
+              <li><code>○○について詳しいサイトを3つ教えて、URLも含めて</code> と聞く</li>
+              <li>応答に出てきたURLを<strong>実際にクリック</strong>——404 や別サイトに飛ぶものがあれば、それはハルシネーション</li>
+              <li>URL の<strong>形だけ正しい</strong>(<code>https://...go.jp/...</code> のような)が、ページとしては存在しない、というパターンが典型</li>
+            </ul>
+            <p><strong>観察ノート(10分)</strong></p>
+            <ul>
+              <li>Googleドキュメントを新規作成、ファイル名を <strong><code>エラー観察メモ</code></strong> にする</li>
+              <li>各演習で見つけた誤りを、以下の4列で記録:
+                <ul>
+                  <li>① プロンプト全文</li>
+                  <li>② AI の誤った応答(誤った部分を引用)</li>
+                  <li>③ 正しい情報</li>
+                  <li>④ なぜ誤ったと思うか(自分の言葉で1〜2行)</li>
+                </ul>
+              </li>
+              <li>最低<strong>3件</strong>あつめる。後半の <strong>【学習データ④】</strong> 作成の素材になる</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「AI が知らない」を引き出すコツ:</strong> 自分が詳しいテーマほど、AI の誤りを発見しやすくなります。一方、自分が詳しくないテーマで AI に聞いて応答を鵜呑みにする——これが日常で危険な使い方です。<strong>「自分が判定できるテーマ」で誤りを体験しておく</strong>ことで、判定できないテーマでも警戒できるようになります。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>「回答を再確認」と検証3ステップで応答の信頼性を見極める</h3>
+          <div class="timeline-body">
+            <p><strong>Gemini の「回答を再確認」(double-check)機能を使う(20分)</strong></p>
+            <ul>
+              <li>Gemini で応答を受けたあと、応答下部の<strong>Google ロゴ付きアイコン</strong>をクリックすると <strong>「回答を再確認」</strong> が動く</li>
+              <li>Google 検索で<strong>似た内容(緑ハイライト)</strong>と<strong>異なる内容(オレンジハイライト)</strong>を自動で示してくれる</li>
+              <li>1限後半の演習で集めたエラー応答に対して実際に試す——緑とオレンジがどう分布するかを観察</li>
+              <li><strong>緑だけ＝必ず正しい、ではない</strong>——あくまで「Web上に似た記述がある」だけ。最終判断は人間が行う</li>
+              <li>公式の表現: 「Even when Gemini Apps show sources or related content, it can still get things wrong.」(Google 公式の Gemini Apps Help より、参考リンク参照)</li>
+            </ul>
+            <p><strong>検証の3ステップ(20分)</strong></p>
+            <ul>
+              <li><strong>ステップ① ダブルチェック</strong>: Gemini の「回答を再確認」で1次スクリーニング——Web上に同じ記述があるかをまず見る</li>
+              <li><strong>ステップ② 公式サイト確認</strong>: 数字・固有名詞は<strong>運営元の公式サイト</strong>で照合(自治体・公式企業・教育機関・学術機関)</li>
+              <li><strong>ステップ③ 第三者ソース</strong>: 1次情報が見つからない時は<strong>立場の異なる複数のソース</strong>で照合(新聞・書籍・学会発表など)</li>
+              <li>1分かかるが、<strong>「使えるかどうか」を決める前に必ず通す習慣</strong>を作る</li>
+            </ul>
+            <p><strong>検証は「結論を変える時間」(10分)</strong></p>
+            <ul>
+              <li>検証で誤りを見つけたら、AI に<strong>そのまま伝えて再質問</strong>する:
+                <pre><code>先ほどの ○○ についての回答は不正確でした。
+正しくは XX です。これを踏まえて、もう一度説明してください。</code></pre>
+              </li>
+              <li>AI は前の応答を踏まえて修正する——<strong>人間が訂正することで応答の質が上がる</strong>双方向性を体験</li>
+              <li>「間違いを見つけたら使えない」ではなく「<strong>間違いを見つけたら教える</strong>」——これが「自分だけのAI」を育てる姿勢</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>【学習データ④】AI特性まとめ・エラー事例集を作成し投入する</h3>
+          <div class="timeline-body">
+            <p><strong>書く内容</strong></p>
+            <ul>
+              <li>Googleドキュメントを新規作成し、ファイル名を <strong><code>【学習データ④】AI特性まとめ・エラー事例集</code></strong> にする</li>
+              <li>項目(最低限):
+                <ul>
+                  <li><strong>AIの得意なこと</strong>を3つ、<strong>自分の言葉で</strong>箇条書き</li>
+                  <li><strong>AIの不得意なこと</strong>を3つ、<strong>自分の言葉で</strong>箇条書き(ハルシネーションを必ず含む)</li>
+                  <li>1限後半で集めた<strong>エラー事例を最低3件</strong>(プロンプト / 誤った応答 / 正しい情報 / 誤った理由)</li>
+                  <li><strong>検証の3ステップ</strong>を自分の言葉で書き直す</li>
+                  <li>「今日いちばん驚いた誤り」を1件、エピソードとして書く</li>
+                </ul>
+              </li>
+              <li>体裁は問わない——<strong>後で自分のAIに読ませて参照できれば十分</strong></li>
+            </ul>
+            <p><strong>NotebookLM のソースに追加する</strong></p>
+            <ul>
+              <li>第2/3回と同じ手順で、<strong>【学習データ④】</strong> をソース追加</li>
+              <li>追加直後に自分のAIに質問:
+                <pre><code>あなたが私に答える時、間違いを減らすために
+私はどう質問すればいい?</code></pre>
+              </li>
+              <li><strong>【学習データ①②③】</strong> だけだった時と比べて、応答に「検証の3ステップ」や「ハルシネーション」の話が登場するか観察</li>
+              <li>このプロセスは「<strong>自分のAIに AI の限界を教える</strong>」作業——自分のAIが慎重さを身につけていく</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ ai-communication.html Week 5 「情報の構造化とAI育成①」と同期 -->
+              <li>次回(第5回): <strong>情報の構造化とAI育成①</strong>——NotebookLM への効果的な情報記録方法、Googleドキュメントの構造化(見出し・リスト)、自分だけのAIを育てる実践時間、<strong>音声概要機能(Audio Overview)</strong> の体験</li>
+              <li>次回に向けて、<strong>【学習データ⑤】情報整理テクニック資料</strong> を授業内で扱う予定</li>
+              <li>「今日いちばん驚いた AI の誤り」を1つ言語化して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>【学習データ④】AI特性まとめ・エラー事例集を完成させて NotebookLM に投入する</strong>
+            <p>授業内で書き切れなかった項目を埋め、ソースに入れた状態にする。投入済みかどうかは次回確認します。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>家で AI に質問する時、1回は「回答を再確認」を実行してから採用する</strong>
+            <p>普段の Gemini 利用で1回でいいので、ダブルチェックを通してから応答を採用する。緑とオレンジのハイライトを見て、自分がどう判断したかを <code>エラー観察メモ</code> に1行追記。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>Google公式の「Gemini Apps からの応答について」を5分眺める</strong>
+            <p>下記の参考リンクから「Learn about responses from Gemini Apps」(自動翻訳可)を開き、<strong>気になった一文を1つだけメモする</strong>。全部読まなくてOK——公式の表現に触れる習慣作り。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://support.google.com/gemini/answer/16279220?hl=ja" target="_blank" rel="noopener">Gemini Apps ヘルプ — Gemini Apps からの応答について(Learn about responses from Gemini Apps)</a> — Google 公式。応答の不正確性とユーザー側の確認の重要性</li>
+        <li><a href="https://support.google.com/gemini/answer/14143489?hl=ja" target="_blank" rel="noopener">Gemini Apps ヘルプ — 関連ソースを表示して回答を再確認する(View related sources &amp; double-check responses)</a> — ダブルチェック機能の公式解説</li>
+        <li><a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a> — 今日の「わざと誤らせる」演習で使うAI</li>
+        <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> — 「自分だけのAI」を育てる場所</li>
+        <li><a href="https://support.google.com/notebooklm/" target="_blank" rel="noopener">NotebookLM ヘルプ</a> — Google 公式のヘルプセンター</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week03.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第3回 プロンプトの基本</span>
+      </a>
+      <a href="../ai-communication.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AIコミュニケーション基礎</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第5回(準備中)</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>

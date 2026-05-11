@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第4回 ミニ完成① プロフィールサイト公開 | プログラム基礎 I</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--blue">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../program-basics.html">プログラム基礎 I</a>
+        <span>/</span>
+        <span>第4回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">ミニ完成①<wbr>プロフィールサイト<wbr>公開</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 4</span>
+            <span class="page-badge">火曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">第3回までに書いた <code>index.html</code> + <code>style.css</code> を GitHub Pages 経由でインターネット上に公開し、自分の公開URLを取得する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">GitHub Pages / Settings → Pages / Deploy from a branch / 公開URL / プロジェクトサイト / 個人情報を載せない判断 / commit &amp; push</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第3回までに commit &amp; push 済みの <code>index.html</code> + <code>style.css</code> を含む自分のリポジトリ・Codespaces が起動できる状態</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>GitHub Pages が「リポジトリ上の HTML/CSS をそのまま Web に公開する仕組み」であることを自分の言葉で説明できる</li>
+        <li><strong>Settings → Pages</strong> の操作だけで自分のサイトが公開URLを持つことを体験する</li>
+        <li>公開URLにブラウザ・スマホからアクセスし、第三者の目で自分の作品を確認できる</li>
+        <li>プロフィールに<strong>何を載せるか・何を載せないか</strong>を自分で判断できる（個人情報の扱い）</li>
+        <li>反映までの待ち時間（最大10分）と、変更後の再デプロイの仕組みを理解する</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続(90分 + 90分 = 計180分)。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>「公開する」とは何かを理解し、公開前の最終チェックを行う</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り(10分)</strong></p>
+            <ul>
+              <li>第3回で書いた <code>index.html</code> + <code>style.css</code> を Codespaces で開き直す</li>
+              <li><code>python3 -m http.server 8000</code> → Simple Browser で表示確認(第1回と同じ手順)</li>
+              <li>第3回で commit &amp; push したかを確認する。まだなら、今この場で実行する</li>
+            </ul>
+            <p><strong>「公開する」とは何か(15分)</strong></p>
+            <ul>
+              <li>これまでの Simple Browser は Codespaces 上の<strong>自分にしか見えない</strong>プレビュー</li>
+              <li>GitHub Pages を有効化すると、リポジトリ内の HTML/CSS が <code>https://&lt;ユーザー名&gt;.github.io/&lt;リポジトリ名&gt;/</code> という URL で<strong>誰でもアクセスできる</strong>状態になる</li>
+              <li>公開後は、URL を知っている人は誰でも見られる——<strong>プライベートではない</strong>ことを最初に確認</li>
+              <li>これが「<strong>プロジェクトサイト</strong>」の公開方式。<code>username.github.io</code> という名前のリポジトリを別途作る「ユーザーサイト」もあるが、今日はリポジトリ名を変える必要がない<strong>プロジェクトサイト</strong>方式でいく</li>
+            </ul>
+            <p><strong>公開前の3つの最終チェック(15分)</strong></p>
+            <ul>
+              <li><strong>① ファイル名</strong>: トップページは必ず <code>index.html</code>。他の名前にすると公開URLで「Not Found」になる</li>
+              <li><strong>② 個人情報チェック</strong>: 本名・住所・電話番号・通学先など、<strong>公開して困る情報が入っていないか</strong>を見直す(後述の「載せる/載せない判断」)</li>
+              <li><strong>③ commit と push 状態</strong>: GitHub Pages はリポジトリの最新コミットを公開対象にする。push されていない変更は公開URLに反映されない</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>公開前のレイアウト微調整 → commit &amp; push する</h3>
+          <div class="timeline-body">
+            <p><strong>レイアウト微調整(30分)</strong></p>
+            <ul>
+              <li>第3回で書いた CSS を<strong>そのまま公開できる状態</strong>にする最終調整</li>
+              <li>チェック観点:
+                <ul>
+                  <li>見出し(<code>h1</code> / <code>h2</code> / <code>h3</code>)と本文(<code>p</code>)のサイズバランス</li>
+                  <li>色は1〜2色に絞れているか(第3回の「自分らしい1色」ルール継続)</li>
+                  <li>リンク(<code>a</code>)の色が本文と区別できるか</li>
+                  <li>余白(<code>margin</code> / <code>padding</code>)で読みやすい呼吸が入っているか</li>
+                </ul>
+              </li>
+              <li><strong>1行ずつ書いて Simple Browser で確認</strong>を繰り返す。第3回と同じリズム</li>
+            </ul>
+            <p><strong>「載せる/載せない」を自分で決める(10分)</strong></p>
+            <ul>
+              <li>本名は「公開してよい」と<strong>自分が判断できるか</strong>(クラスメイトの判断と違って当たり前)</li>
+              <li>学校名・学年は載せるか、伏せるか</li>
+              <li>SNS アカウントを載せるなら<strong>公開アカウントのみ</strong>。鍵アカウントは載せない</li>
+              <li>迷ったら<strong>載せない</strong>を選ぶ。後から追加はいつでもできる</li>
+            </ul>
+            <p><strong>commit &amp; push(10分)</strong></p>
+            <ul>
+              <li>Codespaces の左側「ソース管理」(Source Control)タブで変更ファイル一覧を確認</li>
+              <li>コミットメッセージ例: <code>公開前の最終調整</code></li>
+              <li>「Commit」→「Sync Changes」(または「Push」)で GitHub に反映</li>
+              <li>GitHub.com の自分のリポジトリページで最新コミットが反映されたか確認</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「公開URLに恥ずかしいコミットを残さない」必要はない:</strong> Git の履歴は学習プロセスそのものです。「最初の一歩」のコミットも、レイアウトを直したコミットも全部残してOK。後で見返すと「自分はここから始めた」という記録になります。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>GitHub Pages を有効化して公開URLを取得する</h3>
+          <div class="timeline-body">
+            <p><strong>リポジトリの Settings を開く(5分)</strong></p>
+            <ul>
+              <li>GitHub.com で自分のリポジトリのページを開く(<code>https://github.com/&lt;ユーザー名&gt;/&lt;リポジトリ名&gt;</code>)</li>
+              <li>上部タブの<strong>「Settings」</strong>をクリック(自分が所有しているリポジトリでないと表示されない)</li>
+              <li>左サイドバーの<strong>「Pages」</strong>を選択</li>
+            </ul>
+            <p><strong>Source の設定(10分)</strong></p>
+            <ul>
+              <li>「Build and deployment」セクションの<strong>「Source」</strong>ドロップダウンで<strong>「Deploy from a branch」</strong>を選択</li>
+              <li>下に出る<strong>「Branch」</strong>ドロップダウンで <strong><code>main</code></strong> を選択</li>
+              <li>右隣のフォルダドロップダウンで <strong><code>/ (root)</code></strong> を選択</li>
+              <li><strong>「Save」</strong>ボタンをクリック</li>
+            </ul>
+            <p><strong>デプロイ待ちと公開URL確認(25分)</strong></p>
+            <ul>
+              <li>Save 後、Pages 設定ページ上部に <strong>「Your site is live at ...」</strong> という案内が表示されるまで待つ</li>
+              <li>公式: 反映まで<strong>最大10分</strong>(通常は1〜3分)。教室では待ち時間を使ってクラスメイトの進捗を確認するのもよい</li>
+              <li>リポジトリの<strong>「Actions」</strong>タブで <code>pages build and deployment</code> ワークフローの進行状況を見られる</li>
+              <li>表示された公開URLをコピーしてブラウザの<strong>別タブで開く</strong>——自分の <code>index.html</code> が表示されることを確認</li>
+            </ul>
+            <p><strong>Public / Private と無料プランの注意(10分)</strong></p>
+            <ul>
+              <li>GitHub Pages の<strong>無料プラン</strong>は public(誰でもコードを見られる)リポジトリのみ対応</li>
+              <li>private リポジトリで Pages を使うには GitHub Pro 以上が必要</li>
+              <li>GitHub Student 認証済みなら GitHub Pro 相当の機能が無料で使える</li>
+              <li>注意: <strong>2026-04-20 から Copilot Pro / Pro+ / Student の新規申請が一時停止中</strong>(既存認証済みユーザーは継続利用可)。再開時期は公式の Important 掲示で都度確認。Pages の利用自体は public リポジトリで全員可能</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「Source」と「Branch」の用語は公式 UI の表記そのまま:</strong> GitHub の UI は英語が基準で、日本語化されていない要素も多くあります。「Source」「Branch」「Save」は<strong>UI のまま覚える</strong>のが結局はやい。教える時も英語と日本語訳の両方を併用します。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>公開URLを実機で確認しトラブルシューティング手順を身につける</h3>
+          <div class="timeline-body">
+            <p><strong>スマホ実機で確認する(15分)</strong></p>
+            <ul>
+              <li>公開URLを LINE などで自分宛にメッセージ送信、または手で打ち込んでスマホで開く(QR コード変換は Week 5 で扱う)</li>
+              <li>PC とスマホで見え方が違っていて当然——本格的なレスポンシブ対応は Week 5 のテーマ</li>
+              <li>今日は「<strong>気になった点をスクリーンショットで保存</strong>」だけしておく。Week 5 の素材になる</li>
+            </ul>
+            <p><strong>表示されない時のチェックリスト(15分)</strong></p>
+            <ul>
+              <li><strong>① 「404 — Not Found」が出る</strong> → <code>index.html</code> がリポジトリの<strong>ルート(一番上)</strong>にあるか確認。ファイル名のスペル(<code>Index.html</code> や <code>index.htm</code> はダメ)も確認</li>
+              <li><strong>② 古いまま変わらない</strong> → 反映に最大10分かかる。ブラウザの強制再読み込み(Mac: <code>Cmd</code> + <code>Shift</code> + <code>R</code> / Windows: <code>Ctrl</code> + <code>Shift</code> + <code>R</code>)でキャッシュをクリア</li>
+              <li><strong>③ CSS が反映されない</strong> → <code>&lt;link rel="stylesheet" href="style.css"&gt;</code> のスペル、<code>style.css</code> ファイルのスペル、大文字小文字を確認</li>
+              <li><strong>④ 画像が表示されない</strong> → 画像のパスと大文字小文字。GitHub Pages はパスの<strong>大文字小文字を区別する</strong>(Codespaces 上では動いていてもサーバーでは <code>Profile.png</code> と <code>profile.png</code> は別物)</li>
+              <li><strong>⑤ それでも直らない</strong> → 講師に公開URLとスクリーンショットを見せて相談。エラーメッセージは「読む」が基本(第13回でも同じことを練習する)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ program-basics.html Week 5 「レスポンシブ&スマホ実機確認&バグ修正ワーク①」と同期 -->
+              <li>次回(第5回): <strong>レスポンシブ＆スマホ実機確認＆バグ修正ワーク①</strong>——今日取得した公開URLを<strong>QRコードに変換してスマホで読み取り</strong>、PC とスマホでの表示の違いをメディアクエリで吸収する。AI に「バグ入りスマホ対応 CSS」を生成させ、修正する演習も行う</li>
+              <li>公開URLは<strong>必ず控えておく</strong>。スマホのブックマークや自分宛のメッセージに保存</li>
+              <li>「公開URL」「Settings → Pages」「<code>main</code> / <code>(root)</code>」の3つを口に出して言えるか確認して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>公開URLを記録する</strong>
+            <p>自分のメモアプリ・スマホのブックマーク・自分宛メッセージなど、<strong>次回必ず取り出せる場所</strong>に保存する。Week 5 で QR コード変換に使います。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>家のスマホで公開URLを開き、気になった点をスクリーンショットに残す</strong>
+            <p>「文字が小さい」「画像がはみ出る」「余白が詰まりすぎ」など、PC では気にならなかったことがスマホで見えるはずです。<strong>今日は直さない</strong>、Week 5 の素材として記録するだけ。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>家族や友人に公開URLを見せて反応をもらう</strong>
+            <p>「<strong>世界に公開された自分の作品</strong>」を一人でも誰かに見せる体験。褒められたら次回シェア歓迎、辛口の指摘も Week 5 の素材になります。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://docs.github.com/ja/pages/quickstart" target="_blank" rel="noopener">GitHub Docs — GitHub Pages クイックスタート</a> — 公式のいちばん短い手順</li>
+        <li><a href="https://docs.github.com/ja/pages/getting-started-with-github-pages/creating-a-github-pages-site" target="_blank" rel="noopener">GitHub Docs — GitHub Pages サイトの作成</a> — 詳細版の手順</li>
+        <li><a href="https://docs.github.com/ja/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site" target="_blank" rel="noopener">GitHub Docs — GitHub Pages サイトの公開元の構成</a> — ブランチとフォルダの設定詳細</li>
+        <li><a href="https://docs.github.com/ja/pages/getting-started-with-github-pages/about-github-pages" target="_blank" rel="noopener">GitHub Docs — GitHub Pages について</a> — 仕組みと制限の公式説明</li>
+        <li><a href="https://education.github.com/pack" target="_blank" rel="noopener">GitHub Student Developer Pack</a> — 学生向け無料特典(GitHub Pro 相当の機能を含む)</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week03.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第3回 CSS入門：色とレイアウト</span>
+      </a>
+      <a href="../program-basics.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">プログラム基礎 I</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第5回(準備中)</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
