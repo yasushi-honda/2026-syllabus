@@ -95,8 +95,8 @@
               <li><strong>正確な事実の保証</strong>: 学習データに含まれていない情報、最新情報、固有名詞の細部は誤りやすい</li>
               <li><strong>計算と検算</strong>: 数字を扱う応答は要検証(電卓と違って計算ミスをする)</li>
               <li><strong>存在しない情報の生成</strong>: 出典・URL・人物名などが<strong>もっともらしく見えるが実在しない</strong>ことがある——これを <strong>「ハルシネーション」</strong> と呼ぶ</li>
-              <li><strong>なぜ起きるか</strong>: 第1回で学んだ「<strong>次に来る言葉の断片(トークン)を予測する</strong>」仕組み上、AI は「事実かどうか」を判定していない。<strong>「それらしい言葉のつながり」</strong> を出力するのが本質</li>
-              <li>公式の表現: Google の Gemini Apps ヘルプも「Gemini Apps は不正確な情報を出すことがあり、ユーザー側での確認が重要」と明言している(参考リンクの「Gemini Apps からの応答について」を参照)</li>
+              <li><strong>なぜ起きるか</strong>: 第1回で学んだ通り、生成AIは「<strong>次に来る言葉の断片(トークン)を予測する</strong>」仕組みで動いている(公式ドキュメントでも生成AIは「次のトークンを予測する」モデル設計と説明される)。AI は「事実かどうか」を判定していない——<strong>「それらしい言葉のつながり」</strong>を出力するのが本質</li>
+              <li>公式の表現: Google の Gemini アプリヘルプは「生成される情報は不正確、不快、または不適切な場合があります」と述べ、続けて「回答を再確認するようにしてください」と利用者側の検証を促している(参考リンクの「Gemini アプリの回答について」を参照)</li>
             </ul>
           </div>
         </div>
@@ -172,7 +172,7 @@
           <div class="timeline-body">
             <p><strong>Gemini の「回答を再確認」(double-check)機能を使う(20分)</strong></p>
             <ul>
-              <li>Gemini で応答を受けたあと、応答下部の<strong>Google ロゴ付きアイコン</strong>をクリックすると <strong>「回答を再確認」</strong> が動く</li>
+              <li>Gemini で応答を受けたあと、応答下部の <strong>[その他] メニュー</strong>(縦三点アイコン)から <strong>[回答を再確認]</strong> を選ぶと、ダブルチェックが動く(公式の操作手順: 「回答の下にある [その他] [次に] [回答を再確認] をクリック」)</li>
               <li>Google 検索で<strong>似た内容(緑ハイライト)</strong>と<strong>異なる内容(オレンジハイライト)</strong>を自動で示してくれる</li>
               <li>1限後半の演習で集めたエラー応答に対して実際に試す——緑とオレンジがどう分布するかを観察</li>
               <li><strong>緑だけ＝必ず正しい、ではない</strong>——あくまで「Web上に似た記述がある」だけ。最終判断は人間が行う</li>
@@ -270,8 +270,8 @@
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
-            <strong>Google公式の「Gemini Apps からの応答について」を5分眺める</strong>
-            <p>下記の参考リンクから「Learn about responses from Gemini Apps」(自動翻訳可)を開き、<strong>気になった一文を1つだけメモする</strong>。全部読まなくてOK——公式の表現に触れる習慣作り。</p>
+            <strong>Google公式の「Gemini アプリの回答について」を5分眺める</strong>
+            <p>下記の参考リンクから「Gemini アプリの回答について(Learn about responses from Gemini Apps)」(自動翻訳可)を開き、<strong>気になった一文を1つだけメモする</strong>。全部読まなくてOK——公式の表現に触れる習慣作り。</p>
           </div>
         </div>
       </div>
@@ -280,8 +280,8 @@
     <div class="syllabus-section">
       <h2>参考リンク</h2>
       <ul>
-        <li><a href="https://support.google.com/gemini/answer/16279220?hl=ja" target="_blank" rel="noopener">Gemini Apps ヘルプ — Gemini Apps からの応答について(Learn about responses from Gemini Apps)</a> — Google 公式。応答の不正確性とユーザー側の確認の重要性</li>
-        <li><a href="https://support.google.com/gemini/answer/14143489?hl=ja" target="_blank" rel="noopener">Gemini Apps ヘルプ — 関連ソースを表示して回答を再確認する(View related sources &amp; double-check responses)</a> — ダブルチェック機能の公式解説</li>
+        <li><a href="https://support.google.com/gemini/answer/16279220?hl=ja" target="_blank" rel="noopener">Gemini アプリヘルプ — Gemini アプリの回答について(Learn about responses from Gemini Apps)</a> — Google 公式。応答の不正確性とユーザー側の確認の重要性</li>
+        <li><a href="https://support.google.com/gemini/answer/14143489?hl=ja" target="_blank" rel="noopener">Gemini アプリヘルプ — 関連ソースを表示し、Gemini アプリの回答を再確認する(View related sources &amp; double-check responses)</a> — ダブルチェック機能の公式解説</li>
         <li><a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a> — 今日の「わざと誤らせる」演習で使うAI</li>
         <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> — 「自分だけのAI」を育てる場所</li>
         <li><a href="https://support.google.com/notebooklm/" target="_blank" rel="noopener">NotebookLM ヘルプ</a> — Google 公式のヘルプセンター</li>

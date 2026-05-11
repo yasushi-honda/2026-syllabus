@@ -204,7 +204,7 @@
               <li><strong>① 「404 — Not Found」が出る</strong> → <code>index.html</code> がリポジトリの<strong>ルート(一番上)</strong>にあるか確認。ファイル名のスペル(<code>Index.html</code> や <code>index.htm</code> はダメ)も確認</li>
               <li><strong>② 古いまま変わらない</strong> → 反映に最大10分かかる。ブラウザの強制再読み込み(Mac: <code>Cmd</code> + <code>Shift</code> + <code>R</code> / Windows: <code>Ctrl</code> + <code>Shift</code> + <code>R</code>)でキャッシュをクリア</li>
               <li><strong>③ CSS が反映されない</strong> → <code>&lt;link rel="stylesheet" href="style.css"&gt;</code> のスペル、<code>style.css</code> ファイルのスペル、大文字小文字を確認</li>
-              <li><strong>④ 画像が表示されない</strong> → 画像のパスと大文字小文字。GitHub Pages はパスの<strong>大文字小文字を区別する</strong>(Codespaces 上では動いていてもサーバーでは <code>Profile.png</code> と <code>profile.png</code> は別物)</li>
+              <li><strong>④ 画像が表示されない</strong> → 画像のパスと大文字小文字。GitHub Pages は Linux サーバー上で動くため、ファイルパスの<strong>大文字小文字を区別する</strong>(Codespaces のローカルプレビューや Windows / macOS の標準設定では同一視されるが、本番サーバーでは <code>Profile.png</code> と <code>profile.png</code> は別物として扱われる)</li>
               <li><strong>⑤ それでも直らない</strong> → 講師に公開URLとスクリーンショットを見せて相談。エラーメッセージは「読む」が基本(第13回でも同じことを練習する)</li>
             </ul>
           </div>
@@ -261,8 +261,8 @@
       <ul>
         <li><a href="https://docs.github.com/ja/pages/quickstart" target="_blank" rel="noopener">GitHub Docs — GitHub Pages クイックスタート</a> — 公式のいちばん短い手順</li>
         <li><a href="https://docs.github.com/ja/pages/getting-started-with-github-pages/creating-a-github-pages-site" target="_blank" rel="noopener">GitHub Docs — GitHub Pages サイトの作成</a> — 詳細版の手順</li>
-        <li><a href="https://docs.github.com/ja/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site" target="_blank" rel="noopener">GitHub Docs — GitHub Pages サイトの公開元の構成</a> — ブランチとフォルダの設定詳細</li>
-        <li><a href="https://docs.github.com/ja/pages/getting-started-with-github-pages/about-github-pages" target="_blank" rel="noopener">GitHub Docs — GitHub Pages について</a> — 仕組みと制限の公式説明</li>
+        <li><a href="https://docs.github.com/ja/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site" target="_blank" rel="noopener">GitHub Docs — GitHub Pages サイトの発行ソースの構成</a> — ブランチとフォルダの設定詳細</li>
+        <li><a href="https://docs.github.com/ja/pages/getting-started-with-github-pages/about-github-pages" target="_blank" rel="noopener">GitHub Docs — GitHub Pages とは</a> — 仕組みと制限の公式説明</li>
         <li><a href="https://education.github.com/pack" target="_blank" rel="noopener">GitHub Student Developer Pack</a> — 学生向け無料特典(GitHub Pro 相当の機能を含む)</li>
       </ul>
     </div>
