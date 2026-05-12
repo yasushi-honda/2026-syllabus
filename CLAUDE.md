@@ -240,6 +240,8 @@ done
 | `github.com/pricing` の個人プランタブに `GitHub Pro` が表示されていることを前提に「Pro 以上が必要」と書く | 2026-05 時点で個人プランタブは **Free / Team / Enterprise の3つのみ表示**（「Pricing update coming soon」バナー）。Pro 自体は `docs.github.com/.../githubs-plans` と `education.github.com/pack` に残るが、購入導線は移行中。「**有料プランへのアップグレードが必要(Pro / Team / Enterprise などの上位プラン)**」と汎化し、Student Pack 経由の Free GitHub Pro 提供は今も明記されているため Student 認証経路は併記する | PR #76 |
 | Gemini ヘルプ URL `support.google.com/gemini/answer/14552787` 等の古い番号を参照 | Gemini ヘルプの URL 番号は短期間で再編される（2026-05 時点で 14552787 は **404**）。最新は `/16279220`(「Gemini アプリの回答について」) / `/14143489`(「関連ソースを表示し、Gemini アプリの回答を再確認する」)。教材執筆時は curl で必ず生存確認 + `?hl=ja` 付きも併存確認 | PR #75 |
 | 参考リンクラベルを和訳の意訳で作る（例: `Gemini Apps からの応答について` / `GitHub Pages サイトの公開元の構成`） | 公式ページの**実 H1 そのまま**を使う（例: `Gemini アプリの回答について` / `GitHub Pages サイトの発行ソースの構成`）。Japanese docs は機械翻訳由来で表記が変わることがあるため、執筆時に WebFetch で H1 を直接取得して照合 | PR #75 |
+| 外部から提示された AI 機能の説明に**非公式用語**が混入したまま教材に取り込む（例: Gemini 3 系の機能名として「Thinking Cycles」「思考の循環」） | 公式は **`dynamic thinking`**（公式 docs: `ai.google.dev/gemini-api/docs/thinking`）。提示元の用語を信じず、`執筆前ファクトチェック必須§1-2` で公式 docs / pricing / ヘルプを直接当てて確認する。Gemini 3 系の reasoning 機能で言及するのは `Dynamic Thinking` のみで、Pro 系の `Deep Think` は別の上位機能として区別 | PR #79 |
+| 外部から提示されたベンチマーク数字を**裏取りせず**「ほぼ満点」「100% 近い」等の最上級表現で教材に書く（例: 「数学オリンピック級で 100% 近いスコア」） | 実際の IMO 2025 ベンチマークは **35/42 点 ≒ 83.3%（6 問中 5 問正解、ゴールドメダル）**(`arxiv.org/abs/2507.15855` / `vellum.ai/blog/google-gemini-3-benchmarks`)。「100% 近い」は誇張。スコアを書く場合は**実際の数字と出典**を併記、書かないなら「ゴールドメダル相当」等のレンジ表現に留める | PR #79 |
 
 ### レビュー手順（必ず実行）
 
