@@ -49,7 +49,7 @@
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
-          <div class="lesson-overview-value">第5回完了（進級制作リポジトリに <code>docs/prd/&lt;feature-slug&gt;.md</code> / <code>docs/adr/0001-&lt;slug&gt;.md</code> / <code>docs/plans/0001-&lt;feature-slug&gt;.md</code> が push 済み）／Codespaces 上で Gemini CLI または GitHub Copilot CLI のどちらかが起動できる状態</div>
+          <div class="lesson-overview-value">第5回完了（進級制作リポジトリに <code>docs/prd/&lt;feature-slug&gt;.md</code> / <code>docs/adr/0001-&lt;slug&gt;.md</code> / <code>docs/plans/0001-&lt;feature-slug&gt;.md</code> が push 済み）／Codespaces 上で Gemini CLI または GitHub Copilot CLI のどちらかが起動できる状態（2026-04-20 以降 Copilot Pro/Pro+/Student の新規申請が一時停止中のため、未認証の人は Gemini CLI 単体で進める）</div>
         </div>
       </div>
     </div>
@@ -146,12 +146,13 @@
 curl -LsSf https://astral.sh/uv/install.sh | sh
 
 # Spec Kit を一回限りで実行する（uvx は uv 同梱のツール実行コマンド）
-uvx --from git+https://github.com/github/spec-kit.git specify init --here --ai gemini
+# 安定運用したい場合は @vX.Y.Z でタグピン留めを推奨（公式 installation.md）
+uvx --from git+https://github.com/github/spec-kit.git specify init --here --integration gemini
 </code></pre>
               </li>
               <li><code>--here</code>: <strong>カレントディレクトリ</strong>（=自分の進級制作リポジトリのルート）に初期化。新規プロジェクトの場合は <code>specify init &lt;PROJECT_NAME&gt;</code> でディレクトリを作る</li>
-              <li><code>--ai gemini</code>: 今日のメインは Gemini CLI を選択。Copilot CLI を使う人は <code>--ai copilot</code>。<strong>Spec Kit は 30+ の AI coding agent に対応</strong>（公式表記: <em>"30 integrations — Copilot, Gemini, Codex, Windsurf, Claude, Forge, Kiro, and more"</em>）</li>
-              <li>初期化後、リポジトリに <code>.specify/</code>（テンプレ・プロジェクト設定）と、対応 CLI に応じた <strong>スラッシュコマンド定義</strong>（Gemini CLI なら <code>.gemini/commands/</code>、Copilot CLI なら <code>.github/prompts/</code> 等）が追加される</li>
+              <li><code>--integration gemini</code>: 今日のメインは Gemini CLI を選択（公式の現行オプション。古い解説に出てくる <code>--ai</code> は deprecated で警告が出る）。Copilot CLI を使う人は <code>--integration copilot</code>。<strong>Spec Kit は 30+ の AI coding agent に対応</strong>（公式 README: <em>"Spec Kit works with 30+ AI coding agents"</em> / 公式 docs: <em>"30 integrations — Copilot, Gemini, Codex, Windsurf, Claude, Forge, Kiro, and more"</em>）</li>
+              <li>初期化後、リポジトリに <code>.specify/</code>（テンプレ・プロジェクト設定）と、対応 CLI に応じた <strong>スラッシュコマンド定義</strong>が追加される（Gemini CLI なら <code>.gemini/commands/</code>、Copilot CLI なら <code>.github/agents/</code>（<code>.agent.md</code> 形式のスラッシュコマンド本体）＋ <code>.github/prompts/</code>（companion）＋ <code>.github/copilot-instructions.md</code> 等）</li>
               <li>git diff で生成物を一通り眺める。「Spec Kit は何を作ったのか」を3つ言える状態を作る</li>
             </ul>
             <p><strong><code>/speckit.constitution</code> でプロジェクト原則を書く（10分）</strong></p>
@@ -231,7 +232,7 @@ uvx --from git+https://github.com/github/spec-kit.git specify init --here --ai g
             <ul>
               <li><code>/speckit.analyze</code> は <strong>SDD ライフサイクルの「デバッグ」フェーズ</strong>に相当する公式コマンド（実装が始まる前でも、仕様・計画・タスクの整合性を機械的に検査できる）</li>
               <li>仕様で書いたユーザーストーリーが計画とタスクの両方でカバーされているか、矛盾している記述がないかを Spec Kit が指摘する</li>
-              <li>第5回の Plan Mode では「人間がレビューする」段階だった<strong>整合性チェック</strong>を、<code>/speckit.analyze</code> は<strong>自動で行う</strong></li>
+              <li>第5回の Plan Mode では「人間がレビューする」段階だった<strong>整合性チェック</strong>を、<code>/speckit.analyze</code> は<strong>機械的に走らせて指摘する</strong>（最終的にどの3ファイルを直すかの判断・修正は人間の責任）</li>
               <li>指摘が出たら、<code>spec.md</code> / <code>plan.md</code> / <code>tasks.md</code> のどれを直すべきかを判断して修正する</li>
             </ul>
             <div class="lesson-tip">
@@ -316,7 +317,7 @@ uvx --from git+https://github.com/github/spec-kit.git specify init --here --ai g
             <ul>
               <li>今日のキーワード: <strong>SDD / Spec Kit / <code>/speckit.specify</code> / <code>/speckit.plan</code> / <code>/speckit.tasks</code> / <code>/speckit.implement</code> / <code>/speckit.analyze</code> / Plan mode との対比</strong></li>
               <li>覚えてほしいこと: <strong>「仕様が実行可能な成果物になる」</strong>。仕様（spec）→ 計画（plan）→ タスク（tasks）→ 実装（implement）が、ばらばらの markdown ではなく<strong>連動する一筆書き</strong>になる</li>
-              <li>2026年5月時点の Spec Kit はオープンソースの初期段階で活発に開発中（GitHub Stars 90k+、30 以上の AI coding agent に対応）。仕様・コマンド名は変わる可能性があるため、迷ったら<strong>公式 README と公式 docs</strong>を確認する</li>
+              <li>2026年5月時点の Spec Kit はオープンソースの初期段階で活発に開発中（GitHub Stars 100k 近い規模、30 以上の AI coding agent に対応）。仕様・コマンド名は変わる可能性があるため、迷ったら<strong>公式 README と公式 docs</strong>を確認する</li>
               <li>次回（第7回）: <strong>テスト駆動開発（TDD）基礎</strong>。今日 <code>tasks.md</code> に並んだタスクを、<strong>Red → Green → Refactor</strong> サイクルで実装していく。テスト観点（正常系・異常系・境界値）の設計を学ぶ</li>
               <li>家での発展（任意）: 残ったタスクを <code>/speckit.implement</code> で1〜2件追加で進める。差分が大きくなったら、自分の手で1コミットに収まるサイズに分割する練習にもなる</li>
             </ul>
@@ -333,7 +334,7 @@ uvx --from git+https://github.com/github/spec-kit.git specify init --here --ai g
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
             <strong>Spec Kit セットアップ済みリポジトリを push</strong>
-            <p>進級制作リポジトリに <code>.specify/</code> と対応 CLI のスラッシュコマンド定義（<code>.gemini/commands/</code> または <code>.github/prompts/</code> 等）が含まれる状態で push。<code>uvx</code> による初期化の実行ログ（成功表示）を任意の <code>docs/speckit-init.txt</code> として残してもよい。</p>
+            <p>進級制作リポジトリに <code>.specify/</code> と対応 CLI のスラッシュコマンド定義（<code>.gemini/commands/</code> または <code>.github/agents/</code> 等）が含まれる状態で push。<code>uvx</code> による初期化の実行ログ（成功表示）を任意の <code>docs/speckit-init.txt</code> として残してもよい。</p>
           </div>
         </div>
         <div class="lesson-task">
@@ -374,7 +375,7 @@ uvx --from git+https://github.com/github/spec-kit.git specify init --here --ai g
         <li><a href="https://github.github.com/spec-kit/" target="_blank" rel="noopener">GitHub Spec Kit（公式ドキュメントサイト）</a> — "Spec → Plan → Tasks → Implement" コアプロセスと統合一覧</li>
         <li><a href="https://github.com/github/spec-kit/blob/main/spec-driven.md" target="_blank" rel="noopener">github/spec-kit — spec-driven.md</a> — SDD の方法論・哲学を詳しく説明した公式ドキュメント</li>
         <li><a href="https://github.blog/ai-and-ml/generative-ai/spec-driven-development-with-ai-get-started-with-a-new-open-source-toolkit/" target="_blank" rel="noopener">The GitHub Blog — Spec-driven development with AI: Get started with a new open source toolkit</a> — GitHub による公式アナウンス記事</li>
-        <li><a href="https://learn.microsoft.com/en-us/training/modules/spec-driven-development-github-spec-kit-enterprise-developers/" target="_blank" rel="noopener">Microsoft Learn — Implement Spec-Driven Development using the GitHub Spec Kit</a> — Microsoft 公式の体系的なトレーニングモジュール</li>
+        <li><a href="https://learn.microsoft.com/en-us/training/modules/spec-driven-development-github-spec-kit-enterprise-developers/" target="_blank" rel="noopener">Microsoft Learn — Implement spec-driven development using the GitHub Spec Kit</a> — Microsoft 公式の体系的なトレーニングモジュール</li>
         <li><a href="https://www.geminicli.com/docs/cli/plan-mode/" target="_blank" rel="noopener">Gemini CLI Docs — Plan Mode（公式）</a> — 第5回で扱った Plan mode の起動方法と公式定義（今日 SDD と対比した）</li>
         <li><a href="https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli" target="_blank" rel="noopener">GitHub Copilot CLI — About Copilot CLI（公式）</a> — Copilot CLI の概要と Plan mode の位置づけ</li>
         <li><a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener">uv（Astral）— 公式ドキュメント</a> — <code>uvx</code> コマンドを提供する Python ツール実行ランナー</li>
