@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第6回 Spec-Driven Development入門 | 自然言語開発</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+  <!-- 公式情報確認: 2026-05-14 (github/spec-kit README + github.github.com/spec-kit/ + spec-driven.md) -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev.html">自然言語開発</a>
+        <span>/</span>
+        <span>第6回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">Spec-Driven Development<wbr>入門</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 6</span>
+            <span class="page-badge">木曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value"><strong>Spec-Driven Development（SDD：仕様駆動開発）</strong>を、GitHub 公式の <strong>Spec Kit</strong>(<code>specify</code> CLI) で体験する。第5回までの PRD/ADR/Plan Mode を <strong>「仕様が実行可能な成果物になる」</strong>方向へ一段進める</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">SDD / Spec Kit / <code>/speckit.specify</code> / <code>/speckit.plan</code> / <code>/speckit.tasks</code> / <code>/speckit.implement</code> / Plan mode 比較</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第5回完了（進級制作リポジトリに <code>docs/prd/&lt;feature-slug&gt;.md</code> / <code>docs/adr/0001-&lt;slug&gt;.md</code> / <code>docs/plans/0001-&lt;feature-slug&gt;.md</code> が push 済み）／Codespaces 上で Gemini CLI または GitHub Copilot CLI のどちらかが起動できる状態（2026-04-20 以降 Copilot Pro/Pro+/Student の新規申請が一時停止中のため、未認証の人は Gemini CLI 単体で進める）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li><strong>SDD（Spec-Driven Development）</strong>の核となる考え方——<strong>「仕様が実行可能な成果物になる」</strong>（公式: <em>"specifications become executable, directly generating working implementations rather than just guiding them"</em>）——を、自分の言葉で1〜2行で説明できる</li>
+        <li>GitHub 公式の <strong>Spec Kit</strong>（<code>specify</code> CLI）を進級制作リポジトリにセットアップできる</li>
+        <li>SDD ライフサイクル（<strong>定義 → 計画 → 分解 → 実行 → デバッグ</strong>）の各フェーズが、Spec Kit の公式スラッシュコマンドにどう対応するかを表で結びつけられる</li>
+        <li>第5回で書いた PRD/ADR を素材に、<code>/speckit.specify</code> → <code>/speckit.plan</code> → <code>/speckit.tasks</code> までを Gemini CLI または Copilot CLI で実行し、<strong>仕様 → 計画 → タスク一覧</strong>が一筆書きで生成される様子を体感する</li>
+        <li>第5回の <strong>Plan Mode</strong>（CLI 単体の読み取り専用設計モード）と、Spec Kit の <strong>SDD ライフサイクル</strong>を比較し、<strong>「実行前に計画を立てる」サイクル</strong>がどちらでどう違うかを口頭で言える</li>
+        <li>進級制作に <strong>SDD で新機能を1つ</strong>追加する小演習を、<code>/speckit.implement</code> の途中まで進める（仕上げは家＋第7回 TDD 回で継続）</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>第5回の振り返り → SDD の核「仕様が実行可能な成果物になる」を理解する</h3>
+          <div class="timeline-body">
+            <p><strong>第5回課題の共有（10分）</strong></p>
+            <ul>
+              <li>第5回で push した <code>docs/prd/</code> <code>docs/adr/</code> <code>docs/plans/</code> の3点セットを、近くの人と互いに見せる</li>
+              <li>「PRD の成功基準が Plan Mode の出力にどこまで反映されたか」を1人1分で報告</li>
+            </ul>
+            <p><strong>Plan Mode だけでは届かないこと（10分）</strong></p>
+            <ul>
+              <li>第5回の Plan Mode 出力は<strong>計画 markdown</strong>だった。これを実装に移すには、人間が:
+                <ul>
+                  <li>計画 markdown を読む</li>
+                  <li>1ステップずつ Gemini CLI または Copilot CLI に「これを実装して」と依頼する</li>
+                  <li>各ステップの差分をレビューしてコミットする</li>
+                </ul>
+                を毎回手で繰り返す必要がある
+              </li>
+              <li>「<strong>計画は立てた、でもそこから先が手作業</strong>」がボトルネック。仕様・計画・タスク・実装が<strong>同じプロジェクト構造の中で連動して動く</strong>仕組みが欲しい</li>
+            </ul>
+            <p><strong>SDD の公式定義（10分）</strong></p>
+            <ul>
+              <li>GitHub Spec Kit 公式 README の冒頭（一次出典: <a href="https://github.com/github/spec-kit" target="_blank" rel="noopener">github/spec-kit</a>）から、SDD の定義を逐語で読む:
+                <blockquote>
+                  <em>"Spec-Driven Development flips the script on traditional software development... specifications become executable, directly generating working implementations rather than just guiding them."</em>
+                </blockquote>
+              </li>
+              <li>翻訳の要点:
+                <ul>
+                  <li><strong>flips the script</strong>: 従来の「コードが主役・仕様は補助資料」を逆転させる</li>
+                  <li><strong>specifications become executable</strong>: 仕様自体が実行可能になる</li>
+                  <li><strong>directly generating working implementations</strong>: 仕様から直接、動く実装を生成する</li>
+                </ul>
+              </li>
+              <li>Spec Kit 公式 docs（<a href="https://github.github.com/spec-kit/" target="_blank" rel="noopener">github.github.com/spec-kit</a>）のコアプロセス: <strong>"Spec → Plan → Tasks → Implement"</strong>。第5回までで体験した PRD/ADR/Plan Mode が、この一筆書きに繋がる素材だったと位置づけられる</li>
+            </ul>
+            <p><strong>今日のゴール提示（10分）</strong></p>
+            <ul>
+              <li>今日は Spec Kit を進級制作リポジトリにセットアップして、<strong>第5回 PRD/ADR を素材に</strong> Spec → Plan → Tasks まで一筆書きで生成する。<code>/speckit.implement</code> はサイズの小さいタスクから1〜2件試す</li>
+              <li>SDD ライフサイクル（親ページの言い方: <strong>定義 → 計画 → 分解 → 実行 → デバッグ</strong>）と Spec Kit の公式スラッシュコマンドの対応:
+                <pre><code>定義    →  /speckit.specify    (要件・ユーザーストーリーを書く)
+計画    →  /speckit.plan       (技術的実装計画を作る)
+分解    →  /speckit.tasks      (実行可能なタスク一覧に分解)
+実行    →  /speckit.implement  (タスクを順番に実装)
+デバッグ →  /speckit.analyze    (仕様と実装の整合性検証)
++ 前提  →  /speckit.constitution (プロジェクト方針・原則)
+</code></pre>
+              </li>
+              <li>仕上げに、Spec Kit の SDD ライフサイクル vs 第5回 Plan Mode の対比を口頭でまとめる（2限後半）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>今日の合言葉:</strong> 「<strong>計画 markdown を読ませる</strong>」から「<strong>仕様から実装まで一筆書きにする</strong>」へ。手で繋いでいた4階層（指示／意図／判断／計画）が、今日からはツールで連動する。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>Spec Kit セットアップ → <code>/speckit.constitution</code> と <code>/speckit.specify</code></h3>
+          <div class="timeline-body">
+            <p><strong>Spec Kit を進級制作リポジトリに導入（15分）</strong></p>
+            <ul>
+              <li>公式の推奨インストール手順（一次出典: <a href="https://github.com/github/spec-kit" target="_blank" rel="noopener">github/spec-kit README</a>）。Codespaces ターミナルで次を実行:
+                <pre><code># uv がまだ入っていなければ
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Spec Kit を一回限りで実行する（uvx は uv 同梱のツール実行コマンド）
+# 安定運用したい場合は @vX.Y.Z でタグピン留めを推奨（公式 installation.md）
+uvx --from git+https://github.com/github/spec-kit.git specify init --here --integration gemini
+</code></pre>
+              </li>
+              <li><code>--here</code>: <strong>カレントディレクトリ</strong>（=自分の進級制作リポジトリのルート）に初期化。新規プロジェクトの場合は <code>specify init &lt;PROJECT_NAME&gt;</code> でディレクトリを作る</li>
+              <li><code>--integration gemini</code>: 今日のメインは Gemini CLI を選択（公式の現行オプション。古い解説に出てくる <code>--ai</code> は deprecated で警告が出る）。Copilot CLI を使う人は <code>--integration copilot</code>。<strong>Spec Kit は 30+ の AI coding agent に対応</strong>（公式 README: <em>"Spec Kit works with 30+ AI coding agents"</em> / 公式 docs: <em>"30 integrations — Copilot, Gemini, Codex, Windsurf, Claude, Forge, Kiro, and more"</em>）</li>
+              <li>初期化後、リポジトリに <code>.specify/</code>（テンプレ・プロジェクト設定）と、対応 CLI に応じた <strong>スラッシュコマンド定義</strong>が追加される（Gemini CLI なら <code>.gemini/commands/</code>、Copilot CLI なら <code>.github/agents/</code>（<code>.agent.md</code> 形式のスラッシュコマンド本体）＋ <code>.github/prompts/</code>（companion）＋ <code>.github/copilot-instructions.md</code> 等）</li>
+              <li>git diff で生成物を一通り眺める。「Spec Kit は何を作ったのか」を3つ言える状態を作る</li>
+            </ul>
+            <p><strong><code>/speckit.constitution</code> でプロジェクト原則を書く（10分）</strong></p>
+            <ul>
+              <li>Gemini CLI（または Copilot CLI）を起動し、最初に <code>/speckit.constitution</code> を呼ぶ。これは<strong>SDD の前提となるプロジェクトの方針・ガイドライン</strong>を整える</li>
+              <li>第4回の <code>GEMINI.md</code>（指示）と似ているが、Spec Kit の constitution は<strong>「このプロジェクトでは何を絶対に守るか」</strong>に絞る。例:
+                <ul>
+                  <li>使用言語と理由（例: TypeScript＋React。既存進級制作と揃える）</li>
+                  <li>テスト方針（例: 主要な振る舞いに最低1つテストを書く）</li>
+                  <li>UI 原則（例: モバイル幅で崩れない）</li>
+                  <li>禁止事項（例: 外部API キーをコミットしない）</li>
+                </ul>
+              </li>
+              <li>3〜6行で十分。長くしない</li>
+            </ul>
+            <p><strong><code>/speckit.specify</code> で仕様を書く（25分）</strong></p>
+            <ul>
+              <li>第5回で書いた進級制作の小機能 PRD（<code>docs/prd/&lt;feature-slug&gt;.md</code>）を題材にする。<strong>Spec Kit に同じ機能を「仕様」として渡し直す</strong></li>
+              <li>Gemini CLI / Copilot CLI で次のように呼ぶ:
+                <pre><code>/speckit.specify @docs/prd/&lt;feature-slug&gt;.md を仕様の元ネタにして、
+このプロジェクトの仕様（ユーザーストーリーと受け入れ基準）を書いてください。
+</code></pre>
+              </li>
+              <li>第5回までに学んだ <strong>Memory Import の <code>@</code> 構文</strong>を使って PRD を直接渡せる（公式: <em>"Use the <code>@</code> symbol followed by the path to the file you want to import"</em>）。これで Spec Kit は PRD の「背景・成功基準・非ゴール」を踏まえた仕様を書く</li>
+              <li>生成された <code>specs/&lt;NNN&gt;-&lt;feature-slug&gt;/spec.md</code> を開いて、PRD の成功基準が<strong>ユーザーストーリー＋受け入れ基準</strong>として再構成されているか確認</li>
+              <li>不足があれば <code>/speckit.clarify</code> を呼ぶ。Spec Kit が<strong>あいまいな点を質問</strong>してきて、答えると仕様に追記される（公式 README に <code>/speckit.clarify</code> 記載あり）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>PRD と spec.md の役割分担:</strong> PRD は<strong>「なぜ作るか」（意図）</strong>、Spec Kit の <code>spec.md</code> は<strong>「動くものとしての受け入れ基準」</strong>。同じ機能でも目的が違うので両方残す。PRD は将来 ADR と一緒に「なぜそう判断したか」を伝え、<code>spec.md</code> は「これが動けば完成」を伝える。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3><code>/speckit.plan</code> → <code>/speckit.tasks</code> で「仕様 → 計画 → タスク一覧」を一筆書きにする</h3>
+          <div class="timeline-body">
+            <p><strong><code>/speckit.plan</code> で技術的実装計画を生成（20分）</strong></p>
+            <ul>
+              <li>同じ Gemini CLI / Copilot CLI セッションで <code>/speckit.plan</code> を呼ぶ。Spec Kit は <code>spec.md</code> を読んで、<strong>技術スタック・コンポーネント分割・データフロー・採用ライブラリ</strong>を含む計画を生成する</li>
+              <li>第5回の ADR を素材として渡せる:
+                <pre><code>/speckit.plan @docs/adr/0001-&lt;slug&gt;.md の決定事項に沿って計画してください。
+</code></pre>
+              </li>
+              <li>生成された <code>plan.md</code> を開く。第5回の Plan Mode 出力との違いを観察:
+                <ul>
+                  <li>第5回 Plan Mode: <strong>1機能の実装ステップ列挙</strong>（人間が markdown を別保存）</li>
+                  <li>Spec Kit <code>/speckit.plan</code>: <strong>仕様ファイル（spec.md）と紐づいた計画</strong>として、プロジェクト構造に組み込まれた状態で出力される</li>
+                </ul>
+              </li>
+              <li>気になる点があれば、もう一度 <code>/speckit.plan</code> を呼んで「ここは案 B にしてほしい」と追加指示できる</li>
+            </ul>
+            <p><strong><code>/speckit.tasks</code> で計画をタスク一覧に分解（15分）</strong></p>
+            <ul>
+              <li><code>/speckit.tasks</code> を呼ぶと、<code>plan.md</code> を読んで<strong>実行可能なタスク一覧</strong>（<code>tasks.md</code>）が生成される</li>
+              <li>各タスクは「ファイル名」「変更内容」「依存関係」「完了の判定条件」が書かれた粒度になっている</li>
+              <li>生成された <code>tasks.md</code> を3つの観点で読む:
+                <ul>
+                  <li><strong>仕様の受け入れ基準と1対1で紐づくタスクがあるか</strong>（漏れチェック）</li>
+                  <li><strong>1タスクの粒度が「30〜60分で終わりそう」になっているか</strong>（大きすぎないか）</li>
+                  <li><strong>依存関係が現実的か</strong>（先にやるべきものが後ろに置かれていないか）</li>
+                </ul>
+              </li>
+              <li>違和感があれば再生成、または <code>tasks.md</code> を手で編集する</li>
+            </ul>
+            <p><strong><code>/speckit.analyze</code> で仕様と実装計画の整合性を検証（15分）</strong></p>
+            <ul>
+              <li><code>/speckit.analyze</code> は <strong>SDD ライフサイクルの「デバッグ」フェーズ</strong>に相当する公式コマンド（実装が始まる前でも、仕様・計画・タスクの整合性を機械的に検査できる）</li>
+              <li>仕様で書いたユーザーストーリーが計画とタスクの両方でカバーされているか、矛盾している記述がないかを Spec Kit が指摘する</li>
+              <li>第5回の Plan Mode では「人間がレビューする」段階だった<strong>整合性チェック</strong>を、<code>/speckit.analyze</code> は<strong>機械的に走らせて指摘する</strong>（最終的にどの3ファイルを直すかの判断・修正は人間の責任）</li>
+              <li>指摘が出たら、<code>spec.md</code> / <code>plan.md</code> / <code>tasks.md</code> のどれを直すべきかを判断して修正する</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>3ファイル（spec / plan / tasks）の役割を覚える:</strong> 仕様（spec）は「動けば完成と判定できる条件」、計画（plan）は「どんな構造で作るか」、タスク（tasks）は「どの順番で何を実装するか」。整合性チェック（analyze）は3者がズレていないかの検査。この3階層は SDD の中核。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3><code>/speckit.implement</code> で最初の1〜2タスクを実装＋Plan mode との対比</h3>
+          <div class="timeline-body">
+            <p><strong><code>/speckit.implement</code> で先頭1〜2タスクを実装させる（20分）</strong></p>
+            <ul>
+              <li><code>/speckit.implement</code> は <code>tasks.md</code> を読んで<strong>順番に実装する</strong>コマンド。今日は最後まで走らせず、<strong>先頭1〜2タスクだけ</strong>進める</li>
+              <li>Gemini CLI / Copilot CLI どちらの場合も、実装中はファイル変更の差分が出るたびに<strong>人間がレビュー</strong>して進める。AI まかせで一気通貫させない</li>
+              <li>レビュー観点:
+                <ul>
+                  <li><code>spec.md</code> の受け入れ基準を満たす変更になっているか</li>
+                  <li>第4回 <code>GEMINI.md</code> の指示（命名規則・スタイル）から外れていないか</li>
+                  <li>関係ないファイルが変更されていないか</li>
+                </ul>
+              </li>
+              <li>1タスク完了したら <code>git add -p</code> で差分を眺めてからコミット。「Spec Kit が作った差分」と「自分が選んで採用した差分」を意識して分ける</li>
+              <li>残りのタスクは家＋第7回（TDD 基礎）以降で継続する</li>
+            </ul>
+            <p><strong>Plan mode と SDD ライフサイクルの対比（10分）</strong></p>
+            <ul>
+              <li>第5回までの<strong>Plan Mode</strong>（公式: <em>"a read-only environment for architecting robust solutions before implementation"</em>）と、今日の<strong>Spec Kit による SDD ライフサイクル</strong>の違いを表で整理:
+                <div class="table-wrap">
+                  <table class="schedule-table">
+                    <thead>
+                      <tr>
+                        <th>観点</th>
+                        <th>Plan mode（第5回）</th>
+                        <th>SDD ライフサイクル（Spec Kit）</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>起動方法</td>
+                        <td>Gemini CLI: <code>/plan</code> または <code>Shift+Tab</code><br>Copilot CLI: <code>Shift+Tab</code></td>
+                        <td><code>specify init</code> で導入後、<code>/speckit.*</code> スラッシュコマンド群</td>
+                      </tr>
+                      <tr>
+                        <td>出力</td>
+                        <td>1本の計画 markdown</td>
+                        <td>仕様（spec.md）／計画（plan.md）／タスク（tasks.md）の<strong>3ファイル</strong></td>
+                      </tr>
+                      <tr>
+                        <td>整合性検証</td>
+                        <td>人間がレビュー</td>
+                        <td><code>/speckit.analyze</code> が自動検査</td>
+                      </tr>
+                      <tr>
+                        <td>適する場面</td>
+                        <td>1機能の実装計画を素早く作る</td>
+                        <td>機能サイズが大きい・複数タスクに分解する必要がある</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </li>
+              <li>結論: <strong>両方使う</strong>。小さい機能や試作は Plan mode、ある程度サイズがあって品質を担保したい機能は Spec Kit。「実行前に計画を立てる」というサイクル自体は両方に共通する</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>実装は来週以降:</strong> 今日は <strong>先頭1〜2タスクまで</strong>。残りは家＋第7回（TDD 基礎）でテストを書きながら進める。Spec Kit が一気に最後まで実装してしまえる魅力に流されないこと。<strong>「責任あるコード」</strong>は<strong>差分を毎回レビューする</strong>姿勢から始まる。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り＆次回予告</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>今日のキーワード: <strong>SDD / Spec Kit / <code>/speckit.specify</code> / <code>/speckit.plan</code> / <code>/speckit.tasks</code> / <code>/speckit.implement</code> / <code>/speckit.analyze</code> / Plan mode との対比</strong></li>
+              <li>覚えてほしいこと: <strong>「仕様が実行可能な成果物になる」</strong>。仕様（spec）→ 計画（plan）→ タスク（tasks）→ 実装（implement）が、ばらばらの markdown ではなく<strong>連動する一筆書き</strong>になる</li>
+              <li>2026年5月時点の Spec Kit はオープンソースの初期段階で活発に開発中（GitHub Stars 100k 近い規模、30 以上の AI coding agent に対応）。仕様・コマンド名は変わる可能性があるため、迷ったら<strong>公式 README と公式 docs</strong>を確認する</li>
+              <li>次回（第7回）: <strong>テスト駆動開発（TDD）基礎</strong>。今日 <code>tasks.md</code> に並んだタスクを、<strong>Red → Green → Refactor</strong> サイクルで実装していく。テスト観点（正常系・異常系・境界値）の設計を学ぶ</li>
+              <li>家での発展（任意）: 残ったタスクを <code>/speckit.implement</code> で1〜2件追加で進める。差分が大きくなったら、自分の手で1コミットに収まるサイズに分割する練習にもなる</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>Spec Kit セットアップ済みリポジトリを push</strong>
+            <p>進級制作リポジトリに <code>.specify/</code> と対応 CLI のスラッシュコマンド定義（<code>.gemini/commands/</code> または <code>.github/agents/</code> 等）が含まれる状態で push。<code>uvx</code> による初期化の実行ログ（成功表示）を任意の <code>docs/speckit-init.txt</code> として残してもよい。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>仕様・計画・タスクの3ファイルを push</strong>
+            <p><code>specs/&lt;NNN&gt;-&lt;feature-slug&gt;/spec.md</code> / <code>plan.md</code> / <code>tasks.md</code> の3ファイルを push。第5回 PRD の成功基準と <code>spec.md</code> の受け入れ基準が対応しているか目視確認。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>/speckit.analyze</code> の検査結果を要約してメモ</strong>
+            <p><code>/speckit.analyze</code> の出力を <code>docs/speckit-analyze.md</code> として保存（または README にメモ）。指摘があれば、どの3ファイル（spec/plan/tasks）をどう直したかも1〜2行で記録する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>2〜3タスクまで <code>/speckit.implement</code> を進める</strong>
+            <p>家で先頭タスクの続きを実装。差分が大きい場合は1コミット30分〜1時間で収まるサイズに分けてコミット。第7回 TDD 回では、各タスクに対するテストを後追いで書いていく。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong><code>specify check</code> でツール環境を点検</strong>
+            <p>Spec Kit には環境点検コマンド <code>specify check</code> がある。Codespaces 上で実行し、自分の環境で Gemini CLI または Copilot CLI が Spec Kit から認識されているかを確認。出力を <code>docs/speckit-check.txt</code> として残してもよい。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://github.com/github/spec-kit" target="_blank" rel="noopener">github/spec-kit（公式リポジトリ）</a> — Spec Kit の本体。README に SDD の定義・スラッシュコマンド一覧・インストール手順の一次情報</li>
+        <li><a href="https://github.github.com/spec-kit/" target="_blank" rel="noopener">GitHub Spec Kit（公式ドキュメントサイト）</a> — "Spec → Plan → Tasks → Implement" コアプロセスと統合一覧</li>
+        <li><a href="https://github.com/github/spec-kit/blob/main/spec-driven.md" target="_blank" rel="noopener">github/spec-kit — spec-driven.md</a> — SDD の方法論・哲学を詳しく説明した公式ドキュメント</li>
+        <li><a href="https://github.blog/ai-and-ml/generative-ai/spec-driven-development-with-ai-get-started-with-a-new-open-source-toolkit/" target="_blank" rel="noopener">The GitHub Blog — Spec-driven development with AI: Get started with a new open source toolkit</a> — GitHub による公式アナウンス記事</li>
+        <li><a href="https://learn.microsoft.com/en-us/training/modules/spec-driven-development-github-spec-kit-enterprise-developers/" target="_blank" rel="noopener">Microsoft Learn — Implement spec-driven development using the GitHub Spec Kit</a> — Microsoft 公式の体系的なトレーニングモジュール</li>
+        <li><a href="https://www.geminicli.com/docs/cli/plan-mode/" target="_blank" rel="noopener">Gemini CLI Docs — Plan Mode（公式）</a> — 第5回で扱った Plan mode の起動方法と公式定義（今日 SDD と対比した）</li>
+        <li><a href="https://docs.github.com/en/copilot/concepts/agents/about-copilot-cli" target="_blank" rel="noopener">GitHub Copilot CLI — About Copilot CLI（公式）</a> — Copilot CLI の概要と Plan mode の位置づけ</li>
+        <li><a href="https://docs.astral.sh/uv/" target="_blank" rel="noopener">uv（Astral）— 公式ドキュメント</a> — <code>uvx</code> コマンドを提供する Python ツール実行ランナー</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week05.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第5回 PRDとADRで「なぜそうしたか」をAIに渡す</span>
+      </a>
+      <a href="../natural-language-dev.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">自然言語開発</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第7回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
