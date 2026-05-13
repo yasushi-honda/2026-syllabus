@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第4回 NotebookLMで「自分だけのAI」を本格化 | AI活用プログラミング基礎</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+  <!-- 公式情報確認: 2026-05-14 (NotebookLM ヘルプ「NotebookLM でチャットを使用する」 + 8 expert tips 公式ブログ) -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--orange">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-programming.html">AI活用プログラミング基礎</a>
+        <span>/</span>
+        <span>第4回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">NotebookLMで<wbr>「自分だけのAI」を<wbr>本格化</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 4</span>
+            <span class="page-badge">木曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">第2回 Gem の限界（学校外で消える／保存が続かない）と対比し、<strong>NotebookLM なら知識を継続的に育てられる</strong>違いを体験。「自分専用 AI ノート」に <strong>【学習データ②】学習目標シート</strong>を追加し、<strong>「チャットを設定」のカスタムモード</strong>で<strong>「自分だけのAI」を本格化</strong>する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">自分専用 AI ノート / ソースを追加（複数ソース）/ 【学習データ②】学習目標シート / チャットを設定（カスタムモード）/ 性格・口調・役割の指示 / Gem との対比</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第3回完了（家で <strong>【学習データ①】自己紹介シート</strong>を書き上げ、自分専用 AI ノートにソース1個として入っている状態）／講師配布の <strong>【学習データ②】学習目標シート</strong>テンプレ（授業内で配布）／第2回 Gem キャラ設計のメモ（性格・口調・得意分野）が手元にある</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>第2回 Gem の限界（学校外では使えない／会話履歴は残るがキャラ設計の保存が壊れることがある）と、NotebookLM の継続育成性の違いを自分の言葉で言える</li>
+        <li><strong>自分専用 AI ノート</strong>に、第3回で取り込んだ<strong>【学習データ①】自己紹介シート</strong>に加えて、今日の<strong>【学習データ②】学習目標シート</strong>をソースとして追加できる（2 つ目のソース運用）</li>
+        <li>第3回で名前だけ紹介した<strong>「チャットを設定」のカスタムモード</strong>に踏み込み、自分の AI の<strong>性格・口調・得意分野・役割</strong>を文章で書き込める</li>
+        <li>カスタムモードで仕込んだ自分の AI に質問して、<strong>デフォルトモードの応答との違い</strong>を体感できる（同じ質問が違う性格で返ってくる）</li>
+        <li>Gem の「キャラを作る」と NotebookLM カスタムモードの「自分の AI を仕込む」の<strong>役割分担</strong>を1〜2行で言える</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。第3回までと同じく、ITが苦手でも置いていかない進行で。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>家での宿題確認 → Gem との違いをもう一度押さえる</h3>
+          <div class="timeline-body">
+            <p><strong>家で完成させた「自分専用 AI ノート」を開く（10分）</strong></p>
+            <ul>
+              <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">notebooklm.google.com</a> にログインし、第3回で作った <strong>「○○の AI ノート」</strong>（自分専用 AI ノート）を開く</li>
+              <li>「ソースを追加」エリアに、家で完成させた<strong>【学習データ①】自己紹介シート</strong>がソースとして1つ入っているかを確認。入っていない人は今日の冒頭でテンプレを開き直して入れ直す（第3回の「Markdown をコピー」ボタンも使える）</li>
+              <li>練習用ノート（第3回で先に作ったサブノート）と取り違えないように<strong>名前で見分ける</strong>。今日触るのは<strong>自分専用 AI ノートだけ</strong></li>
+            </ul>
+            <p><strong>第3回の振り返り——NotebookLM の3つのポイント（10分）</strong></p>
+            <ul>
+              <li>第3回で覚えた3つのポイントを口頭で確認:
+                <ul>
+                  <li>① <strong>自分が入れた資料の中から答えてくれる</strong>（チャットは引用番号付き）</li>
+                  <li>② <strong>同じ素材を Studio で 9 通りに料理してくれる</strong></li>
+                  <li>③ <strong>ノートブックは用途で分ける</strong>（今日のメインは自分専用 AI ノート）</li>
+                </ul>
+              </li>
+              <li>家で「自分専用 AI ノート」に試しに1問チャットを投げた人は、引用付きで返ってきた感想を1人1分シェア</li>
+            </ul>
+            <p><strong>第2回 Gem との違いを再確認（10分）</strong></p>
+            <ul>
+              <li>第2回で作った Gem キャラには、こんな限界があった:
+                <ul>
+                  <li><strong>家のPCからアクセスしにくい</strong>（学校アカウントとログインが違うと見えない）</li>
+                  <li><strong>キャラの保存が消えたり戻ったりする</strong>ことがある（Gemini の UI 更新時など）</li>
+                  <li><strong>知識を継続的に積み上げる仕組みがない</strong>（毎回キャラ説明を読み直すだけ）</li>
+                </ul>
+              </li>
+              <li>NotebookLM は次の点で<strong>「育てる」型</strong>:
+                <ul>
+                  <li>個人の Google アカウントでログインすれば<strong>家からも同じノートが開ける</strong></li>
+                  <li>ノートブックに入れたソースは<strong>消えない</strong>（自分で消すまで残る）</li>
+                  <li>新しい資料を追加していけば、<strong>知識が積み上がっていく</strong>(後期・来年と続いていく)</li>
+                </ul>
+              </li>
+              <li>覚えてほしい一言: <strong>「Gem は一発キャラ、NotebookLM は育てるAI」</strong></li>
+            </ul>
+            <p><strong>今日のゴール提示（10分）</strong></p>
+            <ul>
+              <li>今日は自分専用 AI ノートに対して2つの仕事をする:
+                <ol>
+                  <li>1限後半: <strong>【学習データ②】学習目標シート</strong>をソースとして追加する（既存の自己紹介シートに重ねる）</li>
+                  <li>2限前半: <strong>「チャットを設定」のカスタムモード</strong>に踏み込んで、自分の AI の<strong>性格・口調・得意分野・役割</strong>を文章で書く</li>
+                </ol>
+              </li>
+              <li>仕上げ（2限後半）: カスタムモードを<strong>オン/オフで切り替えながら</strong>同じ質問を投げて、応答の違いを観察する</li>
+              <li>第2回 Gem で作ったキャラの<strong>性格・口調・得意分野メモ</strong>を持ってきた人は、今日の2限前半で使う。なくしてしまった人も新しく書けば OK</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>今日の合言葉:</strong> 「<strong>資料を増やしながら、性格も仕込む</strong>」。自分専用 AI ノートが<strong>「自分だけのAI」</strong>に近づく回。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>【学習データ②】学習目標シートを自分専用 AI ノートに追加する</h3>
+          <div class="timeline-body">
+            <p><strong>【学習データ②】学習目標シートのテンプレを開く（10分）</strong></p>
+            <ul>
+              <li>講師配布の Google ドキュメント版テンプレを「ファイル → コピーを作成」で自分のドライブに保存（家で配布版が見つからない人はこのページ下部の「Markdown をコピー」から自分で作っても OK）</li>
+              <li>テンプレのファイル名は <strong>「○○の学習目標シート」</strong>（○○は自分の名前やニックネーム）</li>
+              <li>第3回の<strong>自己紹介シート</strong>とは別ファイルで保存する。1ファイルにまとめない</li>
+            </ul>
+            <p><strong>学習目標シートを書く（25分）</strong></p>
+            <ul>
+              <li>テンプレの空欄を埋めていく。<strong>書ける範囲で OK</strong>。完璧を目指さない</li>
+              <li>5項目の概要（詳細はテンプレ参照）:
+                <ol>
+                  <li>① <strong>今学期の学習目標</strong>: 学校で「○○ができるようになりたい」を1〜2行で</li>
+                  <li>② <strong>半年後の自分のイメージ</strong>: 前期末（夏休み前）にこうなっていたい姿</li>
+                  <li>③ <strong>1年後の自分のイメージ</strong>: 年度末にこうなっていたい姿</li>
+                  <li>④ <strong>困った時の支援者</strong>: 友達・先生・家族など、相談できる人や場所</li>
+                  <li>⑤ <strong>自分の学習スタイル</strong>: 自分が学びやすい時間・場所・方法</li>
+                </ol>
+              </li>
+              <li><strong>個人情報を入れない原則は第1回・第3回と同じ</strong>。本名・住所・電話番号・学籍番号を書かない</li>
+              <li>書きながら不安や悩みがあれば、空欄でも構わない。第13回・第14回（個人課題）で見返したくなった項目だけ後で埋め直せばよい</li>
+            </ul>
+            <p><strong>自分専用 AI ノートにソースとして追加（15分）</strong></p>
+            <ul>
+              <li>NotebookLM の自分専用 AI ノートを開いて、「<strong>ソースを追加</strong>」→「<strong>ドライブ</strong>」→ 学習目標シート（Google ドキュメント）を選択</li>
+              <li>これで自分専用 AI ノートには<strong>2つのソース</strong>が入った状態:
+                <ul>
+                  <li>ソース1: 【学習データ①】自己紹介シート（第3回で追加）</li>
+                  <li>ソース2: 【学習データ②】学習目標シート（今日追加）</li>
+                </ul>
+              </li>
+              <li>左パネルでソースが2つ並んでいることを確認。<strong>ソース数が増えるとチャットの答えも厚くなる</strong>（公式 8 expert tips の Tip 3: <em>"Use NotebookLM to connect the dots from different materials"</em> — 異なる素材を結びつける）</li>
+              <li>動作確認: チャットに <em>「自己紹介シートと学習目標シートを合わせて読んで、今学期の私の伸び代を3つ挙げて」</em>と聞いてみる。両方のソースから引用番号 [1] [2] が混じって返ってくることを観察</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>2つ目のソースが入ると変わること:</strong> NotebookLM はソースを<strong>横断して読む</strong>ので、自己紹介と学習目標を組み合わせた質問が刺さるようになります。「私が好きな◯◯と、今学期の目標◯◯を組み合わせると、どんな学び方が合いそう？」など、両方を踏まえた壁打ちが可能に。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>「チャットを設定」のカスタムモードに踏み込む</h3>
+          <div class="timeline-body">
+            <p><strong>「チャットを設定」を開く（5分）</strong></p>
+            <ul>
+              <li>自分専用 AI ノートの<strong>チャット欄の調整アイコン</strong>（第3回 2限後半で名前だけ見たやつ）をクリック → 「チャットを設定」パネル</li>
+              <li>3 モードのおさらい（公式「NotebookLM でチャットを使用する」ヘルプの逐語引用):
+                <ul>
+                  <li><strong>デフォルト</strong>: 「リサーチやブレインストーミングの汎用タスクに最適です。」</li>
+                  <li><strong>学習ガイド</strong>: 「教育コンテンツに最適です。効率良く新しい概念を理解し、スキル習得に役立ちます。」</li>
+                  <li><strong>カスタム</strong>: 「特定のスタイル（『博士課程の学生のように回答して』）を選択する場合や、役割を提案する場合（『ロールプレイング ゲームのホストを演じて』）に最適です。」</li>
+                </ul>
+              </li>
+              <li>今日は<strong>「カスタム」</strong>を選ぶ。第2回の Gem「カスタム指示」と似た感覚で、自分のAIに性格と役割を仕込む</li>
+            </ul>
+            <p><strong>カスタム指示を書く（30分）</strong></p>
+            <ul>
+              <li>カスタム欄は<strong>自由文</strong>で書く（公式アナウンス 2025-12 で最大 10,000 文字まで拡張済み。今日は<strong>200〜500 文字</strong>程度で十分）</li>
+              <li>書く要素は次の5つ。1要素1〜3行で:
+                <ol>
+                  <li><strong>性格</strong>: 例「明るく前向きに励ましてくれる」「落ち着いて穏やかに話す」</li>
+                  <li><strong>口調</strong>: 例「敬語ではなく友達のようにフランクに」「丁寧語で、私を『○○さん』と呼ぶ」</li>
+                  <li><strong>得意分野</strong>: 例「学習相談に乗ってくれる」「アイデア出しを手伝ってくれる」</li>
+                  <li><strong>避けたい応答</strong>: 例「命令口調で話さない」「長すぎる回答は避ける」「答えだけポンと出さず一緒に考える」</li>
+                  <li><strong>役割</strong>: 例「壁打ち相手」「学習コーチ」「質問してくれる先生役」</li>
+                </ol>
+              </li>
+              <li>第2回 Gem キャラ設計のメモがある人は、それを土台にしてここに書き写すと早い</li>
+              <li>例文（コピペして書き換えて OK）:
+                <pre><code>あなたは私の学習コーチです。
+明るく前向きに励ましてくれる性格で、敬語ではなく友達のように
+フランクに話してください。
+私のソース（自己紹介シートと学習目標シート）を踏まえた上で、
+学習の進め方の相談に乗ってください。
+命令口調で話したり、長すぎる回答を出したりしないでください。
+答えだけポンと出すのではなく、私に質問を返しながら一緒に考えて
+ください。
+</code></pre>
+              </li>
+              <li>書き終わったら<strong>「保存」</strong>をクリック（書き換えるたびに「保存」を押す必要がある。第2回 Gem の Save ボタンと同じ仕組み——Gem 側は公式が <em>"Using the preview window does not automatically save your Gem"</em> と明記している）</li>
+            </ul>
+            <p><strong>仕込んだAIで質問して感触をつかむ（15分）</strong></p>
+            <ul>
+              <li>カスタムモードのまま、チャットに3問ほど投げてみる。例:
+                <ul>
+                  <li>「学習目標シートを見て、今学期一番に取り組むべきことを教えて」</li>
+                  <li>「私の苦手なこと（自己紹介シートに書いた）を踏まえて、勉強で気をつけることを助言して」</li>
+                  <li>「半年後の自分のイメージに近づくために、今週やれそうな小さな一歩は？」</li>
+                </ul>
+              </li>
+              <li>答えが自分の指定した性格・口調になっているか観察。<strong>口調が違う・長すぎる・命令口調になっている</strong>等のズレがあれば、カスタム欄に戻って指示を1〜2行追加 → 保存 → 再質問</li>
+              <li>「<strong>カスタム指示を書き直しながら、自分のAIに近づけていく</strong>」が今日のメイン体験</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「保存」を忘れない:</strong> カスタム欄をいくら書いても、<strong>「保存」をクリックしないと反映されない</strong>。書いただけで閉じると次に開いたときには空のまま。第2回 Gem の Save ボタンと同じ仕組み——書き換えるたびに保存。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>デフォルト vs カスタムで応答の違いを比べる＋Gemとの役割分担を整理</h3>
+          <div class="timeline-body">
+            <p><strong>デフォルトモードに戻して同じ質問を投げる（15分）</strong></p>
+            <ul>
+              <li>「チャットを設定」を開いて、<strong>デフォルト</strong>に切り替える（カスタム欄の内容は保存されているので消えない。モードを戻すだけ）</li>
+              <li>2限前半でカスタムモードに投げたのと<strong>同じ質問を1〜2問</strong>、デフォルトモードでも投げる</li>
+              <li>違いを観察:
+                <ul>
+                  <li><strong>口調</strong>: フランク → 標準的な丁寧語に戻ったか</li>
+                  <li><strong>長さ</strong>: 短めに → やや長めに変わったか</li>
+                  <li><strong>応答の方向性</strong>: 質問返しが減って、答えがポンと出るようになったか</li>
+                </ul>
+              </li>
+              <li>「<strong>同じソース・同じ質問でも、カスタム指示で AI の性格が変わる</strong>」を体感。これが「自分だけのAI」を書き換えながら近づけていく意味</li>
+              <li>確認できたら<strong>カスタムモードに戻す</strong>（普段使いはカスタムのまま、状況に応じて切り替える）</li>
+            </ul>
+            <p><strong>Gem と NotebookLM カスタムモードの役割分担（10分）</strong></p>
+            <ul>
+              <li>第2回 Gem と今日 NotebookLM カスタムモードで仕込んだ AI を比べる:
+                <div class="table-wrap">
+                  <table class="schedule-table">
+                    <thead>
+                      <tr>
+                        <th>観点</th>
+                        <th>Gem（第2回）</th>
+                        <th>NotebookLM カスタム（今日）</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>主な目的</td>
+                        <td>キャラを作って遊ぶ・対話する</td>
+                        <td>自分の資料を読んで応答してくれる AI を育てる</td>
+                      </tr>
+                      <tr>
+                        <td>引用</td>
+                        <td>付かない（一般知識から答える）</td>
+                        <td>付く（自分のソースから引用番号付き）</td>
+                      </tr>
+                      <tr>
+                        <td>知識の継続性</td>
+                        <td>その場限り・新しい資料は持たせにくい</td>
+                        <td>ソースを足せば足すほど詳しくなる</td>
+                      </tr>
+                      <tr>
+                        <td>家からのアクセス</td>
+                        <td>環境次第（ログインで詰まることあり）</td>
+                        <td>個人 Google アカウントなら家からも開きやすい</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </li>
+              <li>結論: <strong>Gem は一発キャラ、NotebookLM は育てるAI</strong>。どちらが偉い・劣っているではなく<strong>用途で使い分ける</strong></li>
+            </ul>
+            <p><strong>メモを残す（5分）</strong></p>
+            <ul>
+              <li>自分専用 AI ノートの右側「メモ」エリアに、今日の手応えを1〜2行残す。例:
+                <ul>
+                  <li>「カスタムにしたら口調が一気にフランクになって面白かった」</li>
+                  <li>「短く答えてって書いたのに長くなった。次回もう少し強く書く」</li>
+                  <li>「学習目標シートを読んでくれて、今週の小さな一歩を提案してくれた」</li>
+                </ul>
+              </li>
+              <li>メモは後の回で見返すとカスタム指示の改善ヒントになる</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>うまく仕込めなかった人へ:</strong> カスタム指示は<strong>1回で完成させなくていい</strong>。家で何度も書き直して保存→質問→違和感→書き直し、を繰り返すと自分の AI に近づく。第5回（プロンプトの基本）でこの感覚をさらに深めます。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り＆次回予告</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>今日のキーワード: <strong>自分専用 AI ノート / ソースを増やす / 【学習データ②】学習目標シート / チャットを設定（カスタムモード）/ 性格・口調・役割の指示 / Gem との対比</strong></li>
+              <li>覚えてほしいこと: <strong>「自分だけのAI」</strong>は<strong>ソースを増やすこと（知識）</strong>＋<strong>カスタム指示を書くこと（性格）</strong>の両輪で育つ</li>
+              <li>家での発展（任意）:
+                <ul>
+                  <li>カスタム指示を家で書き直して保存→質問→違和感→書き直しを2〜3周</li>
+                  <li>学習目標シートに思いついたことを追記して、ソースを最新版に更新</li>
+                </ul>
+              </li>
+              <li>次回（第5回）: <strong>プロンプトの基本</strong>。同じ質問を異なる聞き方で投げて応答の違いを観察。<strong>【学習データ③】プロンプトのコツまとめ資料</strong>を配布</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>もし NotebookLM が学校アカウントで使えなかったら（フォールバック）</h2>
+      <p>学校アカウントで NotebookLM が表示されない場合、第3回と同じ進め方で大丈夫。</p>
+      <ul>
+        <li><strong>A. 個人 Google アカウントに切り替えてログイン</strong>（無料で利用可能）</li>
+        <li><strong>B. ペアでお互いのノートを見せ合いながら進める</strong>（学校アカウントで使える人と一緒に操作を見る）</li>
+      </ul>
+      <p>学習目標シート（Google ドキュメント）は<strong>個人 Google アカウントの「マイドライブ」</strong>に置いておくと、家から個人アカウントで開き直したときに同じノートブックにソースとして追加できます。</p>
+      <p><strong>第3回を欠席して自分専用 AI ノートが未作成の人へ:</strong> 今日はペアの友人と一緒に操作画面を見せてもらいながら進めてください。授業後、家で第3回ページの手順（自分専用 AI ノート作成 + 自己紹介シート追加）を一気にやり、その後に今日の学習目標シート追加・カスタムモード設定を行うと第5回までに追いつけます。詰まったら次回授業の冒頭で講師に相談してください。</p>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>【学習データ②】学習目標シート テンプレ（コピー用）</h2>
+      <p>授業内では講師が配布する Google ドキュメント版を使う。<strong>家でゼロから作り直したい人</strong>や<strong>別の Google アカウントで作り直したい人</strong>のために、テンプレ本文をここからコピーできるようにしてある（第3回と同じ仕組み）。</p>
+      <p><strong>使い方:</strong></p>
+      <ol>
+        <li>下の「Markdown をコピー」ボタンを押す</li>
+        <li><a href="https://docs.google.com" target="_blank" rel="noopener">Google ドキュメント</a> で新規ドキュメントを開く（ファイル名は <strong>「○○の学習目標シート」</strong>）</li>
+        <li>Google ドキュメントの <strong>ツール → 設定 → 全般タブ →「マークダウンを有効にする」</strong>がオンになっているか確認（第3回で設定した人はそのまま）</li>
+        <li>本文に <strong>編集 →「マークダウンから貼り付け」</strong>で貼り付ける（普通の Ctrl/⌘+V でも内容は使えるので、Markdown 整形にこだわらない人はそのままで OK）→ 空欄を自分の言葉で埋める</li>
+        <li>NotebookLM の自分専用 AI ノートで「ソースを追加」→「ドライブ」→ このドキュメントを選択</li>
+      </ol>
+      <p><strong>個人情報を入れない原則は第1回・第3回と同じ。</strong>本名・住所・電話番号・学籍番号は書かない。書ける範囲で OK・空欄でも OK。</p>
+      <button class="copy-md-btn" data-md-source="study-goal-md">
+        <span class="btn-icon"></span> Markdown をコピー
+      </button>
+<pre id="study-goal-md" class="md-preview"># 学習目標シート（NotebookLM 用）
+
+> このシートは「自分専用 AI ノート」のソースとして使います。
+> 自己紹介シートと組み合わせて、AI が「今学期の私の方向性」を踏まえた応答を返せるようになります。
+> 個人情報（本名・住所・電話番号・学籍番号など）は書かないこと。書ける範囲で OK・空欄でも OK。
+
+## ① 今学期の学習目標
+学校で「○○ ができるようになりたい」を 1〜2 行で。
+（例: 「HTML と CSS で自分のページを作れるようになりたい」「AI と上手に対話できるようになりたい」）
+
+→
+
+## ② 半年後の自分のイメージ
+前期末（夏休み前）にこうなっていたい姿。具体的でも、ぼんやりでも OK。
+（例: 「自分の作品を1つ完成させてポートフォリオに入れている」）
+
+→
+
+## ③ 1年後の自分のイメージ
+年度末にこうなっていたい姿。
+（例: 「友達に自分の AI ノートを見せて『これ私が育てたの』と言える状態」）
+
+→
+
+## ④ 困った時の支援者（3 個書く）
+友達・先生・家族・先輩など、相談できる人や場所。名前を書かなくても「クラスメイト」「担任の先生」等で OK。
+（例: 「クラスのメンバー」「担当の講師」「実家の家族」）
+
+-
+-
+-
+
+## ⑤ 自分の学習スタイル（2 個書く）
+自分が学びやすい時間・場所・方法。書ける範囲で OK。
+（例: 「朝の方が集中できる」「家より学校の自習室の方が捗る」「動画より文章で学ぶのが好き」）
+
+-
+-
+
+## メモ（自由記入）
+今日の自分の気分や、最近気になっていることなど、何でも。
+（例: 「最近は◯◯にハマっている」「将来◯◯の仕事に興味がある」）
+
+→
+</pre>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>学習目標シートを完成させて自分専用 AI ノートに追加</strong>
+            <p>授業内で書ききれなかった項目を家で埋める。<strong>本名・住所・電話番号・学籍番号は入れない</strong>。書き終えたら NotebookLM の自分専用 AI ノートで「ソースを追加」→「ドライブ」→ 学習目標シートを選択（授業中に追加し終えている人は再確認のみで OK）。試しに「自己紹介シートと学習目標シートを合わせて読んで、私の伸び代を3つ挙げて」と質問し、両方のソースから引用 [1] [2] が混じって返ることを確認。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>カスタム指示を保存した状態にする</strong>
+            <p>「チャットを設定」のカスタム欄に、性格・口調・得意分野・避けたい応答・役割を書いて<strong>「保存」</strong>をクリック。次回授業の冒頭で「自分の AI に1問投げる」ところから始まるので、保存状態のまま来てほしい。書き直し回数は不問。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>自分のAIに3問質問してメモする</strong>
+            <p>家でカスタムモードのまま3問質問を投げて、自分専用 AI ノートの「メモ」エリアに<strong>気づきを1〜2行</strong>残す。「思った通りの口調になった」「長すぎた」「ここを直したい」など、観察した違いを書く。第5回（プロンプトの基本）でこのメモを使う。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>カスタム指示を書き直して保存→質問のサイクルを2〜3周</strong>
+            <p>気になる応答があったら、カスタム欄に1〜2行追加 → 保存 → 同じ質問を投げ直し、を2〜3回繰り返す。書き直すたびに自分のAIに近づく感覚を体験する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>デフォルト/学習ガイド/カスタムを比べる</strong>
+            <p>同じ質問を3モードそれぞれで投げて応答を比較。<strong>学習ガイド</strong>モードは授業ではほとんど触らないが、家で1問試すと「問いかけスタイル」の感じが掴める。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>練習用ノートにもソースを足す</strong>
+            <p>第3回で作った「練習用ノート」（サブ）が残っている人は、Fast Research で別ジャンルのソースを2〜3件足してみる。今日のメインの自分専用 AI ノートとは独立しているので、混ざる心配はない。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> — 今日触ったツール本体</li>
+        <li><a href="https://support.google.com/notebooklm/?hl=ja" target="_blank" rel="noopener">NotebookLM ヘルプ（日本語公式）</a> — ノートブック・ソース・チャット・Studio の公式マニュアル</li>
+        <li><a href="https://support.google.com/notebooklm/answer/16179559?hl=ja" target="_blank" rel="noopener">NotebookLM ヘルプ — NotebookLM でチャットを使用する（公式）</a> — 「チャットを設定」3 モード（デフォルト／学習ガイド／カスタム）の公式説明と推奨用途</li>
+        <li><a href="https://support.google.com/notebooklm/answer/16215270?hl=ja" target="_blank" rel="noopener">NotebookLM ヘルプ — ノートブックの新しいソースを追加または検索する（公式）</a> — 複数ソース運用のための公式手順</li>
+        <li><a href="https://blog.google/innovation-and-ai/products/notebooklm-beginner-tips/" target="_blank" rel="noopener">Google ブログ — 8 expert tips for getting started with NotebookLM（公式）</a> — 「異なる素材を結びつける」など 8 つの初心者向け公式ヒント</li>
+        <li><a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a> — 第2回で Gem を作った場所（今日比較対象になった）</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week03.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第3回 NotebookLM入門——自分用のノートブックを作ろう</span>
+      </a>
+      <a href="../ai-programming.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AI活用プログラミング基礎</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第5回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>

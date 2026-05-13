@@ -38,6 +38,7 @@ ai-programming/         # AI活用プログラミング基礎の各回詳細ペ�
   week01.html           #   第1回 オリエンテーション＆AIってなんだろう？
   week02.html           #   第2回 自分だけのAIキャラをつくろう（Gem入門）
   week03.html           #   第3回 NotebookLM入門——自分用のノートブックを作ろう
+  week04.html           #   第4回 NotebookLMで「自分だけのAI」を本格化
 java-basics-1.html      # Java基礎I（土曜前期）
 java-basics-2.html      # Java基礎II（土曜前期）
 java-spring.html        # Javaフレームワーク（土曜後期）
