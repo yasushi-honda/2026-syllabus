@@ -32,6 +32,7 @@ natural-language-dev/   # 自然言語開発の各回詳細ページ
   week03.html           #   第3回 Gemini CLI / GitHub Copilot CLI を使い分ける
   week04.html           #   第4回 Vibe Codingの限界とGEMINI.mdで落ち着かせる
   week05.html           #   第5回 PRDとADRで「なぜそうしたか」をAIに渡す
+  week06.html           #   第6回 Spec-Driven Development入門
 ai-programming.html     # AI活用プログラミング基礎（木3・4限）※AIコミュ基礎と共通ベース
 ai-programming/         # AI活用プログラミング基礎の各回詳細ページ
   week01.html           #   第1回 オリエンテーション＆AIってなんだろう？
