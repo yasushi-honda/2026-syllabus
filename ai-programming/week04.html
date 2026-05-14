@@ -41,7 +41,7 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">第2回 Gem の限界（学校外で消える／保存が続かない）と対比し、<strong>NotebookLM なら知識を継続的に育てられる</strong>違いを体験。「自分専用 AI ノート」に <strong>【学習データ②】学習目標シート</strong>を追加し、<strong>「チャットを設定」のカスタムモード</strong>で<strong>「自分だけのAI」を本格化</strong>する</div>
+          <div class="lesson-overview-value">第2回 Gem は「キャラ＝ペルソナ」を仕込む設計で、自分の資料を読ませて引用付きで答えてもらう仕組みは持たない。<strong>NotebookLM はソースを取り込んで知識を継続的に育てられる</strong>違いを体験。「自分専用 AI ノート」に <strong>【学習データ②】学習目標シート</strong>を追加し、<strong>「チャットを設定」のカスタムモード</strong>で<strong>「自分だけのAI」を本格化</strong>する</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
@@ -57,7 +57,7 @@
     <div class="syllabus-section">
       <h2>この回のゴール</h2>
       <ul>
-        <li>第2回 Gem の限界（学校外では使えない／会話履歴は残るがキャラ設計の保存が壊れることがある）と、NotebookLM の継続育成性の違いを自分の言葉で言える</li>
+        <li>第2回 Gem（キャラ＝ペルソナ中心の設計／ソースを読ませる仕組みは持たない／応答に引用は付かない）と、NotebookLM（ソースベースで引用付きで答え、ソースを足せば足すほど知識が積み上がる）の<strong>機能設計</strong>の違いを自分の言葉で言える</li>
         <li><strong>自分専用 AI ノート</strong>に、第3回で取り込んだ<strong>【学習データ①】自己紹介シート</strong>に加えて、今日の<strong>【学習データ②】学習目標シート</strong>をソースとして追加できる（2 つ目のソース運用）</li>
         <li>第3回で名前だけ紹介した<strong>「チャットを設定」のカスタムモード</strong>に踏み込み、自分の AI の<strong>性格・口調・得意分野・役割</strong>を文章で書き込める</li>
         <li>カスタムモードで仕込んだ自分の AI に質問して、<strong>デフォルトモードの応答との違い</strong>を体感できる（同じ質問が違う性格で返ってくる）</li>
@@ -95,23 +95,26 @@
               </li>
               <li>家で「自分専用 AI ノート」に試しに1問チャットを投げた人は、引用付きで返ってきた感想を1人1分シェア</li>
             </ul>
-            <p><strong>第2回 Gem との違いを再確認（10分）</strong></p>
+            <p><strong>第2回 Gem と NotebookLM の機能設計の違い（10分）</strong></p>
             <ul>
-              <li>第2回で作った Gem キャラには、こんな限界があった:
+              <li>第2回で作った Gem は<strong>「キャラの性格」を仕込む</strong>ことに特化した設計:
                 <ul>
-                  <li><strong>家のPCからアクセスしにくい</strong>（学校アカウントとログインが違うと見えない）</li>
-                  <li><strong>キャラの保存が消えたり戻ったりする</strong>ことがある（Gemini の UI 更新時など）</li>
-                  <li><strong>知識を継続的に積み上げる仕組みがない</strong>（毎回キャラ説明を読み直すだけ）</li>
+                  <li>名前・性格・口調・得意分野などの<strong>ペルソナ</strong>を設定して、そのキャラと対話する</li>
+                  <li>答えは AI の<strong>一般知識</strong>から組み立てられる（特定のソースを参照する仕組みではない）</li>
+                  <li>応答に<strong>引用は付かない</strong>（出典が示されない）</li>
+                  <li>キャラ自体に資料を継続的に積み上げる仕組みは持たない（持たせるなら指示文に書き足すしかない）</li>
                 </ul>
               </li>
-              <li>NotebookLM は次の点で<strong>「育てる」型</strong>:
+              <li>NotebookLM は<strong>「ソースを読ませる」</strong>ことに特化した設計:
                 <ul>
-                  <li>個人の Google アカウントでログインすれば<strong>家からも同じノートが開ける</strong></li>
-                  <li>ノートブックに入れたソースは<strong>消えない</strong>（自分で消すまで残る）</li>
-                  <li>新しい資料を追加していけば、<strong>知識が積み上がっていく</strong>(後期・来年と続いていく)</li>
+                  <li>自分が取り込んだ<strong>ソース</strong>（ドキュメント・ウェブページ等）を根拠に答える</li>
+                  <li>答えには<strong>引用番号</strong>が付く（どのソースのどこから答えたかが分かる）</li>
+                  <li>ソースを足すたびに<strong>知識が積み上がっていく</strong>（後期・来年と続いていく）</li>
+                  <li>第3回で見た通り、Studio で 9 通りの形式に「料理」もできる</li>
                 </ul>
               </li>
-              <li>覚えてほしい一言: <strong>「Gem は一発キャラ、NotebookLM は育てるAI」</strong></li>
+              <li>※学校アカウント／個人アカウントのアクセス制御は、Gem も NotebookLM も<strong>同じ Workspace for Education のポリシーに従う</strong>ため、ここは本質的な対比ポイントではない（どちらも組織設定や個人アカウント切り替えで同様に挙動する）</li>
+              <li>覚えてほしい一言: <strong>「Gem はキャラ型、NotebookLM はソース型」</strong>。優劣ではなく<strong>用途で使い分ける</strong></li>
             </ul>
             <p><strong>今日のゴール提示（10分）</strong></p>
             <ul>
@@ -281,30 +284,30 @@
                     </thead>
                     <tbody>
                       <tr>
+                        <td>設計の主軸</td>
+                        <td>キャラ＝ペルソナ（性格・口調・得意分野）</td>
+                        <td>ソース＝資料（自分が取り込んだ文書）</td>
+                      </tr>
+                      <tr>
                         <td>主な目的</td>
-                        <td>キャラを作って遊ぶ・対話する</td>
+                        <td>キャラを作って対話する</td>
                         <td>自分の資料を読んで応答してくれる AI を育てる</td>
                       </tr>
                       <tr>
-                        <td>引用</td>
+                        <td>応答の引用</td>
                         <td>付かない（一般知識から答える）</td>
                         <td>付く（自分のソースから引用番号付き）</td>
                       </tr>
                       <tr>
-                        <td>知識の継続性</td>
-                        <td>その場限り・新しい資料は持たせにくい</td>
-                        <td>ソースを足せば足すほど詳しくなる</td>
-                      </tr>
-                      <tr>
-                        <td>家からのアクセス</td>
-                        <td>環境次第（ログインで詰まることあり）</td>
-                        <td>個人 Google アカウントなら家からも開きやすい</td>
+                        <td>知識の積み上げ</td>
+                        <td>仕組みなし（持たせるなら指示文に書き足す）</td>
+                        <td>ソースを足せば足すほど厚くなる</td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
               </li>
-              <li>結論: <strong>Gem は一発キャラ、NotebookLM は育てるAI</strong>。どちらが偉い・劣っているではなく<strong>用途で使い分ける</strong></li>
+              <li>結論: <strong>Gem はキャラ型、NotebookLM はソース型</strong>（1限前半で出した一言と同じ）。優劣ではなく<strong>用途で使い分ける</strong></li>
             </ul>
             <p><strong>メモを残す（5分）</strong></p>
             <ul>
