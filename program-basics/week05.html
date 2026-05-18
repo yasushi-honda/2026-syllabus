@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第5回 レスポンシブ＆スマホ実機確認＆バグ修正ワーク① | プログラム基礎 I</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--blue">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../program-basics.html">プログラム基礎 I</a>
+        <span>/</span>
+        <span>第5回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">レスポンシブ＆<wbr>スマホ実機確認＆<wbr>バグ修正ワーク①</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 5</span>
+            <span class="page-badge">火曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">第4回で公開した URL を QR コードに変換してスマホで読み取り、PC とスマホの表示差を <code>viewport</code> メタタグと<strong>メディアクエリ</strong>で吸収する。AI が生成した「バグ入りスマホ対応 CSS」を読み解いて修正する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">QR コード / <code>viewport</code> メタタグ / メディアクエリ / <code>@media</code> / <code>min-width</code> / <code>max-width</code> / ブレイクポイント / DevTools のレスポンシブモード / バグ修正ワーク / AI 提案の批判的評価</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第4回で取得した公開 URL（GitHub Pages）・Codespaces が起動できる状態・QR コードを読めるスマホ・第4回の課題で残したスマホ表示のスクリーンショット</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>公開 URL を QR コードに変換し、スマホで読み取って実機確認できる</li>
+        <li><code>&lt;meta name="viewport"&gt;</code> が「スマホで縮小表示しない」ための宣言であることを自分の言葉で説明できる</li>
+        <li>メディアクエリ（<code>@media (max-width: ...)</code>）の基本構文を<strong>手で書ける</strong></li>
+        <li>Chrome DevTools の<strong>レスポンシブモード</strong>で複数の画面幅を試せる</li>
+        <li>AI が生成した「バグ入りスマホ対応 CSS」を読み解き、<strong>採用するか・修正するか・捨てるか</strong>を自分で判断できる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続(90分 + 90分 = 計180分)。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>公開 URL を QR コード化 → スマホで実機確認する</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り(10分)</strong></p>
+            <ul>
+              <li>第4回で取得した自分の<strong>公開 URL</strong>(<code>https://&lt;ユーザー名&gt;.github.io/&lt;リポジトリ名&gt;/</code>)を取り出す</li>
+              <li>第4回の課題で<strong>家のスマホで撮ったスクリーンショット</strong>を手元に置く——今日の素材になる</li>
+              <li>Codespaces を起動し、<code>python3 -m http.server 8000</code> → Simple Browser で表示確認(第1回と同じ手順)</li>
+            </ul>
+            <p><strong>QR コードに変換する(15分)</strong></p>
+            <ul>
+              <li>QR コード生成サービスを開く——おすすめは <a href="https://qr.quel.jp/" target="_blank" rel="noopener">qr.quel.jp(日本語)</a> または <a href="https://www.qrcode-monkey.com/" target="_blank" rel="noopener">QRCode Monkey(英語)</a>。どちらも無料、登録不要</li>
+              <li>入力欄に<strong>公開 URL を貼り付け</strong>→ 生成ボタン → PNG をダウンロード</li>
+              <li>生成された QR を Codespaces の画面に表示するか、PC の隣に並べてスマホで読み取る</li>
+              <li>iPhone は標準カメラアプリ、Android は標準カメラ or Google レンズで QR を認識</li>
+            </ul>
+            <p><strong>スマホで実機確認する(15分)</strong></p>
+            <ul>
+              <li>QR から開いた公開 URL を、<strong>縦持ち・横持ち</strong>の両方で確認</li>
+              <li>第4回の家で撮ったスクショと見比べて、気になる点を口に出す:
+                <ul>
+                  <li>「文字が小さい」「画像がはみ出る」「余白が詰まりすぎ」「ボタンがタップしづらい」など</li>
+                </ul>
+              </li>
+              <li>クラスメイトに自分の QR を見せて公開 URL を覗いてもらうのもよい(今日は public リポジトリ前提なので問題なし)</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>QR コードに有効期限はない:</strong> 公開 URL が変わらない限り、生成した QR は何度でも使えます。スマホの「写真」アプリに保存しておくと、後の回でも実機確認に使えて便利。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>「なぜ崩れるか」を <code>viewport</code> メタタグとメディアクエリで理解する</h3>
+          <div class="timeline-body">
+            <p><strong>なぜ PC とスマホで違って見えるか(15分)</strong></p>
+            <ul>
+              <li>PC のブラウザは画面幅が広い(1280px / 1920px など)、スマホは狭い(360px / 414px など)</li>
+              <li>スマホはデフォルトでは <strong>「擬似的に約 980px 幅」</strong> として PC 向けのページを縮小表示しようとする(MDN「レスポンシブウェブデザイン」の説明)——これが「文字が小さい」の正体</li>
+              <li>これを止めて<strong>「端末の実際の幅でレイアウトしてね」</strong>と伝えるのが <code>viewport</code> メタタグ</li>
+            </ul>
+            <p><strong><code>viewport</code> メタタグを書く(10分)</strong></p>
+            <ul>
+              <li>第1回からの雛形にはすでに入っているはず——<code>&lt;head&gt;</code> 内を確認:
+                <pre><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</code></pre>
+              </li>
+              <li><strong><code>width=device-width</code></strong>: ビューポート幅を端末の実際の幅に合わせる</li>
+              <li><strong><code>initial-scale=1.0</code></strong>: 初期倍率を100%にする(縮小表示しない)</li>
+              <li>もし無かったら追加してリロード——スマホ実機での「文字の小ささ」が変わるはず(変わらない人はクラスメイトとペアで比較)</li>
+            </ul>
+            <p><strong>メディアクエリの考え方(15分)</strong></p>
+            <ul>
+              <li><code>viewport</code> を入れただけでは「縮小されない」だけ。<strong>レイアウト自体をスマホ向けに変える</strong>には、画面幅に応じた CSS の出し分けが必要</li>
+              <li>その出し分けの仕組みが <strong>メディアクエリ</strong>(<code>@media</code>)</li>
+              <li>基本構文:
+                <pre><code>@media (max-width: 600px) {
+  /* 画面幅が 600px 以下のときだけ
+     ここに書いた CSS が適用される */
+  body { font-size: 14px; }
+  img  { width: 100%; }
+}</code></pre>
+              </li>
+              <li><strong>ブレイクポイント</strong>: 「ここで切り替える」と決める画面幅のこと。よく使う値は <strong>600px / 768px / 1024px</strong>(MDN の例も 600px / 1200px が代表的)</li>
+            </ul>
+            <p><strong>DevTools のレスポンシブモードを開く(10分)</strong></p>
+            <ul>
+              <li>Chrome の Simple Browser や別タブで公開 URL を開き、<strong><code>F12</code></strong> または <strong>右クリック → 検証</strong> で DevTools を開く</li>
+              <li>左上のスマホ/タブレットアイコン(Toggle device toolbar)をクリック → レスポンシブモードに切り替わる</li>
+              <li>画面上部の幅(例: <code>375 × 667</code>)を変えて、PC でスマホ表示を再現できる——QR で実機を見られない時はこれで代用</li>
+              <li>「Responsive」と書かれた左上のプルダウンで、iPhone / Pixel / iPad など実機相当の幅プリセットも選べる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>メディアクエリを<strong>手で書いて</strong>スマホ表示を整える</h3>
+          <div class="timeline-body">
+            <p><strong>気になる点を1つに絞る(5分)</strong></p>
+            <ul>
+              <li>1限前半のスマホ実機確認で出た「気になる点」のうち、<strong>1つだけ</strong>を選ぶ</li>
+              <li>典型例:
+                <ul>
+                  <li>「見出し(<code>h1</code>)が大きすぎてスマホで2行に折り返してしまう」</li>
+                  <li>「画像が画面からはみ出している」</li>
+                  <li>「左右の余白(<code>padding</code>)が広すぎて中身が窮屈」</li>
+                </ul>
+              </li>
+              <li>全部直そうとしない——<strong>1問解いてから次へ</strong></li>
+            </ul>
+            <p><strong>手でメディアクエリを書く(25分)</strong></p>
+            <ul>
+              <li><code>style.css</code> の<strong>末尾</strong>に追記する。元の CSS は触らない(切り戻せるように)</li>
+              <li>例: 見出しがスマホで大きすぎる場合
+                <pre><code>/* スマホ向け(600px 以下) */
+@media (max-width: 600px) {
+  h1 { font-size: 1.5rem; }
+  p  { font-size: 0.95rem; }
+}</code></pre>
+              </li>
+              <li>例: 画像が画面からはみ出す場合
+                <pre><code>img {
+  max-width: 100%;
+  height: auto;
+}</code></pre>
+                <p>※これは<strong>メディアクエリ無しでも効く基本ルール</strong>。スマホ専用ではなく常に有効にする</p>
+              </li>
+              <li>例: 左右の余白を狭くする場合
+                <pre><code>@media (max-width: 600px) {
+  body { padding: 0.5rem; }
+}</code></pre>
+              </li>
+              <li>1つ書くたびに DevTools のレスポンシブモードで確認 → スマホ実機(QR)で確認、を繰り返す</li>
+            </ul>
+            <p><strong>commit &amp; push(10分)</strong></p>
+            <ul>
+              <li>「ソース管理」タブで変更内容を確認 → コミットメッセージ例: <code>スマホ向けメディアクエリを追加</code></li>
+              <li>「Commit」→「Sync Changes」で push</li>
+              <li>GitHub Pages の反映を待つ(最大10分、通常1〜3分)→ スマホで QR を読み直して確認</li>
+            </ul>
+            <p><strong>うまくいかない時のチェックリスト(10分)</strong></p>
+            <ul>
+              <li><strong>① メディアクエリ内の CSS が効かない</strong> → 中括弧 <code>{ }</code> の対応をチェック。<code>@media</code> の <code>{</code> と中の各セレクタの <code>{</code> で<strong>2重のネスト</strong>になっていることを確認</li>
+              <li><strong>② 画面幅を変えても何も変わらない</strong> → <code>viewport</code> メタタグが <code>&lt;head&gt;</code> に入っているか確認</li>
+              <li><strong>③ ブラウザの表示が古いまま</strong> → <code>Cmd</code>(<code>Ctrl</code>) + <code>Shift</code> + <code>R</code> で強制再読み込み</li>
+              <li><strong>④ スマホでだけ崩れる</strong> → DevTools のレスポンシブモードで該当幅を再現してから直す方が早い</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>🔧バグ修正ワーク①: AI が書いた「バグ入りスマホ対応 CSS」を直す</h3>
+          <div class="timeline-body">
+            <p><strong>このワークの意図(5分)</strong></p>
+            <ul>
+              <li>AI(GitHub Copilot)は<strong>もっともらしい CSS を一瞬で書く</strong>——でも全部が正しいとは限らない</li>
+              <li>「AI に書いてもらって動いた」で止まると、自分のスキルにならない</li>
+              <li>今日のワークは「<strong>わざとバグを混ぜた CSS を AI に書かせて、自分で読み解いて直す</strong>」</li>
+            </ul>
+            <p><strong>AI にバグ入り CSS を頼む(10分)</strong></p>
+            <ul>
+              <li>Codespaces 内蔵の Copilot Chat、または <a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a> を開く</li>
+              <li>プロンプト例(コピペ可):
+                <pre><code>HTMLのプロフィールページをスマホ対応するCSSを書いてください。
+ただし、わざと「3箇所」だけ間違いを混ぜてください。
+たとえば、プロパティ名のスペルミス、単位の付け忘れ、
+メディアクエリの構文ミスなどです。
+「どこに間違いを混ぜたか」は最後まで教えないでください。</code></pre>
+              </li>
+              <li>生成されたコードをそのまま <code>style.css</code> の<strong>末尾</strong>に貼り付ける(本来の CSS が壊れないように分離)</li>
+              <li>ブラウザでリロード → 期待通り動いていない箇所が出るはず</li>
+            </ul>
+            <p><strong>3つのバグを探して直す(15分)</strong></p>
+            <ul>
+              <li>1行ずつ<strong>声に出して読む</strong>:「セレクタはこれ、プロパティは <code>font-size</code>、値は <code>16</code>……あれ、単位の <code>px</code> が無い」のように</li>
+              <li>DevTools の「Elements」タブで該当要素を選択 → 右側の「Styles」で<strong>適用されていない CSS</strong>(取り消し線)を探す——これは強力なヒント</li>
+              <li>見つけたバグを<strong>自分の言葉でメモ</strong>: 「① <code>padd</code> は <code>padding</code> のスペルミス / ② <code>max-width 600px</code> は <code>:</code> が抜けている / ③ <code>@media screen</code> の後の <code>and</code> が抜けている」など</li>
+              <li>直し終わったら AI に「3箇所のバグを答え合わせしてください」と聞いて、自分の発見と照合する</li>
+              <li>すべて発見できなかった人は、自分が見落とした理由を1行メモ——次回以降の自分への申し送り</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「AI が出したコードを採用するかどうか」の判断材料:</strong> ① <strong>自分で読めるか</strong>(読めないコードは採用すると後でメンテできない)、② <strong>動作確認したか</strong>(見た目で動いていても、別の場所が壊れていないか)、③ <strong>第三者(クラスメイトや講師)に説明できるか</strong>。「動いた」だけで採用しない癖をつける。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ program-basics.html Week 6 「JavaScript入門：変数と出力」と同期 -->
+              <li>次回(第6回): <strong>JavaScript 入門：変数と出力</strong>——いよいよ <strong>JavaScript</strong> に入る。変数・データ型(文字列・数値)・<code>console.log</code> での動作確認、簡単なおみくじページを<strong>手で書く</strong></li>
+              <li>今日見つけた「AI のバグ」と「自分のメディアクエリ」は<strong>そのままリポジトリに残しておく</strong>。後の回で見返すと「自分はここから始めた」がわかる</li>
+              <li>「<code>viewport</code>」「<code>@media (max-width: 600px)</code>」「ブレイクポイント」の3つを口に出して言えるか確認して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>家のスマホで公開 URL を開き、メディアクエリ適用後の表示を確認する</strong>
+            <p>第4回の課題で撮ったスクショと並べて、<strong>何が改善されたか</strong>を1〜2行メモする。改善できなかった点があれば、それも次回の素材として残しておく。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>バグ修正ワーク①の「自分が見つけたバグ」を <code>README.md</code> か新規 <code>NOTES.md</code> に記録する</strong>
+            <p>「① プロンプト全文 / ② AI が出した間違い / ③ 自分が見つけた理由」の3項目で記録。<strong>第7回・第10回のバグ修正ワーク②③でも同じフォーマットで追記</strong>していく。GitHub に push しておくと自分の成長記録になる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>MDN「レスポンシブウェブデザイン」を流し読みする</strong>
+            <p>下の参考リンクから日本語版を開いて、<strong>気になった一文を1つだけメモ</strong>する。全部読まなくてOK——「公式の表現に触れる」癖を作る。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://developer.mozilla.org/ja/docs/Learn_web_development/Core/CSS_layout/Responsive_Design" target="_blank" rel="noopener">MDN — レスポンシブウェブデザイン</a> — 概念と <code>viewport</code> メタタグの解説</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/CSS/CSS_media_queries/Using_media_queries" target="_blank" rel="noopener">MDN — メディアクエリの使用</a> — <code>@media</code> の基本構文と実例</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/CSS/@media" target="_blank" rel="noopener">MDN — @media</a> — 公式リファレンス(詳細版)</li>
+        <li><a href="https://qr.quel.jp/" target="_blank" rel="noopener">QRのススメ(qr.quel.jp)</a> — 日本語の無料 QR コード生成サイト</li>
+        <li><a href="https://www.qrcode-monkey.com/" target="_blank" rel="noopener">QRCode Monkey</a> — 英語の無料 QR コード生成サイト(カスタマイズ豊富)</li>
+        <li><a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a> — 今日の「バグ入り CSS」を書かせる AI</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week04.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第4回 ミニ完成① プロフィールサイト公開</span>
+      </a>
+      <a href="../program-basics.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">プログラム基礎 I</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第6回(準備中)</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
