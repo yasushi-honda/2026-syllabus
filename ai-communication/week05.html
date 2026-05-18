@@ -199,19 +199,18 @@ NotebookLMをもっと使いこなしたい...(続く)</code></pre>
             <p><strong>マインドマップを生成する(10分)</strong></p>
             <ul>
               <li>NotebookLM のノートブックを開き、ソースに <strong>【学習データ①〜④】</strong>+ 1限後半で作った <strong><code>テスト用_構造化メモ</code></strong> が入っていることを確認</li>
-              <li>生成方法は2通り(公式手順):
+              <li>生成手順(公式):
                 <ul>
-                  <li><strong>方法A</strong>: チャット欄の<strong>「マインドマップ」チップ</strong>をクリック</li>
-                  <li><strong>方法B</strong>: 右側の <strong>[Studio] パネル</strong>から<strong>マインドマップ</strong>を選択</li>
+                  <li>チャット欄の<strong>「マインドマップ」チップ</strong>を選択</li>
+                  <li>右側の <strong>[Studio] パネル</strong>に、生成されたマインドマップを含む<strong>新しいメモ</strong>が追加される(これがマインドマップ本体)</li>
                 </ul>
               </li>
-              <li>どちらでも、Studio パネルにマインドマップ付きのメモが追加される</li>
-              <li>追加されたメモを開くと、樹形図が表示される——中央に大テーマ、そこから枝が複数方向に伸びる</li>
+              <li>追加されたメモを開くと、樹形図が表示される——中心の大テーマから枝が伸びる形が一般的</li>
             </ul>
             <p><strong>樹形を観察し操作する(20分)</strong></p>
             <ul>
               <li><strong>ズーム・スクロール</strong>: マウスホイールで拡大縮小、ドラッグで全体を移動</li>
-              <li><strong>枝の開閉</strong>: 各ノードの先端にあるマークで、サブトピックを開く/閉じる——<strong>広い視野</strong>と<strong>深い詳細</strong>を切り替える</li>
+              <li><strong>枝の開閉</strong>: ノード近くのマーク(+/− やアイコンなど、UI 表現は実機で確認)でサブトピックを開く/閉じる——<strong>広い視野</strong>と<strong>深い詳細</strong>を切り替える</li>
               <li><strong>ノード選択 → チャット質問</strong>: 気になったトピックをクリックすると、そのノードを起点にチャットへ質問を送れる
                 <pre><code>(ノード「自分だけのAI」を選択した状態で)
 このトピックを、第1〜4回の学習データに沿って
@@ -228,7 +227,7 @@ NotebookLMをもっと使いこなしたい...(続く)</code></pre>
             </ul>
             <p><strong>ダウンロードして残す(10分)</strong></p>
             <ul>
-              <li>マインドマップウィンドウの<strong>「ダウンロード」</strong>から画像(PNG など)として保存可能</li>
+              <li>マインドマップウィンドウの<strong>右上のオプション</strong>から<strong>「ダウンロード」</strong>を選択して画像として保存可能(公式の操作位置)。形式は実機で確認</li>
               <li>ダウンロード版は後で <strong>【学習データ⑤】</strong> に貼り付けて、自分のAIに「この樹形図はどう読み取れますか」と質問する素材になる</li>
               <li>マインドマップ全体を共有したい時は、<strong>ノートブック全体の共有</strong>か<strong>ダウンロード版の共有</strong>の2通り(公式)。今日は自分用にダウンロードだけしておく</li>
               <li>時間が許せば、<strong>もう一度生成し直す</strong>と樹形が変わることがある——同じソースでも AI の構造化は<strong>毎回同じではない</strong>ことを観察</li>
@@ -307,7 +306,7 @@ NotebookLMをもっと使いこなしたい...(続く)</code></pre>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>家でマインドマップのノードを<strong>3つ</strong>選び、それぞれチャットで質問する</strong>
+            <strong>家でマインドマップのノードを3つ選び、それぞれチャットで質問する</strong>
             <p>枝の中で気になるノードを3つクリックし、それぞれに「これをもう少し具体的に説明して」とチャットを送る。返ってきた応答のうち<strong>1つだけを自分の言葉で1〜2行に要約</strong>し、<code>テスト用_構造化メモ</code> または <strong>【学習データ⑤】</strong> に追記する。</p>
           </div>
         </div>
@@ -326,7 +325,7 @@ NotebookLMをもっと使いこなしたい...(続く)</code></pre>
       <ul>
         <li><a href="https://support.google.com/notebooklm/answer/16212283?hl=ja" target="_blank" rel="noopener">NotebookLM ヘルプ — NotebookLM でマインドマップを使用する</a> — Google 公式。生成方法・枝の開閉・ノード選択 → チャット質問・ダウンロードの手順</li>
         <li><a href="https://support.google.com/notebooklm/" target="_blank" rel="noopener">NotebookLM ヘルプセンター</a> — Google 公式のヘルプ一覧</li>
-        <li><a href="https://support.google.com/notebooklm/answer/16212820?hl=ja" target="_blank" rel="noopener">NotebookLM ヘルプ — NotebookLM で音声解説を生成する</a> — Studio パネルの別機能。授業時間内では扱わないが興味がある人は</li>
+        <li><a href="https://support.google.com/notebooklm/answer/16212820?hl=ja" target="_blank" rel="noopener">NotebookLM ヘルプ — NotebookLM で音声解説を生成する</a> — NotebookLM のもう一つの自動生成機能(AIホストによる解説音声)。授業時間内では扱わないが興味がある人は</li>
         <li><a href="https://support.google.com/docs/answer/116338?hl=ja" target="_blank" rel="noopener">Google ドキュメント ヘルプ — ドキュメントにタイトル、見出し、目次を追加する</a> — 見出し機能の公式説明</li>
         <li><a href="https://support.google.com/docs/answer/3300615?hl=ja" target="_blank" rel="noopener">Google ドキュメント ヘルプ — 番号付きリスト、箇条書き、チェックリストを追加する</a> — リスト機能の公式説明</li>
         <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> — 「自分だけのAI」を育てる場所</li>
