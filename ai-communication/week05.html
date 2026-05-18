@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第5回 情報の構造化とAI育成① | AIコミュニケーション基礎</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication.html">AIコミュニケーション基礎</a>
+        <span>/</span>
+        <span>第5回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">情報の<wbr>構造化と<wbr>AI育成①</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 5</span>
+            <span class="page-badge">火曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">NotebookLM に投入する情報を Google ドキュメントの<strong>見出し・リスト</strong>で構造化することで応答の精度を上げる。さらに<strong>音声解説(Audio Overview)</strong>を生成して、自分専用のAIポッドキャストを体験する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">情報の構造化 / 見出しレベル / 箇条書き / Google ドキュメントの目次 / NotebookLM ソース追加 / <strong>音声解説(Audio Overview)</strong> / 形式(詳細・概要・批評・議論) / 【学習データ⑤】情報整理テクニック資料</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第4回までに <strong>【学習データ①〜④】</strong> を投入した「自分だけのAI」(NotebookLM)・Google ドキュメントが使える状態・イヤホン or ヘッドホン(音声解説の再生用)</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>「同じ情報でも、構造化されているとAIの応答が変わる」ことを<strong>自分の手で比較</strong>して確認できる</li>
+        <li>Google ドキュメントの<strong>見出し1〜3</strong>と<strong>箇条書き</strong>を使い分けられる</li>
+        <li>NotebookLM の<strong>音声解説(Audio Overview)</strong>を生成し、4つの形式(詳細・概要・批評・議論)から選べる</li>
+        <li>音声解説の<strong>長さ・プロンプト</strong>を指定して、自分の関心に絞った内容を生成できる</li>
+        <li>授業内で <strong>【学習データ⑤】情報整理テクニック資料</strong> を作成し、自分のAIに追加する</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続(90分 + 90分 = 計180分)。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の振り返りと「構造化されていない情報」の限界を体験する</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り(10分)</strong></p>
+            <ul>
+              <li>第4回で投入した <strong>【学習データ④】AI特性まとめ・エラー事例集</strong> が NotebookLM のソースに入っているか確認</li>
+              <li>家で <strong>「回答を再確認」(double-check)</strong> を試した結果を、希望者が一人1〜2文で共有(緑/オレンジのハイライトで何が分かったか)</li>
+            </ul>
+            <p><strong>「構造化されていない情報」を AI に渡してみる(20分)</strong></p>
+            <ul>
+              <li>準備: Google ドキュメントを新規作成、ファイル名を <strong><code>テスト用_未整理メモ</code></strong> にする</li>
+              <li>講師から配布する素材(あるいは自分の自由テーマ)について、<strong>句読点なしの一文長文</strong>で 10〜15 行ほど書き殴る——意図的に「整理されていない状態」にする</li>
+              <li>例(自由テーマ):
+                <pre><code>私が今期挑戦したいことは沢山あって例えば
+プログラミングをもっと頑張りたくて特にHTMLと
+CSSは自分のサイトを作れるようになりたくて
+あとはAIとの付き合い方を学びたくて
+NotebookLMをもっと使いこなしたい...(続く)</code></pre>
+              </li>
+              <li>NotebookLM のサイドバー「+ ソースの追加」→「Google ドライブ」→ このドキュメントを選択して投入</li>
+              <li>追加後、AI に質問:
+                <pre><code>このソースから、私が「今期取り組むこと」を
+3つの大項目に整理して提示してください</code></pre>
+              </li>
+              <li>応答を観察——<strong>大項目の切り口が AI 任せ</strong>になり、自分の意図と微妙にズレることが多い</li>
+            </ul>
+            <p><strong>なぜズレるのか(10分)</strong></p>
+            <ul>
+              <li>AI は「次に来る言葉の断片(トークン)を予測する」仕組み(第1〜4回で繰り返し確認)——<strong>文章の見た目の構造</strong>(見出し・箇条書き)をヒントとして使う</li>
+              <li>句読点なしの長文は、AI から見ると「<strong>どこからどこまでが一つの話題か</strong>」が曖昧</li>
+              <li>「<strong>人間が先に整理する</strong>」と、AI はその構造を踏まえて応答する</li>
+              <li>これが今日のテーマ「<strong>情報の構造化で AI の応答精度が上がる</strong>」の本質</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>Google ドキュメントの<strong>見出し</strong>と<strong>箇条書き</strong>で同じ情報を構造化する</h3>
+          <div class="timeline-body">
+            <p><strong>Google ドキュメントの見出し機能(10分)</strong></p>
+            <ul>
+              <li>新規ドキュメントを作成、ファイル名を <strong><code>テスト用_構造化メモ</code></strong> にする</li>
+              <li>Google ドキュメントの<strong>スタイル選択</strong>(ツールバーの「標準テキスト」プルダウン)から<strong>見出し1 / 見出し2 / 見出し3</strong>を選べる</li>
+              <li>使い分け:
+                <ul>
+                  <li><strong>見出し1</strong>: 文書全体の大きなテーマ(1つだけ)</li>
+                  <li><strong>見出し2</strong>: 大項目(3〜5個程度)</li>
+                  <li><strong>見出し3</strong>: 中項目(各大項目の下に2〜4個)</li>
+                </ul>
+              </li>
+              <li>見出しを付けると、左サイドの<strong>目次(アウトライン)</strong>に自動で並ぶ——これが Google ドキュメントの「構造化された証拠」</li>
+            </ul>
+            <p><strong>箇条書きを使い分ける(10分)</strong></p>
+            <ul>
+              <li>ツールバーの<strong>箇条書き</strong>アイコン(中黒の点)で開始、<strong>Tab キー</strong>で階層を深く、<strong>Shift+Tab</strong> で浅くできる</li>
+              <li>番号付きリストとの使い分け:
+                <ul>
+                  <li><strong>番号付き</strong>: 順序が大事(手順・優先順位)</li>
+                  <li><strong>中黒(点)</strong>: 並列(順序がない)</li>
+                </ul>
+              </li>
+              <li>1つの見出しの下に<strong>最大5〜6項目</strong>。多すぎると見出しを分割する合図</li>
+            </ul>
+            <p><strong>同じ内容を構造化して書き直す(20分)</strong></p>
+            <ul>
+              <li>1限前半の <code>テスト用_未整理メモ</code> と<strong>同じ内容</strong>を、<code>テスト用_構造化メモ</code> に書き直す</li>
+              <li>例:
+                <pre><code>(見出し1) 今期の挑戦リスト
+
+(見出し2) プログラミング
+  ・HTML / CSS で自分のサイトを作る
+  ・自分の言葉でコードを説明できるようになる
+
+(見出し2) AIとの付き合い方
+  ・NotebookLM をもっと使いこなす
+  ・プロンプト改善を継続する
+
+(見出し2) ...</code></pre>
+              </li>
+              <li>左サイドの目次が自動で並ぶ状態にする</li>
+              <li>NotebookLM に<strong>このドキュメントもソース追加</strong>(<code>テスト用_未整理メモ</code> はそのまま残す)</li>
+            </ul>
+            <p><strong>応答を比較する(10分)</strong></p>
+            <ul>
+              <li>NotebookLM のチャットで、1限前半と<strong>同じ質問</strong>を投げる:
+                <pre><code>このソースから、私が「今期取り組むこと」を
+3つの大項目に整理して提示してください</code></pre>
+              </li>
+              <li>応答に<strong>引用(citation)</strong>として、構造化メモの<strong>見出し2</strong>がそのまま並ぶことが多い——AI が見出しを「大項目の証拠」として使った結果</li>
+              <li>「未整理メモを優先しないで、構造化メモのほうから答えて」と追加指示してもよい</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「構造化は AI のためだけじゃない」:</strong> 見出しと箇条書きで整理する作業は、<strong>自分の頭の整理</strong>そのものです。AI に渡せる形に整えることが、結果的に自分の理解を深めます。これが「AI に教えるとは、自分が学ぶこと」の意味です。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>NotebookLM の<strong>音声解説(Audio Overview)</strong>を生成する</h3>
+          <div class="timeline-body">
+            <p><strong>音声解説とは(10分)</strong></p>
+            <ul>
+              <li>NotebookLM の <strong>[Studio] パネル</strong>から、自分のソースを元に<strong>ポッドキャスト風の音声</strong>を自動生成できる機能</li>
+              <li>ホスト(AI)が、自分が投入した資料について<strong>会話形式または解説形式</strong>で話してくれる</li>
+              <li>形式は<strong>4種類</strong>(公式仕様):
+                <ul>
+                  <li><strong>詳細(Deep Dive)</strong>: <strong>2人のホスト</strong>がソースを深く掘り下げる定番形式(おすすめ初回)</li>
+                  <li><strong>概要(Brief)</strong>: <strong>1人のホスト</strong>が短くまとめる(約2分程度)</li>
+                  <li><strong>批評(Critique)</strong>: 内容に対して批判的な視点で議論</li>
+                  <li><strong>議論(Debate)</strong>: 異なる立場から議論</li>
+                </ul>
+              </li>
+              <li><strong>言語</strong>と<strong>長さ</strong>を指定でき、<strong>プロンプト</strong>で「何を中心に話してほしいか」を指示できる</li>
+              <li>イヤホン or ヘッドホンを準備(教室内で複数人が同時に再生するため)</li>
+            </ul>
+            <p><strong>音声解説を生成する(15分)</strong></p>
+            <ul>
+              <li>NotebookLM の右側 <strong>[Studio] パネル</strong>を開く</li>
+              <li><strong>[音声解説]</strong>(Audio Overview)を選択</li>
+              <li>形式・言語・長さを設定。プロンプト例(コピペ可):
+                <pre><code>このソースで私が一番大事に思っているのは
+「自分だけのAI」を育てることです。
+そのテーマを中心に、初心者向けに話してください。</code></pre>
+              </li>
+              <li>「生成」ボタンを押す——<strong>生成には数分かかる場合がある</strong>(公式説明)。待っている間に他の作業をしてもOK(バックグラウンドで生成される)</li>
+              <li>注意: NotebookLM の<strong>インタラクティブ モード</strong>(再生中にホストに質問できる機能)は、現時点で<strong>英語のみ</strong>(公式)。日本語の音声解説は<strong>聴くだけ</strong>になる</li>
+            </ul>
+            <p><strong>聴いて感想をメモする(15分)</strong></p>
+            <ul>
+              <li>生成が終わったら<strong>再生</strong>。再生速度の変更も可能</li>
+              <li>聴きながら手元のドキュメントに以下をメモ:
+                <ul>
+                  <li>① <strong>自分の資料</strong>が正しく扱われているか(内容が変わっていないか)</li>
+                  <li>② <strong>気づき</strong>: 自分が書いた時に意識していなかった切り口があったか</li>
+                  <li>③ <strong>違和感</strong>: 「ここは自分の意図と違う」と感じた箇所</li>
+                </ul>
+              </li>
+              <li>聴き終わったら<strong>ダウンロード</strong>もできる——スマホに移して通学中に聴き直すと、復習にちょうどよい</li>
+              <li><strong>共有</strong>機能: リンク共有・ノートブック全体共有・ダウンロード版の共有の3方法(公式)。今日は自分用に留める</li>
+            </ul>
+            <p><strong>形式を変えてもう1回(10分)</strong></p>
+            <ul>
+              <li>時間が許せば、<strong>批評</strong>または<strong>議論</strong>の形式でもう1本生成してみる</li>
+              <li>「詳細」と「批評/議論」で<strong>何が違ったか</strong>を一言メモ</li>
+              <li>2本目以降も生成自体は<strong>数分かかる場合がある</strong>ため、待ち時間を計算に入れる</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「聞き取れない」「内容が薄い」と感じたら:</strong> プロンプトの指示が足りなかったサイン。次回生成時は「専門用語は避けて」「具体例を多めに」「○○については触れないで」など、<strong>条件を追加</strong>して再生成すると、自分専用のポッドキャストに近づきます。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>【学習データ⑤】情報整理テクニック資料を作成し投入する</h3>
+          <div class="timeline-body">
+            <p><strong>書く内容</strong></p>
+            <ul>
+              <li>Google ドキュメントを新規作成、ファイル名を <strong><code>【学習データ⑤】情報整理テクニック資料</code></strong> にする</li>
+              <li>今日学んだことを<strong>見出し1〜3 + 箇条書き</strong>で構造化する(練習を兼ねる)</li>
+              <li>項目(最低限):
+                <ul>
+                  <li><strong>見出し1: 情報整理テクニック</strong></li>
+                  <li><strong>見出し2: なぜ構造化するか</strong> — AI の応答精度が上がる理由を自分の言葉で</li>
+                  <li><strong>見出し2: Google ドキュメントの使い方</strong> — 見出し1〜3 と箇条書きの使い分け</li>
+                  <li><strong>見出し2: NotebookLM への投入の流れ</strong> — ソース追加 → 質問 → 応答比較</li>
+                  <li><strong>見出し2: 音声解説の使い方</strong> — 4つの形式 / 長さ / プロンプト指定 / 注意点(日本語はインタラクティブ モード不可)</li>
+                  <li><strong>見出し2: 今日いちばん驚いたこと</strong> — 未整理メモと構造化メモの応答差 or 音声解説の感想</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>NotebookLM のソースに追加する</strong></p>
+            <ul>
+              <li>第2〜4回と同じ手順で、<strong>【学習データ⑤】</strong> をソース追加</li>
+              <li>追加直後に自分のAIに質問:
+                <pre><code>あなたに何かを質問する前に、私はどう情報を
+整理しておけば、より良い応答ができますか?</code></pre>
+              </li>
+              <li>応答に「見出しで整理して」「箇条書きで」「目次を作って」など、今日学んだ構造化の語が登場するか観察</li>
+              <li>このプロセスは「<strong>自分のAIに自分との付き合い方を教える</strong>」作業——回を重ねるほど自分のAIが自分専用になっていく</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ ai-communication.html Week 6 「『伝わる』プロンプトの設計」と同期 -->
+              <li>次回(第6回): <strong>「伝わる」プロンプトの設計</strong>——あいまいな指示と明確な指示で応答がどう変わるかを比較する個人演習。プロンプトを<strong>段階的に改善する練習</strong>。<strong>【学習データ⑥】プロンプト改善ワークシート</strong></li>
+              <li>「今日いちばん驚いたこと」を一つ言語化して退出</li>
+              <li>家で<strong>音声解説のダウンロード版</strong>を1回聴き直してくると、復習として効果的</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>【学習データ⑤】情報整理テクニック資料を完成させて NotebookLM に投入する</strong>
+            <p>授業内で書き切れなかった項目を埋め、見出し1〜3と箇条書きを使った<strong>構造化された状態</strong>でソースに入れる。投入済みかどうかは次回確認します。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>家で<strong>音声解説</strong>をもう1本だけ生成する</strong>
+            <p>今日と<strong>別の形式</strong>(詳細を聴いた人は批評や議論)で1本だけ生成し、ダウンロードしてスマホで聴く。プロンプトを工夫して「自分の関心に絞った内容」を引き出す練習。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>Google 公式「NotebookLM で音声解説を生成する」を眺める</strong>
+            <p>下記の参考リンクから公式ヘルプを開き、<strong>気になった一文を1つだけメモ</strong>する。授業中に触れなかった機能(再生速度の変更、共有方法など)が見つかるかも。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://support.google.com/notebooklm/answer/16212820?hl=ja" target="_blank" rel="noopener">NotebookLM ヘルプ — NotebookLM で音声解説を生成する</a> — Google 公式。形式・長さ・プロンプト指定の手順</li>
+        <li><a href="https://support.google.com/notebooklm/" target="_blank" rel="noopener">NotebookLM ヘルプセンター</a> — Google 公式のヘルプ一覧</li>
+        <li><a href="https://blog.google/technology/ai/notebooklm-audio-overviews/" target="_blank" rel="noopener">Google blog — NotebookLM Audio Overviews</a> — 音声解説機能のリリース告知(英語、公式)</li>
+        <li><a href="https://support.google.com/docs/answer/116338?hl=ja" target="_blank" rel="noopener">Google ドキュメント ヘルプ — ドキュメントにタイトル、見出し、目次を追加する</a> — 見出し機能の公式説明</li>
+        <li><a href="https://support.google.com/docs/answer/3300615?hl=ja" target="_blank" rel="noopener">Google ドキュメント ヘルプ — 番号付きリスト、箇条書き、チェックリストを追加する</a> — リスト機能の公式説明</li>
+        <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> — 「自分だけのAI」を育てる場所</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week04.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第4回 AIの能力と限界を知る</span>
+      </a>
+      <a href="../ai-communication.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AIコミュニケーション基礎</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第6回(準備中)</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
