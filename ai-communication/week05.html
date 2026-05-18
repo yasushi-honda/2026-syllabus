@@ -40,15 +40,15 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">NotebookLM に投入する情報を Google ドキュメントの<strong>見出し・リスト</strong>で構造化することで応答の精度を上げる。さらに<strong>音声解説(Audio Overview)</strong>を生成して、自分専用のAIポッドキャストを体験する</div>
+          <div class="lesson-overview-value">NotebookLM に投入する情報を Google ドキュメントの<strong>見出し・リスト</strong>で構造化することで応答の精度を上げる。さらに<strong>マインドマップ機能</strong>で AI による構造化を樹形図として可視化し、自分が作った構造との違いを観察する</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">情報の構造化 / 見出しレベル / 箇条書き / Google ドキュメントの目次 / NotebookLM ソース追加 / <strong>音声解説(Audio Overview)</strong> / 形式(詳細・概要・批評・議論) / 【学習データ⑤】情報整理テクニック資料</div>
+          <div class="lesson-overview-value">情報の構造化 / 見出しレベル / 箇条書き / Google ドキュメントの目次 / NotebookLM ソース追加 / <strong>マインドマップ</strong> / 樹形図 / ノードの開閉 / ノード選択 → チャット質問 / 【学習データ⑤】情報整理テクニック資料</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
-          <div class="lesson-overview-value">第4回までに <strong>【学習データ①〜④】</strong> を投入した「自分だけのAI」(NotebookLM)・Google ドキュメントが使える状態・イヤホン or ヘッドホン(音声解説の再生用)</div>
+          <div class="lesson-overview-value">第4回までに <strong>【学習データ①〜④】</strong> を投入した「自分だけのAI」(NotebookLM)・Google ドキュメントが使える状態</div>
         </div>
       </div>
     </div>
@@ -58,8 +58,8 @@
       <ul>
         <li>「同じ情報でも、構造化されているとAIの応答が変わる」ことを<strong>自分の手で比較</strong>して確認できる</li>
         <li>Google ドキュメントの<strong>見出し1〜3</strong>と<strong>箇条書き</strong>を使い分けられる</li>
-        <li>NotebookLM の<strong>音声解説(Audio Overview)</strong>を生成し、4つの形式(詳細・概要・批評・議論)から選べる</li>
-        <li>音声解説の<strong>長さ・プロンプト</strong>を指定して、自分の関心に絞った内容を生成できる</li>
+        <li>NotebookLM の<strong>マインドマップ</strong>を生成し、自分が見出しで作った構造と AI が樹形図化した構造の違いを観察できる</li>
+        <li>マインドマップの<strong>ノードを展開・選択してチャットに渡す</strong>操作で、特定トピックを掘り下げられる</li>
         <li>授業内で <strong>【学習データ⑤】情報整理テクニック資料</strong> を作成し、自分のAIに追加する</li>
       </ul>
     </div>
@@ -187,56 +187,53 @@ NotebookLMをもっと使いこなしたい...(続く)</code></pre>
             <span class="timeline-time">2限 前半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>NotebookLM の<strong>音声解説(Audio Overview)</strong>を生成する</h3>
+          <h3>NotebookLM の<strong>マインドマップ</strong>で AI による構造化を可視化する</h3>
           <div class="timeline-body">
-            <p><strong>音声解説とは(10分)</strong></p>
+            <p><strong>マインドマップとは(10分)</strong></p>
             <ul>
-              <li>NotebookLM の <strong>[Studio] パネル</strong>から、自分のソースを元に<strong>ポッドキャスト風の音声</strong>を自動生成できる機能</li>
-              <li>ホスト(AI)が、自分が投入した資料について<strong>会話形式または解説形式</strong>で話してくれる</li>
-              <li>形式は<strong>4種類</strong>(公式仕様):
+              <li>NotebookLM の <strong>マインドマップ</strong>機能は、自分が投入したソースを <strong>主なトピック + 関連するアイデア</strong>の<strong>樹形図</strong>として可視化する機能(公式の表現)</li>
+              <li>1限後半で<strong>自分が見出し1〜3で構造化</strong>した内容を、AI はどんな樹形に展開するのか——<strong>同じ情報の別の構造化</strong>を観察するのが今日の中核</li>
+              <li>音は出ない——教室で全員同時に画面を見ながら進められる</li>
+              <li>ブラウザ上で操作する図で、ノードを<strong>展開・折りたたみ</strong>、特定のノードを<strong>クリックして詳細をチャットで質問</strong>できる</li>
+            </ul>
+            <p><strong>マインドマップを生成する(10分)</strong></p>
+            <ul>
+              <li>NotebookLM のノートブックを開き、ソースに <strong>【学習データ①〜④】</strong>+ 1限後半で作った <strong><code>テスト用_構造化メモ</code></strong> が入っていることを確認</li>
+              <li>生成手順(公式):
                 <ul>
-                  <li><strong>詳細(Deep Dive)</strong>: <strong>2人のホスト</strong>がソースを深く掘り下げる定番形式(おすすめ初回)</li>
-                  <li><strong>概要(Brief)</strong>: <strong>1人のホスト</strong>が短くまとめる(約2分程度)</li>
-                  <li><strong>批評(Critique)</strong>: 内容に対して批判的な視点で議論</li>
-                  <li><strong>議論(Debate)</strong>: 異なる立場から議論</li>
+                  <li>チャット欄の<strong>「マインドマップ」チップ</strong>を選択</li>
+                  <li>右側の <strong>[Studio] パネル</strong>に、生成されたマインドマップを含む<strong>新しいメモ</strong>が追加される(これがマインドマップ本体)</li>
                 </ul>
               </li>
-              <li><strong>言語</strong>と<strong>長さ</strong>を指定でき、<strong>プロンプト</strong>で「何を中心に話してほしいか」を指示できる</li>
-              <li>イヤホン or ヘッドホンを準備(教室内で複数人が同時に再生するため)</li>
+              <li>追加されたメモを開くと、樹形図が表示される——中心の大テーマから枝が伸びる形が一般的</li>
             </ul>
-            <p><strong>音声解説を生成する(15分)</strong></p>
+            <p><strong>樹形を観察し操作する(20分)</strong></p>
             <ul>
-              <li>NotebookLM の右側 <strong>[Studio] パネル</strong>を開く</li>
-              <li><strong>[音声解説]</strong>(Audio Overview)を選択</li>
-              <li>形式・言語・長さを設定。プロンプト例(コピペ可):
-                <pre><code>このソースで私が一番大事に思っているのは
-「自分だけのAI」を育てることです。
-そのテーマを中心に、初心者向けに話してください。</code></pre>
+              <li><strong>ズーム・スクロール</strong>: マウスホイールで拡大縮小、ドラッグで全体を移動</li>
+              <li><strong>枝の開閉</strong>: ノード近くのマーク(+/− やアイコンなど、UI 表現は実機で確認)でサブトピックを開く/閉じる——<strong>広い視野</strong>と<strong>深い詳細</strong>を切り替える</li>
+              <li><strong>ノード選択 → チャット質問</strong>: 気になったトピックをクリックすると、そのノードを起点にチャットへ質問を送れる
+                <pre><code>(ノード「自分だけのAI」を選択した状態で)
+このトピックを、第1〜4回の学習データに沿って
+もう少し具体的に説明してください</code></pre>
               </li>
-              <li>「生成」ボタンを押す——<strong>生成には数分かかる場合がある</strong>(公式説明)。待っている間に他の作業をしてもOK(バックグラウンドで生成される)</li>
-              <li>注意: NotebookLM の<strong>インタラクティブ モード</strong>(再生中にホストに質問できる機能)は、現時点で<strong>英語のみ</strong>(公式)。日本語の音声解説は<strong>聴くだけ</strong>になる</li>
-            </ul>
-            <p><strong>聴いて感想をメモする(15分)</strong></p>
-            <ul>
-              <li>生成が終わったら<strong>再生</strong>。再生速度の変更も可能</li>
-              <li>聴きながら手元のドキュメントに以下をメモ:
+              <li><strong>自分の構造化メモと比較する</strong>のが本日の鍵:
                 <ul>
-                  <li>① <strong>自分の資料</strong>が正しく扱われているか(内容が変わっていないか)</li>
-                  <li>② <strong>気づき</strong>: 自分が書いた時に意識していなかった切り口があったか</li>
-                  <li>③ <strong>違和感</strong>: 「ここは自分の意図と違う」と感じた箇所</li>
+                  <li>① 自分が<strong>見出し2</strong>に置いた項目が、マインドマップの<strong>第1階層の枝</strong>になっているか</li>
+                  <li>② 自分は<strong>1つの大項目</strong>として書いたが、AI は<strong>2つに分けた</strong>箇所はないか</li>
+                  <li>③ 自分が書かなかったのに、AI が<strong>新しい切り口</strong>を見つけたノードはあるか</li>
                 </ul>
               </li>
-              <li>聴き終わったら<strong>ダウンロード</strong>もできる——スマホに移して通学中に聴き直すと、復習にちょうどよい</li>
-              <li><strong>共有</strong>機能: リンク共有・ノートブック全体共有・ダウンロード版の共有の3方法(公式)。今日は自分用に留める</li>
+              <li>気づきを <code>テスト用_構造化メモ</code> の末尾に<strong>「マインドマップ観察メモ」</strong>として書き留める(3〜5行)</li>
             </ul>
-            <p><strong>形式を変えてもう1回(10分)</strong></p>
+            <p><strong>ダウンロードして残す(10分)</strong></p>
             <ul>
-              <li>時間が許せば、<strong>批評</strong>または<strong>議論</strong>の形式でもう1本生成してみる</li>
-              <li>「詳細」と「批評/議論」で<strong>何が違ったか</strong>を一言メモ</li>
-              <li>2本目以降も生成自体は<strong>数分かかる場合がある</strong>ため、待ち時間を計算に入れる</li>
+              <li>マインドマップウィンドウの<strong>右上のオプション</strong>から<strong>「ダウンロード」</strong>を選択して画像として保存可能(公式の操作位置)。形式は実機で確認</li>
+              <li>ダウンロード版は後で <strong>【学習データ⑤】</strong> に貼り付けて、自分のAIに「この樹形図はどう読み取れますか」と質問する素材になる</li>
+              <li>マインドマップ全体を共有したい時は、<strong>ノートブック全体の共有</strong>か<strong>ダウンロード版の共有</strong>の2通り(公式)。今日は自分用にダウンロードだけしておく</li>
+              <li>時間が許せば、<strong>もう一度生成し直す</strong>と樹形が変わることがある——同じソースでも AI の構造化は<strong>毎回同じではない</strong>ことを観察</li>
             </ul>
             <div class="lesson-tip">
-              <strong>「聞き取れない」「内容が薄い」と感じたら:</strong> プロンプトの指示が足りなかったサイン。次回生成時は「専門用語は避けて」「具体例を多めに」「○○については触れないで」など、<strong>条件を追加</strong>して再生成すると、自分専用のポッドキャストに近づきます。
+              <strong>「マインドマップが自分の構造と違う」のは失敗じゃない:</strong> 自分の構造化は「自分の使い道に最適化された切り口」、AI のマインドマップは「ソースに頻出する語の関係性から見える切り口」。<strong>両方とも正解</strong>で、それぞれ得られる気づきが違います。AI から新しい切り口を借りつつ、自分の構造を更新していく——これが「AI と一緒に考える」体験です。
             </div>
           </div>
         </div>
@@ -258,8 +255,9 @@ NotebookLMをもっと使いこなしたい...(続く)</code></pre>
                   <li><strong>見出し2: なぜ構造化するか</strong> — AI の応答精度が上がる理由を自分の言葉で</li>
                   <li><strong>見出し2: Google ドキュメントの使い方</strong> — 見出し1〜3 と箇条書きの使い分け</li>
                   <li><strong>見出し2: NotebookLM への投入の流れ</strong> — ソース追加 → 質問 → 応答比較</li>
-                  <li><strong>見出し2: 音声解説の使い方</strong> — 4つの形式 / 長さ / プロンプト指定 / 注意点(日本語はインタラクティブ モード不可)</li>
-                  <li><strong>見出し2: 今日いちばん驚いたこと</strong> — 未整理メモと構造化メモの応答差 or 音声解説の感想</li>
+                  <li><strong>見出し2: マインドマップの使い方</strong> — 生成方法(チップ / Studio) / 枝の開閉 / ノード選択 → チャット質問 / ダウンロード</li>
+                  <li><strong>見出し2: 自分の構造化と AI の樹形図の違い</strong> — 2限前半で書いた「マインドマップ観察メモ」をここに転記、3つの観点(第1階層の対応 / 分割の差 / 新しい切り口)で整理</li>
+                  <li><strong>見出し2: 今日いちばん驚いたこと</strong> — 未整理メモと構造化メモの応答差、または AI の樹形図で見つけた新しい切り口</li>
                 </ul>
               </li>
             </ul>
@@ -287,7 +285,7 @@ NotebookLMをもっと使いこなしたい...(続く)</code></pre>
               <!-- 親ページ ai-communication.html Week 6 「『伝わる』プロンプトの設計」と同期 -->
               <li>次回(第6回): <strong>「伝わる」プロンプトの設計</strong>——あいまいな指示と明確な指示で応答がどう変わるかを比較する個人演習。プロンプトを<strong>段階的に改善する練習</strong>。<strong>【学習データ⑥】プロンプト改善ワークシート</strong></li>
               <li>「今日いちばん驚いたこと」を一つ言語化して退出</li>
-              <li>家で<strong>音声解説のダウンロード版</strong>を1回聴き直してくると、復習として効果的</li>
+              <li>家で<strong>マインドマップを開き直して</strong>ノードを1つ選んでチャットへ質問してみると、復習として効果的</li>
             </ul>
           </div>
         </div>
@@ -308,15 +306,15 @@ NotebookLMをもっと使いこなしたい...(続く)</code></pre>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>家で<strong>音声解説</strong>をもう1本だけ生成する</strong>
-            <p>今日と<strong>別の形式</strong>(詳細を聴いた人は批評や議論)で1本だけ生成し、ダウンロードしてスマホで聴く。プロンプトを工夫して「自分の関心に絞った内容」を引き出す練習。</p>
+            <strong>家でマインドマップのノードを3つ選び、それぞれチャットで質問する</strong>
+            <p>枝の中で気になるノードを3つクリックし、それぞれに「これをもう少し具体的に説明して」とチャットを送る。返ってきた応答のうち<strong>1つだけを自分の言葉で1〜2行に要約</strong>し、<code>テスト用_構造化メモ</code> または <strong>【学習データ⑤】</strong> に追記する。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
-            <strong>Google 公式「NotebookLM で音声解説を生成する」を眺める</strong>
-            <p>下記の参考リンクから公式ヘルプを開き、<strong>気になった一文を1つだけメモ</strong>する。授業中に触れなかった機能(再生速度の変更、共有方法など)が見つかるかも。</p>
+            <strong>Google 公式「NotebookLM でマインドマップを使用する」を眺める</strong>
+            <p>下記の参考リンクから公式ヘルプを開き、<strong>気になった一文を1つだけメモ</strong>する。授業中に触れなかった操作(ノードの折りたたみ、ダウンロード形式など)が見つかるかも。</p>
           </div>
         </div>
       </div>
@@ -325,9 +323,9 @@ NotebookLMをもっと使いこなしたい...(続く)</code></pre>
     <div class="syllabus-section">
       <h2>参考リンク</h2>
       <ul>
-        <li><a href="https://support.google.com/notebooklm/answer/16212820?hl=ja" target="_blank" rel="noopener">NotebookLM ヘルプ — NotebookLM で音声解説を生成する</a> — Google 公式。形式・長さ・プロンプト指定の手順</li>
+        <li><a href="https://support.google.com/notebooklm/answer/16212283?hl=ja" target="_blank" rel="noopener">NotebookLM ヘルプ — NotebookLM でマインドマップを使用する</a> — Google 公式。生成方法・枝の開閉・ノード選択 → チャット質問・ダウンロードの手順</li>
         <li><a href="https://support.google.com/notebooklm/" target="_blank" rel="noopener">NotebookLM ヘルプセンター</a> — Google 公式のヘルプ一覧</li>
-        <li><a href="https://blog.google/technology/ai/notebooklm-audio-overviews/" target="_blank" rel="noopener">Google blog — NotebookLM Audio Overviews</a> — 音声解説機能のリリース告知(英語、公式)</li>
+        <li><a href="https://support.google.com/notebooklm/answer/16212820?hl=ja" target="_blank" rel="noopener">NotebookLM ヘルプ — NotebookLM で音声解説を生成する</a> — NotebookLM のもう一つの自動生成機能(AIホストによる解説音声)。授業時間内では扱わないが興味がある人は</li>
         <li><a href="https://support.google.com/docs/answer/116338?hl=ja" target="_blank" rel="noopener">Google ドキュメント ヘルプ — ドキュメントにタイトル、見出し、目次を追加する</a> — 見出し機能の公式説明</li>
         <li><a href="https://support.google.com/docs/answer/3300615?hl=ja" target="_blank" rel="noopener">Google ドキュメント ヘルプ — 番号付きリスト、箇条書き、チェックリストを追加する</a> — リスト機能の公式説明</li>
         <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> — 「自分だけのAI」を育てる場所</li>
