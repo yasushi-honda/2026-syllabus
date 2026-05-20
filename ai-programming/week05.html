@@ -91,7 +91,7 @@
               <li>同じ AI でも、<strong>プロンプトの書き方しだいで応答の質はまるで変わる</strong>。AI の性能だけでなく、<strong>こちらの伝え方</strong>が結果を決める</li>
               <li>今日のキーフレーズ: <strong>「あいまいな指示にはあいまいな答えが返ってくる」</strong></li>
               <li>プロンプトは「魔法の呪文」ではなく、<strong>人間相手にお願いするときと同じ伝え方</strong>とほぼ同じ。「明確に・具体的に・どんな場面で必要なのか・どんな形で欲しいか」を書くと、相手も答えやすい</li>
-              <li>Google 公式の <a href="https://ai.google.dev/gemini-api/docs/prompting-strategies" target="_blank" rel="noopener">Gemini API プロンプト戦略</a>では、最初の原則として <strong>「Give clear and specific instructions（明確かつ具体的な指示を出す）」</strong>が挙げられている。今日の合言葉と同じ</li>
+              <li>Google 公式の <a href="https://ai.google.dev/gemini-api/docs/prompting-strategies" target="_blank" rel="noopener">Gemini API プロンプト戦略</a>では、設計原則のひとつに <strong>「Clear and specific instructions（明確かつ具体的な指示を与える）」</strong>という章が用意されている。今日の合言葉と同じ</li>
             </ul>
             <p><strong>プロンプトの4要素（15分）</strong></p>
             <ul>
@@ -100,7 +100,7 @@
               <li><strong>③ 指示（Instruction）</strong>: 何をしてほしいかを<strong>動詞</strong>で書く。例:「3つの例えを使って説明して」「箇条書きで3つ挙げて」</li>
               <li><strong>④ 制約（Constraint）</strong>: 形式や分量の縛り。例:「200字以内で」「敬語で」「専門用語は使わずに」</li>
               <li>すべてを毎回入れる必要はない。<strong>「答えがズレたな」と思ったら、足りなかった要素を1つだけ足す</strong>のが現実的なコツ</li>
-              <li>※ Google 公式の <a href="https://ai.google.dev/gemini-api/docs/prompting-strategies" target="_blank" rel="noopener">Gemini API プロンプト戦略</a>では、4要素のほかに「例を1つ見せる（few-shot）」「短く分割する」なども基本原則として並んでいる。本授業の4要素フレームは、その基本原則を1年向けに整理し直したもの</li>
+              <li>※ Google 公式の <a href="https://ai.google.dev/gemini-api/docs/prompting-strategies" target="_blank" rel="noopener">Gemini API プロンプト戦略</a>では「Clear and specific instructions」「Add context」「Zero-shot vs few-shot prompts」「Break down prompts into components」などが設計プラクティスとして並ぶ。また第2回 Gem の出典である <a href="https://support.google.com/gemini/answer/15235603?hl=ja" target="_blank" rel="noopener">Gemini ヘルプ「カスタム Gem 作成のヒント」</a>では <strong>ペルソナ・タスク・コンテキスト・形式</strong>の4要素が明示されている。本授業の <strong>役割・文脈・指示・制約</strong>フレームは、これらの公式原則を1年向けに整理し直したもの（公式の <strong>ペルソナ→役割／タスク→指示／コンテキスト→文脈／形式→制約</strong>に対応）</li>
             </ul>
             <div class="lesson-tip">
               <strong>今日の合言葉:</strong> 「<strong>あいまいな指示にはあいまいな答えが返ってくる</strong>」。逆に、<strong>具体的に書けば具体的な答えが返ってくる</strong>。これは AI 相手だけでなく、人間相手のお願いごとでも同じ。
@@ -245,7 +245,7 @@
                   <li>ソース 3: 【学習データ③】プロンプトのコツまとめ資料（今日）</li>
                 </ul>
               </li>
-              <li>追加直後にチャットで試す: <em>「私が次に書くプロンプトを、より明確にするにはどう直せばいい?」</em> ——自分が書いた資料を踏まえたアドバイスが、引用番号 [3] 付きで返ってくることを観察する</li>
+              <li>追加直後にチャットで試す: <em>「私が次に書くプロンプトを、より明確にするにはどう直せばいい?」</em> ——自分が書いた資料を踏まえたアドバイスが、ソースの引用番号（多くは [3]、関連が出れば [1] [2] も）付きで返ってくることを観察する</li>
               <li>このように、<strong>自分の学びを資料化して AI に教える</strong>——この行為そのものが「自分だけのAI」を育てる作業</li>
             </ul>
             <div class="lesson-tip">
@@ -304,8 +304,8 @@
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>自分専用 AI ノートで <strong>【学習データ③】</strong> を踏まえた質問を1問試す</strong>
-            <p>「私が次に書くプロンプトを、より明確にするにはどう直せばいい?」をチャットに投げ、引用 [3] 付きで返ってくる感覚を確認。第6回（グループでテーマを決めよう）の冒頭でも使う感覚なので、家でならしておく。</p>
+            <strong>自分専用 AI ノートで【学習データ③】を踏まえた質問を1問試す</strong>
+            <p>「私が次に書くプロンプトを、より明確にするにはどう直せばいい?」をチャットに投げ、ソースの引用番号付き（多くは [3]、関連が出れば [1] [2] も）で返ってくる感覚を確認。第6回（グループでテーマを決めよう）の冒頭でも使う感覚なので、家でならしておく。</p>
           </div>
         </div>
         <div class="lesson-task">
@@ -330,7 +330,7 @@
       <ul>
         <li><a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a> — 今日の比較演習で使った素の Gemini</li>
         <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> — 自分専用 AI ノート（3 つのソースが揃った場所）</li>
-        <li><a href="https://ai.google.dev/gemini-api/docs/prompting-strategies" target="_blank" rel="noopener">Gemini API — プロンプト戦略</a> — Google 公式のプロンプト設計ガイド（英語、自動翻訳可）。「Give clear and specific instructions」の一次出典</li>
+        <li><a href="https://ai.google.dev/gemini-api/docs/prompting-strategies" target="_blank" rel="noopener">Gemini API — プロンプト戦略</a> — Google 公式のプロンプト設計ガイド（英語、自動翻訳可）。「Clear and specific instructions」章の一次出典</li>
         <li><a href="https://support.google.com/notebooklm/answer/16179559?hl=ja" target="_blank" rel="noopener">NotebookLM ヘルプ — NotebookLM でチャットを使用する（日本語公式）</a> — 「チャットを設定」3 モード（デフォルト／学習ガイド／カスタム）の公式説明</li>
         <li><a href="https://support.google.com/gemini/answer/15235603?hl=ja" target="_blank" rel="noopener">Gemini ヘルプ — カスタム Gem 作成のヒント（日本語公式）</a> — 第2回 Gem 作成の正本（役割・指示の書き方の一次出典）</li>
       </ul>
