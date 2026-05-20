@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第7回 テスト駆動開発（TDD）基礎 | 自然言語開発</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+  <!-- 公式情報確認: 2026-05-21 (martinfowler.com/bliki/TestDrivenDevelopment.html + vitest.dev + Anthropic Engineering claude-code-best-practices + github/spec-kit README) -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev.html">自然言語開発</a>
+        <span>/</span>
+        <span>第7回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">テスト駆動開発<wbr>（TDD）基礎</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 7</span>
+            <span class="page-badge">木曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">第6回 Spec Kit で並べた <code>tasks.md</code> を、<strong>Red → Green → Refactor</strong> サイクルで実装する。テスト観点（<strong>正常系・異常系・境界値</strong>）を人間が設計し、AI にテストとプロダクションコードの両方を書かせて、<strong>観点の網羅性は人間が判断する</strong>役割分担を体感する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">TDD / Red → Green → Refactor / テスト観点（正常系・異常系・境界値）/ <code>tasks.md</code> と TDD の接続 / AI に書かせる + 人間が観点を検証 / Vitest など既存テストランナー</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第6回完了（進級制作リポジトリに <code>specs/&lt;NNN&gt;-&lt;feature-slug&gt;/spec.md</code> <code>plan.md</code> <code>tasks.md</code> が push 済み）／進級制作で使うテストフレームワーク（<strong>Vitest / Jest / pytest 等</strong>）が <code>npm test</code> または <code>pytest</code> 等のコマンドで起動できる状態／Gemini CLI または GitHub Copilot CLI のどちらかが起動できる状態</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>TDD の基本サイクル <strong>Red → Green → Refactor</strong> を、自分の言葉で1〜2行で説明できる（Red = 失敗するテストを先に書く／Green = テストを通す最小実装／Refactor = テストを保ったまま整える）</li>
+        <li>テスト観点の3分類——<strong>正常系・異常系・境界値</strong>——を、自分の進級制作の1機能に当てはめて列挙できる</li>
+        <li>第6回 <code>tasks.md</code> の先頭1〜2タスクを Red → Green → Refactor の1サイクル分実装し、テスト・実装・<code>tasks.md</code> の <code>[x]</code> マーキングまで push できる</li>
+        <li>AI（Gemini CLI / Copilot CLI）にテストを書かせる際、<strong>「コードを書く仕事」と「観点の網羅性を判断する仕事」の境目</strong>を意識できる</li>
+        <li>今日書いたテストが、第8回（ハーネスエンジニアリング入門）で <strong>GitHub Actions のセンサー</strong>として毎回走る仕組みに繋がることを理解する</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>第6回の振り返り → TDD の核「テストを先に書く」を公式定義で押さえる</h3>
+          <div class="timeline-body">
+            <p><strong>第6回課題（Spec Kit）の共有（10分）</strong></p>
+            <ul>
+              <li>第6回で push した <code>spec.md</code> / <code>plan.md</code> / <code>tasks.md</code> の3点を、近くの人と互いに見せる</li>
+              <li>家で <code>/speckit.implement</code> の続きを進めた人は、「先頭タスクが実装まで進んだか」「関係ないファイルが変更されなかったか」を1人1分で報告</li>
+              <li>よくある体感を共有: 「実装まで一気に走らせたら関係ない場所まで触られた」「テストが付いてこない実装になった」「Refactor で振る舞いが変わってしまった」</li>
+            </ul>
+            <p><strong>TDD の公式定義を読む（15分）</strong></p>
+            <ul>
+              <li>一次出典: <a href="https://martinfowler.com/bliki/TestDrivenDevelopment.html" target="_blank" rel="noopener">Martin Fowler — "TestDrivenDevelopment"</a> から逐語:
+                <blockquote>
+                  <em>"Test-Driven Development (TDD) is a technique for building software that guides software development by writing tests."</em>
+                </blockquote>
+              </li>
+              <li>翻訳の要点: <strong>テストを書くことが、ソフトウェア開発そのものを導く（guide する）</strong>。テストは「後付けの検証」ではなく「<strong>開発を進めるためのハンドル</strong>」</li>
+              <li>サイクルは Kent Beck の <em>"Test-Driven Development: By Example"</em>（2002）以来、3フェーズで定義される（一次出典: <a href="https://en.wikipedia.org/wiki/Test-driven_development" target="_blank" rel="noopener">Wikipedia — Test-driven development</a> の "TDD cycle" 節）:
+                <pre><code>Red       →  失敗するテストを書く（実装はまだない or 通らない）
+Green     →  テストを通す最小実装を書く（賢くしようとしない）
+Refactor  →  テストが通る状態を保ったまま、コードを整える
+</code></pre>
+              </li>
+              <li>第6回までで <code>tasks.md</code> には「何を実装すべきか」が並んだ。今日は各タスクを <strong>「実装の前に Red を書く」</strong>から始める</li>
+            </ul>
+            <p><strong>今日のゴール提示（15分）</strong></p>
+            <ul>
+              <li>今日は <code>tasks.md</code> の先頭1〜2タスクで Red → Green → Refactor を1サイクル回す。<strong>2タスク目以降は家＋第8回（ハーネス）以降で継続</strong></li>
+              <li>テスト観点の3分類（1限後半で詳しく扱う）を覚える: <strong>正常系 / 異常系 / 境界値</strong></li>
+              <li>AI（Gemini CLI / Copilot CLI）にテストを書かせる際の役割分担:
+                <ul>
+                  <li>AI が書く: テストコードの形式・assertion の使い方・mock の組み立て</li>
+                  <li>人間が判断する: <strong>観点の網羅性</strong>（境界値が落ちていないか、異常系の入力パターンが現実的か）</li>
+                </ul>
+              </li>
+              <li>Anthropic の <a href="https://code.claude.com/docs/en/best-practices" target="_blank" rel="noopener">"Claude Code: Best practices for agentic coding"</a>（公式）でも、テストを Claude の<strong>自己検証手段</strong>として位置づけ、「ある Claude にテストを書かせ、別の Claude にそのテストを通す実装を書かせる」<strong>Writer/Reviewer パターン</strong>が紹介されている（公式逐語: <em>"You can do something similar with tests: have one Claude write tests, then another write code to pass them."</em>）。同じ発想は Gemini CLI / Copilot CLI でも応用できる</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>今日の合言葉:</strong> 「<strong>テストの色（Red / Green）を意図的に作る</strong>」。Red を意図して作って、Green を確認して初めて、Refactor が安全な作業になる。色を見ずに書いたテストは、後でリファクタを守ってくれない。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>テスト観点（正常系・異常系・境界値）と最初の Red テスト</h3>
+          <div class="timeline-body">
+            <p><strong>テスト観点の3分類を覚える（15分）</strong></p>
+            <ul>
+              <li><strong>① 正常系（Happy Path）</strong>: 想定通りの入力で、想定通りの出力が返るケース。「動くことの確認」ではなく「<strong>仕様を満たすことの確認</strong>」</li>
+              <li><strong>② 異常系（Error Path）</strong>: 想定外の入力（<code>null</code> / <code>undefined</code> / 空文字列 / 空配列 / 型不一致 / 認証なし 等）が来たときの振る舞いを宣言するケース</li>
+              <li><strong>③ 境界値（Boundary）</strong>: 仕様の境目（最小・最大・<code>±1</code> ・0・1要素・上限値）でも壊れないこと</li>
+              <li>例: 仕様「ユーザー名は3〜20文字」のとき、境界値テストは <strong>2文字（NG）・3文字（OK）・20文字（OK）・21文字（NG）</strong>の4点。1点だけでは境界の「両側」を守れない</li>
+              <li>本授業のグローバル方針（<code>~/.claude/CLAUDE.md</code> Test First 節）でも: <strong>「境界値（最小/最大/±1）と異常系（null/undefined/空）を必ず含める」</strong>が MUST として書かれている</li>
+              <li>仕様の受け入れ基準（<code>spec.md</code>）を見直して、3分類のどれにあたるかを脇にメモすると、テスト名を考えるときに迷わない</li>
+            </ul>
+            <p><strong>tasks.md の先頭タスクで Red テストを書く（30分）</strong></p>
+            <ul>
+              <li>進級制作の <code>tasks.md</code> の<strong>先頭タスク1件</strong>を選ぶ。複数タスクをまたぐと色（Red/Green）が混ざって追えなくなるため、必ず1件ずつ</li>
+              <li>既存のテストフレームワークで <code>*.test.ts</code>（または <code>test_*.py</code> 等）を新規作成。ファイル名は実装ファイル名と対応させる（<code>foo.ts</code> → <code>foo.test.ts</code>）</li>
+              <li>Vitest を使う場合の基本形（一次出典: <a href="https://vitest.dev/" target="_blank" rel="noopener">Vitest 公式</a>）:
+                <pre><code>import { describe, it, expect } from 'vitest';
+import { formatUserName } from './formatUserName';
+
+describe('formatUserName', () =&gt; {
+  it('正常系: 想定通りの入力で正しく整形される', () =&gt; {
+    expect(formatUserName('  yamada  ')).toBe('yamada');
+  });
+  it('異常系: null が来たら空文字列を返す', () =&gt; {
+    expect(formatUserName(null as unknown as string)).toBe('');
+  });
+  it('境界値: 上限21文字は切り捨てる', () =&gt; {
+    expect(formatUserName('a'.repeat(21))).toHaveLength(20);
+  });
+});
+</code></pre>
+              </li>
+              <li>AI に依頼する場合のプロンプト例（<code>@</code> Memory Import で <code>spec.md</code> / <code>tasks.md</code> を渡す）:
+                <pre><code>@specs/0001-&lt;feature-slug&gt;/spec.md と @tasks.md の先頭タスクを読んで、
+Vitest でテストを書いてください。次の3分類を最低1件ずつ:
+- 正常系: 仕様通りの入力で期待通りの出力が返る
+- 異常系: null / 空 / 型不一致が来たときの振る舞い
+- 境界値: 仕様の境目（最小・最大・±1）でも壊れない
+
+実装ファイルはまだ書かないでください。テストだけを生成してください。
+</code></pre>
+              </li>
+              <li>生成されたテストを <code>npm test</code>（または <code>pytest</code>）で実行 → <strong>すべて失敗すること</strong>を確認。これが <strong>Red</strong>
+              </li>
+              <li>「全部が失敗していない」場合は要注意:
+                <ul>
+                  <li>テスト名が仕様を表していない（実装と無関係に通る）</li>
+                  <li>すでに実装が部分的に存在している</li>
+                  <li>AI が空のテストを書いて Pass にしてしまっている（<code>expect(true).toBe(true)</code> 等）</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>AI に書かせる仕事と人間がやる仕事の境目（5分）</strong></p>
+            <ul>
+              <li>AI が書く: テストコードの<strong>形</strong>（<code>describe</code> / <code>it</code> / <code>expect</code> の組み立て・mock）</li>
+              <li>人間が判断する: <strong>観点の網羅性</strong>（境界値が落ちていないか・異常系の入力パターンが現実的か）</li>
+              <li>第6回 <code>spec.md</code> の受け入れ基準1つ1つを指で追って、対応するテストがあるかを確認する</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>Red を意図して作る:</strong> 失敗するテストを書くのは「下手だから」ではなく「<strong>これからこの仕様を作る</strong>」という宣言。Red の状態を一度通過させずに実装に進むと、テストが実装に都合よく書き換えられてしまう。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>Green → Refactor の1サイクルを完走させる</h3>
+          <div class="timeline-body">
+            <p><strong>Green: 最小実装でテストを通す（25分）</strong></p>
+            <ul>
+              <li>Gemini CLI / Copilot CLI に依頼:
+                <pre><code>@&lt;テストファイルパス&gt; を通すための最小実装を書いてください。
+賢く書こうとせず、テストが通るだけのコードで構いません。
+関係ないファイルは変更しないでください。
+</code></pre>
+              </li>
+              <li><code>npm test</code> で<strong>全テストが通ること</strong>を確認（Red → Green）。色が変わる体感を意識する</li>
+              <li>「テストを通すだけ」が原則。仕様外の装飾（過剰な抽象化・将来のための拡張ポイント）は、この段階では避ける——<strong>後の Refactor で整える</strong>のが TDD の順番</li>
+              <li>テストが通らない場合の選択肢:
+                <ul>
+                  <li>実装側を直す（<strong>原則こちら</strong>）</li>
+                  <li>テスト側の誤りを直す（assertion の数値ミス等）。<strong>ただし「テストが通らないからテストを変える」のは AI に任せず人間が判断</strong>——テストを実装に都合よく書き換えると、TDD のサイクル自体が壊れる</li>
+                </ul>
+              </li>
+              <li>第4回 <code>GEMINI.md</code> の指示（命名規則・スタイル）から実装が外れていないかも併せて確認</li>
+            </ul>
+            <p><strong>Refactor: テストを保ったままコードを整える（15分）</strong></p>
+            <ul>
+              <li>AI に依頼:
+                <pre><code>現在のテストを保ったまま、実装の可読性と命名を改善してください。
+変更後は npm test がすべて通ることを確認してから差分を出してください。
+振る舞いを変える変更は提案しないでください。
+</code></pre>
+              </li>
+              <li>各 Refactor の差分ごとに <code>npm test</code> を走らせ、<strong>緑のまま</strong>であることを確認する。これが Red で書いたテストの最大の役目——<strong>「Refactor で振る舞いが変わってしまった」を検出するセンサー</strong>として働く</li>
+              <li>Refactor の方向性:
+                <ul>
+                  <li>マジックナンバーを定数に</li>
+                  <li>重複コードの整理（同じ判定ロジックが2箇所以上に出ていたら関数化）</li>
+                  <li>関数の責務を1つに（1関数1責務）</li>
+                  <li>命名の改善（変数名・関数名）</li>
+                </ul>
+              </li>
+              <li>注意: Refactor は<strong>「整える」までで止める</strong>。ここで仕様を超えた機能追加に行ってしまうと、テストが守る範囲を超えてしまい、安全網が外れる</li>
+            </ul>
+            <p><strong>2サイクル目に入る（10分）</strong></p>
+            <ul>
+              <li><code>tasks.md</code> の2番目のタスクを取り出し、再び <strong>Red</strong> から始める</li>
+              <li>1サイクル目で「これは AI が書いた」「これは自分が判断した」の境目を意識しながら進める</li>
+              <li>時間切れの場合は2サイクル目の Red だけで終わって OK（家で続ける）</li>
+              <li>2サイクル目を終えたタスクは <code>tasks.md</code> 上で <code>[ ]</code> → <code>[x]</code> に更新してコミット（グローバル CLAUDE.md MUST: <strong>「Spec完了の定義 → tasks.md の全チェックボックスを <code>[x]</code> に更新してからコミット」</strong>に準拠する練習）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>3フェーズはコミットを分ける:</strong> 1サイクルを <code>test:</code> (Red) → <code>feat:</code> (Green) → <code>refactor:</code> (Refactor) の3コミットに分けると、後でログを読んだ自分（や将来のレビュアー）が「テストが先に来ていた」「Refactor で振る舞いが変わっていない」を確認できる。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>AI 生成テストの観点検証 → 第8回（ハーネス）への接続</h3>
+          <div class="timeline-body">
+            <p><strong>AI に観点拡張を依頼して、人間が網羅性を判定（20分）</strong></p>
+            <ul>
+              <li>1サイクル目のテストファイルを開いて、AI に追加観点を提案させる:
+                <pre><code>現在のテストにどんな観点が抜けていますか？
+正常系・異常系・境界値の3分類で抜けがあれば、テストを追加してください。
+なぜそのテストが必要かも1行で説明してください。
+</code></pre>
+              </li>
+              <li>AI の提案を人間がレビューして取捨選択する:
+                <ul>
+                  <li><strong>採用</strong>: 仕様（<code>spec.md</code>）の受け入れ基準に対して現実的な観点</li>
+                  <li><strong>却下</strong>: 「AI が書きたいから書いた」レベルの過剰テスト。「<strong>このテストがなぜ必要か</strong>」を1行で説明できないテストは、ノイズになるので消す</li>
+                </ul>
+              </li>
+              <li>残ったテストが Red になることを確認 → Green → Refactor で1サイクル回す（時間があれば）</li>
+              <li>ここで「<strong>AI にテストを書かせる</strong>」と「<strong>人間がテスト観点を検証する</strong>」の役割分担を改めて体感する。観点の網羅性は人間が判断する責任領域</li>
+              <li>授業概要にあった<strong>「責任あるコード」</strong>の最初の具体例: <strong>異常系・境界値を最低1つは書いた</strong>＝「想定外でも壊れない／仕様の境目を意識した」という設計上の宣言</li>
+            </ul>
+            <p><strong>第8回（ハーネスエンジニアリング）への接続（10分）</strong></p>
+            <ul>
+              <li>今日書いたテストは、第8回で <strong>GitHub Actions のセンサー</strong>として毎回 PR ごとに自動実行される仕組みを作る</li>
+              <li>親ページ用語のおさらい:
+                <ul>
+                  <li><strong>ガイド（事前制御）</strong>: <code>GEMINI.md</code> / <code>.geminiignore</code> / サンドボックス / ブランチ保護 = AI が触る前に「これはやるな・これを守れ」を伝える</li>
+                  <li><strong>センサー（事後検証）</strong>: GitHub Actions の test / lint / build = AI が触った後で「振る舞いが壊れていないか」を検出する</li>
+                </ul>
+              </li>
+              <li>第8回では Gemini CLI の <strong>Hooks</strong>（<code>BeforeTool</code> / <code>AfterTool</code>）でツール呼出の前後に検証を差し込む仕組みも実装する</li>
+              <li>結論: 「<strong>テストを書く</strong>」は出発点で、「<strong>テストが必ず走る環境を作る</strong>」が次の段階</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>テストの最大の役目は色の管理:</strong> Red は「これからこの仕様を作る」の宣言、Green は「仕様を満たした」の証拠、Refactor 中の Green 維持は「振る舞いを変えていない」の証拠。テストが守る範囲だけが、安全にリファクタできる範囲。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り＆次回予告</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>今日のキーワード: <strong>TDD / Red → Green → Refactor / テスト観点（正常系・異常系・境界値）/ <code>tasks.md</code> と TDD の接続 / AI に書かせる + 人間が観点を検証</strong></li>
+              <li>覚えてほしいこと: <strong>テストは「書いたら終わり」ではなく「色（Red / Green）を見るための道具」</strong>。Red を意図して作って、Green を確認することで、後の Refactor が安全な作業になる</li>
+              <li>「責任あるコード」の最初の具体例:
+                <ul>
+                  <li>異常系を最低1つ書いた = 「想定外でも壊れないことの宣言」</li>
+                  <li>境界値を最低1つ書いた = 「仕様の境目を意識した実装の宣言」</li>
+                </ul>
+              </li>
+              <li>次回（第8回）: <strong>ハーネスエンジニアリング入門</strong>。今日書いたテストを <strong>GitHub Actions</strong> で毎回 PR ごとに走らせる仕組み・<strong>Gemini CLI Hooks</strong>（<code>BeforeTool</code> / <code>AfterTool</code>）で機密情報コミット阻止・ツール引数検証・監査ログを実装する</li>
+              <li>家での発展（任意）: 残ったタスクを <code>tasks.md</code> の順に Red → Green → Refactor で1〜2件進める。サイクルごとに3コミットに分ける練習にもなる</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>1サイクル分の Red → Green → Refactor を push</strong>
+            <p>進級制作リポジトリに、<code>tasks.md</code> 先頭タスクに対する Red テスト（最低: 正常系1件・異常系1件・境界値1件）、Green を満たす最小実装、Refactor 済みコードの3点を push。コミットは <code>test:</code> → <code>feat:</code> → <code>refactor:</code> の3コミットに分けるのが推奨だが、1コミットにまとめても OK。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>tasks.md</code> の進捗を <code>[x]</code> に更新</strong>
+            <p>完了したタスクのチェックボックスを <code>[ ]</code> から <code>[x]</code> に更新してコミット（グローバル CLAUDE.md MUST 準拠の練習）。残りのタスクは <code>[ ]</code> のままで OK。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>テストの観点メモを README に追記</strong>
+            <p><code>README.md</code> または <code>docs/testing.md</code> に、今日書いたテストの3観点（正常系・異常系・境界値）を1〜2行ずつ、対応するテスト関数名と一緒に列挙する。AI に観点拡張を依頼した結果も <strong>採用 / 却下</strong>の判断を含めて記録する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>2サイクル目以降を家で進める</strong>
+            <p><code>tasks.md</code> の2〜3番目のタスクを家で Red → Green → Refactor で進める。差分が大きい場合は、1コミット30分〜1時間で収まるサイズに分けてコミット。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>「振る舞いを変えない Refactor」を意識的に1回試す</strong>
+            <p>テストが緑の状態で、AI に「振る舞いを変えずに命名・構造だけ整えて」と依頼。差分ごとに <code>npm test</code> を走らせて、緑のまま整える体験を積む。途中で赤になったら、何が振る舞いを変えたかを観察するのが学び。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://martinfowler.com/bliki/TestDrivenDevelopment.html" target="_blank" rel="noopener">Martin Fowler — TestDrivenDevelopment</a> — TDD の定義「テストを書くことが開発を導く」の一次出典</li>
+        <li><a href="https://en.wikipedia.org/wiki/Test-driven_development" target="_blank" rel="noopener">Wikipedia — Test-driven development</a> — Kent Beck 起源と Red → Green → Refactor サイクルの体系的解説</li>
+        <li><a href="https://vitest.dev/" target="_blank" rel="noopener">Vitest 公式ドキュメント</a> — 進級制作で TypeScript / JavaScript を使っている場合の標準的テストランナー</li>
+        <li><a href="https://docs.pytest.org/" target="_blank" rel="noopener">pytest 公式ドキュメント</a> — Python を使っている場合の標準的テストランナー</li>
+        <li><a href="https://code.claude.com/docs/en/best-practices" target="_blank" rel="noopener">Claude Code: Best practices for agentic coding（公式）</a> — Claude にテスト・スクショ・期待出力で自己検証させる設計指針、および "have one Claude write tests, then another write code to pass them" の Writer/Reviewer パターンの一次出典</li>
+        <li><a href="https://github.com/github/spec-kit" target="_blank" rel="noopener">github/spec-kit（第6回の続き）</a> — <code>tasks.md</code> の役割と <code>/speckit.implement</code> の挙動</li>
+        <li><a href="https://www.geminicli.com/docs/cli/plan-mode/" target="_blank" rel="noopener">Gemini CLI Docs — Plan Mode（公式）</a> — テストを書く前に「実装計画を立てる」サイクルとの組み合わせ</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week06.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第6回 Spec-Driven Development入門</span>
+      </a>
+      <a href="../natural-language-dev.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">自然言語開発</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第8回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
