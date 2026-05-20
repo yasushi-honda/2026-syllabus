@@ -94,7 +94,7 @@
               <li>翻訳の要点: <strong>テストを書くことが、ソフトウェア開発そのものを導く（guide する）</strong>。テストは「後付けの検証」ではなく「<strong>開発を進めるためのハンドル</strong>」</li>
               <li>サイクルは Kent Beck の <em>"Test-Driven Development: By Example"</em>（2002）以来、3フェーズで定義される（一次出典: <a href="https://en.wikipedia.org/wiki/Test-driven_development" target="_blank" rel="noopener">Wikipedia — Test-driven development</a> の "TDD cycle" 節）:
                 <pre><code>Red       →  失敗するテストを書く（実装はまだない or 通らない）
-Green     →  テストを通す<strong>最小実装</strong>を書く（賢くしようとしない）
+Green     →  テストを通す最小実装を書く（賢くしようとしない）
 Refactor  →  テストが通る状態を保ったまま、コードを整える
 </code></pre>
               </li>
@@ -110,7 +110,7 @@ Refactor  →  テストが通る状態を保ったまま、コードを整え�
                   <li>人間が判断する: <strong>観点の網羅性</strong>（境界値が落ちていないか、異常系の入力パターンが現実的か）</li>
                 </ul>
               </li>
-              <li>Anthropic Engineering 公式 (<a href="https://www.anthropic.com/engineering/claude-code-best-practices" target="_blank" rel="noopener">"Claude Code: Best practices for agentic coding"</a>) でも、TDD は AI コーディングと相性のよい主要ワークフローとして紹介されている。テストを先に書いて固定し、AI が実装を反復する流れは Gemini CLI / Copilot CLI でも同じく機能する</li>
+              <li>Anthropic の <a href="https://code.claude.com/docs/en/best-practices" target="_blank" rel="noopener">"Claude Code: Best practices for agentic coding"</a>（公式）でも、テストを Claude の<strong>自己検証手段</strong>として位置づけ、「ある Claude にテストを書かせ、別の Claude にそのテストを通す実装を書かせる」<strong>Writer/Reviewer パターン</strong>が紹介されている（公式逐語: <em>"You can do something similar with tests: have one Claude write tests, then another write code to pass them."</em>）。同じ発想は Gemini CLI / Copilot CLI でも応用できる</li>
             </ul>
             <div class="lesson-tip">
               <strong>今日の合言葉:</strong> 「<strong>テストの色（Red / Green）を意図的に作る</strong>」。Red を意図して作って、Green を確認して初めて、Refactor が安全な作業になる。色を見ずに書いたテストは、後でリファクタを守ってくれない。
@@ -162,7 +162,7 @@ Vitest でテストを書いてください。次の3分類を最低1件ずつ:
 - 異常系: null / 空 / 型不一致が来たときの振る舞い
 - 境界値: 仕様の境目（最小・最大・±1）でも壊れない
 
-実装ファイルは<strong>まだ書かないでください</strong>。テストだけを生成してください。
+実装ファイルはまだ書かないでください。テストだけを生成してください。
 </code></pre>
               </li>
               <li>生成されたテストを <code>npm test</code>（または <code>pytest</code>）で実行 → <strong>すべて失敗すること</strong>を確認。これが <strong>Red</strong>
@@ -204,7 +204,7 @@ Vitest でテストを書いてください。次の3分類を最低1件ずつ:
             <p><strong>Green: 最小実装でテストを通す（25分）</strong></p>
             <ul>
               <li>Gemini CLI / Copilot CLI に依頼:
-                <pre><code>@&lt;テストファイルパス&gt; を通すための<strong>最小実装</strong>を書いてください。
+                <pre><code>@&lt;テストファイルパス&gt; を通すための最小実装を書いてください。
 賢く書こうとせず、テストが通るだけのコードで構いません。
 関係ないファイルは変更しないでください。
 </code></pre>
@@ -223,7 +223,7 @@ Vitest でテストを書いてください。次の3分類を最低1件ずつ:
             <ul>
               <li>AI に依頼:
                 <pre><code>現在のテストを保ったまま、実装の可読性と命名を改善してください。
-変更後は <code>npm test</code> がすべて通ることを確認してから差分を出してください。
+変更後は npm test がすべて通ることを確認してから差分を出してください。
 振る舞いを変える変更は提案しないでください。
 </code></pre>
               </li>
@@ -263,7 +263,7 @@ Vitest でテストを書いてください。次の3分類を最低1件ずつ:
               <li>1サイクル目のテストファイルを開いて、AI に追加観点を提案させる:
                 <pre><code>現在のテストにどんな観点が抜けていますか？
 正常系・異常系・境界値の3分類で抜けがあれば、テストを追加してください。
-<strong>なぜそのテストが必要か</strong>も1行で説明してください。
+なぜそのテストが必要かも1行で説明してください。
 </code></pre>
               </li>
               <li>AI の提案を人間がレビューして取捨選択する:
@@ -367,7 +367,7 @@ Vitest でテストを書いてください。次の3分類を最低1件ずつ:
         <li><a href="https://en.wikipedia.org/wiki/Test-driven_development" target="_blank" rel="noopener">Wikipedia — Test-driven development</a> — Kent Beck 起源と Red → Green → Refactor サイクルの体系的解説</li>
         <li><a href="https://vitest.dev/" target="_blank" rel="noopener">Vitest 公式ドキュメント</a> — 進級制作で TypeScript / JavaScript を使っている場合の標準的テストランナー</li>
         <li><a href="https://docs.pytest.org/" target="_blank" rel="noopener">pytest 公式ドキュメント</a> — Python を使っている場合の標準的テストランナー</li>
-        <li><a href="https://www.anthropic.com/engineering/claude-code-best-practices" target="_blank" rel="noopener">Anthropic Engineering — Claude Code: Best practices for agentic coding</a> — AI コーディングと TDD の親和性、テスト先行ワークフローの設計指針</li>
+        <li><a href="https://code.claude.com/docs/en/best-practices" target="_blank" rel="noopener">Claude Code: Best practices for agentic coding（公式）</a> — Claude にテスト・スクショ・期待出力で自己検証させる設計指針、および "have one Claude write tests, then another write code to pass them" の Writer/Reviewer パターンの一次出典</li>
         <li><a href="https://github.com/github/spec-kit" target="_blank" rel="noopener">github/spec-kit（第6回の続き）</a> — <code>tasks.md</code> の役割と <code>/speckit.implement</code> の挙動</li>
         <li><a href="https://www.geminicli.com/docs/cli/plan-mode/" target="_blank" rel="noopener">Gemini CLI Docs — Plan Mode（公式）</a> — テストを書く前に「実装計画を立てる」サイクルとの組み合わせ</li>
       </ul>
