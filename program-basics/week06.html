@@ -86,7 +86,7 @@
             </ul>
             <p><strong>「3つの言葉」の役割分担（15分）</strong></p>
             <ul>
-              <li>3つの言語は<strong>役割が違う</strong>——MDN「JavaScript とは何か」の整理:
+              <li>3つの言語は<strong>役割が違う</strong>——MDN「JavaScript とは」の整理:
                 <ul>
                   <li><strong>HTML</strong>: ページの<strong>構造</strong>を組み立てる（見出し・段落・リスト・画像）</li>
                   <li><strong>CSS</strong>: 構造に<strong>スタイル</strong>を当てる（色・余白・レイアウト）</li>
@@ -109,7 +109,7 @@
               <li>ページ自体は何も変わらない——<strong>動きは画面の裏側</strong>にいる。次のステップで取り出す</li>
             </ul>
             <div class="lesson-tip">
-              <strong>なぜ <code>&lt;/body&gt;</code> の直前か:</strong> JavaScript は HTML が読み込まれてから実行するほうが安全な場面が多いので、まずはこの位置を癖にします（MDN「<code>&lt;script&gt;</code> 要素」でも紹介される基本パターン）。<code>&lt;head&gt;</code> 内に書く方法もありますが、それは後の回で扱います。
+              <strong>なぜ <code>&lt;/body&gt;</code> の直前か:</strong> JavaScript は HTML が読み込まれてから実行するほうが安全な場面が多いので、まずはこの位置を癖にします（MDN「HTML <code>&lt;script&gt;</code> スクリプト要素」でも紹介される基本パターン）。<code>&lt;head&gt;</code> 内に書く方法もありますが、それは後の回で扱います。
             </div>
           </div>
         </div>
@@ -146,7 +146,7 @@
                   <li>文字には引用符（<code>"</code> または <code>'</code>）が付き、数字には付かない——これがデータ型の違いの最初のヒント</li>
                 </ul>
               </li>
-              <li>MDN「変数とは」では「<strong>箱に名前を付けて中身を出し入れする</strong>」というイメージで説明されている。最初はそれで十分</li>
+              <li>MDN「必要な情報を保管する — 変数」では「<strong>箱に名前を付けて中身を出し入れする</strong>」というイメージで説明されている。最初はそれで十分</li>
             </ul>
             <p><strong>3つの基本データ型を見分ける（15分）</strong></p>
             <ul>
@@ -315,7 +315,7 @@ const index = Math.floor(Math.random() * fortunes.length);</code></pre>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
-            <strong>MDN「変数とは何か」を流し読みする</strong>
+            <strong>MDN「必要な情報を保管する — 変数」を流し読みする</strong>
             <p>下記の参考リンクから日本語版を開いて、<strong>気になった一文を1つだけメモ</strong>する。「<code>let</code> と <code>const</code> の使い分けはどう書いてあるか」だけでもOK。</p>
           </div>
         </div>
@@ -325,12 +325,12 @@ const index = Math.floor(Math.random() * fortunes.length);</code></pre>
     <div class="syllabus-section">
       <h2>参考リンク</h2>
       <ul>
-        <li><a href="https://developer.mozilla.org/ja/docs/Learn_web_development/Core/Scripting/What_is_JavaScript" target="_blank" rel="noopener">MDN — JavaScript とは何か</a> — HTML/CSS との役割の違いを公式の言葉で確認</li>
-        <li><a href="https://developer.mozilla.org/ja/docs/Learn_web_development/Core/Scripting/Variables" target="_blank" rel="noopener">MDN — 必要な変数の保存</a> — <code>let</code> / <code>const</code> と「変数とは」の入門解説</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Learn_web_development/Core/Scripting/What_is_JavaScript" target="_blank" rel="noopener">MDN — JavaScript とは</a> — HTML/CSS との役割の違いを公式の言葉で確認</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Learn_web_development/Core/Scripting/Variables" target="_blank" rel="noopener">MDN — 必要な情報を保管する — 変数</a> — <code>let</code> / <code>const</code> の入門解説</li>
         <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Guide/Grammar_and_types" target="_blank" rel="noopener">MDN — 文法とデータ型</a> — 文字列・数値・真偽値などの基本データ型</li>
-        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/console/log_static" target="_blank" rel="noopener">MDN — <code>console.log()</code> 静的メソッド</a> — 公式リファレンス</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/console/log_static" target="_blank" rel="noopener">MDN — <code>console: log()</code> 静的メソッド</a> — <code>console.log()</code> の公式リファレンス</li>
         <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Math/random" target="_blank" rel="noopener">MDN — <code>Math.random()</code></a> — 乱数生成の公式リファレンス</li>
-        <li><a href="https://developer.mozilla.org/ja/docs/Web/HTML/Reference/Elements/script" target="_blank" rel="noopener">MDN — <code>&lt;script&gt;</code> 要素</a> — HTML に JavaScript を組み込むタグ</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/HTML/Reference/Elements/script" target="_blank" rel="noopener">MDN — HTML <code>&lt;script&gt;</code> スクリプト要素</a> — HTML に JavaScript を組み込むタグ</li>
       </ul>
     </div>
 
