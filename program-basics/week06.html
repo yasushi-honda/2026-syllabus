@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第6回 JavaScript入門：変数と出力 | プログラム基礎 I</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--blue">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../program-basics.html">プログラム基礎 I</a>
+        <span>/</span>
+        <span>第6回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">JavaScript入門：<wbr>変数と出力</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 6</span>
+            <span class="page-badge">火曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">HTML/CSS で見た目を作ってきたページに、はじめて<strong>動き</strong>を加える。<strong>変数</strong>に文字や数を入れて <code>console.log</code> で出力する基本サイクルを手で書き、最後に <code>Math.random</code> を使った<strong>おみくじページ</strong>を完成させる</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">JavaScript / <code>&lt;script&gt;</code> タグ / 変数（<code>let</code> / <code>const</code>） / データ型（文字列・数値・真偽値） / <code>console.log</code> / 開発者ツールの Console / <code>Math.random</code> / 配列とインデックス / おみくじ</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第5回までに作った自分のプロフィールサイト（<code>index.html</code> / <code>style.css</code>）・Codespaces が起動できる状態・Chrome の DevTools を開けること</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>HTML/CSS と JavaScript の役割の違いを自分の言葉で説明できる（「構造」「見た目」「動き」）</li>
+        <li><code>&lt;script&gt;</code> タグで JavaScript を HTML に組み込める</li>
+        <li><code>let</code> と <code>const</code> を使って<strong>変数を手で宣言</strong>できる</li>
+        <li><strong>文字列・数値・真偽値</strong>の3つの基本データ型を区別できる</li>
+        <li><code>console.log</code> で値を出力し、ブラウザの<strong>開発者ツールの Console</strong> で確認できる</li>
+        <li>配列と <code>Math.random</code> を組み合わせて<strong>おみくじページ</strong>を完成させる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>HTML/CSS と JavaScript の役割の違いを理解する</h3>
+          <div class="timeline-body">
+            <p><strong>前回までの振り返り（10分）</strong></p>
+            <ul>
+              <li>第1〜5回で書いてきたのは <strong>HTML</strong>（文書の構造）と <strong>CSS</strong>（見た目・レイアウト）</li>
+              <li>第5回ではメディアクエリでスマホ表示を整えた——でも、ページを開いた時点で見た目は決まっていて、<strong>その後は何も変わらない</strong>状態だった</li>
+              <li>今日からは <strong>JavaScript</strong> で「ページを開いた後にも動く」要素を作る</li>
+            </ul>
+            <p><strong>「3つの言葉」の役割分担（15分）</strong></p>
+            <ul>
+              <li>3つの言語は<strong>役割が違う</strong>——MDN「JavaScript とは何か」の整理:
+                <ul>
+                  <li><strong>HTML</strong>: ページの<strong>構造</strong>を組み立てる（見出し・段落・リスト・画像）</li>
+                  <li><strong>CSS</strong>: 構造に<strong>スタイル</strong>を当てる（色・余白・レイアウト）</li>
+                  <li><strong>JavaScript</strong>: ページに<strong>動的な動き</strong>を加える（クリックで反応、内容を書き換える、計算する）</li>
+                </ul>
+              </li>
+              <li>たとえ話: HTMLが「家の骨組み」、CSSが「壁紙と家具」、JavaScript が「電気とスイッチ」</li>
+              <li>3つは同じ HTML ファイル上に共存できる——今日はその同居の最初の一歩</li>
+            </ul>
+            <p><strong><code>&lt;script&gt;</code> タグを書いてみる（15分）</strong></p>
+            <ul>
+              <li>第5回までの <code>index.html</code> を開く（消した人は新規でも可）</li>
+              <li><code>&lt;/body&gt;</code> の<strong>直前</strong>に <code>&lt;script&gt;</code> ブロックを追加:
+                <pre><code>&lt;script&gt;
+  console.log("はじめての JavaScript");
+&lt;/script&gt;
+&lt;/body&gt;</code></pre>
+              </li>
+              <li>第1回と同じ手順（<code>python3 -m http.server 8000</code> → 「ポート」タブから「エディターでプレビュー」→ Simple Browser）でページを表示</li>
+              <li>ページ自体は何も変わらない——<strong>動きは画面の裏側</strong>にいる。次のステップで取り出す</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>なぜ <code>&lt;/body&gt;</code> の直前か:</strong> JavaScript は HTML が読み込まれてから実行するほうが安全な場面が多いので、まずはこの位置を癖にします（MDN「<code>&lt;script&gt;</code> 要素」でも紹介される基本パターン）。<code>&lt;head&gt;</code> 内に書く方法もありますが、それは後の回で扱います。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>Console を開き、変数とデータ型を<strong>手で書く</strong></h3>
+          <div class="timeline-body">
+            <p><strong>開発者ツールの Console を開く（10分）</strong></p>
+            <ul>
+              <li>Simple Browser で表示中のページ、または別タブで開いた公開 URL で <strong><code>F12</code></strong> または<strong>右クリック → 検証</strong></li>
+              <li>上のタブから <strong>「Console」</strong> を選ぶ（第5回の DevTools と同じ画面、別のタブ）</li>
+              <li>さっき書いた <code>console.log("はじめての JavaScript")</code> の出力がここに表示されているはず</li>
+              <li>これが<strong>「JavaScript からの声」を聞く場所</strong>——以降ずっと使う</li>
+            </ul>
+            <p><strong>変数を手で宣言する（15分）</strong></p>
+            <ul>
+              <li><code>&lt;script&gt;</code> ブロックの中身を書き換える:
+                <pre><code>&lt;script&gt;
+  let name = "あなたの名前";
+  const year = 2026;
+  console.log(name);
+  console.log(year);
+&lt;/script&gt;</code></pre>
+              </li>
+              <li><strong><code>let</code></strong>: あとから変えてよい値を入れる箱（変数）</li>
+              <li><strong><code>const</code></strong>: あとから変えない値を入れる箱（定数）</li>
+              <li>保存 → Simple Browser を更新 → Console を確認:
+                <ul>
+                  <li>「あなたの名前」と <code>2026</code> が表示されたら成功</li>
+                  <li>文字には引用符（<code>"</code> または <code>'</code>）が付き、数字には付かない——これがデータ型の違いの最初のヒント</li>
+                </ul>
+              </li>
+              <li>MDN「変数とは」では「<strong>箱に名前を付けて中身を出し入れする</strong>」というイメージで説明されている。最初はそれで十分</li>
+            </ul>
+            <p><strong>3つの基本データ型を見分ける（15分）</strong></p>
+            <ul>
+              <li>JavaScript で最初に出会うデータ型は3つ（MDN「文法とデータ型」より）:
+                <pre><code>let myString  = "こんにちは";    // 文字列（String）
+let myNumber  = 42;              // 数値（Number）
+let myBool    = true;            // 真偽値（Boolean）
+
+console.log(typeof myString);   // "string"
+console.log(typeof myNumber);   // "number"
+console.log(typeof myBool);     // "boolean"</code></pre>
+              </li>
+              <li><strong><code>typeof</code></strong> はその値が「どの型か」を教えてくれる演算子——今は呪文として使ってOK</li>
+              <li><strong>よくある間違い</strong>: <code>"42"</code>（引用符あり）と <code>42</code>（引用符なし）は別物。前者は文字列、後者は数値。Console で <code>"42" + 1</code> と <code>42 + 1</code> を試して挙動の違いを観察</li>
+            </ul>
+            <p><strong>変数を組み合わせて文章を作る（10分）</strong></p>
+            <ul>
+              <li>テンプレートリテラル（バッククォート <code>`</code>）を使うと、文字列の中に変数を埋め込める:
+                <pre><code>let myName = "山田 太郎";
+let myAge  = 20;
+console.log(`私の名前は ${myName} で、${myAge} 歳です。`);</code></pre>
+              </li>
+              <li><code>${ 変数名 }</code> の部分が、値に置き換わる</li>
+              <li>自分の自己紹介文を1つ、変数を使って組み立ててみる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>配列と <code>Math.random</code> で<strong>おみくじ</strong>のロジックを組む</h3>
+          <div class="timeline-body">
+            <p><strong>配列で「候補のリスト」を作る（10分）</strong></p>
+            <ul>
+              <li>「大吉・中吉・小吉・末吉・凶」のように、<strong>並びの中から1つを選ぶ</strong>用途には<strong>配列</strong>を使う:
+                <pre><code>const fortunes = ["大吉", "中吉", "小吉", "末吉", "凶"];
+console.log(fortunes);       // 全部
+console.log(fortunes[0]);    // "大吉"
+console.log(fortunes[2]);    // "小吉"</code></pre>
+              </li>
+              <li>配列の番号は <strong>0 から始まる</strong>——これが最初のつまずきポイント</li>
+              <li><code>fortunes.length</code> で配列の長さ（要素数）を取得できる</li>
+            </ul>
+            <p><strong><code>Math.random</code> でランダムな数を作る（15分）</strong></p>
+            <ul>
+              <li><strong><code>Math.random()</code></strong> は <strong>0 以上 1 未満</strong>の乱数を返す関数（MDN「<code>Math.random()</code>」）
+                <pre><code>console.log(Math.random());    // 例: 0.7234...
+console.log(Math.random());    // 例: 0.1029...</code></pre>
+              </li>
+              <li>これを配列の番号として使うには「<strong>0以上、配列の長さ未満</strong>」の整数に変換する必要がある:
+                <pre><code>const fortunes = ["大吉", "中吉", "小吉", "末吉", "凶"];
+const index = Math.floor(Math.random() * fortunes.length);
+console.log(index);            // 0〜4 のどれか
+console.log(fortunes[index]);  // ランダムに選ばれた1つ</code></pre>
+              </li>
+              <li><strong><code>Math.floor</code></strong> は小数点以下を切り捨てて整数にする関数。<code>Math.random() * 5</code> は <strong>0以上5未満</strong>、それを切り捨てると<strong> 0〜4 </strong>になり、配列の番号と一致</li>
+              <li>Console で何度か実行して、毎回違う結果が出ることを観察</li>
+            </ul>
+            <p><strong>おみくじを HTML 上に表示する（25分）</strong></p>
+            <ul>
+              <li>これまで Console にしか出ていなかった結果を、いよいよ<strong>ページ本体に表示</strong>する</li>
+              <li><code>index.html</code> の <code>&lt;body&gt;</code> 内に表示用のタグを追加:
+                <pre><code>&lt;h2&gt;今日の運勢&lt;/h2&gt;
+&lt;p id="fortune"&gt;ここに結果が出ます&lt;/p&gt;</code></pre>
+              </li>
+              <li><code>&lt;script&gt;</code> の中身を書き換える:
+                <pre><code>const fortunes = ["大吉", "中吉", "小吉", "末吉", "凶"];
+const index    = Math.floor(Math.random() * fortunes.length);
+const result   = fortunes[index];
+
+console.log(result);
+
+// HTML の id="fortune" の要素を取り出して中身を書き換える
+document.getElementById("fortune").textContent = result;</code></pre>
+              </li>
+              <li><code>document.getElementById("fortune")</code> は「<code>id="fortune"</code> の HTML 要素を JavaScript の手元に引き寄せる」呪文（詳しくは第11回 DOM 操作で扱う、今日は使い方だけ）</li>
+              <li>保存 → Simple Browser を更新 → 毎回違う結果が出る</li>
+              <li>第4回でやった commit & push を思い出して、自分のリポジトリに保存しておく</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「動いた」で止めない:</strong> おみくじが動いたら、自分の言葉で <strong>「配列の何番目が選ばれて、それを HTML に書き込んでいる」</strong> と説明してみてください。説明できれば、来週の「条件分岐＆バグ修正ワーク②」がぐっと楽になります。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>おみくじを自分らしくカスタマイズし、コメントで言語化する</h3>
+          <div class="timeline-body">
+            <p><strong>選択肢を自分仕様にする（10分）</strong></p>
+            <ul>
+              <li><code>fortunes</code> 配列の中身を、自分が普段使う言葉に書き換える（例: 「最高」「ぼちぼち」「ちょっと注意」など）</li>
+              <li>項目数を <strong>3個・5個・7個</strong>と変えて、それぞれおみくじが正しく動くか確認——<code>fortunes.length</code> を使っているので、配列の長さに自動で対応するはず</li>
+              <li>もし動かない時は Console を確認:「<code>index</code> が想定外の値になっていないか」「<code>fortune</code> の id 名がタイプミスしていないか」</li>
+            </ul>
+            <p><strong>コメントで「自分の言葉」を残す（15分）</strong></p>
+            <ul>
+              <li>JavaScript のコメントは <code>// 一行コメント</code> または <code>/* 複数行 */</code>:
+                <pre><code>// おみくじの候補リスト（順番に意味はない）
+const fortunes = ["大吉", "中吉", "小吉", "末吉", "凶"];
+
+// 0以上 配列長未満 の整数をランダムに作る
+const index = Math.floor(Math.random() * fortunes.length);</code></pre>
+              </li>
+              <li><strong>「なぜこう書いたか」</strong>を自分の言葉で残す——「何をしているか」だけならコードが語ってくれる</li>
+              <li>来週この行を見たときの自分が、コメント無しで読めるか想像しながら書く</li>
+            </ul>
+            <p><strong>commit & push（5分）</strong></p>
+            <ul>
+              <li>第4回・第5回と同じ手順で「ソース管理」タブ → コミット → Sync</li>
+              <li>コミットメッセージ例: <code>JavaScriptでおみくじを追加</code></li>
+              <li>GitHub Pages の反映後、スマホ実機で開いて「自分の手で書いた JavaScript が世界に公開されている」状態を体感する</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ program-basics.html Week 7 「条件分岐＆🔧バグ修正ワーク②」と同期 -->
+              <li>次回（第7回）: <strong>条件分岐＆🔧バグ修正ワーク②</strong>——<code>if</code> 文を手で書き、簡単な診断ゲームを作る。AI に「バグ入り <code>if</code> 文コード」を生成させて修正する演習</li>
+              <li>今日のキーワード <strong>「変数」「データ型（文字列・数値・真偽値）」「<code>console.log</code>」「配列」「<code>Math.random</code>」</strong>を口に出して言えるか確認して退出</li>
+              <li>家で「<code>console.log</code> で何を出してみたいか」を1つ考えておくと次回が楽しくなる</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>おみくじページを完成させてリポジトリに push する</strong>
+            <p>自分仕様にカスタマイズした <code>fortunes</code> 配列で、何度か更新して違う結果が出ることを確認。授業内で間に合わなかったコメントの追加も家で進める。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>自分の <code>&lt;script&gt;</code> ブロックに <code>console.log</code> を3行追加してみる</strong>
+            <p>変数の値・<code>typeof</code> の結果・テンプレートリテラルで組み立てた文章、の3種類を最低1つずつ Console に出してみる。何が表示されたかを <code>NOTES.md</code> に1〜2行メモする。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>MDN「変数とは何か」を流し読みする</strong>
+            <p>下記の参考リンクから日本語版を開いて、<strong>気になった一文を1つだけメモ</strong>する。「<code>let</code> と <code>const</code> の使い分けはどう書いてあるか」だけでもOK。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://developer.mozilla.org/ja/docs/Learn_web_development/Core/Scripting/What_is_JavaScript" target="_blank" rel="noopener">MDN — JavaScript とは何か</a> — HTML/CSS との役割の違いを公式の言葉で確認</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Learn_web_development/Core/Scripting/Variables" target="_blank" rel="noopener">MDN — 必要な変数の保存</a> — <code>let</code> / <code>const</code> と「変数とは」の入門解説</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Guide/Grammar_and_types" target="_blank" rel="noopener">MDN — 文法とデータ型</a> — 文字列・数値・真偽値などの基本データ型</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/console/log_static" target="_blank" rel="noopener">MDN — <code>console.log()</code> 静的メソッド</a> — 公式リファレンス</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Math/random" target="_blank" rel="noopener">MDN — <code>Math.random()</code></a> — 乱数生成の公式リファレンス</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/HTML/Reference/Elements/script" target="_blank" rel="noopener">MDN — <code>&lt;script&gt;</code> 要素</a> — HTML に JavaScript を組み込むタグ</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week05.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第5回 レスポンシブ＆スマホ実機確認＆バグ修正ワーク①</span>
+      </a>
+      <a href="../program-basics.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">プログラム基礎 I</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第7回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>

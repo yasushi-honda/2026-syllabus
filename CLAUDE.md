@@ -20,6 +20,7 @@ program-basics/         # プログラム基礎 I の各回詳細ページ
   week03.html           #   第3回 CSS入門：色とレイアウト
   week04.html           #   第4回 ミニ完成① プロフィールサイト公開
   week05.html           #   第5回 レスポンシブ＆スマホ実機確認＆バグ修正ワーク①
+  week06.html           #   第6回 JavaScript入門：変数と出力
 ai-communication.html   # AIコミュニケーション基礎（火3・4限）
 ai-communication/       # AIコミュニケーション基礎の各回詳細ページ
   week01.html           #   第1回 オリエンテーションとAI概論
@@ -27,6 +28,7 @@ ai-communication/       # AIコミュニケーション基礎の各回詳細ペ�
   week03.html           #   第3回 プロンプトの基本
   week04.html           #   第4回 AIの能力と限界を知る
   week05.html           #   第5回 情報の構造化とAI育成①
+  week06.html           #   第6回 「伝わる」プロンプトの設計
 natural-language-dev.html # 自然言語開発（木1・2限）
 natural-language-dev/   # 自然言語開発の各回詳細ページ
   week01.html           #   第1回 オリエンテーション＆前年度の進級制作を振り返る
