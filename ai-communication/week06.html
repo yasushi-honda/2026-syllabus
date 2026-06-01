@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第6回 「伝わる」プロンプトの設計 | AIコミュニケーション基礎</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication.html">AIコミュニケーション基礎</a>
+        <span>/</span>
+        <span>第6回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">「伝わる」<wbr>プロンプトの設計</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 6</span>
+            <span class="page-badge">火曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">あいまいな指示と明確な指示で AI の応答がどう変わるかを<strong>同じ目的・別の聞き方</strong>で比較する。第3回で学んだプロンプトの基本を踏まえ、<strong>段階的に改善する手順</strong>を体験して身につける</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">あいまい vs 明確 / 役割（ペルソナ） / 目的 / 制約条件（出力形式・文字数・トーン） / 例の提示（few-shot） / 段階的改善 / 同一質問の差分観察 / 【学習データ⑥】プロンプト改善ワークシート</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第5回までに <strong>【学習データ①〜⑤】</strong> を投入した「自分だけのAI」（NotebookLM）・Gemini が使えるブラウザ・Google ドキュメントが使える状態</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>「あいまいな指示」と「明確な指示」が、AI の応答にどう違いを生むかを<strong>自分の手で観察</strong>できる</li>
+        <li>プロンプトを構成する <strong>役割 / 目的 / 制約 / 例</strong> の4要素を意識して書ける</li>
+        <li>1回目の応答に満足しなかったとき、プロンプトを<strong>段階的に改善する手順</strong>を踏める</li>
+        <li>同じ目的を達成するプロンプトを<strong>3パターン</strong>書き、応答の差を言語化できる</li>
+        <li>授業内で <strong>【学習データ⑥】プロンプト改善ワークシート</strong> を作成し、自分のAIに追加する</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の振り返りと「あいまいな指示」で何が起きるか観察する</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り（10分）</strong></p>
+            <ul>
+              <li>第5回で投入した <strong>【学習データ⑤】情報整理テクニック資料</strong> と、マインドマップの観察メモがソースに入っているか確認</li>
+              <li>家で開き直したマインドマップから、どんな気づきがあったかを希望者が一人1〜2文で共有</li>
+            </ul>
+            <p><strong>あいまいなプロンプトを Gemini に投げる（15分）</strong></p>
+            <ul>
+              <li>Gemini の画面下部の入力欄を開き、以下の<strong>そっけない一文</strong>をそのまま投げる:
+                <pre><code>自己紹介を書いて</code></pre>
+              </li>
+              <li>応答を見て次の点を観察:
+                <ul>
+                  <li>① 誰の自己紹介を書いたか（自分の情報を知らないので<strong>一般的なテンプレ</strong>になる）</li>
+                  <li>② どんな場面用の自己紹介か（就活・SNS・授業・営業…）</li>
+                  <li>③ 何文字くらい書いてきたか</li>
+                  <li>④ どんな口調か（丁寧語・カジュアル・営業っぽい…）</li>
+                </ul>
+              </li>
+              <li>応答そのものは決して悪くない——でも「自分が欲しかったもの」とは違うはず。なぜか?</li>
+            </ul>
+            <p><strong>「AI は超能力者ではない」を再確認（15分）</strong></p>
+            <ul>
+              <li>第1回・第3回でも触れたとおり、AI は <strong>「次に来る言葉の断片（トークン）を予測する」</strong>仕組み——プロンプトに書かれていないことは<strong>もっともらしい一般解</strong>で埋められる</li>
+              <li>つまり、応答がズレた原因は<strong>AI ではなく自分の指示</strong>側にある——ここに気づくのが今日の出発点</li>
+              <li>第3回で扱った「<strong>役割・目的・制約・例</strong>」の4要素をどう足し算するかを、今日はじっくり練習する</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>4要素を1つずつ足して<strong>同じ目的のプロンプト</strong>を3パターン書く</h3>
+          <div class="timeline-body">
+            <p><strong>パターン A：役割と目的を明示する（15分）</strong></p>
+            <ul>
+              <li>Gemini の入力欄に、先ほどの「自己紹介を書いて」を以下のように書き直す:
+                <pre><code>あなたはキャリア支援の先生です。
+専門学校 2 年の私が、IT 企業のインターン面接で
+最初の 1 分間に話す自己紹介の原稿を書いてください。</code></pre>
+              </li>
+              <li><strong>役割</strong>（キャリア支援の先生）と<strong>目的</strong>（IT 企業のインターン面接の自己紹介）を加えた</li>
+              <li>応答を観察——どんな情報を含めようとしたか、どんな構成で書いたか</li>
+              <li>「自分の名前や経歴は知らないので<strong>埋めるべき空欄</strong>が指示されるか」「<strong>面接向けに最適化</strong>されたか」をチェック</li>
+            </ul>
+            <p><strong>パターン B：制約条件を追加する（15分）</strong></p>
+            <ul>
+              <li>パターン A のプロンプトに <strong>出力形式と文字数</strong> を足す:
+                <pre><code>あなたはキャリア支援の先生です。
+専門学校 2 年の私が、IT 企業のインターン面接で
+最初の 1 分間に話す自己紹介の原稿を書いてください。
+
+【条件】
+- 約 300 文字（話して 1 分以内に収まる長さ）
+- 「名前」「学校・学年」「強み」「志望理由」「最後の一言」の
+  5 ブロックに分けて出力
+- 話し言葉・敬語</code></pre>
+              </li>
+              <li>制約は<strong>箇条書き</strong>で出すと AI が拾いやすい——Google の Gemini プロンプトガイドでも推奨されている書き方</li>
+              <li>応答を観察:
+                <ul>
+                  <li>① 5ブロック構成は守られたか</li>
+                  <li>② 文字数の指示は近い数字に着地したか</li>
+                  <li>③ 「名前」などの<strong>埋めるべき欄</strong>が <code>[ ]</code> 等で残ったか</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>パターン C：自分の情報と「例」を渡す（20分）</strong></p>
+            <ul>
+              <li>パターン B に<strong>自分の情報</strong>と<strong>真似してほしい例</strong>を1つ加える:
+                <pre><code>あなたはキャリア支援の先生です。
+専門学校 2 年の私が、IT 企業のインターン面接で
+最初の 1 分間に話す自己紹介の原稿を書いてください。
+
+【私の情報】
+- 名前: 山田 太郎
+- 学校: 清風情報工科学院 ITビジネスコース 2 年
+- 強み: NotebookLM で勉強ノートを整理してきた経験
+- 志望理由: AI を業務に活かす現場を見てみたい
+
+【条件】
+- 約 300 文字、話し言葉・敬語
+- 「名前」「学校・学年」「強み」「志望理由」「最後の一言」の 5 ブロック構成
+
+【真似してほしい例（口調の参考）】
+「はじめまして、清風情報工科学院の○○と申します。
+ITビジネスコースの 2 年生で、普段は…」</code></pre>
+              </li>
+              <li>このような「<strong>真似してほしい例</strong>」を1〜2個渡す書き方を <strong>few-shot</strong> と呼ぶ（Google の Gemini プロンプトガイドで推奨される技法）</li>
+              <li>応答を、パターン A・B と<strong>並べて</strong>比較:
+                <ul>
+                  <li>埋め欄ではなく<strong>自分用の原稿</strong>になったか</li>
+                  <li>口調が例に寄ったか</li>
+                  <li>「これなら自分が話せる」と思えるか</li>
+                </ul>
+              </li>
+              <li>3パターンの応答を Google ドキュメントに<strong>並べて貼り付け</strong>、隣に「気づいた差」を1〜2行ずつ書き留める（2限後半の【学習データ⑥】の素材になる）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「一発でうまく書ける必要はない」:</strong> プロは最初から完璧なプロンプトを書いているわけではありません。<strong>A → B → C と段階的に育てる</strong>のが普通の進み方です。「1回目で物足りない応答が来た」のは失敗ではなく、改善のヒントが出てきた合図と捉えましょう。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>自分テーマで<strong>段階的に改善する</strong>練習をする</h3>
+          <div class="timeline-body">
+            <p><strong>自分のテーマを1つ選ぶ（5分）</strong></p>
+            <ul>
+              <li>1限のお題（自己紹介原稿）は<strong>共通教材</strong>。2限は自分の使い道に寄せる</li>
+              <li>例:
+                <ul>
+                  <li>「来月の文化祭で配るチラシのキャッチコピーを 3 案考えて」</li>
+                  <li>「アルバイトのシフト相談を店長に出すメールの下書きを書いて」</li>
+                  <li>「夏休みに読む本を 5 冊おすすめして」</li>
+                  <li>「自分の好きなゲームの楽しさをまだ知らない人に説明する文章を作って」</li>
+                </ul>
+              </li>
+              <li>選んだテーマを Google ドキュメント（新規 or <code>テスト用_構造化メモ</code>）の上部に書く</li>
+            </ul>
+            <p><strong>パターン A → B → C を自分のテーマで書く（30分）</strong></p>
+            <ul>
+              <li><strong>A: あいまいな最初の一文</strong>を書く（10分）
+                <ul>
+                  <li>例:「キャッチコピーを考えて」</li>
+                  <li>Gemini に投げる → 応答を Google ドキュメントに貼り付け</li>
+                </ul>
+              </li>
+              <li><strong>B: 役割と目的と制約を足す</strong>（10分）
+                <ul>
+                  <li>役割（誰として書いてほしいか）/ 目的（誰に向けて何のため）/ 制約（文字数・形式・トーン）を書き加える</li>
+                  <li>Gemini に投げる → 応答を貼り付け</li>
+                </ul>
+              </li>
+              <li><strong>C: 自分の情報と例を足す</strong>（10分）
+                <ul>
+                  <li>具体的な背景情報（学校名・場面・対象者）と、参考にしたい例（過去のチラシ、好きなコピー）を加える</li>
+                  <li>Gemini に投げる → 応答を貼り付け</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>3パターンの差を言語化する（15分）</strong></p>
+            <ul>
+              <li>3つの応答を並べて読み、以下の観点で差を書き留める:
+                <ul>
+                  <li>① 自分が望んでいた応答に<strong>どれが一番近かったか</strong>、その理由</li>
+                  <li>② A → B、B → C の<strong>1ステップごとに変わった点</strong>を 1〜2行ずつ</li>
+                  <li>③ もし<strong>パターン D</strong> を作るなら、次に何を足す/削るか</li>
+                </ul>
+              </li>
+              <li>気づきは抽象化して「<strong>これは他のテーマでも使えそう</strong>」とメモする——これが「自分のプロンプト技術の蓄積」になる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>【学習データ⑥】プロンプト改善ワークシートを作成し投入する</h3>
+          <div class="timeline-body">
+            <p><strong>書く内容</strong></p>
+            <ul>
+              <li>Google ドキュメントを新規作成、ファイル名を <strong><code>【学習データ⑥】プロンプト改善ワークシート</code></strong> にする</li>
+              <li>第5回で学んだとおり、<strong>見出し1〜3 + 箇条書き</strong>で構造化する（NotebookLM の応答精度が上がる）</li>
+              <li>項目（最低限）:
+                <ul>
+                  <li><strong>見出し1: プロンプト改善ワークシート</strong></li>
+                  <li><strong>見出し2: 4 要素チェックリスト</strong> — 役割 / 目的 / 制約（出力形式・文字数・トーン） / 例（few-shot）の4つを、自分の言葉で説明</li>
+                  <li><strong>見出し2: 段階的改善の手順</strong> — A: あいまい / B: 役割と目的と制約 / C: 自分の情報と例、を自分の言葉で</li>
+                  <li><strong>見出し2: 今日の3パターン比較</strong> — 自分のテーマで作った A・B・C の応答の差を整理</li>
+                  <li><strong>見出し2: 次に試したい改善案</strong> — もし<strong>パターン D</strong> を作るなら何を足す/削るか</li>
+                  <li><strong>見出し2: 自分の決まり文句テンプレ</strong> — 自分がよく書く役割設定（例:「あなたはキャリア支援の先生です」）を 3〜5 個リスト化しておく</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>NotebookLM のソースに追加する</strong></p>
+            <ul>
+              <li>第2〜5回と同じ手順で、<strong>【学習データ⑥】</strong> をソース追加</li>
+              <li>追加直後に自分のAIに質問:
+                <pre><code>私がこれから新しいプロンプトを書く時、
+あなたに最初に確認すべき 4 つのことを
+箇条書きで教えてください</code></pre>
+              </li>
+              <li>応答に「役割」「目的」「制約」「例」など、今日学んだ語が登場するか観察</li>
+              <li>登場しなかった場合は「<strong>【学習データ⑥】の見出し2の 4 要素を使って答え直してください</strong>」と追加指示——<strong>自分のAIに今日の学びを定着させる</strong>作業</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「自分のAIに自分の言葉を教える」:</strong> 今日作った <strong>【学習データ⑥】</strong> は、今後あなたが書くプロンプトの<strong>下敷き</strong>になります。次回以降の授業で AI に何か頼むとき、「<strong>第6回の 4 要素チェックリストに沿って質問を整えて</strong>」と頼めば、自分のAIが下敷きを使って整えてくれるようになります。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ ai-communication.html Week 7 「AIコーディング支援入門」と同期 -->
+              <li>次回（第7回）: <strong>AIコーディング支援入門</strong>——Gemini を使ったコード生成・実行・修正。エラーメッセージの読み方と AI を使った解決。簡単なコードを「自分の言葉で AI に説明させる」演習。<strong>【学習データ⑦】プログラミング基礎用語集</strong></li>
+              <li>「今日いちばん変化が大きかったのは A → B か、B → C か」を一つ言語化して退出</li>
+              <li>家で<strong>別のテーマ</strong>でもう一度 A → B → C を回してみると、4 要素の感覚が固まる</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>【学習データ⑥】プロンプト改善ワークシートを完成させて NotebookLM に投入する</strong>
+            <p>授業内で書き切れなかった項目を埋め、第5回で学んだ<strong>見出し1〜3と箇条書き</strong>で構造化した状態でソースに入れる。投入済みかどうかは次回確認します。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>授業とは別のテーマで、A → B → C をもう 1 セット回す</strong>
+            <p>2限前半で選んだテーマ以外のものを 1 つ選び、自分のペースで A・B・C のプロンプトを書いて応答を集める。3つの応答と「気づいた差」を Google ドキュメントに残し、<strong>【学習データ⑥】</strong> の「今日の3パターン比較」セクションの下に追記する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>Google「Gemini プロンプトガイド」を眺める</strong>
+            <p>下記の参考リンクから Gemini for Workspace のプロンプトガイドを開き、<strong>授業で扱わなかったヒントを 1 つだけメモ</strong>する。【学習データ⑥】の「次に試したい改善案」に追記しておくと、来週以降の素材になる。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://workspace.google.com/resources/ai/writing-effective-prompts/" target="_blank" rel="noopener">Gemini for Workspace — ビジネスで効果を発揮する AI プロンプトの書き方</a> — Google 公式。ペルソナ・タスク・背景情報・形式の 4 要素フレームワークで解説</li>
+        <li><a href="https://ai.google.dev/gemini-api/docs/prompting-strategies" target="_blank" rel="noopener">Google AI for Developers — Prompt design strategies</a> — 公式の設計戦略。役割設定・few-shot・出力形式の指示など、今日扱った 4 要素の根拠</li>
+        <li><a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a> — 今日のプロンプト比較に使う AI</li>
+        <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> — 【学習データ⑥】を投入する「自分だけのAI」</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week05.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第5回 情報の構造化とAI育成①</span>
+      </a>
+      <a href="../ai-communication.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AIコミュニケーション基礎</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第7回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
