@@ -105,7 +105,15 @@
 &lt;/script&gt;
 &lt;/body&gt;</code></pre>
               </li>
-              <li>第1回と同じ手順（<code>python3 -m http.server 8000</code> → 「ポート」タブから「エディターでプレビュー」→ Simple Browser）でページを表示</li>
+              <li>ページを表示する手順（第1回と同じ、要点だけおさらい）:
+                <ol>
+                  <li>Codespaces 下部の<strong>ターミナル</strong>（無ければ <code>Ctrl + `</code> または「表示」→「ターミナル」）に <code>python3 -m http.server 8000</code> を<strong>そのまま貼り付けて Enter</strong>——Python 標準ライブラリの簡易 HTTP サーバーが<strong>ポート 8000</strong> でカレントディレクトリを公開する（<code>8000</code> はデフォルトポート番号と同じだが、明示しておくと事故が減る）</li>
+                  <li>Codespaces はターミナル出力に含まれる localhost URL を検知して<strong>自動でポート転送</strong>する仕組み（公式: <a href="https://docs.github.com/ja/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace" target="_blank" rel="noopener">Forwarding ports in your codespace</a>）。起動と同時に右下にトーストが出れば、それをクリックでもよい</li>
+                  <li>トーストを閉じてしまった・出なかった時は、画面下部の <strong>「ポート」タブ</strong> を開き、<strong>8000 番</strong> の行を探す。その行で <strong>「エディターでプレビュー」</strong>（画面アイコン）を選ぶとエディタ内に <strong>Simple Browser</strong> が開く。隣の<strong>「ブラウザーで開く」</strong>（地球儀アイコン）は<strong>外部ブラウザ</strong>を起動するため、学校環境では Simple Browser のほうを選ぶ</li>
+                  <li>ページが表示されたら成功。ファイルを保存しても自動では反映されないので、Simple Browser の<strong>更新ボタン</strong>で再読み込みする</li>
+                </ol>
+                詳しい初回手順や詰まった時のフォールバックは <a href="week01.html">第1回</a> を参照
+              </li>
               <li>ページ自体は何も変わらない——<strong>動きは画面の裏側</strong>にいる。次のステップで取り出す</li>
             </ul>
             <div class="lesson-tip">
