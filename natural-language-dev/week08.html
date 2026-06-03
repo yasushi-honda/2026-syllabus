@@ -45,7 +45,7 @@
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">ハーネス / ガイドとセンサー（事前制御 / 事後検証）/ <code>.geminiignore</code> / <code>GEMINI.md</code> / <code>AGENTS.md</code> / ブランチ保護 / GitHub Actions / Antigravity CLI（<code>agy</code>）への移行 / <code>agy plugin import gemini</code> / Hook（plugin 内 <code>hooks.json</code>）の存在</div>
+          <div class="lesson-overview-value">ハーネス / ガイドとセンサー（事前制御 / 事後検証）/ <code>.geminiignore</code> / <code>GEMINI.md</code> / <code>AGENTS.md</code> / ブランチ保護 / GitHub Actions / Antigravity CLI（<code>agy</code>）への移行 / <code>agy plugin import gemini</code> / Hook（plugin 内 <code>hooks.json</code> または <code>settings.json</code>）の存在</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
@@ -69,7 +69,7 @@
         <li>進級制作環境を <strong>Antigravity CLI</strong>（コマンド <code>agy</code>）に切り替え、<code>agy plugin import gemini</code> で第7回までの設定・拡張を自動変換できる</li>
         <li>進級制作リポジトリに <code>.geminiignore</code> を1ファイル追加して、AI が触ってはいけない場所を宣言できる</li>
         <li>第7回で書いたテストを <strong>GitHub Actions</strong> 上で push のたびに自動実行する <code>.github/workflows/test.yml</code> を1本作って push できる</li>
-        <li>Antigravity CLI には <strong>Hook</strong>（plugin 内の <code>hooks.json</code> で定義し、<code>/hooks</code> で active を確認できる仕組み）が存在することを知り、ハーネスの「閘門（こうもん）」として将来発展させる余地を持って帰る</li>
+        <li>Antigravity CLI には <strong>Hook</strong>（plugin 内の <code>hooks.json</code> または <code>~/.gemini/antigravity-cli/settings.json</code> に直接定義し、<code>/hooks</code> で active を確認できる仕組み）が存在することを知り、ハーネスの「閘門（こうもん）」として将来発展させる余地を持って帰る</li>
         <li>「<strong>AI が触る前に止める</strong>（ガイド）」と「<strong>AI が触った後で検出する</strong>（センサー）」の両輪が揃って初めて、AI に長時間作業を任せられる感覚を掴む</li>
       </ul>
     </div>
@@ -113,7 +113,7 @@
                 <ul>
                   <li>コマンド名: <code>gemini</code> → <strong><code>agy</code></strong></li>
                   <li>設定ファイル: <code>~/.gemini/settings.json</code> → <strong><code>~/.gemini/antigravity-cli/settings.json</code></strong></li>
-                  <li>ワークスペース skills: <code>.gemini/skills/</code> → <strong><code>.agents/skills/</code></strong>（手動移動が必要）</li>
+                  <li>ワークスペース skills: <code>.gemini/skills/</code> → <strong><code>.agents/skills/</code></strong>（手動移動が必要・本授業はここのみ扱う）。グローバル skills は <code>~/.gemini/skills/</code> → <code>~/.gemini/antigravity-cli/skills/</code> に変更</li>
                   <li>MCP 設定: <code>settings.json</code> 内 inline → 独立 <code>mcp_config.json</code> profile に分離（ワークスペースは <code>.agents/mcp_config.json</code>）</li>
                   <li>拡張: <code>extensions</code> → <strong><code>plugins</code></strong>（<code>agy plugin import gemini</code> で legacy を自動変換）</li>
                   <li><code>GEMINI.md</code>: <strong>そのまま動作</strong>（<code>AGENTS.md</code> も両方 parse される）</li>
@@ -136,7 +136,7 @@
           <div class="timeline-body">
             <p><strong>Antigravity CLI のインストール（15分）</strong></p>
             <ul>
-              <li>一次出典: <a href="https://antigravity.google/docs/cli-install" target="_blank" rel="noopener">Antigravity CLI — Installation & Auth</a></li>
+              <li>一次出典: <a href="https://antigravity.google/docs/cli-install" target="_blank" rel="noopener">Antigravity CLI — Installation & auth</a></li>
               <li>公式 docs のインストール手順に従い、自分の環境（Codespaces / macOS / Linux / Windows）で <code>agy</code> を導入する。インストール後、ターミナルで <code>agy --version</code> が動くことを確認</li>
               <li>初回起動: <code>agy</code> をプロジェクト直下で実行すると、第7回までの <code>~/.gemini/</code> 配下の設定を自動検出して「<strong>Auto-conversion</strong>: 変換するか」「<strong>Keyring storage</strong>: トークンを OS の keyring に移行するか」「<strong>Settings alignment</strong>: 既定値を新プロファイルに整列するか」のチェックリストが出る（公式 docs <em>"First-launch onboarding"</em>）</li>
               <li>チェックリストはひとまず<strong>全部 OK</strong>で進める（後から個別に調整可）</li>
@@ -161,7 +161,7 @@
             </ul>
             <p><strong>MCP server 設定が <code>settings.json</code> 内にあった場合（5分・該当者のみ）</strong></p>
             <ul>
-              <li>旧 <code>~/.gemini/settings.json</code> 内に <code>mcpServers</code> セクションを書いていた人は、ワークスペースなら <code>.agents/mcp_config.json</code>、グローバルなら <code>~/.gemini/antigravity-cli/mcp_config.json</code> の独立ファイルに分離する</li>
+              <li>旧 <code>~/.gemini/settings.json</code> 内に <code>mcpServers</code> セクションを書いていた人は、ワークスペースなら <code>.agents/mcp_config.json</code>、グローバルなら <code>~/.gemini/antigravity-cli/mcp_config.json</code> の独立ファイルに分離する（※ グローバルパスは 2026-06-04 時点で公式 <code>cli-plugins</code> と <code>gcli-migration</code> で記述が異なる場合がある。<code>agy</code> 起動時の出力で実際の参照先を確認）</li>
               <li>リモート SSE / WebSocket 接続を持っていた人は、スキーマキーを <code>url</code> / <code>httpUrl</code> から <strong><code>serverUrl</code></strong> に変更する（旧キーは非サポート）</li>
               <li>該当者がいなければ次のトピックへ</li>
             </ul>
@@ -197,7 +197,7 @@
               <li>公式説明の要点（旧 Gemini CLI docs ベース）:
                 <ul>
                   <li>構文は <strong><code>.gitignore</code> と同じ glob パターン</strong>（行末コメント・否定 <code>!</code> ・ディレクトリ末尾の <code>/</code> 全対応）</li>
-                  <li>記述したファイルは <code>@</code>（ファイル参照）コマンドや <code>read_many_files</code> などの<strong>ツール経由でアクセスできなくなる</strong>。Git からは普通に見える（<code>.gitignore</code> とは別物）</li>
+                  <li>公式の文言: 「<em>tools that respect this file will exclude matching files and directories from their operations</em>」。<code>@</code>（ファイル参照）コマンド経由や、<code>.geminiignore</code> を尊重する各種ツール経由のアクセスが除外される。Git からは普通に見える（<code>.gitignore</code> とは別物）</li>
                   <li>変更を反映するには<strong>セッションの再起動</strong>が必要</li>
                 </ul>
               </li>
@@ -239,8 +239,13 @@ secrets/
             </ul>
             <p><strong>サンドボックスの話（5分・口頭）</strong></p>
             <ul>
-              <li>Antigravity CLI には <strong>permissions & sandbox</strong> という公式機能があり、<code>--sandbox</code> フラグや <code>toolPermission</code> 設定（<code>request-review</code> / <code>proceed-in-sandbox</code> / <code>always-proceed</code> / <code>strict</code> の4プリセット）で AI のコマンド実行をどこまで自動許可するかを制御できる（一次出典: <a href="https://antigravity.google/docs/cli-sandbox" target="_blank" rel="noopener">Antigravity CLI — Permissions & Sandbox</a>）</li>
-              <li>今日は触らないが、<strong>本番リポジトリで Vibe Coding するときは「壊れていい環境」で動かす</strong>のが鉄則という認識を持つ。Codespaces を使う＝最低限の隔離は確保、Antigravity の <code>--sandbox</code> や <code>toolPermission: "strict"</code> まで含めて検討するのは次の段階</li>
+              <li>Antigravity CLI には機能が独立した2系統がある:
+                <ul>
+                  <li><strong><code>--sandbox</code> フラグ</strong>（公式 <a href="https://antigravity.google/docs/cli-settings" target="_blank" rel="noopener">cli-settings</a> "Command-line overrides" 例 <code>agy --sandbox=false</code>）: <strong><code>enableTerminalSandbox</code> の実行時オン/オフ切替</strong>。シェル実行をサンドボックス化するかどうかの boolean</li>
+                  <li><strong><code>toolPermission</code> 設定</strong>（公式 <a href="https://antigravity.google/docs/cli-reference" target="_blank" rel="noopener">cli-reference</a> "Configuration keys"）: <strong>パーミッション要求の粒度</strong>を4プリセットから選ぶ。<code>request-review</code>（write/bash/web で都度確認）/ <code>proceed-in-sandbox</code>（サンドボックス内で自動進行）/ <code>always-proceed</code>（一切確認しない）/ <code>strict</code>（read 以外は全て確認）</li>
+                </ul>
+              </li>
+              <li>今日は触らないが、<strong>本番リポジトリで Vibe Coding するときは「壊れていい環境」で動かす</strong>のが鉄則という認識を持つ。Codespaces を使う＝最低限の隔離は確保、Antigravity の <code>--sandbox=true</code> + <code>toolPermission: "strict"</code> まで含めて検討するのは次の段階。詳細は公式 <a href="https://antigravity.google/docs/cli-sandbox" target="_blank" rel="noopener">Sandbox</a> 参照</li>
             </ul>
             <div class="lesson-tip">
               <strong><code>.geminiignore</code> は <code>.gitignore</code> とは別:</strong> <code>.gitignore</code> は「Git にコミットしない」、<code>.geminiignore</code> は「AI のツールから読まない」。役割が違うので、両方の管理が必要。<code>.env</code> は <strong>両方</strong>に書く。
@@ -355,7 +360,7 @@ push と pull_request トリガーで動く GitHub Actions の最小ワークフ
           <h3>振り返り＆次回予告</h3>
           <div class="timeline-body">
             <ul>
-              <li>今日のキーワード: <strong>ハーネス / ガイド（事前制御）/ センサー（事後検証）/ Antigravity CLI（<code>agy</code>）/ <code>agy plugin import gemini</code> / <code>.geminiignore</code> / ブランチ保護 / GitHub Actions / Hook（plugin 内 <code>hooks.json</code> ・<code>/hooks</code> で確認）</strong></li>
+              <li>今日のキーワード: <strong>ハーネス / ガイド（事前制御）/ センサー（事後検証）/ Antigravity CLI（<code>agy</code>）/ <code>agy plugin import gemini</code> / <code>.geminiignore</code> / ブランチ保護 / GitHub Actions / Hook（plugin 内 <code>hooks.json</code> または <code>settings.json</code> ・<code>/hooks</code> で確認）</strong></li>
               <li>覚えてほしいこと: <strong>AI を信用するために、AI を疑う仕組みを先に置く</strong>。ガイドとセンサーの両輪が揃って初めて、長時間 AI に任せた結果を信用できる。Hook はその上の第3の層</li>
               <li>「責任あるコード」第2の具体例:
                 <ul>
@@ -364,7 +369,7 @@ push と pull_request トリガーで動く GitHub Actions の最小ワークフ
                   <li>GitHub Actions を置いた = 「振る舞いが壊れたら検出する装置を常設した」</li>
                 </ul>
               </li>
-              <li>ハーネスにはもう1つ第3の層がある: <strong>Hook</strong>（plugin 内の <code>hooks.json</code> で定義し、<code>agy</code> 起動中に <code>/hooks</code> で active を確認できる仕組み）。<strong>「AI のツール実行のたびに、その場で割り込む閘門（こうもん）」</strong>として、自動 fmt や機密情報ブロックに使う。公式 <a href="https://antigravity.google/docs/cli-plugins" target="_blank" rel="noopener">Plugins & Skills</a> の "Managing hooks" 節参照。今日は存在を知るだけで、具体実装は家での発展に回す</li>
+              <li>ハーネスにはもう1つ第3の層がある: <strong>Hook</strong>（plugin 内の <code>hooks.json</code> または <code>~/.gemini/antigravity-cli/settings.json</code> に直接定義し、<code>agy</code> 起動中に <code>/hooks</code> で active を確認できる仕組み）。<strong>「AI のツール実行のたびに、その場で割り込む閘門（こうもん）」</strong>として、自動 fmt や機密情報ブロックに使う。公式 <a href="https://antigravity.google/docs/cli-plugins" target="_blank" rel="noopener">Plugins & skills</a> の "Managing hooks" 節参照（公式原文: <em>"Hooks are defined inside a plugin's <code>hooks.json</code> or configured inside your primary <code>settings.json</code> file."</em>）。今日は存在を知るだけで、具体実装は家での発展に回す</li>
               <li>次回（第9回）: <strong>中間レビュー＆コードレビュー実践</strong>。ハーネス構築前後の進級制作コードを自分で振り返り、自分の過去 PR に<strong>自己レビュー</strong>してみる。AI レビューと人間レビューの違いと使い分けを体験する</li>
               <li>家での発展（任意）: <code>/hooks</code> で active hook を確認／<code>hooks.json</code> の最小例に挑戦／ブランチ保護の <strong>Require status checks</strong> に今日作ったワークフロー名を追加して「テストが緑にならないと merge できない」状態を完成させる／Antigravity 公式の <code>--sandbox</code> や <code>toolPermission</code> 設定を読んで自分の進級制作にどれを当てるか検討</li>
             </ul>
@@ -416,7 +421,7 @@ push と pull_request トリガーで動く GitHub Actions の最小ワークフ
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
             <strong><code>/hooks</code> で active hook を確認 + <code>hooks.json</code> 最小例に挑戦</strong>
-            <p><code>agy</code> 起動中に <code>/hooks</code> を打って active hook の一覧を観察。さらに公式 <a href="https://antigravity.google/docs/cli-plugins" target="_blank" rel="noopener">Plugins & Skills</a> の "Managing hooks" 節を読み、<code>hooks.json</code> の最小例を1つ作って動かす。動いたら次回の冒頭で共有。</p>
+            <p><code>agy</code> 起動中に <code>/hooks</code> を打って active hook の一覧を観察。さらに公式 <a href="https://antigravity.google/docs/cli-plugins" target="_blank" rel="noopener">Plugins & skills</a> の "Managing hooks" 節を読み、<code>hooks.json</code> の最小例を1つ作って動かす。動いたら次回の冒頭で共有。</p>
           </div>
         </div>
       </div>
@@ -426,11 +431,11 @@ push と pull_request トリガーで動く GitHub Actions の最小ワークフ
       <h2>参考リンク</h2>
       <ul>
         <li><a href="https://developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli/" target="_blank" rel="noopener">Google Developers Blog — Transitioning Gemini CLI to Antigravity CLI（2026-05-19 公式発表）</a> — 個人ユーザーの Gemini CLI が 2026-06-18 に停止することと、Antigravity CLI への移行を案内する一次出典</li>
-        <li><a href="https://antigravity.google/docs/gcli-migration" target="_blank" rel="noopener">Antigravity CLI — Gemini Migration（公式）</a> — first-launch onboarding / <code>agy plugin import gemini</code> / <code>GEMINI.md</code>・<code>AGENTS.md</code> 両対応 / Skills パス変更 / MCP config 分離の正本</li>
-        <li><a href="https://antigravity.google/docs/cli-install" target="_blank" rel="noopener">Antigravity CLI — Installation & Auth（公式）</a> — 環境別インストール手順</li>
-        <li><a href="https://antigravity.google/docs/cli-plugins" target="_blank" rel="noopener">Antigravity CLI — Plugins & Skills（公式）</a> — plugin / skills / Managing hooks / MCP の正本</li>
-        <li><a href="https://antigravity.google/docs/cli-sandbox" target="_blank" rel="noopener">Antigravity CLI — Permissions & Sandbox（公式）</a> — <code>--sandbox</code> フラグと <code>toolPermission</code> 4 プリセット</li>
-        <li><a href="https://antigravity.google/docs/cli-reference" target="_blank" rel="noopener">Antigravity CLI — Reference（公式）</a> — <code>/hooks</code> 等のスラッシュコマンド一覧</li>
+        <li><a href="https://antigravity.google/docs/gcli-migration" target="_blank" rel="noopener">Antigravity CLI — Migrating from Gemini CLI（公式）</a> — first-launch onboarding / <code>agy plugin import gemini</code> / <code>GEMINI.md</code>・<code>AGENTS.md</code> 両対応 / Skills パス変更 / MCP config 分離の正本</li>
+        <li><a href="https://antigravity.google/docs/cli-install" target="_blank" rel="noopener">Antigravity CLI — Installation & auth（公式）</a> — 環境別インストール手順</li>
+        <li><a href="https://antigravity.google/docs/cli-plugins" target="_blank" rel="noopener">Antigravity CLI — Plugins & skills（公式）</a> — plugin / skills / Managing hooks / MCP の正本</li>
+        <li><a href="https://antigravity.google/docs/cli-sandbox" target="_blank" rel="noopener">Antigravity CLI — Sandbox（公式）</a> — <code>--sandbox</code> フラグと <code>toolPermission</code> 4 プリセット</li>
+        <li><a href="https://antigravity.google/docs/cli-reference" target="_blank" rel="noopener">Antigravity CLI — CLI reference（公式）</a> — <code>/hooks</code> 等のスラッシュコマンド一覧</li>
         <li><a href="https://www.anthropic.com/engineering/harness-design-long-running-apps" target="_blank" rel="noopener">Anthropic Engineering — Harness design for long-running application development</a> — 「ハーネス」用語の一次出典</li>
         <li><a href="https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/gemini-ignore.md" target="_blank" rel="noopener">gemini-cli — <code>.geminiignore</code>（旧 Gemini CLI 公式）</a> — <code>.gitignore</code> 準拠 glob と動作仕様（Antigravity CLI でも継続使用可と想定）</li>
         <li><a href="https://docs.github.com/ja/actions/quickstart" target="_blank" rel="noopener">GitHub Docs — GitHub Actions のクイック スタート（日本語公式）</a> — ワークフロー YAML の最小例とトリガー</li>
