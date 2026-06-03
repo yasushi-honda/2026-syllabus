@@ -88,12 +88,8 @@
             </ul>
             <p><strong>「ハーネス」を公式定義で押さえる（15分）</strong></p>
             <ul>
-              <li>一次出典: <a href="https://www.anthropic.com/engineering/harness-design-long-running-apps" target="_blank" rel="noopener">Anthropic Engineering — "Harness design for long-running application development"</a> から逐語:
-                <blockquote>
-                  <em>"A harness wraps the LLM with the additional tooling and infrastructure needed to deploy it for a specific task."</em>
-                </blockquote>
-              </li>
-              <li>翻訳の要点: ハーネス＝<strong>LLM を特定の仕事に投入するための周辺ツール・基盤の総称</strong>。LLM 単体ではなく、「LLM ＋ それを安全に走らせる足場」がひとつのシステム</li>
+              <li>出典: <a href="https://www.anthropic.com/engineering/harness-design-long-running-apps" target="_blank" rel="noopener">Anthropic Engineering — "Harness design for long-running application development"</a></li>
+              <li>本授業での整理: ハーネス＝<strong>LLM を特定の仕事に投入するための周辺ツール・基盤の総称</strong>。LLM 単体ではなく、「LLM ＋ それを安全に走らせる足場」がひとつのシステム。Anthropic の記事では、長時間動くエージェントの土台として decomposition / context resets / evaluator / generator の設計パターンが議論されている</li>
               <li>本授業での捉え方を2軸に整理:
                 <ul>
                   <li><strong>ガイド（事前制御）</strong>: AI が触る前に「これはやるな・これを守れ」を伝える仕組み。<code>GEMINI.md</code> / <code>.geminiignore</code> / サンドボックス / ブランチ保護</li>
@@ -170,12 +166,12 @@ secrets/
                 </ul>
               </li>
               <li>これにより、AI が <code>git push origin main</code> を実行しても拒否される——<strong>「人間が PR をレビューする経路を物理的に必須化」</strong>する</li>
-              <li>リポジトリの可視性: <strong>Free プランの private リポジトリは branch protection の一部機能が使えない</strong>場合がある。Public リポジトリ・GitHub Pro・GitHub Team 以上では classic protection rule が利用可。Free private で設定できない場合は、<strong>規範として「main に直 push しない」を <code>GEMINI.md</code> に明記</strong>することで運用ルールに落とす</li>
+              <li>リポジトリの可視性とプラン: Free private リポジトリでも本授業で使う<strong>Pull Request 必須化</strong>と<strong>status checks 必須化</strong>は利用可能（2022 年以降の classic branch protection）。<strong>push できる人を制限</strong>する機能（Restrict who can push to matching branches）や <strong>Rulesets</strong> の一部高度機能は Free 組織では public 限定／Team・Enterprise 以上で全リポジトリ利用可、というプラン依存があるため、UI に表示されない項目があった場合は<strong>規範として「main に直 push しない」を <code>GEMINI.md</code> に明記</strong>することで補う</li>
             </ul>
             <p><strong>サンドボックスの話（5分・口頭）</strong></p>
             <ul>
-              <li>「サンドボックス」とは AI が実行するコマンドを<strong>本物のOS環境から隔離</strong>するレイヤー（Docker / VM / chroot 等）。Codespaces で開いていれば、それ自体がサンドボックスの一種</li>
-              <li>今日は触らないが、<strong>本番リポジトリで Vibe Coding するときは「壊れていい環境」で動かす</strong>のが鉄則という認識を持つ</li>
+              <li>「サンドボックス」とは AI が実行するコマンドを<strong>本物のOS環境から隔離</strong>するレイヤー（Docker / VM / chroot 等）。Codespaces で開いている場合、それ自体が仮想マシンで隔離された「壊れていい環境」として機能する（ただし<strong>Gemini CLI 公式の <code>--sandbox</code> フラグ</strong>（Docker / Podman / macOS Seatbelt を呼び出す機能）とは別概念）</li>
+              <li>今日は触らないが、<strong>本番リポジトリで Vibe Coding するときは「壊れていい環境」で動かす</strong>のが鉄則という認識を持つ。Codespaces を使う＝最低限の隔離は確保、<code>--sandbox</code> フラグまで含めて検討するのは次の段階</li>
             </ul>
             <div class="lesson-tip">
               <strong><code>.geminiignore</code> は <code>.gitignore</code> とは別:</strong> <code>.gitignore</code> は「Git にコミットしない」、<code>.geminiignore</code> は「Gemini CLI のツールから読まない」。役割が違うので、両方の管理が必要。<code>.env</code> は <strong>両方</strong>に書く。
@@ -299,18 +295,21 @@ push と pull_request トリガーで動く GitHub Actions の最小ワークフ
             <p><strong>Hooks の公式仕様（10分）</strong></p>
             <ul>
               <li>一次出典: <a href="https://github.com/google-gemini/gemini-cli/blob/main/docs/hooks/reference.md" target="_blank" rel="noopener">gemini-cli/docs/hooks/reference.md（公式）</a> / <a href="https://github.com/google-gemini/gemini-cli/blob/main/docs/hooks/writing-hooks.md" target="_blank" rel="noopener">writing-hooks.md（公式）</a></li>
-              <li>Gemini CLI の Hook イベント（公式名・逐語）:
+              <li>Gemini CLI の Hook イベント（公式 reference の全 11 個）:
                 <ul>
-                  <li><strong><code>BeforeTool</code></strong>: ツールが実行される<strong>直前</strong>に発火（実行をブロックできる）</li>
-                  <li><strong><code>AfterTool</code></strong>: ツールが実行された<strong>直後</strong>に発火（結果を観察・ログ記録）</li>
-                  <li><code>BeforeAgent</code> / <code>AfterAgent</code> / <code>BeforeToolSelection</code> もある（今日は触らない）</li>
+                  <li><strong>Tool 系</strong>: <code>BeforeTool</code>（ツール実行<strong>直前</strong>・ブロック可）/ <code>AfterTool</code>（実行<strong>直後</strong>・結果観察）</li>
+                  <li><strong>Model 系</strong>: <code>BeforeModel</code> / <code>AfterModel</code></li>
+                  <li><strong>Agent 系</strong>: <code>BeforeAgent</code> / <code>AfterAgent</code> / <code>BeforeToolSelection</code></li>
+                  <li><strong>ライフサイクル系</strong>: <code>SessionStart</code> / <code>SessionEnd</code> / <code>Notification</code> / <code>PreCompress</code></li>
+                  <li>今日触るのは <code>BeforeTool</code> のみ。他は公式 <a href="https://github.com/google-gemini/gemini-cli/blob/main/docs/hooks/reference.md" target="_blank" rel="noopener">Hooks reference</a> 参照</li>
                 </ul>
               </li>
               <li>動作モデル:
                 <ul>
-                  <li>Hook 本体は<strong>任意のシェルコマンド</strong>。stdin から JSON でイベント情報（ツール名・引数等）が入る</li>
-                  <li>stdout に JSON を返すと <strong>Gemini CLI が解釈</strong>（後続を変える）。stderr は<strong>ログ</strong>として保存</li>
-                  <li><strong>exit code 2 で system block</strong>: ツールの実行が止まり、AI 側にも「ブロックされた理由」が伝わる</li>
+                  <li>Hook 本体は<strong>任意のシェルコマンド</strong>。stdin から JSON でイベント情報が入る。<code>BeforeTool</code> / <code>AfterTool</code> の場合、入力 JSON には <code>tool_name</code>・<strong><code>tool_input</code></strong>（モデルが生成したツール引数。オブジェクト）が含まれ、<code>AfterTool</code> ではさらに <strong><code>tool_response</code></strong>（実行結果）が入る</li>
+                  <li>stdout には <strong>final JSON のみ</strong>を出力する決まり（plain text を混ぜると Gemini CLI 側で parse 失敗）。例: <code>{"decision":"deny","reason":"..."}</code> を返すと exit 0 経路でブロック可（writing-hooks では公式に推奨される方式）</li>
+                  <li>stderr は<strong>ログ</strong>として保存される（人間が後から読む用）</li>
+                  <li><strong>exit code 2 で system block</strong>: ツールの実行が止まり、AI 側にも「ブロックされた理由」が伝わる。公式 writing-hooks では<strong>"Emergency Brake"</strong>と呼ばれる経路で、最も単純で確実なブロック方法</li>
                 </ul>
               </li>
               <li>※ Claude Code には <code>PreToolUse</code> / <code>PostToolUse</code> という別綴りのイベントがある。Gemini CLI と Claude Code の Hook 用語は<strong>似ているが別物</strong>。設定ファイルも別。混同しない</li>
@@ -338,12 +337,13 @@ let raw = '';
 process.stdin.on('data', (chunk) =&gt; { raw += chunk; });
 process.stdin.on('end', () =&gt; {
   const evt = JSON.parse(raw || '{}');
-  const args = JSON.stringify(evt.tool_args || evt.params || {});
+  // BeforeTool / AfterTool の入力 JSON にはモデルが生成した引数が tool_input に入る
+  const args = JSON.stringify(evt.tool_input || {});
   // ブロック対象パターン（必要に応じて追加）
   const danger = /\.env\b|API_KEY|SECRET|PRIVATE_KEY|password|BEGIN [A-Z ]*PRIVATE KEY/i;
   if (danger.test(args)) {
     process.stderr.write('blocked: command references a secret-like token\n');
-    process.exit(2); // ← system block
+    process.exit(2); // ← system block (Emergency Brake)
   }
   process.exit(0);
 });
@@ -351,12 +351,12 @@ process.stdin.on('end', () =&gt; {
               </li>
               <li><code>chmod +x ~/.gemini/hooks/block-secrets.js</code> で実行権限を付与</li>
               <li>動作確認: Gemini CLI を起動 → 「<code>.env</code> の中身を見せて」と依頼 → ブロックされて AI 側に「blocked: command references a secret-like token」が伝わる。AI は別の方法（環境変数を直接読まない手順の提案など）に切り替えるはず</li>
-              <li>注意: JSON スキーマ（フィールド名 <code>tool_args</code> / <code>params</code> 等）は<strong>バージョンで変わる可能性</strong>がある。動かなければ <code>process.stderr.write(raw)</code> で stdin の生 JSON を覗いて、実フィールド名に合わせる</li>
+              <li>動かないときの調査: <code>process.stderr.write(raw)</code> で stdin の生 JSON を覗く（stderr はログとしてのみ扱われるので、stdout の JSON 規約に違反しない）。公式 <a href="https://github.com/google-gemini/gemini-cli/blob/main/docs/hooks/reference.md" target="_blank" rel="noopener">Hooks reference</a> のスキーマと突き合わせる</li>
             </ul>
             <p><strong>AfterTool で監査ログを取る発展（5分・口頭）</strong></p>
             <ul>
               <li><code>AfterTool</code> Hook を追加で書くと、AI が実行した<strong>すべてのコマンドと結果</strong>をローカルの監査ログ（例: <code>~/.gemini/audit.log</code>）に追記できる</li>
-              <li>家で発展課題に挑戦したい人は、stdin から <code>tool_name</code> / <code>tool_args</code> / <code>result</code> を取り出して append するだけの数行スクリプトを試すとよい</li>
+              <li>家で発展課題に挑戦したい人は、stdin から <code>tool_name</code> / <code>tool_input</code> / <code>tool_response</code> を取り出して append するだけの数行スクリプトを試すとよい（フィールド名は公式 <a href="https://github.com/google-gemini/gemini-cli/blob/main/docs/hooks/reference.md" target="_blank" rel="noopener">Hooks reference</a> 準拠）</li>
             </ul>
             <div class="lesson-tip">
               <strong>Hook の最強の防御は exit 2:</strong> stdout に JSON を返して「警告だけ」にすることもできるが、機密情報のように<strong>後から取り返しがつかない</strong>事象は <strong>exit 2 で system block</strong>するのが筋。「人間判断を要求するシグナル」を必ず立てる。
