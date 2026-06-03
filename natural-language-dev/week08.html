@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第8回 ハーネスエンジニアリング入門 | 自然言語開発</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+  <!-- 公式情報確認: 2026-06-04 (anthropic.com/engineering/harness-design-long-running-apps + github.com/google-gemini/gemini-cli docs/hooks + docs/cli/gemini-ignore.md + docs.github.com/ja/actions/quickstart + docs.github.com/ja/.../about-protected-branches) -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev.html">自然言語開発</a>
+        <span>/</span>
+        <span>第8回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">ハーネス<wbr>エンジニアリング<wbr>入門</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 8</span>
+            <span class="page-badge">木曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">進級制作リポジトリに<strong>ハーネス</strong>（AI を安全に長時間走らせる土台）を構築する実践。<strong>ガイド</strong>（<code>GEMINI.md</code> / <code>.geminiignore</code> / サンドボックス / ブランチ保護＝<strong>事前制御</strong>）と<strong>センサー</strong>（GitHub Actions の test / lint / build＝<strong>事後検証</strong>）の2系統を揃え、最後に Gemini CLI の <strong>Hooks</strong>（<code>BeforeTool</code> / <code>AfterTool</code>）で機密情報コミット阻止・ツール引数検証・監査ログを実装する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">ハーネス / ガイドとセンサー（事前制御 / 事後検証）/ <code>GEMINI.md</code> / <code>.geminiignore</code> / サンドボックス / ブランチ保護 / GitHub Actions / Gemini CLI Hooks（<code>BeforeTool</code> / <code>AfterTool</code>）/ stdin JSON / exit 2 で system block</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第7回完了（進級制作リポジトリに <code>tasks.md</code> 先頭タスクの Red → Green → Refactor が push 済み・テストランナーが <code>npm test</code> 等で起動できる状態）／GitHub リポジトリの Settings にアクセスできる権限／Gemini CLI が起動できる状態（<code>~/.gemini/settings.json</code> を編集する）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li><strong>ハーネス</strong>＝「AI エージェントを長時間安全に走らせるための足場（ガイド＋センサー）」だと、自分の言葉で1〜2行で説明できる</li>
+        <li><strong>ガイド（事前制御）</strong>と<strong>センサー（事後検証）</strong>の違いを、第7回までに自分が触ったファイル名を例に挙げて説明できる</li>
+        <li>進級制作リポジトリに <code>.geminiignore</code> を1ファイル追加して、AI が触ってはいけない場所を宣言できる</li>
+        <li>第7回で書いたテストを <strong>GitHub Actions</strong> 上で push のたびに自動実行する <code>.github/workflows/test.yml</code> を1本作って push できる</li>
+        <li>Gemini CLI の <code>BeforeTool</code> Hook を1つ実装し、機密情報を含むコマンドを <strong>exit 2 で system block</strong> できる体験を積む</li>
+        <li>「<strong>AI が触る前に止める</strong>（ガイド）」と「<strong>AI が触った後で検出する</strong>（センサー）」の両輪が揃って初めて、AI に長時間作業を任せられる感覚を掴む</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>第7回の振り返り → 「ハーネス」とは何かを公式定義で押さえる</h3>
+          <div class="timeline-body">
+            <p><strong>第7回課題（TDD 1サイクル）の共有（10分）</strong></p>
+            <ul>
+              <li>第7回で push した <code>test:</code> → <code>feat:</code> → <code>refactor:</code> の3コミットを、近くの人と互いに見せる</li>
+              <li>家で2サイクル目以降を進めた人は、「テストが先に来ていたか」「Refactor で振る舞いが変わらなかったか」を1人1分で報告</li>
+              <li>よくある体感を共有: 「AI に任せたら関係ないファイルが書き換わった」「<code>.env</code> の中身を含むコマンドが履歴に残った」「テストはローカルでは通ったが他人の環境で落ちた」</li>
+              <li>今日のテーマは、こうした事故を<strong>仕組みで防ぐ</strong>設計</li>
+            </ul>
+            <p><strong>「ハーネス」を公式定義で押さえる（15分）</strong></p>
+            <ul>
+              <li>一次出典: <a href="https://www.anthropic.com/engineering/harness-design-long-running-apps" target="_blank" rel="noopener">Anthropic Engineering — "Harness design for long-running application development"</a> から逐語:
+                <blockquote>
+                  <em>"A harness wraps the LLM with the additional tooling and infrastructure needed to deploy it for a specific task."</em>
+                </blockquote>
+              </li>
+              <li>翻訳の要点: ハーネス＝<strong>LLM を特定の仕事に投入するための周辺ツール・基盤の総称</strong>。LLM 単体ではなく、「LLM ＋ それを安全に走らせる足場」がひとつのシステム</li>
+              <li>本授業での捉え方を2軸に整理:
+                <ul>
+                  <li><strong>ガイド（事前制御）</strong>: AI が触る前に「これはやるな・これを守れ」を伝える仕組み。<code>GEMINI.md</code> / <code>.geminiignore</code> / サンドボックス / ブランチ保護</li>
+                  <li><strong>センサー（事後検証）</strong>: AI が触った後で「振る舞いが壊れていないか」を検出する仕組み。GitHub Actions の test / lint / build / PR レビュー</li>
+                </ul>
+              </li>
+              <li>第7回で書いたテストは、それ単体ではローカルで走るだけ。今日の作業で <strong>GitHub Actions のセンサー</strong>として PR ごとに毎回走る仕組みに昇格させる</li>
+            </ul>
+            <p><strong>今日のゴール提示（15分）</strong></p>
+            <ul>
+              <li>進級制作リポジトリに次の3点を入れる:
+                <ol>
+                  <li>ガイドの1ファイル: <code>.geminiignore</code>（<code>node_modules/</code> や <code>.env*</code> など AI に触らせない場所の宣言）</li>
+                  <li>センサーの1ワークフロー: <code>.github/workflows/test.yml</code>（push と PR で <code>npm test</code> 等が走る）</li>
+                  <li>Gemini CLI の <code>BeforeTool</code> Hook を1つ: <code>.env</code> を含む <code>cat</code> / <code>echo</code> 等のコマンドを <strong>exit 2 で system block</strong></li>
+                </ol>
+              </li>
+              <li>ブランチ保護の設定は GitHub の Settings から行うため、リポジトリ管理権限を持っていない人は<strong>ペアの人と画面を共有して</strong>進める（自分のリポジトリでは家でも設定できる）</li>
+              <li>本授業のグローバル方針（<code>~/.claude/CLAUDE.md</code> CRITICAL 節）でも「main / master ブランチへの直接 push は避ける」が MUST として書かれている。今日のブランチ保護はその仕組み化</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>今日の合言葉:</strong> 「<strong>AI を信用するために、AI を疑う仕組みを先に置く</strong>」。ガイドで触れる範囲を狭め、センサーで触った後を検出する。両輪が揃って初めて、長時間 AI に任せた作業の結果を信用できる。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>ガイド（事前制御）— <code>.geminiignore</code> とブランチ保護</h3>
+          <div class="timeline-body">
+            <p><strong><code>.geminiignore</code> を作る（25分）</strong></p>
+            <ul>
+              <li>一次出典: <a href="https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/gemini-ignore.md" target="_blank" rel="noopener">gemini-cli/docs/cli/gemini-ignore.md（公式）</a></li>
+              <li>公式説明の要点（逐語に近い翻訳）:
+                <ul>
+                  <li>構文は <strong><code>.gitignore</code> と同じ glob パターン</strong>（行末コメント・否定 <code>!</code> ・ディレクトリ末尾の <code>/</code> 全対応）</li>
+                  <li>記述したファイルは <code>@</code>（ファイル参照）コマンドや <code>read_many_files</code> などの<strong>ツール経由でアクセスできなくなる</strong>。Git からは普通に見える（<code>.gitignore</code> とは別物）</li>
+                  <li>変更を反映するには<strong>セッションの再起動</strong>が必要</li>
+                </ul>
+              </li>
+              <li>進級制作リポジトリのルートに <code>.geminiignore</code> を新規作成し、最低限以下を入れる:
+                <pre><code># 依存物・ビルド成果物
+node_modules/
+dist/
+build/
+.cache/
+
+# 機密情報
+.env
+.env.*
+*.pem
+*.key
+secrets/
+
+# ローカル設定・履歴
+.vscode/
+.idea/
+*.log
+</code></pre>
+              </li>
+              <li>進級制作で<strong>追加で AI に触らせたくない場所</strong>（例: 個人の調査メモ・本人写真・古い実験コード）があれば、自分の判断で1〜2行追記</li>
+              <li>commit して push。コミットメッセージは <code>chore: add .geminiignore</code> 等で短く</li>
+            </ul>
+            <p><strong>ブランチ保護を有効化（20分）</strong></p>
+            <ul>
+              <li>一次出典: <a href="https://docs.github.com/ja/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches" target="_blank" rel="noopener">GitHub Docs ja — 保護されたブランチについて</a></li>
+              <li>進級制作リポジトリの GitHub ページ → <strong>Settings → Branches → Add classic branch protection rule</strong>（または Rulesets）で <code>main</code> を対象に以下を最低限有効化:
+                <ul>
+                  <li><strong>Require a pull request before merging</strong>（PR 経由でないと merge できない）</li>
+                  <li><strong>Require status checks to pass before merging</strong>（後で作る GitHub Actions が緑になるまで merge できない／Actions が初回 push 後に「ステータスチェック候補」として選べるようになる）</li>
+                </ul>
+              </li>
+              <li>これにより、AI が <code>git push origin main</code> を実行しても拒否される——<strong>「人間が PR をレビューする経路を物理的に必須化」</strong>する</li>
+              <li>リポジトリの可視性: <strong>Free プランの private リポジトリは branch protection の一部機能が使えない</strong>場合がある。Public リポジトリ・GitHub Pro・GitHub Team 以上では classic protection rule が利用可。Free private で設定できない場合は、<strong>規範として「main に直 push しない」を <code>GEMINI.md</code> に明記</strong>することで運用ルールに落とす</li>
+            </ul>
+            <p><strong>サンドボックスの話（5分・口頭）</strong></p>
+            <ul>
+              <li>「サンドボックス」とは AI が実行するコマンドを<strong>本物のOS環境から隔離</strong>するレイヤー（Docker / VM / chroot 等）。Codespaces で開いていれば、それ自体がサンドボックスの一種</li>
+              <li>今日は触らないが、<strong>本番リポジトリで Vibe Coding するときは「壊れていい環境」で動かす</strong>のが鉄則という認識を持つ</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong><code>.geminiignore</code> は <code>.gitignore</code> とは別:</strong> <code>.gitignore</code> は「Git にコミットしない」、<code>.geminiignore</code> は「Gemini CLI のツールから読まない」。役割が違うので、両方の管理が必要。<code>.env</code> は <strong>両方</strong>に書く。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>センサー（事後検証）— GitHub Actions で第7回のテストを毎回走らせる</h3>
+          <div class="timeline-body">
+            <p><strong>GitHub Actions の公式定義（10分）</strong></p>
+            <ul>
+              <li>一次出典: <a href="https://docs.github.com/ja/actions/quickstart" target="_blank" rel="noopener">GitHub Docs ja — GitHub Actions のクイック スタート</a></li>
+              <li>要点: <strong>リポジトリのイベント</strong>（push / PR / schedule 等）<strong>をトリガーに、ワークフロー（YAML で定義した一連の処理）が自動実行される</strong>仕組み</li>
+              <li>ファイル配置: <code>.github/workflows/&lt;任意の名前&gt;.yml</code>。複数ファイル可</li>
+              <li>本授業のテーマでの位置づけ: 第7回で書いたテストは「<strong>振る舞いが壊れたら赤くなる装置</strong>」だが、ローカルで毎回手動 <code>npm test</code> を打たないと走らない。GitHub Actions に乗せると <strong>push のたびに勝手に走り、PR ページに緑/赤が表示される</strong>=これがセンサー</li>
+            </ul>
+            <p><strong><code>.github/workflows/test.yml</code> を作る（30分）</strong></p>
+            <ul>
+              <li>進級制作リポジトリのルートに <code>.github/workflows/</code> ディレクトリを作り、その中に <code>test.yml</code> を新規作成</li>
+              <li>進級制作が <strong>Node.js (npm) プロジェクト</strong>の場合の最小例（公式 quickstart に準拠）:
+                <pre><code>name: test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+</code></pre>
+              </li>
+              <li>進級制作が <strong>Python プロジェクト</strong>の場合の最小例:
+                <pre><code>name: test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run tests
+        run: pytest
+</code></pre>
+              </li>
+              <li>AI に依頼する場合のプロンプト例:
+                <pre><code>@package.json （または @requirements.txt）を読んで、
+push と pull_request トリガーで動く GitHub Actions の最小ワークフローを
+.github/workflows/test.yml として作ってください。
+- ubuntu-latest
+- 公式 actions のメジャーバージョン v4 / v5 系を使う
+- npm ci （または pip install -r requirements.txt）後に npm test （または pytest）
+これ以外の steps は追加しないでください。
+</code></pre>
+              </li>
+              <li>新規ブランチに commit → push → GitHub の <strong>Pull requests → New PR</strong> で PR を作成 → <strong>Actions タブ</strong>でワークフローが走るのを観察</li>
+              <li>緑になった人は、1限後半のブランチ保護の <strong>Require status checks</strong> に今走らせたワークフロー名（<code>test</code>）を追加して「テストが緑にならないと merge できない」状態を完成させる</li>
+            </ul>
+            <p><strong>赤になった場合の対処（10分）</strong></p>
+            <ul>
+              <li>Actions タブ → 該当 run → ログを開いて、どのステップで失敗したかを特定</li>
+              <li>ローカルでは通ったのに CI で落ちる典型: <strong>依存ファイルが <code>.gitignore</code> 漏れで commit されていない</strong> / <strong>ローカルだけにある環境変数を CI で渡せていない</strong> / <strong>Node / Python のバージョン違い</strong></li>
+              <li>原因が掴めない場合は、AI にログを貼って「<strong>このCIエラーの原因と最小修正案を、ローカルの動作を変えずに提示して</strong>」と依頼。直接 commit を任せず、提案だけ受けて自分で適用</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>センサーは「赤くなった事実」が価値:</strong> GitHub Actions が赤くなることは「失敗」ではなく「<strong>振る舞いが変わったことを検出した</strong>」という成功イベント。本当に怖いのは、何も検出されないまま壊れたコードが main に merge されること。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>Gemini CLI Hooks（<code>BeforeTool</code> / <code>AfterTool</code>）で機密情報コミット阻止</h3>
+          <div class="timeline-body">
+            <p><strong>Hooks の公式仕様（10分）</strong></p>
+            <ul>
+              <li>一次出典: <a href="https://github.com/google-gemini/gemini-cli/blob/main/docs/hooks/reference.md" target="_blank" rel="noopener">gemini-cli/docs/hooks/reference.md（公式）</a> / <a href="https://github.com/google-gemini/gemini-cli/blob/main/docs/hooks/writing-hooks.md" target="_blank" rel="noopener">writing-hooks.md（公式）</a></li>
+              <li>Gemini CLI の Hook イベント（公式名・逐語）:
+                <ul>
+                  <li><strong><code>BeforeTool</code></strong>: ツールが実行される<strong>直前</strong>に発火（実行をブロックできる）</li>
+                  <li><strong><code>AfterTool</code></strong>: ツールが実行された<strong>直後</strong>に発火（結果を観察・ログ記録）</li>
+                  <li><code>BeforeAgent</code> / <code>AfterAgent</code> / <code>BeforeToolSelection</code> もある（今日は触らない）</li>
+                </ul>
+              </li>
+              <li>動作モデル:
+                <ul>
+                  <li>Hook 本体は<strong>任意のシェルコマンド</strong>。stdin から JSON でイベント情報（ツール名・引数等）が入る</li>
+                  <li>stdout に JSON を返すと <strong>Gemini CLI が解釈</strong>（後続を変える）。stderr は<strong>ログ</strong>として保存</li>
+                  <li><strong>exit code 2 で system block</strong>: ツールの実行が止まり、AI 側にも「ブロックされた理由」が伝わる</li>
+                </ul>
+              </li>
+              <li>※ Claude Code には <code>PreToolUse</code> / <code>PostToolUse</code> という別綴りのイベントがある。Gemini CLI と Claude Code の Hook 用語は<strong>似ているが別物</strong>。設定ファイルも別。混同しない</li>
+            </ul>
+            <p><strong>機密情報コミット阻止 Hook を1つ書く（15分）</strong></p>
+            <ul>
+              <li>狙い: AI が <code>cat .env</code> や <code>echo $API_KEY</code> のような<strong>機密情報を読みに行くコマンド</strong>を実行しようとしたとき、ツール実行前に止める</li>
+              <li><code>~/.gemini/settings.json</code> の <code>hooks</code> セクションに以下を追加（既存設定がある場合は <code>hooks</code> キーだけ merge）:
+                <pre><code>{
+  "hooks": {
+    "BeforeTool": [
+      {
+        "matcher": "Bash|run_shell_command",
+        "command": "node ~/.gemini/hooks/block-secrets.js"
+      }
+    ]
+  }
+}
+</code></pre>
+              </li>
+              <li>Hook 本体 <code>~/.gemini/hooks/block-secrets.js</code> を新規作成:
+                <pre><code>#!/usr/bin/env node
+// stdin から JSON を読む
+let raw = '';
+process.stdin.on('data', (chunk) =&gt; { raw += chunk; });
+process.stdin.on('end', () =&gt; {
+  const evt = JSON.parse(raw || '{}');
+  const args = JSON.stringify(evt.tool_args || evt.params || {});
+  // ブロック対象パターン（必要に応じて追加）
+  const danger = /\.env\b|API_KEY|SECRET|PRIVATE_KEY|password|BEGIN [A-Z ]*PRIVATE KEY/i;
+  if (danger.test(args)) {
+    process.stderr.write('blocked: command references a secret-like token\n');
+    process.exit(2); // ← system block
+  }
+  process.exit(0);
+});
+</code></pre>
+              </li>
+              <li><code>chmod +x ~/.gemini/hooks/block-secrets.js</code> で実行権限を付与</li>
+              <li>動作確認: Gemini CLI を起動 → 「<code>.env</code> の中身を見せて」と依頼 → ブロックされて AI 側に「blocked: command references a secret-like token」が伝わる。AI は別の方法（環境変数を直接読まない手順の提案など）に切り替えるはず</li>
+              <li>注意: JSON スキーマ（フィールド名 <code>tool_args</code> / <code>params</code> 等）は<strong>バージョンで変わる可能性</strong>がある。動かなければ <code>process.stderr.write(raw)</code> で stdin の生 JSON を覗いて、実フィールド名に合わせる</li>
+            </ul>
+            <p><strong>AfterTool で監査ログを取る発展（5分・口頭）</strong></p>
+            <ul>
+              <li><code>AfterTool</code> Hook を追加で書くと、AI が実行した<strong>すべてのコマンドと結果</strong>をローカルの監査ログ（例: <code>~/.gemini/audit.log</code>）に追記できる</li>
+              <li>家で発展課題に挑戦したい人は、stdin から <code>tool_name</code> / <code>tool_args</code> / <code>result</code> を取り出して append するだけの数行スクリプトを試すとよい</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>Hook の最強の防御は exit 2:</strong> stdout に JSON を返して「警告だけ」にすることもできるが、機密情報のように<strong>後から取り返しがつかない</strong>事象は <strong>exit 2 で system block</strong>するのが筋。「人間判断を要求するシグナル」を必ず立てる。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り＆次回予告</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>今日のキーワード: <strong>ハーネス / ガイド（事前制御）/ センサー（事後検証）/ <code>.geminiignore</code> / ブランチ保護 / GitHub Actions / Gemini CLI Hooks（<code>BeforeTool</code> / <code>AfterTool</code>）/ exit 2 で system block</strong></li>
+              <li>覚えてほしいこと: <strong>AI を信用するために、AI を疑う仕組みを先に置く</strong>。ガイドとセンサーの両輪が揃って初めて、長時間 AI に任せた結果を信用できる</li>
+              <li>「責任あるコード」第2の具体例:
+                <ul>
+                  <li><code>.geminiignore</code> を置いた = 「AI に触らせない場所を宣言した」</li>
+                  <li>GitHub Actions を置いた = 「振る舞いが壊れたら検出する装置を常設した」</li>
+                  <li>Hook で exit 2 した = 「人間判断を強制する閘門を作った」</li>
+                </ul>
+              </li>
+              <li>次回（第9回）: <strong>中間レビュー＆コードレビュー実践</strong>。ハーネス構築前後の進級制作コードを自分で振り返り、自分の過去 PR に<strong>自己レビュー</strong>してみる。AI レビューと人間レビューの違いと使い分けを体験する</li>
+              <li>家での発展（任意）: <code>AfterTool</code> Hook で監査ログを実装する／ブランチ保護の <strong>Require status checks</strong> に今日作ったワークフロー名を追加して「テストが緑にならないと merge できない」状態を完成させる</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>.geminiignore</code> を進級制作リポジトリに push</strong>
+            <p>今日の演習で作った <code>.geminiignore</code> をリポジトリのルートに置いて push。最低でも <code>node_modules/</code> 系・<code>.env*</code> 系・自分の判断で AI に触らせたくないディレクトリ1つ、を含める。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>GitHub Actions の <code>test.yml</code> を push して PR で緑にする</strong>
+            <p>今日の演習で作った <code>.github/workflows/test.yml</code> を新規ブランチで push → PR を作って <strong>Actions タブで緑になることを確認</strong>してから merge。第7回のテストが PR ごとに自動で走るセンサー状態を完成させる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>Gemini CLI <code>BeforeTool</code> Hook を 1 つ動かす</strong>
+            <p><code>~/.gemini/settings.json</code> と <code>~/.gemini/hooks/block-secrets.js</code> を配置して、Gemini CLI を起動 → 「<code>.env</code> の中身を見せて」と依頼 → ブロックされる挙動を <strong>1 回スクショ</strong>して進級制作リポジトリの <code>docs/harness.md</code>（新規 OK）に貼り付ける。なぜ exit 2 を使ったかも 1〜2 行添える。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>ブランチ保護の <code>Require status checks</code> に <code>test</code> を追加</strong>
+            <p>1 限後半で有効化したブランチ保護ルールを編集して、今日 push した <code>test</code> ワークフローを <strong>必須ステータスチェック</strong>として登録。これで「テストが緑にならないと main に merge できない」状態が完成。Free private で機能制限がある場合は、その旨を <code>GEMINI.md</code> に明記して規範運用に切り替える。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong><code>AfterTool</code> Hook で監査ログを実装</strong>
+            <p><code>~/.gemini/hooks/audit.js</code> を新規作成し、ツール名・引数・結果を <code>~/.gemini/audit.log</code> に追記するだけの数行スクリプトを書く。<code>settings.json</code> の <code>hooks.AfterTool</code> に登録して、Gemini CLI 1 セッション分の作業ログが残ることを確認する。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://www.anthropic.com/engineering/harness-design-long-running-apps" target="_blank" rel="noopener">Anthropic Engineering — Harness design for long-running application development</a> — 「ハーネス」用語の一次出典。LLM 周辺の足場全般を俯瞰</li>
+        <li><a href="https://github.com/google-gemini/gemini-cli/blob/main/docs/hooks/reference.md" target="_blank" rel="noopener">gemini-cli — Hooks reference（公式）</a> — <code>BeforeTool</code> / <code>AfterTool</code> 等のイベント一覧と JSON スキーマの正本</li>
+        <li><a href="https://github.com/google-gemini/gemini-cli/blob/main/docs/hooks/writing-hooks.md" target="_blank" rel="noopener">gemini-cli — Writing hooks（公式）</a> — Hook 本体の書き方・stdin / stdout / stderr / exit code の意味</li>
+        <li><a href="https://github.com/google-gemini/gemini-cli/blob/main/docs/cli/gemini-ignore.md" target="_blank" rel="noopener">gemini-cli — <code>.geminiignore</code>（公式）</a> — <code>.gitignore</code> 準拠の glob と動作仕様</li>
+        <li><a href="https://docs.github.com/ja/actions/quickstart" target="_blank" rel="noopener">GitHub Docs — GitHub Actions のクイック スタート（日本語公式）</a> — ワークフロー YAML の最小例とトリガー</li>
+        <li><a href="https://docs.github.com/ja/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches" target="_blank" rel="noopener">GitHub Docs — 保護されたブランチについて（日本語公式）</a> — ブランチ保護の機能一覧とプランごとの利用可否</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week07.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第7回 テスト駆動開発（TDD）基礎</span>
+      </a>
+      <a href="../natural-language-dev.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">自然言語開発</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第9回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>

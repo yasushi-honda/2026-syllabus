@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第6回 グループでテーマを決めよう | AI活用プログラミング基礎</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+  <!-- 公式情報確認: 2026-06-04 (support.google.com/notebooklm/answer/16179559 + workspace.google.com/resources/ai/writing-effective-prompts/) -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--orange">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-programming.html">AI活用プログラミング基礎</a>
+        <span>/</span>
+        <span>第6回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">グループで<wbr>テーマを<wbr>決めよう</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 6</span>
+            <span class="page-badge">木曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value"><strong>グループ調査①</strong>。今日から <strong>第8回（中間共有会）まで3週連続</strong>で、4人グループで共通の興味あるテーマ（好きなアニメ／推しのスポーツ／旅行先など）を決めて調べる。今日はその第1回として<strong>グループ分け → テーマ決定 → 各自が自分専用 AI ノートで初期調査を開始</strong>するところまで進める</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">3週連続のグループ調査 / 4人グループ / 共通テーマ / 各自の AI で初期調査 / 第5回までに育てた自分専用 AI ノート / プロンプトの4要素（役割・文脈・指示・制約）</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第5回完了（自分専用 AI ノートに <strong>【学習データ①】自己紹介シート</strong>・<strong>【学習データ②】学習目標シート</strong>・<strong>【学習データ③】プロンプトのコツまとめ資料</strong>の3ソースが入っている状態）／NotebookLM にログインできる状態／ノートかメモアプリ（グループ内の話し合いをメモするため）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>これから3週かけて、グループで1つのテーマを調べていく<strong>全体像</strong>を理解する（今日：テーマ決定＋初期調査／第7回：役割分担して深掘り＋準備／第8回：中間共有会で他グループに5分プレゼン）</li>
+        <li>4人グループでお互いの興味を持ち寄り、<strong>全員が「これなら調べたい」と思える共通テーマ</strong>を1つ決めることができる</li>
+        <li>決まったテーマについて、<strong>自分専用 AI ノートを使って今日のうちに 3〜5 個の発見</strong>を持ち帰ることができる</li>
+        <li>第5回で身につけた<strong>プロンプトの4要素（役割・文脈・指示・制約）</strong>を、調査の場面で1〜2回意識して使える</li>
+        <li>グループの仲間が今日見つけた発見を聞いて、<strong>「次に自分は何を調べると役に立てそうか」</strong>を1つメモして帰る</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。第5回までと同じく、IT が苦手でも置いていかない進行で。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>第5回の振り返り → 3週連続グループ調査の全体像 → グループ分け</h3>
+          <div class="timeline-body">
+            <p><strong>第5回の振り返り（10分）</strong></p>
+            <ul>
+              <li>第5回課題で作った <strong>【学習データ③】プロンプトのコツまとめ資料</strong>を自分専用 AI ノートに追加できた人は、隣の人と「どんな工夫を書いたか」を1人1分でシェア</li>
+              <li>授業内で書ききれなかった人・追加し損ねた人は、今日の2限前半までに <strong>第5回ページ末尾のテンプレ</strong>からコピーして追加すれば追いつける（家で完成させても OK）</li>
+              <li>第5回までの達成: 自分専用 AI ノートに<strong>3つのソース</strong>（自己紹介・学習目標・プロンプトのコツ）が入って、「<strong>自分の状況を踏まえた、自分用のアドバイス</strong>」を AI が返せる土台が完成している状態</li>
+            </ul>
+            <p><strong>3週連続グループ調査の全体像（15分）</strong></p>
+            <ul>
+              <li>今日から第8回まで、グループ作業が3週続く:
+                <ul>
+                  <li><strong>今日（第6回）— グループ調査①</strong>: 4人グループを作って共通テーマを決める → 各自が自分のAIで初期調査を始める</li>
+                  <li><strong>第7回 — グループ調査②</strong>: 役割分担してテーマを深掘り。グループ内で進捗を共有し、足りない情報を補い合う。中間共有の準備</li>
+                  <li><strong>第8回 — 🎤 中間共有会</strong>: 各グループが調査内容を5分程度で軽く共有。聞き手からはコメントや質問を1つ。完璧なプレゼンではなく「やってみた・話してみた」体験</li>
+                </ul>
+              </li>
+              <li>この3週で大事にしたいこと:
+                <ul>
+                  <li><strong>「正解を見つける」より「自分たちなりの調べ方を試す」</strong>。同じテーマでも、調べる人によって見つかるものが違うのが面白いところ</li>
+                  <li>第5回までに育てた<strong>自分専用 AI ノート</strong>と<strong>プロンプトの4要素</strong>を、実際の調査で使ってみる初めての機会</li>
+                  <li>うまくいかなくて OK。第8回の中間共有会は<strong>「やってみた・話してみた」</strong>の場であって、完璧なプレゼンが目的ではない</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>グループ分け（15分）</strong></p>
+            <ul>
+              <li><strong>4人グループ</strong>を講師がその場で組む（出席状況により3人または5人のグループが1つできる場合あり、その場合はそのまま進めて OK）</li>
+              <li>グループ内で順番に1人1分で自己紹介:
+                <ol>
+                  <li>名前（普段呼ばれている呼び方で OK）</li>
+                  <li>第5回までに作った<strong>自分の AI の名前と性格</strong>を一言（第4回のカスタム指示を思い出して）</li>
+                  <li>「最近ハマっていること」「気になっていること」のどちらか1つ</li>
+                </ol>
+              </li>
+              <li>各グループは<strong>テーブル番号・代表者（記録係）</strong>を決める。記録係はテーマ決定の過程と決まったテーマを A4 1 枚程度にメモしておく（第8回の振り返りで使う）</li>
+              <li>「初対面の相手と話すのが苦手」「ITが得意な人とペアになるのが不安」という人がいてもOK。<strong>得意な人は教える側に回る、苦手な人は素直に質問する</strong>——両方が今日のグループの中で起きる前提</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>3週続くと知っておくのが大事:</strong> 今日のグループは第8回まで同じメンバーで続く。だから今日の段階で「<strong>このメンバーで3週やっていけそう</strong>」と思える関係を作っておくのが、後の2週をラクにする一番のコツ。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>共通テーマを 1 つ決める — 全員が「これなら調べたい」と思える1つに</h3>
+          <div class="timeline-body">
+            <p><strong>各自の興味を出す（15分）</strong></p>
+            <ul>
+              <li>各自、<strong>「グループで3週かけて調べてもいい」と思える興味</strong>を <strong>3 個</strong>、付箋（無ければノートの切れ端）に1つずつ書く</li>
+              <li>例（自由に発想して OK）:
+                <ul>
+                  <li>好きなアニメ・マンガ・ゲーム・アーティスト</li>
+                  <li>推しのスポーツ・推しの選手</li>
+                  <li>行ってみたい旅行先・気になる国・気になる都市</li>
+                  <li>気になっている食べ物・スイーツ・飲み物</li>
+                  <li>最近ハマっているSNSの話題・YouTube のジャンル</li>
+                  <li>ファッション・ヘアスタイル・コスメ</li>
+                  <li>気になっている職業・働き方</li>
+                </ul>
+              </li>
+              <li>本名・住所・学校の内部事情・他人の悪口など、<strong>第8回の中間共有会で他のグループに話せない内容</strong>は今日は外す</li>
+              <li>4人 × 3個 = 12個の付箋がテーブルに並ぶ状態を作る</li>
+            </ul>
+            <p><strong>グループ化と1つに絞る（25分）</strong></p>
+            <ul>
+              <li>テーブルの上で、似ているもの・関連しているものを近くにまとめる（例: 「アニメ」「マンガ」「ゲーム」は近くに置く）</li>
+              <li>記録係が、まとまったグループに<strong>1〜2 単語の見出し</strong>をつけて口頭で読み上げる（例: 「サブカル」「アジア旅行」「スポーツ観戦」など）</li>
+              <li>全員で1分間目を閉じて、<strong>「自分が3週調べてもワクワクできそうな見出し」</strong>を1つ心の中で選ぶ</li>
+              <li>順番に1人ずつ「私はこの見出し」と言う → 1回で全員一致しなくて当たり前。一致しなかったら次のステップへ</li>
+              <li><strong>絞り方の例</strong>:
+                <ul>
+                  <li>票が多かった見出し2つを残して、それぞれ「これを3週調べると何が見えてきそうか」をグループで1分だけ話す</li>
+                  <li>最後にもう一度全員で1つ選ぶ。それでも割れたら<strong>記録係がじゃんけんで決めて OK</strong>（時間をかけすぎない）</li>
+                  <li>「自分の第1希望ではないテーマに決まった」という人も、<strong>「3週やってみるとどんな発見があるか分からない」</strong>という姿勢で参加する</li>
+                </ul>
+              </li>
+              <li>決まったテーマを <strong>1文</strong>でグループ内合意する。例:
+                <ul>
+                  <li>「日本の地方都市の魅力を調べる」</li>
+                  <li>「カフェのドリンクメニューが流行る理由を探る」</li>
+                  <li>「ジャンルの違う3人のミュージシャンを聴き比べてみる」</li>
+                </ul>
+              </li>
+              <li>記録係はテーマ1文と、後で見返せるように<strong>「なぜそのテーマに決めたか」</strong>を1〜2行メモ</li>
+            </ul>
+            <p><strong>テーマを自分の AI に伝える準備（10分）</strong></p>
+            <ul>
+              <li>各自、第5回までに育てた<strong>自分専用 AI ノート</strong>を開いて、決まったテーマを<strong>第1回目のプロンプト</strong>として書ける形に整える</li>
+              <li>第5回で学んだ<strong>プロンプトの4要素</strong>を思い出す:
+                <ul>
+                  <li><strong>役割</strong>: 自分の AI に与えた性格＋今日の調査担当としての立場（例: 「初心者向けのリサーチアシスタントとして」）</li>
+                  <li><strong>文脈</strong>: 4人グループで3週かけてこのテーマを調べることになった、という背景</li>
+                  <li><strong>指示</strong>: 今日は「テーマを <strong>3〜5 個の切り口に分ける手伝い</strong>」をしてほしい</li>
+                  <li><strong>制約</strong>: 専門用語を使わない／日本語で／箇条書きで5項目以内</li>
+                </ul>
+              </li>
+              <li>2限前半でこの形のプロンプトを実際に投げる。今は<strong>頭の中で組み立てるだけ</strong>でOK</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「これがいい」と「これでいい」のあいだ:</strong> グループでテーマを決めるとき、全員の第1希望が一致することは稀。「<strong>第1希望ではないけれど、3週やってみる価値はありそう</strong>」のラインで合意できれば十分。完璧な一致を狙うと時間が無くなる。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>各自が自分専用 AI ノートで初期調査を始める</h3>
+          <div class="timeline-body">
+            <p><strong>自分専用 AI ノートでテーマを切り口に分ける（20分）</strong></p>
+            <ul>
+              <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">notebooklm.google.com</a> にログイン → <strong>自分専用 AI ノート</strong>を開く（第3回〜第5回で育てたソース3つが入っている状態）</li>
+              <li>1限後半の準備で組み立てたプロンプトを投げる。例:
+                <pre><code>あなたは私の初心者向けリサーチアシスタントです。
+今日からグループで「[テーマ1文]」を3週かけて調べることになりました。
+このテーマを、グループ4人で手分けして調べるための
+「切り口」を3〜5個に分けてください。
+専門用語を使わず、日本語で、箇条書きで5項目以内に。
+</code></pre>
+              </li>
+              <li>返ってきた応答に <strong>引用番号 [1] [2] [3]</strong> が付くことに注目（自分専用 AI ノートのソースを参照して答えている証拠）</li>
+              <li>応答の中で「これは興味ある」「これは自分が担当したい」と思った切り口に印をつける</li>
+            </ul>
+            <p><strong>1 つの切り口を深く聞く（20分）</strong></p>
+            <ul>
+              <li>AI が提案した切り口の中から <strong>1 つ</strong>を選んで、さらに掘り下げて聞く。例:
+                <pre><code>「[切り口1]」について、初心者の私がこれから調べるなら、
+最初にぶつかる疑問を 3 つ挙げてください。
+それぞれ、なぜその疑問が出てくるかも 1 行で添えてください。
+</code></pre>
+              </li>
+              <li>返ってきた疑問の中から、自分が「これは答えを知りたい」と思うものを1つ選んで、もう1回深く聞く:
+                <pre><code>「[疑問1]」について、現時点で分かっている範囲で
+答えてください。分からない部分・あいまいな部分は
+「分からない」「あいまい」と正直に言ってください。
+</code></pre>
+              </li>
+              <li>第4回・第5回で学んだ「AI は時々間違える」「あいまいな指示にはあいまいな答えが返る」を思い出して、<strong>応答を鵜呑みにしないで読む</strong>。「ここは確信ありそう」「ここは怪しい」を自分で区別する練習</li>
+            </ul>
+            <p><strong>発見メモを残す（10分）</strong></p>
+            <ul>
+              <li>Google ドキュメントを新規作成し、ファイル名を <strong><code>○○の[テーマ]調査メモ</code></strong> にする（○○は自分の名前やニックネーム、[テーマ]はグループで決めたテーマの短縮版）</li>
+              <li>今日の調査で見つけた発見を <strong>3〜5 個</strong>、箇条書きでメモ:
+                <ul>
+                  <li>どの切り口を選んだか</li>
+                  <li>AI が答えた内容のうち、自分が「面白い」と思った点</li>
+                  <li>「ここは怪しい」「ここは別のソースで確認したい」と思った点</li>
+                  <li>次に調べるとしたら何を聞きたいか</li>
+                </ul>
+              </li>
+              <li>このメモは<strong>第7回・第8回で使う</strong>。消さずに残す</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>引用番号 [1] [2] [3] は AI が嘘をつきにくい仕組み:</strong> 自分専用 AI ノートでは、AI は「自分が読んだソースの中から」答える。引用番号があると「どのソースを参照したか」が分かるので、素の Gemini で聞いた時より<strong>あいまいな答えが減りやすい</strong>。今日の調査では、引用番号がついた応答とついていない応答の違いも観察してみる。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>グループに戻って今日の発見を口頭で共有 → 役割分担の素案</h3>
+          <div class="timeline-body">
+            <p><strong>1 人 3 分の口頭シェア（15分）</strong></p>
+            <ul>
+              <li>グループに戻って、1人 3 分ずつ<strong>今日の発見</strong>を口頭で共有（4人なら計 12 分）</li>
+              <li>話す内容:
+                <ul>
+                  <li>自分が選んだ切り口</li>
+                  <li>面白かった発見を 1〜2 個</li>
+                  <li>「ここは怪しい」「もっと調べたい」と思った点を 1 つ</li>
+                </ul>
+              </li>
+              <li>聞き手は<strong>メモを取りながら聞く</strong>。「あ、それは自分の切り口とつながるかも」と思ったら口に出してOK</li>
+              <li>記録係はホワイトボード（無ければノート）に各自の切り口を書き出していく</li>
+            </ul>
+            <p><strong>次回までの役割分担を仮で決める（10分）</strong></p>
+            <ul>
+              <li>4人で並んだ切り口を見て、<strong>第7回までに各自がどの切り口を深く調べるか</strong>を仮で決める</li>
+              <li>切り口が重なっていれば話し合って分担。空いている重要な切り口があれば誰かが担当する</li>
+              <li>「仮」でOK。第7回の冒頭でもう一度調整する</li>
+              <li>記録係は、テーマ1文 + 各自の担当切り口 + 各自が次回までにやることを 1 枚にまとめる</li>
+            </ul>
+            <p><strong>家でやることの確認（5分）</strong></p>
+            <ul>
+              <li>家での発展は<strong>任意</strong>。授業内で進んだ範囲で OK</li>
+              <li>余裕がある人は、自分の担当切り口について<strong>家で 1〜2 個追加の発見</strong>を <code>○○の[テーマ]調査メモ</code> に書き足しておくと、第7回が楽になる</li>
+              <li>「自分の AI に役割を覚えさせたい」人は、第4回で書いたカスタム欄に「今、[テーマ]の[切り口]を調べています」を 1 行追加して保存しておくと、家で続きを聞くときに毎回背景を説明しなくて済む</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>口頭共有は AI に勝るところ:</strong> AI は何でも答えてくれるけれど、<strong>「あ、それは私が今日見つけたあれとつながる」</strong>のような<strong>人間同士の発見の連鎖</strong>は AI には作れない。グループ調査の本当の価値は、ここで起きる。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り＆次回予告</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>今日のキーワード: <strong>3週連続のグループ調査 / 4人グループ / 共通テーマ / 自分専用 AI ノートで初期調査 / プロンプトの4要素 / 引用番号付きの応答</strong></li>
+              <li>覚えてほしいこと: <strong>「これがいい」と「これでいい」のあいだで合意するのがグループのコツ</strong>。完璧な一致ではなく、3週やってみる価値があると全員が思える1つに絞れれば十分</li>
+              <li>今日の達成: 4人グループでテーマを決めた／各自の自分専用 AI ノートで初期調査を始めた／グループ内で発見を口頭で共有した／第7回までの役割分担を仮で決めた</li>
+              <li>次回（第7回）: <strong>グループ調査と準備</strong>。役割分担してテーマを深掘り。グループ内で進捗を共有し、足りない情報を補い合う。第8回（中間共有会）の準備も始める</li>
+              <li>家での発展（任意）: 自分の担当切り口で追加の発見を <code>○○の[テーマ]調査メモ</code> に 1〜2 個書き足す／第4回のカスタム欄に「今、[テーマ]の[切り口]を調べています」を 1 行追加して保存</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>もし NotebookLM が学校アカウントで使えなかったら（フォールバック）</h2>
+      <p>第3回〜第5回と同じ進め方で大丈夫。</p>
+      <ul>
+        <li><strong>A. 個人 Google アカウントに切り替えてログイン</strong>（無料で利用可能）</li>
+        <li><strong>B. ペアでお互いの画面を見せ合いながら進める</strong>（NotebookLM が使える人と画面共有しながら、グループ内のもう1人として参加）</li>
+      </ul>
+      <p><strong>第3〜5回を欠席して自分専用 AI ノート・3つのソースが揃っていない人へ:</strong> 今日のグループ作業はそのまま参加して OK（テーマ決め・口頭シェアは AI なしでも進められる）。2限前半の<strong>初期調査</strong>は、グループの仲間に画面を見せてもらいながら<strong>素の Gemini</strong>（<a href="https://gemini.google.com" target="_blank" rel="noopener">gemini.google.com</a>）で同じプロンプトを試す形で代替できる。授業後、家で第3〜5回ページの手順を一気にやって自分専用 AI ノートを完成させると、第7回からは追いつける。詰まったら次回授業の冒頭で講師に相談してください。</p>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>家で試してみよう（任意）</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">やってみよう</span>
+          <div>
+            <strong><code>○○の[テーマ]調査メモ</code> に追加の発見を 1〜2 個書き足す</strong>
+            <p>授業内で書ききれなかった発見、家で AI に追加で聞いてみた内容、別のサイトで見つけた関連情報など、自由に追加。<strong>本名・住所・他人の悪口は書かない</strong>原則は第3〜5回と同じ。1行で OK。空欄でも OK。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">やってみよう</span>
+          <div>
+            <strong>カスタム欄に「今、[テーマ]の[切り口]を調べている」を 1 行追加</strong>
+            <p>第4回で書いたカスタム指示欄に、今 3 週調査中のテーマと自分の担当切り口を 1 行追加して<strong>保存</strong>。家で AI に続きを聞くとき、毎回背景を説明しなくて済む。第7回が始まったらまた更新する前提なので、1 行追加で十分。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">もっと深める</span>
+          <div>
+            <strong>素の Gemini で同じテーマを聞いてみて違いを観察</strong>
+            <p><a href="https://gemini.google.com" target="_blank" rel="noopener">素の Gemini</a> でも今日と同じテーマを 1 回だけ聞いてみる。<strong>引用番号が付かない応答</strong>が返ってきて、自分専用 AI ノートとの違いを実感できる。違いに気づいたら <code>○○の[テーマ]調査メモ</code> に 1 行メモしておく。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">もっと深める</span>
+          <div>
+            <strong>気になる切り口について別のサイトを 1 つ読む</strong>
+            <p>自分の担当切り口に関する公式サイト・ニュース記事・解説記事を 1 つだけ読んで、AI の応答と<strong>一致する内容・違う内容</strong>を 1〜2 個メモする。第7回・第8回で「AI の応答と現実の情報の照らし合わせ」をする練習の前段。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> — 自分専用 AI ノート（3 つのソースが揃った場所）</li>
+        <li><a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a> — 素の Gemini（フォールバック用・素の応答との比較用）</li>
+        <li><a href="https://support.google.com/notebooklm/answer/16179559?hl=ja" target="_blank" rel="noopener">NotebookLM ヘルプ — NotebookLM でチャットを使用する（日本語公式）</a> — 「チャットを設定」3 モード（デフォルト／学習ガイド／カスタム）の公式説明</li>
+        <li><a href="https://workspace.google.com/resources/ai/writing-effective-prompts/" target="_blank" rel="noopener">Google Workspace — ビジネスで効果を発揮する AI プロンプトの書き方</a> — プロンプト 4 要素（ペルソナ／タスク／背景情報／形式）の安定ソース。本授業の<strong>役割・文脈・指示・制約</strong>と対応</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week05.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第5回 プロンプトの基本</span>
+      </a>
+      <a href="../ai-programming.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AI活用プログラミング基礎</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第7回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
