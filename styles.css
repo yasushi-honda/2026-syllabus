@@ -1310,6 +1310,14 @@ img { max-width: 100%; display: block; }
   overflow-y: auto;
 }
 
+/* `!==` `===` `<=` `=>` 等の合字（ligature）は教材文脈で原文字数を誤解させるため無効化 */
+code,
+pre,
+.md-preview {
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
+}
+
 /* Syllabus content */
 .syllabus-content {
   padding-bottom: var(--sp-16);
