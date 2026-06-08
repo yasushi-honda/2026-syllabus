@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第7回 AIコーディング支援入門 | AIコミュニケーション基礎</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication.html">AIコミュニケーション基礎</a>
+        <span>/</span>
+        <span>第7回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">AIコーディング<wbr>支援入門</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 7</span>
+            <span class="page-badge">火曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">Gemini に<strong>コードを生成させ・動かし・直す</strong>サイクルを体験する。<strong>Gemini Canvas</strong> なら同じ画面でコードと動作プレビューを並べられるので、コードを書いた経験がなくても「動く・動かない」が目で見える。エラーメッセージを Gemini にそのまま戻して直す<strong>共同デバッグ</strong>と、自分の手元のコードを Gemini に<strong>自分の言葉で説明させる</strong>演習を通じて、AI と「コードについて話せる」状態を作る</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">Gemini Canvas / コード生成プロンプト / 動作プレビュー / エラーメッセージの貼り戻し / 共同デバッグ / 「このコードは何をしているか」を自分の言葉で説明させる / 用語集としての自分のAI / 【学習データ⑦】プログラミング基礎用語集</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第6回までに <strong>【学習データ①〜⑥】</strong> を投入した「自分だけのAI」（NotebookLM）・Gemini が使えるブラウザ・Google ドキュメントが使える状態。コードを書いたことが無くても OK</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>Gemini の <strong>Canvas</strong> 機能で、簡単な HTML/JavaScript のコードを生成し、その場で動作プレビューを確認できる</li>
+        <li>動かなかったときに、エラーメッセージや「動かなかった様子」をそのまま Gemini に戻して<strong>共同で原因を探る</strong>サイクルを 1 回まわせる</li>
+        <li>生成されたコードを<strong>自分の言葉で説明できるか</strong>確認し、説明できない部分は Gemini に説明させて確認できる</li>
+        <li>AI が出すコード解説は<strong>常に正しいわけではない</strong>と理解し、第4回の検証姿勢をコードの場面でも応用できる</li>
+        <li>授業内で <strong>【学習データ⑦】プログラミング基礎用語集</strong> を作成し、自分のAIに追加する</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の振り返りと「AI にコードを頼む」の輪郭を掴む</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り（10分）</strong></p>
+            <ul>
+              <li>第6回で投入した <strong>【学習データ⑥】プロンプト改善ワークシート</strong> がソースに入っているか NotebookLM で確認</li>
+              <li>家でやった「別のテーマで A → B → C」の手応えを希望者が一人 1〜2 文で共有</li>
+              <li>今日からは <strong>「役割・目的・制約・例」の 4 要素</strong>を、コードを書かせる場面に応用する</li>
+            </ul>
+            <p><strong>「コードもプロンプトの一種」と捉え直す（15分）</strong></p>
+            <ul>
+              <li>AI に「文章を書いて」と頼むのも、「コードを書いて」と頼むのも、<strong>仕組みとしては同じ</strong>——どちらも「次に来るトークンを予測する」</li>
+              <li>違うのはコードの場合、出てきた結果を<strong>動かして確かめられる</strong>こと——文章は「読んでみてしっくり来るか」しかチェックできなかったが、コードは<strong>動く / 動かない</strong>がはっきり出る</li>
+              <li>そのため、コードを頼むときのプロンプトは特に<strong>制約（言語・動作環境・期待する出力）</strong>を明示するのが効く</li>
+              <li>たとえば「自己紹介ページを作って」より「<strong>1 つの HTML ファイルだけで動く、ボタンを押すと挨拶文が変わる、初心者向けに短く</strong>」のほうが、Gemini が出すコードがブレない</li>
+            </ul>
+            <p><strong>Gemini Canvas に切り替える（15分）</strong></p>
+            <ul>
+              <li>Gemini を開き、画面下部の入力欄の近くにある「<strong>Canvas</strong>」ボタンをクリック（公式: <a href="https://gemini.google/overview/canvas/" target="_blank" rel="noopener">Gemini Canvas</a>）</li>
+              <li>Canvas モードでは応答が<strong>右側のパネル</strong>に開き、コードと動作プレビューを<strong>同じ画面で行き来できる</strong>のがポイント</li>
+              <li>Canvas で扱える主なファイル形式: HTML/CSS/JavaScript（1 ファイルにまとまったもの）、Python、Markdown ドキュメント</li>
+              <li>今日は <strong>HTML/CSS/JavaScript</strong>（1 ファイル）を中心に扱う——ブラウザだけで完結し、PC への保存・実行環境構築なしで動かせる</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「コードが書けないと困る授業ではありません」:</strong> この回は<strong>コードを書く授業</strong>ではなく、<strong>AI とコードについて話す授業</strong>です。生成されたコードを 1 行ずつ理解する必要はありません。<strong>「動くか・動かないか」「思った通りか・違うか」</strong>を観察し、AI とのやり取りで近づけていく感覚を掴むのがゴールです。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>Gemini Canvas で<strong>動く小さなページ</strong>を作って動かす</h3>
+          <div class="timeline-body">
+            <p><strong>お題：ボタンで色が変わる挨拶ページ（15分）</strong></p>
+            <ul>
+              <li>Canvas モードの Gemini に、次のプロンプトを投げる:
+                <pre><code>あなたは Web 入門の先生です。
+HTML/CSS/JavaScript が 1 つのファイルにまとまった
+「ボタンを押すと背景色がランダムに変わり、画面中央に挨拶文が
+表示される」シンプルなページを作ってください。
+
+【条件】
+- 1 つの HTML ファイルだけで動く
+- ライブラリは使わない
+- ボタンには「色を変える」と書く
+- 挨拶文は「こんにちは、世界！」で固定でよい
+- コード全体は 60 行以内
+- 初心者が読みやすいように、各セクションに短い日本語コメントを入れる</code></pre>
+              </li>
+              <li>応答が右側の Canvas パネルに出てくる——上に<strong>動作プレビュー</strong>、下に<strong>コード</strong>が並ぶレイアウト（または切替タブ）</li>
+              <li>プレビューでボタンをクリックして、背景色が変わるか・挨拶文が出るかを確認</li>
+            </ul>
+            <p><strong>「動いた」の中身を観察する（15分）</strong></p>
+            <ul>
+              <li>動いた場合:
+                <ul>
+                  <li>コードの中に <strong>HTML（構造）/ CSS（見た目）/ JavaScript（動き）</strong>の 3 領域がどこにあるかをコメントを頼りに探す</li>
+                  <li>「<strong>このボタンを押したときの動きはどの行が担当しているか</strong>」を自分なりに当てて、答え合わせは後で Gemini にする</li>
+                </ul>
+              </li>
+              <li>動かなかった場合:
+                <ul>
+                  <li>プレビューが真っ白 / ボタンが反応しない / 色が変わらない、のうちどれが起きたかをメモ</li>
+                  <li>そのまま Gemini に「<strong>プレビューで○○が起きません。原因を一緒に探してください</strong>」と返す</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>1 か所だけ自分流に変えてみる（20分）</strong></p>
+            <ul>
+              <li>Canvas のコードは<strong>編集可能</strong>。たとえば次のどれか 1 つを自分の手で変えてみる:
+                <ul>
+                  <li>挨拶文を自分が好きなフレーズに変える</li>
+                  <li>ボタンの文字を「色を変える」から「次の気分」などに変える</li>
+                  <li>背景色の候補を、AI が出した色から自分の好きな色に差し替える</li>
+                </ul>
+              </li>
+              <li>変えた後にプレビューを更新（自動更新でなければ Canvas の更新ボタン）して、思った通りに変わったか確認</li>
+              <li>変な動きになった場合は、<strong>変える前のコード</strong>に Ctrl+Z（取り消し）で戻すか、Gemini に「<strong>○○の部分を△△に変えたら×× になりました。元の動きに戻しつつ、私が変えたかった意図を活かしてください</strong>」と相談</li>
+              <li>これが<strong>AI と一緒にコードを育てる</strong>感覚——全部を自分で書けなくても、変更を依頼する側になれる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>エラーを<strong>そのまま貼り戻す</strong>共同デバッグと「説明させる」演習</h3>
+          <div class="timeline-body">
+            <p><strong>あえて壊して、エラーメッセージを観察する（15分）</strong></p>
+            <ul>
+              <li>1 限後半で動かしたコードのうち、JavaScript の<strong>セミコロンを 1 個消す</strong>、<strong>関数名を 1 文字だけタイプミス</strong>するなど、ごく小さな破壊を 1 か所だけ行う</li>
+              <li>プレビューが止まる・ボタンが反応しなくなる現象を観察</li>
+              <li>ブラウザの<strong>開発者ツール（F12）→ Console タブ</strong>を開くと、赤い文字でエラーメッセージが出ているはず——たとえば <code>SyntaxError</code> や <code>ReferenceError</code></li>
+              <li>このエラーメッセージは <strong>「英語でちょっと怖い」</strong>けど、実は AI が読むのが一番得意な相手</li>
+            </ul>
+            <p><strong>エラーメッセージをそのまま Gemini に戻す（15分）</strong></p>
+            <ul>
+              <li>Console の赤いエラーメッセージを<strong>1 行ごとコピー</strong>して、Canvas モードのまま Gemini に投げる:
+                <pre><code>さっき作ってもらったコードで、次のエラーが出ました。
+
+[ここにエラーメッセージを貼り付け]
+
+私が直前にやった変更は「[セミコロンを消した / 関数名を typo した など]」です。
+原因と直し方を、初心者にもわかる言葉で説明してください。</code></pre>
+              </li>
+              <li>Gemini が原因と修正版コードを返してきたら、Canvas に反映してプレビューで確認</li>
+              <li><strong>動作が戻ったら成功</strong>。AI と「壊れた→相談→直った」のサイクルを 1 周まわせたことが今日の中核体験</li>
+            </ul>
+            <p><strong>「このコードは何をしているか」を Gemini に説明させる（20分）</strong></p>
+            <ul>
+              <li>直したコードについて、自分が<strong>一番ピンときていない部分</strong>を 5〜10 行だけ範囲指定で Gemini に投げる:
+                <pre><code>このコードが何をしているか、初心者にもわかる言葉で
+1 行ずつ説明してください。
+
+[コードを貼り付け]
+
+専門用語が出てきた場合は、初出のときに括弧で簡単な意味も
+添えてください。</code></pre>
+              </li>
+              <li>Gemini の説明を読み、<strong>自分が思っていた動きと一致するか</strong>を比較する</li>
+              <li>違っていた箇所・新しく知った用語を、後で <strong>【学習データ⑦】</strong> の素材として Google ドキュメントにメモしておく</li>
+              <li>AI の説明も<strong>常に正しいわけではない</strong>（第4回の学び）。「<strong>本当にそうか</strong>」と思った行があれば、別のプロンプトで聞き直したり、参考リンクの MDN で裏取りする習慣を持つ</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「全部わからなくても進める」:</strong> 説明を読んで <strong>「ここはわかった」「ここはまだピンと来ない」</strong>と切り分けられれば十分です。<strong>「わからない」を正確に言える</strong>のが、AI 時代の最初のスキル。次に聞くときの精度が一気に上がります。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>【学習データ⑦】プログラミング基礎用語集を作成し投入する</h3>
+          <div class="timeline-body">
+            <p><strong>書く内容</strong></p>
+            <ul>
+              <li>Google ドキュメントを新規作成、ファイル名を <strong><code>【学習データ⑦】プログラミング基礎用語集</code></strong> にする</li>
+              <li>第5回で学んだとおり、<strong>見出し1〜3 + 箇条書き</strong>で構造化する（NotebookLM の応答精度が上がる）</li>
+              <li>項目（最低限）:
+                <ul>
+                  <li><strong>見出し1: プログラミング基礎用語集</strong>（自分が今日出会った言葉を、自分のために整理する）</li>
+                  <li><strong>見出し2: 今日 Gemini に説明させた用語</strong> — 例: <strong>HTML / CSS / JavaScript / 関数 / 変数 / セミコロン / コメント</strong> など、出てきたものを 5〜10 個。各語に「Gemini の説明」と「自分の言葉で書き直したもの」をペアで残す</li>
+                  <li><strong>見出し2: エラーメッセージの読み方メモ</strong> — 今日出会ったエラーの種類（<code>SyntaxError</code>, <code>ReferenceError</code> など）と、「<strong>何が原因のことが多かったか</strong>」を 1〜2 行ずつ</li>
+                  <li><strong>見出し2: コードを頼むときの自分テンプレ</strong> — 1 限後半で使った「役割 + 目的 + 制約」のプロンプトを<strong>自分仕様</strong>に書き直して保存。次回以降コピーで使える状態にする</li>
+                  <li><strong>見出し2: わからないままにした言葉</strong> — 今日は深追いせず、後日聞き直したい用語を 2〜3 個。空欄でも OK</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>NotebookLM のソースに追加する</strong></p>
+            <ul>
+              <li>第2〜6回と同じ手順で、<strong>【学習データ⑦】</strong> をソース追加</li>
+              <li>追加直後に自分のAIに質問:
+                <pre><code>今日学んだ「コードを頼むときの自分テンプレ」を使って、
+「ボタンを押すと現在時刻が表示されるシンプルな HTML ページ」を
+頼むためのプロンプトを下書きしてください。
+私の用語集に出てこない専門用語は使わないでください。</code></pre>
+              </li>
+              <li>応答に、自分の用語集に登録した言葉が登場するかを観察</li>
+              <li>登場しない・知らない単語が増えた場合は「<strong>【学習データ⑦】の見出し2「今日 Gemini に説明させた用語」に登録済みの言葉だけで書き直してください</strong>」と追加指示——<strong>自分のAIに「自分の語彙」を覚えさせる</strong>作業</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「コードが書けるようになる前に、コードについて話せるようになる」:</strong> 今日作った <strong>【学習データ⑦】</strong> は、第8回以降「自分のAIを使いこなす」「AI出力の検証と改善」でも下敷きとして使います。<strong>用語集は完成品ではなく、これから増やしていくノート</strong>。次に新しい言葉と出会ったら、Google ドキュメントに戻って 1 行追加 → NotebookLM のソースを再同期、を繰り返してください。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ ai-communication.html Week 8 「自分のAIを使いこなす」と同期 -->
+              <li>次回（第8回）: <strong>自分のAIを使いこなす</strong>——NotebookLM の検索・参照機能を活用した過去情報の再利用。これまでの学びを自分のAIに整理させる個人演習。<strong>【学習データ⑧】課題解決フレームワーク資料</strong></li>
+              <li>「今日いちばん助けられた瞬間は <strong>コード生成・エラー貼り戻し・コード説明</strong> のどれだったか」を一つ言語化して退出</li>
+              <li>家で <strong>別のお題</strong>（タイマー、簡単な計算機、好きな食べ物リストなど）でもう一度 Canvas で同じサイクルをまわすと、用語集が自然と増える</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>【学習データ⑦】プログラミング基礎用語集 テンプレ(コピー用)</h2>
+      <p>授業内で書ききれなかった人や<strong>家でゼロから作り直したい人</strong>、<strong>別の Google アカウントで作り直したい人</strong>のために、テンプレ本文をここからコピーできるようにしてある。</p>
+      <p><strong>使い方:</strong></p>
+      <ol>
+        <li>下の「Markdown をコピー」ボタンを押す</li>
+        <li><a href="https://docs.google.com" target="_blank" rel="noopener">Google ドキュメント</a> で新規ドキュメントを開く(ファイル名は <strong>「【学習データ⑦】プログラミング基礎用語集」</strong>)</li>
+        <li>Google ドキュメントの <strong>ツール → 設定 → 全般タブ →「マークダウンを有効にする」</strong>がオンになっているか確認(第5〜6回までに設定した人はそのまま)</li>
+        <li>本文に <strong>編集 →「マークダウンから貼り付け」</strong>で貼り付ける(普通の Ctrl/⌘+V でも内容は使えるので、Markdown 整形にこだわらない人はそのままで OK)→ 空欄を自分の言葉で埋める</li>
+        <li>NotebookLM の自分だけのAIで「ソースを追加」→「ドライブ」→ このドキュメントを選択</li>
+      </ol>
+      <p><strong>個人情報を入れない原則は第1〜6回と同じ。</strong>本名・住所・電話番号・学籍番号は書かない。書ける範囲で OK・空欄でも OK。</p>
+      <button class="copy-md-btn" data-md-source="programming-glossary-md">
+        <span class="btn-icon"></span> Markdown をコピー
+      </button>
+<pre id="programming-glossary-md" class="md-preview"># プログラミング基礎用語集(NotebookLM 用)
+
+> このシートは「自分だけのAI」の 7 つ目のソースとして使います。
+> 第1〜6回で蓄積した【学習データ①〜⑥】に「自分の語彙でのプログラミング用語」を足すことで、AI が「私が知っている言葉」だけで応答を組み立てやすくなります。
+> 個人情報(本名・住所・電話番号・学籍番号など)は書かないこと。書ける範囲で OK・空欄でも OK。
+
+## ① 今日 Gemini に説明させた用語
+今日 Gemini Canvas で出会った用語を、AI の説明と自分の言葉の両方で残す。最低 5 個。新しい用語に出会ったら、後日この章に追記していく。
+
+**用語 1: HTML**
+- Gemini の説明:
+- 自分の言葉:
+
+→
+
+**用語 2: CSS**
+- Gemini の説明:
+- 自分の言葉:
+
+→
+
+**用語 3: JavaScript**
+- Gemini の説明:
+- 自分の言葉:
+
+→
+
+**用語 4: (自分が今日出会った用語)**
+- Gemini の説明:
+- 自分の言葉:
+
+→
+
+**用語 5: (自分が今日出会った用語)**
+- Gemini の説明:
+- 自分の言葉:
+
+→
+
+## ② エラーメッセージの読み方メモ
+今日出会ったエラー、または Gemini に「初心者がよく出会うエラー」を聞いて教えてもらったものを残す。
+
+**エラー 1: SyntaxError(文法エラー)**
+- どんな時に出るか:
+- 自分の言葉での意味:
+- 直し方の第一歩:
+
+→
+
+**エラー 2: ReferenceError(参照エラー)**
+- どんな時に出るか:
+- 自分の言葉での意味:
+- 直し方の第一歩:
+
+→
+
+**エラー 3: (今日自分が出会ったエラー、任意)**
+- どんな時に出るか:
+- 自分の言葉での意味:
+- 直し方の第一歩:
+
+→
+
+## ③ コードを頼むときの自分テンプレ
+1 限後半で使った「役割 + 目的 + 制約」のプロンプトを、自分が次回以降コピペで使える形に整える。
+
+**テンプレ A: シンプルな 1 ファイル HTML ページを頼むとき**
+
+```
+あなたは Web 入門の先生です。
+HTML/CSS/JavaScript が 1 つのファイルにまとまった
+「[ここにやりたいことを書く]」シンプルなページを作ってください。
+
+【条件】
+- 1 つの HTML ファイルだけで動く
+- ライブラリは使わない
+- コード全体は 60 行以内
+- 初心者が読みやすいように、各セクションに短い日本語コメントを入れる
+```
+
+→ 自分の使い道に寄せた書き換え案:
+
+→
+
+**テンプレ B: エラーを共同で直してもらうとき**
+
+```
+さっき作ってもらったコードで、次のエラーが出ました。
+
+[ここにエラーメッセージを貼り付け]
+
+私が直前にやった変更は「[何を変えたか]」です。
+原因と直し方を、初心者にもわかる言葉で説明してください。
+```
+
+→ 自分の言い回しに整えた版:
+
+→
+
+**テンプレ C: コードを 1 行ずつ説明させるとき**
+
+```
+このコードが何をしているか、初心者にもわかる言葉で
+1 行ずつ説明してください。
+
+[コードを貼り付け]
+
+専門用語が出てきた場合は、初出のときに括弧で簡単な意味も
+添えてください。
+```
+
+→ 自分の言い回しに整えた版:
+
+→
+
+## ④ わからないままにした言葉
+今日は深追いせず、後日聞き直したい用語。空欄でも OK。次の授業で 1 つ消化できれば十分。
+
+- 用語 1:
+- 用語 2:
+- 用語 3:
+
+## メモ(自由記入)
+今日の AI コーディング支援学習で気づいたこと・引っかかったこと・次に試したいこと。空欄でも OK。
+(例: 「エラーをそのまま貼り戻すと、AI が思ったより的確に直してくれた」「Canvas の動作プレビューがあるとコードを直す判断が早くなった」)
+
+→
+</pre>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>【学習データ⑦】プログラミング基礎用語集を完成させて NotebookLM に投入する</strong>
+            <p>授業内で書き切れなかった項目を埋め、第5〜6回で学んだ<strong>見出し1〜3と箇条書き</strong>で構造化した状態でソースに入れる。投入済みかどうかは次回確認します。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>別のお題で Gemini Canvas の生成 → 修正サイクルをもう 1 周まわす</strong>
+            <p>今日と違うお題（タイマー、計算機、好きな食べ物リストなど）を 1 つ選び、コード生成 → わざと小さく壊す → エラーを Gemini に貼り戻して直す、を 1 周まわす。出てきた新しい用語があれば <strong>【学習データ⑦】</strong> の「① 今日 Gemini に説明させた用語」に追記する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>Google「Prompt design strategies」を眺める</strong>
+            <p>下記の参考リンクから公式の Prompt design strategies を開き、<strong>授業で扱わなかったヒントを 1 つだけメモ</strong>する。【学習データ⑦】の「③ コードを頼むときの自分テンプレ」のどこかに追記しておくと、来週以降の素材になる。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://gemini.google/overview/canvas/" target="_blank" rel="noopener">Gemini Canvas — AI を活用して 1 か所で記述、コーディング、作成</a> — Google 公式。今日使った Canvas モードの紹介ページ</li>
+        <li><a href="https://ai.google.dev/gemini-api/docs/prompting-strategies" target="_blank" rel="noopener">Google AI for Developers — Prompt design strategies</a> — 公式の設計戦略。コード生成プロンプトでも役立つ役割設定・制約・例（few-shot）の根拠</li>
+        <li><a href="https://workspace.google.com/resources/ai/writing-effective-prompts/" target="_blank" rel="noopener">Gemini for Workspace — ビジネスで効果を発揮する AI プロンプトの書き方</a> — 第6回の参考リンクの再掲。今日のコードプロンプトでも同じ 4 要素が効く</li>
+        <li><a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a> — 今日の Canvas モード演習に使う AI</li>
+        <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> — 【学習データ⑦】を投入する「自分だけのAI」</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week06.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第6回 「伝わる」プロンプトの設計</span>
+      </a>
+      <a href="../ai-communication.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AIコミュニケーション基礎</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第8回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>

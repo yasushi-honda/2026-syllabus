@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第7回 条件分岐＆バグ修正ワーク② | プログラム基礎 I</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--blue">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../program-basics.html">プログラム基礎 I</a>
+        <span>/</span>
+        <span>第7回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">条件分岐＆<wbr>🔧バグ修正ワーク②</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 7</span>
+            <span class="page-badge">火曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">第6回で書いた <strong>変数</strong> に、はじめて<strong>判断</strong>を加える。<code>if</code> / <code>else if</code> / <code>else</code> を手で書いて、入力された値で結果を振り分ける<strong>簡単な診断ゲーム</strong>を完成させる。最後に AI にわざと <strong>バグ入り <code>if</code> 文</strong>を生成させ、自分で読み解いて修正する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">条件分岐 / <code>if</code> / <code>else if</code> / <code>else</code> / 比較演算子（<code>===</code> / <code>!==</code> / <code>&lt;</code> / <code>&gt;</code> / <code>&lt;=</code> / <code>&gt;=</code>） / 論理演算子（<code>&amp;&amp;</code> / <code>||</code>） / 真偽値（<code>true</code> / <code>false</code>） / バグ修正ワーク② / よくあるつまずき（<code>=</code> と <code>==</code> と <code>===</code>）</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第6回で作った <strong>おみくじページ</strong>（<code>index.html</code> + <code>&lt;script&gt;</code>）・Codespaces が起動できる状態・Chrome の DevTools の Console が開けること</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li><code>if</code> / <code>else if</code> / <code>else</code> の3つを<strong>手で書いて</strong>使い分けられる</li>
+        <li>比較演算子（<code>===</code>, <code>!==</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>）の意味を区別できる</li>
+        <li><strong><code>=</code>（代入）</strong>と<strong><code>===</code>（厳密な等価比較）</strong>の違いを自分の言葉で説明できる</li>
+        <li>論理演算子（<code>&amp;&amp;</code>, <code>||</code>）で複数条件を組み合わせられる</li>
+        <li>入力値で結果が3〜4分岐する<strong>診断ゲーム</strong>を1つ完成させる</li>
+        <li>AI が生成した<strong>バグ入り <code>if</code> 文</strong>を、自分で原因を特定して修正できる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3><code>if</code> 文の基本構文を手で書く → 真偽値の感覚をつかむ</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り（10分）</strong></p>
+            <ul>
+              <li>第6回で作った<strong>おみくじページ</strong>を Codespaces で開き直す（ターミナルで <code>python3 -m http.server 8000</code> → 第1回と同じ手順で Simple Browser）</li>
+              <li>更新ボタンを何度か押して、配列からランダムに選ばれる動きを思い出す</li>
+              <li>ただし今のおみくじは <strong>「どんな結果でも同じ動き」</strong>——「大吉だったらお祝い、凶だったら励まし」のように<strong>結果ごとに違う処理</strong>はできない。今日はそれを可能にする</li>
+            </ul>
+            <p><strong>はじめての <code>if</code> 文（15分）</strong></p>
+            <ul>
+              <li><code>&lt;script&gt;</code> ブロックの中に、新しい行を追加して試す:
+                <pre><code>const score = 80;
+
+if (score &gt;= 60) {
+  console.log("合格です");
+}</code></pre>
+              </li>
+              <li><code>if (条件) { 処理 }</code> という形——<strong>カッコの中が <code>true</code> なら、波カッコの中身が実行される</strong></li>
+              <li>保存 → Simple Browser を更新 → Console を確認:
+                <ul>
+                  <li><code>"合格です"</code> が表示されたら成功</li>
+                  <li><code>score</code> を <code>40</code> に変えてもう一度 → 今度は何も表示されない（条件が <code>false</code> なので中身がスキップされる）</li>
+                </ul>
+              </li>
+              <li>これが「<strong>判断して、必要な時だけ動く</strong>」プログラムの第一歩——MDN「コードでの意思決定 — 条件文」でも最初に出てくる構文</li>
+            </ul>
+            <p><strong>真偽値（<code>true</code> / <code>false</code>）を Console で観察（15分）</strong></p>
+            <ul>
+              <li>第6回で「真偽値（Boolean）」という型の名前は出たが、実際にどんなときに <code>true</code> / <code>false</code> になるかを、いま Console で確かめる:
+                <pre><code>console.log(80 &gt;= 60);   // true
+console.log(40 &gt;= 60);   // false
+console.log(80 === 80);  // true
+console.log(80 === "80"); // false  ← 型が違うと false
+console.log("はい" === "はい"); // true</code></pre>
+              </li>
+              <li><strong>比較演算子の一覧</strong>（MDN「式と演算子」より、よく使うもの）:
+                <ul>
+                  <li><code>===</code> 等しい（型もチェック）／ <code>!==</code> 等しくない</li>
+                  <li><code>&lt;</code> 小さい／ <code>&gt;</code> 大きい／ <code>&lt;=</code> 以下／ <code>&gt;=</code> 以上</li>
+                </ul>
+              </li>
+              <li><code>if</code> のカッコの中身は、<strong>必ず最終的に <code>true</code> か <code>false</code> になる</strong>式を書く——これが今日いちばん大事なルール</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「<code>=</code> と <code>==</code> と <code>===</code> は別物」:</strong> <code>=</code> は「箱に値を入れる」（代入）、<code>===</code> は「2 つを比べる」（厳密な等価比較）。<code>==</code> は「型を勝手に揃えて比べる」古い書き方で、思わぬ落とし穴があるため、今日からは <strong><code>===</code> と <code>!==</code> を使う</strong>と覚える（MDN もそう推奨）。バグ修正ワーク②でもこの取り違えが頻出します。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3><code>else if</code> / <code>else</code> と論理演算子で<strong>3分岐</strong>を組む</h3>
+          <div class="timeline-body">
+            <p><strong><code>else</code> で「それ以外」を書く（10分）</strong></p>
+            <ul>
+              <li>さっきの <code>if</code> は「合格のときだけ表示」だった。今度は「合格 / 不合格」を両方表示する:
+                <pre><code>const score = 40;
+
+if (score &gt;= 60) {
+  console.log("合格です");
+} else {
+  console.log("もう少し！");
+}</code></pre>
+              </li>
+              <li><code>score</code> を <code>80</code> と <code>40</code> で交互に切り替えて Console の出力が変わることを確認</li>
+              <li>「<strong>もしAなら○○、そうじゃなければ△△</strong>」を 1 セットで書けるのが <code>if / else</code>——日本語の構造とほぼ同じ</li>
+            </ul>
+            <p><strong><code>else if</code> で「3 段階以上」を書く（15分）</strong></p>
+            <ul>
+              <li>合格・条件付き合格・不合格の <strong>3 段階</strong>に振り分けたい:
+                <pre><code>const score = 75;
+
+if (score &gt;= 80) {
+  console.log("優秀");
+} else if (score &gt;= 60) {
+  console.log("合格");
+} else {
+  console.log("もう少し！");
+}</code></pre>
+              </li>
+              <li>上から順番にチェックして、<strong>最初に <code>true</code> になった枝</strong>だけが実行される</li>
+              <li>そのため <code>if</code> の条件は<strong>厳しいほうから順番</strong>に書くのがコツ。<code>score &gt;= 60</code> を <code>score &gt;= 80</code> より先に書くと、80 点でも「合格」止まりになってしまう（バグ修正ワーク②の予習）</li>
+              <li><code>score</code> を <code>85</code> / <code>70</code> / <code>50</code> と変えて、それぞれの枝が動くことを確認</li>
+            </ul>
+            <p><strong>論理演算子で複数条件を組み合わせる（15分）</strong></p>
+            <ul>
+              <li>「A <strong>かつ</strong> B」「A <strong>または</strong> B」を書きたいときは論理演算子を使う:
+                <pre><code>const age      = 17;
+const hasTicket = true;
+
+// A かつ B（両方 true のときだけ true）
+if (age &gt;= 13 &amp;&amp; hasTicket === true) {
+  console.log("入場できます");
+}
+
+// A または B（どちらか一つでも true なら true）
+if (age &lt; 13 || hasTicket === false) {
+  console.log("受付に来てください");
+}</code></pre>
+              </li>
+              <li><code>&amp;&amp;</code>: かつ（and）／ <code>||</code>: または（or）</li>
+              <li>真偽値そのものを比較に使うときは <code>=== true</code> を省略して <code>if (hasTicket)</code> とも書けるが、最初は<strong>明示的に書く方が読みやすい</strong></li>
+            </ul>
+            <p><strong>診断ゲームの設計を考える（10分）</strong></p>
+            <ul>
+              <li>2限前半で完成させる「<strong>気分スコア診断</strong>」の設計を立てる:
+                <ul>
+                  <li>入力: <code>mood</code> という数値（0〜10）</li>
+                  <li>分岐: 9以上 → 「絶好調！」／ 6以上 → 「いい感じ」／ 3以上 → 「ぼちぼち」／ それ以下 → 「お疲れさま」</li>
+                  <li>出力: 第6回と同じく <code>id="result"</code> の要素に <code>textContent</code> で表示</li>
+                </ul>
+              </li>
+              <li>このように<strong>「入力 → 分岐 → 出力」</strong>と分けて設計図を頭に描いてから書くと、コードを書く順番が決まる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>気分スコア診断を<strong>手で完成させ</strong>、ページに表示する</h3>
+          <div class="timeline-body">
+            <p><strong>HTML 側を整える（10分）</strong></p>
+            <ul>
+              <li>第6回のおみくじページに、新しいセクションを追加（おみくじは残したまま）:
+                <pre><code>&lt;h2&gt;気分スコア診断&lt;/h2&gt;
+&lt;p&gt;今日の気分を 0〜10 の数値で <code>mood</code> 変数に書いて更新してください&lt;/p&gt;
+&lt;p id="result"&gt;ここに診断結果が出ます&lt;/p&gt;</code></pre>
+              </li>
+              <li>この時点で Simple Browser を更新して、見出しと段落が表示されることだけ確認</li>
+            </ul>
+            <p><strong>JavaScript 側を手で書く（25分）</strong></p>
+            <ul>
+              <li>おみくじの <code>&lt;script&gt;</code> ブロックの<strong>後ろ</strong>に、新しいブロックを追加してもよいし、同じブロックの下に書き足してもよい:
+                <pre><code>// 気分スコア診断
+const mood = 7;  // 0〜10 で気分を表す数値
+
+let message;
+
+if (mood &gt;= 9) {
+  message = "絶好調！その勢いを大切に";
+} else if (mood &gt;= 6) {
+  message = "いい感じ。今日もがんばろう";
+} else if (mood &gt;= 3) {
+  message = "ぼちぼち。無理せずいこう";
+} else {
+  message = "お疲れさま。今日はゆっくり休もう";
+}
+
+console.log(message);
+document.getElementById("result").textContent = message;</code></pre>
+              </li>
+              <li>ポイント:
+                <ul>
+                  <li><code>message</code> は<strong>最初は中身を入れずに <code>let</code> で宣言</strong>し、各 <code>if</code> の枝で代入する——「あとから値が決まる箱」</li>
+                  <li>条件は<strong>厳しい順</strong>（<code>&gt;= 9</code> → <code>&gt;= 6</code> → <code>&gt;= 3</code>）に書く。順番を逆にすると常に <code>&gt;= 3</code> の枝に落ちる</li>
+                  <li><strong>すべての枝に <code>message = "..."</code> を書く</strong>のを忘れない——書き忘れた枝に入ると <code>message</code> が <code>undefined</code> のまま表示される</li>
+                </ul>
+              </li>
+              <li>保存 → Simple Browser を更新 → 結果が表示されたら成功</li>
+              <li><code>mood</code> の値を <code>10</code> / <code>7</code> / <code>4</code> / <code>1</code> と変えて、毎回違う結果が出ることを確認</li>
+            </ul>
+            <p><strong>論理演算子で 1 段階「条件付き」を足してみる（15分）</strong></p>
+            <ul>
+              <li>たとえば「気分が低い (<code>mood &lt; 3</code>) <strong>かつ</strong> 平日（<code>isWeekday === true</code>）のときだけ別メッセージを返す」を組み込んでみる:
+                <pre><code>const mood      = 2;
+const isWeekday = true;
+
+let message;
+
+if (mood &lt; 3 &amp;&amp; isWeekday === true) {
+  message = "平日のお疲れさま。早めに切り上げて";
+} else if (mood &gt;= 9) {
+  message = "絶好調！その勢いを大切に";
+} else if (mood &gt;= 6) {
+  message = "いい感じ。今日もがんばろう";
+} else if (mood &gt;= 3) {
+  message = "ぼちぼち。無理せずいこう";
+} else {
+  message = "お疲れさま。今日はゆっくり休もう";
+}</code></pre>
+              </li>
+              <li><strong>より厳しい条件（<code>&amp;&amp;</code> で AND を取った条件）は前に</strong>持ってくると、欲しい枝に正しく落ちる</li>
+              <li>余裕があれば <code>isWeekday</code> の値を切り替えて、結果が変わることを観察</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>🔧バグ修正ワーク②：AI に<strong>バグ入り <code>if</code> 文</strong>を生成させて自分で直す</h3>
+          <div class="timeline-body">
+            <p><strong>ワークの趣旨（5分）</strong></p>
+            <ul>
+              <li>第5回のバグ修正ワーク①（スマホ表示の CSS）と同じ方針——<strong>AI が出すコードは常に正しいわけではない</strong>。読んで判断する力を養うのが目的</li>
+              <li>今日は AI に「<strong>わざとバグの入った <code>if</code> 文コード</strong>」を生成してもらい、自分で動かして・読んで・直す</li>
+              <li>使う AI は GitHub Copilot Chat または Gemini どちらでもよい——授業内で<strong>普段使っている方</strong>を使う</li>
+            </ul>
+            <p><strong>バグ入りコードを生成させる（10分）</strong></p>
+            <ul>
+              <li>新規ファイル <code>bugfix02.html</code> を作り、第1回と同じ最小 HTML テンプレに <code>&lt;script&gt;</code> ブロックだけ用意</li>
+              <li>AI に以下のように依頼:
+                <pre><code>JavaScript の初心者向けに、わざとバグが 3 つ入った if 文のコードを書いてください。
+お題は「年齢で入場区分を判定するプログラム」。
+12 歳未満は「子ども」、12 歳以上 18 歳未満は「学生」、18 歳以上は「大人」と返す。
+バグの種類は次の中から 3 つ選んで混ぜてください：
+- 代入と等価比較の取り違え（= と ===）
+- 条件を厳しい順に書いていない
+- 比較演算子の向きが逆（< と >）
+- else if の書き間違い
+バグの場所は教えないでください。私が自分で見つけて直します。</code></pre>
+              </li>
+              <li>AI が出したコードを <code>bugfix02.html</code> の <code>&lt;script&gt;</code> 内に貼り付ける</li>
+            </ul>
+            <p><strong>自分で読み解いて直す（15分）</strong></p>
+            <ul>
+              <li>まず<strong>動かしてみる</strong>（Simple Browser で表示 → Console 確認）。エラーメッセージが出る場合と、エラーは出ないけど結果がおかしい場合がある</li>
+              <li>確認のしかた:
+                <ul>
+                  <li><code>age</code> を <code>5</code> / <code>15</code> / <code>30</code> の 3 通りで試して、それぞれ「子ども」「学生」「大人」が返るか</li>
+                  <li>返らない場合、どの値で何が返ったかを <strong><code>NOTES.md</code> に記録</strong>（バグの再現条件）</li>
+                </ul>
+              </li>
+              <li>1 つずつ直して、その都度動かし直す——<strong>一気に全部直さない</strong>のがコツ。直したつもりが別のバグを生む</li>
+              <li>「ここを直した理由」を <code>NOTES.md</code> に 1〜2 行ずつメモ。AI に質問して答え合わせするのは<strong>自分で全部直し終わったあと</strong></li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「動かなかったらまず Console」:</strong> 真っ白な画面が出たり、結果が表示されない時は、必ず <strong>F12 → Console タブ</strong>を開く。赤い行があれば、その<strong>1 行目をそのままコピーして読む</strong>のが第一歩。MDN「よくある JavaScript の問題の解決」にも代表的なエラーメッセージの読み方が載っています。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ program-basics.html Week 8 「🎯ミニ完成② 小ゲーム公開」と同期 -->
+              <li>次回（第8回）: <strong>🎯ミニ完成② 小ゲーム公開</strong>——今日の診断ゲームをベースに、ロジックを統合して GitHub Pages に公開。2 作目の公開体験</li>
+              <li>今日のキーワード <strong>「<code>if</code> / <code>else if</code> / <code>else</code>」「比較演算子」「論理演算子（<code>&amp;&amp;</code> / <code>||</code>）」「条件は厳しい順」「<code>=</code> と <code>===</code> の違い」</strong>を口に出して言えるか確認して退出</li>
+              <li>家で <code>mood</code> や <code>age</code> の値を変えて、自分が想定した枝に正しく落ちるか観察するだけでも十分復習になる</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>気分スコア診断を完成させてリポジトリに push する</strong>
+            <p>2 限前半で書いたコードを保存して、第4回・第6回と同じ手順で commit & push。コミットメッセージ例: <code>気分スコア診断を追加</code>。授業内で論理演算子の追加まで届かなかった人は家で進める。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>バグ修正ワーク②の修正記録を <code>NOTES.md</code> に書く</strong>
+            <p>① 元の AI コード（コピーで OK）／② 自分で見つけた 3 つのバグの場所と直し方／③ 直した順番と理由、を最低 3〜5 行ずつ記録。直し終えたら <code>bugfix02.html</code> と一緒に push する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>MDN「コードでの意思決定 — 条件文」を流し読みする</strong>
+            <p>下記の参考リンクから日本語版を開いて、<strong>授業で扱わなかった構文</strong>（たとえば <code>switch</code> 文や三項演算子 <code>条件 ? A : B</code>）の名前だけ覚えておく。第8回以降で出会う伏線になる。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://developer.mozilla.org/ja/docs/Learn_web_development/Core/Scripting/Conditionals" target="_blank" rel="noopener">MDN — コードでの意思決定 — 条件文</a> — 入門者向けに <code>if</code> / <code>else if</code> / <code>else</code> を最初から解説</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/if...else" target="_blank" rel="noopener">MDN — <code>if...else</code></a> — 公式リファレンス（構文の細部を確認するとき用）</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Guide/Control_flow_and_error_handling" target="_blank" rel="noopener">MDN — 制御フローとエラー処理</a> — <code>if</code> 以外の分岐構文（<code>switch</code> など）と一緒に概観できる</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators" target="_blank" rel="noopener">MDN — 式と演算子</a> — 比較演算子（<code>===</code>, <code>!==</code> ほか）と論理演算子（<code>&amp;&amp;</code>, <code>||</code>）の一覧</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Learn_web_development/Howto/Solve_JavaScript_problems" target="_blank" rel="noopener">MDN — よくある JavaScript の問題の解決</a> — バグ修正ワーク②でエラーメッセージを読むときの参考</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week06.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第6回 JavaScript入門：変数と出力</span>
+      </a>
+      <a href="../program-basics.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">プログラム基礎 I</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第8回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
