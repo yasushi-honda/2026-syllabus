@@ -120,7 +120,7 @@ console.log("はい" === "はい"); // true</code></pre>
               <li><code>if</code> のカッコの中身は、<strong>必ず最終的に <code>true</code> か <code>false</code> になる</strong>式を書く——これが今日いちばん大事なルール</li>
             </ul>
             <div class="lesson-tip">
-              <strong>「<code>=</code> と <code>==</code> と <code>===</code> は別物」:</strong> <code>=</code> は「箱に値を入れる」（代入）、<code>===</code> は「2 つを比べる」（厳密な等価比較）。<code>==</code> は「型を勝手に揃えて比べる」古い書き方で、思わぬ落とし穴があるため、今日からは <strong><code>===</code> と <code>!==</code> を使う</strong>と覚える（MDN もそう推奨）。バグ修正ワーク②でもこの取り違えが頻出します。
+              <strong>「<code>=</code> と <code>==</code> と <code>===</code> は別物」:</strong> <code>=</code> は「箱に値を入れる」（代入）、<code>===</code> は「2 つを比べる」（厳密な等価比較）。MDN の <code>==</code>（等価演算子）の解説では「<strong>型変換を試みる</strong>」と明記されており、思わぬ落とし穴が生まれます。一方 <code>===</code>（厳密な等価演算子）は「<strong>型変換を一切試みない</strong>」ので事故が少ない——今日からは <strong><code>===</code> と <code>!==</code> を使う</strong>と覚える。バグ修正ワーク②でもこの取り違えが頻出します。
             </div>
           </div>
         </div>
@@ -214,7 +214,7 @@ if (age &lt; 13 || hasTicket === false) {
             <ul>
               <li>第6回のおみくじページに、新しいセクションを追加（おみくじは残したまま）:
                 <pre><code>&lt;h2&gt;気分スコア診断&lt;/h2&gt;
-&lt;p&gt;今日の気分を 0〜10 の数値で <code>mood</code> 変数に書いて更新してください&lt;/p&gt;
+&lt;p&gt;今日の気分を 0〜10 の数値で mood 変数に書いて更新してください&lt;/p&gt;
 &lt;p id="result"&gt;ここに診断結果が出ます&lt;/p&gt;</code></pre>
               </li>
               <li>この時点で Simple Browser を更新して、見出しと段落が表示されることだけ確認</li>
@@ -287,7 +287,7 @@ if (mood &lt; 3 &amp;&amp; isWeekday === true) {
             <ul>
               <li>第5回のバグ修正ワーク①（スマホ表示の CSS）と同じ方針——<strong>AI が出すコードは常に正しいわけではない</strong>。読んで判断する力を養うのが目的</li>
               <li>今日は AI に「<strong>わざとバグの入った <code>if</code> 文コード</strong>」を生成してもらい、自分で動かして・読んで・直す</li>
-              <li>使う AI は GitHub Copilot Chat または Gemini どちらでもよい——授業内で<strong>普段使っている方</strong>を使う</li>
+              <li>使う AI は GitHub Copilot Chat または Gemini どちらでもよい——授業内で<strong>普段使っている方</strong>を使う（第4回の注記の通り、2026-04-20 以降 Copilot Student の新規申請が停止中で未認証の人は、<strong>Gemini で進めて構わない</strong>）</li>
             </ul>
             <p><strong>バグ入りコードを生成させる（10分）</strong></p>
             <ul>

@@ -85,7 +85,7 @@
             </ul>
             <p><strong>「コードもプロンプトの一種」と捉え直す（15分）</strong></p>
             <ul>
-              <li>AI に「文章を書いて」と頼むのも、「コードを書いて」と頼むのも、<strong>仕組みとしては同じ</strong>——どちらも「次に来るトークンを予測する」</li>
+              <li>AI に「文章を書いて」と頼むのも、「コードを書いて」と頼むのも、<strong>仕組みとしては同じ</strong>——どちらも「次に来る言葉の断片（トークン）を予測する」</li>
               <li>違うのはコードの場合、出てきた結果を<strong>動かして確かめられる</strong>こと——文章は「読んでみてしっくり来るか」しかチェックできなかったが、コードは<strong>動く / 動かない</strong>がはっきり出る</li>
               <li>そのため、コードを頼むときのプロンプトは特に<strong>制約（言語・動作環境・期待する出力）</strong>を明示するのが効く</li>
               <li>たとえば「自己紹介ページを作って」より「<strong>1 つの HTML ファイルだけで動く、ボタンを押すと挨拶文が変わる、初心者向けに短く</strong>」のほうが、Gemini が出すコードがブレない</li>
@@ -93,9 +93,9 @@
             <p><strong>Gemini Canvas に切り替える（15分）</strong></p>
             <ul>
               <li>Gemini を開き、画面下部の入力欄の近くにある「<strong>Canvas</strong>」ボタンをクリック（公式: <a href="https://gemini.google/overview/canvas/" target="_blank" rel="noopener">Gemini Canvas</a>）</li>
-              <li>Canvas モードでは応答が<strong>右側のパネル</strong>に開き、コードと動作プレビューを<strong>同じ画面で行き来できる</strong>のがポイント</li>
-              <li>Canvas で扱える主なファイル形式: HTML/CSS/JavaScript（1 ファイルにまとまったもの）、Python、Markdown ドキュメント</li>
-              <li>今日は <strong>HTML/CSS/JavaScript</strong>（1 ファイル）を中心に扱う——ブラウザだけで完結し、PC への保存・実行環境構築なしで動かせる</li>
+              <li>Canvas モードでは応答が<strong>画面の一部に専用パネル</strong>として開き、コードと動作プレビューを<strong>同じ画面で行き来できる</strong>のがポイント（パネルの位置や見た目は UI 更新で変わる可能性があるので、その場で目視確認）</li>
+              <li>公式ページの紹介によれば、Canvas は「<strong>1 か所で記述、コーディング、作成</strong>」できる作業空間として、ウェブページ・アプリ・インフォグラフィック・テスト・音声解説などを生成し、その場で編集とプレビューが可能</li>
+              <li>本授業では <strong>1 ファイルにまとまった HTML/CSS/JavaScript のウェブページ</strong>を中心に扱う——ブラウザだけで完結し、PC への保存・実行環境構築なしで動かせる</li>
             </ul>
             <div class="lesson-tip">
               <strong>「コードが書けないと困る授業ではありません」:</strong> この回は<strong>コードを書く授業</strong>ではなく、<strong>AI とコードについて話す授業</strong>です。生成されたコードを 1 行ずつ理解する必要はありません。<strong>「動くか・動かないか」「思った通りか・違うか」</strong>を観察し、AI とのやり取りで近づけていく感覚を掴むのがゴールです。
