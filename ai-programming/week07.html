@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第7回 グループ調査と準備 | AI活用プログラミング基礎</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+  <!-- 公式情報確認: 2026-06-11 (support.google.com/notebooklm/answer/16179559 + workspace.google.com/resources/ai/writing-effective-prompts/) -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--orange">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-programming.html">AI活用プログラミング基礎</a>
+        <span>/</span>
+        <span>第7回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">グループ調査と<wbr>準備</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 7</span>
+            <span class="page-badge">木曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value"><strong>グループ調査②</strong>。第6回で決めたグループとテーマを引き継いで、今日は <strong>役割分担を本決定 → 各自の担当切り口を深掘り → 途中でグループ内シェア → 第8回（中間共有会）の素案づくり</strong>まで進める。仲間が足りないと言ったところを補い合う1日</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">役割分担の本決定 / 担当切り口の深掘り / 仲間が足りないところを補い合う / NotebookLM（メタな相談）と素の Gemini（一般知識の引き出し）の使い分け / 中間共有会の素案 / プロンプトの4要素（役割・文脈・指示・制約）</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第6回完了（4 人グループ・共通テーマ 1 文・仮の役割分担・各自の <code>○○の[テーマ]調査メモ</code> が手元にある状態）／自分専用 AI ノート（NotebookLM）に <strong>【学習データ①②③】</strong>の3ソースが入っている／NotebookLM と素の Gemini にログインできる状態／グループの共有ドキュメント（Google ドキュメント等）が開ける状態</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>第6回で仮決めした<strong>担当切り口</strong>を本決定し、4 人で重なりなく分担できる</li>
+        <li>自分の担当切り口について、<strong>「初心者の疑問 3 つ → 1 つ深掘り → 別ソースで確認」</strong>のサイクルを 1〜2 周まわせる</li>
+        <li>授業の途中で<strong>グループ内シェア</strong>を 1 回はさみ、仲間が「足りない」と言った情報を自分が補えるか / 自分が足りないところを仲間が補えるかを口頭で擦り合わせられる</li>
+        <li><strong>NotebookLM はメタな相談（プロンプトの組み立て・調査の方向性）</strong>、<strong>素の Gemini は一般知識の引き出し（テーマそのものの中身）</strong>の使い分けを、今日の場面で 2 回以上使い分けできる</li>
+        <li>第8回（中間共有会）の <strong>5 分発表</strong>に向けて、グループの共有ドキュメントに<strong>素案 1 枚</strong>（テーマ 1 文 + 切り口 4 個 + 各自の発見 3〜5 個ずつ）を仕上げて帰る</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。第6回までと同じく、IT が苦手でも置いていかない進行で。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>第6回の振り返り → 役割分担を本決定 → 今日の流れの共有</h3>
+          <div class="timeline-body">
+            <p><strong>家でやったこと・今日の体調を 1 人 1 分シェア（10分）</strong></p>
+            <ul>
+              <li>グループに戻り、第6回後に家でやったこと（追加の調査メモ・カスタム欄の更新等）を <strong>1 人 1 分</strong>でシェア。何もできなかった人は「今日からまた進めます」で OK</li>
+              <li>記録係はグループの共有ドキュメント（第6回で作ったもの）を開く。今日は<strong>同じドキュメントに書き足していく</strong>形で進める</li>
+              <li>「家で AI に聞いてみたら、授業の続きが思い出せなかった」「素の Gemini と NotebookLM、どっちに聞けばいいか迷った」など、<strong>困った場面の共有</strong>もこのタイミングで OK</li>
+            </ul>
+            <p><strong>仮の役割分担を本決定する（15分）</strong></p>
+            <ul>
+              <li>第6回の終わりに仮で決めた<strong>各自の担当切り口</strong>を、共有ドキュメントに並べて全員で確認</li>
+              <li>家で「自分にはこっちの切り口の方が向いているかも」と思った人がいたら、ここで申告。重なりがあれば<strong>譲り合いで調整</strong>。「3 週続くから無理してでもこっちにする」より「<strong>3 週続くから無理しない方を選ぶ</strong>」が原則</li>
+              <li>切り口が 4 つに足りないグループは、「<strong>第6回時点では見えていなかったが今気になる新しい切り口</strong>」を 1 つ追加する。逆に切り口が 5 つ以上あるグループは、関連の薄いものを 1 つ削る</li>
+              <li>各自、自分の <code>○○の[テーマ]調査メモ</code> の冒頭に、本決定した担当切り口を 1 行で書き直す（例: <code>担当切り口: 「[切り口名]」</code>）</li>
+              <li>記録係は共有ドキュメントに「テーマ 1 文 + 切り口 4 個 + 担当者の名前」のミニ表を 1 つ完成させる</li>
+            </ul>
+            <p><strong>今日の流れの確認（10分）</strong></p>
+            <ul>
+              <li>講師が黒板 or 画面で次の流れを示す:
+                <ol>
+                  <li><strong>1 限後半（50分）</strong>: 個別深掘り①。プロンプトの組み立ては NotebookLM、調査本体は素の Gemini で</li>
+                  <li><strong>休憩</strong></li>
+                  <li><strong>2 限前半 前半（25分）</strong>: 個別深掘り②（1 限の続き）</li>
+                  <li><strong>2 限前半 後半（25分）</strong>: グループ内シェア（中間チェック）→ 仲間が足りないところを補い合う相談</li>
+                  <li><strong>2 限後半（30分）</strong>: 中間共有会（第8回）の素案を共有ドキュメントに 1 枚仕上げる</li>
+                  <li><strong>まとめ（10分）</strong>: 第8回の流れ・当日の役割分担</li>
+                </ol>
+              </li>
+              <li>第8回（中間共有会）でやることを 1 分だけ予告: <strong>各グループ 5 分の発表</strong> + <strong>聞き手からのコメント・質問を 1 つ</strong>。完璧なプレゼンが目的ではないので、<strong>今日の素案がそのまま発表資料の土台</strong>になる</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「補い合う」が今日のキーワード:</strong> 個別の深掘りだけなら家でもできる。今日わざわざ集まる意味は、<strong>1 人では気づかない「足りていないところ」</strong>を、仲間の目で気づいてもらえること。グループ内シェアで「ここは私の調べた内容と関係しそう」と言われたら、それが補い合いの第一歩。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>個別深掘り① — NotebookLM でプロンプトを組み立て、素の Gemini で調査する</h3>
+          <div class="timeline-body">
+            <p><strong>NotebookLM にプロンプトの組み立てを相談する（15分）</strong></p>
+            <ul>
+              <li>各自、自分専用 AI ノート（NotebookLM）を開く。第6回と同じく <strong>【学習データ③】プロンプトのコツまとめ資料</strong>がソースに入っている状態であることを確認</li>
+              <li>自分の AI に、次のような依頼を投げる（テーマ部分・切り口部分を自分のものに置き換える）:
+                <pre><code>私は4人グループで「[テーマ1文]」を3週かけて調べています。
+今日から私の担当切り口は「[切り口名]」です。
+
+ソースに入れた【学習データ③】プロンプトのコツまとめ資料を踏まえて、
+「[切り口名]について、初心者の私が今日 30 分で深掘りするための
+最初の質問」を 1 つ組み立ててください。
+役割・文脈・指示・制約の4要素で整えてほしいです。
+</code></pre>
+              </li>
+              <li>応答に <strong>引用番号</strong>（[3] 等）が付くことを確認——自分のソースが活きている証拠</li>
+              <li>返ってきたプロンプトを、<strong>自分の言葉で 1〜2 箇所だけカスタマイズ</strong>。長すぎたら短くしてよい</li>
+              <li>覚えてほしいコツ: <strong>「テーマの中身」を NotebookLM に聞かない</strong>。ソースに調査テーマの情報は入っていないため、ソース駆動の NotebookLM では一般知識ベースの答えが返らないか、引用なしの曖昧な応答になる。<strong>「中身は素の Gemini」「組み立て方の相談は NotebookLM」</strong>の使い分けを毎回意識する</li>
+            </ul>
+            <p><strong>素の Gemini に組み立てたプロンプトを投げる（20分）</strong></p>
+            <ul>
+              <li><a href="https://gemini.google.com" target="_blank" rel="noopener">gemini.google.com</a> を開く</li>
+              <li>NotebookLM が組み立ててくれたプロンプトを、そのまま投げる（プロンプトの形は AI が変わっても通用する）</li>
+              <li>応答が返ってくる。<strong>素の Gemini なので引用番号は付かない</strong>——「<strong>時々間違える前提</strong>で読む」第4・5回で学んだ姿勢を思い出す</li>
+              <li>応答の中で「これは面白い」「これは担当切り口の核になりそう」と思った部分を<strong>抜き出して</strong> <code>○○の[テーマ]調査メモ</code> に書き写す。AI の応答をそのままコピペするより、<strong>自分の言葉で書き直す</strong>と頭に残る</li>
+              <li>応答が浅かったら、追加で 1 回だけ深掘り質問を投げる。例:
+                <pre><code>「[応答の中の特定の言葉]」について、もう一段詳しく教えてください。
+ただし、確信のある部分とあいまいな部分は区別して、
+あいまいな部分は「あいまい」と正直に言ってください。
+</code></pre>
+              </li>
+            </ul>
+            <p><strong>「ここは怪しい」を 1 つ見つける（15分）</strong></p>
+            <ul>
+              <li>素の Gemini の応答の中から、<strong>「これは本当だろうか」</strong>と感じる箇所を<strong>1 つだけ</strong>選ぶ。AI は時々間違えるという第4回の学びを、今日の調査で実際に検証する場面</li>
+              <li>選んだ箇所について、別のサイトで 1 つだけ確認する。確認方法は何でも OK:
+                <ul>
+                  <li>同じテーマを Google で普通に検索して、上位 1 件を読む</li>
+                  <li>関連する公式サイト（自治体の観光ページ・公式 SNS・出典のあるニュース記事 等）を 1 つ読む</li>
+                  <li>Wikipedia の該当項目を 1 段落だけ読む</li>
+                </ul>
+              </li>
+              <li>確認結果を <code>○○の[テーマ]調査メモ</code> に 1 行残す。例:
+                <ul>
+                  <li>「AI は『〇〇は△△だ』と言っていたが、公式サイトでは『〇〇は☆☆』。AI の方が違っていた」</li>
+                  <li>「AI の応答と公式サイトはおおむね一致。安心して使える」</li>
+                  <li>「公式サイトに該当情報がなく、確かめきれなかった。第7回後半でグループに相談する」</li>
+                </ul>
+              </li>
+              <li>「<strong>確かめきれなかった</strong>」も立派な発見。確かめられなかったことを 1 つ持って後半のグループシェアに参加すると、仲間に補ってもらえるチャンスが増える</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「自分の言葉で書き直す」がコピペの 3 倍効く:</strong> AI の応答をそのままコピペしても、第8回の中間共有会で 5 分話すときに口から出てこない。<strong>1 度自分の言葉に書き直す</strong>と、当日の発表で自分の言葉として自然に話せる。今日の <code>○○の[テーマ]調査メモ</code> がそのまま発表ノートになる。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>個別深掘り② → グループ内シェアで足りないところを補い合う</h3>
+          <div class="timeline-body">
+            <p><strong>個別深掘り②（25分）</strong></p>
+            <ul>
+              <li>1 限後半の続き。「ここは怪しい」を確かめる作業が途中の人はそれを優先</li>
+              <li>確かめられた人は、<strong>担当切り口のもう 1 つの疑問</strong>に深掘りを進める。例:
+                <pre><code>「[切り口名]」について、初心者の私が次に知ると面白そうな
+ことを 3 つ挙げてください。それぞれ、なぜ面白いかも 1 行で
+添えてください。
+</code></pre>
+              </li>
+              <li>3 つのうち 1 つ選んで、もう一段聞く。応答を <code>○○の[テーマ]調査メモ</code> に追記</li>
+              <li>今日の目標は<strong>「発見を 3〜5 個」</strong>。1 限後半と合わせて自分の調査メモが 3〜5 個の箇条書きになっていれば十分。<strong>多ければ良い、ではない</strong>——第8回で話せる量に絞る方が大事</li>
+            </ul>
+            <p><strong>グループ内シェア（15分・1 人 3 分目安）</strong></p>
+            <ul>
+              <li>グループに戻り、各自<strong>3 分</strong>で今日の発見を口頭シェア。話す内容:
+                <ul>
+                  <li>自分の担当切り口</li>
+                  <li>今日見つけた発見を 1〜2 個（一番話したいものから）</li>
+                  <li><strong>「ここはまだ足りない / 確かめきれなかった」と思う点を 1 つ</strong></li>
+                </ul>
+              </li>
+              <li>聞き手は、<strong>「あ、それは自分の切り口とつながるかも」「家で見たサイトで答えがあった気がする」</strong>などを口に出して OK。途中の口出しが今日の本番</li>
+              <li>記録係は共有ドキュメントに、各自の<strong>発見の見出し</strong>と<strong>足りていない点</strong>を 1 行ずつ書き出す</li>
+            </ul>
+            <p><strong>補い合いの相談（10分）</strong></p>
+            <ul>
+              <li>記録係が読み上げた「足りていない点」の一覧を見て、グループで相談:
+                <ul>
+                  <li><strong>「これは私の担当切り口とつながるから、家で 1 つ追加で調べる」</strong>と申告できる人がいれば、その場で担当を決める</li>
+                  <li><strong>「これはグループの誰も担当していないが、第8回で触れたい」</strong>と全員が思ったら、当日までに誰がどう調べるか分担を決める</li>
+                  <li><strong>「これは無理に補わなくていい」</strong>と全員が思ったら、第8回の発表で「ここは確かめきれませんでした」と正直に言う方針で OK。<strong>「分からないことを分からないと言える」</strong>のは大事な学び</li>
+                </ul>
+              </li>
+              <li>分担が決まったら、各自の <code>○○の[テーマ]調査メモ</code> の末尾に「<strong>家でやること</strong>」を 1 行追記</li>
+              <li>このタイミングで <strong>NotebookLM</strong> に戻り、自分の AI に「<strong>今日のグループでの話を踏まえて、次に私が調べると役に立ちそうな質問を 1 つ組み立ててください</strong>」と頼んでもよい。<strong>メタな相談は NotebookLM</strong> という第6回の使い分けが、ここでも効く</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「分からない」が言えるグループは強い:</strong> 4 人全員が「全部分かりました」と言うグループは、たぶん深く調べていない。1 人が「ここは確かめきれませんでした」と言うと、他のメンバーも「私もここが怪しいと思っていました」と続く。<strong>分からないを言える空気</strong>が、第8回の発表を等身大にしてくれる。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>第8回（中間共有会）の素案を共有ドキュメントに 1 枚仕上げる</h3>
+          <div class="timeline-body">
+            <p><strong>素案の中身を決める（5分）</strong></p>
+            <ul>
+              <li>第8回の発表は<strong>1 グループ 5 分</strong>。詰め込みすぎず、伝わる量に絞る</li>
+              <li>1 枚に入れる内容を全員で合意:
+                <ol>
+                  <li><strong>テーマ 1 文</strong>（第6回で決めたもの）</li>
+                  <li><strong>切り口 4 個</strong>と<strong>担当者の名前</strong></li>
+                  <li><strong>各自の発見 1〜2 個</strong>（今日の <code>○○の[テーマ]調査メモ</code> から精選）</li>
+                  <li><strong>グループとしての気づき 1 つ</strong>（「テーマ全体で何が見えてきたか」）</li>
+                  <li><strong>第8回までに補う予定の不足ポイント</strong>（補い合いの相談で決めたこと）</li>
+                </ol>
+              </li>
+              <li>「キレイなスライド」より「<strong>これ見ながら 5 分話せる</strong>1 枚」を目指す。Google ドキュメントの箇条書き 1 ページで十分</li>
+            </ul>
+            <p><strong>各自が自分のパートを書き込む（15分）</strong></p>
+            <ul>
+              <li>共有ドキュメントを<strong>4 人で同時編集</strong>。各自、自分の担当切り口の<strong>発見 1〜2 個</strong>を貼り付ける（<code>○○の[テーマ]調査メモ</code> から精選してコピー）</li>
+              <li>表現を整える時間も取る。AI の応答をそのままにせず、<strong>5 分の口頭発表で読み上げられる長さ・言葉</strong>に直す</li>
+              <li>記録係は、テーマ 1 文・切り口の見出し・グループの気づき・不足ポイントを書き込む</li>
+              <li>NotebookLM に「<strong>このグループ共有資料を 5 分発表用に短くしたら、私のパートはどう言い換えられますか</strong>」と相談してもよい（<strong>メタな相談は NotebookLM</strong> の応用）</li>
+            </ul>
+            <p><strong>1 度全員で読み返す（10分）</strong></p>
+            <ul>
+              <li>素案ができたら、グループで<strong>順番に音読</strong>（各自 1 分以内で自分のパートを読み上げる）。読みづらいところ・話しづらいところがあれば、その場で短くする</li>
+              <li>聞き手は<strong>「ここは分かりやすかった」「ここはもう少し説明があるとよさそう」</strong>を 1 つずつフィードバック</li>
+              <li>第8回当日の<strong>話す順番</strong>（記録係 → 切り口担当順 等）と<strong>時間配分</strong>（1 人 1 分・グループ気づき 1 分 等）を決める</li>
+              <li>「<strong>誰がイントロを話すか</strong>」だけ決めておくと、当日 5 分が静かに立ち上がる</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「準備したことを全部話す」より「準備したことの半分だけ話す」:</strong> 5 分は短い。準備した発見を 1〜2 個に絞って、<strong>「他にも調べたが今日はこの 1 個に絞った」</strong>と言えるくらいでちょうどよい。残りは聞き手の質問が来たときに引き出す引き出しに置いておく。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り＆次回予告</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>今日のキーワード: <strong>役割分担の本決定 / 担当切り口の深掘り / NotebookLM（メタな相談）と素の Gemini（一般知識）の使い分け / 「ここは怪しい」を 1 つ確かめる / グループで補い合う / 第8回 5 分発表の素案 1 枚</strong></li>
+              <li>覚えてほしいこと: <strong>「分からない」と言える</strong>のは、深く調べた人だけ。AI に全部聞いて全部わかった気になる方が、実は浅い</li>
+              <li>今日の達成: 役割分担を本決定した／NotebookLM と素の Gemini を使い分けて担当切り口を深掘りした／グループ内シェアで足りないところを補い合った／第8回の素案 1 枚を仕上げた</li>
+              <li>次回（第8回）: <strong>🎤 中間共有会</strong>。グループごとに 5 分の発表 → 聞き手からのコメント・質問を 1 つ。完璧なプレゼンが目的ではなく「<strong>やってみた・話してみた</strong>」体験</li>
+              <li>家での発展（任意）:「補い合いの相談」で自分が引き受けた追加調査を <code>○○の[テーマ]調査メモ</code> に書き足す／NotebookLM のカスタム欄の「今、[テーマ]の[切り口]を調べている」を最新版に更新する／共有ドキュメントを家で読み返して、自分のパートで言葉にしづらいところを 1 回声に出して練習する</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>もし NotebookLM が学校アカウントで使えなかったら（フォールバック）</h2>
+      <p>第3〜6回と同じ進め方で大丈夫。</p>
+      <ul>
+        <li><strong>A. 個人 Google アカウントに切り替えてログイン</strong>（無料で利用可能）</li>
+        <li><strong>B. ペアでお互いの画面を見せ合いながら進める</strong>（NotebookLM が使える人と画面共有しながら、グループ内のもう 1 人として参加）</li>
+      </ul>
+      <p><strong>第6回を欠席した人へ:</strong> 今日のグループ作業はそのまま参加して OK。テーマ・グループ・仮の役割分担は他のメンバーが共有ドキュメントを見せてくれる。自分の担当切り口だけ受け取って、1 限後半から深掘りに合流してください。授業後、家で第6回ページを 1 度通して読むと、グループの流れが繋がります。</p>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>家で試してみよう（任意）</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">やってみよう</span>
+          <div>
+            <strong>「補い合いの相談」で引き受けた追加調査を 1 つ進める</strong>
+            <p>授業後半でグループから引き受けた追加調査を、第8回までに 1 つ進めて <code>○○の[テーマ]調査メモ</code> に書き足す。AI の応答だけで足りなければ、別のサイトを 1 つ読んで確かめる。引き受けた覚えがない人は、自分の担当切り口で<strong>「ここは怪しい」だった部分</strong>を 1 つ確かめる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">やってみよう</span>
+          <div>
+            <strong>共有ドキュメントを家で読み返して、自分のパートを 1 回声に出す</strong>
+            <p>授業で書いた共有ドキュメントの自分のパートを<strong>家で 1 回声に出して読む</strong>。読みにくいところ・話しづらいところに気づいたら、その場で短くする。第8回当日「初めて口に出した」を避けるためのちょっとした準備。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">もっと深める</span>
+          <div>
+            <strong>NotebookLM のカスタム欄を最新版に更新</strong>
+            <p>第4回で書いたカスタム欄に、今の担当切り口を反映する 1 行に更新（例: <code>今、[テーマ]の中で [切り口名] を調べているから、その方向での助言を優先してね</code>）。家で続きを聞くときに、毎回背景を説明しなくて済む。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">もっと深める</span>
+          <div>
+            <strong>仲間の担当切り口について 1 つだけ自分でも調べてみる</strong>
+            <p>自分以外のメンバーの担当切り口について、<strong>素の Gemini に 1 つだけ質問を投げて</strong>応答を読む。第8回の発表で「他のメンバーの話に質問しやすくなる」効果がある。応答を <code>○○の[テーマ]調査メモ</code> に「<strong>他メンバーの切り口について</strong>」として 1〜2 行残す。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> — 自分専用 AI ノート（プロンプトの組み立てや調査の方向性を相談する場所）</li>
+        <li><a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a> — 素の Gemini（テーマの中身を引き出す場所）</li>
+        <li><a href="https://support.google.com/notebooklm/answer/16179559?hl=ja" target="_blank" rel="noopener">NotebookLM ヘルプ — NotebookLM でチャットを使用する（日本語公式）</a> — 「チャットを設定」3 モード（デフォルト／学習ガイド／カスタム）の公式説明</li>
+        <li><a href="https://workspace.google.com/resources/ai/writing-effective-prompts/" target="_blank" rel="noopener">Google Workspace — ビジネスで効果を発揮する AI プロンプトの書き方</a> — プロンプト 4 要素（ペルソナ／タスク／背景情報／形式）の安定ソース。本授業の<strong>役割・文脈・指示・制約</strong>と対応</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week06.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第6回 グループでテーマを決めよう</span>
+      </a>
+      <a href="../ai-programming.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AI活用プログラミング基礎</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第8回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
