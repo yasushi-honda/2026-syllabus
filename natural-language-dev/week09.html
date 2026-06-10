@@ -83,7 +83,7 @@
             <ul>
               <li>授業前半 8 回で、<strong>進級制作リポジトリ</strong>に積み上げてきた変更を一覧で眺める:
                 <ul>
-                  <li>第1〜2回: Codespaces + Gemini CLI / Antigravity CLI 起動、コンテキストエンジニアリングの基礎</li>
+                  <li>第1〜2回: Codespaces + Gemini CLI 起動（第8回で Antigravity CLI に移行）、コンテキストエンジニアリングの基礎</li>
                   <li>第3〜4回: <strong>GEMINI.md</strong> でプロジェクトのルールを宣言（プロンプト → コンテキスト）</li>
                   <li>第5回: <strong>PRD / ADR</strong> で「なぜそうしたか」を AI に渡す</li>
                   <li>第6回: <strong>Spec-Driven Development</strong> で計画 → 実装の順番を作る</li>
@@ -99,9 +99,9 @@
               <li>一次出典: <a href="https://docs.github.com/ja/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/about-pull-request-reviews" target="_blank" rel="noopener">GitHub Docs ja — プルリクエストのレビューについて</a></li>
               <li>公式の整理: PR レビューでは、レビュアーは<strong>変更ファイル全体・特定のセクション・1 行</strong>のいずれにもコメントを付けられる。レビュー全体を完了させるときには <strong>3 種類の状態</strong>から 1 つを選ぶ:
                 <ul>
-                  <li><strong>Comment（コメント）</strong>: 承認も変更要求もせず、所感だけを残す。<em>「general feedback without explicitly approving the changes or requesting additional changes」</em></li>
-                  <li><strong>Approve（承認）</strong>: 提案された変更をマージしてよいと判断する。<em>"Submit feedback and approve merging the changes proposed in the pull request"</em></li>
-                  <li><strong>Request changes（変更を要求）</strong>: マージ前に修正してほしい点を残す。<em>"Submit feedback that must be addressed before the pull request can be merged"</em></li>
+                  <li><strong>Comment（コメント）</strong>: 承認も変更要求もせず、所感だけを残す。公式（英語版）: <em>"Comment: Share feedback without approving or requesting changes."</em></li>
+                  <li><strong>Approve（承認）</strong>: 提案された変更をマージしてよいと判断する。公式（英語版）: <em>"Approve: Approve the changes for merging."</em></li>
+                  <li><strong>Request changes（変更を要求）</strong>: マージ前に修正してほしい点を残す。公式（英語版）: <em>"Request changes: Identify issues that must be fixed before merging."</em></li>
                 </ul>
               </li>
               <li>本授業での捉え方:
@@ -111,7 +111,7 @@
                   <li><strong>Request changes</strong> = 「マージを止める」強い使い方。自分の過去 PR にはあえて使ってみて、感覚を体験するだけでよい</li>
                 </ul>
               </li>
-              <li>注意: 自分が <strong>author</strong> の PR には GitHub UI から <strong>Approve / Request changes は送れない</strong>（GitHub の仕様）。自分の過去 PR に対しては <strong>Comment 型のレビュー</strong>と <strong>inline comment</strong> を中心に体験する</li>
+              <li>注意: 自分が <strong>author</strong> の PR には GitHub UI から<strong>通常 Approve / Request changes は送れない</strong>（リポジトリの保護設定や required reviews の状況によって挙動が変わる場合がある）。自分の過去 PR に対しては <strong>Comment 型のレビュー</strong>と <strong>inline comment</strong> を中心に体験する</li>
             </ul>
             <p><strong>なぜ自分の過去 PR を見るのか（10分）</strong></p>
             <ul>
@@ -147,7 +147,7 @@
             </ul>
             <p><strong>GitHub UI で inline comment を付ける（25分）</strong></p>
             <ul>
-              <li>選んだ PR を開いて <strong>Files changed タブ</strong>へ。一次出典: <a href="https://docs.github.com/ja/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-proposed-changes-in-a-pull-request" target="_blank" rel="noopener">GitHub Docs ja — プルリクエストでの変更の確認</a></li>
+              <li>選んだ PR を開いて <strong>Files changed タブ</strong>へ。一次出典: <a href="https://docs.github.com/ja/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-proposed-changes-in-a-pull-request" target="_blank" rel="noopener">GitHub Docs ja — プルリクエストで提案された変更をレビューする</a></li>
               <li>diff の左端の <strong>行番号にマウスを乗せると現れる「＋」アイコン</strong>をクリックして、その行にコメントを付ける。複数行をまとめてコメントしたい場合は、開始行の「＋」をドラッグして範囲選択</li>
               <li>1 つだけ送るときは <strong>Add single comment</strong>、まとめてレビューにする場合は <strong>Start a review</strong> ボタンで保留 → 全部書き終わったら <strong>Finish your review</strong> から <strong>Comment</strong> を選んで送信</li>
               <li>観点リスト（自分への 4 つの問い・1 行ごとに当てる）:
@@ -172,8 +172,8 @@ gh pr review &lt;PR番号&gt; --comment --body "セルフレビュー: 命名と
               <li>主なフラグ（公式 manual より）:
                 <ul>
                   <li><code>--comment</code> / <code>-c</code> — Comment 型のレビューを送る</li>
-                  <li><code>--approve</code> / <code>-a</code> — Approve（自分の PR には送れない）</li>
-                  <li><code>--request-changes</code> / <code>-r</code> — Request changes（自分の PR には送れない）</li>
+                  <li><code>--approve</code> / <code>-a</code> — Approve（通常、自分の PR には送れない）</li>
+                  <li><code>--request-changes</code> / <code>-r</code> — Request changes（通常、自分の PR には送れない）</li>
                   <li><code>--body "..."</code> — 全体コメント本文をインラインで指定</li>
                   <li><code>--body-file &lt;file&gt;</code> — ファイルから本文を読み込む（長文を渡すとき便利）</li>
                 </ul>
@@ -182,7 +182,7 @@ gh pr review &lt;PR番号&gt; --comment --body "セルフレビュー: 命名と
               <li>UI / CLI の<strong>使い分け</strong>: inline comment（特定行の指摘）は UI、レビュー全体のサマリーや bot 連携は CLI、というのが現場の感覚</li>
             </ul>
             <div class="lesson-tip">
-              <strong>「Comment / Approve / Request changes」は不可逆ではない:</strong> Approve / Request changes は<strong>後から取り消し（Dismiss）や上書き</strong>ができる（公式 docs <em>"Dismissing a review"</em> 節参照）。最初から正解を選ぶ必要はない。本授業のセルフレビューでは <strong>Comment</strong> から入って、感覚を掴んだら他のレビュー（後期や進級制作の他人レビュー）で使い分けていく。
+              <strong>「Comment / Approve / Request changes」は不可逆ではない:</strong> Approve / Request changes は<strong>後から取り消し（Dismiss）や上書き</strong>ができる（公式 ja docs <a href="https://docs.github.com/ja/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/dismissing-a-pull-request-review" target="_blank" rel="noopener">「PR レビューを却下する」</a>参照）。最初から正解を選ぶ必要はない。本授業のセルフレビューでは <strong>Comment</strong> から入って、感覚を掴んだら他のレビュー（後期や進級制作の他人レビュー）で使い分けていく。
             </div>
           </div>
         </div>
@@ -267,7 +267,7 @@ gh pr review &lt;PR番号&gt; --comment --body "セルフレビュー: 命名と
               <li>一次出典: <a href="https://google.github.io/eng-practices/review/reviewer/comments.html" target="_blank" rel="noopener">Google eng-practices — How to write code review comments</a></li>
               <li>公式の要点を 3 つだけ持ち帰る:
                 <ul>
-                  <li><strong>Be kind</strong>（親切に）— 公式原文: <em>"Be kind to the coder, not to the code."</em>。コードへの厳しさはよいが、人格への厳しさにしない</li>
+                  <li><strong>Be kind</strong>（親切に）— 公式の項目名は <em>"Be kind."</em>（1 語のサマリー）。本文では「コードへの厳しさはよいが、書き手の人格への厳しさにしない」という趣旨で展開されている</li>
                   <li><strong>Explain your reasoning</strong>（理由を説明する）— なぜそう指摘するのかを 1 行添える</li>
                   <li><strong>Provide guidance</strong>（手がかりを提供する）— 「これは間違い」だけで止めず、「こうすると良い」「ここを読むと参考になる」を添える</li>
                 </ul>
@@ -277,7 +277,7 @@ gh pr review &lt;PR番号&gt; --comment --body "セルフレビュー: 命名と
             <p><strong>Conventional Comments の 7 ラベルを1 周（10分）</strong></p>
             <ul>
               <li>一次出典: <a href="https://conventionalcomments.org/" target="_blank" rel="noopener">Conventional Comments</a></li>
-              <li>公式が定義する 7 ラベルを順に眺める:
+              <li>公式が定義する<strong>コア 7 ラベル</strong>を順に眺める（このほかに <code>typo:</code> / <code>polish:</code> / <code>quibble:</code> 等の追加ラベルも公式で提示されているが、本授業はコア 7 つに絞る）:
                 <ul>
                   <li><code>praise:</code> — 賞賛。「ここは良い」を明示する。レビューはダメ出しだけになりがちなので、意識的に 1 件入れる</li>
                   <li><code>nitpick:</code> — 細かい好み。「マージを止めるほどではないが気になる」を明示する</li>
@@ -288,7 +288,7 @@ gh pr review &lt;PR番号&gt; --comment --body "セルフレビュー: 命名と
                   <li><code>chore:</code> — 雑務。「フォーマット直して」「typo」など軽い指摘</li>
                 </ul>
               </li>
-              <li>修飾子（公式 docs 参照）: <code>(non-blocking)</code> — マージを止めない指摘 / <code>(blocking)</code> — マージを止める指摘 / <code>(if-minor)</code> — 軽微なら任意。例: <code>suggestion (non-blocking):</code></li>
+              <li>修飾子（公式の <strong>Decorations</strong> カテゴリ）: <code>(non-blocking)</code> — マージを止めない指摘 / <code>(blocking)</code> — マージを止める指摘 / <code>(if-minor)</code> — 軽微なら任意。例: <code>suggestion (non-blocking):</code></li>
               <li>1 限後半でラベル付きで送った 1 件と、他のコメントを並べて読み比べ。<strong>ラベル付きの方が読み手の負担が軽い</strong>ことを実感する</li>
             </ul>
             <p><strong>第7回テストとの接続（5分・口頭）</strong></p>
@@ -317,7 +317,7 @@ gh pr review &lt;PR番号&gt; --comment --body "セルフレビュー: 命名と
           <h3>振り返り＆次回予告</h3>
           <div class="timeline-body">
             <ul>
-              <li>今日のキーワード: <strong>セルフコードレビュー / Comment・Approve・Request changes / inline comment / <code>gh pr review</code> / AI レビューの幻覚 / Conventional Comments / 「Be kind to the coder, not to the code」</strong></li>
+              <li>今日のキーワード: <strong>セルフコードレビュー / Comment・Approve・Request changes / inline comment / <code>gh pr review</code> / AI レビューの幻覚 / Conventional Comments / Be kind・Explain reasoning・Provide guidance</strong></li>
               <li>覚えてほしいこと: <strong>過去の自分は他人</strong>。今の自分でレビューすれば必ず学びが出る。AI レビューは観点の抜け漏れを補ってくれるが、<strong>幻覚を必ず自分で検証する</strong>のがレビューする側の責任</li>
               <li>「責任あるコード」第3の具体例:
                 <ul>
@@ -387,6 +387,8 @@ gh pr review &lt;PR番号&gt; --comment --body "セルフレビュー: 命名と
         <li><a href="https://google.github.io/eng-practices/review/reviewer/comments.html" target="_blank" rel="noopener">Google eng-practices — How to write code review comments</a> — Be kind / Explain reasoning / Provide guidance の出典</li>
         <li><a href="https://conventionalcomments.org/" target="_blank" rel="noopener">Conventional Comments</a> — 7 ラベル（praise / nitpick / suggestion / issue / question / thought / chore）と修飾子の正本</li>
         <li><a href="https://antigravity.google/docs/cli-reference" target="_blank" rel="noopener">Antigravity CLI — CLI reference（公式）</a> — <code>agy</code> のスラッシュコマンド・引数一覧</li>
+        <li><a href="https://antigravity.google/docs/cli-getting-started" target="_blank" rel="noopener">Antigravity CLI — Getting Started（公式）</a> — CLI コマンド全体像の最初のページ。<code>cli-reference</code> が SPA で読みづらいときのフォールバックにも</li>
+        <li><a href="https://docs.github.com/ja/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/dismissing-a-pull-request-review" target="_blank" rel="noopener">GitHub Docs ja — PR レビューを却下する</a> — Approve / Request changes を後から取り消す Dismiss の公式手順</li>
       </ul>
     </div>
 
