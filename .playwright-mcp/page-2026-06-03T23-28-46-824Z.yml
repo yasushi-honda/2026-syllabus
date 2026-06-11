@@ -1,0 +1,250 @@
+- generic [active] [ref=e1]:
+  - region "antigravity.google uses cookies to deliver and enhance the quality of its services and to analyze traffic. If you agree, cookies are also used to serve advertising and to personalize the content and advertisements that you see." [ref=e2]:
+    - paragraph [ref=e3]:
+      - text: antigravity.google uses cookies to deliver and enhance the quality of its services and to analyze traffic. If you agree, cookies are also used to serve advertising and to personalize the content and advertisements that you see.
+      - link "Learn more about how Google uses cookies. Opens in a new tab." [ref=e4] [cursor=pointer]:
+        - /url: https://policies.google.com/technologies/cookies?hl=en
+        - text: Learn more
+    - button "Agree" [ref=e5] [cursor=pointer]
+    - button "No thanks" [ref=e6] [cursor=pointer]
+  - main [ref=e7]:
+    - generic [ref=e10]:
+      - generic [ref=e13]:
+        - link "Google Antigravity" [ref=e14] [cursor=pointer]:
+          - /url: /
+          - img [ref=e16]
+        - generic [ref=e59]:
+          - navigation [ref=e60] [cursor=pointer]:
+            - button "Product" [ref=e63]:
+              - text: Product
+              - generic [ref=e64]: keyboard_arrow_down
+            - button "Use Cases" [ref=e67]:
+              - text: Use Cases
+              - generic [ref=e68]: keyboard_arrow_down
+            - button "Pricing" [expanded] [ref=e71]
+            - button "Blog" [expanded] [ref=e74]
+            - button "Resources" [ref=e77]:
+              - text: Resources
+              - generic [ref=e78]: keyboard_arrow_down
+          - button "Download download" [ref=e80] [cursor=pointer]:
+            - text: Download
+            - generic [ref=e81]: download
+      - generic [ref=e83]:
+        - navigation "Documentation navigation" [ref=e86]:
+          - link "Home" [ref=e88] [cursor=pointer]:
+            - /url: /docs/home
+            - generic [ref=e89]: Home
+          - generic [ref=e91]:
+            - generic [ref=e92] [cursor=pointer]: Antigravity 2.0
+            - generic [ref=e93] [cursor=pointer]: expand_more
+          - link "Overview" [ref=e95] [cursor=pointer]:
+            - /url: /docs/overview
+            - generic [ref=e96]: Overview
+          - link "Getting Started" [ref=e98] [cursor=pointer]:
+            - /url: /docs/getting-started
+            - generic [ref=e99]: Getting Started
+          - link "Build with Google" [ref=e101] [cursor=pointer]:
+            - /url: /docs/build-with-google
+            - generic [ref=e102]: Build with Google
+          - link "Feature Overview" [ref=e104] [cursor=pointer]:
+            - /url: /docs/features
+            - generic [ref=e105]: Feature Overview
+          - link "Models" [ref=e107] [cursor=pointer]:
+            - /url: /docs/models
+            - generic [ref=e108]: Models
+          - link "Projects" [ref=e110] [cursor=pointer]:
+            - /url: /docs/projects
+            - generic [ref=e111]: Projects
+          - generic [ref=e113]:
+            - generic [ref=e114] [cursor=pointer]: Settings
+            - generic [ref=e115] [cursor=pointer]: chevron_right
+          - generic [ref=e117]:
+            - generic [ref=e118] [cursor=pointer]: Customizations
+            - generic [ref=e119] [cursor=pointer]: chevron_right
+          - generic [ref=e121]:
+            - generic [ref=e122] [cursor=pointer]: Agent Capabilities
+            - generic [ref=e123] [cursor=pointer]: chevron_right
+          - generic [ref=e125]:
+            - generic [ref=e126] [cursor=pointer]: Artifacts
+            - generic [ref=e127] [cursor=pointer]: chevron_right
+          - generic [ref=e129]:
+            - generic [ref=e130] [cursor=pointer]: Antigravity CLI
+            - generic [ref=e131] [cursor=pointer]: chevron_right
+          - generic [ref=e133]:
+            - generic [ref=e134] [cursor=pointer]: Antigravity SDK
+            - generic [ref=e135] [cursor=pointer]: chevron_right
+          - generic [ref=e137]:
+            - generic [ref=e138] [cursor=pointer]: Antigravity IDE
+            - generic [ref=e139] [cursor=pointer]: chevron_right
+          - generic [ref=e141]:
+            - generic [ref=e142] [cursor=pointer]: Migration
+            - generic [ref=e143] [cursor=pointer]: chevron_right
+          - link "Enterprise" [ref=e145] [cursor=pointer]:
+            - /url: /docs/enterprise
+            - generic [ref=e146]: Enterprise
+          - link "Plans" [ref=e148] [cursor=pointer]:
+            - /url: /docs/plans
+            - generic [ref=e149]: Plans
+          - link "FAQ" [ref=e151] [cursor=pointer]:
+            - /url: /docs/faq
+            - generic [ref=e152]: FAQ
+        - generic [ref=e153]:
+          - list [ref=e154] [cursor=pointer]:
+            - listitem [ref=e155]: Antigravity 2.0
+            - generic [ref=e156]: ">"
+            - listitem [ref=e157]: Getting Started
+          - heading "Getting Started with Antigravity 2.0" [level=1] [ref=e159]
+          - heading "Download" [level=3] [ref=e161]
+          - paragraph [ref=e163]:
+            - text: Visit
+            - link "antigravity.google/download" [ref=e164] [cursor=pointer]:
+              - /url: https://antigravity.google/download
+            - text: to download Google Antigravity 2.0.
+          - list [ref=e166]:
+            - listitem [ref=e167]:
+              - generic [ref=e168]:
+                - strong [ref=e169]: macOS
+                - text: ":"
+              - text: macOS versions with Apple security update support. This is typically the current and two previous versions. Min Version 12 (Monterey), X86 is not supported.
+            - listitem [ref=e170]:
+              - generic [ref=e171]:
+                - strong [ref=e172]: Windows
+                - text: ":"
+              - text: Windows 10 (64 bit)
+            - listitem [ref=e173]:
+              - generic [ref=e174]:
+                - strong [ref=e175]: Linux
+                - text: ":"
+              - text: glibc >= 2.28, glibcxx >= 3.4.25 (e.g. Ubuntu 20, Debian 10, Fedora 36, RHEL 8)
+          - heading "Installation" [level=3] [ref=e177]
+          - paragraph [ref=e179]:
+            - text: You may get a notification asking whether you want to “Keep Both” or “Replace” Antigravity, select “Replace.” You will be prompted to re-install the IDE during installation, should you choose to. If you do not install it now and would like to re-download it later, you can do so
+            - link "here" [ref=e180] [cursor=pointer]:
+              - /url: /download
+            - text: .
+          - heading "Creating a Project" [level=3] [ref=e182]
+          - paragraph [ref=e184]: Agents work within Projects, which define the boundaries of the folders and repositories they can access.
+          - list [ref=e186]:
+            - listitem [ref=e187]:
+              - generic [ref=e188]:
+                - text: Click the
+                - strong [ref=e189]: folder with a "+" icon
+                - text: in the
+                - strong [ref=e190]: left sidebar
+                - text: .
+            - listitem [ref=e191]:
+              - generic [ref=e192]:
+                - text: Click on
+                - strong [ref=e193]: "\"New Project\""
+                - text: .
+            - listitem [ref=e194]:
+              - generic [ref=e195]:
+                - text: Click
+                - strong [ref=e196]: Add Folder
+                - text: to associate one or more local folders or Git repositories. Adding multiple folders provides your agent with full cross-repository context.
+            - listitem [ref=e197]:
+              - generic [ref=e198]:
+                - text: Click
+                - strong [ref=e199]: Create
+                - text: .
+            - listitem [ref=e200]:
+              - generic [ref=e201]:
+                - emphasis [ref=e202]: (Optional)
+                - text: Configure your Project's settings. Each Project maintains its own isolated settings and security policies that the agent respects.
+          - heading "Starting an Agent" [level=3] [ref=e204]
+          - paragraph [ref=e206]: Once your Project is created, you can spawn an agent to start working on tasks.
+          - list [ref=e208]:
+            - listitem [ref=e209]:
+              - generic [ref=e210]:
+                - text: Type your goal or instruction in the chat input (e.g., "Help me add a new feature") and press
+                - strong [ref=e211]: Enter
+                - text: .
+            - listitem [ref=e212]:
+              - generic [ref=e213]:
+                - text: Choose a
+                - strong [ref=e214]: Mode
+                - text: "in the setup modal to boot up your agent:"
+          - list [ref=e216]:
+            - listitem [ref=e217]:
+              - generic [ref=e218]:
+                - strong [ref=e219]: Local Mode
+                - text: ":"
+              - text: The agent operates directly in your active folders.
+            - listitem [ref=e220]:
+              - generic [ref=e221]:
+                - strong [ref=e222]: New Worktree Mode
+                - text: ":"
+              - text: The agent operates in an isolated Git worktree.
+          - heading "Basic Navigation" [level=3] [ref=e224]
+          - paragraph [ref=e226]:
+            - table [ref=e227]:
+              - rowgroup [ref=e228]:
+                - row "Action macOS Windows / Linux" [ref=e229]:
+                  - columnheader "Action" [ref=e230]
+                  - columnheader "macOS" [ref=e231]
+                  - columnheader "Windows / Linux" [ref=e232]
+              - rowgroup [ref=e233]:
+                - row "Open Conversation Picker ⌘K Ctrl + K" [ref=e234]:
+                  - cell "Open Conversation Picker" [ref=e235]:
+                    - strong [ref=e236]: Open Conversation Picker
+                  - cell "⌘K" [ref=e237]:
+                    - code [ref=e238]: ⌘K
+                  - cell "Ctrl + K" [ref=e239]:
+                    - code [ref=e240]: Ctrl + K
+                - row "Open File Search ⌘P Ctrl + P" [ref=e241]:
+                  - cell "Open File Search" [ref=e242]:
+                    - strong [ref=e243]: Open File Search
+                  - cell "⌘P" [ref=e244]:
+                    - code [ref=e245]: ⌘P
+                  - cell "Ctrl + P" [ref=e246]:
+                    - code [ref=e247]: Ctrl + P
+                - row "Focus Input ⌘L Ctrl + L" [ref=e248]:
+                  - cell "Focus Input" [ref=e249]:
+                    - strong [ref=e250]: Focus Input
+                  - cell "⌘L" [ref=e251]:
+                    - code [ref=e252]: ⌘L
+                  - cell "Ctrl + L" [ref=e253]:
+                    - code [ref=e254]: Ctrl + L
+                - row "New Conversation ⌘N Ctrl + N" [ref=e255]:
+                  - cell "New Conversation" [ref=e256]:
+                    - strong [ref=e257]: New Conversation
+                  - cell "⌘N" [ref=e258]:
+                    - code [ref=e259]: ⌘N
+                  - cell "Ctrl + N" [ref=e260]:
+                    - code [ref=e261]: Ctrl + N
+                - row "Next/Previous Conversation ⌥ Up / Down Alt + Up / Down" [ref=e262]:
+                  - cell "Next/Previous Conversation" [ref=e263]:
+                    - strong [ref=e264]: Next/Previous Conversation
+                  - cell "⌥ Up / Down" [ref=e265]:
+                    - code [ref=e266]: ⌥ Up / Down
+                  - cell "Alt + Up / Down" [ref=e267]:
+                    - code [ref=e268]: Alt + Up / Down
+          - heading "Slash Commands" [level=3] [ref=e270]
+          - list [ref=e272]:
+            - listitem [ref=e273]:
+              - generic [ref=e274]:
+                - code [ref=e275]: /goal
+                - text: ": Run until the specified task is completely finished, not asking for intermediate input from the user."
+            - listitem [ref=e276]:
+              - generic [ref=e277]:
+                - code [ref=e278]: /grill-me
+                - text: ": Before starting to implement, ask questions back to align on the specific details of the plan."
+            - listitem [ref=e279]:
+              - generic [ref=e280]:
+                - code [ref=e281]: /schedule
+                - text: ": Run an instruction as a one-time timer in the future or on some recurring schedule (via Scheduled Tasks)"
+            - listitem [ref=e282]:
+              - generic [ref=e283]:
+                - code [ref=e284]: /browser
+                - text: ": We heard the feedback that the agents were still not capable enough to determine exactly when to be using the browser. So for now, we’ve made it such that an explicit slash command controls these behaviors. When used, the agent diligently uses the browser primitives. This requires both Google Chrome and the user to provide permission in Google Chrome to start a debugging session."
+          - navigation [ref=e285]:
+            - link "keyboard_arrow_left Overview" [ref=e287] [cursor=pointer]:
+              - /url: /docs/overview
+            - link "Build with Google keyboard_arrow_right" [ref=e289] [cursor=pointer]:
+              - /url: /docs/build-with-google
+        - generic [ref=e291]:
+          - generic [ref=e292]: On this Page
+          - navigation [ref=e293]:
+            - list [ref=e295]:
+              - listitem [ref=e297] [cursor=pointer]:
+                - generic [ref=e298]: Getting Started with Antigravity 2.0

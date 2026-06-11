@@ -1,0 +1,429 @@
+- generic [active] [ref=e1]:
+  - region "antigravity.google uses cookies to deliver and enhance the quality of its services and to analyze traffic. If you agree, cookies are also used to serve advertising and to personalize the content and advertisements that you see." [ref=e2]:
+    - paragraph [ref=e3]:
+      - text: antigravity.google uses cookies to deliver and enhance the quality of its services and to analyze traffic. If you agree, cookies are also used to serve advertising and to personalize the content and advertisements that you see.
+      - link "Learn more about how Google uses cookies. Opens in a new tab." [ref=e4] [cursor=pointer]:
+        - /url: https://policies.google.com/technologies/cookies?hl=en
+        - text: Learn more
+    - button "Agree" [ref=e5] [cursor=pointer]
+    - button "No thanks" [ref=e6] [cursor=pointer]
+  - main [ref=e7]:
+    - generic [ref=e10]:
+      - generic [ref=e13]:
+        - link "Google Antigravity" [ref=e14] [cursor=pointer]:
+          - /url: /
+          - img [ref=e16]
+        - generic [ref=e59]:
+          - navigation [ref=e60] [cursor=pointer]:
+            - button "Product" [ref=e63]:
+              - text: Product
+              - generic [ref=e64]: keyboard_arrow_down
+            - button "Use Cases" [ref=e67]:
+              - text: Use Cases
+              - generic [ref=e68]: keyboard_arrow_down
+            - button "Pricing" [expanded] [ref=e71]
+            - button "Blog" [expanded] [ref=e74]
+            - button "Resources" [ref=e77]:
+              - text: Resources
+              - generic [ref=e78]: keyboard_arrow_down
+          - button "Download download" [ref=e80] [cursor=pointer]:
+            - text: Download
+            - generic [ref=e81]: download
+      - generic [ref=e83]:
+        - navigation "Documentation navigation" [ref=e86]:
+          - link "Home" [ref=e88] [cursor=pointer]:
+            - /url: /docs/home
+            - generic [ref=e89]: Home
+          - generic [ref=e91]:
+            - generic [ref=e92] [cursor=pointer]: Antigravity 2.0
+            - generic [ref=e93] [cursor=pointer]: chevron_right
+          - generic [ref=e95]:
+            - generic [ref=e96] [cursor=pointer]: Antigravity CLI
+            - generic [ref=e97] [cursor=pointer]: expand_more
+          - link "Overview" [ref=e99] [cursor=pointer]:
+            - /url: /docs/cli-overview
+            - generic [ref=e100]: Overview
+          - link "Getting Started" [ref=e102] [cursor=pointer]:
+            - /url: /docs/cli-getting-started
+            - generic [ref=e103]: Getting Started
+          - link "Installation & Auth" [ref=e105] [cursor=pointer]:
+            - /url: /docs/cli-install
+            - generic [ref=e106]: Installation & Auth
+          - link "Tutorial" [ref=e108] [cursor=pointer]:
+            - /url: /docs/cli-tutorial
+            - generic [ref=e109]: Tutorial
+          - link "Using AGY CLI" [ref=e111] [cursor=pointer]:
+            - /url: /docs/cli-using
+            - generic [ref=e112]: Using AGY CLI
+          - link "Features" [ref=e114] [cursor=pointer]:
+            - /url: /docs/cli-features
+            - generic [ref=e115]: Features
+          - link "Gemini Migration" [ref=e117] [cursor=pointer]:
+            - /url: /docs/gcli-migration
+            - generic [ref=e118]: Gemini Migration
+          - link "Prompting" [ref=e120] [cursor=pointer]:
+            - /url: /docs/cli-prompting
+            - generic [ref=e121]: Prompting
+          - generic [ref=e123]:
+            - generic [ref=e124] [cursor=pointer]: Artifacts
+            - generic [ref=e125] [cursor=pointer]: chevron_right
+          - link "Conversations" [ref=e127] [cursor=pointer]:
+            - /url: /docs/cli-conversations
+            - generic [ref=e128]: Conversations
+          - generic [ref=e130]:
+            - generic [ref=e131] [cursor=pointer]: Agent Capabilities
+            - generic [ref=e132] [cursor=pointer]: chevron_right
+          - generic [ref=e134]:
+            - generic [ref=e135] [cursor=pointer]: Settings
+            - generic [ref=e136] [cursor=pointer]: chevron_right
+          - link "AI Credits" [ref=e138] [cursor=pointer]:
+            - /url: /docs/cli-credits
+            - generic [ref=e139]: AI Credits
+          - generic [ref=e141]:
+            - generic [ref=e142] [cursor=pointer]: Customizations
+            - generic [ref=e143] [cursor=pointer]: chevron_right
+          - link "Best Practices" [ref=e145] [cursor=pointer]:
+            - /url: /docs/cli-best-practices
+            - generic [ref=e146]: Best Practices
+          - link "Troubleshooting" [ref=e148] [cursor=pointer]:
+            - /url: /docs/cli-troubleshooting
+            - generic [ref=e149]: Troubleshooting
+          - link "Reference" [ref=e151] [cursor=pointer]:
+            - /url: /docs/cli-reference
+            - generic [ref=e152]: Reference
+          - generic [ref=e154]:
+            - generic [ref=e155] [cursor=pointer]: Antigravity SDK
+            - generic [ref=e156] [cursor=pointer]: chevron_right
+          - generic [ref=e158]:
+            - generic [ref=e159] [cursor=pointer]: Antigravity IDE
+            - generic [ref=e160] [cursor=pointer]: chevron_right
+          - generic [ref=e162]:
+            - generic [ref=e163] [cursor=pointer]: Migration
+            - generic [ref=e164] [cursor=pointer]: chevron_right
+          - link "Enterprise" [ref=e166] [cursor=pointer]:
+            - /url: /docs/enterprise
+            - generic [ref=e167]: Enterprise
+          - link "Plans" [ref=e169] [cursor=pointer]:
+            - /url: /docs/plans
+            - generic [ref=e170]: Plans
+          - link "FAQ" [ref=e172] [cursor=pointer]:
+            - /url: /docs/faq
+            - generic [ref=e173]: FAQ
+        - generic [ref=e174]:
+          - list [ref=e175] [cursor=pointer]:
+            - listitem [ref=e176]: Antigravity CLI
+            - generic [ref=e177]: ">"
+            - listitem [ref=e178]: Troubleshooting
+          - heading "Troubleshooting" [level=1] [ref=e180]
+          - paragraph [ref=e182]: Diagnose and resolve common anomalies with installation PATHs, local self-updating locks, keyring access permissions, and SSH clipboard forwarding.
+          - heading "Quick reference" [level=2] [ref=e184]
+          - paragraph [ref=e186]: "Scan the lookup table below to identify symptoms and access immediate solutions:"
+          - paragraph [ref=e188]:
+            - table [ref=e189]:
+              - rowgroup [ref=e190]:
+                - row "Error Symptom Potential Cause Target Resolution" [ref=e191]:
+                  - columnheader "Error Symptom" [ref=e192]
+                  - columnheader "Potential Cause" [ref=e193]
+                  - columnheader "Target Resolution" [ref=e194]
+              - rowgroup [ref=e195]:
+                - 'row "agy: command not found Binary directory missing from shell environments. Configure your shell PATH" [ref=e196]':
+                  - 'cell "agy: command not found" [ref=e197]':
+                    - strong [ref=e198]:
+                      - code [ref=e199]: "agy: command not found"
+                  - cell "Binary directory missing from shell environments." [ref=e200]
+                  - cell "Configure your shell PATH" [ref=e201]:
+                    - link "Configure your shell PATH" [ref=e202] [cursor=pointer]:
+                      - /url: "#configure-your-shell-path"
+                - 'row "keyring: secure lock out Missing system service permissions or active lockouts. Authorize keyring permissions" [ref=e203]':
+                  - 'cell "keyring: secure lock out" [ref=e204]':
+                    - strong [ref=e205]:
+                      - code [ref=e206]: "keyring: secure lock out"
+                  - cell "Missing system service permissions or active lockouts." [ref=e207]
+                  - cell "Authorize keyring permissions" [ref=e208]:
+                    - link "Authorize keyring permissions" [ref=e209] [cursor=pointer]:
+                      - /url: "#authorize-keyring-permissions"
+                - row "SSH Clipboard paste failures Protocol streams blocked or missing forward configurations. Enable emulator clipboard forwarding" [ref=e210]:
+                  - cell "SSH Clipboard paste failures" [ref=e211]:
+                    - strong [ref=e212]:
+                      - code [ref=e213]: SSH Clipboard paste failures
+                  - cell "Protocol streams blocked or missing forward configurations." [ref=e214]
+                  - cell "Enable emulator clipboard forwarding" [ref=e215]:
+                    - link "Enable emulator clipboard forwarding" [ref=e216] [cursor=pointer]:
+                      - /url: "#enable-emulator-clipboard-forwarding"
+                - row "Advisory lock / update failures Locked self-updater thread or read-only directory paths. Resolve self-updater locks and failures" [ref=e217]:
+                  - cell "Advisory lock / update failures" [ref=e218]:
+                    - strong [ref=e219]:
+                      - code [ref=e220]: Advisory lock / update failures
+                  - cell "Locked self-updater thread or read-only directory paths." [ref=e221]
+                  - cell "Resolve self-updater locks and failures" [ref=e222]:
+                    - link "Resolve self-updater locks and failures" [ref=e223] [cursor=pointer]:
+                      - /url: "#resolve-self-updater-locks-and-failures"
+          - paragraph [ref=e225]: "---"
+          - heading "Configure your shell PATH" [level=2] [ref=e227]
+          - heading "Symptom" [level=3] [ref=e229]
+          - paragraph [ref=e231]:
+            - text: Executing
+            - code [ref=e232]: agy
+            - text: "returns a shell terminal error:"
+          - generic [ref=e235]:
+            - generic [ref=e237]: bash
+            - button "content_copy" [ref=e238] [cursor=pointer]
+            - code [ref=e241]
+          - heading "Cause" [level=3] [ref=e243]
+          - paragraph [ref=e245]:
+            - text: The installation utility downloads the binary to
+            - code [ref=e246]: ~/.local/bin
+            - text: (or
+            - code [ref=e247]: C:\Users\<Username>\AppData\Local\agy\bin
+            - text: ), but your shell's active
+            - code [ref=e248]: $PATH
+            - text: environment does not index this directory.
+          - heading "Resolution" [level=3] [ref=e250]
+          - paragraph [ref=e252]: Ensure your terminal session loads the binary path.
+          - paragraph [ref=e254]:
+            - strong [ref=e255]: macOS & Linux
+            - text: ":"
+          - list [ref=e257]:
+            - listitem [ref=e258]:
+              - generic [ref=e259]:
+                - text: Open your shell configuration file (
+                - code [ref=e260]: ~/.bashrc
+                - text: or
+                - code [ref=e261]: ~/.zshrc
+                - text: ).
+            - listitem [ref=e262]: "Verify or append the following line at the end of the file:"
+          - generic [ref=e265]:
+            - button "content_copy" [ref=e266] [cursor=pointer]
+            - code [ref=e269]
+          - list [ref=e271]:
+            - listitem [ref=e272]: "Reload your profile configurations:"
+          - generic [ref=e275]:
+            - button "content_copy" [ref=e276] [cursor=pointer]
+            - code [ref=e279]
+          - paragraph [ref=e281]:
+            - strong [ref=e282]: Windows (PowerShell)
+            - text: ":"
+          - list [ref=e284]:
+            - listitem [ref=e285]: "Open a PowerShell terminal as an Administrator and execute:"
+          - generic [ref=e288]:
+            - button "content_copy" [ref=e289] [cursor=pointer]
+            - code [ref=e292]
+          - list [ref=e294]:
+            - listitem [ref=e295]: Restart your terminal emulator for the system registry environment to refresh.
+          - paragraph [ref=e297]: "---"
+          - heading "Authorize keyring permissions" [level=2] [ref=e299]
+          - heading "Symptom" [level=3] [ref=e301]
+          - paragraph [ref=e303]: "When launching, the CLI hangs, prints DBUS warnings, or throws keyring access exceptions:"
+          - generic [ref=e306]:
+            - generic [ref=e308]: text
+            - button "content_copy" [ref=e309] [cursor=pointer]
+            - code [ref=e312]
+          - heading "Cause" [level=3] [ref=e314]
+          - paragraph [ref=e316]: Antigravity CLI utilizes secure keychain libraries (Apple Keychain, Linux secret-service via dbus, or Windows Credential Manager) to encrypt your session tokens. If the background daemon is locked or headless, the CLI cannot read credentials.
+          - heading "Resolution" [level=3] [ref=e318]
+          - paragraph [ref=e320]:
+            - strong [ref=e321]: macOS
+            - text: ":"
+          - list [ref=e323]:
+            - listitem [ref=e324]:
+              - generic [ref=e325]:
+                - text: Open
+                - strong [ref=e326]: Keychain Access
+                - text: app.
+            - listitem [ref=e327]:
+              - generic [ref=e328]:
+                - text: Search for the
+                - code [ref=e329]: Antigravity CLI
+                - text: security item.
+            - listitem [ref=e330]:
+              - generic [ref=e331]:
+                - text: Right-click, select
+                - strong [ref=e332]: Get Info
+                - text: ", choose the"
+                - strong [ref=e333]: Access Control
+                - text: tab, and verify that
+                - code [ref=e334]: agy
+                - text: is on the allowed applications list.
+            - listitem [ref=e335]: "If running inside a headless SSH session on Mac, run the following unlock sequence:"
+          - generic [ref=e338]:
+            - button "content_copy" [ref=e339] [cursor=pointer]
+            - code [ref=e342]
+          - paragraph [ref=e344]:
+            - strong [ref=e345]: Linux
+            - text: ":"
+          - paragraph [ref=e347]: Ensure your system keyring (such as GNOME Keyring or KWallet) is unlocked and accessible.
+          - paragraph [ref=e349]: "If you are running in a headless environment or over SSH, ensure that a D-Bus session is active and that your keyring daemon is running. You can typically initialize a D-Bus session by running:"
+          - generic [ref=e352]:
+            - generic [ref=e354]: bash
+            - button "content_copy" [ref=e355] [cursor=pointer]
+            - code [ref=e358]
+          - paragraph [ref=e360]: If you still experience access issues, ensure your user account has the necessary permissions to access the keyring service or reach out to support.
+          - paragraph [ref=e362]: "---"
+          - heading "Enable emulator clipboard forwarding" [level=2] [ref=e364]
+          - heading "Symptom" [level=3] [ref=e366]
+          - paragraph [ref=e368]:
+            - text: Pasting screenshots or media files via
+            - code [ref=e369]: Ctrl+V
+            - text: "within an SSH terminal returns a failure notification:"
+          - generic [ref=e372]:
+            - generic [ref=e374]: text
+            - button "content_copy" [ref=e375] [cursor=pointer]
+            - code [ref=e378]
+          - heading "Cause" [level=3] [ref=e380]
+          - paragraph [ref=e382]: Standard SSH streams do not forward graphical clipboards. Graphic uploads require specific terminal multiplexer protocols.
+          - heading "Resolution" [level=3] [ref=e384]
+          - paragraph [ref=e386]: Verify that you are utilizing supported terminal emulators and configurations.
+          - list [ref=e388]:
+            - listitem [ref=e389]:
+              - generic [ref=e390]:
+                - strong [ref=e391]: Use iTerm2 or Ghostty
+                - text: ":"
+              - text: These emulators support advanced clip channels.
+            - listitem [ref=e392]:
+              - generic [ref=e393]:
+                - strong [ref=e394]: Configure iTerm2 Forwarding
+                - text: ":"
+          - list [ref=e396]:
+            - listitem [ref=e397]:
+              - generic [ref=e398]:
+                - text: Open iTerm2 Preferences (
+                - code [ref=e399]: Cmd+,
+                - text: ).
+            - listitem [ref=e400]:
+              - generic [ref=e401]:
+                - text: Go to the
+                - strong [ref=e402]: General
+                - text: tab, select
+                - strong [ref=e403]: Selection
+                - text: submenu.
+            - listitem [ref=e404]:
+              - generic [ref=e405]:
+                - text: Check
+                - strong [ref=e406]: Applications in terminal may access clipboard
+                - text: (enabling OSC 52 write channels).
+          - list [ref=e408]:
+            - listitem [ref=e409]:
+              - generic [ref=e410]:
+                - strong [ref=e411]: Bypass Multiplexers
+                - text: ":"
+              - generic [ref=e412]:
+                - text: If running inside
+                - code [ref=e413]: tmux
+                - text: ", ensure your active configuration maps standard paste clips correctly:"
+          - generic [ref=e416]:
+            - button "content_copy" [ref=e417] [cursor=pointer]
+            - code [ref=e420]
+          - paragraph [ref=e422]: "---"
+          - heading "Resolve self-updater locks and failures" [level=2] [ref=e424]
+          - heading "Symptom" [level=3] [ref=e426]
+          - paragraph [ref=e428]:
+            - text: Launching
+            - code [ref=e429]: agy
+            - text: "hangs, fails to apply upgrades, or returns an advisory lock warning:"
+          - generic [ref=e432]:
+            - generic [ref=e434]: text
+            - button "content_copy" [ref=e435] [cursor=pointer]
+            - code [ref=e438]
+          - heading "Cause" [level=3] [ref=e440]
+          - paragraph [ref=e442]:
+            - text: Antigravity CLI contains a native, statically linked self-updater that runs in the background. It uses a 15-minute Time-To-Live (TTL) debounce marker (
+            - code [ref=e443]: last_check.timestamp
+            - text: ) and an advisory lock (
+            - code [ref=e444]: update.lock
+            - text: ) inside
+            - code [ref=e445]: ~/.gemini/antigravity-cli/updater/
+            - text: to prevent concurrent process collisions. If a background updater process hangs, crashes without releasing the lock, or has insufficient user filesystem permissions inside the executable directory, subsequent updates are blocked.
+          - heading "Resolution" [level=3] [ref=e447]
+          - list [ref=e449]:
+            - listitem [ref=e450]:
+              - generic [ref=e451]:
+                - strong [ref=e452]: Release the advisory lock
+                - text: ":"
+              - text: "Purge the background lock file manually:"
+          - generic [ref=e455]:
+            - button "content_copy" [ref=e456] [cursor=pointer]
+            - code [ref=e459]
+          - list [ref=e461]:
+            - listitem [ref=e462]:
+              - generic [ref=e463]:
+                - strong [ref=e464]: Opt-out/Disable auto-updates
+                - text: ":"
+              - generic [ref=e465]:
+                - text: Set the
+                - code [ref=e466]: AGY_CLI_DISABLE_AUTO_UPDATE
+                - text: environment variable to
+                - code [ref=e467]: "true"
+                - text: inside your shell profile (
+                - code [ref=e468]: ~/.bashrc
+                - text: or
+                - code [ref=e469]: ~/.zshrc
+                - text: "):"
+          - generic [ref=e472]:
+            - button "content_copy" [ref=e473] [cursor=pointer]
+            - code [ref=e476]
+          - list [ref=e478]:
+            - listitem [ref=e479]:
+              - generic [ref=e480]:
+                - strong [ref=e481]: Verify directory write permissions
+                - text: ":"
+              - generic [ref=e482]:
+                - text: Ensure your user profile owns and has write permissions inside the target installation directory (
+                - code [ref=e483]: ~/.local/bin/
+                - text: on Unix, or
+                - code [ref=e484]: "%LOCALAPPDATA%\\agy\\bin"
+                - text: on Windows).
+          - paragraph [ref=e486]: "---"
+          - heading "Next steps" [level=2] [ref=e488]
+          - paragraph [ref=e490]: "Access our quick reference sheets or configure advanced permissions:"
+          - list [ref=e492]:
+            - listitem [ref=e493]:
+              - generic [ref=e494]:
+                - strong [ref=e495]:
+                  - link "CLI Reference" [ref=e496] [cursor=pointer]:
+                    - /url: /docs/cli-reference
+                - text: ":"
+              - text: Dense tables listing all slash commands and visual settings keys.
+            - listitem [ref=e497]:
+              - generic [ref=e498]:
+                - strong [ref=e499]:
+                  - link "Permissions" [ref=e500] [cursor=pointer]:
+                    - /url: /docs/cli-permissions
+                - text: ":"
+              - text: Configure fine-grained allowed and denied action policies.
+            - listitem [ref=e501]:
+              - generic [ref=e502]:
+                - strong [ref=e503]:
+                  - link "Sandbox" [ref=e504] [cursor=pointer]:
+                    - /url: /docs/cli-sandbox
+                - text: ":"
+              - text: Enforce OS-level container isolation boundaries.
+            - listitem [ref=e505]:
+              - generic [ref=e506]:
+                - strong [ref=e507]:
+                  - link "Plugins & Skills" [ref=e508] [cursor=pointer]:
+                    - /url: /docs/cli-plugins
+                - text: ":"
+              - text: Create your own custom skills.
+          - navigation [ref=e509]:
+            - link "keyboard_arrow_left Best Practices" [ref=e511] [cursor=pointer]:
+              - /url: /docs/cli-best-practices
+            - link "CLI Reference keyboard_arrow_right" [ref=e513] [cursor=pointer]:
+              - /url: /docs/cli-reference
+        - generic [ref=e515]:
+          - generic [ref=e516]: On this Page
+          - navigation [ref=e517]:
+            - list [ref=e519]:
+              - listitem [ref=e520] [cursor=pointer]:
+                - generic [ref=e521]: Troubleshooting
+              - listitem [ref=e522] [cursor=pointer]:
+                - generic [ref=e523]: Quick reference
+              - listitem [ref=e524] [cursor=pointer]:
+                - generic [ref=e525]: Configure your shell PATH
+              - listitem [ref=e526] [cursor=pointer]:
+                - generic [ref=e527]: Authorize keyring permissions
+              - listitem [ref=e528] [cursor=pointer]:
+                - generic [ref=e529]: Enable emulator clipboard forwarding
+              - listitem [ref=e530] [cursor=pointer]:
+                - generic [ref=e531]: Resolve self-updater locks and failures
+              - listitem [ref=e532] [cursor=pointer]:
+                - generic [ref=e533]: Next steps

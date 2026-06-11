@@ -1,0 +1,244 @@
+- generic [active] [ref=e1]:
+  - region "antigravity.google uses cookies to deliver and enhance the quality of its services and to analyze traffic. If you agree, cookies are also used to serve advertising and to personalize the content and advertisements that you see." [ref=e2]:
+    - paragraph [ref=e3]:
+      - text: antigravity.google uses cookies to deliver and enhance the quality of its services and to analyze traffic. If you agree, cookies are also used to serve advertising and to personalize the content and advertisements that you see.
+      - link "Learn more about how Google uses cookies. Opens in a new tab." [ref=e4] [cursor=pointer]:
+        - /url: https://policies.google.com/technologies/cookies?hl=en
+        - text: Learn more
+    - button "Agree" [ref=e5] [cursor=pointer]
+    - button "No thanks" [ref=e6] [cursor=pointer]
+  - main [ref=e7]:
+    - generic [ref=e10]:
+      - generic [ref=e13]:
+        - link "Google Antigravity" [ref=e14] [cursor=pointer]:
+          - /url: /
+          - img [ref=e16]
+        - generic [ref=e59]:
+          - navigation [ref=e60] [cursor=pointer]:
+            - button "Product" [ref=e63]:
+              - text: Product
+              - generic [ref=e64]: keyboard_arrow_down
+            - button "Use Cases" [ref=e67]:
+              - text: Use Cases
+              - generic [ref=e68]: keyboard_arrow_down
+            - button "Pricing" [expanded] [ref=e71]
+            - button "Blog" [expanded] [ref=e74]
+            - button "Resources" [ref=e77]:
+              - text: Resources
+              - generic [ref=e78]: keyboard_arrow_down
+          - button "Download download" [ref=e80] [cursor=pointer]:
+            - text: Download
+            - generic [ref=e81]: download
+      - generic [ref=e83]:
+        - navigation "Documentation navigation" [ref=e86]:
+          - link "Home" [ref=e88] [cursor=pointer]:
+            - /url: /docs/home
+            - generic [ref=e89]: Home
+          - generic [ref=e91]:
+            - generic [ref=e92] [cursor=pointer]: Antigravity 2.0
+            - generic [ref=e93] [cursor=pointer]: chevron_right
+          - generic [ref=e95]:
+            - generic [ref=e96] [cursor=pointer]: Antigravity CLI
+            - generic [ref=e97] [cursor=pointer]: expand_more
+          - link "Overview" [ref=e99] [cursor=pointer]:
+            - /url: /docs/cli-overview
+            - generic [ref=e100]: Overview
+          - link "Getting Started" [ref=e102] [cursor=pointer]:
+            - /url: /docs/cli-getting-started
+            - generic [ref=e103]: Getting Started
+          - link "Installation & Auth" [ref=e105] [cursor=pointer]:
+            - /url: /docs/cli-install
+            - generic [ref=e106]: Installation & Auth
+          - link "Tutorial" [ref=e108] [cursor=pointer]:
+            - /url: /docs/cli-tutorial
+            - generic [ref=e109]: Tutorial
+          - link "Using AGY CLI" [ref=e111] [cursor=pointer]:
+            - /url: /docs/cli-using
+            - generic [ref=e112]: Using AGY CLI
+          - link "Features" [ref=e114] [cursor=pointer]:
+            - /url: /docs/cli-features
+            - generic [ref=e115]: Features
+          - link "Gemini Migration" [ref=e117] [cursor=pointer]:
+            - /url: /docs/gcli-migration
+            - generic [ref=e118]: Gemini Migration
+          - link "Prompting" [ref=e120] [cursor=pointer]:
+            - /url: /docs/cli-prompting
+            - generic [ref=e121]: Prompting
+          - generic [ref=e123]:
+            - generic [ref=e124] [cursor=pointer]: Artifacts
+            - generic [ref=e125] [cursor=pointer]: chevron_right
+          - link "Conversations" [ref=e127] [cursor=pointer]:
+            - /url: /docs/cli-conversations
+            - generic [ref=e128]: Conversations
+          - generic [ref=e130]:
+            - generic [ref=e131] [cursor=pointer]: Agent Capabilities
+            - generic [ref=e132] [cursor=pointer]: chevron_right
+          - generic [ref=e134]:
+            - generic [ref=e135] [cursor=pointer]: Settings
+            - generic [ref=e136] [cursor=pointer]: chevron_right
+          - link "AI Credits" [ref=e138] [cursor=pointer]:
+            - /url: /docs/cli-credits
+            - generic [ref=e139]: AI Credits
+          - generic [ref=e141]:
+            - generic [ref=e142] [cursor=pointer]: Customizations
+            - generic [ref=e143] [cursor=pointer]: chevron_right
+          - link "Best Practices" [ref=e145] [cursor=pointer]:
+            - /url: /docs/cli-best-practices
+            - generic [ref=e146]: Best Practices
+          - link "Troubleshooting" [ref=e148] [cursor=pointer]:
+            - /url: /docs/cli-troubleshooting
+            - generic [ref=e149]: Troubleshooting
+          - link "Reference" [ref=e151] [cursor=pointer]:
+            - /url: /docs/cli-reference
+            - generic [ref=e152]: Reference
+          - generic [ref=e154]:
+            - generic [ref=e155] [cursor=pointer]: Antigravity SDK
+            - generic [ref=e156] [cursor=pointer]: chevron_right
+          - generic [ref=e158]:
+            - generic [ref=e159] [cursor=pointer]: Antigravity IDE
+            - generic [ref=e160] [cursor=pointer]: chevron_right
+          - generic [ref=e162]:
+            - generic [ref=e163] [cursor=pointer]: Migration
+            - generic [ref=e164] [cursor=pointer]: chevron_right
+          - link "Enterprise" [ref=e166] [cursor=pointer]:
+            - /url: /docs/enterprise
+            - generic [ref=e167]: Enterprise
+          - link "Plans" [ref=e169] [cursor=pointer]:
+            - /url: /docs/plans
+            - generic [ref=e170]: Plans
+          - link "FAQ" [ref=e172] [cursor=pointer]:
+            - /url: /docs/faq
+            - generic [ref=e173]: FAQ
+        - generic [ref=e174]:
+          - list [ref=e175] [cursor=pointer]:
+            - listitem [ref=e176]: Antigravity CLI
+            - generic [ref=e177]: ">"
+            - listitem [ref=e178]: Installation & Auth
+          - heading "Installation & auth" [level=1] [ref=e180]
+          - paragraph [ref=e182]: Install Antigravity CLI, configure enterprise requirements, and establish secure authenticated sessions.
+          - heading "Installation" [level=2] [ref=e184]
+          - paragraph [ref=e186]: Antigravity CLI runs natively on macOS, Linux, and Windows. Use the platform-specific scripts below to install or upgrade the binary on your system.
+          - heading "macOS and Linux" [level=3] [ref=e188]
+          - paragraph [ref=e190]:
+            - text: Execute the native installer script to download and install the executable to
+            - code [ref=e191]: ~/.local/bin/agy
+            - text: ":"
+          - generic [ref=e194]:
+            - generic [ref=e196]: bash
+            - button "content_copy" [ref=e197] [cursor=pointer]
+            - code [ref=e200]
+          - heading "Windows" [level=3] [ref=e202]
+          - paragraph [ref=e204]:
+            - text: The installation script registers the
+            - code [ref=e205]: agy
+            - text: "binary to your local user directory:"
+            - code [ref=e206]: C:\Users\<Username>\AppData\Local\agy\bin
+            - text: (where
+            - code [ref=e207]: <Username>
+            - text: represents your active Windows user profile).
+          - paragraph [ref=e209]:
+            - strong [ref=e210]: PowerShell
+            - text: ": Open PowerShell and execute the following installation script:"
+          - generic [ref=e213]:
+            - generic [ref=e215]: powershell
+            - button "content_copy" [ref=e216] [cursor=pointer]
+            - code [ref=e219]
+          - paragraph [ref=e221]:
+            - strong [ref=e222]: CMD
+            - text: ": Open a standard Command Prompt and execute:"
+          - generic [ref=e225]:
+            - generic [ref=e227]: cmd
+            - button "content_copy" [ref=e228] [cursor=pointer]
+            - code [ref=e231]
+          - heading "Installation flags" [level=3] [ref=e233]
+          - paragraph [ref=e235]: "When executing the installation scripts, you can append the following customization flags:"
+          - list [ref=e237]:
+            - listitem [ref=e238]:
+              - generic [ref=e239]:
+                - code [ref=e240]: "--skip-aliases"
+                - text: ": Bypasses shell profile alias purging (prevents the script from purging or updating legacy"
+                - code [ref=e241]: agy
+                - text: or
+                - code [ref=e242]: antigravity
+                - text: shell aliases).
+            - listitem [ref=e243]:
+              - generic [ref=e244]:
+                - code [ref=e245]: "--skip-path"
+                - text: ": Bypasses shell profile"
+                - code [ref=e246]: PATH
+                - text: appending (prevents the script from modifying your shell profile's dynamic environment variables).
+          - heading "Authentication workflows" [level=2] [ref=e248]
+          - paragraph [ref=e250]: Antigravity CLI uses secure credentials and token profiles to communicate with the shared agent harness.
+          - heading "Local silent keyring sign-in" [level=3] [ref=e252]
+          - paragraph [ref=e254]:
+            - text: When launching
+            - code [ref=e255]: agy
+            - text: on your local machine, the CLI attempts to access your operating system's native secure keyring (such as Apple Keychain, Linux Secret Service/dbus, or Windows Credential Manager). If a valid token profile is found, the CLI authenticates your session silently without opening a browser.
+          - paragraph [ref=e257]: "If no saved session is found:"
+          - list [ref=e259]:
+            - listitem [ref=e260]: The CLI automatically launches your local default web browser.
+            - listitem [ref=e261]: Sign in using your approved account credentials.
+          - heading "Remote SSH OAuth flow" [level=3] [ref=e263]
+          - paragraph [ref=e265]: "When running over SSH, the CLI detects the remote connection environment. Because it cannot launch a local web browser, the CLI initiates a manual URL loop:"
+          - list [ref=e267]:
+            - listitem [ref=e268]:
+              - generic [ref=e269]:
+                - text: Launch
+                - code [ref=e270]: agy
+                - text: in your remote terminal session.
+            - listitem [ref=e271]: The CLI detects the SSH environment and prints a unique, secure authorization URL.
+            - listitem [ref=e272]: Copy this URL and paste it into a web browser on your local machine.
+            - listitem [ref=e273]: Sign in with your approved credentials and complete the authentication.
+            - listitem [ref=e274]: The browser displays a unique alphanumeric authorization code.
+            - listitem [ref=e275]: Copy this code, return to your remote SSH terminal, and paste it into the prompt.
+          - heading "Managing your session" [level=2] [ref=e277]
+          - paragraph [ref=e279]: Terminating your session clears active credentials and local cache directories.
+          - heading "Logging out" [level=3] [ref=e281]
+          - paragraph [ref=e283]: "To disconnect your account and purge saved authentication profiles from your operating system's keyring, run the following command in the CLI prompt box:"
+          - generic [ref=e286]:
+            - generic [ref=e288]: text
+            - button "content_copy" [ref=e289] [cursor=pointer]
+            - code [ref=e292]
+          - heading "Next steps" [level=2] [ref=e294]
+          - paragraph [ref=e296]: "Once you complete installation and authentication, start interacting with your local agent:"
+          - list [ref=e298]:
+            - listitem [ref=e299]:
+              - generic [ref=e300]:
+                - strong [ref=e301]:
+                  - link "Tutorial" [ref=e302] [cursor=pointer]:
+                    - /url: /docs/cli-tutorial
+                - text: ":"
+              - text: Create and run a basic Python project with an agent.
+            - listitem [ref=e303]:
+              - generic [ref=e304]:
+                - strong [ref=e305]:
+                  - link "Prompting & Interaction" [ref=e306] [cursor=pointer]:
+                    - /url: /docs/cli-prompting
+                - text: ":"
+              - text: Explore multiline text editing, interrupt commands, and terminal media pasting.
+            - listitem [ref=e307]:
+              - generic [ref=e308]:
+                - strong [ref=e309]:
+                  - link "Permissions & Sandbox" [ref=e310] [cursor=pointer]:
+                    - /url: /docs/cli-sandbox
+                - text: ":"
+              - text: Configure secure filesystem directories and command limits.
+          - navigation [ref=e311]:
+            - link "keyboard_arrow_left Getting Started" [ref=e313] [cursor=pointer]:
+              - /url: /docs/cli-getting-started
+            - link "Tutorial keyboard_arrow_right" [ref=e315] [cursor=pointer]:
+              - /url: /docs/cli-tutorial
+        - generic [ref=e317]:
+          - generic [ref=e318]: On this Page
+          - navigation [ref=e319]:
+            - list [ref=e321]:
+              - listitem [ref=e323] [cursor=pointer]:
+                - generic [ref=e324]: Installation & auth
+              - listitem [ref=e325] [cursor=pointer]:
+                - generic [ref=e326]: Installation
+              - listitem [ref=e327] [cursor=pointer]:
+                - generic [ref=e328]: Authentication workflows
+              - listitem [ref=e329] [cursor=pointer]:
+                - generic [ref=e330]: Managing your session
+              - listitem [ref=e331] [cursor=pointer]:
+                - generic [ref=e332]: Next steps

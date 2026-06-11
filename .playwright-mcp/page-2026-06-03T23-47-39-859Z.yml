@@ -1,0 +1,327 @@
+- generic [active] [ref=e1]:
+  - region "antigravity.google uses cookies to deliver and enhance the quality of its services and to analyze traffic. If you agree, cookies are also used to serve advertising and to personalize the content and advertisements that you see." [ref=e2]:
+    - paragraph [ref=e3]:
+      - text: antigravity.google uses cookies to deliver and enhance the quality of its services and to analyze traffic. If you agree, cookies are also used to serve advertising and to personalize the content and advertisements that you see.
+      - link "Learn more about how Google uses cookies. Opens in a new tab." [ref=e4] [cursor=pointer]:
+        - /url: https://policies.google.com/technologies/cookies?hl=en
+        - text: Learn more
+    - button "Agree" [ref=e5] [cursor=pointer]
+    - button "No thanks" [ref=e6] [cursor=pointer]
+  - main [ref=e7]:
+    - generic [ref=e10]:
+      - generic [ref=e13]:
+        - link "Google Antigravity" [ref=e14] [cursor=pointer]:
+          - /url: /
+          - img [ref=e16]
+        - generic [ref=e59]:
+          - navigation [ref=e60] [cursor=pointer]:
+            - button "Product" [ref=e63]:
+              - text: Product
+              - generic [ref=e64]: keyboard_arrow_down
+            - button "Use Cases" [ref=e67]:
+              - text: Use Cases
+              - generic [ref=e68]: keyboard_arrow_down
+            - button "Pricing" [expanded] [ref=e71]
+            - button "Blog" [expanded] [ref=e74]
+            - button "Resources" [ref=e77]:
+              - text: Resources
+              - generic [ref=e78]: keyboard_arrow_down
+          - button "Download download" [ref=e80] [cursor=pointer]:
+            - text: Download
+            - generic [ref=e81]: download
+      - generic [ref=e83]:
+        - navigation "Documentation navigation" [ref=e86]:
+          - link "Home" [ref=e88] [cursor=pointer]:
+            - /url: /docs/home
+            - generic [ref=e89]: Home
+          - generic [ref=e91]:
+            - generic [ref=e92] [cursor=pointer]: Antigravity 2.0
+            - generic [ref=e93] [cursor=pointer]: chevron_right
+          - generic [ref=e95]:
+            - generic [ref=e96] [cursor=pointer]: Antigravity CLI
+            - generic [ref=e97] [cursor=pointer]: expand_more
+          - link "Overview" [ref=e99] [cursor=pointer]:
+            - /url: /docs/cli-overview
+            - generic [ref=e100]: Overview
+          - link "Getting Started" [ref=e102] [cursor=pointer]:
+            - /url: /docs/cli-getting-started
+            - generic [ref=e103]: Getting Started
+          - link "Installation & Auth" [ref=e105] [cursor=pointer]:
+            - /url: /docs/cli-install
+            - generic [ref=e106]: Installation & Auth
+          - link "Tutorial" [ref=e108] [cursor=pointer]:
+            - /url: /docs/cli-tutorial
+            - generic [ref=e109]: Tutorial
+          - link "Using AGY CLI" [ref=e111] [cursor=pointer]:
+            - /url: /docs/cli-using
+            - generic [ref=e112]: Using AGY CLI
+          - link "Features" [ref=e114] [cursor=pointer]:
+            - /url: /docs/cli-features
+            - generic [ref=e115]: Features
+          - link "Gemini Migration" [ref=e117] [cursor=pointer]:
+            - /url: /docs/gcli-migration
+            - generic [ref=e118]: Gemini Migration
+          - link "Prompting" [ref=e120] [cursor=pointer]:
+            - /url: /docs/cli-prompting
+            - generic [ref=e121]: Prompting
+          - generic [ref=e123]:
+            - generic [ref=e124] [cursor=pointer]: Artifacts
+            - generic [ref=e125] [cursor=pointer]: chevron_right
+          - link "Conversations" [ref=e127] [cursor=pointer]:
+            - /url: /docs/cli-conversations
+            - generic [ref=e128]: Conversations
+          - generic [ref=e130]:
+            - generic [ref=e131] [cursor=pointer]: Agent Capabilities
+            - generic [ref=e132] [cursor=pointer]: chevron_right
+          - generic [ref=e134]:
+            - generic [ref=e135] [cursor=pointer]: Settings
+            - generic [ref=e136] [cursor=pointer]: expand_more
+          - link "Overview" [ref=e138] [cursor=pointer]:
+            - /url: /docs/cli-settings
+            - generic [ref=e139]: Overview
+          - link "AI Credits" [ref=e141] [cursor=pointer]:
+            - /url: /docs/cli-credits
+            - generic [ref=e142]: AI Credits
+          - generic [ref=e144]:
+            - generic [ref=e145] [cursor=pointer]: Customizations
+            - generic [ref=e146] [cursor=pointer]: chevron_right
+          - link "Best Practices" [ref=e148] [cursor=pointer]:
+            - /url: /docs/cli-best-practices
+            - generic [ref=e149]: Best Practices
+          - link "Troubleshooting" [ref=e151] [cursor=pointer]:
+            - /url: /docs/cli-troubleshooting
+            - generic [ref=e152]: Troubleshooting
+          - link "Reference" [ref=e154] [cursor=pointer]:
+            - /url: /docs/cli-reference
+            - generic [ref=e155]: Reference
+          - generic [ref=e157]:
+            - generic [ref=e158] [cursor=pointer]: Antigravity SDK
+            - generic [ref=e159] [cursor=pointer]: chevron_right
+          - generic [ref=e161]:
+            - generic [ref=e162] [cursor=pointer]: Antigravity IDE
+            - generic [ref=e163] [cursor=pointer]: chevron_right
+          - generic [ref=e165]:
+            - generic [ref=e166] [cursor=pointer]: Migration
+            - generic [ref=e167] [cursor=pointer]: chevron_right
+          - link "Enterprise" [ref=e169] [cursor=pointer]:
+            - /url: /docs/enterprise
+            - generic [ref=e170]: Enterprise
+          - link "Plans" [ref=e172] [cursor=pointer]:
+            - /url: /docs/plans
+            - generic [ref=e173]: Plans
+          - link "FAQ" [ref=e175] [cursor=pointer]:
+            - /url: /docs/faq
+            - generic [ref=e176]: FAQ
+        - generic [ref=e177]:
+          - list [ref=e178] [cursor=pointer]:
+            - listitem [ref=e179]: Antigravity CLI
+            - generic [ref=e180]: ">"
+            - listitem [ref=e181]: Settings
+            - generic [ref=e182]: ">"
+            - listitem [ref=e183]: Overview
+          - heading "Settings, rendering & keybindings" [level=1] [ref=e185]
+          - paragraph [ref=e187]: Configure persistent preferences, customize keyboard shortcuts, toggle terminal display buffers, and manage runtime CLI parameter overrides.
+          - heading "Setting up preferences" [level=2] [ref=e189]
+          - paragraph [ref=e191]: Antigravity CLI stores user preferences in a minimal, forward-compatible JSON configuration profile.
+          - heading "Configuration file location" [level=3] [ref=e193]
+          - paragraph [ref=e195]: "The persistent settings are saved in a plain JSON format:"
+          - generic [ref=e198]:
+            - generic [ref=e200]: text
+            - button "content_copy" [ref=e201] [cursor=pointer]
+            - code [ref=e204]: ~/.gemini/antigravity-cli/settings.json
+          - paragraph [ref=e206]:
+            - text: The CLI leverages
+            - strong [ref=e207]: sparse persistence
+            - text: by writing only values to disk that differ from their system defaults. This keeps your configuration file clean, minimal, and fully forward-compatible with future updates.
+          - heading "The interactive settings panel" [level=3] [ref=e209]
+          - paragraph [ref=e211]: "To edit settings directly inside your active terminal session without opening raw JSON files:"
+          - list [ref=e213]:
+            - listitem [ref=e214]:
+              - generic [ref=e215]:
+                - text: Type
+                - code [ref=e216]: /config
+                - text: (or its alias
+                - code [ref=e217]: /settings
+                - text: ) inside the prompt panel and press
+                - code [ref=e218]: Enter
+                - text: .
+            - listitem [ref=e219]:
+              - generic [ref=e220]:
+                - text: The full-screen
+                - strong [ref=e221]: Settings Editor Overlay
+                - text: opens.
+            - listitem [ref=e222]:
+              - generic [ref=e223]:
+                - text: Navigate between available options using
+                - code [ref=e224]: ↑
+                - text: /
+                - code [ref=e225]: ↓
+                - text: .
+            - listitem [ref=e226]:
+              - generic [ref=e227]:
+                - text: Press
+                - code [ref=e228]: Enter
+                - text: on a highlighted parameter to toggle its state or open a text insertion field.
+            - listitem [ref=e229]:
+              - generic [ref=e230]:
+                - text: Press
+                - code [ref=e231]: Esc
+                - text: to save your modifications and close the editor.
+          - heading "Command-line overrides" [level=2] [ref=e233]
+          - paragraph [ref=e235]: "You can temporarily override persistent preferences for individual terminal sessions using CLI command flags:"
+          - generic [ref=e238]:
+            - generic [ref=e240]: bash
+            - button "content_copy" [ref=e241] [cursor=pointer]
+            - code [ref=e244]: agy --sandbox=false --notifications=false
+          - paragraph [ref=e246]:
+            - text: When an override flag is active, the interactive
+            - code [ref=e247]: /config
+            - text: "menu displays a warning indicator alongside the modified setting:"
+          - generic [ref=e250]:
+            - generic [ref=e252]: text
+            - button "content_copy" [ref=e253] [cursor=pointer]
+            - code [ref=e256]: "! Tool Permission: strict (overridden by command flag)"
+          - paragraph [ref=e258]: You can still edit the persistent value on disk during these sessions, but the CLI enforces the active runtime flag override until you close the session.
+          - heading "Visual rendering modes" [level=2] [ref=e260]
+          - paragraph [ref=e262]: The TUI operates in one of two visual rendering modes depending on your terminal capability and connection latency.
+          - 'heading "Alt-screen mode (`always`)" [level=3] [ref=e264]'
+          - paragraph [ref=e266]: This mode opens a dedicated display screen using the terminal's alternate buffer, creating an immersive, standalone app interface.
+          - list [ref=e268]:
+            - listitem [ref=e269]:
+              - generic [ref=e270]:
+                - strong [ref=e271]: Key features
+                - text: ":"
+              - text: Integrated scrollback, mouse-wheel scrolling support, custom rendered scrollbar, and clean terminal state restoration on exit.
+            - listitem [ref=e272]:
+              - generic [ref=e273]:
+                - strong [ref=e274]: Best used for
+                - text: ":"
+              - text: Standard local development sessions in advanced terminal emulators (such as iTerm2, Ghostty, or WezTerm).
+          - 'heading "Inline mode (`never`)" [level=3] [ref=e276]'
+          - paragraph [ref=e278]: This mode renders output sequentially directly within your terminal's standard stdout pipeline.
+          - list [ref=e280]:
+            - listitem [ref=e281]:
+              - generic [ref=e282]:
+                - strong [ref=e283]: Key features
+                - text: ":"
+              - text: Preserves entire session history inside your emulator's native scrollback buffer, does not capture mouse inputs, and works seamlessly alongside standard command outputs.
+            - listitem [ref=e284]:
+              - generic [ref=e285]:
+                - strong [ref=e286]: Best used for
+                - text: ":"
+              - generic [ref=e287]:
+                - text: Remote SSH terminals, terminal multiplexers like
+                - code [ref=e288]: tmux
+                - text: or
+                - code [ref=e289]: screen
+                - text: ", and low-bandwidth remote sessions."
+          - generic [ref=e291]:
+            - generic [ref=e292]: info
+            - generic [ref=e293]:
+              - strong [ref=e294]: Adaptive Rendering
+              - text: ": Setting Alt-Screen mode to"
+              - code [ref=e295]: default
+              - text: allows the TUI to automatically detect your environment. It defaults to Alt-Screen on advanced local shells and degrades to Inline mode when running over SSH or in non-interactive sessions.
+          - heading "Custom status lines & terminal titles" [level=2] [ref=e297]
+          - paragraph [ref=e299]: "For advanced TUI environment integrations, you can toggle active metrics or deploy custom scripts to generate dynamic status bars and modify your terminal window titles:"
+          - list [ref=e301]:
+            - listitem [ref=e302]:
+              - generic [ref=e303]:
+                - strong [ref=e304]:
+                  - link "Status Line Customization" [ref=e305] [cursor=pointer]:
+                    - /url: /docs/cli-statusline
+                - text: ":"
+              - text: Learn how to manage the status indicator panel and construct custom formatted status line shell scripts.
+            - listitem [ref=e306]:
+              - generic [ref=e307]:
+                - strong [ref=e308]:
+                  - link "Terminal Title Customization" [ref=e309] [cursor=pointer]:
+                    - /url: /docs/cli-title
+                - text: ":"
+              - text: Learn how to toggle window title outputs and pipe live agent states into your window headers.
+          - heading "Keybindings configuration" [level=2] [ref=e311]
+          - paragraph [ref=e313]: You can customize almost all keyboard shortcuts in the TUI by mapping keys to specific workspace commands.
+          - heading "Keybindings file location" [level=3] [ref=e315]
+          - paragraph [ref=e317]: "Custom maps are stored alongside your primary settings profile:"
+          - generic [ref=e320]:
+            - generic [ref=e322]: text
+            - button "content_copy" [ref=e323] [cursor=pointer]
+            - code [ref=e326]: ~/.gemini/antigravity-cli/keybindings.json
+          - heading "Format and customization" [level=3] [ref=e328]
+          - paragraph [ref=e330]: "The JSON structure maps a single TUI command action to an array of hotkey sequences:"
+          - generic [ref=e333]:
+            - generic [ref=e335]: json
+            - button "content_copy" [ref=e336] [cursor=pointer]
+            - code [ref=e339]: "{ \"cli.clear_screen\": [ \"ctrl+l\" ], \"prompt.insert_newline\": [ \"shift+enter\", \"ctrl+j\" ], \"edit.open_editor\": [ \"ctrl+g\" ] }"
+          - paragraph [ref=e341]:
+            - text: To completely disable a default hotkey, map its action to an empty array
+            - code [ref=e342]: "[]"
+            - text: . If your JSON schema is malformed or invalid, the CLI falls back to system defaults for those specific actions and loads the remaining valid mappings.
+          - generic [ref=e344]:
+            - generic [ref=e345]: warning
+            - generic [ref=e346]:
+              - strong [ref=e347]: Protected Keys
+              - text: ": Crucial navigation shortcuts like"
+              - code [ref=e348]: cli.exit
+              - text: (
+              - code [ref=e349]: Ctrl+D
+              - text: /
+              - code [ref=e350]: Ctrl+C
+              - text: ) and
+              - code [ref=e351]: cli.enter
+              - text: (
+              - code [ref=e352]: Enter
+              - text: ) are protected by the system and cannot be disabled.
+          - heading "Restoring defaults" [level=3] [ref=e354]
+          - paragraph [ref=e356]: "To revert all keys back to system defaults, simply delete the keybindings profile:"
+          - generic [ref=e359]:
+            - generic [ref=e361]: bash
+            - button "content_copy" [ref=e362] [cursor=pointer]
+            - code [ref=e365]: rm ~/.gemini/antigravity-cli/keybindings.json
+          - heading "Next steps" [level=2] [ref=e367]
+          - paragraph [ref=e369]: "Now that you have configured your environment, review security controls and extensibility options:"
+          - list [ref=e371]:
+            - listitem [ref=e372]:
+              - generic [ref=e373]:
+                - strong [ref=e374]:
+                  - link "Permissions & Sandbox" [ref=e375] [cursor=pointer]:
+                    - /url: /docs/cli-sandbox
+                - text: ":"
+              - text: Manage secure execution containment boundaries.
+            - listitem [ref=e376]:
+              - generic [ref=e377]:
+                - strong [ref=e378]:
+                  - link "Plugins & Skills" [ref=e379] [cursor=pointer]:
+                    - /url: /docs/cli-plugins
+                - text: ":"
+              - text: Create your own custom skills and import legacy plugins.
+            - listitem [ref=e380]:
+              - generic [ref=e381]:
+                - strong [ref=e382]:
+                  - link "CLI Reference" [ref=e383] [cursor=pointer]:
+                    - /url: /docs/cli-reference
+                - text: ":"
+              - text: Access quick reference sheets listing all configuration options, commands, and default key maps.
+          - navigation [ref=e384]:
+            - link "keyboard_arrow_left Sandbox" [ref=e386] [cursor=pointer]:
+              - /url: /docs/cli-sandbox
+            - link "AI Credits keyboard_arrow_right" [ref=e388] [cursor=pointer]:
+              - /url: /docs/cli-credits
+        - generic [ref=e390]:
+          - generic [ref=e391]: On this Page
+          - navigation [ref=e392]:
+            - list [ref=e394]:
+              - listitem [ref=e396] [cursor=pointer]:
+                - generic [ref=e397]: Settings, rendering & keybindings
+              - listitem [ref=e398] [cursor=pointer]:
+                - generic [ref=e399]: Setting up preferences
+              - listitem [ref=e400] [cursor=pointer]:
+                - generic [ref=e401]: Command-line overrides
+              - listitem [ref=e402] [cursor=pointer]:
+                - generic [ref=e403]: Visual rendering modes
+              - listitem [ref=e404] [cursor=pointer]:
+                - generic [ref=e405]: Custom status lines & terminal titles
+              - listitem [ref=e406] [cursor=pointer]:
+                - generic [ref=e407]: Keybindings configuration
+              - listitem [ref=e408] [cursor=pointer]:
+                - generic [ref=e409]: Next steps

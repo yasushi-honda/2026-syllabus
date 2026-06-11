@@ -1,0 +1,379 @@
+- generic [active] [ref=e1]:
+  - region "antigravity.google uses cookies to deliver and enhance the quality of its services and to analyze traffic. If you agree, cookies are also used to serve advertising and to personalize the content and advertisements that you see." [ref=e2]:
+    - paragraph [ref=e3]:
+      - text: antigravity.google uses cookies to deliver and enhance the quality of its services and to analyze traffic. If you agree, cookies are also used to serve advertising and to personalize the content and advertisements that you see.
+      - link "Learn more about how Google uses cookies. Opens in a new tab." [ref=e4] [cursor=pointer]:
+        - /url: https://policies.google.com/technologies/cookies?hl=en
+        - text: Learn more
+    - button "Agree" [ref=e5] [cursor=pointer]
+    - button "No thanks" [ref=e6] [cursor=pointer]
+  - main [ref=e7]:
+    - generic [ref=e10]:
+      - generic [ref=e13]:
+        - link "Google Antigravity" [ref=e14] [cursor=pointer]:
+          - /url: /
+          - img [ref=e16]
+        - generic [ref=e59]:
+          - navigation [ref=e60] [cursor=pointer]:
+            - button "Product" [ref=e63]:
+              - text: Product
+              - generic [ref=e64]: keyboard_arrow_down
+            - button "Use Cases" [ref=e67]:
+              - text: Use Cases
+              - generic [ref=e68]: keyboard_arrow_down
+            - button "Pricing" [expanded] [ref=e71]
+            - button "Blog" [expanded] [ref=e74]
+            - button "Resources" [ref=e77]:
+              - text: Resources
+              - generic [ref=e78]: keyboard_arrow_down
+          - button "Download download" [ref=e80] [cursor=pointer]:
+            - text: Download
+            - generic [ref=e81]: download
+      - generic [ref=e83]:
+        - navigation "Documentation navigation" [ref=e86]:
+          - link "Home" [ref=e88] [cursor=pointer]:
+            - /url: /docs/home
+            - generic [ref=e89]: Home
+          - generic [ref=e91]:
+            - generic [ref=e92] [cursor=pointer]: Antigravity 2.0
+            - generic [ref=e93] [cursor=pointer]: chevron_right
+          - generic [ref=e95]:
+            - generic [ref=e96] [cursor=pointer]: Antigravity CLI
+            - generic [ref=e97] [cursor=pointer]: expand_more
+          - link "Overview" [ref=e99] [cursor=pointer]:
+            - /url: /docs/cli-overview
+            - generic [ref=e100]: Overview
+          - link "Getting Started" [ref=e102] [cursor=pointer]:
+            - /url: /docs/cli-getting-started
+            - generic [ref=e103]: Getting Started
+          - link "Installation & Auth" [ref=e105] [cursor=pointer]:
+            - /url: /docs/cli-install
+            - generic [ref=e106]: Installation & Auth
+          - link "Tutorial" [ref=e108] [cursor=pointer]:
+            - /url: /docs/cli-tutorial
+            - generic [ref=e109]: Tutorial
+          - link "Using AGY CLI" [ref=e111] [cursor=pointer]:
+            - /url: /docs/cli-using
+            - generic [ref=e112]: Using AGY CLI
+          - link "Features" [ref=e114] [cursor=pointer]:
+            - /url: /docs/cli-features
+            - generic [ref=e115]: Features
+          - link "Gemini Migration" [ref=e117] [cursor=pointer]:
+            - /url: /docs/gcli-migration
+            - generic [ref=e118]: Gemini Migration
+          - link "Prompting" [ref=e120] [cursor=pointer]:
+            - /url: /docs/cli-prompting
+            - generic [ref=e121]: Prompting
+          - generic [ref=e123]:
+            - generic [ref=e124] [cursor=pointer]: Artifacts
+            - generic [ref=e125] [cursor=pointer]: chevron_right
+          - link "Conversations" [ref=e127] [cursor=pointer]:
+            - /url: /docs/cli-conversations
+            - generic [ref=e128]: Conversations
+          - generic [ref=e130]:
+            - generic [ref=e131] [cursor=pointer]: Agent Capabilities
+            - generic [ref=e132] [cursor=pointer]: chevron_right
+          - generic [ref=e134]:
+            - generic [ref=e135] [cursor=pointer]: Settings
+            - generic [ref=e136] [cursor=pointer]: chevron_right
+          - link "AI Credits" [ref=e138] [cursor=pointer]:
+            - /url: /docs/cli-credits
+            - generic [ref=e139]: AI Credits
+          - generic [ref=e141]:
+            - generic [ref=e142] [cursor=pointer]: Customizations
+            - generic [ref=e143] [cursor=pointer]: chevron_right
+          - link "Best Practices" [ref=e145] [cursor=pointer]:
+            - /url: /docs/cli-best-practices
+            - generic [ref=e146]: Best Practices
+          - link "Troubleshooting" [ref=e148] [cursor=pointer]:
+            - /url: /docs/cli-troubleshooting
+            - generic [ref=e149]: Troubleshooting
+          - link "Reference" [ref=e151] [cursor=pointer]:
+            - /url: /docs/cli-reference
+            - generic [ref=e152]: Reference
+          - generic [ref=e154]:
+            - generic [ref=e155] [cursor=pointer]: Antigravity SDK
+            - generic [ref=e156] [cursor=pointer]: chevron_right
+          - generic [ref=e158]:
+            - generic [ref=e159] [cursor=pointer]: Antigravity IDE
+            - generic [ref=e160] [cursor=pointer]: chevron_right
+          - generic [ref=e162]:
+            - generic [ref=e163] [cursor=pointer]: Migration
+            - generic [ref=e164] [cursor=pointer]: chevron_right
+          - link "Enterprise" [ref=e166] [cursor=pointer]:
+            - /url: /docs/enterprise
+            - generic [ref=e167]: Enterprise
+          - link "Plans" [ref=e169] [cursor=pointer]:
+            - /url: /docs/plans
+            - generic [ref=e170]: Plans
+          - link "FAQ" [ref=e172] [cursor=pointer]:
+            - /url: /docs/faq
+            - generic [ref=e173]: FAQ
+        - generic [ref=e174]:
+          - list [ref=e175] [cursor=pointer]:
+            - listitem [ref=e176]: Antigravity CLI
+            - generic [ref=e177]: ">"
+            - listitem [ref=e178]: Features
+          - heading "Antigravity CLI Features" [level=1] [ref=e180]
+          - heading "Plugins" [level=3] [ref=e182]
+          - paragraph [ref=e184]:
+            - strong [ref=e185]: How Plugins Work
+            - text: Plugins are namespaced bundles that can contain skills, agents, rules, MCP servers, and hooks as a single deployable unit.
+          - paragraph [ref=e187]:
+            - text: When you install a plugin, the CLI stages the files in your home directory under
+            - code [ref=e188]: ~/.gemini/antigravity-cli/plugins/<plugin_name>/
+            - text: . The Antigravity Agent automatically discovers and loads these staged customizations.
+          - generic [ref=e191]:
+            - button "content_copy" [ref=e192] [cursor=pointer]
+            - code [ref=e195]: "~/.gemini/antigravity-cli/ ├── plugins/ │ └── <plugin_name>/ │ ├── plugin.json # Required marker file │ ├── mcp_config.json # Optional MCP server definitions │ ├── hooks.json # Optional event hooks definition │ ├── skills/ # Optional skills │ ├── agents/ # Optional subagents │ └── rules/ # Optional rules └── import_manifest.json # Tracking manifest"
+          - paragraph [ref=e197]:
+            - strong [ref=e198]: Accessing Plugin Components
+            - text: Once staged and loaded, you can interact with the plugin components inside the CLI using slash commands.
+          - heading "Terminal Sandbox" [level=3] [ref=e200]
+          - paragraph [ref=e202]: The Terminal Sandbox is a lightweight security isolation mechanism that protects your host system from potentially destructive file manipulations or unauthorized outbound network requests when the agent executes local shell commands.
+          - paragraph [ref=e204]:
+            - text: Rather than running heavy virtual machines or containers, the CLI leverages native operating system features (
+            - code [ref=e205]: nsjail
+            - text: on Linux,
+            - code [ref=e206]: sandbox-exec
+            - text: on macOS, and
+            - code [ref=e207]: AppContainer
+            - text: on Windows) to enforce strict containment boundaries with zero startup overhead.
+          - paragraph [ref=e209]:
+            - strong [ref=e210]: Configuration
+            - text: You can configure the sandbox behavior in your
+            - code [ref=e211]: settings.json
+            - text: file (located at
+            - code [ref=e212]: ~/.gemini/antigravity-cli/settings.json
+            - text: "):"
+          - generic [ref=e215]:
+            - generic [ref=e217]: json
+            - button "content_copy" [ref=e218] [cursor=pointer]
+            - code [ref=e221]:
+              - text: "{ \"enableTerminalSandbox\":"
+              - generic [ref=e222]: "true"
+              - text: "}"
+          - list [ref=e224]:
+            - listitem [ref=e225]:
+              - generic [ref=e226]:
+                - strong [ref=e227]:
+                  - code [ref=e228]: enableTerminalSandbox
+                - text: "(boolean, default:"
+                - code [ref=e229]: "false"
+                - text: "): Enables general execution containment barriers on all local agent processes."
+          - paragraph [ref=e231]:
+            - strong [ref=e232]: Interactive Approvals
+            - text: "When the agent proposes a terminal command that requires your confirmation, the CLI prompt adapts dynamically based on your settings:"
+          - list [ref=e234]:
+            - listitem [ref=e235]:
+              - generic [ref=e236]:
+                - strong [ref=e237]: When the Sandbox is Enabled
+                - text: ":"
+              - generic [ref=e238]:
+                - text: The confirmation prompt will include a specific option to
+                - strong [ref=e239]: Yes, and run without sandbox restrictions
+                - text: if you need to temporarily bypass the containment boundary for a single trusted command.
+            - listitem [ref=e240]:
+              - generic [ref=e241]:
+                - strong [ref=e242]: When the Sandbox is Disabled
+                - text: ":"
+              - generic [ref=e243]:
+                - text: The prompt will include an option to
+                - strong [ref=e244]: Yes, and run in sandbox
+                - text: if you want to force a specific, potentially risky command to execute within the safety boundary.
+          - heading "CLI Slash Commands Reference" [level=3] [ref=e246]
+          - paragraph [ref=e248]: The Antigravity CLI supports a variety of slash commands typed directly into the prompt box to manage conversations, configure settings, and inspect agent capabilities.
+          - heading "Core Slash Commands" [level=3] [ref=e250]
+          - paragraph [ref=e252]:
+            - table [ref=e253]:
+              - rowgroup [ref=e254]:
+                - row "Command Category Purpose" [ref=e255]:
+                  - columnheader "Command" [ref=e256]
+                  - columnheader "Category" [ref=e257]
+                  - columnheader "Purpose" [ref=e258]
+              - rowgroup [ref=e259]:
+                - row "/resume (alias /switch) Conversation Open the conversation picker to resume or switch sessions." [ref=e260]:
+                  - cell "/resume (alias /switch)" [ref=e261]:
+                    - strong [ref=e262]:
+                      - code [ref=e263]: /resume
+                    - emphasis [ref=e264]:
+                      - text: (alias
+                      - code [ref=e265]: /switch
+                      - text: )
+                  - cell "Conversation" [ref=e266]
+                  - cell "Open the conversation picker to resume or switch sessions." [ref=e267]
+                - row "/rewind (alias /undo) Conversation Roll back conversation history to a previous checkpoint." [ref=e268]:
+                  - cell "/rewind (alias /undo)" [ref=e269]:
+                    - strong [ref=e270]:
+                      - code [ref=e271]: /rewind
+                    - emphasis [ref=e272]:
+                      - text: (alias
+                      - code [ref=e273]: /undo
+                      - text: )
+                  - cell "Conversation" [ref=e274]
+                  - cell "Roll back conversation history to a previous checkpoint." [ref=e275]
+                - row "/rename <name> Conversation Rename the active conversation thread for easier tracking." [ref=e276]:
+                  - cell "/rename <name>" [ref=e277]:
+                    - strong [ref=e278]:
+                      - code [ref=e279]: /rename <name>
+                  - cell "Conversation" [ref=e280]
+                  - cell "Rename the active conversation thread for easier tracking." [ref=e281]
+                - row "/permissions Configuration Select agent autonomy level (request-review, always-proceed, or strict)." [ref=e282]:
+                  - cell "/permissions" [ref=e283]:
+                    - strong [ref=e284]:
+                      - code [ref=e285]: /permissions
+                  - cell "Configuration" [ref=e286]
+                  - cell "Select agent autonomy level (request-review, always-proceed, or strict)." [ref=e287]:
+                    - text: Select agent autonomy level (
+                    - code [ref=e288]: request-review
+                    - text: ","
+                    - code [ref=e289]: always-proceed
+                    - text: ", or"
+                    - code [ref=e290]: strict
+                    - text: ).
+                - row "/model Configuration Select the default reasoning model (persists across sessions)." [ref=e291]:
+                  - cell "/model" [ref=e292]:
+                    - strong [ref=e293]:
+                      - code [ref=e294]: /model
+                  - cell "Configuration" [ref=e295]
+                  - cell "Select the default reasoning model (persists across sessions)." [ref=e296]
+                - row "/keybindings Configuration Open the interactive keyboard shortcut editor." [ref=e297]:
+                  - cell "/keybindings" [ref=e298]:
+                    - strong [ref=e299]:
+                      - code [ref=e300]: /keybindings
+                  - cell "Configuration" [ref=e301]
+                  - cell "Open the interactive keyboard shortcut editor." [ref=e302]
+                - row "/statusline Configuration Customize real-time indicators displayed in the CLI status bar." [ref=e303]:
+                  - cell "/statusline" [ref=e304]:
+                    - strong [ref=e305]:
+                      - code [ref=e306]: /statusline
+                  - cell "Configuration" [ref=e307]
+                  - cell "Customize real-time indicators displayed in the CLI status bar." [ref=e308]
+                - row "/tasks Tools & Monitoring Monitor, view logs for, or terminate active background tasks." [ref=e309]:
+                  - cell "/tasks" [ref=e310]:
+                    - strong [ref=e311]:
+                      - code [ref=e312]: /tasks
+                  - cell "Tools & Monitoring" [ref=e313]
+                  - cell "Monitor, view logs for, or terminate active background tasks." [ref=e314]
+                - row "/skills Tools & Monitoring Browse local and global encapsulated agent workflows." [ref=e315]:
+                  - cell "/skills" [ref=e316]:
+                    - strong [ref=e317]:
+                      - code [ref=e318]: /skills
+                  - cell "Tools & Monitoring" [ref=e319]
+                  - cell "Browse local and global encapsulated agent workflows." [ref=e320]
+                - row "/mcp Tools & Monitoring Open the panel to configure and manage Model Context Protocol servers." [ref=e321]:
+                  - cell "/mcp" [ref=e322]:
+                    - strong [ref=e323]:
+                      - code [ref=e324]: /mcp
+                  - cell "Tools & Monitoring" [ref=e325]
+                  - cell "Open the panel to configure and manage Model Context Protocol servers." [ref=e326]
+                - row "/open <path> Utility Immediately open a file in your preferred external editor." [ref=e327]:
+                  - cell "/open <path>" [ref=e328]:
+                    - strong [ref=e329]:
+                      - code [ref=e330]: /open <path>
+                  - cell "Utility" [ref=e331]
+                  - cell "Immediately open a file in your preferred external editor." [ref=e332]
+                - row "/usage Utility Open the inline interactive help manual inside the terminal." [ref=e333]:
+                  - cell "/usage" [ref=e334]:
+                    - strong [ref=e335]:
+                      - code [ref=e336]: /usage
+                  - cell "Utility" [ref=e337]
+                  - cell "Open the inline interactive help manual inside the terminal." [ref=e338]
+                - row "/logout Account Log out of your Google session and clear cached credentials." [ref=e339]:
+                  - cell "/logout" [ref=e340]:
+                    - strong [ref=e341]:
+                      - code [ref=e342]: /logout
+                  - cell "Account" [ref=e343]
+                  - cell "Log out of your Google session and clear cached credentials." [ref=e344]
+          - 'heading "Advanced Customization via `settings.json`" [level=3] [ref=e346]'
+          - paragraph [ref=e348]:
+            - text: For power users, several slash commands support deep customization via your
+            - code [ref=e349]: ~/.gemini/antigravity-cli/settings.json
+            - text: "configuration:"
+          - list [ref=e351]:
+            - listitem [ref=e352]:
+              - generic [ref=e353]:
+                - strong [ref=e354]: Fine-Grained Permissions
+                - text: ":"
+              - text: "Instead of global levels, define specific allowed/denied commands:"
+          - generic [ref=e357]:
+            - button "content_copy" [ref=e358] [cursor=pointer]
+            - code [ref=e361]: "\"permissions\": { \"allow\": [\"command(git)\", \"command(npm test)\"], \"deny\": [\"command(rm -rf)\"] }"
+          - list [ref=e363]:
+            - listitem [ref=e364]:
+              - generic [ref=e365]:
+                - strong [ref=e366]: Custom Status Line & Window Titles
+                - text: ":"
+              - text: You can pipe live agent metadata (JSON format containing CWD, active model, token usage, state, etc.) directly into your own custom shell scripts to generate dynamic status bars or terminal window titles.
+          - heading "Subagents in Antigravity CLI" [level=3] [ref=e368]
+          - paragraph [ref=e370]: Antigravity CLI features an asynchronous subagents framework that allows the main agent to delegate parallel work, perform background research, and run system tests without blocking your active conversation.
+          - paragraph [ref=e372]:
+            - strong [ref=e373]: What are Subagents?
+            - text: Subagents are independent, concurrent agent sessions designed to tackle specific background tasks in parallel with the main conversation.
+          - list [ref=e375]:
+            - listitem [ref=e376]:
+              - generic [ref=e377]:
+                - strong [ref=e378]: Purpose
+                - text: ":"
+              - text: The main agent automatically spawns subagents to perform background operations such as looking up documentation, running builds, or validating a fix.
+            - listitem [ref=e379]:
+              - generic [ref=e380]:
+                - strong [ref=e381]: Capabilities
+                - text: ":"
+              - text: Subagents have full access to tools such as code search, file editing, terminal commands, and web searches to complete their assigned tasks.
+            - listitem [ref=e382]: The main agent decides what tools and permissions subagents get, including whether they can use MCP tools and if they can write files.
+          - 'heading "Managing Agents: The `/agents` Panel" [level=3] [ref=e384]'
+          - paragraph [ref=e386]: Antigravity CLI provides an interactive terminal UI to view, manage, and approve actions for running subagents.
+          - list [ref=e388]:
+            - listitem [ref=e389]:
+              - generic [ref=e390]:
+                - strong [ref=e391]: Access
+                - text: ":"
+              - generic [ref=e392]:
+                - text: Type
+                - code [ref=e393]: /agents
+                - text: in the prompt to open the subagents panel.
+            - listitem [ref=e394]:
+              - generic [ref=e395]:
+                - strong [ref=e396]: Overview
+                - text: ":"
+              - text: The panel shows a list of active and completed subagents, including surface-level details such as their status (running, done, killed, etc.) and the current step they are executing.
+          - generic [ref=e398]:
+            - generic [ref=e399]: info
+            - generic [ref=e400]: Selecting a subagent from the panel opens a full-screen detail view. This view shows the entirety of the subagent’s conversation, including its steps, thoughts, and tool execution logs.
+          - paragraph [ref=e402]:
+            - strong [ref=e403]: Tool Confirmations & Approvals
+            - text: "When a subagent wants to execute a tool that requires user permissions (such as running a local command or writing a file), it will surface the request. You can manage approvals in two ways:"
+          - list [ref=e405]:
+            - listitem [ref=e406]:
+              - strong [ref=e408]: Detail View Approvals
+          - paragraph [ref=e410]: The Subagent Detail View features an interaction section containing all pending approvals, where you can selectively approve or deny requests.
+          - generic [ref=e412]:
+            - generic [ref=e413]: lightbulb
+            - generic [ref=e414]:
+              - strong [ref=e415]: Tip
+              - text: ": Use the keyboard shortcut"
+              - code [ref=e416]: ctrl+j
+              - text: to "teleport" from the main conversation directly to the detailed view of the next subagent waiting for your approval.
+          - list [ref=e418]:
+            - listitem [ref=e419]:
+              - strong [ref=e421]: Fast Path Alerts
+          - paragraph [ref=e423]: To keep you in your flow, Antigravity CLI displays a Fast Path Alert directly above your prompt box when a subagent requests permission.
+          - generic [ref=e425]:
+            - generic [ref=e426]: lightbulb
+            - generic [ref=e427]:
+              - strong [ref=e428]: Tip
+              - text: ": You can approve a pending subagent permission instantly using"
+              - code [ref=e429]: ctrl+k
+              - text: without ever having to switch away from the main conversation.
+          - navigation [ref=e430]:
+            - link "keyboard_arrow_left Using AGY CLI" [ref=e432] [cursor=pointer]:
+              - /url: /docs/cli-using
+            - link "Migration keyboard_arrow_right" [ref=e434] [cursor=pointer]:
+              - /url: /docs/gcli-migration
+        - generic [ref=e436]:
+          - generic [ref=e437]: On this Page
+          - navigation [ref=e438]:
+            - list [ref=e440]:
+              - listitem [ref=e442] [cursor=pointer]:
+                - generic [ref=e443]: Antigravity CLI Features
