@@ -24,19 +24,19 @@
       flex: 1;
       min-width: 220px;
       padding: 0.65rem 0.85rem;
-      border: 1px solid var(--c-rule, #c8c2b3);
+      border: 1px solid var(--c-border-strong, #c9c2ac);
       border-radius: 4px;
       font: 1rem 'Noto Sans JP', sans-serif;
       background: var(--c-surface, #fff);
-      color: var(--c-ink, #2a2a2a);
+      color: var(--c-text, #1a1a2e);
     }
     .demo-controls input:focus {
-      outline: 2px solid var(--c-green, #0e8a5f);
+      outline: 2px solid #0a6e4b;
       outline-offset: -1px;
     }
     .demo-btn {
       padding: 0.65rem 1.3rem;
-      background: var(--c-green, #0e8a5f);
+      background: #0a6e4b; /* AA PASS 6.28:1 on #fff */
       color: #fff;
       border: none;
       border-radius: 4px;
@@ -44,8 +44,8 @@
       cursor: pointer;
       white-space: nowrap;
     }
-    .demo-btn:hover { background: #0a6e4b; }
-    .demo-btn:disabled { background: #999; cursor: not-allowed; }
+    .demo-btn:hover { background: #084f37; }
+    .demo-btn:disabled { background: #888; cursor: not-allowed; }
     .demo-status {
       margin: 0.6rem 0;
       padding: 0.65rem 0.85rem;
@@ -67,17 +67,17 @@
     }
     #map {
       height: 480px;
-      border: 1px solid var(--c-rule, #c8c2b3);
+      border: 1px solid var(--c-border-strong, #c9c2ac);
       border-radius: 4px;
       margin: 0.6rem 0 1rem;
     }
     .demo-hint {
       font-size: 0.92rem;
-      color: var(--c-ink-mute, #555);
+      color: var(--c-text-muted, #4a4a5e);
       line-height: 1.65;
     }
     .demo-hint code {
-      background: var(--c-bg-alt, #f1ede3);
+      background: var(--c-bg-alt, #f2efe4);
       padding: 0.1rem 0.35rem;
       border-radius: 3px;
       font-family: 'JetBrains Mono', monospace;
@@ -91,27 +91,31 @@
     }
     .demo-presets button {
       padding: 0.3rem 0.7rem;
-      background: var(--c-bg-alt, #f1ede3);
-      border: 1px solid var(--c-rule, #c8c2b3);
+      background: var(--c-bg-alt, #f2efe4);
+      border: 1px solid var(--c-border-strong, #c9c2ac);
       border-radius: 999px;
       font: 0.85rem 'Noto Sans JP', sans-serif;
-      color: var(--c-ink, #2a2a2a);
+      color: var(--c-text, #1a1a2e);
       cursor: pointer;
     }
-    .demo-presets button:hover {
+    .demo-presets button:hover:not(:disabled) {
       background: var(--c-green-soft, #e3f4ec);
       border-color: var(--c-green-border, #c2e4d3);
     }
+    .demo-presets button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
     .demo-stack {
       font-size: 0.85rem;
-      color: var(--c-ink-mute, #555);
+      color: var(--c-text-muted, #4a4a5e);
       line-height: 1.7;
       margin-top: 1.5rem;
       padding-top: 1rem;
-      border-top: 1px dashed var(--c-rule, #c8c2b3);
+      border-top: 1px dashed var(--c-border-strong, #c9c2ac);
     }
     .demo-stack code {
-      background: var(--c-bg-alt, #f1ede3);
+      background: var(--c-bg-alt, #f2efe4);
       padding: 0.1rem 0.35rem;
       border-radius: 3px;
       font-family: 'JetBrains Mono', monospace;
@@ -160,7 +164,7 @@
         <button id="go" class="demo-btn">天気を見る</button>
       </div>
 
-      <div class="demo-presets" aria-label="プリセット">
+      <div class="demo-presets" role="group" aria-label="プリセット地名">
         <button type="button" data-q="大阪市天王寺区">大阪市天王寺区</button>
         <button type="button" data-q="東京駅">東京駅</button>
         <button type="button" data-q="札幌">札幌</button>
@@ -220,6 +224,7 @@
     const statusEl = document.getElementById('status');
     const btn = document.getElementById('go');
     const q = document.getElementById('q');
+    const presetBtns = document.querySelectorAll('.demo-presets button');
 
     function showStatus(msg, kind) {
       statusEl.textContent = msg;
@@ -228,6 +233,34 @@
     function hideStatus() {
       statusEl.className = 'demo-status';
       statusEl.textContent = '';
+    }
+    function setBusy(busy) {
+      btn.disabled = busy;
+      presetBtns.forEach((b) => { b.disabled = busy; });
+    }
+
+    function buildPopupElement(hit, wText, temperatureC) {
+      // DOM construction with textContent to avoid XSS via third-party API data
+      const root = document.createElement('div');
+
+      const nameSpan = document.createElement('span');
+      nameSpan.className = 'demo-popup-name';
+      nameSpan.textContent = hit.name;
+      root.appendChild(nameSpan);
+
+      if (hit.country) {
+        const countrySpan = document.createElement('span');
+        countrySpan.className = 'demo-popup-country';
+        countrySpan.textContent = '(' + hit.country + ')';
+        root.appendChild(countrySpan);
+      }
+
+      const weatherDiv = document.createElement('div');
+      weatherDiv.className = 'demo-popup-weather';
+      weatherDiv.textContent = wText + ' / 気温 ' + temperatureC.toFixed(1) + '°C';
+      root.appendChild(weatherDiv);
+
+      return root;
     }
 
     async function fetchGeocode(name) {
@@ -253,13 +286,15 @@
     }
 
     async function lookup(name) {
-      const query = (name || q.value).trim();
+      const fromArg = typeof name === 'string' && name.length > 0;
+      const query = (fromArg ? name : q.value).trim();
       if (!query) {
         showStatus('地名を入力してください', 'error');
         return;
       }
-      q.value = query;
-      btn.disabled = true;
+      if (fromArg) q.value = query;
+
+      setBusy(true);
       showStatus('「' + query + '」を検索中…', 'info');
       try {
         const hit = await fetchGeocode(query);
@@ -268,28 +303,26 @@
           return;
         }
         const w = await fetchWeather(hit.latitude, hit.longitude);
+        if (!w || typeof w.temperature_2m !== 'number') {
+          showStatus('天気データが取得できませんでした (API レスポンス不整合)', 'error');
+          return;
+        }
         const wText = WMO_TEXT[w.weather_code] || ('天気コード ' + w.weather_code);
 
         map.setView([hit.latitude, hit.longitude], 13);
         if (marker) marker.remove();
 
-        const popupHtml =
-          '<span class="demo-popup-name">' + hit.name + '</span>'
-          + (hit.country ? '<span class="demo-popup-country">(' + hit.country + ')</span>' : '')
-          + '<div class="demo-popup-weather">'
-          +   wText + ' / 気温 ' + w.temperature_2m.toFixed(1) + '°C'
-          + '</div>';
-
+        const popupEl = buildPopupElement(hit, wText, w.temperature_2m);
         marker = L.marker([hit.latitude, hit.longitude])
           .addTo(map)
-          .bindPopup(popupHtml)
+          .bindPopup(popupEl)
           .openPopup();
 
         hideStatus();
       } catch (err) {
         showStatus('エラー: ' + err.message + '（時間をおいて再試行してください）', 'error');
       } finally {
-        btn.disabled = false;
+        setBusy(false);
       }
     }
 
@@ -300,7 +333,7 @@
         lookup();
       }
     });
-    document.querySelectorAll('.demo-presets button').forEach((b) => {
+    presetBtns.forEach((b) => {
       b.addEventListener('click', () => lookup(b.dataset.q));
     });
 
