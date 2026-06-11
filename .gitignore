@@ -1,2 +1,4 @@
 .envrc
 .claude/
+.playwright-mcp/
+.serena/

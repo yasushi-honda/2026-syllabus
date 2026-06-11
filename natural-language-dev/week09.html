@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-  <link rel="stylesheet" href="../styles.css?v=2">
+  <link rel="stylesheet" href="../styles.css?v=3">
   <!-- 公式情報確認: 2026-06-11 (leafletjs.com + leafletjs.com/examples/quick-start/ + operations.osmfoundation.org/policies/tiles/ + open-meteo.com/en/docs/geocoding-api + open-meteo.com/en/docs + nominatim.org/release-docs/develop/api/Search/ + antigravity.google/docs/cli-reference) -->
 </head>
 <body>
@@ -66,7 +66,7 @@
       <h2>この回のゴール</h2>
       <ul>
         <li><strong>Leaflet</strong> + OpenStreetMap タイルでブラウザに地図を表示できる（緯度経度・ズーム・タイル URL・attribution の役割を 1 行ずつ説明できる）</li>
-        <li><strong>Open-Meteo Geocoding API</strong> を <code>fetch()</code> で叩いて、地名（例：「大阪市天王寺区」）から緯度経度・ヒット名・国名を取得できる</li>
+        <li><strong>Open-Meteo Geocoding API</strong> を <code>fetch()</code> で叩いて、地名（例：「<code>Tennoji</code>」「<code>Osaka</code>」 — 英語/ローマ字推奨）から緯度経度・ヒット名・国名を取得できる</li>
         <li><strong>Open-Meteo Forecast API</strong> を <code>fetch()</code> で叩いて、緯度経度から現在の気温（<code>temperature_2m</code>）と天気コード（<code>weather_code</code>）を取得できる</li>
         <li>取得した緯度経度に <code>L.marker</code> を立て、<code>bindPopup</code> で「ヒット名 / 気温 / 天気テキスト」を組み立てて表示できる</li>
         <li><strong>Leaflet / Mapbox GL JS / Google Maps Platform</strong> の判断軸（OSS or 商用・API キーの要否・無料枠の有無・利用規約上の制約）を 1 行ずつ説明できる</li>
@@ -265,7 +265,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
               <li>本日採用する <strong>Open-Meteo Geocoding API</strong> の前提:
                 <ul>
                   <li>データ源は <strong>GeoNames</strong>（CC-BY 4.0 ライセンス）</li>
-                  <li><strong>API キー不要・非商用無料・<code>language=ja</code> で日本語名対応</strong>。レスポンス自体も <strong>CC-BY 4.0</strong>（公式 <a href="https://open-meteo.com/en/terms" target="_blank" rel="noopener">Terms</a>）</li>
+                  <li><strong>API キー不要・非商用無料</strong>。<code>language=ja</code> は<strong>結果表示の言語化</strong>（<code>Osaka</code> → 大阪市）であり、<strong>検索クエリは英語/ローマ字が確実</strong>（<code>大阪市天王寺区</code> / <code>東京駅</code> 等の日本語名では GeoNames データに当たらないケースが多い、本回の体験ポイント）。レスポンス自体も <strong>CC-BY 4.0</strong>（公式 <a href="https://open-meteo.com/en/terms" target="_blank" rel="noopener">Terms</a>）</li>
                   <li>非商用無料枠は <strong>1 日 10,000 / 1 時間 5,000 / 1 分 600 リクエスト</strong>まで。授業中の「ボタンクリックで叩く」ペースでは問題なく収まる範囲</li>
                   <li>同プロバイダの <strong>Forecast API と組み合わせる前提で設計</strong>されている（学生リクエストの「Open-Meteo に使う位置情報をジオコードで取る」に直接マッチ）</li>
                 </ul>
@@ -281,15 +281,22 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             <p><strong>curl で生のレスポンスを観察する（10分）</strong></p>
             <ul>
               <li>JS を書く前に、まず<strong>素の API レスポンス</strong>を見て JSON 構造を把握する。これが <strong>4 作法 ② の現場感覚</strong>を養う基礎</li>
-              <li>ターミナルで:
-                <pre><code>curl 'https://geocoding-api.open-meteo.com/v1/search?name=大阪市天王寺区&amp;count=3&amp;language=ja' | jq
+              <li>ターミナルで <strong>日本語名と英語名の差</strong>を実機で観察する:
+                <pre><code># ① 日本語名 — 0 件で返るケースが多い (体験ポイント)
+curl 'https://geocoding-api.open-meteo.com/v1/search?name=大阪市天王寺区&amp;count=3&amp;language=ja' | jq
+
+# ② 英語名 — ヒットして緯度経度が返る
+curl 'https://geocoding-api.open-meteo.com/v1/search?name=Tennoji&amp;count=3&amp;language=ja' | jq
+
+# ③ 主要都市の英語名も全部ヒット
+curl 'https://geocoding-api.open-meteo.com/v1/search?name=Osaka&amp;count=1&amp;language=ja' | jq
 </code></pre>
               </li>
               <li>観察ポイント:
                 <ul>
                   <li><code>results</code> 配列に <code>id</code> / <code>name</code> / <code>latitude</code> / <code>longitude</code> / <code>country</code> / <code>country_code</code> / <code>population</code> / <code>feature_code</code> / <code>admin1</code> / <code>postcodes</code> 等が入る</li>
                   <li>候補が 0 件のときは <strong><code>results</code> キー自体が無い</strong>（= <code>undefined</code>）。ここを見落とすと <code>data.results[0]</code> で <code>TypeError</code></li>
-                  <li><code>language=ja</code> を入れると<strong>日本語名</strong>がヒットする（市・区・町名は ja 表記に最適化）</li>
+                  <li><code>language=ja</code> は<strong>結果表示の言語化</strong>（<code>Osaka</code> → 大阪市、<code>Tennoji</code> → 天王寺町北）。<strong>検索クエリ自体は英語/ローマ字</strong>でないと GeoNames の日本データに当たらないことが多い（① の curl で実体験）。本格運用で日本語名検索が必要なら Nominatim や Mapbox / Google の Geocoding を比較検討</li>
                   <li><code>count</code> を 3 にすると複数候補が見られる（同名地名の曖昧性が体感できる）</li>
                 </ul>
               </li>
@@ -306,15 +313,17 @@ popup に「ヒット名 (国名)」が表示される。
 
 # 公式 API (Open-Meteo Geocoding 抜粋)
 GET https://geocoding-api.open-meteo.com/v1/search?name=NAME&amp;count=1&amp;language=ja
-レスポンス (抜粋):
+レスポンス (抜粋, name=Tennoji の場合):
 {
   "results": [
-    { "id": ..., "name": "天王寺区",
-      "latitude": 34.6435, "longitude": 135.5132,
+    { "id": ..., "name": "天王寺町北",
+      "latitude": 34.64575, "longitude": 135.52402,
       "country": "日本", "country_code": "JP" }
   ]
 }
-results が無いケースあり (該当なし)。
+重要: 検索クエリは英語/ローマ字 (Tennoji / Osaka / Tokyo) が確実。
+日本語名 (大阪市天王寺区 等) では results が無いケースあり。
+language=ja は結果表示の言語化のみ。
 
 # 失敗ケース
 なし (これは新規追加)
@@ -358,14 +367,14 @@ document.getElementById('go').addEventListener('click', async () =&gt; {
 });
 </code></pre>
               </li>
-              <li>動作確認: 「大阪市天王寺区」「東京駅」「札幌」「自分の自宅最寄り駅」を順に入れて、ピンが正しい位置に立つかを目視する</li>
+              <li>動作確認: <strong>英語/ローマ字で</strong>「<code>Tennoji</code>」「<code>Osaka</code>」「<code>Tokyo</code>」「<code>Sapporo</code>」を順に入れて、ピンが正しい位置に立つかを目視する。試しに<strong>日本語名</strong>（「大阪市天王寺区」「東京駅」）も入れてみて、<strong>0 件で見つからない挙動</strong>を体験する（API の言語サポートの実態を体感）</li>
             </ul>
             <p><strong>失敗を起こして 4 作法 ③ を実演する（10分）</strong></p>
             <ul>
               <li>意図的に失敗させて、再現手順を <code>agy</code> に渡す体験をする:
                 <ul>
                   <li>存在しない地名（例: <code>ahkjsdh</code>） → alert が出ること・コンソールに何が出ているかを観察</li>
-                  <li>「大阪」だけを <code>count=5</code> で叩く → 大阪市・大阪府・大阪城などが返って「最初の 1 件」が必ずしも意図と一致しないことを観察</li>
+                  <li>「<code>Osaka</code>」だけを <code>count=5</code> で叩く → <strong>大阪市（日本）/ Osaka（アメリカ・複数州）/ 大坂（旧字、別地点）</strong> などが返って「最初の 1 件」が必ずしも意図と一致しないことを観察。同名地名の曖昧性は<strong>国境をまたぐ</strong>こともある</li>
                 </ul>
               </li>
               <li>2 つ目の体験から「<strong>地名が曖昧なときの UX</strong>」（候補リスト UI）を発展課題に回せることが分かる。今日は「最初の 1 件で進める」割り切り</li>
@@ -386,8 +395,8 @@ document.getElementById('go').addEventListener('click', async () =&gt; {
           <div class="timeline-body">
             <p><strong>Forecast API の最小利用を curl で確認（10分）</strong></p>
             <ul>
-              <li>2 限前半と同じく、まず<strong>素の JSON</strong>を観察する:
-                <pre><code>curl 'https://api.open-meteo.com/v1/forecast?latitude=34.6435&amp;longitude=135.5132&amp;current=temperature_2m,weather_code' | jq
+              <li>2 限前半でジオコードして取った緯度経度（<code>Tennoji</code> → 34.64575, 135.52402）をそのまま渡して、まず<strong>素の JSON</strong>を観察する:
+                <pre><code>curl 'https://api.open-meteo.com/v1/forecast?latitude=34.64575&amp;longitude=135.52402&amp;current=temperature_2m,weather_code' | jq
 </code></pre>
               </li>
               <li>観察ポイント:
@@ -466,7 +475,7 @@ marker = L.marker([hit.latitude, hit.longitude])
   .openPopup();
 </code></pre>
               </li>
-              <li>動作確認: 「大阪市天王寺区」「東京駅」「札幌」「那覇」を順に入れて、地点ごとに気温と天気が変わることを観察する</li>
+              <li>動作確認: 「<code>Tennoji</code>」「<code>Tokyo</code>」「<code>Sapporo</code>」「<code>Naha</code>」を順に入れて、地点ごとに気温と天気が変わることを観察する（緯度の差で気温がはっきり変わることを実感）</li>
             </ul>
             <p><strong>動作確認と push（5分）</strong></p>
             <ul>
