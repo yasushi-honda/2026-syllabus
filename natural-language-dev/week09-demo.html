@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第9回デモ｜進級制作で Map を使う — 自然言語開発</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=2">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin="" />
+  <style>
+    .demo-controls {
+      display: flex;
+      gap: 0.6rem;
+      margin: 1.2rem 0 0.6rem;
+      flex-wrap: wrap;
+      align-items: stretch;
+    }
+    .demo-controls input {
+      flex: 1;
+      min-width: 220px;
+      padding: 0.65rem 0.85rem;
+      border: 1px solid var(--c-border-strong, #c9c2ac);
+      border-radius: 4px;
+      font: 1rem 'Noto Sans JP', sans-serif;
+      background: var(--c-surface, #fff);
+      color: var(--c-text, #1a1a2e);
+    }
+    .demo-controls input:focus {
+      outline: 2px solid #0a6e4b;
+      outline-offset: -1px;
+    }
+    .demo-btn {
+      padding: 0.65rem 1.3rem;
+      background: #0a6e4b; /* AA PASS 6.28:1 on #fff */
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font: 600 1rem 'Noto Sans JP', sans-serif;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .demo-btn:hover { background: #084f37; }
+    .demo-btn:disabled { background: #888; cursor: not-allowed; }
+    .demo-status {
+      margin: 0.6rem 0;
+      padding: 0.65rem 0.85rem;
+      border-radius: 4px;
+      font-size: 0.92rem;
+      display: none;
+      border: 1px solid;
+    }
+    .demo-status.show { display: block; }
+    .demo-status.info {
+      background: var(--c-green-soft, #e3f4ec);
+      border-color: var(--c-green-border, #c2e4d3);
+      color: #094f37;
+    }
+    .demo-status.error {
+      background: #fdecec;
+      border-color: #f1c0c0;
+      color: #8a2222;
+    }
+    #map {
+      height: 480px;
+      border: 1px solid var(--c-border-strong, #c9c2ac);
+      border-radius: 4px;
+      margin: 0.6rem 0 1rem;
+    }
+    .demo-hint {
+      font-size: 0.92rem;
+      color: var(--c-text-muted, #4a4a5e);
+      line-height: 1.65;
+    }
+    .demo-hint code {
+      background: var(--c-bg-alt, #f2efe4);
+      padding: 0.1rem 0.35rem;
+      border-radius: 3px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.88em;
+    }
+    .demo-presets {
+      display: flex;
+      gap: 0.4rem;
+      margin: 0.4rem 0 0;
+      flex-wrap: wrap;
+    }
+    .demo-presets button {
+      padding: 0.3rem 0.7rem;
+      background: var(--c-bg-alt, #f2efe4);
+      border: 1px solid var(--c-border-strong, #c9c2ac);
+      border-radius: 999px;
+      font: 0.85rem 'Noto Sans JP', sans-serif;
+      color: var(--c-text, #1a1a2e);
+      cursor: pointer;
+    }
+    .demo-presets button:hover:not(:disabled) {
+      background: var(--c-green-soft, #e3f4ec);
+      border-color: var(--c-green-border, #c2e4d3);
+    }
+    .demo-presets button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    .demo-stack {
+      font-size: 0.85rem;
+      color: var(--c-text-muted, #4a4a5e);
+      line-height: 1.7;
+      margin-top: 1.5rem;
+      padding-top: 1rem;
+      border-top: 1px dashed var(--c-border-strong, #c9c2ac);
+    }
+    .demo-stack code {
+      background: var(--c-bg-alt, #f2efe4);
+      padding: 0.1rem 0.35rem;
+      border-radius: 3px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .demo-popup-name { font-weight: 600; font-size: 1.05em; }
+    .demo-popup-country { color: #555; font-size: 0.85em; margin-left: 0.3em; }
+    .demo-popup-weather { margin-top: 0.3em; font-size: 0.95em; }
+  </style>
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev.html">自然言語開発</a>
+        <span>/</span>
+        <a href="week09.html">第9回</a>
+        <span>/</span>
+        <span>動くデモ</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">第9回デモ：進級制作で Map を使う</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 9</span>
+            <span class="page-badge">動く MVP</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+    <div class="syllabus-section">
+      <p class="demo-hint">
+        授業の到達点（<strong>Leaflet 1.9.4 + OpenStreetMap タイル + Open-Meteo Geocoding API + Open-Meteo Forecast API</strong>）をそのまま 1 ファイル HTML に集約した最小実装。
+        入力欄に地名を入れて「天気を見る」を押すと、ジオコーディング API で緯度経度を取得し、Forecast API で現在の天気を popup に表示します。
+        API キー不要・非商用無料・初期表示は天王寺（34.6435, 135.5132）。
+      </p>
+
+      <div class="demo-controls">
+        <input id="q" type="text" placeholder="地名 (例: 大阪市天王寺区, 東京駅, 札幌)" value="大阪市天王寺区" autocomplete="off" />
+        <button id="go" class="demo-btn">天気を見る</button>
+      </div>
+
+      <div class="demo-presets" role="group" aria-label="プリセット地名">
+        <button type="button" data-q="大阪市天王寺区">大阪市天王寺区</button>
+        <button type="button" data-q="東京駅">東京駅</button>
+        <button type="button" data-q="札幌">札幌</button>
+        <button type="button" data-q="那覇">那覇</button>
+        <button type="button" data-q="清風情報工科学院">清風情報工科学院</button>
+      </div>
+
+      <div id="status" class="demo-status" role="status" aria-live="polite"></div>
+
+      <div id="map"></div>
+
+      <div class="demo-stack">
+        <strong>Stack</strong>:
+        <code>L.map</code> / <code>L.tileLayer</code> / <code>L.marker</code> / <code>L.popup</code>（Leaflet 1.9.4）·
+        <a href="https://tile.openstreetmap.org/" target="_blank" rel="noopener">OpenStreetMap タイル</a>（attribution 表示） ·
+        <a href="https://geocoding-api.open-meteo.com/v1/search" target="_blank" rel="noopener">Open-Meteo Geocoding API</a>（<code>name</code> / <code>count=1</code> / <code>language=ja</code>） ·
+        <a href="https://api.open-meteo.com/v1/forecast" target="_blank" rel="noopener">Open-Meteo Forecast API</a>（<code>current=temperature_2m,weather_code</code>） ·
+        WMO weather_code 日本語辞書（96 = 雷雨と雹（少量）/ 99 = 雷雨と雹（多量）等）
+        <br>
+        <strong>このデモのソース</strong>: <code>natural-language-dev/week09-demo.html</code>（1 ファイル / CSS+JS インライン）·
+        <a href="week09.html">第9回の授業計画に戻る</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+          crossorigin=""></script>
+  <script>
+    const map = L.map('map').setView([34.6435, 135.5132], 13);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    const WMO_TEXT = {
+      0: '快晴', 1: '晴れ', 2: '一部曇り', 3: '曇り',
+      45: '霧', 48: '着氷霧',
+      51: '霧雨', 53: '霧雨 (中)', 55: '霧雨 (強)',
+      56: '着氷霧雨 (弱)', 57: '着氷霧雨 (強)',
+      61: '雨', 63: '雨 (中)', 65: '雨 (強)',
+      66: '着氷雨 (弱)', 67: '着氷雨 (強)',
+      71: '雪', 73: '雪 (中)', 75: '雪 (強)',
+      77: '雪粒',
+      80: 'にわか雨', 81: 'にわか雨 (中)', 82: 'にわか雨 (強)',
+      85: 'にわか雪', 86: 'にわか雪 (強)',
+      95: '雷雨', 96: '雷雨と雹 (少量)', 99: '雷雨と雹 (多量)'
+    };
+
+    let marker = null;
+    const statusEl = document.getElementById('status');
+    const btn = document.getElementById('go');
+    const q = document.getElementById('q');
+    const presetBtns = document.querySelectorAll('.demo-presets button');
+
+    function showStatus(msg, kind) {
+      statusEl.textContent = msg;
+      statusEl.className = 'demo-status show ' + (kind || 'info');
+    }
+    function hideStatus() {
+      statusEl.className = 'demo-status';
+      statusEl.textContent = '';
+    }
+    function setBusy(busy) {
+      btn.disabled = busy;
+      presetBtns.forEach((b) => { b.disabled = busy; });
+    }
+
+    function buildPopupElement(hit, wText, temperatureC) {
+      // DOM construction with textContent to avoid XSS via third-party API data
+      const root = document.createElement('div');
+
+      const nameSpan = document.createElement('span');
+      nameSpan.className = 'demo-popup-name';
+      nameSpan.textContent = hit.name;
+      root.appendChild(nameSpan);
+
+      if (hit.country) {
+        const countrySpan = document.createElement('span');
+        countrySpan.className = 'demo-popup-country';
+        countrySpan.textContent = '(' + hit.country + ')';
+        root.appendChild(countrySpan);
+      }
+
+      const weatherDiv = document.createElement('div');
+      weatherDiv.className = 'demo-popup-weather';
+      weatherDiv.textContent = wText + ' / 気温 ' + temperatureC.toFixed(1) + '°C';
+      root.appendChild(weatherDiv);
+
+      return root;
+    }
+
+    async function fetchGeocode(name) {
+      const url = 'https://geocoding-api.open-meteo.com/v1/search'
+        + '?name=' + encodeURIComponent(name)
+        + '&count=1&language=ja';
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('Geocoding API ' + res.status);
+      const data = await res.json();
+      if (!data.results || data.results.length === 0) return null;
+      return data.results[0];
+    }
+
+    async function fetchWeather(lat, lon) {
+      const url = 'https://api.open-meteo.com/v1/forecast'
+        + '?latitude=' + lat
+        + '&longitude=' + lon
+        + '&current=temperature_2m,weather_code';
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('Forecast API ' + res.status);
+      const data = await res.json();
+      return data.current;
+    }
+
+    async function lookup(name) {
+      const fromArg = typeof name === 'string' && name.length > 0;
+      const query = (fromArg ? name : q.value).trim();
+      if (!query) {
+        showStatus('地名を入力してください', 'error');
+        return;
+      }
+      if (fromArg) q.value = query;
+
+      setBusy(true);
+      showStatus('「' + query + '」を検索中…', 'info');
+      try {
+        const hit = await fetchGeocode(query);
+        if (!hit) {
+          showStatus('見つかりませんでした: ' + query + '（地名を変えて試してください）', 'error');
+          return;
+        }
+        const w = await fetchWeather(hit.latitude, hit.longitude);
+        if (!w || typeof w.temperature_2m !== 'number') {
+          showStatus('天気データが取得できませんでした (API レスポンス不整合)', 'error');
+          return;
+        }
+        const wText = WMO_TEXT[w.weather_code] || ('天気コード ' + w.weather_code);
+
+        map.setView([hit.latitude, hit.longitude], 13);
+        if (marker) marker.remove();
+
+        const popupEl = buildPopupElement(hit, wText, w.temperature_2m);
+        marker = L.marker([hit.latitude, hit.longitude])
+          .addTo(map)
+          .bindPopup(popupEl)
+          .openPopup();
+
+        hideStatus();
+      } catch (err) {
+        showStatus('エラー: ' + err.message + '（時間をおいて再試行してください）', 'error');
+      } finally {
+        setBusy(false);
+      }
+    }
+
+    btn.addEventListener('click', () => lookup());
+    q.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        lookup();
+      }
+    });
+    presetBtns.forEach((b) => {
+      b.addEventListener('click', () => lookup(b.dataset.q));
+    });
+
+    // 初期表示時に天王寺の天気を自動で 1 度取得
+    lookup('大阪市天王寺区');
+  </script>
+</body>
+</html>

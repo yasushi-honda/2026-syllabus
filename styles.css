@@ -360,6 +360,42 @@ img { max-width: 100%; display: block; }
 .slot--indigo { color: var(--c-indigo); background: var(--c-indigo-soft); border-color: var(--c-indigo-border); }
 
 /* ========================================
+   Demo CTA — 週ページから動くデモへの誘導ブロック
+   week09-demo.html の流用パターン
+   ======================================== */
+.demo-cta {
+  background: var(--c-green-soft);
+  border: 1px solid var(--c-green-border);
+  border-radius: 6px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.4rem;
+}
+.demo-cta__heading {
+  margin: 0 0 0.4rem;
+  font-weight: 700;
+  color: #094f37; /* AA PASS 8.43:1 on --c-green-soft */
+  font-size: 1.02rem;
+}
+.demo-cta__body {
+  margin: 0 0 0.7rem;
+  font-size: 0.93rem;
+  line-height: 1.65;
+}
+.demo-cta__link {
+  display: inline-block;
+  padding: 0.55rem 1.1rem;
+  background: #0a6e4b; /* AA PASS 6.28:1 on #fff */
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.demo-cta__link:hover {
+  background: #084f37;
+}
+
+/* ========================================
    Timetable Grid — weekly matrix
    ======================================== */
 
