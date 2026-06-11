@@ -370,7 +370,7 @@ push と pull_request トリガーで動く GitHub Actions の最小ワークフ
                 </ul>
               </li>
               <li>ハーネスにはもう1つ第3の層がある: <strong>Hook</strong>（plugin 内の <code>hooks.json</code> または <code>~/.gemini/antigravity-cli/settings.json</code> に直接定義し、<code>agy</code> 起動中に <code>/hooks</code> で active を確認できる仕組み）。<strong>「AI のツール実行のたびに、その場で割り込む閘門（こうもん）」</strong>として、自動 fmt や機密情報ブロックに使う。公式 <a href="https://antigravity.google/docs/cli-plugins" target="_blank" rel="noopener">Plugins & skills</a> の "Managing hooks" 節参照（公式原文: <em>"Hooks are defined inside a plugin's <code>hooks.json</code> or configured inside your primary <code>settings.json</code> file."</em>）。今日は存在を知るだけで、具体実装は家での発展に回す</li>
-              <li>次回（第9回）: <strong>中間レビュー＆コードレビュー実践</strong>。ハーネス構築前後の進級制作コードを自分で振り返り、自分の過去 PR に<strong>自己レビュー</strong>してみる。AI レビューと人間レビューの違いと使い分けを体験する</li>
+              <li>次回（第9回）: <strong>進級制作で Map を使う：Leaflet × ジオコード × 天気 API</strong>。学生リクエストを起点に、進級制作の具体機能としてマップを組み込む実装回。Leaflet + OpenStreetMap で地図描画、Open-Meteo Geocoding API で住所→緯度経度、Open-Meteo Forecast API で天気を popup に表示する最小機能を <code>agy</code> と協働で 1 ファイル（HTML+JS）から組み立てる</li>
               <li>家での発展（任意）: <code>/hooks</code> で active hook を確認／<code>hooks.json</code> の最小例に挑戦／ブランチ保護の <strong>Require status checks</strong> に今日作ったワークフロー名を追加して「テストが緑にならないと merge できない」状態を完成させる／Antigravity 公式の <code>--sandbox</code> や <code>toolPermission</code> 設定を読んで自分の進級制作にどれを当てるか検討</li>
             </ul>
           </div>
@@ -454,7 +454,7 @@ push と pull_request トリガーで動く GitHub Actions の最小ワークフ
       </a>
       <a href="week09.html" class="lesson-nav-item" style="text-align:right">
         <span class="lesson-nav-label">次の回</span>
-        <span class="lesson-nav-title">第9回 中間レビュー＆コードレビュー実践</span>
+        <span class="lesson-nav-title">第9回 進級制作で Map を使う：Leaflet × ジオコード × 天気 API</span>
       </a>
     </nav>
 

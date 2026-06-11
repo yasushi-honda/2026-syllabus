@@ -25,7 +25,7 @@
       </nav>
       <div class="page-title-area">
         <div>
-          <h1 class="page-title">進級制作で Map を使う<wbr>：<wbr>Leaflet × ジオコード × 天気 API</h1>
+          <h1 class="page-title">進級制作で Map を使う：<wbr>Leaflet × ジオコード × 天気 API</h1>
           <div class="page-meta-badges">
             <span class="page-badge">Week 9</span>
             <span class="page-badge">木曜 1・2限</span>
@@ -95,7 +95,7 @@
               <li>地図サービスは <strong>3 つの層</strong>に分かれている。まずこれを押さえる:
                 <ol>
                   <li><strong>地図ライブラリ</strong>（ブラウザで地図を描画する JavaScript）: Leaflet / MapLibre GL JS / Mapbox GL JS / Google Maps JS API</li>
-                  <li><strong>タイルサーバー</strong>（地図画像の供給元）: OpenStreetMap タイル / MapTiler / Stamen / Carto / Mapbox タイル / Google タイル など</li>
+                  <li><strong>タイルサーバー</strong>（地図画像の供給元）: OpenStreetMap タイル / MapTiler / Stadia Maps（旧 Stamen タイル）/ Carto / Mapbox タイル / Google タイル など</li>
                   <li><strong>ジオコーディングサービス</strong>（地名↔緯度経度の変換 API）: Nominatim（OSM） / Open-Meteo Geocoding / Mapbox Geocoding / Google Geocoding など</li>
                 </ol>
               </li>
@@ -104,7 +104,7 @@
                   <li><strong>Leaflet</strong>: BSD-2 ライセンスの OSS、API キー不要、CDN だけで動く、軽量で学習資料が多い。<strong>本日採用</strong></li>
                   <li><strong>MapLibre GL JS</strong>: BSD-3 ライセンスの OSS。Mapbox GL JS v1 からのフォーク。ベクトルタイル前提で見栄えは良いが、タイルサーバー（MapTiler 等）の準備が要る</li>
                   <li><strong>Mapbox GL JS</strong>: 商用ライブラリ（無料枠あり）。<strong>アカウント登録 + アクセストークン発行</strong>が必要。学生リクエストに直接該当するが、登録手順を 180 分内でやるとそこで時間が消える</li>
-                  <li><strong>Google Maps JavaScript API</strong>: Google Maps Platform の一部。<strong>クレジットカード登録</strong>が API キー発行に必要。学校 PC では授業時間内に各自登録するのは現実的でない</li>
+                  <li><strong>Google Maps JavaScript API</strong>: Google Maps Platform の一部。標準の API キーを動作させるには <strong>Billing 有効化（クレジットカード登録）が必要</strong>で、学校 PC では授業時間内に各自設定するのは現実的でない。試用用途の <strong>Maps Demo Key</strong>（クレカ不要・利用制限あり）もあるが、本格運用とは前提が違うので発展課題で各自確認する</li>
                 </ul>
               </li>
               <li>ジオコーディングサービスの比較（本日採用 = Open-Meteo Geocoding）:
@@ -112,7 +112,7 @@
                   <li><strong>Nominatim（OSM 公式）</strong>: 無料・キー不要だが、Usage Policy が厳しい（1 req/sec 上限、<strong>独自 User-Agent 必須</strong>、高頻度利用は自前サーバー推奨）。教材デモなら可だが、本日扱う「ボタンクリックで叩く」スタイルは Usage Policy にギリギリ</li>
                   <li><strong>Open-Meteo Geocoding</strong>: GeoNames データベースに基づく無料の地名検索 API。<strong>API キー不要・非商用無料・<code>language=ja</code> 対応</strong>。同じプロバイダの Forecast API と組み合わせやすい。<strong>本日採用</strong></li>
                   <li><strong>Mapbox Geocoding</strong>: 商用（無料枠あり）、API キー必要</li>
-                  <li><strong>Google Geocoding</strong>: 商用、API キー + クレカ必要</li>
+                  <li><strong>Google Geocoding</strong>: Google Maps Platform の一部、標準キーは Billing 有効化（クレジットカード登録）が必要</li>
                 </ul>
               </li>
               <li>「<strong>ライブラリ・タイル・ジオコード</strong>」の 3 層は組み合わせ自由。今日は <code>Leaflet × OSM タイル × Open-Meteo Geocoding</code> という最小の組み合わせを使うが、本格運用では「Leaflet × MapTiler タイル × Mapbox Geocoding」のような混成構成も普通にあり得る</li>
@@ -226,7 +226,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
               <li>「<strong>住所を入れたら自動で緯度経度が取れたら楽だな</strong>」という<strong>動機の生成</strong>が、ここでの教育上の狙い。次の 2 限前半で「それがジオコーディングです」と接続する</li>
             </ul>
             <div class="lesson-tip">
-              <strong>OpenStreetMap タイルは教育デモ規模なら使ってよい:</strong> OSMF の <a href="https://operations.osmfoundation.org/policies/tiles/" target="_blank" rel="noopener">Tile Usage Policy</a> は<strong>「学習のための対話的閲覧」を許可</strong>し、<strong>attribution の表示・大量取得の禁止・独自 User-Agent 設定（本番アプリ）</strong>を求める。授業内デモは許容範囲だが、進級制作を実運用するなら<strong>本格運用前に Policy を読み返し</strong>、規模が出てきたら MapTiler / Stamen / Carto などの<strong>タイル供給サービス契約</strong>に移ることを覚えておく。
+              <strong>OpenStreetMap タイルは「人間が直接操作する小規模デモ」なら使ってよい:</strong> OSMF の <a href="https://operations.osmfoundation.org/policies/tiles/" target="_blank" rel="noopener">Tile Usage Policy</a> は<strong>「人間による通常の対話的閲覧」（ブラウザでマウス操作してタイルを見る用途）を許可</strong>し、<strong>事前一括取得や自動取得の禁止・attribution の表示・独自 User-Agent 設定（本番アプリ）</strong>を求める。授業内デモは許容範囲だが、進級制作を実運用するなら<strong>本格運用前に Policy を読み返し</strong>、規模が出てきたら MapTiler / Stadia Maps（旧 Stamen タイル）/ Carto / Mapbox などの<strong>タイル供給サービス契約</strong>に移ることを覚えておく。
             </div>
           </div>
         </div>
@@ -256,8 +256,9 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
               <li>「住所→緯度経度の辞書」は<strong>誰かが集めて公開している</strong>: OpenStreetMap / GeoNames / Google / Mapbox など</li>
               <li>本日採用する <strong>Open-Meteo Geocoding API</strong> の前提:
                 <ul>
-                  <li>データ源は <strong>GeoNames</strong>（CC-BY ライセンス）</li>
-                  <li><strong>API キー不要・非商用無料・<code>language=ja</code> で日本語名対応</strong></li>
+                  <li>データ源は <strong>GeoNames</strong>（CC-BY 4.0 ライセンス）</li>
+                  <li><strong>API キー不要・非商用無料・<code>language=ja</code> で日本語名対応</strong>。レスポンス自体も <strong>CC-BY 4.0</strong>（公式 <a href="https://open-meteo.com/en/terms" target="_blank" rel="noopener">Terms</a>）</li>
+                  <li>非商用無料枠は <strong>1 日 10,000 / 1 時間 5,000 / 1 分 600 リクエスト</strong>まで。授業中の「ボタンクリックで叩く」ペースでは問題なく収まる範囲</li>
                   <li>同プロバイダの <strong>Forecast API と組み合わせる前提で設計</strong>されている（学生リクエストの「Open-Meteo に使う位置情報をジオコードで取る」に直接マッチ）</li>
                 </ul>
               </li>
@@ -273,7 +274,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             <ul>
               <li>JS を書く前に、まず<strong>素の API レスポンス</strong>を見て JSON 構造を把握する。これが <strong>4 作法 ② の現場感覚</strong>を養う基礎</li>
               <li>ターミナルで:
-                <pre><code>curl 'https://geocoding-api.open-meteo.com/v1/search?name=大阪市天王寺区&count=3&language=ja' | jq
+                <pre><code>curl 'https://geocoding-api.open-meteo.com/v1/search?name=大阪市天王寺区&amp;count=3&amp;language=ja' | jq
 </code></pre>
               </li>
               <li>観察ポイント:
@@ -296,7 +297,7 @@ index.html に入力欄とボタン (「この地点を表示」) を追加。
 popup に「ヒット名 (国名)」が表示される。
 
 # 公式 API (Open-Meteo Geocoding 抜粋)
-GET https://geocoding-api.open-meteo.com/v1/search?name=NAME&count=1&language=ja
+GET https://geocoding-api.open-meteo.com/v1/search?name=NAME&amp;count=1&amp;language=ja
 レスポンス (抜粋):
 {
   "results": [
@@ -378,13 +379,13 @@ document.getElementById('go').addEventListener('click', async () =&gt; {
             <p><strong>Forecast API の最小利用を curl で確認（10分）</strong></p>
             <ul>
               <li>2 限前半と同じく、まず<strong>素の JSON</strong>を観察する:
-                <pre><code>curl 'https://api.open-meteo.com/v1/forecast?latitude=34.6435&longitude=135.5132&current=temperature_2m,weather_code' | jq
+                <pre><code>curl 'https://api.open-meteo.com/v1/forecast?latitude=34.6435&amp;longitude=135.5132&amp;current=temperature_2m,weather_code' | jq
 </code></pre>
               </li>
               <li>観察ポイント:
                 <ul>
                   <li><code>current</code> フィールドに <code>temperature_2m</code>（地上 2m の気温・摂氏）と <code>weather_code</code>（WMO 標準の天気コード・整数）が入る</li>
-                  <li><code>weather_code</code> は <strong>WMO Weather interpretation codes</strong>: 0=快晴 / 1〜3=晴れ〜曇り / 45〜48=霧 / 51〜67=雨 / 71〜86=雪 / 95〜99=雷雨 等。詳細表は Open-Meteo docs の下部にある</li>
+                  <li><code>weather_code</code> は <strong>WMO Weather interpretation codes</strong>: 0=快晴 / 1〜3=晴れ〜曇り / 45・48=霧 / 51〜57=霧雨系（着氷霧雨含む）/ 61〜67=雨系（着氷雨含む）/ 71〜77=雪系（降雪・雪粒）/ 80〜82=にわか雨 / 85・86=にわか雪 / 95〜99=雷雨 等。詳細表は Open-Meteo docs の下部にある（80〜82 は名称が「雨」系統で、71〜77/85〜86 の「雪」系統と混在しないので注意）</li>
                   <li>API キー不要・非商用無料</li>
                 </ul>
               </li>
@@ -398,7 +399,7 @@ document.getElementById('go').addEventListener('click', async () =&gt; {
 「ヒット名 / 晴れ / 気温 22.4°C」のような表示を追加する。
 
 # 公式 API (Open-Meteo Forecast 抜粋)
-GET https://api.open-meteo.com/v1/forecast?latitude=LAT&longitude=LON&current=temperature_2m,weather_code
+GET https://api.open-meteo.com/v1/forecast?latitude=LAT&amp;longitude=LON&amp;current=temperature_2m,weather_code
 レスポンス (抜粋):
 {
   "latitude": 34.64, "longitude": 135.51,
@@ -439,7 +440,7 @@ const WMO_TEXT = {
   61: '雨', 63: '雨 (中)', 65: '雨 (強)',
   71: '雪', 73: '雪 (中)', 75: '雪 (強)',
   80: 'にわか雨', 81: 'にわか雨 (中)', 82: 'にわか雨 (強)',
-  95: '雷雨', 96: '雷雨と雹', 99: '雷雨と雹 (強)'
+  95: '雷雨', 96: '雷雨と雹 (少量)', 99: '雷雨と雹 (多量)'
 };
 
 // クリックハンドラ内 (marker 設置の直前) を以下に差し替え:
@@ -540,7 +541,7 @@ marker = L.marker([hit.latitude, hit.longitude])
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
             <strong>Mapbox / Google Maps Platform の登録手順を 1 つ調べる</strong>
-            <p><code>docs/map-services-week09.md</code> を新規作成して、<strong>Mapbox か Google Maps Platform のいずれか</strong>について「アカウント作成 → API キー（アクセストークン）発行 → 無料枠の月間ロード数 / リクエスト数 → 商用利用条件」を 5〜10 行でまとめる。実際に登録までしなくてよい（公式 docs を読むだけで OK）。進級制作で本格運用したくなったとき、自分が即動ける状態を作っておく。</p>
+            <p><code>docs/map-services-week09.md</code> を新規作成して、<strong>Mapbox か Google Maps Platform のいずれか</strong>について「アカウント作成 → API キー（アクセストークン）発行 → 無料枠と従量課金 → 商用利用条件」を 5〜10 行でまとめる。<strong>Google Maps Platform は 2025-03-01 以降「月間 $200 ユニバーサルクレジット」が廃止</strong>され、<strong>SKU 別の月間無料枠（Maps / Routes / Places 等それぞれ別カウント）＋ 新規顧客向け $300 トライアルクレジット</strong>に変更されている点が要注意（古い記事だと旧体系のままで書かれていることがある）。実際に登録までしなくてよい（公式 docs と pricing ページを読むだけで OK）。進級制作で本格運用したくなったとき、自分が即動ける状態を作っておく。</p>
           </div>
         </div>
         <div class="lesson-task">
@@ -556,18 +557,18 @@ marker = L.marker([hit.latitude, hit.longitude])
     <div class="syllabus-section">
       <h2>参考リンク</h2>
       <ul>
-        <li><a href="https://leafletjs.com/" target="_blank" rel="noopener">Leaflet — 公式トップ</a> — 現在の安定版は 1.9.4。2.0.0-alpha.1 が 2025-08-16 にリリース済み（本日の授業は安定版 1.9.4 を採用）</li>
+        <li><a href="https://leafletjs.com/" target="_blank" rel="noopener">Leaflet — 公式トップ</a> — Quick Start および unpkg CDN が現在指している安定版は <strong>1.9.4</strong>。2.0.0-alpha.1 が 2025-08-16 にリリース済みだが alpha のため本日の授業は 1.9.4 を採用</li>
         <li><a href="https://leafletjs.com/examples/quick-start/" target="_blank" rel="noopener">Leaflet — Quick Start Guide</a> — 本日 1 限後半の <code>L.map</code> / <code>L.tileLayer</code> / OSM タイル URL / attribution のサンプルの正本</li>
         <li><a href="https://leafletjs.com/reference.html" target="_blank" rel="noopener">Leaflet — API Reference</a> — <code>L.marker</code> / <code>L.popup</code> / <code>bindPopup</code> / <code>setView</code> 等のメソッド・オプション一覧</li>
         <li><a href="https://operations.osmfoundation.org/policies/tiles/" target="_blank" rel="noopener">OpenStreetMap Foundation — Tile Usage Policy</a> — OSM タイルを使うときの利用条件（attribution 必須・大量取得禁止・本番では独自 User-Agent 必須）の正本</li>
         <li><a href="https://open-meteo.com/en/docs/geocoding-api" target="_blank" rel="noopener">Open-Meteo — Geocoding API docs</a> — 本日 2 限前半で使う地名→緯度経度の API。<code>name</code> / <code>count</code> / <code>language</code> / レスポンス JSON の正本</li>
         <li><a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener">Open-Meteo — Weather Forecast API docs</a> — 本日 2 限後半で使う現在の天気の API。<code>current=temperature_2m,weather_code</code> と WMO Weather interpretation codes の正本</li>
-        <li><a href="https://nominatim.org/release-docs/develop/api/Search/" target="_blank" rel="noopener">Nominatim — Search API docs</a> — 採用しなかった OSM 公式ジオコーダーの正本。本格運用検討時の比較対象</li>
+        <li><a href="https://nominatim.org/release-docs/latest/api/Search/" target="_blank" rel="noopener">Nominatim — Search</a> — 採用しなかった OSM 公式ジオコーダーの正本（安定版 docs）。本格運用検討時の比較対象</li>
         <li><a href="https://operations.osmfoundation.org/policies/nominatim/" target="_blank" rel="noopener">OpenStreetMap Foundation — Nominatim Usage Policy</a> — Nominatim の Usage Policy（1 req/sec 上限・独自 User-Agent 必須・高頻度利用は自前サーバー推奨）の正本</li>
         <li><a href="https://docs.mapbox.com/api/search/geocoding/" target="_blank" rel="noopener">Mapbox — Geocoding API docs</a> — 学生リクエスト「Mapbox の勉強」に応じる発展先。アクセストークン発行と無料枠の条件はここから辿る</li>
         <li><a href="https://www.mapbox.com/pricing" target="_blank" rel="noopener">Mapbox — Pricing</a> — 月間 map load 数の無料枠と従量課金の正本</li>
-        <li><a href="https://developers.google.com/maps/documentation/javascript" target="_blank" rel="noopener">Google Maps Platform — JavaScript API docs</a> — 学生リクエスト「Google Maps の勉強」に応じる発展先。API キー発行はクレジットカード登録が前提</li>
-        <li><a href="https://mapsplatform.google.com/pricing/" target="_blank" rel="noopener">Google Maps Platform — Pricing</a> — 無料枠と従量課金の正本</li>
+        <li><a href="https://developers.google.com/maps/documentation/javascript" target="_blank" rel="noopener">Google Maps Platform — JavaScript API docs</a> — 学生リクエスト「Google Maps の勉強」に応じる発展先。標準の API キーは Billing 有効化（クレジットカード登録）が前提（試用用途の <a href="https://mapsplatform.google.com/maps-demo-key/" target="_blank" rel="noopener">Maps Demo Key</a> はクレカ不要だが利用制限あり）</li>
+        <li><a href="https://mapsplatform.google.com/pricing/" target="_blank" rel="noopener">Google Maps Platform — Pricing</a> — 2025-03-01 以降「月間 $200 ユニバーサルクレジット」から「SKU 別月間無料枠 + 新規顧客向け $300 トライアルクレジット」に変更。最新の課金体系の正本</li>
         <li><a href="https://antigravity.google/docs/cli-reference" target="_blank" rel="noopener">Antigravity CLI — CLI reference（公式）</a> — 第8回から使っている <code>agy</code> のスラッシュコマンド・引数一覧</li>
       </ul>
     </div>
