@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>第9回 中間レビュー＆コードレビュー実践 | 自然言語開発</title>
+  <title>第9回 進級制作で Map を使う：Leaflet × ジオコード × 天気 API | 自然言語開発</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=2">
-  <!-- 公式情報確認: 2026-06-11 (docs.github.com/ja/pull-requests/.../about-pull-request-reviews + reviewing-proposed-changes-in-a-pull-request + commenting-on-a-pull-request + cli.github.com/manual/gh_pr_review + google.github.io/eng-practices/review/reviewer/standard.html + comments.html + conventionalcomments.org + antigravity.google/docs/cli-reference + cli-plugins) -->
+  <!-- 公式情報確認: 2026-06-11 (leafletjs.com + leafletjs.com/examples/quick-start/ + operations.osmfoundation.org/policies/tiles/ + open-meteo.com/en/docs/geocoding-api + open-meteo.com/en/docs + nominatim.org/release-docs/develop/api/Search/ + antigravity.google/docs/cli-reference) -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -25,7 +25,7 @@
       </nav>
       <div class="page-title-area">
         <div>
-          <h1 class="page-title">中間レビュー<wbr>＆<wbr>コードレビュー実践</h1>
+          <h1 class="page-title">進級制作で Map を使う<wbr>：<wbr>Leaflet × ジオコード × 天気 API</h1>
           <div class="page-meta-badges">
             <span class="page-badge">Week 9</span>
             <span class="page-badge">木曜 1・2限</span>
@@ -41,15 +41,15 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">第1〜8回で<strong>進級制作リポジトリに積み上げてきた変更</strong>を、いったん立ち止まって自分で振り返る。GitHub の <strong>Pull Request レビュー</strong>機能を使い、<strong>自分の過去 PR にセルフレビュー</strong>を入れる体験から始める。続けて同じ PR に対して <strong>AI（Antigravity CLI）にもレビュー</strong>を依頼し、人間レビューと AI レビューの<strong>得意・不得意の違い</strong>を実体験で掴む</div>
+          <div class="lesson-overview-value">学生リクエストを起点に、<strong>進級制作の具体機能としてマップを組み込む実装回</strong>。<strong>Leaflet + OpenStreetMap</strong> で地図を描画し、<strong>Open-Meteo Geocoding API</strong> で地名→緯度経度を取得、<strong>Open-Meteo Forecast API</strong> で現在の天気を地図ピンの popup に表示する最小機能を、Antigravity CLI（<code>agy</code>）と協働で 1 ファイル構成（HTML + JS）から組み立てる。React は次回以降の SDD 実践プロジェクトで段階的に検討する</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">セルフコードレビュー / Pull Request レビュー（Comment / Approve / Request changes）/ <code>gh pr review</code> / inline comment / AI レビューと人間レビューの使い分け / Conventional Comments / Google eng-practices の「コードレビューの基準」</div>
+          <div class="lesson-overview-value">Leaflet 1.9.4 / OpenStreetMap タイル / <code>L.map</code> / <code>L.tileLayer</code> / <code>L.marker</code> / <code>L.popup</code> / ジオコーディング（forward） / Open-Meteo Geocoding API / Open-Meteo Forecast API / WMO <code>weather_code</code> / Map ライブラリ選定（Leaflet / Mapbox GL JS / Google Maps Platform）/ AI コーディング 4 作法（完成イメージ先出し／公式 API 仕様の貼り付け／失敗ケースの再現手順／1 ステップずつ）</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
-          <div class="lesson-overview-value">第8回完了（進級制作リポジトリに <code>.geminiignore</code> / <code>.github/workflows/test.yml</code> / Antigravity CLI <code>agy</code> 環境が揃っている状態）／自分の進級制作リポジトリに第1〜8回でマージした PR が<strong>3 本以上</strong>あること（PR が少ない人は授業内で過去コミットを <code>git log</code> で読み返す形で代替可）／ブラウザで GitHub にログイン済み</div>
+          <div class="lesson-overview-value">第8回完了（進級制作リポジトリに <code>.geminiignore</code> / <code>.github/workflows/test.yml</code> / Antigravity CLI <code>agy</code> 環境が揃っている状態）／ブラウザだけで動く HTML+JS の最小構成で進める（フレームワーク不要・React は今回扱わない）／Codespaces 内のターミナルから <code>python3 -m http.server</code> でローカルプレビューを立てる手順を覚えていること（第1〜2回の演習で実施済み）</div>
         </div>
       </div>
     </div>
@@ -57,12 +57,12 @@
     <div class="syllabus-section">
       <h2>この回のゴール</h2>
       <ul>
-        <li>第1〜8回で積み上げた「プロンプト → コンテキスト → ハーネス」の進化を、<strong>自分のリポジトリの diff を眺めながら</strong>3〜5 行で言語化できる</li>
-        <li>GitHub Docs の定義に沿って、Pull Request レビューの 3 種類（<strong>Comment / Approve / Request changes</strong>）と inline comment の使い分けを説明できる</li>
-        <li>自分の過去 PR 1 本に <strong>セルフレビュー</strong>を最低 3 件の inline comment 付きで送信できる（自分でマージ済みの PR でもレビューは追加できる）</li>
-        <li>同じ PR の diff を <strong>Antigravity CLI（<code>agy</code>）</strong>に読ませて「気になる点を 5 つ挙げて」と依頼し、<strong>自分のセルフレビューと比較</strong>して「人間が見つけた／AI が見つけた／両方一致」を3 列で整理できる</li>
-        <li><strong>Conventional Comments</strong> のラベル（<code>suggestion:</code> / <code>question:</code> / <code>nitpick:</code> / <code>praise:</code> 等）を 1〜2 個 使って、建設的なコメントの書き方を実体験する</li>
-        <li>後半（第10回以降の SDD 実践プロジェクト）に持ち越す「<strong>自分のコードの弱点</strong>」を 1〜2 個メモして帰る</li>
+        <li><strong>Leaflet</strong> + OpenStreetMap タイルでブラウザに地図を表示できる（緯度経度・ズーム・タイル URL・attribution の役割を 1 行ずつ説明できる）</li>
+        <li><strong>Open-Meteo Geocoding API</strong> を <code>fetch()</code> で叩いて、地名（例：「大阪市天王寺区」）から緯度経度・ヒット名・国名を取得できる</li>
+        <li><strong>Open-Meteo Forecast API</strong> を <code>fetch()</code> で叩いて、緯度経度から現在の気温（<code>temperature_2m</code>）と天気コード（<code>weather_code</code>）を取得できる</li>
+        <li>取得した緯度経度に <code>L.marker</code> を立て、<code>bindPopup</code> で「ヒット名 / 気温 / 天気テキスト」を組み立てて表示できる</li>
+        <li><strong>Leaflet / Mapbox GL JS / Google Maps Platform</strong> の判断軸（OSS or 商用・API キーの要否・無料枠の有無・利用規約上の制約）を 1 行ずつ説明できる</li>
+        <li>Antigravity CLI（<code>agy</code>）への効果的なプロンプトの <strong>4 作法</strong>（① 完成イメージを先に貼る ② 公式 API 仕様を貼り付ける ③ 失敗ケースの再現手順を渡す ④ 1 ステップずつ進める）を、3 段階の実装で自分のセッションで実演できる</li>
       </ul>
     </div>
 
@@ -77,51 +77,57 @@
             <span class="timeline-time">1限 前半</span>
             <span class="timeline-duration">約40分</span>
           </div>
-          <h3>前期前半の振り返り → 「コードレビュー」とは何か → なぜ自分の過去 PR を見るのか</h3>
+          <h3>学生リクエストを設計に変換 → Map サービスの全体地図 → AI コーディング 4 作法</h3>
           <div class="timeline-body">
-            <p><strong>第1〜8回の積み上げを並べる（15分）</strong></p>
+            <p><strong>学生リクエストを設計に変換する（10分）</strong></p>
             <ul>
-              <li>授業前半 8 回で、<strong>進級制作リポジトリ</strong>に積み上げてきた変更を一覧で眺める:
+              <li>事前に挙がった進級制作リクエスト: <strong>「開発をしたい」「Open-Meteo に使う位置情報をジオコードで取りたい」「Mapbox や Google Maps の勉強」「Map」「AI コーディングの正しい使い方」「React」</strong></li>
+              <li>今日 180 分で「触れる」もの・「持ち越す」ものを最初に宣言する:
                 <ul>
-                  <li>第1〜2回: Codespaces + Gemini CLI 起動（第8回で Antigravity CLI に移行）、コンテキストエンジニアリングの基礎</li>
-                  <li>第3〜4回: <strong>GEMINI.md</strong> でプロジェクトのルールを宣言（プロンプト → コンテキスト）</li>
-                  <li>第5回: <strong>PRD / ADR</strong> で「なぜそうしたか」を AI に渡す</li>
-                  <li>第6回: <strong>Spec-Driven Development</strong> で計画 → 実装の順番を作る</li>
-                  <li>第7回: <strong>TDD</strong> で Red → Green → Refactor を 1 サイクル回す</li>
-                  <li>第8回: <strong>ハーネス</strong>（<code>.geminiignore</code> + GitHub Actions + ブランチ保護）を構築</li>
+                  <li><strong>触れる</strong>: 地図描画（Leaflet） / ジオコード（Open-Meteo Geocoding） / 天気取得（Open-Meteo Forecast） / Mapbox・Google Maps の判断軸 / AI コーディング 4 作法</li>
+                  <li><strong>持ち越す</strong>: Mapbox / Google Maps の<strong>登録手続き自体は授業時間中には行わない</strong>（各自宿題）／React への移行は<strong>第10回以降の SDD 実践プロジェクト</strong>の中で検討</li>
                 </ul>
               </li>
-              <li>各自、自分のリポジトリで <code>git log --oneline | head -20</code> を打って<strong>「4 月の自分が書いた最初のコミット」と「第8回 push の最新コミット」</strong>を見比べる。何が変わったか、5 分で隣の人と 1 ターンずつ口頭シェア</li>
-              <li>狙いは<strong>「動くようになった機能」ではなく「コードの周辺に置いた装置の差」</strong>を意識すること（<code>GEMINI.md</code> / PRD / ADR / テスト / CI / <code>.geminiignore</code>）。<strong>ハーネス構築前後</strong>で何が変わったかを 1 行で言語化できれば、今日の振り返りの半分は達成</li>
+              <li>狙い: 学生が <strong>「自分のリクエストが今日の 180 分にどう配置されているか」</strong>を最初に把握できる状態を作る。後半で「これは今日扱わない」と分かっていれば、置き去り感が出ない</li>
             </ul>
-            <p><strong>「Pull Request レビュー」を公式定義で押さえる（15分）</strong></p>
+            <p><strong>Map サービスの全体地図（15分）</strong></p>
             <ul>
-              <li>一次出典: <a href="https://docs.github.com/ja/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/about-pull-request-reviews" target="_blank" rel="noopener">GitHub Docs ja — プルリクエストのレビューについて</a></li>
-              <li>公式の整理: PR レビューでは、レビュアーは<strong>変更ファイル全体・特定のセクション・1 行</strong>のいずれにもコメントを付けられる。レビュー全体を完了させるときには <strong>3 種類の状態</strong>から 1 つを選ぶ:
+              <li>地図サービスは <strong>3 つの層</strong>に分かれている。まずこれを押さえる:
+                <ol>
+                  <li><strong>地図ライブラリ</strong>（ブラウザで地図を描画する JavaScript）: Leaflet / MapLibre GL JS / Mapbox GL JS / Google Maps JS API</li>
+                  <li><strong>タイルサーバー</strong>（地図画像の供給元）: OpenStreetMap タイル / MapTiler / Stamen / Carto / Mapbox タイル / Google タイル など</li>
+                  <li><strong>ジオコーディングサービス</strong>（地名↔緯度経度の変換 API）: Nominatim（OSM） / Open-Meteo Geocoding / Mapbox Geocoding / Google Geocoding など</li>
+                </ol>
+              </li>
+              <li>地図ライブラリの比較（本日採用 = Leaflet）:
                 <ul>
-                  <li><strong>Comment（コメント）</strong>: 承認も変更要求もせず、所感だけを残す。公式（英語版）: <em>"Comment: Share feedback without approving or requesting changes."</em></li>
-                  <li><strong>Approve（承認）</strong>: 提案された変更をマージしてよいと判断する。公式（英語版）: <em>"Approve: Approve the changes for merging."</em></li>
-                  <li><strong>Request changes（変更を要求）</strong>: マージ前に修正してほしい点を残す。公式（英語版）: <em>"Request changes: Identify issues that must be fixed before merging."</em></li>
+                  <li><strong>Leaflet</strong>: BSD-2 ライセンスの OSS、API キー不要、CDN だけで動く、軽量で学習資料が多い。<strong>本日採用</strong></li>
+                  <li><strong>MapLibre GL JS</strong>: BSD-3 ライセンスの OSS。Mapbox GL JS v1 からのフォーク。ベクトルタイル前提で見栄えは良いが、タイルサーバー（MapTiler 等）の準備が要る</li>
+                  <li><strong>Mapbox GL JS</strong>: 商用ライブラリ（無料枠あり）。<strong>アカウント登録 + アクセストークン発行</strong>が必要。学生リクエストに直接該当するが、登録手順を 180 分内でやるとそこで時間が消える</li>
+                  <li><strong>Google Maps JavaScript API</strong>: Google Maps Platform の一部。<strong>クレジットカード登録</strong>が API キー発行に必要。学校 PC では授業時間内に各自登録するのは現実的でない</li>
                 </ul>
               </li>
-              <li>本授業での捉え方:
+              <li>ジオコーディングサービスの比較（本日採用 = Open-Meteo Geocoding）:
                 <ul>
-                  <li><strong>Comment</strong> = 「気づき・所感」を残す軽い使い方。今日のセルフレビューはまずこれで始める</li>
-                  <li><strong>Approve</strong> = 「これでマージしてよい」と他者に宣言する重い使い方。マージ後の自分の PR には付け直さない</li>
-                  <li><strong>Request changes</strong> = 「マージを止める」強い使い方。自分の過去 PR にはあえて使ってみて、感覚を体験するだけでよい</li>
+                  <li><strong>Nominatim（OSM 公式）</strong>: 無料・キー不要だが、Usage Policy が厳しい（1 req/sec 上限、<strong>独自 User-Agent 必須</strong>、高頻度利用は自前サーバー推奨）。教材デモなら可だが、本日扱う「ボタンクリックで叩く」スタイルは Usage Policy にギリギリ</li>
+                  <li><strong>Open-Meteo Geocoding</strong>: GeoNames データベースに基づく無料の地名検索 API。<strong>API キー不要・非商用無料・<code>language=ja</code> 対応</strong>。同じプロバイダの Forecast API と組み合わせやすい。<strong>本日採用</strong></li>
+                  <li><strong>Mapbox Geocoding</strong>: 商用（無料枠あり）、API キー必要</li>
+                  <li><strong>Google Geocoding</strong>: 商用、API キー + クレカ必要</li>
                 </ul>
               </li>
-              <li>注意: 自分が <strong>author</strong> の PR には GitHub UI から<strong>通常 Approve / Request changes は送れない</strong>（リポジトリの保護設定や required reviews の状況によって挙動が変わる場合がある）。自分の過去 PR に対しては <strong>Comment 型のレビュー</strong>と <strong>inline comment</strong> を中心に体験する</li>
+              <li>「<strong>ライブラリ・タイル・ジオコード</strong>」の 3 層は組み合わせ自由。今日は <code>Leaflet × OSM タイル × Open-Meteo Geocoding</code> という最小の組み合わせを使うが、本格運用では「Leaflet × MapTiler タイル × Mapbox Geocoding」のような混成構成も普通にあり得る</li>
             </ul>
-            <p><strong>なぜ自分の過去 PR を見るのか（10分）</strong></p>
+            <p><strong>AI コーディングへの効果的なプロンプトの 4 作法（15分）</strong></p>
             <ul>
-              <li>普段の開発で<strong>マージ直後</strong>の PR を見直すことは少ない。「動いたら次へ」が普通</li>
-              <li>本授業では<strong>第10回からの SDD 実践プロジェクト</strong>で、より大きな機能追加を進める。その前に、<strong>「自分が普段どこを見落としがちか」</strong>を 1 回だけ棚卸しする</li>
-              <li>レビューの基準として<strong>Google の Engineering Practices</strong> を 1 段落だけ確認する。一次出典: <a href="https://google.github.io/eng-practices/review/reviewer/standard.html" target="_blank" rel="noopener">Google eng-practices — The Standard of Code Review</a>。公式原文: <em>"In general, reviewers should favor approving a CL once it is in a state where it definitely improves the overall code health of the system being worked on, even if the CL isn't perfect."</em></li>
-              <li>本授業での読み替え: 「<strong>完璧かどうか</strong>」ではなく「<strong>コード全体の健康度がはっきり良くなるか</strong>」で判断する。マージ済みの自分のコードを<strong>今の自分</strong>がレビューすれば、4 月の自分には見えなかった改善点が必ず見える</li>
+              <li>学生リクエストの 1 つ「<strong>AI を利用したコーディング。AI の正しい使い方。どう指示すれば精度の高いコードを生成してくれるか</strong>」をここで言語化する。本日 180 分の実装は、この 4 作法を <strong>1 限後半・2 限前半・2 限後半</strong>の 3 段階で実演する場でもある</li>
+              <li><strong>① 完成イメージを先に貼る</strong>（Goal first）<br>「住所を入れたら地図にピンが立って popup で天気が見える」のような<strong>完成形のスクリーンショットや 1 文の動作仕様</strong>を最初に貼る。AI は「何が完成か」を共有できないと、勝手に範囲を広げたり、似て非なるものを作り始める</li>
+              <li><strong>② 公式 API 仕様を貼り付ける</strong>（Spec injection）<br>使う API の <strong>公式 docs から該当パラメータ・エンドポイント・レスポンス JSON 例を切り抜いて貼る</strong>。AI の中の古い知識（学習時点のスナップショット）より、<strong>今このセッションで貼った docs</strong> を優先するルールが守られやすい。Open-Meteo は API が安定しているので docs を 5〜10 行貼るだけで十分</li>
+              <li><strong>③ 失敗ケースの再現手順を渡す</strong>（Reproducible failure）<br>「コンソールにこのエラーが出た」「このプロンプトを入れたらこの応答が返った」を貼る。AI は「ありそうな原因」を推測で直したがる傾向があるが、再現手順を渡すと<strong>「読みに行く」モード</strong>に入る。今日は 1 限後半で動かなかったときに 2 限前半で実演する</li>
+              <li><strong>④ 1 ステップずつ進める</strong>（Vertical slice）<br>「いきなり全部作って」と頼まない。<strong>「まず地図描画だけ」「次に検索 → ピン」「最後に天気 popup」</strong>と 3 段階に分けて、各段階でブラウザで動作確認する。これがハルシネーションを抑える最大の作法。180 分のタイムラインそのものが 4 作法 ④ の実演になる</li>
+              <li>4 作法は<strong>カード（手元のメモ・ノート）に書き写す</strong>。1 限後半以降の各演習で、自分が出したプロンプトを「4 作法のどれを守れたか」自己採点する</li>
             </ul>
             <div class="lesson-tip">
-              <strong>今日の合言葉:</strong> 「<strong>過去の自分は他人</strong>」。4 月の自分が書いたコードは、今の自分とは違う前提・違う知識で書かれている。だから今の目で読み直すと、必ず「ここは今ならこう書く」が見つかる。それを言語化することが、第10回からの SDD 実践への助走になる。
+              <strong>「AI コーディングの正しい使い方」は「指示を磨くこと」:</strong> AI に向かって「いい感じに作って」と頼むと、いい感じの幻覚が返ってくる。完成像を先に貼り、公式 docs を貼り、失敗ケースを貼り、1 ステップずつ進めるだけで、同じ AI から返るコードの精度が体感で変わる。今日 180 分はそれを実体験する場でもある。
             </div>
           </div>
         </div>
@@ -131,58 +137,96 @@
             <span class="timeline-time">1限 後半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>自分の過去 PR にセルフレビューを入れる — GitHub UI と <code>gh pr review</code></h3>
+          <h3>Leaflet + OpenStreetMap で地図を描画 → 天王寺を初期表示する最小コード</h3>
           <div class="timeline-body">
-            <p><strong>振り返る PR を 1 本選ぶ（10分）</strong></p>
+            <p><strong>最小ファイル構成を作る（10分）</strong></p>
             <ul>
-              <li>進級制作リポジトリの GitHub ページ → <strong>Pull requests タブ → State: closed</strong> で過去のマージ済み PR を一覧表示</li>
-              <li>その中から、今日 1 本だけ深くレビューする PR を選ぶ。選び方の目安:
-                <ul>
-                  <li><strong>第5〜8回</strong>あたりで自分が書いた PR（4 月直後よりも、ある程度規模が育ったもの）</li>
-                  <li>diff が<strong>50 行 〜 200 行</strong>程度（多すぎず、少なすぎず）</li>
-                  <li>「動かすことだけ考えて、後で見直したい」と感じていた PR があれば最優先</li>
-                </ul>
-              </li>
-              <li>該当 PR がない人は、<code>git log --oneline --since="2 weeks ago" | head -20</code> で最近のコミットから 1 本選び、ローカルで <code>git diff &lt;commit&gt;^ &lt;commit&gt;</code> を眺めて代替する</li>
-            </ul>
-            <p><strong>GitHub UI で inline comment を付ける（25分）</strong></p>
-            <ul>
-              <li>選んだ PR を開いて <strong>Files changed タブ</strong>へ。一次出典: <a href="https://docs.github.com/ja/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-proposed-changes-in-a-pull-request" target="_blank" rel="noopener">GitHub Docs ja — プルリクエストで提案された変更をレビューする</a></li>
-              <li>diff の左端の <strong>行番号にマウスを乗せると現れる「＋」アイコン</strong>をクリックして、その行にコメントを付ける。複数行をまとめてコメントしたい場合は、開始行の「＋」をドラッグして範囲選択</li>
-              <li>1 つだけ送るときは <strong>Add single comment</strong>、まとめてレビューにする場合は <strong>Start a review</strong> ボタンで保留 → 全部書き終わったら <strong>Finish your review</strong> から <strong>Comment</strong> を選んで送信</li>
-              <li>観点リスト（自分への 4 つの問い・1 行ごとに当てる）:
-                <ul>
-                  <li><strong>命名</strong>: 変数名・関数名は、今の自分が見ても 1 秒で意図がわかるか</li>
-                  <li><strong>責務</strong>: この関数 / コミットは「<strong>1 つのこと</strong>」だけをやっているか（複数の変更が混ざっていないか）</li>
-                  <li><strong>テスト</strong>: この変更は<strong>テストで守られているか</strong>（第7回で書いたテストの守備範囲に入っているか）</li>
-                  <li><strong>過剰な装飾</strong>: コメント・try-catch・抽象化が、今の文脈で<strong>必要な分</strong>か（過剰なら削れる）</li>
-                </ul>
-              </li>
-              <li>最低 <strong>3 件</strong> 付ける。「特に問題はないが今ならこう書く」も立派なコメント。<strong>自分の言葉で 1 行</strong>でよい</li>
-              <li>1 件は<strong>意図的に「Conventional Comments」のラベル</strong>を付けてみる。一次出典: <a href="https://conventionalcomments.org/" target="_blank" rel="noopener">Conventional Comments</a>。公式の主要ラベル: <code>praise:</code>（賞賛）/ <code>nitpick:</code>（細かい好み）/ <code>suggestion:</code>（具体的な代案）/ <code>question:</code>（質問）/ <code>issue:</code>（問題提起）/ <code>thought:</code>（思考の共有）/ <code>chore:</code>（雑務）。1 件付けるだけで、<strong>「指摘の重さ」が読み手に伝わる</strong>感覚が掴める</li>
-            </ul>
-            <p><strong><code>gh pr review</code> でターミナルからレビューする（15分）</strong></p>
-            <ul>
-              <li>GitHub CLI を使うと、Codespaces のターミナルから直接 PR レビューが送れる。一次出典: <a href="https://cli.github.com/manual/gh_pr_review" target="_blank" rel="noopener">gh CLI manual — <code>gh pr review</code></a></li>
-              <li>UI で書いた感覚を踏まえて、今度はターミナルから 1 件だけ短いレビューを送ってみる:
-                <pre><code># 直前にレビューした PR 番号を指定
-gh pr review &lt;PR番号&gt; --comment --body "セルフレビュー: 命名と責務を中心に見直し。詳細は inline コメント参照。"
+              <li>進級制作リポジトリのルートに新しいディレクトリ <code>map-week09/</code> を作って、その中に <strong>2 ファイルだけ</strong>: <code>index.html</code> と <code>app.js</code></li>
+              <li>意図: 進級制作リポジトリ本体に直接組み込むより、まず<strong>独立した最小サンプル</strong>として動かす方が、第10回以降の SDD 実践プロジェクトで本体に統合するときに「動作確認済みの参照実装」を持っていける</li>
+              <li><code>index.html</code> の最低限のヘッダ（CDN は Leaflet 公式 Quick Start から逐語コピー）:
+                <pre><code>&lt;link rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin="" /&gt;
+&lt;script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""&gt;&lt;/script&gt;
 </code></pre>
               </li>
-              <li>主なフラグ（公式 manual より）:
+              <li><code>integrity</code> 属性は<strong>改ざん検知</strong>（Subresource Integrity）。Leaflet 公式 Quick Start からそのままコピーするのが正解。AI に書かせるとハッシュ値を捏造することがあるので<strong>必ず公式から貼る</strong>（4 作法 ② の典型例）</li>
+              <li><code>body</code> には<strong>地図を描く箱</strong>と <code>app.js</code> の読み込みだけ:
+                <pre><code>&lt;div id="map" style="height: 480px;"&gt;&lt;/div&gt;
+&lt;script src="app.js"&gt;&lt;/script&gt;
+</code></pre>
+              </li>
+              <li><strong>地雷</strong>: <code>#map</code> に <strong>高さ（height）を指定しないと地図が見えない</strong>（Leaflet の必須要件）。初心者の「動かない」報告の半分がこれ。今日は明示的に <code>style="height: 480px;"</code> を書く</li>
+            </ul>
+            <p><strong><code>agy</code> に 4 作法でプロンプトを投げて <code>app.js</code> を生成（15分）</strong></p>
+            <ul>
+              <li>Codespaces のターミナルで <code>cd map-week09 &amp;&amp; agy</code> を起動</li>
+              <li>4 作法を全部入れたプロンプトの最小例:
+                <pre><code># 完成イメージ
+ブラウザで index.html を開くと、大阪市天王寺区
+(緯度 34.6435, 経度 135.5132) を中心にした地図が
+ズームレベル 14 で表示される。マーカーや fetch はまだ不要。
+
+# 公式 API (Leaflet Quick Start から抜粋)
+https://leafletjs.com/examples/quick-start/
+
+L.map('map').setView([51.505, -0.09], 13);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution: '&amp;copy; &lt;a href="https://www.openstreetmap.org/copyright"&gt;OpenStreetMap&lt;/a&gt;'
+}).addTo(map);
+
+# 失敗ケース
+なし (初回)
+
+# ステップ
+今は地図描画だけ。fetch / marker / popup はまだ書かない。
+依頼: 上記の公式サンプルを大阪市天王寺区 (34.6435, 135.5132)
+に置き換えた app.js を作ってください。
+</code></pre>
+              </li>
+              <li>期待される生成物（<code>app.js</code>）:
+                <pre><code>const map = L.map('map').setView([34.6435, 135.5132], 14);
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  maxZoom: 19,
+  attribution:
+    '&amp;copy; &lt;a href="https://www.openstreetmap.org/copyright"&gt;OpenStreetMap&lt;/a&gt;'
+}).addTo(map);
+</code></pre>
+              </li>
+              <li>AI が一発で動かないときの典型対処:
                 <ul>
-                  <li><code>--comment</code> / <code>-c</code> — Comment 型のレビューを送る</li>
-                  <li><code>--approve</code> / <code>-a</code> — Approve（通常、自分の PR には送れない）</li>
-                  <li><code>--request-changes</code> / <code>-r</code> — Request changes（通常、自分の PR には送れない）</li>
-                  <li><code>--body "..."</code> — 全体コメント本文をインラインで指定</li>
-                  <li><code>--body-file &lt;file&gt;</code> — ファイルから本文を読み込む（長文を渡すとき便利）</li>
+                  <li>integrity ハッシュが書き換わっていた → Leaflet 公式 Quick Start から<strong>再コピー</strong>（4 作法 ②）</li>
+                  <li><code>#map</code> に height が無い → <strong>CSS で高さ指定</strong>（前項の地雷）</li>
+                  <li><code>L is not defined</code> → <code>leaflet.js</code> の読み込みが <code>app.js</code> より後ろ → <strong>script タグの順序</strong>を直す</li>
                 </ul>
               </li>
-              <li>動作確認: GitHub の PR ページに戻ると、ターミナルから送った Comment 型レビューが反映されていることを目視で確認</li>
-              <li>UI / CLI の<strong>使い分け</strong>: inline comment（特定行の指摘）は UI、レビュー全体のサマリーや bot 連携は CLI、というのが現場の感覚</li>
+            </ul>
+            <p><strong>Codespaces でローカルプレビューする（15分）</strong></p>
+            <ul>
+              <li>ターミナルで <code>python3 -m http.server 8000</code>（<code>map-week09/</code> ディレクトリで実行）</li>
+              <li>Codespaces の「ポート」タブ → <strong>「エディターでプレビュー」</strong>（画面アイコン） → Simple Browser で <code>http://localhost:8000/index.html</code> を開く</li>
+              <li><strong>「ブラウザーで開く」</strong>（地球儀アイコン）は外部ブラウザで Simple Browser ではない。学校環境では Simple Browser 側で確認する</li>
+              <li>地図が表示されたら、マウスでドラッグ・スクロールでズームを試す。<strong>右下に OpenStreetMap の attribution が出ていること</strong>を必ず確認する（OSM Tile Usage Policy の必須要件）</li>
+              <li>動かないときは <strong>F12 で DevTools を開いて Console と Network タブ</strong>を確認。エラーがあればそれをそのまま <code>agy</code> に貼って 4 作法 ③ で直してもらう</li>
+            </ul>
+            <p><strong>初期表示の緯度経度を自分の好きな地点に差し替える（10分）</strong></p>
+            <ul>
+              <li>緯度経度を取る素朴な方法:
+                <ul>
+                  <li><strong>OpenStreetMap.org</strong> で右クリック → 「住所を表示」 → URL に <code>?mlat=...&amp;mlon=...</code> が入る</li>
+                  <li><strong>Google マップ</strong>で右クリック → 一番上の数字（例: <code>34.6435, 135.5132</code>）をクリックでコピー</li>
+                </ul>
+              </li>
+              <li>取った緯度経度を <code>setView([lat, lon], zoom)</code> の第 1 引数に渡して、初期表示を「学校 / 自宅最寄り駅 / 好きな観光地」に差し替えてみる</li>
+              <li>「<strong>住所を入れたら自動で緯度経度が取れたら楽だな</strong>」という<strong>動機の生成</strong>が、ここでの教育上の狙い。次の 2 限前半で「それがジオコーディングです」と接続する</li>
             </ul>
             <div class="lesson-tip">
-              <strong>「Comment / Approve / Request changes」は不可逆ではない:</strong> Approve / Request changes は<strong>後から取り消し（Dismiss）や上書き</strong>ができる（公式 ja docs <a href="https://docs.github.com/ja/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/dismissing-a-pull-request-review" target="_blank" rel="noopener">「PR レビューを却下する」</a>参照）。最初から正解を選ぶ必要はない。本授業のセルフレビューでは <strong>Comment</strong> から入って、感覚を掴んだら他のレビュー（後期や進級制作の他人レビュー）で使い分けていく。
+              <strong>OpenStreetMap タイルは教育デモ規模なら使ってよい:</strong> OSMF の <a href="https://operations.osmfoundation.org/policies/tiles/" target="_blank" rel="noopener">Tile Usage Policy</a> は<strong>「学習のための対話的閲覧」を許可</strong>し、<strong>attribution の表示・大量取得の禁止・独自 User-Agent 設定（本番アプリ）</strong>を求める。授業内デモは許容範囲だが、進級制作を実運用するなら<strong>本格運用前に Policy を読み返し</strong>、規模が出てきたら MapTiler / Stamen / Carto などの<strong>タイル供給サービス契約</strong>に移ることを覚えておく。
             </div>
           </div>
         </div>
@@ -199,58 +243,127 @@ gh pr review &lt;PR番号&gt; --comment --body "セルフレビュー: 命名と
             <span class="timeline-time">2限 前半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>同じ PR に <code>agy</code> でレビューを依頼 → 人間レビューと比較する</h3>
+          <h3>Open-Meteo Geocoding API で地名 → 緯度経度を取得 → Marker をその地点に立てる</h3>
           <div class="timeline-body">
-            <p><strong>Antigravity CLI（<code>agy</code>）にレビューを依頼（20分）</strong></p>
+            <p><strong>ジオコーディングとは何か（10分）</strong></p>
             <ul>
-              <li>進級制作リポジトリのルートで <code>agy</code> を起動</li>
-              <li>1 限後半でレビューした PR 番号 / コミット範囲を伝えて、レビューを依頼。プロンプト例:
-                <pre><code>@.git/HEAD と PR #&lt;番号&gt; に対応するコミット範囲 &lt;ベース&gt;..&lt;先端&gt; の diff を読んで、
-レビューしてください。次の観点を含め、気になる点を最大 5 つ挙げてください。
-- 命名（変数名・関数名・ファイル名の意図の通りやすさ）
-- 責務（1 つのコミット / 関数が複数の役割を持っていないか）
-- テスト（変更がテストで守られているか・テストが必要に見えるが書かれていない箇所はあるか）
-- 過剰な装飾（不要な抽象化・防御的コード・コメント）
-- セキュリティ（機密情報の混入・入力検証の欠落）
-
-各指摘は次の3点で書いてください。
-1) ファイル名:行番号  2) 問題  3) 修正の方向性
+              <li>定義:
+                <ul>
+                  <li><strong>Forward geocoding</strong>: 地名 / 住所 → 緯度経度（今日扱う）</li>
+                  <li><strong>Reverse geocoding</strong>: 緯度経度 → 地名 / 住所（今日扱わない・進級制作で扱いたい人は宿題）</li>
+                </ul>
+              </li>
+              <li>「住所→緯度経度の辞書」は<strong>誰かが集めて公開している</strong>: OpenStreetMap / GeoNames / Google / Mapbox など</li>
+              <li>本日採用する <strong>Open-Meteo Geocoding API</strong> の前提:
+                <ul>
+                  <li>データ源は <strong>GeoNames</strong>（CC-BY ライセンス）</li>
+                  <li><strong>API キー不要・非商用無料・<code>language=ja</code> で日本語名対応</strong></li>
+                  <li>同プロバイダの <strong>Forecast API と組み合わせる前提で設計</strong>されている（学生リクエストの「Open-Meteo に使う位置情報をジオコードで取る」に直接マッチ）</li>
+                </ul>
+              </li>
+              <li>「<strong>なぜ Nominatim ではなく Open-Meteo Geocoding か</strong>」を 1 行ずつ:
+                <ul>
+                  <li>Nominatim は OSM 公式ジオコーダーだが、Usage Policy が厳しい（1 req/sec 上限・独自 User-Agent 必須・高頻度利用は自前サーバー推奨）。<strong>ボタン連打すると簡単に弾かれる</strong></li>
+                  <li>Open-Meteo Geocoding は<strong>「Open-Meteo に位置情報を渡すための地名検索」として設計</strong>されており、本日のスコープに自然に収まる</li>
+                  <li>進級制作を本格的に運用するなら、<strong>商用本格運用なら Mapbox / Google / HERE</strong> を比較対象に入れる（料金・SLA・候補リスト UX を比べる）</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>curl で生のレスポンスを観察する（10分）</strong></p>
+            <ul>
+              <li>JS を書く前に、まず<strong>素の API レスポンス</strong>を見て JSON 構造を把握する。これが <strong>4 作法 ② の現場感覚</strong>を養う基礎</li>
+              <li>ターミナルで:
+                <pre><code>curl 'https://geocoding-api.open-meteo.com/v1/search?name=大阪市天王寺区&count=3&language=ja' | jq
 </code></pre>
               </li>
-              <li>応答が長すぎる場合は「<strong>上位 3 件に絞って</strong>」と追加依頼。短すぎる場合は「<strong>テストの観点を追加で</strong>」と観点を限定して再依頼</li>
-              <li>応答結果を <code>docs/code-review-week09.md</code>（新規 OK）に貼り付けて保存。あとで本人レビューと比較する材料にする</li>
-              <li>注意: <code>agy</code> の応答は<strong>「ありそうな指摘」</strong>を返してくることがある（実際にはコード上に存在しないファイル名や行番号、空想の関数名）。必ず<strong>応答を読み終えた直後に</strong>、各指摘を<strong>該当行が実在するか</strong>自分で 1 件ずつ確認する。実在しなければ「<strong>幻覚（hallucination）</strong>」として印を付けて除外する</li>
-            </ul>
-            <p><strong>3 列で並べる（20分）</strong></p>
-            <ul>
-              <li>Google ドキュメントまたは <code>docs/code-review-week09.md</code> に、3 列の表を作る:
+              <li>観察ポイント:
                 <ul>
-                  <li>列 A: <strong>人間（自分）だけが見つけた指摘</strong></li>
-                  <li>列 B: <strong>AI（<code>agy</code>）だけが見つけた指摘</strong></li>
-                  <li>列 C: <strong>両方が一致した指摘</strong></li>
+                  <li><code>results</code> 配列に <code>id</code> / <code>name</code> / <code>latitude</code> / <code>longitude</code> / <code>country</code> / <code>country_code</code> / <code>population</code> / <code>feature_code</code> / <code>admin1</code> / <code>postcodes</code> 等が入る</li>
+                  <li>候補が 0 件のときは <strong><code>results</code> キー自体が無い</strong>（= <code>undefined</code>）。ここを見落とすと <code>data.results[0]</code> で <code>TypeError</code></li>
+                  <li><code>language=ja</code> を入れると<strong>日本語名</strong>がヒットする（市・区・町名は ja 表記に最適化）</li>
+                  <li><code>count</code> を 3 にすると複数候補が見られる（同名地名の曖昧性が体感できる）</li>
                 </ul>
               </li>
-              <li>2 つのレビューを 1 件ずつ突き合わせて分類。突き合わせのコツ:
+              <li>「Open-Meteo Geocoding API docs」を 1 タブ開いておく（次のプロンプトに貼る）。一次出典: <a href="https://open-meteo.com/en/docs/geocoding-api" target="_blank" rel="noopener">Open-Meteo — Geocoding API docs</a></li>
+            </ul>
+            <p><strong><code>agy</code> にジオコード処理を実装させる（20分）</strong></p>
+            <ul>
+              <li>4 作法を全部入れたプロンプト例:
+                <pre><code># 完成イメージ
+index.html に入力欄とボタン (「この地点を表示」) を追加。
+入力欄に地名を入れてボタンを押すと、
+地図がその地点にズームし Marker が立って
+popup に「ヒット名 (国名)」が表示される。
+
+# 公式 API (Open-Meteo Geocoding 抜粋)
+GET https://geocoding-api.open-meteo.com/v1/search?name=NAME&count=1&language=ja
+レスポンス (抜粋):
+{
+  "results": [
+    { "id": ..., "name": "天王寺区",
+      "latitude": 34.6435, "longitude": 135.5132,
+      "country": "日本", "country_code": "JP" }
+  ]
+}
+results が無いケースあり (該当なし)。
+
+# 失敗ケース
+なし (これは新規追加)
+
+# ステップ
+1) index.html に &lt;input id="q"&gt; と &lt;button id="go"&gt; を追加
+2) app.js にクリックハンドラ
+3) fetch して results[0] の latitude/longitude/name/country を取り出す
+4) setView + L.marker + bindPopup
+5) 2 回目以降は前のマーカーを remove してから新しいマーカーを置く
+</code></pre>
+              </li>
+              <li>期待される生成物（<code>app.js</code> に追記）:
+                <pre><code>let marker = null;
+
+document.getElementById('go').addEventListener('click', async () =&gt; {
+  const name = document.getElementById('q').value.trim();
+  if (!name) return;
+
+  const url =
+    'https://geocoding-api.open-meteo.com/v1/search'
+    + '?name=' + encodeURIComponent(name)
+    + '&amp;count=1&amp;language=ja';
+
+  const res = await fetch(url);
+  const data = await res.json();
+
+  if (!data.results || data.results.length === 0) {
+    alert('見つかりませんでした: ' + name);
+    return;
+  }
+
+  const hit = data.results[0];
+  map.setView([hit.latitude, hit.longitude], 13);
+
+  if (marker) marker.remove();
+  marker = L.marker([hit.latitude, hit.longitude])
+    .addTo(map)
+    .bindPopup(hit.name + ' (' + hit.country + ')')
+    .openPopup();
+});
+</code></pre>
+              </li>
+              <li>動作確認: 「大阪市天王寺区」「東京駅」「札幌」「自分の自宅最寄り駅」を順に入れて、ピンが正しい位置に立つかを目視する</li>
+            </ul>
+            <p><strong>失敗を起こして 4 作法 ③ を実演する（10分）</strong></p>
+            <ul>
+              <li>意図的に失敗させて、再現手順を <code>agy</code> に渡す体験をする:
                 <ul>
-                  <li>「同じファイルの同じ行」ではなく<strong>「指摘の主旨」</strong>で一致を判定する。表現が違っても、同じ問題を指していれば C 列</li>
-                  <li>AI の指摘で「実在しない行」を指していたら、B 列の末尾に <strong>「幻覚」</strong>とラベルを付けて記録する（消さない・印象に残るので）</li>
+                  <li>存在しない地名（例: <code>ahkjsdh</code>） → alert が出ること・コンソールに何が出ているかを観察</li>
+                  <li>「大阪」だけを <code>count=5</code> で叩く → 大阪市・大阪府・大阪城などが返って「最初の 1 件」が必ずしも意図と一致しないことを観察</li>
                 </ul>
               </li>
-              <li>各列の<strong>件数</strong>を数える。「自分 N 件 / AI M 件 / 一致 K 件 / うち幻覚 H 件」</li>
-            </ul>
-            <p><strong>気づきを言語化する（10分）</strong></p>
-            <ul>
-              <li>下の 3 つの問いに、<code>docs/code-review-week09.md</code> に 1〜2 行ずつメモする:
-                <ol>
-                  <li><strong>AI だけが見つけた指摘は、なぜ自分は見落としたか</strong>（例: 「網羅的に見るのが苦手」「セキュリティ観点を持っていなかった」）</li>
-                  <li><strong>自分だけが見つけた指摘は、なぜ AI には見えなかったか</strong>（例: 「プロジェクトの歴史的経緯を知っているのは自分だけ」「進級制作の目的に関わる判断」）</li>
-                  <li><strong>幻覚は何件あったか・どんな種類か</strong>（例: 「存在しない関数名を提案してきた」「無い行番号を指してきた」）</li>
-                </ol>
-              </li>
-              <li>これが第10回からの SDD 実践プロジェクトで<strong>「どこを AI に任せ、どこを自分で見るか」</strong>の判断材料になる</li>
+              <li>2 つ目の体験から「<strong>地名が曖昧なときの UX</strong>」（候補リスト UI）を発展課題に回せることが分かる。今日は「最初の 1 件で進める」割り切り</li>
+              <li>「曖昧なときの UX」を<strong>その場で AI に丸投げする</strong>と、想像で UI を生成し始める。これが 4 作法 ① 「完成イメージを先に」を守らなかった場合の失敗の典型。割り切りを宣言してから実装に進む方が、結果として速い</li>
             </ul>
             <div class="lesson-tip">
-              <strong>幻覚は欠陥ではなく特徴:</strong> AI レビューには一定の確率で実在しない指摘が混ざる。これは現時点の LLM の特徴であって、消し方ではなく<strong>「自分が必ず検証する」</strong>運用で乗り越える。<strong>「AI のレビューを最終結論にしない」</strong>のが、責任あるコードを書く側のラインになる。
+              <strong>「最初の 1 件で進める」は技術的な妥協ではなく、設計の意思決定:</strong> 候補リスト UI は「やる価値がある機能」だが、180 分の中では「やらない」と決める。<strong>「やらないことを明示する」</strong>のも進級制作の設計力。決めた割り切りは <code>docs/</code> に ADR として残しておくと、第10回以降の SDD 実践プロジェクトで再評価できる。
             </div>
           </div>
         </div>
@@ -260,51 +373,100 @@ gh pr review &lt;PR番号&gt; --comment --body "セルフレビュー: 命名と
             <span class="timeline-time">2限 後半</span>
             <span class="timeline-duration">約30分</span>
           </div>
-          <h3>建設的なレビューコメントの書き方 — Google eng-practices と Conventional Comments</h3>
+          <h3>Open-Meteo Forecast API で天気を取得 → Popup に組み込んで完成</h3>
           <div class="timeline-body">
-            <p><strong>「指摘」と「攻撃」の境目（10分）</strong></p>
+            <p><strong>Forecast API の最小利用を curl で確認（10分）</strong></p>
             <ul>
-              <li>一次出典: <a href="https://google.github.io/eng-practices/review/reviewer/comments.html" target="_blank" rel="noopener">Google eng-practices — How to write code review comments</a></li>
-              <li>公式の要点を 3 つだけ持ち帰る:
+              <li>2 限前半と同じく、まず<strong>素の JSON</strong>を観察する:
+                <pre><code>curl 'https://api.open-meteo.com/v1/forecast?latitude=34.6435&longitude=135.5132&current=temperature_2m,weather_code' | jq
+</code></pre>
+              </li>
+              <li>観察ポイント:
                 <ul>
-                  <li><strong>Be kind</strong>（親切に）— 公式の項目名は <em>"Be kind."</em>（1 語のサマリー）。本文では「コードへの厳しさはよいが、書き手の人格への厳しさにしない」という趣旨で展開されている</li>
-                  <li><strong>Explain your reasoning</strong>（理由を説明する）— なぜそう指摘するのかを 1 行添える</li>
-                  <li><strong>Provide guidance</strong>（手がかりを提供する）— 「これは間違い」だけで止めず、「こうすると良い」「ここを読むと参考になる」を添える</li>
+                  <li><code>current</code> フィールドに <code>temperature_2m</code>（地上 2m の気温・摂氏）と <code>weather_code</code>（WMO 標準の天気コード・整数）が入る</li>
+                  <li><code>weather_code</code> は <strong>WMO Weather interpretation codes</strong>: 0=快晴 / 1〜3=晴れ〜曇り / 45〜48=霧 / 51〜67=雨 / 71〜86=雪 / 95〜99=雷雨 等。詳細表は Open-Meteo docs の下部にある</li>
+                  <li>API キー不要・非商用無料</li>
                 </ul>
               </li>
-              <li>セルフレビューでも同じ原則が効く。<strong>「過去の自分」を責めない</strong>。原因を理解して、次の PR で直すための言葉にする</li>
+              <li>一次出典: <a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener">Open-Meteo — Weather Forecast API docs</a></li>
             </ul>
-            <p><strong>Conventional Comments の 7 ラベルを1 周（10分）</strong></p>
+            <p><strong>天気を Popup に組み込む（15分）</strong></p>
             <ul>
-              <li>一次出典: <a href="https://conventionalcomments.org/" target="_blank" rel="noopener">Conventional Comments</a></li>
-              <li>公式が定義する<strong>コア 7 ラベル</strong>を順に眺める（このほかに <code>typo:</code> / <code>polish:</code> / <code>quibble:</code> 等の追加ラベルも公式で提示されているが、本授業はコア 7 つに絞る）:
-                <ul>
-                  <li><code>praise:</code> — 賞賛。「ここは良い」を明示する。レビューはダメ出しだけになりがちなので、意識的に 1 件入れる</li>
-                  <li><code>nitpick:</code> — 細かい好み。「マージを止めるほどではないが気になる」を明示する</li>
-                  <li><code>suggestion:</code> — 具体的な代案。「こう書くのはどう？」</li>
-                  <li><code>issue:</code> — 問題提起。「これは修正が必要」と明示する</li>
-                  <li><code>question:</code> — 質問。「ここはなぜ？」と意図を尋ねる</li>
-                  <li><code>thought:</code> — 思考の共有。「これは判断材料に過ぎない」</li>
-                  <li><code>chore:</code> — 雑務。「フォーマット直して」「typo」など軽い指摘</li>
-                </ul>
+              <li>4 作法プロンプト例:
+                <pre><code># 完成イメージ
+2 限前半のジオコード結果に加えて、popup に
+「ヒット名 / 晴れ / 気温 22.4°C」のような表示を追加する。
+
+# 公式 API (Open-Meteo Forecast 抜粋)
+GET https://api.open-meteo.com/v1/forecast?latitude=LAT&longitude=LON&current=temperature_2m,weather_code
+レスポンス (抜粋):
+{
+  "latitude": 34.64, "longitude": 135.51,
+  "current": {
+    "time": "2026-06-11T10:00",
+    "temperature_2m": 22.4,
+    "weather_code": 1
+  }
+}
+weather_code は WMO 標準: 0=快晴 1=晴れ 2=一部曇り 3=曇り
+45=霧 51=霧雨 61=雨 71=雪 95=雷雨 など。
+
+# 失敗ケース
+なし (これは新規追加)
+
+# ステップ
+1) fetchWeather(lat, lon) 関数を追加
+2) weather_code を日本語化する WMO_TEXT 辞書を作る
+3) クリックハンドラの marker 設置直前で await fetchWeather
+4) popup の HTML を組み立てる
+</code></pre>
               </li>
-              <li>修飾子（公式の <strong>Decorations</strong> カテゴリ）: <code>(non-blocking)</code> — マージを止めない指摘 / <code>(blocking)</code> — マージを止める指摘 / <code>(if-minor)</code> — 軽微なら任意。例: <code>suggestion (non-blocking):</code></li>
-              <li>1 限後半でラベル付きで送った 1 件と、他のコメントを並べて読み比べ。<strong>ラベル付きの方が読み手の負担が軽い</strong>ことを実感する</li>
+              <li>期待される生成物（<code>app.js</code> に追記）:
+                <pre><code>async function fetchWeather(lat, lon) {
+  const url =
+    'https://api.open-meteo.com/v1/forecast'
+    + '?latitude=' + lat + '&amp;longitude=' + lon
+    + '&amp;current=temperature_2m,weather_code';
+  const res = await fetch(url);
+  const data = await res.json();
+  return data.current; // { time, temperature_2m, weather_code, ... }
+}
+
+const WMO_TEXT = {
+  0: '快晴', 1: '晴れ', 2: '一部曇り', 3: '曇り',
+  45: '霧', 48: '着氷霧',
+  51: '霧雨', 53: '霧雨 (中)', 55: '霧雨 (強)',
+  61: '雨', 63: '雨 (中)', 65: '雨 (強)',
+  71: '雪', 73: '雪 (中)', 75: '雪 (強)',
+  80: 'にわか雨', 81: 'にわか雨 (中)', 82: 'にわか雨 (強)',
+  95: '雷雨', 96: '雷雨と雹', 99: '雷雨と雹 (強)'
+};
+
+// クリックハンドラ内 (marker 設置の直前) を以下に差し替え:
+const w = await fetchWeather(hit.latitude, hit.longitude);
+const wText = WMO_TEXT[w.weather_code]
+  ?? ('天気コード ' + w.weather_code);
+
+if (marker) marker.remove();
+marker = L.marker([hit.latitude, hit.longitude])
+  .addTo(map)
+  .bindPopup(
+    '&lt;b&gt;' + hit.name + '&lt;/b&gt;&lt;br&gt;'
+    + wText + ' / 気温 ' + w.temperature_2m.toFixed(1) + '°C'
+  )
+  .openPopup();
+</code></pre>
+              </li>
+              <li>動作確認: 「大阪市天王寺区」「東京駅」「札幌」「那覇」を順に入れて、地点ごとに気温と天気が変わることを観察する</li>
             </ul>
-            <p><strong>第7回テストとの接続（5分・口頭）</strong></p>
+            <p><strong>動作確認と push（5分）</strong></p>
             <ul>
-              <li>レビューで「ここはテストが必要」と思った箇所が出てきたら、それは<strong>第7回 TDD のサイクル</strong>を 1 回追加で回す宿題に変換できる</li>
-              <li>具体的には: その箇所に対する Red テスト（壊れたら検出する最小ケース）を新規ブランチで書く → push して GitHub Actions で赤になることを確認 → 実装を補強して Green に戻す</li>
-              <li>レビューは「終わり」ではなく「次のサイクルの起点」。第10回以降の SDD 実践プロジェクトでも、レビュー指摘から TDD サイクルが立ち上がる流れを繰り返す</li>
-            </ul>
-            <p><strong>2 限の作業ログを <code>docs/code-review-week09.md</code> にまとめる（5分）</strong></p>
-            <ul>
-              <li>PR 番号 / 観点別の指摘件数 / 「AI だけ」「自分だけ」「一致」「幻覚」の件数 / 第10回に持ち越す自分の弱点 1〜2 個</li>
-              <li>commit メッセージ例: <code>docs(week09): セルフレビューと AI レビューの比較ログ</code></li>
-              <li>push する前に第8回で作った GitHub Actions が緑になることを確認</li>
+              <li>3 段階すべてが動いたら、進級制作リポジトリで新規ブランチ <code>map-week09</code> を切って push → PR を作る</li>
+              <li>第8回で作った <strong>GitHub Actions の test ジョブが緑になることを確認</strong>してから merge する。今日の追加分はテストが無いので green を阻害しないはず</li>
+              <li>「テスト無しで merge して大丈夫か」は<strong>第10回以降の SDD 実践プロジェクト</strong>で TDD を入れて整える。今日は「動く 1 ファイル HTML+JS の完成」までを正解とする</li>
             </ul>
             <div class="lesson-tip">
-              <strong>ラベルは「相手のため」より「自分のため」:</strong> 7 つのラベルから 1 つを選ぶこと自体が、「自分はこれを<strong>本当にマージを止めるほどの指摘</strong>と思っているのか」を自問する儀式になる。コメントを書く前に 1 秒だけ立ち止まる効果がある。
+              <strong>WMO 辞書は AI に作らせず自分で書く意味:</strong> WMO_TEXT 辞書を「AI に推測で作らせる」と<strong>存在しないコードや誤訳</strong>を入れがち。Open-Meteo docs に WMO Weather interpretation codes の<strong>正本テーブル</strong>があるので、そこを 1 度<strong>自分の目で読んでから</strong>辞書化する。これも 4 作法 ②（公式 API 仕様を貼り付ける）の応用。
             </div>
           </div>
         </div>
@@ -317,17 +479,25 @@ gh pr review &lt;PR番号&gt; --comment --body "セルフレビュー: 命名と
           <h3>振り返り＆次回予告</h3>
           <div class="timeline-body">
             <ul>
-              <li>今日のキーワード: <strong>セルフコードレビュー / Comment・Approve・Request changes / inline comment / <code>gh pr review</code> / AI レビューの幻覚 / Conventional Comments / Be kind・Explain reasoning・Provide guidance</strong></li>
-              <li>覚えてほしいこと: <strong>過去の自分は他人</strong>。今の自分でレビューすれば必ず学びが出る。AI レビューは観点の抜け漏れを補ってくれるが、<strong>幻覚を必ず自分で検証する</strong>のがレビューする側の責任</li>
+              <li>今日のキーワード: <strong>Leaflet / OpenStreetMap タイル / L.map・L.tileLayer・L.marker・L.popup / ジオコーディング / Open-Meteo Geocoding API / Open-Meteo Forecast API / WMO weather_code / Map ライブラリ選定の 3 層 / AI コーディング 4 作法</strong></li>
+              <li>覚えてほしいこと: <strong>地図は「ライブラリ × タイル × ジオコード」の組み合わせで成立する</strong>。Leaflet / Mapbox / Google Maps の違いは<strong>ライブラリ層</strong>の差で、タイル層・ジオコード層は別に選べる。<strong>AI に頼むときは 4 作法</strong>（完成イメージ先出し／公式 API 仕様の貼り付け／失敗ケースの再現手順／1 ステップずつ）で精度がはっきり変わる</li>
               <li>「責任あるコード」第3の具体例:
                 <ul>
-                  <li>自分の過去 PR を見直した = 「<strong>動いた後も自分の決定を検証する</strong>習慣の獲得」</li>
-                  <li>AI レビューを最終結論にしなかった = 「<strong>AI 出力の幻覚を検証する責任は自分にある</strong>」</li>
-                  <li>Conventional Comments を使った = 「<strong>指摘の重さを明示する</strong>=コミュニケーションに責任を持つ」</li>
+                  <li>公式 API docs を貼った（4 作法 ②）= <strong>AI の中の古い知識ではなく現時点の公式を信頼させる責任</strong></li>
+                  <li>失敗ケースの再現手順を渡した（4 作法 ③）= <strong>AI に推測で直させない責任</strong></li>
+                  <li>1 ステップずつ進めた（4 作法 ④）= <strong>動く中間状態の積み重ねで完成形を作る責任</strong></li>
                 </ul>
               </li>
-              <li>次回（第10回）: <strong>SDD 実践プロジェクト①：設計</strong>。今日見つけた「自分の弱点」を踏まえて、進級制作により大きな機能追加を <strong>Spec-Driven Development</strong> で始める。仕様書の作成（AI と協働）、テスト計画、ADR、Issue 分解までを進める</li>
-              <li>家での発展（任意）: 別の PR にもセルフレビューを 1 本入れてみる／第7回 TDD で書いたテストの<strong>守備範囲外</strong>を 1 箇所見つけてテストを足す／Conventional Comments の 7 ラベルを 1 週間使い切ってみる</li>
+              <li>次回（第10回）: <strong>SDD 実践プロジェクト①：設計</strong>。今日作った「Leaflet + ジオコード + 天気」の最小実装を<strong>進級制作本体に統合</strong>する、より大きな機能追加プロジェクトを Spec-Driven で始める。PRD（要求）・ADR（設計判断）・テスト計画・Issue 分解までを進める</li>
+              <li>家での発展（任意）:
+                <ol>
+                  <li><strong>Mapbox の登録手順を 1 つ調べる</strong>（アカウント作成 → アクセストークン発行 → 月間 map load 数の無料枠を確認）</li>
+                  <li><strong>候補リスト UX</strong> を 1 つ実装する（<code>count=5</code> で複数候補を取って <code>&lt;ul&gt;</code> に並べ、クリックで地図を切り替える）</li>
+                  <li><strong>取得結果のローカルストレージキャッシュ</strong>（同じ地名を 2 回目に検索したら API を叩かない）</li>
+                  <li><strong>Leaflet 2.0.0-alpha.1 のリリースノート</strong>を読んで 1.9.4 との違いを 1 行でメモ（2025-08-16 リリース、執筆時点で安定版は 1.9.4）</li>
+                  <li>（進度の早い人向け）<strong>今日の 1 ファイル HTML+JS を Vite + React に移植する第一歩</strong>。<code>npm create vite@latest</code> で React 雛形 → 地図描画コンポーネントを <code>useEffect</code> 内で初期化（Leaflet は DOM を直接触るので <code>useEffect</code> パターンが必要）。<strong>移植自体は第10回以降に検討</strong>するが、雛形だけ作っておくと議論の起点になる</li>
+                </ol>
+              </li>
             </ul>
           </div>
         </div>
@@ -341,36 +511,43 @@ gh pr review &lt;PR番号&gt; --comment --body "セルフレビュー: 命名と
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>自分の過去 PR 1 本にセルフレビューを送信</strong>
-            <p>授業で扱った PR に<strong>最低 3 件の inline comment</strong>と<strong>1 件の Comment 型レビュー</strong>を送る。inline comment のうち 1 件は Conventional Comments のラベル（<code>suggestion:</code> / <code>question:</code> / <code>praise:</code> 等）を付ける。送信後の PR ページの URL を <code>docs/code-review-week09.md</code> に記録。</p>
+            <strong>地図 + ジオコード + 天気 popup の最小実装を進級制作リポジトリに push</strong>
+            <p>授業で作った <code>map-week09/index.html</code> と <code>map-week09/app.js</code> を新規ブランチで push → PR を作って <strong>GitHub Actions の test ジョブが緑になることを確認</strong>してから merge。merge 後の PR URL を <code>docs/map-prompts-week09.md</code> に記録。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>AI レビューを <code>agy</code> に依頼して 3 列比較を完成</strong>
-            <p>同じ PR の diff を <code>agy</code> にレビューさせ、応答を <code>docs/code-review-week09.md</code> に貼る。「人間だけ / AI だけ / 一致 / 幻覚」の 4 件数を表に記録。<strong>幻覚があった場合は具体的にどんな指摘だったかを 1 行で書き残す</strong>。</p>
+            <strong>使ったプロンプトと AI の応答を <code>docs/map-prompts-week09.md</code> に記録</strong>
+            <p>1 限後半・2 限前半・2 限後半の 3 段階の<strong>成功プロンプト 1 つずつ</strong>と、<strong>失敗プロンプト 1 つ以上</strong>を貼って、<strong>どこが 4 作法のどれを守れていた／守れていなかったか</strong>を各 1 行で解説する。失敗プロンプトはあえて「いい感じに作って」のような曖昧なものを 1 回投げてみて、応答との差を観察すると教材になる。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>第10回に持ち越す「自分の弱点」を 1〜2 個メモ</strong>
-            <p><code>docs/code-review-week09.md</code> の末尾に「<strong>第10回 SDD 実践で意識すること</strong>」セクションを設けて、1〜2 個書く。例: 「テストの異常系を毎回忘れる」「関数の責務を 1 つに絞れない」「<code>GEMINI.md</code> に書いた制約を実装で踏み外す」。次回授業の冒頭で講師と共有する。</p>
+            <strong>第10回 SDD プロジェクトで進級制作に統合する機能を 1 行で書く</strong>
+            <p><code>docs/map-prompts-week09.md</code> の末尾に「<strong>第10回 SDD プロジェクトで進級制作に統合する Map 機能</strong>」セクションを設けて、自分の進級制作のテーマに照らして<strong>どこに地図を組み込むか</strong>を 1〜3 行で書く。例: 「観光地レビューアプリの『この店の場所』ボタン」「カフェ巡り日記の『行ったお店マップ』」「学校行事マップの『会場ピン』」。次回授業の冒頭で講師と共有する。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
-            <strong>レビューから 1 つだけ TDD サイクルに変換する</strong>
-            <p>セルフレビュー or AI レビューで「テストが必要」と判定した箇所を 1 つ選び、第7回 TDD のサイクルで Red → Green → Refactor を 1 回回して push。新規ブランチ → PR → Actions が緑になるまで。レビューがそのまま次のサイクルを生む流れを体験する。</p>
+            <strong>候補リスト UX を 1 つ実装する</strong>
+            <p>2 限前半で割り切った「最初の 1 件で進める」に対して、<code>count=5</code> で複数候補を取り、<code>&lt;ul&gt;</code> に並べてクリックで地図を切り替える UX を 1 つ実装する。AI に頼むときは 4 作法を守ること（完成イメージを先に貼って、応答を 1 ステップずつ確認する）。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
-            <strong>別の PR にもセルフレビューを 1 本</strong>
-            <p>第1〜8回のうち、まだ振り返っていない PR を 1 本選んで同じ手順を繰り返す。複数 PR を見ると「自分が毎回見落とすパターン」が露わになる。気づきを <code>docs/code-review-week09.md</code> に追記。</p>
+            <strong>Mapbox / Google Maps Platform の登録手順を 1 つ調べる</strong>
+            <p><code>docs/map-services-week09.md</code> を新規作成して、<strong>Mapbox か Google Maps Platform のいずれか</strong>について「アカウント作成 → API キー（アクセストークン）発行 → 無料枠の月間ロード数 / リクエスト数 → 商用利用条件」を 5〜10 行でまとめる。実際に登録までしなくてよい（公式 docs を読むだけで OK）。進級制作で本格運用したくなったとき、自分が即動ける状態を作っておく。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>取得結果をローカルストレージにキャッシュ</strong>
+            <p>同じ地名を 2 回目に検索したら API を叩かずに <code>localStorage</code> から取り出して即表示する。Open-Meteo Geocoding と Forecast のどちらに入れるかも自分で決める（Geocoding は不変なのでキャッシュしやすい、Forecast は時間で変わるので TTL が必要）。「キャッシュの設計判断」を <code>docs/map-prompts-week09.md</code> に追記。</p>
           </div>
         </div>
       </div>
@@ -379,16 +556,19 @@ gh pr review &lt;PR番号&gt; --comment --body "セルフレビュー: 命名と
     <div class="syllabus-section">
       <h2>参考リンク</h2>
       <ul>
-        <li><a href="https://docs.github.com/ja/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/about-pull-request-reviews" target="_blank" rel="noopener">GitHub Docs ja — プルリクエストのレビューについて</a> — Comment / Approve / Request changes の 3 種類の状態と inline comment の公式定義</li>
-        <li><a href="https://docs.github.com/ja/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/reviewing-proposed-changes-in-a-pull-request" target="_blank" rel="noopener">GitHub Docs ja — プルリクエストで提案された変更をレビューする</a> — Files changed タブから inline comment / Start a review / Finish your review の操作手順</li>
-        <li><a href="https://docs.github.com/ja/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/commenting-on-a-pull-request" target="_blank" rel="noopener">GitHub Docs ja — プルリクエストへのコメント</a> — 1 行 / 範囲選択コメント・提案ブロック（Suggested change）の使い方</li>
-        <li><a href="https://cli.github.com/manual/gh_pr_review" target="_blank" rel="noopener">gh CLI manual — <code>gh pr review</code></a> — ターミナルから PR レビューを送る公式フラグ一覧</li>
-        <li><a href="https://google.github.io/eng-practices/review/reviewer/standard.html" target="_blank" rel="noopener">Google eng-practices — The Standard of Code Review</a> — 「完璧ではなく全体のコードヘルス改善で承認する」基準の原典</li>
-        <li><a href="https://google.github.io/eng-practices/review/reviewer/comments.html" target="_blank" rel="noopener">Google eng-practices — How to write code review comments</a> — Be kind / Explain reasoning / Provide guidance の出典</li>
-        <li><a href="https://conventionalcomments.org/" target="_blank" rel="noopener">Conventional Comments</a> — 7 ラベル（praise / nitpick / suggestion / issue / question / thought / chore）と修飾子の正本</li>
-        <li><a href="https://antigravity.google/docs/cli-reference" target="_blank" rel="noopener">Antigravity CLI — CLI reference（公式）</a> — <code>agy</code> のスラッシュコマンド・引数一覧</li>
-        <li><a href="https://antigravity.google/docs/cli-getting-started" target="_blank" rel="noopener">Antigravity CLI — Getting Started（公式）</a> — CLI コマンド全体像の最初のページ。<code>cli-reference</code> が SPA で読みづらいときのフォールバックにも</li>
-        <li><a href="https://docs.github.com/ja/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/dismissing-a-pull-request-review" target="_blank" rel="noopener">GitHub Docs ja — PR レビューを却下する</a> — Approve / Request changes を後から取り消す Dismiss の公式手順</li>
+        <li><a href="https://leafletjs.com/" target="_blank" rel="noopener">Leaflet — 公式トップ</a> — 現在の安定版は 1.9.4。2.0.0-alpha.1 が 2025-08-16 にリリース済み（本日の授業は安定版 1.9.4 を採用）</li>
+        <li><a href="https://leafletjs.com/examples/quick-start/" target="_blank" rel="noopener">Leaflet — Quick Start Guide</a> — 本日 1 限後半の <code>L.map</code> / <code>L.tileLayer</code> / OSM タイル URL / attribution のサンプルの正本</li>
+        <li><a href="https://leafletjs.com/reference.html" target="_blank" rel="noopener">Leaflet — API Reference</a> — <code>L.marker</code> / <code>L.popup</code> / <code>bindPopup</code> / <code>setView</code> 等のメソッド・オプション一覧</li>
+        <li><a href="https://operations.osmfoundation.org/policies/tiles/" target="_blank" rel="noopener">OpenStreetMap Foundation — Tile Usage Policy</a> — OSM タイルを使うときの利用条件（attribution 必須・大量取得禁止・本番では独自 User-Agent 必須）の正本</li>
+        <li><a href="https://open-meteo.com/en/docs/geocoding-api" target="_blank" rel="noopener">Open-Meteo — Geocoding API docs</a> — 本日 2 限前半で使う地名→緯度経度の API。<code>name</code> / <code>count</code> / <code>language</code> / レスポンス JSON の正本</li>
+        <li><a href="https://open-meteo.com/en/docs" target="_blank" rel="noopener">Open-Meteo — Weather Forecast API docs</a> — 本日 2 限後半で使う現在の天気の API。<code>current=temperature_2m,weather_code</code> と WMO Weather interpretation codes の正本</li>
+        <li><a href="https://nominatim.org/release-docs/develop/api/Search/" target="_blank" rel="noopener">Nominatim — Search API docs</a> — 採用しなかった OSM 公式ジオコーダーの正本。本格運用検討時の比較対象</li>
+        <li><a href="https://operations.osmfoundation.org/policies/nominatim/" target="_blank" rel="noopener">OpenStreetMap Foundation — Nominatim Usage Policy</a> — Nominatim の Usage Policy（1 req/sec 上限・独自 User-Agent 必須・高頻度利用は自前サーバー推奨）の正本</li>
+        <li><a href="https://docs.mapbox.com/api/search/geocoding/" target="_blank" rel="noopener">Mapbox — Geocoding API docs</a> — 学生リクエスト「Mapbox の勉強」に応じる発展先。アクセストークン発行と無料枠の条件はここから辿る</li>
+        <li><a href="https://www.mapbox.com/pricing" target="_blank" rel="noopener">Mapbox — Pricing</a> — 月間 map load 数の無料枠と従量課金の正本</li>
+        <li><a href="https://developers.google.com/maps/documentation/javascript" target="_blank" rel="noopener">Google Maps Platform — JavaScript API docs</a> — 学生リクエスト「Google Maps の勉強」に応じる発展先。API キー発行はクレジットカード登録が前提</li>
+        <li><a href="https://mapsplatform.google.com/pricing/" target="_blank" rel="noopener">Google Maps Platform — Pricing</a> — 無料枠と従量課金の正本</li>
+        <li><a href="https://antigravity.google/docs/cli-reference" target="_blank" rel="noopener">Antigravity CLI — CLI reference（公式）</a> — 第8回から使っている <code>agy</code> のスラッシュコマンド・引数一覧</li>
       </ul>
     </div>
 
