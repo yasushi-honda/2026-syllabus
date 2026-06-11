@@ -40,7 +40,7 @@
     <div class="demo-cta">
       <p class="demo-cta__heading">🗺 この回の到達点を「動くデモ」で先に触る</p>
       <p class="demo-cta__body">
-        授業で組み立てる「<strong>Leaflet + Open-Meteo Geocoding + Open-Meteo Forecast</strong>」の最小実装を、1 ファイル HTML の動く MVP にしてあります。地名を入れて popup に天気が出るところまで、<strong>教材を読む前にブラウザで触ってみる</strong>と 180 分の到達点をイメージしやすくなります。
+        授業で組み立てる「<strong>Leaflet + Open-Meteo Geocoding + Open-Meteo Forecast</strong>」の最小実装を、1 ファイル HTML の動く MVP にしてあります。地名を入れて popup に天気が出るところまで、<strong>教材を読む前にブラウザで触ってみる</strong>と 180 分の到達点をイメージしやすくなります。<strong>1 限前半の冒頭（5 分）で教師が全員で体験する流れを設計済み</strong>。予習する場合もまずここで触ってから本文に進むと、後半 4 段階の積み上げが見えやすくなります。
       </p>
       <a href="week09-demo.html" class="demo-cta__link">→ 動くデモを開く</a>
     </div>
@@ -85,18 +85,38 @@
             <span class="timeline-time">1限 前半</span>
             <span class="timeline-duration">約40分</span>
           </div>
-          <h3>学生リクエストを設計に変換 → Map サービスの全体地図 → AI コーディング 4 作法</h3>
+          <h3>動くデモを先に触る → 学生リクエストを設計に変換 → Map サービスの全体地図 → AI コーディング 4 作法</h3>
           <div class="timeline-body">
-            <p><strong>学生リクエストを設計に変換する（10分）</strong></p>
+            <p><strong>動くデモを先に触る（5分）</strong></p>
+            <ul>
+              <li>教師が前面で <a href="week09-demo.html">第9回デモ MVP</a> を開いて、<strong>今日 180 分の到達点</strong>を全員で見る:
+                <ul>
+                  <li>初期表示で <code>Tennoji</code> の天気が popup に出る</li>
+                  <li>プリセット <code>Osaka</code> / <code>Tokyo</code> / <code>Sapporo</code> / <code>Naha</code> を押すと地図が移動して、地点ごとに天気が変わる</li>
+                  <li>入力欄に「<code>大阪市天王寺区</code>」「<code>東京駅</code>」と<strong>日本語名</strong>を入れて押すと「見つかりませんでした」エラーが出る（これも今日の体験ポイント = <code>language=ja</code> は結果表示の言語化のみ、検索クエリは英語/ローマ字必須）</li>
+                </ul>
+              </li>
+              <li>学生も各自 1〜2 分、公開 URL（<code>https://yasushi-honda.github.io/2026-syllabus/natural-language-dev/week09-demo.html</code>）をスマホ or Codespaces のブラウザで開いて、最低 1 地点ぶん触ってみる</li>
+              <li>教師の宣言: <strong>「今日 180 分でこれを 4 段階に分けて自分の手で作る」</strong>
+                <ol>
+                  <li>地図を描画する（1 限後半 50 分）</li>
+                  <li>地名 → 緯度経度 + マーカー（2 限前半 50 分）</li>
+                  <li>天気を popup に表示する（2 限後半 30 分）</li>
+                  <li>自分の進級制作に組み込む（家での発展 + 第10回以降の SDD 実践プロジェクト）</li>
+                </ol>
+              </li>
+              <li>狙い: <strong>「触って動くもの」を最初に見せる</strong>ことで、4 段階の積み上げに<strong>ゴールイメージ</strong>が生まれる。後半の AI コーディング 4 作法 ① <strong>「完成イメージを先に貼る」</strong>を AI に渡す前に、<strong>今日の授業自体が完成イメージから始まる</strong>ことに気づく（メタな実演）</li>
+            </ul>
+            <p><strong>学生リクエストを設計に変換する（5分）</strong></p>
             <ul>
               <li>事前に挙がった進級制作リクエスト: <strong>「開発をしたい」「Open-Meteo に使う位置情報をジオコードで取りたい」「Mapbox や Google Maps の勉強」「Map」「AI コーディングの正しい使い方」「React」</strong></li>
-              <li>今日 180 分で「触れる」もの・「持ち越す」ものを最初に宣言する:
+              <li>今日 180 分で「触れる」もの・「持ち越す」ものを宣言する（先ほどのデモで「触れる」側はもう全員が体験済み）:
                 <ul>
                   <li><strong>触れる</strong>: 地図描画（Leaflet） / ジオコード（Open-Meteo Geocoding） / 天気取得（Open-Meteo Forecast） / Mapbox・Google Maps の判断軸 / AI コーディング 4 作法</li>
                   <li><strong>持ち越す</strong>: Mapbox / Google Maps の<strong>登録手続き自体は授業時間中には行わない</strong>（各自宿題）／React への移行は<strong>第10回以降の SDD 実践プロジェクト</strong>の中で検討</li>
                 </ul>
               </li>
-              <li>狙い: 学生が <strong>「自分のリクエストが今日の 180 分にどう配置されているか」</strong>を最初に把握できる状態を作る。後半で「これは今日扱わない」と分かっていれば、置き去り感が出ない</li>
+              <li>「自分のリクエストが今日の 180 分にどう配置されているか」を最初に把握できる状態を作る。「これは今日扱わない」と分かっていれば、後半で置き去り感が出ない</li>
             </ul>
             <p><strong>Map サービスの全体地図（15分）</strong></p>
             <ul>
