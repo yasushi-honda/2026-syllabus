@@ -123,6 +123,76 @@
     .demo-popup-name { font-weight: 600; font-size: 1.05em; }
     .demo-popup-country { color: #555; font-size: 0.85em; margin-left: 0.3em; }
     .demo-popup-weather { margin-top: 0.3em; font-size: 0.95em; }
+
+    /* ソース表示エリア */
+    .demo-source { margin-top: 1.5rem; }
+    .demo-source details {
+      background: var(--c-bg-alt, #f2efe4);
+      border: 1px solid var(--c-border-strong, #c9c2ac);
+      border-radius: 6px;
+      padding: 0.8rem 1rem;
+    }
+    .demo-source summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--c-text, #1a1a2e);
+      font-size: 0.95rem;
+      user-select: none;
+    }
+    .demo-source summary:hover { color: #0a6e4b; }
+    .demo-source details[open] summary { margin-bottom: 0.8rem; }
+    .demo-source-toolbar {
+      display: flex;
+      gap: 0.5rem;
+      margin: 0.8rem 0;
+      flex-wrap: wrap;
+    }
+    .demo-source-btn {
+      display: inline-block;
+      padding: 0.5rem 0.95rem;
+      background: #0a6e4b; /* AA PASS 6.28:1 on #fff */
+      color: #fff;
+      text-decoration: none;
+      border: none;
+      border-radius: 4px;
+      font: 600 0.88rem 'Noto Sans JP', sans-serif;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .demo-source-btn:hover:not(:disabled) { background: #084f37; }
+    .demo-source-btn:disabled { background: #888; cursor: not-allowed; }
+    .demo-source-btn--secondary {
+      background: var(--c-surface, #fff);
+      color: var(--c-text, #1a1a2e);
+      border: 1px solid var(--c-border-strong, #c9c2ac);
+    }
+    .demo-source-btn--secondary:hover:not(:disabled) {
+      background: var(--c-bg-alt, #f2efe4);
+    }
+    .demo-source pre {
+      max-height: 520px;
+      overflow: auto;
+      background: #1a1a2e;
+      color: #f5f5dc;
+      padding: 1rem;
+      border-radius: 4px;
+      font: 0.82rem/1.55 'JetBrains Mono', monospace;
+      margin: 0;
+    }
+    .demo-source pre code {
+      white-space: pre;
+      background: transparent;
+      padding: 0;
+      color: inherit;
+      font-family: inherit;
+      font-size: inherit;
+    }
+    .demo-source-hint {
+      margin: 0 0 0.6rem;
+      font-size: 0.85rem;
+      color: var(--c-text-muted, #4a4a5e);
+      line-height: 1.65;
+    }
   </style>
 </head>
 <body>
@@ -187,9 +257,29 @@
         <a href="https://api.open-meteo.com/v1/forecast" target="_blank" rel="noopener">Open-Meteo Forecast API</a>（<code>current=temperature_2m,weather_code</code>） ·
         WMO weather_code 日本語辞書（96 = 雷雨と雹（少量）/ 99 = 雷雨と雹（多量）等）
         <br>
-        <strong>このデモのソース</strong>: <code>natural-language-dev/week09-demo.html</code>（1 ファイル / CSS+JS インライン）·
+        <strong>このデモのソース</strong>:
+        <a href="https://github.com/yasushi-honda/2026-syllabus/blob/main/natural-language-dev/week09-demo.html" target="_blank" rel="noopener"><code>natural-language-dev/week09-demo.html</code></a>
+        （1 ファイル / CSS+JS インライン、下の「📄 このページの HTML ソースを表示」セクションでページ内表示・コピー可）·
         <a href="week09.html">第9回の授業計画に戻る</a>
       </div>
+
+      <section class="demo-source">
+        <details>
+          <summary>📄 このページの HTML ソースを表示 (折りたたみを開く)</summary>
+          <p class="demo-source-hint">
+            このページの<strong>全 HTML ソース</strong>（CSS+JS インライン、約 350 行）をそのままページ内に表示します。<strong>コピー</strong>して自分の進級制作リポジトリの新規ファイル（例: <code>map-week09/index.html</code>）に貼り付けるとローカルでもすぐ動きます。
+            シンタックスハイライト・行番号・履歴・raw ダウンロードは「<strong>🐙 GitHub で開く</strong>」から GitHub の標準 UI でご覧いただけます。
+          </p>
+          <div class="demo-source-toolbar">
+            <button id="copy-source" type="button" class="demo-source-btn">📋 ソースをクリップボードにコピー</button>
+            <a href="https://github.com/yasushi-honda/2026-syllabus/blob/main/natural-language-dev/week09-demo.html"
+               target="_blank" rel="noopener" class="demo-source-btn">🐙 GitHub で開く (シンタックスハイライト・行番号)</a>
+            <a href="https://raw.githubusercontent.com/yasushi-honda/2026-syllabus/main/natural-language-dev/week09-demo.html"
+               target="_blank" rel="noopener" class="demo-source-btn demo-source-btn--secondary">📥 raw ファイル</a>
+          </div>
+          <pre><code id="source-code">折りたたみを開いた瞬間にソースが自動で読み込まれます…</code></pre>
+        </details>
+      </section>
     </div>
   </main>
 
@@ -342,6 +432,53 @@
 
     // 初期表示時に天王寺の天気を自動で 1 度取得
     lookup('Tennoji');
+
+    // ソース表示エリアの処理
+    const sourceCodeEl = document.getElementById('source-code');
+    const sourceDetails = document.querySelector('.demo-source details');
+    const copySourceBtn = document.getElementById('copy-source');
+    const copyOriginalLabel = copySourceBtn.textContent;
+
+    async function loadSource() {
+      try {
+        const res = await fetch(window.location.pathname);
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const text = await res.text();
+        sourceCodeEl.textContent = text;
+        sourceCodeEl.dataset.loaded = 'true';
+        return true;
+      } catch (err) {
+        sourceCodeEl.textContent =
+          'ソースの読み込みに失敗しました: ' + err.message
+          + '\n→ 上記の「🐙 GitHub で開く」または「📥 raw ファイル」から直接ご覧ください。';
+        return false;
+      }
+    }
+
+    sourceDetails.addEventListener('toggle', async (e) => {
+      if (!e.target.open) return;
+      if (sourceCodeEl.dataset.loaded === 'true') return;
+      await loadSource();
+    });
+
+    copySourceBtn.addEventListener('click', async () => {
+      if (sourceCodeEl.dataset.loaded !== 'true') {
+        const ok = await loadSource();
+        if (!ok) return;
+      }
+      try {
+        await navigator.clipboard.writeText(sourceCodeEl.textContent);
+        copySourceBtn.textContent = '✓ クリップボードにコピーしました';
+        copySourceBtn.disabled = true;
+        setTimeout(() => {
+          copySourceBtn.textContent = copyOriginalLabel;
+          copySourceBtn.disabled = false;
+        }, 2000);
+      } catch (err) {
+        alert('コピーに失敗しました: ' + err.message
+          + '\n→ 下のソース表示エリアを選択して ⌘+C / Ctrl+C でコピーしてください。');
+      }
+    });
   </script>
 </body>
 </html>
