@@ -41,7 +41,7 @@ natural-language-dev/   # 自然言語開発の各回詳細ページ
   week06.html           #   第6回 Spec-Driven Development入門
   week07.html           #   第7回 テスト駆動開発（TDD）基礎
   week08.html           #   第8回 ハーネスエンジニアリング入門
-  week09.html           #   第9回 中間レビュー＆コードレビュー実践
+  week09.html           #   第9回 進級制作で Map を使う：Leaflet × ジオコード × 天気 API
 ai-programming.html     # AI活用プログラミング基礎（木3・4限）※AIコミュ基礎と共通ベース
 ai-programming/         # AI活用プログラミング基礎の各回詳細ページ
   week01.html           #   第1回 オリエンテーション＆AIってなんだろう？
