@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第8回 自分のAIを使いこなす | AIコミュニケーション基礎</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication.html">AIコミュニケーション基礎</a>
+        <span>/</span>
+        <span>第8回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">自分のAIを<wbr>使いこなす</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 8</span>
+            <span class="page-badge">火曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">これまで投入した <strong>【学習データ①〜⑦】</strong> を「ただ溜めた」状態から「<strong>引っ張り出して使える</strong>」状態にする。<strong>NotebookLM の検索・参照機能</strong>——具体的には<strong>インライン引用</strong>（各回答に [1] [2] と付く番号）と<strong>ソース閲覧画面でのキーワード検索</strong>——を頼りに、AI の応答が<strong>どのソースのどこから来たか</strong>を辿る練習をする。さらに <strong>【学習データ⑧】課題解決フレームワーク資料</strong> を投入し、自分が今抱えている小さな課題を、自分のAIに整理させる個人演習に取り組む</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">過去情報の再利用 / NotebookLM の<strong>インライン引用</strong>（[1] [2] の番号） / 引用クリックで該当箇所にジャンプ / ソース閲覧画面でのキーワード検索 / 自分のAIに整理させる個人演習 / 課題解決フレームワーク（5W1H / PDCA / KPT / SMART） / 【学習データ⑧】課題解決フレームワーク資料</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第7回までに <strong>【学習データ①〜⑦】</strong> を投入した「自分だけのAI」（NotebookLM）・Google ドキュメントが使える状態・自分が今<strong>少しだけ気になっている課題</strong>（学習でも・生活でも・趣味でも OK）を 1 つ思い浮かべておく</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>NotebookLM の<strong>インライン引用</strong>（[1] [2] の番号）が、AI の応答の<strong>どの一文</strong>が<strong>どのソースのどこ</strong>から来たかを示す仕組みであることを自分の言葉で説明できる</li>
+        <li>引用番号を<strong>クリックして該当箇所にジャンプ</strong>し、AI が拾った場所と自分が書いた場所のズレに気づける</li>
+        <li>過去 7 回分の<strong>【学習データ①〜⑦】</strong> を横断する質問を投げ、複数のソースから引用が付くことを体験する</li>
+        <li>授業内で <strong>【学習データ⑧】課題解決フレームワーク資料</strong> を作成し、自分のAIに追加する</li>
+        <li>「自分が今抱えている小さな課題」を 1 つ書き出し、自分のAIに<strong>引用付きで整理してもらう</strong>個人演習を 1 周まわせる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の振り返りと「ただ溜めた」状態を可視化する</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り（10分）</strong></p>
+            <ul>
+              <li>第7回で投入した <strong>【学習データ⑦】プログラミング基礎用語集</strong> がソースに入っているか NotebookLM で確認</li>
+              <li>家でやった「別のお題で Canvas → エラー貼り戻し → 修正」のサイクルがまわせたか、希望者が一人 1〜2 文で共有</li>
+              <li>これで <strong>【学習データ①〜⑦】</strong> が揃った——今日からは<strong>「溜める」より「引き出す」</strong>に重心を移す</li>
+            </ul>
+            <p><strong>「ソースが溜まる」と何が変わるか（15分）</strong></p>
+            <ul>
+              <li>自分の NotebookLM ノートブックを開き、左サイドバーの<strong>ソース一覧</strong>を眺める——【学習データ①〜⑦】が並んでいる</li>
+              <li>ここまでは「<strong>毎週新しい資料を 1 つ足す</strong>」が中心だった。1 つひとつのソースは数百字〜2000 字程度</li>
+              <li>合計すると、自分の言葉で書かれた<strong>1 万字前後の自分専用の知識ベース</strong>になっている——たった 7 週間でこの量が貯まったことを意識する</li>
+              <li>これだけの量があると、人間の頭では<strong>「どこに何を書いたか」</strong>が思い出せなくなる——ここが今日 AI が活躍する場面</li>
+            </ul>
+            <p><strong>横断質問を投げてみる（15分）</strong></p>
+            <ul>
+              <li>NotebookLM のチャットに、次のような<strong>横断質問</strong>を投げる:
+                <pre><code>これまでに私が投入したソース全体から、
+「プロンプト」という単語が出てくる場面を時系列で整理してください。
+それぞれ何の資料の、どんな文脈で出てきたかを教えてください。</code></pre>
+              </li>
+              <li>応答を観察すると、各文の末尾に <strong>[1] [2] [3] と青い小さな番号</strong>が付いているはず——これが<strong>インライン引用</strong>（NotebookLM が「この一文はこのソースのこの場所から拾った」と教えてくれる印）</li>
+              <li>番号をクリックすると、画面右側または別パネルでソースの該当箇所が開く——「<strong>第3回のプロンプトのコツまとめ資料の、ここに書いてあった</strong>」のように具体的に追える</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「引用は AI と『一緒に読む』ための入り口」:</strong> NotebookLM のチャット応答は、<strong>通常はインライン引用が付く設計</strong>になっています（ソースに根拠を求める仕組み）。ソースの範囲外を尋ねたときは応答そのものを返さないことがある一方、応答が返ってきた一文に<strong>引用が付いていない</strong>場合は、その一文を<strong>そのままソースで裏取りできるか</strong>を確認するクセを今日からつけましょう。第4回で扱った検証姿勢の続編です。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>インライン引用と<strong>ソース閲覧画面のキーワード検索</strong>を使いこなす</h3>
+          <div class="timeline-body">
+            <p><strong>引用番号を 3 回クリックして「拾われ方」を観察する（15分）</strong></p>
+            <ul>
+              <li>1 限前半の横断質問の応答から、好きな引用番号を<strong>3 つ</strong>選んでクリック</li>
+              <li>ジャンプ先で必ず確認する 3 点:
+                <ul>
+                  <li><strong>① ソース名</strong>: 自分が投入した【学習データ①〜⑦】のどれか</li>
+                  <li><strong>② ハイライト箇所</strong>: ソース内のどの行・どの一文に色が付いているか</li>
+                  <li><strong>③ AI の解釈とのズレ</strong>: 「ハイライトされた一文」と、AI が応答で書いた一文が<strong>同じことを言っているか</strong></li>
+                </ul>
+              </li>
+              <li>3 つのうち 1 つくらいは「<strong>ズレている</strong>」「<strong>飛躍している</strong>」と感じるはず——これが AI が混ぜる<strong>軽い解釈</strong>で、引用なしで読むと気づきにくい</li>
+              <li>気になったズレは <code>NOTES.md</code> や Google ドキュメントに「<strong>ソース原文 / AI が言ったこと / 自分の感想</strong>」の 3 行でメモ</li>
+            </ul>
+            <p><strong>ソース閲覧画面のキーワード検索を試す（15分）</strong></p>
+            <ul>
+              <li>NotebookLM のソース一覧から、<strong>【学習データ⑥】プロンプト改善ワークシート</strong>を開く（または別のソースでもよい）</li>
+              <li>ソース閲覧画面の上部または検索アイコンから、<strong>キーワード検索バー</strong>を呼び出して「<strong>役割</strong>」など気になるキーワードを入力（公式 UI の名称・配置は更新で変わる可能性があるので、その場で目視確認）</li>
+              <li>キーワードがハイライト表示され、ソース内のどこに登場するかが一望できる</li>
+              <li>「<strong>横断質問 → 引用クリック</strong>」が AI 主導の引き出し方なら、「<strong>ソース閲覧画面でのキーワード検索</strong>」は自分主導の引き出し方——両方使えると、過去 7 週間のメモが<strong>「読まなくても引ける辞書」</strong>として機能し始める</li>
+            </ul>
+            <p><strong>過去ソースを「自分のAIに整理させる」（20分）</strong></p>
+            <ul>
+              <li>NotebookLM のチャットに、自分の学習を整理してもらう質問を投げる:
+                <pre><code>これまでに投入した【学習データ①〜⑦】から、
+私がプロンプト設計で大事にしてきたコツを 5 つ以内に絞って、
+各コツがどの資料から来たかを明示してください。
+引用 ([1] [2] …) を必ず付けてください。</code></pre>
+              </li>
+              <li>応答に出てきた 5 つのコツが、自分の体感とどれだけ一致しているかを観察</li>
+              <li>「<strong>自分が思っていた重要ポイントと違う</strong>」「<strong>忘れていたコツが思い出された</strong>」「<strong>引用元が意外な資料だった</strong>」のうち、最低 1 件は気づきがあるはず——これが「<strong>自分のAIに整理させる</strong>」体験</li>
+              <li>気づきは Google ドキュメントに 1〜2 行メモ。2 限前半の <strong>【学習データ⑧】</strong> の素材になる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>【学習データ⑧】課題解決フレームワーク資料を作成し投入する</h3>
+          <div class="timeline-body">
+            <p><strong>「課題解決フレームワーク」とは何か（10分）</strong></p>
+            <ul>
+              <li>世の中で広く使われている、<strong>考えを整理する「型」</strong>のこと——困ったときに「いったんこの型に当てはめてみる」と、漠然とした悩みが言葉に変わる</li>
+              <li>本授業で扱うのは、最初に覚えると応用が利く<strong>4 つだけ</strong>:
+                <ul>
+                  <li><strong>5W1H</strong>（いつ・どこで・誰が・何を・なぜ・どのように）——状況を言葉にする型</li>
+                  <li><strong>PDCA</strong>（Plan 計画 → Do 実行 → Check 確認 → Action 改善）——繰り返し改善する型</li>
+                  <li><strong>KPT</strong>（Keep 続けたいこと / Problem 困っていること / Try 次に試したいこと）——振り返りの型</li>
+                  <li><strong>SMART</strong>（Specific 具体的 / Measurable 測れる / Achievable 実現できる / Relevant 関係ある / Time-bound 期限がある）——目標を立てる型</li>
+                </ul>
+              </li>
+              <li>4 つに共通するのは<strong>「項目に分けて空欄を埋める」</strong>こと——空欄が埋められない部分が、自分が見えていない場所</li>
+            </ul>
+            <p><strong>書く内容（20分）</strong></p>
+            <ul>
+              <li>Google ドキュメントを新規作成、ファイル名を <strong><code>【学習データ⑧】課題解決フレームワーク資料</code></strong> にする</li>
+              <li>第5回で学んだとおり、<strong>見出し1〜3 + 箇条書き</strong>で構造化する（NotebookLM の応答精度が上がる）</li>
+              <li>項目（最低限）:
+                <ul>
+                  <li><strong>見出し1: 課題解決フレームワーク資料</strong></li>
+                  <li><strong>見出し2: 4 つのフレームワーク一覧</strong> — 5W1H / PDCA / KPT / SMART の名前・何に使うか・項目を箇条書き</li>
+                  <li><strong>見出し2: 私が今抱えている小さな課題</strong> — 1 つだけ。学習・生活・趣味・人間関係どれでも OK。1〜3 行で<strong>自分の言葉</strong>で書く</li>
+                  <li><strong>見出し2: その課題を 5W1H で書き出してみる</strong> — 6 つの問いに自分なりに 1 行ずつ答える（埋まらない問いは「<strong>わからない</strong>」と書いてよい）</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>NotebookLM のソースに追加する（20分）</strong></p>
+            <ul>
+              <li>第2〜7回と同じ手順で、<strong>【学習データ⑧】</strong> をソース追加</li>
+              <li>追加直後に自分のAIに質問:
+                <pre><code>【学習データ⑧】に書いた「私の課題」を、
+KPT（Keep / Problem / Try）の 3 つに当てはめて整理してください。
+過去のソース（【学習データ①〜⑦】）の中で、
+今のこの課題と関係しそうな箇所があれば、引用を付けて教えてください。</code></pre>
+              </li>
+              <li>応答の引用 [1] [2] を 1 つ以上クリックして、「<strong>過去の自分が書いたメモ</strong>」が今の課題に繋がる瞬間を体験する——これが本日のクライマックス</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「フレームワークは万能の答えではない」:</strong> 5W1H や KPT に当てはめれば必ず答えが出る、というわけではありません。型に当てはめてみると<strong>「自分が何を知らないか」が見える</strong>のが本当の効果。空欄が多い問いは、自分にとってまだ言葉になっていない領域——そこを次の調べもの・相談の出発点にすればよい、と捉えてください。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>「自分の課題」をAIに整理させる個人演習</h3>
+          <div class="timeline-body">
+            <p><strong>もう一つのフレームワークで掘り直す（15分）</strong></p>
+            <ul>
+              <li>2 限前半で KPT を試した課題について、今度は <strong>PDCA か SMART</strong>のどちらか好きな方で掘り直す:
+                <pre><code>【学習データ⑧】の「私の課題」について、
+SMART の 5 項目（Specific / Measurable / Achievable / Relevant / Time-bound）に
+当てはめて整理してください。
+それぞれの項目に、過去のソースで関係しそうな部分があれば
+引用を付けて根拠を示してください。</code></pre>
+              </li>
+              <li>応答の中で「<strong>引用が付かなかった項目</strong>」を探す——それは AI がソースから直接引っ張れなかった項目で、自分にとって<strong>これから埋めるべき空白</strong></li>
+              <li>同じ課題でも、KPT と SMART で<strong>見えてくる切り口が違う</strong>ことを観察</li>
+            </ul>
+            <p><strong>整理結果を <code>NOTES.md</code> または Google ドキュメントに残す（10分）</strong></p>
+            <ul>
+              <li>整理結果の要約を 5〜10 行でメモ:
+                <ul>
+                  <li>今日 AI に整理してもらってわかったこと（1〜2 行）</li>
+                  <li>引用元になった過去ソース（番号と該当箇所）</li>
+                  <li>引用が付かなかった項目＝これから埋めるべき空白（1〜2 個）</li>
+                  <li>次回までに 1 つだけ試してみたいこと</li>
+                </ul>
+              </li>
+              <li>このメモは第10回（中間振り返り）の素材として使う——<strong>今日の自分の課題が、5 週間後にどう変わったか</strong>を見返す貴重な記録</li>
+            </ul>
+            <p><strong>「自分のAIを使いこなす」感覚を言葉にする（5分）</strong></p>
+            <ul>
+              <li>今日の体験を 1 文で書き出す:
+                <pre><code>私にとって「自分のAIを使いこなす」とは、
+○○○○○ことだ。</code></pre>
+              </li>
+              <li>正解はない。「過去のメモを思い出させてくれる」「自分の課題に切り口を当ててくれる」「気づきの引き金になる」など、自分の体感に近い言葉でよい</li>
+              <li>書いた一文は、自分のAIに最後に投げて<strong>「この捉え方をあなた（AI）はどう感じる？」</strong>と聞いてみるのもおすすめ——AI からの応答も引用付きで返ってくる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ ai-communication.html Week 9 「AI出力の検証と改善」と同期 -->
+              <li>次回（第9回）: <strong>AI出力の検証と改善</strong>——AI の応答を「自分でファクトチェックする」習慣作り。AI に改善案を出させ、その妥当性を自分で評価する個人演習。<strong>【学習データ⑨】ファクトチェック手順資料</strong></li>
+              <li>今日のキーワード <strong>「インライン引用 [1] [2]」「引用クリックでジャンプ」「ソース閲覧画面でのキーワード検索」「5W1H / PDCA / KPT / SMART」「自分の課題を引用付きで整理してもらう」</strong>を口に出して言えるか確認して退出</li>
+              <li>家では今日選ばなかったフレームワーク（PDCA か SMART のうち未使用の方）でも、同じ課題を掘り直してみる——3 通りの切り口が揃うと、課題が立体的に見えてくる</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>【学習データ⑧】課題解決フレームワーク資料 テンプレ(コピー用)</h2>
+      <p>授業内で書ききれなかった人や<strong>家でゼロから作り直したい人</strong>、<strong>別の Google アカウントで作り直したい人</strong>のために、テンプレ本文をここからコピーできるようにしてある。</p>
+      <p><strong>使い方:</strong></p>
+      <ol>
+        <li>下の「Markdown をコピー」ボタンを押す</li>
+        <li><a href="https://docs.google.com" target="_blank" rel="noopener">Google ドキュメント</a> で新規ドキュメントを開く(ファイル名は <strong>「【学習データ⑧】課題解決フレームワーク資料」</strong>)</li>
+        <li>Google ドキュメントの <strong>ツール → 設定 → 全般タブ →「マークダウンを有効にする」</strong>がオンになっているか確認(第5〜7回までに設定した人はそのまま)</li>
+        <li>本文に <strong>編集 →「マークダウンから貼り付け」</strong>で貼り付ける(普通の Ctrl/⌘+V でも内容は使えるので、Markdown 整形にこだわらない人はそのままで OK)→ 空欄を自分の言葉で埋める</li>
+        <li>NotebookLM の自分だけのAIで「ソースを追加」→「ドライブ」→ このドキュメントを選択</li>
+      </ol>
+      <p><strong>個人情報を入れない原則は第1〜7回と同じ。</strong>本名・住所・電話番号・学籍番号は書かない。書ける範囲で OK・空欄でも OK。</p>
+      <button class="copy-md-btn" data-md-source="problem-solving-framework-md">
+        <span class="btn-icon"></span> Markdown をコピー
+      </button>
+<pre id="problem-solving-framework-md" class="md-preview"># 課題解決フレームワーク資料(NotebookLM 用)
+
+> このシートは「自分だけのAI」の 8 つ目のソースとして使います。
+> 第1〜7回で蓄積した【学習データ①〜⑦】に「課題を整理する型」と「私が今抱えている課題」を足すことで、AI が過去のメモを引用しながら私の課題を整理してくれるようになります。
+> 個人情報(本名・住所・電話番号・学籍番号など)は書かないこと。書ける範囲で OK・空欄でも OK。
+
+## ① 4 つのフレームワーク一覧
+本授業で扱う 4 つの型。それぞれ「何に使うか」「項目」を 1 行ずつまとめる。
+
+**5W1H — 状況を言葉にする型**
+- いつ (When):
+- どこで (Where):
+- 誰が (Who):
+- 何を (What):
+- なぜ (Why):
+- どのように (How):
+
+**PDCA — 繰り返し改善する型**
+- Plan(計画): 何をする予定か
+- Do(実行): 実際に何をしたか
+- Check(確認): どうだったか
+- Action(改善): 次にどう変えるか
+
+**KPT — 振り返りの型**
+- Keep(続けたいこと):
+- Problem(困っていること):
+- Try(次に試したいこと):
+
+**SMART — 目標を立てる型**
+- Specific(具体的): 何を / どうする
+- Measurable(測れる): 何で測るか
+- Achievable(実現できる): 自分の手の届く範囲か
+- Relevant(関係ある): 今の自分の状況に合っているか
+- Time-bound(期限がある): いつまでに
+
+## ② 私が今抱えている小さな課題
+1 つだけ。学習・生活・趣味・人間関係どれでも OK。後で AI に整理してもらいやすいよう、1〜3 行で自分の言葉で書く。
+
+**課題の一言要約:**
+
+**もう少し詳しく(1〜2 行):**
+
+## ③ その課題を 5W1H で書き出してみる
+6 つの問いに、自分なりに 1 行ずつ答える。埋まらない問いは「わからない」と書いてよい——わからないままを残すのが学びの起点になる。
+
+- いつ (When):
+- どこで (Where):
+- 誰が (Who):
+- 何を (What):
+- なぜ (Why):
+- どのように (How):
+
+## ④ AI に整理してもらいたい問い
+NotebookLM のチャットで AI に投げたい問いを、自分仕様にカスタマイズして残す。次回以降コピーで使える状態にする。
+
+**問い A: KPT で整理してもらう**
+
+```
+【学習データ⑧】に書いた「私の課題」を、
+KPT(Keep / Problem / Try)の 3 つに当てはめて整理してください。
+過去のソース(【学習データ①〜⑦】)の中で、
+今のこの課題と関係しそうな箇所があれば、引用を付けて教えてください。
+```
+
+→ 自分の言い回しに整えた版:
+
+→
+
+**問い B: SMART で整理してもらう**
+
+```
+【学習データ⑧】の「私の課題」について、
+SMART の 5 項目(Specific / Measurable / Achievable / Relevant / Time-bound)に
+当てはめて整理してください。
+それぞれの項目に、過去のソースで関係しそうな部分があれば
+引用を付けて根拠を示してください。
+```
+
+→ 自分の言い回しに整えた版:
+
+→
+
+**問い C: PDCA の Plan だけ作ってもらう**
+
+```
+【学習データ⑧】の「私の課題」について、
+PDCA の Plan(計画)の部分だけを 3 ステップで提案してください。
+今週中にやってみる最小の一歩を中心に組み立ててください。
+過去ソースで根拠になる箇所があれば引用を付けてください。
+```
+
+→ 自分の言い回しに整えた版:
+
+→
+
+## ⑤ 引用クリックで見えたこと
+1 限後半・2 限前半で、AI の応答の引用 [1] [2] をクリックして観察した記録。空欄でも OK。
+
+**引用 1**
+- 飛んだ先のソース名:
+- ハイライトされた一文:
+- AI の応答との一致度(自分の感想):
+
+**引用 2**
+- 飛んだ先のソース名:
+- ハイライトされた一文:
+- AI の応答との一致度(自分の感想):
+
+## ⑥ メモ(自由記入)
+今日の演習で気づいたこと・引っかかったこと・次に試したいこと。空欄でも OK。
+(例: 「忘れていた過去のメモが引用で出てきて、いま自分が悩んでいることと繋がった」「引用が付かなかった項目が、自分にとって埋まっていない空白だと分かった」)
+
+→
+</pre>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>【学習データ⑧】課題解決フレームワーク資料を完成させて NotebookLM に投入する</strong>
+            <p>授業内で書ききれなかった項目を埋め、第5〜7回で学んだ<strong>見出し1〜3と箇条書き</strong>で構造化した状態でソースに入れる。投入済みかどうかは次回確認します。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>2 限後半で選ばなかったフレームワークでも、同じ課題を掘り直す</strong>
+            <p>授業内で KPT と SMART のどちらかしか試していないので、家でもう一方（PDCA か SMART のうち未使用の方）でも同じ課題を AI に整理させてみる。応答に出てきた<strong>引用 [1] [2] を最低 2 つクリック</strong>して、過去のどのソースから引っ張られたかをメモする。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>NotebookLM 公式ヘルプを 1 ページだけ眺める</strong>
+            <p>下記の参考リンクから NotebookLM 公式ヘルプを開き、<strong>授業で扱わなかった機能を 1 つだけメモ</strong>する（例: 音声解説 (Audio Overview)、ノートブックの共有、特定ソースの除外など）。【学習データ⑧】の「⑥ メモ」に追記しておくと、第10回（中間振り返り）の素材になる。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> — 今日の演習のメイン会場。<strong>【学習データ①〜⑧】</strong> を投入した「自分だけのAI」</li>
+        <li><a href="https://support.google.com/notebooklm" target="_blank" rel="noopener">NotebookLM ヘルプ</a> — 公式ヘルプセンター。インライン引用・ソース管理・チャット機能の最新仕様はここから（ヘルプ記事の URL は時々再編されるため、検索バーから機能名を入力するのが確実）</li>
+        <li><a href="https://workspace.google.com/resources/ai/writing-effective-prompts/" target="_blank" rel="noopener">Gemini for Workspace — プロンプト初級ガイド</a> — 第6・7回でも使った 4 要素（ペルソナ・タスク・背景情報・形式）。今日の課題整理プロンプトでも応用できる</li>
+        <li><a href="https://ai.google.dev/gemini-api/docs/prompting-strategies" target="_blank" rel="noopener">Google AI for Developers — Prompt design strategies</a> — 公式の設計戦略。複数ソースに引用を付けさせる質問の組み方の根拠</li>
+        <li><a href="https://docs.google.com" target="_blank" rel="noopener">Google ドキュメント</a> — <strong>【学習データ⑧】</strong> の作成会場</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week07.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第7回 AIコーディング支援入門</span>
+      </a>
+      <a href="../ai-communication.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AIコミュニケーション基礎</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第9回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
