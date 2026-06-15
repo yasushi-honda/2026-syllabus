@@ -40,11 +40,11 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">これまで投入した <strong>【学習データ①〜⑦】</strong> を「ただ溜めた」状態から「<strong>引っ張り出して使える</strong>」状態にする。<strong>NotebookLM の検索・参照機能</strong>——具体的には<strong>インライン引用</strong>（各回答に [1] [2] と付く番号）と<strong>ソース内検索</strong>——を頼りに、AI の応答が<strong>どのソースのどこから来たか</strong>を辿る練習をする。さらに <strong>【学習データ⑧】課題解決フレームワーク資料</strong> を投入し、自分が今抱えている小さな課題を、自分のAIに整理させる個人演習に取り組む</div>
+          <div class="lesson-overview-value">これまで投入した <strong>【学習データ①〜⑦】</strong> を「ただ溜めた」状態から「<strong>引っ張り出して使える</strong>」状態にする。<strong>NotebookLM の検索・参照機能</strong>——具体的には<strong>インライン引用</strong>（各回答に [1] [2] と付く番号）と<strong>ソース閲覧画面でのキーワード検索</strong>——を頼りに、AI の応答が<strong>どのソースのどこから来たか</strong>を辿る練習をする。さらに <strong>【学習データ⑧】課題解決フレームワーク資料</strong> を投入し、自分が今抱えている小さな課題を、自分のAIに整理させる個人演習に取り組む</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">過去情報の再利用 / NotebookLM の<strong>インライン引用</strong>（[1] [2] の番号） / 引用クリックで該当箇所にジャンプ / ソース内検索 / 自分のAIに整理させる個人演習 / 課題解決フレームワーク（5W1H / PDCA / KPT / SMART） / 【学習データ⑧】課題解決フレームワーク資料</div>
+          <div class="lesson-overview-value">過去情報の再利用 / NotebookLM の<strong>インライン引用</strong>（[1] [2] の番号） / 引用クリックで該当箇所にジャンプ / ソース閲覧画面でのキーワード検索 / 自分のAIに整理させる個人演習 / 課題解決フレームワーク（5W1H / PDCA / KPT / SMART） / 【学習データ⑧】課題解決フレームワーク資料</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
@@ -101,7 +101,7 @@
               <li>番号をクリックすると、画面右側または別パネルでソースの該当箇所が開く——「<strong>第3回のプロンプトのコツまとめ資料の、ここに書いてあった</strong>」のように具体的に追える</li>
             </ul>
             <div class="lesson-tip">
-              <strong>「引用が付かない応答は要注意」:</strong> NotebookLM の応答は<strong>原則すべて</strong>インライン引用が付きます。<strong>引用が付かない一文</strong>が混じっていたら、それは AI が「ソースに直接書いてないけれど、こうだろう」と推測した可能性が高い——<strong>そのまま信じない</strong>習慣を、今日この回でつけておきましょう。第4回で扱った検証姿勢の続編です。
+              <strong>「引用は AI と『一緒に読む』ための入り口」:</strong> NotebookLM のチャット応答は、<strong>通常はインライン引用が付く設計</strong>になっています（ソースに根拠を求める仕組み）。ソースの範囲外を尋ねたときは応答そのものを返さないことがある一方、応答が返ってきた一文に<strong>引用が付いていない</strong>場合は、その一文を<strong>そのままソースで裏取りできるか</strong>を確認するクセを今日からつけましょう。第4回で扱った検証姿勢の続編です。
             </div>
           </div>
         </div>
@@ -111,7 +111,7 @@
             <span class="timeline-time">1限 後半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>インライン引用と<strong>ソース内検索</strong>を使いこなす</h3>
+          <h3>インライン引用と<strong>ソース閲覧画面のキーワード検索</strong>を使いこなす</h3>
           <div class="timeline-body">
             <p><strong>引用番号を 3 回クリックして「拾われ方」を観察する（15分）</strong></p>
             <ul>
@@ -126,12 +126,12 @@
               <li>3 つのうち 1 つくらいは「<strong>ズレている</strong>」「<strong>飛躍している</strong>」と感じるはず——これが AI が混ぜる<strong>軽い解釈</strong>で、引用なしで読むと気づきにくい</li>
               <li>気になったズレは <code>NOTES.md</code> や Google ドキュメントに「<strong>ソース原文 / AI が言ったこと / 自分の感想</strong>」の 3 行でメモ</li>
             </ul>
-            <p><strong>ソース内検索を試す（15分）</strong></p>
+            <p><strong>ソース閲覧画面のキーワード検索を試す（15分）</strong></p>
             <ul>
               <li>NotebookLM のソース一覧から、<strong>【学習データ⑥】プロンプト改善ワークシート</strong>を開く（または別のソースでもよい）</li>
-              <li>ソース閲覧画面の上部または検索アイコンから、<strong>検索バー</strong>を呼び出して「<strong>役割</strong>」など気になるキーワードを入力（公式 UI の名称・配置は更新で変わる可能性があるので、その場で目視確認）</li>
+              <li>ソース閲覧画面の上部または検索アイコンから、<strong>キーワード検索バー</strong>を呼び出して「<strong>役割</strong>」など気になるキーワードを入力（公式 UI の名称・配置は更新で変わる可能性があるので、その場で目視確認）</li>
               <li>キーワードがハイライト表示され、ソース内のどこに登場するかが一望できる</li>
-              <li>「<strong>横断質問 → 引用クリック</strong>」が AI 主導の引き出し方なら、「<strong>ソース内検索</strong>」は自分主導の引き出し方——両方使えると、過去 7 週間のメモが<strong>「読まなくても引ける辞書」</strong>として機能し始める</li>
+              <li>「<strong>横断質問 → 引用クリック</strong>」が AI 主導の引き出し方なら、「<strong>ソース閲覧画面でのキーワード検索</strong>」は自分主導の引き出し方——両方使えると、過去 7 週間のメモが<strong>「読まなくても引ける辞書」</strong>として機能し始める</li>
             </ul>
             <p><strong>過去ソースを「自分のAIに整理させる」（20分）</strong></p>
             <ul>
@@ -258,7 +258,7 @@ SMART の 5 項目（Specific / Measurable / Achievable / Relevant / Time-bound�
             <ul>
               <!-- 親ページ ai-communication.html Week 9 「AI出力の検証と改善」と同期 -->
               <li>次回（第9回）: <strong>AI出力の検証と改善</strong>——AI の応答を「自分でファクトチェックする」習慣作り。AI に改善案を出させ、その妥当性を自分で評価する個人演習。<strong>【学習データ⑨】ファクトチェック手順資料</strong></li>
-              <li>今日のキーワード <strong>「インライン引用 [1] [2]」「引用クリックでジャンプ」「ソース内検索」「5W1H / PDCA / KPT / SMART」「自分の課題を引用付きで整理してもらう」</strong>を口に出して言えるか確認して退出</li>
+              <li>今日のキーワード <strong>「インライン引用 [1] [2]」「引用クリックでジャンプ」「ソース閲覧画面でのキーワード検索」「5W1H / PDCA / KPT / SMART」「自分の課題を引用付きで整理してもらう」</strong>を口に出して言えるか確認して退出</li>
               <li>家では今日選ばなかったフレームワーク（PDCA か SMART のうち未使用の方）でも、同じ課題を掘り直してみる——3 通りの切り口が揃うと、課題が立体的に見えてくる</li>
             </ul>
           </div>
@@ -419,7 +419,7 @@ PDCA の Plan(計画)の部分だけを 3 ステップで提案してくださ�
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
             <strong>NotebookLM 公式ヘルプを 1 ページだけ眺める</strong>
-            <p>下記の参考リンクから NotebookLM 公式ヘルプを開き、<strong>授業で扱わなかった機能を 1 つだけメモ</strong>する（例: 音声解説、ノートブックの共有、特定ソースの除外など）。【学習データ⑧】の「⑥ メモ」に追記しておくと、第10回（中間振り返り）の素材になる。</p>
+            <p>下記の参考リンクから NotebookLM 公式ヘルプを開き、<strong>授業で扱わなかった機能を 1 つだけメモ</strong>する（例: 音声解説 (Audio Overview)、ノートブックの共有、特定ソースの除外など）。【学習データ⑧】の「⑥ メモ」に追記しておくと、第10回（中間振り返り）の素材になる。</p>
           </div>
         </div>
       </div>
@@ -430,7 +430,7 @@ PDCA の Plan(計画)の部分だけを 3 ステップで提案してくださ�
       <ul>
         <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> — 今日の演習のメイン会場。<strong>【学習データ①〜⑧】</strong> を投入した「自分だけのAI」</li>
         <li><a href="https://support.google.com/notebooklm" target="_blank" rel="noopener">NotebookLM ヘルプ</a> — 公式ヘルプセンター。インライン引用・ソース管理・チャット機能の最新仕様はここから（ヘルプ記事の URL は時々再編されるため、検索バーから機能名を入力するのが確実）</li>
-        <li><a href="https://workspace.google.com/resources/ai/writing-effective-prompts/" target="_blank" rel="noopener">Gemini for Workspace — ビジネスで効果を発揮する AI プロンプトの書き方</a> — 第6・7回でも使った 4 要素（ペルソナ・タスク・コンテキスト・形式）。今日の課題整理プロンプトでも応用できる</li>
+        <li><a href="https://workspace.google.com/resources/ai/writing-effective-prompts/" target="_blank" rel="noopener">Gemini for Workspace — プロンプト初級ガイド</a> — 第6・7回でも使った 4 要素（ペルソナ・タスク・背景情報・形式）。今日の課題整理プロンプトでも応用できる</li>
         <li><a href="https://ai.google.dev/gemini-api/docs/prompting-strategies" target="_blank" rel="noopener">Google AI for Developers — Prompt design strategies</a> — 公式の設計戦略。複数ソースに引用を付けさせる質問の組み方の根拠</li>
         <li><a href="https://docs.google.com" target="_blank" rel="noopener">Google ドキュメント</a> — <strong>【学習データ⑧】</strong> の作成会場</li>
       </ul>
