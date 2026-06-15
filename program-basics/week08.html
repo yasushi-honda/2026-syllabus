@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第8回 🎯ミニ完成② 小ゲーム公開 | プログラム基礎 I</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--blue">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../program-basics.html">プログラム基礎 I</a>
+        <span>/</span>
+        <span>第8回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">🎯ミニ完成②<wbr> 小ゲーム公開</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 8</span>
+            <span class="page-badge">火曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">第6回の<strong>おみくじ（変数・配列・<code>Math.random</code>）</strong>と第7回の<strong>気分スコア診断（<code>if</code> / <code>else if</code> / <code>else</code>）</strong>を<strong>ひとつの小ゲームに統合</strong>し、<strong>GitHub Pages に追加公開</strong>する。Week 4 で取得した公開URL配下に <code>game.html</code> を増やし、スマホでも動くことを実機で確認する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">ロジックの統合 / <code>Math.random</code> + <code>if</code> の組み合わせ / 追加ページの公開 / 公開URL（<code>/game.html</code>） / 再デプロイ（commit &amp; push で自動反映） / スマホ実機での挙動確認 / 公開後の自己レビュー</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第4回で<strong>GitHub Pages を有効化済み</strong>のリポジトリ・第6回の<strong>おみくじページ</strong>・第7回の<strong>気分スコア診断</strong>のコード・Codespaces が起動できる状態・スマホ（公開URLを開くため）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>第6回・第7回で書いたコードを<strong>1つの小ゲーム</strong>に統合できる</li>
+        <li><strong>追加ページ</strong>（<code>game.html</code>）をリポジトリに置くと、自分の公開URL配下に新しい URL が増えることを体験する</li>
+        <li>commit &amp; push したあと<strong>自動的に再デプロイ</strong>される流れ（Week 4 で有効化済みなので Settings 操作は不要）を理解する</li>
+        <li>公開した小ゲームを<strong>スマホ実機</strong>で開いて動作確認できる</li>
+        <li>自分の公開URLをクラスメイトに伝え、<strong>他人に遊んでもらった反応</strong>を1つ以上もらう</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>「小ゲーム」とは何かを整理 → 設計図を紙またはメモに書く</h3>
+          <div class="timeline-body">
+            <p><strong>前回（第7回）の振り返り（10分）</strong></p>
+            <ul>
+              <li>第7回で完成させた<strong>気分スコア診断</strong>を Codespaces で開き直す（<code>python3 -m http.server 8000</code> → 第1回と同じ手順で Simple Browser）</li>
+              <li><code>mood</code> の値を変えて、4 つの枝（絶好調・いい感じ・ぼちぼち・お疲れさま）が想定通りに動くか確認</li>
+              <li>第6回の<strong>おみくじ</strong>のコード（<code>Math.random</code> + 配列）も同じページ内に残っているはず——今日はこの 2 つを統合して、ひとつの<strong>小ゲーム</strong>にする</li>
+            </ul>
+            <p><strong>「小ゲーム」のミニマル定義（10分）</strong></p>
+            <ul>
+              <li>このシラバスでいう「小ゲーム」とは、次の 3 つを満たすもの:
+                <ul>
+                  <li><strong>① 入力（または毎回変わる要素）がある</strong>: 第6回の <code>Math.random</code>、第7回の <code>mood</code> 変数のような「実行ごとに違う値」</li>
+                  <li><strong>② 判断（分岐）がある</strong>: 第7回の <code>if</code> / <code>else if</code> / <code>else</code></li>
+                  <li><strong>③ 結果が画面に表示される</strong>: 第6回・第7回と同じ <code>document.getElementById(...).textContent = ...</code></li>
+                </ul>
+              </li>
+              <li>難しい言葉で言うと「<strong>入力 → 処理 → 出力</strong>」の 3 ステップが揃っているだけで「ゲーム」と呼べる。クリックや入力欄は第11回（DOM 操作）で扱うので、今日は<strong>「ページを開いた瞬間にランダムに 1 回プレイされる」</strong>形でよい</li>
+            </ul>
+            <p><strong>今日作る小ゲームの設計を決める（20分）</strong></p>
+            <ul>
+              <li>選択肢として 2 つの方向を提示。<strong>どちらか自分の好きな方</strong>を選ぶ:
+                <ul>
+                  <li><strong>案A: 運勢アドバイスゲーム</strong>——サイコロ（1〜6）をランダムに振って、出目に応じて「今日のおすすめ行動」を返す</li>
+                  <li><strong>案B: 拡張気分スコア診断</strong>——気分スコアを<strong>ランダムに決定</strong>（毎回違う値）し、結果に応じてアドバイスを返す。さらに「ラッキー絵文字」もランダムに 1 つ添える</li>
+                </ul>
+              </li>
+              <li>どちらの案でも、<code>NOTES.md</code> または紙に<strong>設計図</strong>を書いてから手を動かす:
+                <ul>
+                  <li><strong>変数名</strong>（例: <code>dice</code> / <code>moodScore</code>）</li>
+                  <li><strong>分岐の条件と結果</strong>（例: 5以上 → "机を片付ける" ／ 3以上 → "水を1杯飲む" ／ それ以外 → "深呼吸を3回"）</li>
+                  <li><strong>表示する要素の <code>id</code></strong>（例: <code>id="game-result"</code>）</li>
+                </ul>
+              </li>
+              <li>設計図を 5 分以内に描けたら、すぐにコードを書き始めてよい。迷う人は<strong>案Aで進める</strong>のが時間切れリスクが低い</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「全部入りを狙わない」:</strong> ミニ完成回は<strong>「動くものを公開する」</strong>のが最優先。あれもこれもと盛り込むと 2 限後半までに公開が間に合わなくなります。<strong>1 つの分岐 × 1 つのランダム要素</strong>で十分に「小ゲーム」と呼べます。装飾や追加機能は家でゆっくり足してください。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>新規ファイル <code>game.html</code> を作って、ロジックを統合する</h3>
+          <div class="timeline-body">
+            <p><strong>新規ファイル <code>game.html</code> を作る（10分）</strong></p>
+            <ul>
+              <li>Codespaces のファイル一覧で<strong>右クリック →「New File」</strong>を選び、<code>game.html</code> という名前で作成（リポジトリのルート、<code>index.html</code> と同じ階層に置く）</li>
+              <li>第1回と同じ最小 HTML テンプレを書く。今日の小ゲーム用の要素を 2 つ追加:
+                <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="ja"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;運勢アドバイスゲーム&lt;/title&gt;
+  &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;今日の運勢アドバイス&lt;/h1&gt;
+  &lt;p&gt;ページを更新するたびにサイコロが振られます&lt;/p&gt;
+  &lt;p id="game-result"&gt;ここに結果が出ます&lt;/p&gt;
+  &lt;p&gt;&lt;a href="index.html"&gt;トップに戻る&lt;/a&gt;&lt;/p&gt;
+
+  &lt;script&gt;
+    // ここに統合ロジックを書く（次の手順で）
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+              </li>
+              <li>保存 → Simple Browser のアドレスを <code>http://localhost:8000/game.html</code> に書き換えて表示確認</li>
+              <li><code>index.html</code> 側にも 1 行だけ追加: <code>&lt;p&gt;&lt;a href="game.html"&gt;運勢アドバイスゲームで遊ぶ&lt;/a&gt;&lt;/p&gt;</code> ——<strong>トップから遊べる動線</strong>を作る</li>
+            </ul>
+            <p><strong>ロジックを統合して書く（30分）：案Aの例</strong></p>
+            <ul>
+              <li><code>&lt;script&gt;</code> ブロックの中に、第6回の <code>Math.random</code> と第7回の <code>if</code> 分岐を組み合わせて書く:
+                <pre><code>// 1〜6 のサイコロを 1 回だけ振る
+const dice = Math.floor(Math.random() * 6) + 1;
+
+// 出目で「今日のおすすめ行動」を分岐
+let advice;
+if (dice &gt;= 5) {
+  advice = "机を片付けて気持ちをリセット";
+} else if (dice &gt;= 3) {
+  advice = "コップ1杯の水を飲んでひと息";
+} else {
+  advice = "深呼吸を3回してから次の作業へ";
+}
+
+// 結果を画面に表示
+const message = `🎲 ${dice} が出ました！→ ${advice}`;
+document.getElementById("game-result").textContent = message;
+console.log(message);</code></pre>
+              </li>
+              <li>保存 → Simple Browser を<strong>何度か更新</strong>。サイコロの目と、それに応じたアドバイスが切り替わることを確認</li>
+              <li>うまく動かないときは <strong>F12 → Console タブ</strong>を開く。第7回のバグ修正ワーク②と同じ手順——赤い行があれば 1 行目をそのまま読む</li>
+              <li><strong>案Bを選んだ人</strong>は、上の例の <code>dice</code> を <code>moodScore</code> に、<code>Math.floor(Math.random() * 6) + 1</code> を <code>Math.floor(Math.random() * 11)</code>（0〜10 の整数）に置き換え、第7回の 4 段階の <code>if</code> 文をそのまま貼り込む</li>
+            </ul>
+            <p><strong>動いたらやってほしいこと（10分）</strong></p>
+            <ul>
+              <li>分岐の<strong>メッセージを自分らしい言葉に書き換える</strong>（テンプレのままだとつまらない）</li>
+              <li>余裕があれば、<code>style.css</code> の既存ルールが <code>game.html</code> にも適用されているか確認。見出しの色や余白が共通になっていたら成功</li>
+              <li>絵文字は<strong>1〜2 個まで</strong>。入れすぎると公開時に見づらくなる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>commit &amp; push して GitHub Pages に追加公開する</h3>
+          <div class="timeline-body">
+            <p><strong>commit &amp; push で再デプロイ（15分）</strong></p>
+            <ul>
+              <li>Codespaces 左側の<strong>「ソース管理」（Source Control）</strong>タブを開く</li>
+              <li>変更ファイルとして <code>game.html</code>（新規）と <code>index.html</code>（リンク追記）が一覧に出ているはず</li>
+              <li>コミットメッセージ例: <code>運勢アドバイスゲームを追加</code></li>
+              <li>「Commit」→「Sync Changes」（または「Push」）で GitHub に反映</li>
+              <li><strong>Week 4 で GitHub Pages はすでに有効化済み</strong>なので、Settings の操作は不要。push しただけで<strong>自動的に再デプロイ</strong>される</li>
+              <li>GitHub.com のリポジトリページ →「Actions」タブで <code>pages build and deployment</code> ワークフローの進行状況を確認</li>
+            </ul>
+            <p><strong>追加された公開URLを確認（15分）</strong></p>
+            <ul>
+              <li>第4回で取得した公開URLは <code>https://&lt;ユーザー名&gt;.github.io/&lt;リポジトリ名&gt;/</code></li>
+              <li>今回追加した小ゲームの URL は、その末尾に <code>game.html</code> を付けるだけ:<br>
+                <code>https://&lt;ユーザー名&gt;.github.io/&lt;リポジトリ名&gt;/game.html</code></li>
+              <li>ブラウザの別タブで開いて、Simple Browser と同じ表示・同じ動作（更新ごとにサイコロが変わる）が再現できるか確認</li>
+              <li><strong>反映待ち時間</strong>: 公式に最大10分（通常は1〜3分）。すぐ反映されない時は Mac: <code>Cmd</code> + <code>Shift</code> + <code>R</code> / Windows: <code>Ctrl</code> + <code>Shift</code> + <code>R</code> でキャッシュをクリア</li>
+            </ul>
+            <p><strong>スマホ実機で開く（20分）</strong></p>
+            <ul>
+              <li>新しい公開URLを LINE などで自分宛に送るか、手で打ち込んでスマホで開く（QR コードは第5回で扱った方法を使ってよい）</li>
+              <li>スマホで開いて<strong>2〜3回更新</strong>して、サイコロの目が変わることを確認</li>
+              <li>第5回で書いた<strong>レスポンシブ（メディアクエリ）</strong>のスタイルが効いていれば、スマホでも崩れずに表示されるはず</li>
+              <li>表示が崩れていた場合は、スクリーンショットを撮って <code>NOTES.md</code> に貼っておく（家で家族・友達に遊んでもらうときの素材にもなる）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「公開URLは2つ持っている」と覚える:</strong> 今あなたの公開URLは少なくとも 2 本あります——プロフィール (<code>/</code>) と小ゲーム (<code>/game.html</code>)。これからの回で<strong>ページが増えるたびに公開URLも増えていく</strong>のが GitHub Pages の自然な使い方です。第12回（ミニ完成③ インタラクティブ作品公開）でもこの仕組みを使います。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>クラスメイトに遊んでもらって反応を集める → 自己レビュー</h3>
+          <div class="timeline-body">
+            <p><strong>公開URLを共有する（10分）</strong></p>
+            <ul>
+              <li>授業内の連絡手段（Google Classroom やチャット）で、自分の<strong><code>/game.html</code> の URL</strong>をクラスメイトに共有</li>
+              <li>共有するときは「<strong>更新するたびにサイコロが振られます</strong>」のような遊び方の一言を添えるとよい</li>
+              <li>受け取った側は、相手のゲームを<strong>3 回以上更新</strong>して動かしてみる</li>
+            </ul>
+            <p><strong>他人に遊んでもらった反応をメモする（10分）</strong></p>
+            <ul>
+              <li>クラスメイトから「面白かった点」「分かりにくかった点」を 1 つずつでよいので聞く（口頭・チャットどちらでも）</li>
+              <li><code>NOTES.md</code> の末尾に「<strong>公開後フィードバック</strong>」という見出しで記録:
+                <ul>
+                  <li>誰の反応か（名前は伏せて「クラスメイトA」でよい）</li>
+                  <li>面白かった点</li>
+                  <li>改善したいと思った点</li>
+                </ul>
+              </li>
+              <li>このメモは第14回（自由制作）の素材になる——<strong>「他人がどう感じたか」の記録</strong>は教科書には載っていない自分だけのデータ</li>
+            </ul>
+            <p><strong>自分の作品を1分だけ眺める（10分）</strong></p>
+            <ul>
+              <li>スマホで自分の公開URLを開き、<strong>更新ボタンを 10 回くらい</strong>押す</li>
+              <li>同じメッセージが連続で出ることがあれば、それは <code>Math.random</code> の自然な挙動（偏ることがある）</li>
+              <li>「<strong>自分が作ったものが、家でもスマホで動く</strong>」——この感覚を一度味わって退出する。これが<strong>2 作目の公開体験</strong>として、第4回（プロフィールサイト公開）に続くミニ完成回の本当のゴール</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ program-basics.html Week 9 「繰り返しと配列」と同期 -->
+              <li>次回（第9回）: <strong>繰り返しと配列</strong>——<code>for</code> 文と配列の基本を手で書く。たとえば<strong>1 回だけ振っていたサイコロを「10 回振って全部表示する」</strong>ような、複数のデータを扱う考え方を学ぶ</li>
+              <li>今日のキーワード <strong>「ロジックの統合」「<code>Math.random</code> + <code>if</code>」「追加ページ」「<code>commit &amp; push</code> で自動再デプロイ」「スマホ実機での確認」</strong>を口に出して言えるか確認して退出</li>
+              <li>家で公開URLを家族・友人に見せて、第三者から見たときの第一印象を聞いてみるだけでも復習になる</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>小ゲームを公開URLで遊べる状態にして push する</strong>
+            <p>授業内で公開が間に合わなかった人は家で完成させ、必ず<strong>スマホでも動作確認</strong>してから push する。公開URL（<code>/game.html</code>）を授業内連絡手段で共有しておくと、次回までにクラスメイトからフィードバックが集まる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>NOTES.md</code> に「公開後フィードバック」と「自己レビュー」を書く</strong>
+            <p>クラスメイトから聞いた反応を最低 1 件、自分で見直したときに「ここを直したい」と思った点を最低 1 件、それぞれ 2〜3 行で記録。直すかどうかは第14回まで保留してよい。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>分岐の枝を 1 つ増やす or メッセージを書き換える</strong>
+            <p>3 段階の分岐を 4 段階に増やす、または分岐の中身を自分の趣味や日常に合わせて書き換える。<strong>「自分のための小ゲーム」</strong>として育てると、第14回（自由制作）の起点になる。コード変更後は再度 commit &amp; push して公開URLにも反映する。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://docs.github.com/ja/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site" target="_blank" rel="noopener">GitHub Docs — GitHub Pages サイトの発行ソースの構成</a> — 公開元の設定（第4回で実施済み、再確認用）</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Math/random" target="_blank" rel="noopener">MDN — <code>Math.random()</code></a> — 0以上1未満の乱数を返す。整数化は <code>Math.floor</code> と組み合わせる</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Math/floor" target="_blank" rel="noopener">MDN — <code>Math.floor()</code></a> — 小数点以下を切り捨てて整数にする</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/if...else" target="_blank" rel="noopener">MDN — <code>if...else</code></a> — 第7回でも使った公式リファレンス</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/Document/getElementById" target="_blank" rel="noopener">MDN — <code>document.getElementById()</code></a> — id で要素を取得して表示を書き換える（第6回・第7回でも使用）</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week07.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第7回 条件分岐＆バグ修正ワーク②</span>
+      </a>
+      <a href="../program-basics.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">プログラム基礎 I</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第9回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
