@@ -148,8 +148,9 @@
 &lt;/body&gt;
 &lt;/html&gt;</code></pre>
               </li>
-              <li>保存 → Simple Browser のアドレスを <code>http://localhost:8000/game.html</code> に書き換えて表示確認</li>
-              <li><code>index.html</code> 側にも 1 行だけ追加: <code>&lt;p&gt;&lt;a href="game.html"&gt;運勢アドバイスゲームで遊ぶ&lt;/a&gt;&lt;/p&gt;</code> ——<strong>トップから遊べる動線</strong>を作る</li>
+              <li><code>game.html</code> を保存（この時点ではまだ <code>&lt;script&gt;</code> は空で OK）</li>
+              <li><code>index.html</code> 側にも 1 行だけ追加: <code>&lt;p&gt;&lt;a href="game.html"&gt;運勢アドバイスゲームで遊ぶ&lt;/a&gt;&lt;/p&gt;</code> ——<strong>トップから遊べる動線</strong>を作る。保存して、<strong>Simple Browser で <code>index.html</code> を更新</strong>するとリンクが出るはず</li>
+              <li>Simple Browser に表示された <strong>「運勢アドバイスゲームで遊ぶ」リンクをクリック</strong> → <code>game.html</code> に移動して、見出しと段落が表示されることを確認（この時点では結果文言はまだ出ない、次の手順で <code>&lt;script&gt;</code> を書いて動かす）</li>
             </ul>
             <p><strong>ロジックを統合して書く（30分）：案Aの例</strong></p>
             <ul>
