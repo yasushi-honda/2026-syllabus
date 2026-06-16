@@ -240,6 +240,7 @@ done
 | 「GitHub Copilot」曖昧 | 「**Copilot Student**」と正式名称で | PR #37 |
 | 「Codespacesの拡張枠」曖昧 | 「**月180コア時間枠**」と具体値 | PR #37 |
 | Live Server を Codespaces 標準機能のように書く | 正本は **「科目別の反復表記ルール」→「program-basics: ブラウザプレビュー手順」** を参照。`python3 -m http.server` → 「エディターでプレビュー」→ Simple Browser の3ステップ。`file://` は Simple Browser で扱えないため**サーバー起動手順の省略禁止**。「ブラウザーで開く」（地球儀）は外部ブラウザで Simple Browser ではない点に注意。Copilot Chat フォールバックは「〜することが多い」と断定を避けて記述 | PR #37, 教室実地フィードバック |
+| Simple Browser を `http://localhost:8000/xxx.html` 直打ち / アドレスバー全体の書き換えで案内する | Codespaces のポート転送経由 Simple Browser の URL は `https://<token>-8000.app.github.dev/` 形式で、`localhost:8000` 直打ちは成立しない。サブページに移動するときは **① `index.html` 等から `<a href="xxx.html">` リンクを追加してリンク経由で遷移、または ② Simple Browser のアドレスバーの**末尾だけ** `/xxx.html` に書き換える、のどちらか**で案内する。`http://localhost:8000/...` のような URL 全体の指示は禁止 | PR #119 |
 | NotebookLM/WS Education を「設定可能」と書く | 「**Core Service としてデフォルトで学習に使われない**」 | PR #38 |
 | 「次に来る単語を予測」 | 「**次に来る言葉の断片（トークン）を予測**」 | PR #38 |
 | Workspace for Education URL が `ALL_us`（英語） | `ALL_jp` の日本語版を使う | PR #38 |
