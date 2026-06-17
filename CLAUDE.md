@@ -45,6 +45,7 @@ natural-language-dev/   # 自然言語開発の各回詳細ページ
   week08.html           #   第8回 ハーネスエンジニアリング入門
   week09.html           #   第9回 進級制作で Map を使う：Leaflet × ジオコード × 天気 API
   week09-demo.html      #     第9回 動くデモ MVP（Leaflet 1.9.4 + Open-Meteo Geocoding/Forecast、1 ファイル HTML）
+  week10.html           #   第10回 SDD実践プロジェクト①：設計
 ai-programming.html     # AI活用プログラミング基礎（木3・4限）※AIコミュ基礎と共通ベース
 ai-programming/         # AI活用プログラミング基礎の各回詳細ページ
   week01.html           #   第1回 オリエンテーション＆AIってなんだろう？
