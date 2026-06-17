@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=3">
-  <!-- 公式情報確認: 2026-06-18 (github/spec-kit README + github.github.com/spec-kit "Spec → Plan → Tasks → Implement" + docs.github.com/ja/issues/.../about-projects 実H1「Projects の について」 + adr.github.io 実H1「Architectural Decision Records」 + github.com/joelparkerhenderson/architecture-decision-record + antigravity.google/docs/cli-plan-mode + antigravity.google/docs/cli-reference + anthropic.com/engineering/harness-design-long-running-apps) -->
+  <!-- 公式情報確認: 2026-06-18 (github/spec-kit README + github.github.com/spec-kit "Spec → Plan → Tasks → Implement" + github.github.com/spec-kit/reference/integrations.html: agy 正式対応・skills-based integration + CHANGELOG.md #2276 ".agents/ migrate + --skills deprecate" / #2689 "enhance agy integration" / #2872 "remove legacy --ai, --ai-commands-dir, --ai-skills" + docs.github.com/ja/issues/.../about-projects 実H1「Projects の について」 + docs.github.com/ja/issues/tracking-your-work-with-issues 実H1「課題であなたの作業を追跡する」 + adr.github.io 実H1「Architectural Decision Records」 + github.com/joelparkerhenderson/architecture-decision-record + antigravity.google/docs/cli-plan-mode + antigravity.google/docs/cli-reference + anthropic.com/engineering/harness-design-long-running-apps) -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -49,7 +49,7 @@
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
-          <div class="lesson-overview-value">第8回完了（Antigravity CLI <code>agy</code> セットアップ済・<code>.geminiignore</code>・GitHub Actions の <code>test.yml</code> が緑）／第6回完了（進級制作リポジトリに Spec Kit が <code>--integration gemini</code> で導入済 = <code>.specify/</code> と <code>.gemini/commands/speckit.*</code> が存在し、<code>agy plugin import gemini</code> で Antigravity の plugin として import 済）／第9回（Map）の最小実装が手元にある</div>
+          <div class="lesson-overview-value">第8回完了（Antigravity CLI <code>agy</code> セットアップ済・<code>.geminiignore</code>・GitHub Actions の <code>test.yml</code> が緑）／第6回完了（進級制作リポジトリに Spec Kit が <code>--integration gemini</code> で導入済 = <code>.specify/</code> と <code>.gemini/commands/speckit.*</code> が存在し、第8回 <code>agy plugin import gemini</code> で Antigravity の plugin として import 済）／第9回（Map）の最小実装が手元にある。<strong>※ Spec Kit は本回時点で <code>--integration agy</code> も正式対応済み</strong>（公式 docs <a href="https://github.github.com/spec-kit/reference/integrations.html" target="_blank" rel="noopener">integrations reference</a>）。新規環境構築する人や、第6回経由の plugin が動かない人は本回 1 限後半の fallback 手順で <code>--integration agy</code> による再構成も選べる</div>
         </div>
       </div>
     </div>
@@ -131,9 +131,9 @@
           <div class="timeline-body">
             <p><strong>第6回 Spec Kit 環境の再確認(5分)</strong></p>
             <ul>
-              <li>進級制作リポジトリで <code>agy</code> を起動 → スラッシュコマンド一覧に <code>/speckit.specify</code> / <code>/speckit.plan</code> / <code>/speckit.tasks</code> 等が見えることを確認(第6回で <code>specify init --here --integration gemini</code> 済み + 第8回で <code>agy plugin import gemini</code> 済み = Antigravity の plugin として登録されているはず)</li>
+              <li>進級制作リポジトリで <code>agy</code> を起動 → スラッシュコマンド一覧に <code>/speckit.specify</code> / <code>/speckit.plan</code> / <code>/speckit.tasks</code> 等が見えることを確認。第6回で <code>specify init --here --integration gemini</code> を実行 + 第8回で <code>agy plugin import gemini</code> を実行した人は、<code>.gemini/commands/speckit.*</code> が Antigravity の plugin として登録されている状態</li>
               <li>もし見えない場合は、第8回課題が未完了の可能性。<code>agy plugin import gemini</code> を改めて実行 → <code>agy plugin list</code> で確認</li>
-              <li>それでも見えない場合の fallback: Spec Kit 公式 docs に書かれた <strong><code>generic</code> integration</strong>(公式: <em>"If your agent isn't listed, the <code>generic</code> integration is an escape hatch for any tool."</em>)に切り替える方法もある。本授業では「Week06 で生成済の <code>.gemini/commands/speckit.*</code> を agy が plugin 経由で参照する」想定で進め、不具合時のみ講師に相談</li>
+              <li>fallback(Spec Kit 公式が <code>agy</code> を正式サポートしているため確実な選択肢): <strong><code>specify init --here --integration agy</code></strong> で再初期化する。公式 docs <a href="https://github.github.com/spec-kit/reference/integrations.html" target="_blank" rel="noopener">integrations reference</a> によると <code>agy</code> は <strong>skills-based integration; skills are installed automatically</strong> として正式対応されており、<code>.agents/skills/</code> 配下に <code>/speckit.*</code> コマンドが自動展開される(CHANGELOG #2276 で旧 <code>--skills</code> 経路は deprecated、#2872 で legacy <code>--ai</code> 系 flag も削除済み)。<strong>新規環境構築する人や、第6回経由が動かない人は最初からこちらで進めて OK</strong></li>
             </ul>
             <p><strong><code>/speckit.specify</code> で仕様を書く(20分)</strong></p>
             <ul>
@@ -316,7 +316,7 @@ EOF
               </li>
               <li>Issue タイトルに <strong>spec.md の受け入れ基準番号</strong>を含めると追跡しやすい</li>
               <li>Issue 本文には「<strong>完了条件</strong>」(DoD の該当行を引用)を必ず入れる</li>
-              <li>講師から事前に渡された個人 access の都合で Free private のリポジトリでも <code>gh issue create</code> は動作するはず。ハマったら GitHub Web UI から手動でも OK</li>
+              <li>Codespaces から <code>gh issue create</code> は事前検証済みで動作する。失敗した場合は GitHub Web UI から手動でも OK(機能は同等)</li>
             </ul>
             <p><strong>GitHub Project にまとめる(10分)</strong></p>
             <ul>
@@ -404,9 +404,10 @@ EOF
       <h2>参考リンク</h2>
       <ul>
         <li><a href="https://github.com/github/spec-kit" target="_blank" rel="noopener">github/spec-kit</a> — Spec Kit 公式リポジトリ。<code>/speckit.*</code> スラッシュコマンド一覧と <code>specify init --integration &lt;agent&gt;</code> 対応エージェント一覧の正本</li>
-        <li><a href="https://github.github.com/spec-kit/" target="_blank" rel="noopener">Spec Kit 公式 docs(github.github.com/spec-kit)</a> — コアプロセス "Spec → Plan → Tasks → Implement" と、未対応エージェント向け <code>generic</code> integration の説明</li>
+        <li><a href="https://github.github.com/spec-kit/" target="_blank" rel="noopener">Spec Kit 公式 docs(github.github.com/spec-kit)</a> — コアプロセス "Spec → Plan → Tasks → Implement" の公式逐語引用</li>
+        <li><a href="https://github.github.com/spec-kit/reference/integrations.html" target="_blank" rel="noopener">Spec Kit 公式 docs — Integrations reference</a> — 全 40+ integration の <code>--integration</code> キー一覧。<code>agy</code>(Antigravity) は <strong>skills-based integration; skills are installed automatically</strong> として正式対応</li>
         <li><a href="https://docs.github.com/ja/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects" target="_blank" rel="noopener">GitHub Docs ja — Projects の について</a> — テーブル / ボード / ロードマップの3レイアウト・項目(Issue / PR / draft)・カスタムフィールドの正本</li>
-        <li><a href="https://docs.github.com/ja/issues/tracking-your-work-with-issues" target="_blank" rel="noopener">GitHub Docs ja — Issue で作業を追跡する</a> — Issue の基本(作成・ラベル・割り当て・close 連動)</li>
+        <li><a href="https://docs.github.com/ja/issues/tracking-your-work-with-issues" target="_blank" rel="noopener">GitHub Docs ja — 課題であなたの作業を追跡する</a> — Issue の基本(作成・ラベル・割り当て・close 連動)</li>
         <li><a href="https://adr.github.io/" target="_blank" rel="noopener">Architectural Decision Records(adr.github.io)</a> — ADR エコシステムのハブサイト。定義・テンプレート集・ツール一覧</li>
         <li><a href="https://github.com/joelparkerhenderson/architecture-decision-record" target="_blank" rel="noopener">joelparkerhenderson/architecture-decision-record</a> — ADR の参考実装集(Michael Nygard 形式 / Y-statement 等のテンプレート例)</li>
         <li><a href="https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions" target="_blank" rel="noopener">Michael Nygard — Documenting Architecture Decisions(2011)</a> — Michael Nygard 形式 ADR の原典記事</li>
