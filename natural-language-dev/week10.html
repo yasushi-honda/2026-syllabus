@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第10回 SDD実践プロジェクト①：設計 | 自然言語開発</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+  <!-- 公式情報確認: 2026-06-18 (github/spec-kit README + github.github.com/spec-kit "Spec → Plan → Tasks → Implement" + github.github.com/spec-kit/reference/integrations.html: agy 正式対応・skills-based integration + CHANGELOG.md #2276 ".agents/ migrate + --skills deprecate" / #2689 "enhance agy integration" / #2872 "remove legacy --ai, --ai-commands-dir, --ai-skills" + docs.github.com/ja/issues/.../about-projects 実H1「Projects の について」 + docs.github.com/ja/issues/tracking-your-work-with-issues 実H1「課題であなたの作業を追跡する」 + adr.github.io 実H1「Architectural Decision Records」 + github.com/joelparkerhenderson/architecture-decision-record + antigravity.google/docs/cli-plan-mode + antigravity.google/docs/cli-reference + anthropic.com/engineering/harness-design-long-running-apps) -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev.html">自然言語開発</a>
+        <span>/</span>
+        <span>第10回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">SDD実践<wbr>プロジェクト<wbr>①：設計</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 10</span>
+            <span class="page-badge">木曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">進級制作を素材に<strong>より大きな機能追加</strong>のSDDプロジェクトを開始する。<strong>仕様書（spec.md）</strong>をAIと協働で作り、<strong>アーキテクチャ判断をADR</strong>に残し、<strong>Issueに分解して GitHub Project に並べる</strong>。第6回 SDD入門の <code>/speckit.*</code> サイクルを「お試し1機能」から「本気の機能追加プロジェクト」に格上げする回</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">SDD実践 / <code>/speckit.specify</code> / <code>/speckit.clarify</code> / <code>/speckit.plan</code> / <code>/speckit.tasks</code> / PRD と spec.md の役割分担 / ADR（Architectural Decision Record）/ テスト計画（Definition of Done）/ Issue分解 / GitHub Projects（テーブル・ボード・ロードマップ）</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第8回完了（Antigravity CLI <code>agy</code> セットアップ済・<code>.geminiignore</code>・GitHub Actions の <code>test.yml</code> が緑）／第6回完了（進級制作リポジトリに Spec Kit が <code>--integration gemini</code> で導入済 = <code>.specify/</code> と <code>.gemini/commands/speckit.*</code> が存在し、第8回 <code>agy plugin import gemini</code> で Antigravity の plugin として import 済）／第9回（Map）の最小実装が手元にある。<strong>※ Spec Kit は本回時点で <code>--integration agy</code> も正式対応済み</strong>（公式 docs <a href="https://github.github.com/spec-kit/reference/integrations.html" target="_blank" rel="noopener">integrations reference</a>）。新規環境構築する人や、第6回経由の plugin が動かない人は本回 1 限後半の fallback 手順で <code>--integration agy</code> による再構成も選べる</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>第6回の <strong>SDDサイクル「Spec → Plan → Tasks → Implement」</strong>（Spec Kit 公式 docs より）の前半3つ——<strong>Spec → Plan → Tasks</strong>——を、進級制作の<strong>本気の機能追加</strong>を題材に1周回しきる</li>
+        <li>第5回の <strong>PRD（要求の意図）</strong>と Spec Kit の <strong><code>spec.md</code>（受け入れ基準）</strong>の役割分担を、自分の機能を例に1〜2行で説明できる</li>
+        <li><strong>ADR（Architectural Decision Record）</strong>を「重要設計判断 1 つ」について書き、<strong>「決めたこと／背景／なぜ他を採らなかったか／結果（trade-off）」</strong>の4節を埋めることができる（参考: <a href="https://adr.github.io/" target="_blank" rel="noopener">Architectural Decision Records</a> = ADR エコシステムのハブ）</li>
+        <li><strong>テスト計画</strong>を <strong>Definition of Done</strong>（完成の定義）として書き、「<strong>これが緑になれば完成</strong>」を spec.md の受け入れ基準とリンクできる</li>
+        <li><code>/speckit.tasks</code> が生成した <code>tasks.md</code> を <strong>GitHub Issue に分解</strong>し、<strong>GitHub Project（テーブル or ボード）</strong>に並べて「次に何をやるか」を1画面で見られる状態にする</li>
+        <li>第11回（実装）で TDD サイクルを回す<strong>準備</strong>として、tasks の各行が「30〜60分で終わるサイズ」「テストが先に書ける粒度」になっていることを確認できる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>SDD 実践プロジェクトの全体像（Week10 → 11 → 12）</h2>
+      <div class="lesson-tip">
+        <strong>3週連続プロジェクト:</strong> 本日（第10回 <strong>設計</strong>）→ 第11回 <strong>実装</strong>（TDDサイクル＋MCP連携）→ 第12回 <strong>検証と改善</strong>（テスト結果分析＋リファクタリング）の3回で、進級制作に1つ「本気の機能」を追加しきる。今日の <code>spec.md</code> / ADR / <code>tasks.md</code> / GitHub Project が翌週以降の「正本」になる。<strong>今日設計を雑にすると2週間引きずる</strong>——焦らず時間を使う。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続(90分 + 90分 = 計180分)。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>第9回(Map)の振り返り → SDD実践プロジェクトのテーマ決定 → 今日のゴール</h3>
+          <div class="timeline-body">
+            <p><strong>第9回課題の共有(10分)</strong></p>
+            <ul>
+              <li>第9回で書いた <code>docs/map-prompts-week09.md</code> 末尾の「第10回 SDD プロジェクトで進級制作に統合する Map 機能」を近くの人と互いに見せる</li>
+              <li>1人1分で報告: 「<strong>進級制作のどこに地図を組み込むか</strong>」「<strong>地図以外で進級制作に追加したい本気の機能はあるか</strong>」</li>
+              <li>地図に縛らず、本気で追加したい機能を 1 つ持ってきていればそれを今日のテーマにしてよい(地図 / 検索 / お気に入り / グラフ / 通知 / ログイン 等)</li>
+            </ul>
+            <p><strong>SDD実践プロジェクトのテーマ決定(15分)</strong></p>
+            <ul>
+              <li>各自、進級制作に追加する <strong>1つの機能</strong>を確定する。スコープの目安:
+                <ul>
+                  <li>30〜60分の Issue が <strong>5〜10件</strong>に分解できる規模(今日 tasks.md がそのサイズで分解できるか確認する)</li>
+                  <li>第11回(90分2コマ)+ 第12回(90分2コマ)+ 家での発展 で <strong>動く状態まで持っていける</strong>規模</li>
+                  <li>外部 API を使う場合は、<strong>第9回で確認した OSS / 商用 / 無料枠</strong>の判断軸を再利用する</li>
+                </ul>
+              </li>
+              <li>「決められない」人向けの安全な選択肢: <strong>第9回の Map 最小実装を進級制作本体に統合</strong>(<code>map-demo</code> 単独 HTML → 進級制作のページに組み込み + 自分のテーマに合わせたピン情報を表示)</li>
+              <li>機能名・対象ユーザー・1行で「これは何ができるアプリの一部か」をメモ帳に書いて確定</li>
+            </ul>
+            <p><strong>今日のゴール提示(15分)</strong></p>
+            <ul>
+              <li>今日のアウトプットは4つ:
+                <ol>
+                  <li><strong><code>specs/&lt;NNN&gt;-&lt;feature-slug&gt;/spec.md</code></strong>(Spec Kit が生成、<code>/speckit.clarify</code> で曖昧点解消済)</li>
+                  <li><strong><code>specs/&lt;NNN&gt;-&lt;feature-slug&gt;/plan.md</code></strong>(<code>/speckit.plan</code> が生成、技術スタック・コンポーネント分割)</li>
+                  <li><strong><code>docs/adr/NNNN-&lt;decision-slug&gt;.md</code></strong>(重要設計判断 1 つを Michael Nygard 形式で残す)</li>
+                  <li><strong>GitHub Issue 群と GitHub Project</strong>(<code>/speckit.tasks</code> が生成した <code>tasks.md</code> を Issue に分解 + Project に並べる)</li>
+                </ol>
+              </li>
+              <li>「実装は今日やらない」が今日の鉄則。設計が固まっていない状態で実装に走るのが SDD では一番事故るパターン</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>今日の合言葉:</strong> 「<strong>spec.md は『何が動けば完成か』、ADR は『なぜそう決めたか』</strong>」。実装は来週(第11回)。今日は「<strong>来週の自分が迷わないように、判断を残す</strong>」回。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3><code>/speckit.specify</code> → <code>/speckit.clarify</code> で「何が動けば完成か」を spec.md に固める</h3>
+          <div class="timeline-body">
+            <p><strong>第6回 Spec Kit 環境の再確認(5分)</strong></p>
+            <ul>
+              <li>進級制作リポジトリで <code>agy</code> を起動 → スラッシュコマンド一覧に <code>/speckit.specify</code> / <code>/speckit.plan</code> / <code>/speckit.tasks</code> 等が見えることを確認。第6回で <code>specify init --here --integration gemini</code> を実行 + 第8回で <code>agy plugin import gemini</code> を実行した人は、<code>.gemini/commands/speckit.*</code> が Antigravity の plugin として登録されている状態</li>
+              <li>もし見えない場合は、第8回課題が未完了の可能性。<code>agy plugin import gemini</code> を改めて実行 → <code>agy plugin list</code> で確認</li>
+              <li>fallback(Spec Kit 公式が <code>agy</code> を正式サポートしているため確実な選択肢): <strong><code>specify init --here --integration agy</code></strong> で再初期化する。公式 docs <a href="https://github.github.com/spec-kit/reference/integrations.html" target="_blank" rel="noopener">integrations reference</a> によると <code>agy</code> は <strong>skills-based integration; skills are installed automatically</strong> として正式対応されており、<code>.agents/skills/</code> 配下に <code>/speckit.*</code> コマンドが自動展開される(CHANGELOG #2276 で旧 <code>--skills</code> 経路は deprecated、#2872 で legacy <code>--ai</code> 系 flag も削除済み)。<strong>新規環境構築する人や、第6回経由が動かない人は最初からこちらで進めて OK</strong></li>
+            </ul>
+            <p><strong><code>/speckit.specify</code> で仕様を書く(20分)</strong></p>
+            <ul>
+              <li>1限前半で確定した機能名・対象ユーザー・1行説明を、<code>/speckit.specify</code> に渡す</li>
+              <li>Spec Kit の <code>specify</code> は仕様(<strong>「何を作るか」</strong>)に集中させる設計で、技術スタックは含めない(<strong>HOW は <code>/speckit.plan</code> で扱う</strong>)。プロンプト例:
+                <pre><code>/speckit.specify
+
+進級制作の「飲食店レビューアプリ」に、登録済み店舗を地図上で
+表示する機能を追加したい。
+
+ユーザーストーリー:
+- 利用者は店舗一覧画面の「地図で見る」ボタンを押すと、
+  登録された全店舗がピンとして地図に表示される画面に遷移する
+- ピンをクリックすると店舗名と平均評価がポップアップで表示される
+- ポップアップの「詳細」リンクから店舗詳細ページに戻れる
+
+非ゴール: ピンの色分け、絞り込み、現在地ボタン
+(必要になったら第2スコープとして別 spec にする)
+</code></pre>
+              </li>
+              <li>第5回までに書いた PRD がある人は <strong>Memory Import の <code>@</code> 構文</strong>(<code>@docs/prd/&lt;feature&gt;.md</code>)で渡す。PRD の「背景・成功基準・非ゴール」が <code>spec.md</code> の構成に流れ込む</li>
+              <li>生成された <code>specs/&lt;NNN&gt;-&lt;feature-slug&gt;/spec.md</code> を開いて確認するポイント:
+                <ul>
+                  <li><strong>ユーザーストーリーが具体的か</strong>(「ボタンを押すと地図画面に遷移する」レベルで具体的か)</li>
+                  <li><strong>受け入れ基準が「これが緑になれば完成」と言えるか</strong>(主観表現「使いやすい」「速い」を含んでいないか)</li>
+                  <li><strong>非ゴールが明示されているか</strong>(やらないことが書いてあるか)</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong><code>/speckit.clarify</code> で曖昧点を解消(15分)</strong></p>
+            <ul>
+              <li><code>/speckit.clarify</code> を呼ぶと Spec Kit が <code>spec.md</code> を読んで <strong>「あいまいな点・足りない情報」を質問</strong>してくる(公式 README に明記の SDD 標準コマンド)</li>
+              <li>典型的な質問例: 「ピンに表示するのは店舗名と平均評価だけですか? 営業時間や写真も?」「店舗が0件のとき何を表示しますか?」「地図の初期表示位置はどう決めますか?」</li>
+              <li>1問1問に「<strong>来週の自分が迷わない</strong>」レベルで具体的に答える。<strong>「あとで考える」と答えるなら非ゴールに追記</strong>する</li>
+              <li><code>spec.md</code> に質問・回答が追記されていく。「ここまで決まっていれば実装できる」状態を目指す</li>
+            </ul>
+            <p><strong>spec.md レビュー(10分)</strong></p>
+            <ul>
+              <li>近くの人と <code>spec.md</code> を交換して読み合う</li>
+              <li>レビュー観点: 「自分(他人)が来週これを読んで、実装に着手できるか?」「<strong>主観表現が残っていないか</strong>(「直感的」「シンプル」等)」「<strong>非ゴールが書いてあるか</strong>」</li>
+              <li>指摘があれば <code>spec.md</code> を直接編集して反映(<code>agy</code> の <code>/edit</code> ではなく自分の手で。仕様は人間が責任を持つ)</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>PRD と spec.md の役割分担(再確認):</strong> PRD は<strong>「なぜ作るか」(意図)</strong>、Spec Kit の <code>spec.md</code> は<strong>「動くものとしての受け入れ基準」</strong>。同じ機能でも目的が違うので両方残す。PRD は将来 ADR と一緒に「なぜそう判断したか」を伝え、<code>spec.md</code> は「これが動けば完成」を伝える。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3><code>/speckit.plan</code> → ADRに重要設計判断を残す → テスト計画(DoD)を spec.md にリンクする</h3>
+          <div class="timeline-body">
+            <p><strong><code>/speckit.plan</code> で技術的実装計画を生成(20分)</strong></p>
+            <ul>
+              <li>同じ <code>agy</code> セッションで <code>/speckit.plan</code> を呼ぶ。Spec Kit は <code>spec.md</code> を読んで、<strong>技術スタック・コンポーネント分割・データフロー・採用ライブラリ</strong>を含む <code>plan.md</code> を生成する</li>
+              <li>進級制作の既存構成を踏まえた追加情報をプロンプトで渡す(<code>plan.md</code> の精度がぐっと上がる)。例:
+                <pre><code>plan を立てる際の制約:
+- 既存進級制作は Vite + 素の JavaScript (React 未導入)
+- 地図ライブラリは Leaflet 1.9.4 (第9回で導入済)
+- ジオコードは Open-Meteo Geocoding API (登録不要・無料枠)
+- 既存ページ構成は src/pages/ に HTML 直書き
+- 既存テストランナーは vitest (npm test で起動)
+</code></pre>
+              </li>
+              <li>第5回 Plan Mode との違い:
+                <ul>
+                  <li>第5回 Plan Mode: <strong>1機能の実装ステップ列挙</strong>(人間が markdown を別保存)</li>
+                  <li>Spec Kit <code>/speckit.plan</code>: <strong>仕様ファイル(<code>spec.md</code>)と紐づいた <code>plan.md</code></strong>。<code>specs/&lt;NNN&gt;-&lt;feature-slug&gt;/</code> の中で他の生成物と一緒に管理される</li>
+                </ul>
+              </li>
+              <li>plan.md レビュー観点: 「<strong>採用した技術の理由が書かれているか</strong>」「<strong>進級制作の既存構成と矛盾しないか</strong>」「<strong>外部依存(API key・ライブラリ追加)が明示されているか</strong>」</li>
+            </ul>
+            <p><strong>ADR を1本書く(20分)</strong></p>
+            <ul>
+              <li><code>plan.md</code> の中から<strong>「重要な設計判断」を1つ</strong>選ぶ(複数あれば後回しでOK、今日は1本を完成させる)。例:
+                <ul>
+                  <li>「React に移行するか、素の JS のまま進めるか」</li>
+                  <li>「Leaflet にするか、Mapbox / Google Maps にするか」</li>
+                  <li>「店舗データを localStorage に置くか、JSON ファイルとして配信するか」</li>
+                  <li>「テストランナーを vitest にするか、Jest にするか」</li>
+                </ul>
+              </li>
+              <li>ADR(Architectural Decision Record)とは: <strong>「単一の設計判断と、その根拠を記録する文書」</strong>(adr.github.io 公式: <em>"An Architectural Decision Record (ADR) captures a single AD and its rationale; Put it simply, ADR can help you understand the reasons for a chosen architectural decision, along with its trade-offs and consequences."</em>)</li>
+              <li>本授業で採用するテンプレート: <strong>Michael Nygard 形式</strong>(2011年 "Documenting Architecture Decisions" で提唱、ADR エコシステムで最広く使われている形式)。<a href="https://github.com/joelparkerhenderson/architecture-decision-record" target="_blank" rel="noopener">Joel Parker Henderson の ADR examples リポジトリ</a>に多数の参考実装あり</li>
+              <li>ファイル配置: <code>docs/adr/0001-&lt;decision-slug&gt;.md</code>(連番 + 短い slug)。最低限の4節構成:
+                <pre><code># 0001. Leaflet を採用する(Mapbox / Google Maps ではなく)
+
+## ステータス
+Accepted (2026-XX-XX)
+
+## 背景 (Context)
+進級制作に地図表示機能を追加する必要がある。候補は3つ:
+Leaflet (OSS / OpenStreetMap)、Mapbox (商用 / 無料枠あり)、
+Google Maps Platform (商用 / 無料枠 $200/月相当)。
+
+## 決定 (Decision)
+Leaflet 1.9.4 + OpenStreetMap タイルを採用する。
+
+## 理由・なぜ他を採らなかったか
+- 登録手続き・API key 不要(授業時間内に実装に着手できる)
+- 商用ライセンスの心配がない (OSS / BSD-2)
+- 第9回で最小実装の動作確認済み
+- Mapbox / Google は将来のスケール時に再評価する(別 ADR で)
+
+## 結果・trade-off (Consequences)
+- OSM タイルは商用利用時に attribution 表示が必須
+- ベクタータイルや高度なスタイルが必要になったら Mapbox 再評価
+- 1日あたりのタイル取得量に注意 (OSM タイル利用規約)
+</code></pre>
+              </li>
+              <li>ADR は <code>agy</code> に下書きさせて OK。ただし「<strong>なぜ他を採らなかったか</strong>」「<strong>trade-off</strong>」は<strong>自分の言葉で必ず推敲</strong>する(ここが ADR の価値の本体)</li>
+            </ul>
+            <p><strong>テスト計画 = Definition of Done を spec.md にリンク(10分)</strong></p>
+            <ul>
+              <li><strong>Definition of Done(完成の定義)</strong>を spec.md の末尾に追記する。第11回(実装)で「<strong>これが緑になれば完成</strong>」と言える条件のリスト</li>
+              <li>テスト計画の最小フォーマット(例):
+                <pre><code>## Definition of Done
+
+このスコープが完成したと言えるのは、以下が全て満たされたとき:
+
+- [ ] 受け入れ基準 1〜3 に対応する vitest テストが存在し、全て緑
+- [ ] GitHub Actions の test ワークフローが PR で緑になる
+- [ ] 「地図で見る」ボタンから地図画面に遷移できる(手動確認)
+- [ ] 店舗が0件のときも画面が崩れない(手動確認)
+- [ ] ADR-0001 (Leaflet 採用) を docs/adr/ に push 済み
+</code></pre>
+              </li>
+              <li>第7回 TDD の知識を再利用: 受け入れ基準と1対1のテストが書ける粒度に <code>spec.md</code> を保つ。「使いやすい」「速い」のような主観表現が残っていたら、<strong>具体的な観測可能条件に書き換える</strong>(「3 秒以内に表示」「1 タップで遷移」等)</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>spec.md / plan.md / ADR / DoD の関係:</strong> spec.md は「<strong>何が動けば完成か(WHAT)</strong>」、plan.md は「<strong>どう作るか(HOW)</strong>」、ADR は「<strong>なぜそう決めたか(WHY)</strong>」、DoD は「<strong>緑になる条件のリスト</strong>」。来週(第11回)実装に入った自分が迷ったら、この4つを順に読み返す。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3><code>/speckit.tasks</code> → GitHub Issue 分解 → GitHub Project に並べる</h3>
+          <div class="timeline-body">
+            <p><strong><code>/speckit.tasks</code> で tasks.md を生成(10分)</strong></p>
+            <ul>
+              <li><code>/speckit.tasks</code> を呼ぶと、Spec Kit は <code>plan.md</code> を読んで <strong>実行可能なタスク一覧</strong>(<code>tasks.md</code>)を生成する</li>
+              <li>レビュー観点(第6回からの再確認):
+                <ul>
+                  <li><strong>仕様の受け入れ基準と1対1で紐づくタスクがあるか</strong>(漏れチェック)</li>
+                  <li><strong>1タスクの粒度が「30〜60分で終わりそう」か</strong>(大きすぎるタスクは分割を <code>agy</code> に依頼)</li>
+                  <li><strong>テストを先に書けるタスクか</strong>(第7回 TDD で Red → Green → Refactor を回せる粒度か)</li>
+                  <li><strong>依存関係が見えるか</strong>(タスク A が終わらないと B に着手できない、等)</li>
+                </ul>
+              </li>
+              <li>5〜10件の Issue 候補が並んでいれば適切なサイズ。15件以上なら分割しすぎ、3件以下なら粒度が大きすぎる</li>
+            </ul>
+            <p><strong>tasks.md を GitHub Issue に分解(10分)</strong></p>
+            <ul>
+              <li><code>tasks.md</code> の各行を <strong>GitHub Issue</strong> として作成する。<code>gh</code> CLI(Codespaces には標準で入っている)を使うと一括で楽:
+                <pre><code># 1件ずつ作る例
+gh issue create \
+  --title "[feat] 地図画面のルーティングを追加 (#1/8)" \
+  --body "$(cat &lt;&lt;'EOF'
+spec.md 受け入れ基準 1 に対応。
+src/pages/map.html を新規作成、src/main.js のルーターに /map を追加。
+完了条件: vitest の routing.test.js が緑、ブラウザで /map に遷移できる。
+EOF
+)" \
+  --label "feat,spec-kit"
+</code></pre>
+              </li>
+              <li>Issue タイトルに <strong>spec.md の受け入れ基準番号</strong>を含めると追跡しやすい</li>
+              <li>Issue 本文には「<strong>完了条件</strong>」(DoD の該当行を引用)を必ず入れる</li>
+              <li>Codespaces から <code>gh issue create</code> は事前検証済みで動作する。失敗した場合は GitHub Web UI から手動でも OK(機能は同等)</li>
+            </ul>
+            <p><strong>GitHub Project にまとめる(10分)</strong></p>
+            <ul>
+              <li>一次出典: <a href="https://docs.github.com/ja/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects" target="_blank" rel="noopener">GitHub Docs ja — Projects の について</a>。Projects は<strong>適応性のあるテーブル・ボード・ロードマップの3レイアウトで作業を視覚化</strong>するツール(公式 docs より)</li>
+              <li>GitHub Web UI で 進級制作リポジトリ → <strong>Projects タブ → New project</strong> → テンプレート「<strong>Board</strong>」を選択 → 名前を「&lt;機能名&gt; SDD」のように付ける</li>
+              <li>作成した Issue 群を Project に追加(Project の画面で <code>+</code> ボタン → リポジトリの Issue を選択 / または各 Issue の右サイドバー「Projects」セクションから追加)</li>
+              <li>カラム構成は最小限で OK: <strong>Todo / In progress / Done</strong>。慣れたら「Blocked」「Review」を増やす</li>
+              <li>今日の最後の状態として、<strong>Todo カラムに全 Issue が並んでいる</strong>状態を作る。これが第11回の出発点になる</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>Project は「次に何をやるか」を1画面で見るためのもの:</strong> Issue を作るだけだと一覧が長くなって埋もれる。Board に並べると「Todo に何枚あるか」「In progress に何枚詰んでいるか」が即座に見える。第11回の冒頭でこの Board を開いて1枚 In progress に移すところから始める。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り&次回予告</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>今日のキーワード: <strong>SDD実践 / <code>/speckit.specify</code> / <code>/speckit.clarify</code> / <code>/speckit.plan</code> / <code>/speckit.tasks</code> / spec.md / plan.md / ADR(Michael Nygard 形式) / DoD / GitHub Issue / GitHub Project</strong></li>
+              <li>覚えてほしいこと: <strong>spec.md は「何が動けば完成か(WHAT)」、ADR は「なぜそう決めたか(WHY)」</strong>。実装は来週(第11回)。今日は「<strong>来週の自分が迷わないように、判断を残す</strong>」回</li>
+              <li>SDD サイクル(Spec Kit 公式 <em>"Spec → Plan → Tasks → Implement. Define what to build before building it."</em>)の今日のカバー範囲:
+                <ul>
+                  <li>✅ Spec: <code>/speckit.specify</code> + <code>/speckit.clarify</code> → <code>spec.md</code></li>
+                  <li>✅ Plan: <code>/speckit.plan</code> → <code>plan.md</code> + ADR で重要判断を補強</li>
+                  <li>✅ Tasks: <code>/speckit.tasks</code> → <code>tasks.md</code> → GitHub Issue + Project</li>
+                  <li>⏭ Implement: 第11回で <code>/speckit.implement</code> + TDD サイクル</li>
+                </ul>
+              </li>
+              <li>次回(第11回): <strong>SDD実践プロジェクト②：実装</strong>。今日作った <code>tasks.md</code> / GitHub Project を起点に、<code>/speckit.implement</code> と TDD サイクル(第7回)を組み合わせて1タスクずつ Green にしていく。<strong>MCP サーバー</strong>連携(Antigravity CLI の MCP 対応)で外部ツール(DB・API等)と接続する体験も含む</li>
+              <li>家での発展(任意): tasks.md の Issue 化を10件分やりきる/spec.md の「非ゴール」を見直して曖昧点が残っていないか再確認/ADR をもう1本追加(plan.md 内の別の重要判断)</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>spec.md を完成させて push</strong>
+            <p>授業中に書いた <code>specs/&lt;NNN&gt;-&lt;feature-slug&gt;/spec.md</code> を見直し、<strong>主観表現を1つも残さない</strong>状態にして push。「使いやすい」「速い」「シンプル」等が残っていたら、<strong>「3 秒以内に表示」「1 タップで遷移」「200 文字以内」</strong>等の観測可能条件に書き換える。<code>/speckit.clarify</code> が残した質問・回答も全部反映済の状態に。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>ADR を1本完成させて push</strong>
+            <p><code>docs/adr/0001-&lt;decision-slug&gt;.md</code> を Michael Nygard 形式 4 節(ステータス / 背景 / 決定 / 理由・なぜ他を採らなかったか / 結果・trade-off)で完成させて push。「なぜ他を採らなかったか」と「trade-off」は <code>agy</code> の下書きを<strong>自分の言葉で必ず推敲</strong>する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>tasks.md → GitHub Issue 群 → GitHub Project に並べきる</strong>
+            <p>授業中に作った Project が <strong>Todo カラムに全 Issue が並んでいる</strong>状態を完成。各 Issue 本文に「<strong>完了条件</strong>」(DoD 該当行)が入っていることを確認。第11回の冒頭で1枚 In progress に移すところから始められる状態に。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>spec.md / plan.md / ADR / DoD の関係を <code>docs/sdd-overview.md</code> に図示</strong>
+            <p>進級制作リポジトリの <code>docs/sdd-overview.md</code>(新規 OK)に、<strong>spec.md / plan.md / ADR / DoD がどう繋がっているか</strong>を 4 ボックスの図(箇条書きでも可)で残す。第12回(検証と改善)・第13回以降の振り返りで参照する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>ADR をもう1本追加(plan.md 内の別の重要判断)</strong>
+            <p>plan.md を読み返し、<strong>「これも判断だ」と気づいたもの</strong>(テストランナー選定・データ保存場所・スタイリング手法 等)から1つ選んで ADR-0002 を書く。<strong>1機能で ADR が複数あっても全く問題ない</strong>——むしろ判断が見えて良い。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://github.com/github/spec-kit" target="_blank" rel="noopener">github/spec-kit</a> — Spec Kit 公式リポジトリ。<code>/speckit.*</code> スラッシュコマンド一覧と <code>specify init --integration &lt;agent&gt;</code> 対応エージェント一覧の正本</li>
+        <li><a href="https://github.github.com/spec-kit/" target="_blank" rel="noopener">Spec Kit 公式 docs(github.github.com/spec-kit)</a> — コアプロセス "Spec → Plan → Tasks → Implement" の公式逐語引用</li>
+        <li><a href="https://github.github.com/spec-kit/reference/integrations.html" target="_blank" rel="noopener">Spec Kit 公式 docs — Integrations reference</a> — 全 40+ integration の <code>--integration</code> キー一覧。<code>agy</code>(Antigravity) は <strong>skills-based integration; skills are installed automatically</strong> として正式対応</li>
+        <li><a href="https://docs.github.com/ja/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects" target="_blank" rel="noopener">GitHub Docs ja — Projects の について</a> — テーブル / ボード / ロードマップの3レイアウト・項目(Issue / PR / draft)・カスタムフィールドの正本</li>
+        <li><a href="https://docs.github.com/ja/issues/tracking-your-work-with-issues" target="_blank" rel="noopener">GitHub Docs ja — 課題であなたの作業を追跡する</a> — Issue の基本(作成・ラベル・割り当て・close 連動)</li>
+        <li><a href="https://adr.github.io/" target="_blank" rel="noopener">Architectural Decision Records(adr.github.io)</a> — ADR エコシステムのハブサイト。定義・テンプレート集・ツール一覧</li>
+        <li><a href="https://github.com/joelparkerhenderson/architecture-decision-record" target="_blank" rel="noopener">joelparkerhenderson/architecture-decision-record</a> — ADR の参考実装集(Michael Nygard 形式 / Y-statement 等のテンプレート例)</li>
+        <li><a href="https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions" target="_blank" rel="noopener">Michael Nygard — Documenting Architecture Decisions(2011)</a> — Michael Nygard 形式 ADR の原典記事</li>
+        <li><a href="https://antigravity.google/docs/cli-plan-mode" target="_blank" rel="noopener">Antigravity CLI — Plan mode(公式)</a> — <code>agy</code> 単体の Plan mode(<code>Shift+Tab</code> で切替・読み取り専用設計フェーズ)。Spec Kit の SDD サイクルと併用する位置づけ</li>
+        <li><a href="https://antigravity.google/docs/cli-reference" target="_blank" rel="noopener">Antigravity CLI — CLI reference(公式)</a> — スラッシュコマンド一覧・<code>agy plugin list</code> 等</li>
+        <li><a href="https://www.anthropic.com/engineering/harness-design-long-running-apps" target="_blank" rel="noopener">Anthropic Engineering — Harness design for long-running application development</a> — 第8回からの継続参照。SDD の「設計を残す」行為自体がハーネスのガイド(事前制御)に当たる</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week09.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第9回 進級制作で Map を使う：Leaflet × ジオコード × 天気 API</span>
+      </a>
+      <a href="../natural-language-dev.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">自然言語開発</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第11回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
