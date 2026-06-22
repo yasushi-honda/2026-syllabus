@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第9回 繰り返しと配列 | プログラム基礎 I</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--blue">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../program-basics.html">プログラム基礎 I</a>
+        <span>/</span>
+        <span>第9回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">繰り返しと<wbr>配列</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 9</span>
+            <span class="page-badge">火曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">第8回の小ゲームでは<strong>サイコロを 1 回だけ</strong>振った。今日は<strong>同じことを 10 回繰り返す</strong>のに、コピペで 10 行書くのではなく <code>for</code> 文で 1 度だけ書く方法を学ぶ。あわせて<strong>複数のデータをひとつの変数にまとめる「配列」</strong>を導入し、<code>for</code> 文と組み合わせて<strong>リスト表示アプリ</strong>を作る。新規ファイル <code>list.html</code> を作って GitHub Pages に追加公開する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">繰り返し / <code>for</code> 文（初期化・条件・更新の 3 点セット） / 配列 / インデックス（0 から始まる） / <code>length</code> / <code>push</code> / 配列と <code>for</code> 文の組み合わせ / リスト表示アプリ / <code>document.createElement</code> + <code>appendChild</code> / 追加ページ（<code>list.html</code>） / 再デプロイ</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第8回までに作った <strong>GitHub Pages 公開済みリポジトリ</strong>・Codespaces が起動できる状態・第6回のおみくじ（<code>Math.random</code>）と第7回の <code>if</code> 文を一度書いた経験</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li><strong>配列</strong>が「複数の値をひとつの変数にまとめて入れる入れ物」であることを自分の言葉で説明できる</li>
+        <li><code>const items = ["a", "b", "c"];</code> のように配列を宣言し、<code>items[0]</code> でインデックス指定して値を取り出せる</li>
+        <li><code>for</code> 文の<strong>初期化・条件・更新</strong>の 3 点セットを 1 度は手で書く</li>
+        <li><code>for</code> 文と配列を組み合わせて、<strong>配列の全要素を順番に表示</strong>できる</li>
+        <li>新規ファイル <code>list.html</code> を作り、commit &amp; push で<strong>自動再デプロイ</strong>される流れを再体験する</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>「10 回振りたい」を素朴に書いてみる → 繰り返しの必要性を体感する</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り（10分）</strong></p>
+            <ul>
+              <li>第8回で作った<code>game.html</code> を Codespaces で開き直す（<code>python3 -m http.server 8000</code> → 第1回と同じ手順で Simple Browser）</li>
+              <li>ページを何度か更新して、サイコロが毎回 1 回だけ振られて結果が 1 つだけ出ることを確認</li>
+              <li>「<strong>毎回更新しないと次の目が出ない</strong>」のがやや不便。今日は<strong>1 回ページを開いただけで 10 回分の結果が並ぶ</strong>形を目指す</li>
+            </ul>
+            <p><strong>素朴に「10 回」書いてみる（15分）</strong></p>
+            <ul>
+              <li><code>game.html</code> の <code>&lt;script&gt;</code> ブロックを開き、ためしに<strong>サイコロのコードを 10 個コピペ</strong>してみる:
+                <pre><code>const dice1 = Math.floor(Math.random() * 6) + 1;
+console.log(dice1);
+const dice2 = Math.floor(Math.random() * 6) + 1;
+console.log(dice2);
+const dice3 = Math.floor(Math.random() * 6) + 1;
+console.log(dice3);
+// ... これを 10 個まで書く</code></pre>
+              </li>
+              <li>保存して Simple Browser で <code>game.html</code> を開き、<strong>F12 → Console タブ</strong>で 10 個の数字が並ぶことを確認</li>
+              <li>書いていて気づくはず: 「<strong>同じことを 10 回書くのは面倒</strong>」「<strong>変数名 <code>dice1</code> 〜 <code>dice10</code> を全部覚えていられない</strong>」「<strong>100 回にしたくなったら破綻する</strong>」</li>
+              <li>この「面倒」「破綻する」の感覚が、今日学ぶ <code>for</code> 文と配列が登場する理由</li>
+            </ul>
+            <p><strong>「同じことを繰り返す」を 1 文で書く方法を予告（15分）</strong></p>
+            <ul>
+              <li>同じコードを 10 回書くかわりに、JavaScript には<strong>「これを 10 回繰り返してね」</strong>と頼める書き方がある——それが <code>for</code> 文</li>
+              <li>そして 10 個の結果を <code>dice1</code> 〜 <code>dice10</code> という別々の変数に入れるかわりに、<strong>1 個の入れ物に並べて入れる</strong>書き方がある——それが配列</li>
+              <li><code>for</code> 文と配列の<strong>2 つを組み合わせる</strong>ことで、「サイコロを 10 回振って結果を順番に表示する」が、たった 4〜5 行のコードで書けるようになる</li>
+              <li>先に 10 個コピペした <code>&lt;script&gt;</code> は、1 限後半で書き直すので<strong>消さずに残しておく</strong>（書き直しのとき、新旧で見比べて違いを実感するため）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「面倒だな」と感じる感覚を大切に:</strong> プログラミングの便利な書き方の多くは、「<strong>同じことを何度も書くのが面倒</strong>」という人間側の感覚から生まれています。<code>for</code> 文・配列・関数（次回）も全部その仲間です。<strong>「楽したい」と感じた瞬間が、新しい書き方を学ぶ準備ができたサイン</strong>と覚えておいてください。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>配列と <code>for</code> 文を手で書く → サイコロ 10 回を 4 行で書き直す</h3>
+          <div class="timeline-body">
+            <p><strong>配列の基本（15分）</strong></p>
+            <ul>
+              <li>配列は<strong>角括弧 <code>[ ]</code></strong> で複数の値を並べて書く:
+                <pre><code>const fruits = ["りんご", "みかん", "ぶどう"];
+console.log(fruits[0]);    // "りんご"
+console.log(fruits[1]);    // "みかん"
+console.log(fruits[2]);    // "ぶどう"
+console.log(fruits.length); // 3</code></pre>
+              </li>
+              <li>注意点 3 つ:
+                <ul>
+                  <li><strong>インデックスは 0 から始まる</strong>——<code>fruits[1]</code> は 2 番目（みかん）になる</li>
+                  <li><strong><code>.length</code> で要素数</strong>が取れる——3 個なら 3 が返る</li>
+                  <li><strong>後から要素を追加するときは <code>push</code></strong>——<code>fruits.push("メロン");</code> で末尾にメロンが入る</li>
+                </ul>
+              </li>
+              <li>F12 の Console に直接打ち込んで、上の 4 行を実行して結果を確認</li>
+            </ul>
+            <p><strong><code>for</code> 文の基本（15分）</strong></p>
+            <ul>
+              <li><code>for</code> 文は<strong>初期化・条件・更新</strong>の 3 点セットで書く:
+                <pre><code>for (let i = 0; i &lt; 3; i++) {
+  console.log(i);
+}</code></pre>
+              </li>
+              <li>3 点セットの意味:
+                <ul>
+                  <li><strong>初期化 <code>let i = 0</code></strong>: ループの最初に 1 回だけ実行。<code>i</code> という変数を 0 で開始</li>
+                  <li><strong>条件 <code>i &lt; 3</code></strong>: ループのたびにチェック。<strong>true なら中身を実行</strong>、false なら終わり</li>
+                  <li><strong>更新 <code>i++</code></strong>: 中身を 1 回実行した後に <code>i</code> を 1 増やす（<code>i = i + 1</code> の短縮形）</li>
+                </ul>
+              </li>
+              <li>上の例は <code>i</code> が 0 → 1 → 2 と変わって 3 回ログが出る（<strong>3 回で止まる</strong>のは条件 <code>i &lt; 3</code> が false になるから）</li>
+              <li><strong>よくあるミス</strong>: 条件を <code>i &lt;= 3</code> にすると 4 回回ってしまう。<code>length</code> と組み合わせるときは <strong><code>i &lt; fruits.length</code></strong> が定型句</li>
+            </ul>
+            <p><strong>サイコロ 10 回を 4 行に書き直す（20分）</strong></p>
+            <ul>
+              <li>1 限前半で 10 個コピペしたコードの<strong>下に</strong>、新しく次のコードを書く（古いコードは消さずに残す、見比べたいので）:
+                <pre><code>const diceResults = [];
+for (let i = 0; i &lt; 10; i++) {
+  diceResults.push(Math.floor(Math.random() * 6) + 1);
+}
+console.log(diceResults);</code></pre>
+              </li>
+              <li>保存して Simple Browser を更新。F12 の Console に <strong>10 個の数字が並んだ配列</strong>が出ることを確認</li>
+              <li>確認ポイント:
+                <ul>
+                  <li>10 個コピペした旧コードと比べて、<strong>4 行で同じことをしている</strong></li>
+                  <li>「100 回にしたい」と思ったら、<code>10</code> を <code>100</code> に書き換えるだけ</li>
+                  <li><code>diceResults[0]</code> や <code>diceResults[9]</code> で個別の値も取り出せる</li>
+                </ul>
+              </li>
+              <li>動いたことを確認したら、旧コード（<code>dice1</code> 〜 の 10 行コピペ）は消してよい。<code>for</code> 文を残す</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>新規ファイル <code>list.html</code> を作る → 配列の中身を画面にリスト表示する</h3>
+          <div class="timeline-body">
+            <p><strong>新規ファイル <code>list.html</code> を作る（10分）</strong></p>
+            <ul>
+              <li>第8回と同じ手順——ファイル一覧で<strong>右クリック → New File</strong>、<code>list.html</code> をリポジトリのルートに作成（<code>index.html</code> と同じ階層）</li>
+              <li>最小 HTML テンプレ:
+                <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="ja"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;お気に入りリスト&lt;/title&gt;
+  &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;私のお気に入り&lt;/h1&gt;
+  &lt;p&gt;配列に入れたものを &lt;code&gt;for&lt;/code&gt; 文で全部表示します&lt;/p&gt;
+  &lt;ul id="favorite-list"&gt;&lt;/ul&gt;
+  &lt;p&gt;&lt;a href="index.html"&gt;トップに戻る&lt;/a&gt;&lt;/p&gt;
+
+  &lt;script&gt;
+    // ここに配列と for 文を書く（次の手順で）
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+              </li>
+              <li><code>index.html</code> 側にもリンクを 1 行追加: <code>&lt;p&gt;&lt;a href="list.html"&gt;お気に入りリストを見る&lt;/a&gt;&lt;/p&gt;</code>（第8回の <code>game.html</code> リンクの下に並べる）</li>
+              <li>Simple Browser で <code>index.html</code> を更新 → 新しいリンクをクリックして <code>list.html</code> に移動できることを確認</li>
+            </ul>
+            <p><strong>配列の中身を <code>&lt;li&gt;</code> として並べる（25分）</strong></p>
+            <ul>
+              <li><code>&lt;script&gt;</code> ブロックの中に、次のコードを書く:
+                <pre><code>const favorites = [
+  "好きな食べ物：カレー",
+  "好きな色：青",
+  "好きな音楽：J-POP",
+  "好きな場所：図書館"
+];
+
+const ul = document.getElementById("favorite-list");
+
+for (let i = 0; i &lt; favorites.length; i++) {
+  const li = document.createElement("li");
+  li.textContent = favorites[i];
+  ul.appendChild(li);
+}</code></pre>
+              </li>
+              <li>新しく出てきた 3 つの書き方:
+                <ul>
+                  <li><strong><code>document.createElement("li")</code></strong>: 新しい <code>&lt;li&gt;</code> 要素を JavaScript で作る</li>
+                  <li><strong><code>li.textContent = ...</code></strong>: 作った <code>&lt;li&gt;</code> の中身（テキスト）を設定（第6回・第7回でも <code>textContent</code> を使った）</li>
+                  <li><strong><code>ul.appendChild(li)</code></strong>: 作った <code>&lt;li&gt;</code> を <code>&lt;ul&gt;</code> の子として末尾に追加</li>
+                </ul>
+              </li>
+              <li>保存して Simple Browser を更新——<strong>4 つの項目が箇条書きで表示</strong>されたら成功</li>
+              <li>うまく動かないときは F12 → Console タブ。よくあるエラー:
+                <ul>
+                  <li><strong><code>Cannot read properties of null</code></strong>: HTML 側の <code>id="favorite-list"</code> のスペルミス、または <code>&lt;script&gt;</code> が <code>&lt;ul&gt;</code> より上にある（第6回と同じパターン）</li>
+                  <li><strong>表示が出ない</strong>: <code>li.textContent</code> ではなく <code>li.textcontent</code> など大文字小文字のミスがないか</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>「自分のお気に入り」に書き換える（15分）</strong></p>
+            <ul>
+              <li>テンプレの 4 項目を、<strong>自分自身のお気に入り</strong>に書き換える（4〜6 項目くらい）</li>
+              <li>項目の数を変えても <code>for</code> 文の <code>favorites.length</code> が自動的に追従するので、<strong><code>for</code> 文側を直す必要はない</strong>——これが <code>.length</code> を使うご利益</li>
+              <li>個人情報（本名・住所・学校名・電話番号）は書かない原則は授業共通。「<strong>クラスメイトに見せても OK な範囲</strong>」で書く</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「画面に出す = HTML を JS で作って差し込む」:</strong> 第6回・第7回では <code>textContent</code> で<strong>すでにある要素</strong>の中身を書き換えました。今日は <code>createElement</code> + <code>appendChild</code> で<strong>新しい要素を JavaScript 側で作って</strong>差し込む書き方を覚えました。第11回（DOM 操作とイベント）で本格的に扱いますが、今日はその予告編として「<strong>JS で HTML を組み立てることができる</strong>」と知っておけば十分です。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>commit &amp; push で追加公開 → スマホ実機で確認</h3>
+          <div class="timeline-body">
+            <p><strong>commit &amp; push で再デプロイ（10分）</strong></p>
+            <ul>
+              <li>第8回と同じ流れ——Codespaces 左側の<strong>「ソース管理」</strong>タブを開く</li>
+              <li>変更ファイルとして <code>list.html</code>（新規）と <code>index.html</code>（リンク追記）が一覧に出ているはず</li>
+              <li>コミットメッセージ例: <code>お気に入りリストを追加</code></li>
+              <li>「Commit」→「Sync Changes」（または「Push」）で GitHub に反映</li>
+              <li>Week 4 で有効化済みなので<strong>自動的に再デプロイ</strong>される。Settings 操作は不要</li>
+            </ul>
+            <p><strong>新しい公開URLを確認（10分）</strong></p>
+            <ul>
+              <li>今回追加した URL は <code>https://&lt;ユーザー名&gt;.github.io/&lt;リポジトリ名&gt;/list.html</code></li>
+              <li>ブラウザの別タブで開いて、Simple Browser と同じ表示が再現できるか確認</li>
+              <li>反映待ちは公式で最大10分、通常 1〜3 分（第8回と同じ）。すぐ反映されないときは Mac: <code>Cmd</code> + <code>Shift</code> + <code>R</code> / Windows: <code>Ctrl</code> + <code>Shift</code> + <code>R</code></li>
+              <li>これであなたの公開URLは<strong>3 本</strong>になった——プロフィール (<code>/</code>)、小ゲーム (<code>/game.html</code>)、お気に入りリスト (<code>/list.html</code>)</li>
+            </ul>
+            <p><strong>スマホ実機で開く（10分）</strong></p>
+            <ul>
+              <li>新しい公開URL（<code>/list.html</code>）をスマホで開く（LINE で自分宛、または QR 経由）</li>
+              <li>第5回で書いたレスポンシブのスタイルが効いていれば、スマホでも箇条書きが崩れず表示されるはず</li>
+              <li>同じリポジトリの中で<strong>ページが増えても、デザインは共通の <code>style.css</code> が当たり続ける</strong>ことを実感する</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ program-basics.html Week 10 「関数とコード整理＆バグ修正ワーク③」と同期 -->
+              <li>次回（第10回）: <strong>関数とコード整理＆バグ修正ワーク③</strong>——同じような処理を何度も書くかわりに <code>関数</code> としてまとめる方法を学ぶ。AI に「バグ入り関数」を生成させて読み解く演習も行う</li>
+              <li>今日のキーワード <strong>「配列 <code>[ ]</code>」「インデックスは 0 から」「<code>length</code>」「<code>for (let i = 0; i &lt; length; i++)</code>」「<code>createElement</code> + <code>appendChild</code>」</strong>を口に出して言えるか確認して退出</li>
+              <li>家で <code>favorites</code> 配列に項目を追加・削除して、リストの表示が自動で変わることを 1 回でも確認しておくと <code>length</code> の働きが体に入る</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>お気に入りリストを公開URL（<code>/list.html</code>）で見られる状態にして push する</strong>
+            <p>授業内で公開が間に合わなかった人は家で完成させ、必ず<strong>スマホでも動作確認</strong>してから push する。リポジトリには <code>list.html</code> と、<code>index.html</code> に追加したリンクの両方が入っていること。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>favorites</code> 配列の項目数を変えて、リストが追従することを確認する</strong>
+            <p>1 つ追加してみる・1 つ削除してみる、を最低 1 回ずつ。<code>for</code> 文の本体は変えずに <code>length</code> だけで動くことを目で確かめる。NOTES.md に「配列の項目を変えると <code>&lt;li&gt;</code> も自動で増減した」と 1 行メモする。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>サイコロ 10 回の結果を <code>game.html</code> の画面にも表示してみる</strong>
+            <p>1 限後半で書いた <code>diceResults</code> 配列を、今日学んだ <code>createElement</code> + <code>appendChild</code> で <code>&lt;ul&gt;</code> に並べてみる。第8回の <code>game.html</code> に手を加えるので、うまく動かなかったら<strong>追加部分だけコメントアウト</strong>して元に戻せるようにする。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/for" target="_blank" rel="noopener">MDN — <code>for</code></a> — <code>for</code> 文の公式リファレンス。初期化・条件・更新の 3 点セットの仕様</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array" target="_blank" rel="noopener">MDN — Array</a> — 配列の公式リファレンス。今日扱った以外のメソッドも一覧で見られる</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/length" target="_blank" rel="noopener">MDN — <code>Array.prototype.length</code></a> — 配列の長さを返すプロパティ</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/push" target="_blank" rel="noopener">MDN — <code>Array.prototype.push()</code></a> — 配列の末尾に要素を追加するメソッド</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/Document/createElement" target="_blank" rel="noopener">MDN — <code>document.createElement()</code></a> — 新しい HTML 要素を JavaScript で作るメソッド（第11回でもまた使う）</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week08.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第8回 🎯ミニ完成② 小ゲーム公開</span>
+      </a>
+      <a href="../program-basics.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">プログラム基礎 I</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第10回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
