@@ -23,6 +23,7 @@ program-basics/         # プログラム基礎 I の各回詳細ページ
   week06.html           #   第6回 JavaScript入門：変数と出力
   week07.html           #   第7回 条件分岐＆バグ修正ワーク②
   week08.html           #   第8回 🎯ミニ完成② 小ゲーム公開
+  week09.html           #   第9回 繰り返しと配列
 ai-communication.html   # AIコミュニケーション基礎（火3・4限）
 ai-communication/       # AIコミュニケーション基礎の各回詳細ページ
   week01.html           #   第1回 オリエンテーションとAI概論
