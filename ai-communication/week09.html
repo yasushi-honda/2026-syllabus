@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第9回 AI出力の検証と改善 | AIコミュニケーション基礎</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication.html">AIコミュニケーション基礎</a>
+        <span>/</span>
+        <span>第9回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">AI出力の<wbr>検証と<wbr>改善</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 9</span>
+            <span class="page-badge">火曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">第4回で扱った<strong>「AI はわざと間違うことがある」</strong>を、今度は<strong>毎回自分で確かめる習慣</strong>に落とし込む。AI の応答を「<strong>自分でファクトチェックする</strong>」3 段階の手順——① 第8回で覚えた<strong>引用 [1] [2] をクリック</strong>して原文と一致しているか確認 → ② <strong>引用が付かなかった一文</strong>を見つける → ③ 必要なら<strong>公式情報や別ソース</strong>で裏取りする——を、自分のAIの応答で 1 周まわす。さらに <strong>AI に「自分で改善案を出させる」</strong>個人演習で、AI の自己訂正能力を批判的に評価する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">ファクトチェック / 3 段階の検証手順 / 引用クリックによる原文確認 / 引用なし箇所の検出 / 公式情報での裏取り / AI に改善案を出させる / 改善後の応答を再評価 / 【学習データ⑨】ファクトチェック手順資料</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第8回までに <strong>【学習データ①〜⑧】</strong> を投入した「自分だけのAI」（NotebookLM）・Google ドキュメントが使える状態・第8回で書いた「自分の課題」と AI の整理結果（NOTES.md または Google ドキュメント）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>「ファクトチェック」が<strong>「AI を疑うこと」ではなく「AI と一緒に出典をたどること」</strong>であることを自分の言葉で説明できる</li>
+        <li>AI の応答を<strong>3 段階（引用クリック / 引用なし箇所の検出 / 公式情報での裏取り）</strong>で点検できる</li>
+        <li>授業内で <strong>【学習データ⑨】ファクトチェック手順資料</strong> を作成し、自分のAIに追加する</li>
+        <li>AI に<strong>「自分の応答の根拠が薄い箇所を自分で指摘してください」</strong>と依頼し、改善案を引き出せる</li>
+        <li>AI が出した改善案を<strong>そのまま採用せず、自分でもう一度評価する</strong>サイクルを 1 周まわせる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の振り返りと「なぜファクトチェックが必要か」を整理する</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り（10分）</strong></p>
+            <ul>
+              <li>第8回で投入した <strong>【学習データ⑧】課題解決フレームワーク資料</strong> がソースに入っているか NotebookLM で確認</li>
+              <li>家で KPT / SMART / PDCA のうち未使用のフレームワークで同じ課題を掘り直したか、希望者が一人 1〜2 文で共有</li>
+              <li>第8回で覚えた<strong>インライン引用 [1] [2]</strong> をクリックして、AI が拾った原文に飛ぶ感覚を取り戻す</li>
+            </ul>
+            <p><strong>第4回と何が違うか（15分）</strong></p>
+            <ul>
+              <li>第4回（AIの能力と限界を知る）では「<strong>わざと事実誤認のある回答を作らせて自分で誤りを見つける</strong>」演習を行った——AI が間違える瞬間を<strong>1 度</strong>体験するのが狙い</li>
+              <li>第9回は同じ姿勢を<strong>「毎回自分で確かめる習慣」</strong>に落とし込む——AI が間違える瞬間を<strong>毎回検出する手順</strong>を身につけるのが狙い</li>
+              <li>2026 年現在の生成 AI は、第4回で扱った <strong>Dynamic Thinking</strong>・ツール実行などの改善で正確さが上がっているが、それでも次のパターンは残ることがある:
+                <ul>
+                  <li><strong>引用なしの自信ある主張</strong>: AI が「〜です」と断定するが、出典が示されないケース</li>
+                  <li><strong>引用と本文の言い回しの差</strong>: [1] をクリックすると原文と AI の言い換えの間にニュアンス差があるケース（第8回で気づいた人もいるはず）</li>
+                  <li><strong>複数ソースの混ぜ合わせ</strong>: 文脈の異なる記述を 1 つの結論にまとめてしまうケース</li>
+                </ul>
+              </li>
+              <li>これらを<strong>「AI を信じない」</strong>ではなく<strong>「AI と一緒に出典をたどる」</strong>姿勢で扱う——後者の方が学習として効率がいい</li>
+            </ul>
+            <p><strong>3 段階の検証手順を予告（15分）</strong></p>
+            <ul>
+              <li>今日学ぶのは、応答を読みながら 3 段階で点検する手順:
+                <ul>
+                  <li><strong>① 引用クリック</strong>: [1] [2] が付いている一文は、引用元をクリックしてハイライト箇所を読む（第8回の続き）</li>
+                  <li><strong>② 引用なし箇所の検出</strong>: 応答の中で<strong>引用が付いていない一文</strong>を見つける——そこは AI の解釈や一般知識で、ソースに根拠がない可能性が高い</li>
+                  <li><strong>③ 公式情報での裏取り</strong>: 重要な主張（数字・固有名詞・年号など）は、必要に応じて Web 検索や公式情報で 1 度確認する</li>
+                </ul>
+              </li>
+              <li>毎回 ①②③ を全部やる必要はない——<strong>重要な決定に使う応答ほど厳しく</strong>、雑談寄りなら ① だけでよい</li>
+              <li>1 限後半でこの 3 段階を実際に試す</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「ファクトチェック = AI を疑うこと」ではない:</strong> AI を疑い始めると、応答そのものが信じられなくなって何も進まなくなります。ファクトチェックの本当の効用は「<strong>AI が自信を持って答えている箇所と、AI が解釈で言っている箇所を区別できるようになる</strong>」こと。区別できれば、引用なしの一文を見つけたときに「<strong>ここは自分で裏取りが要る</strong>」と判断できる——これが AI と長く付き合う技術です。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>3 段階の検証手順を自分の応答で試す</h3>
+          <div class="timeline-body">
+            <p><strong>検証用の応答を出す（10分）</strong></p>
+            <ul>
+              <li>NotebookLM のチャットに、過去ソースを横断する質問を投げる（応答に複数の引用が付くお題を選ぶ）:
+                <pre><code>これまでに私が投入した【学習データ①〜⑧】の内容を踏まえて、
+「私が AI を活用するときに最も大事にしたい姿勢」を 3 つに整理してください。
+それぞれの姿勢が、どの資料のどの一文から導かれたかを引用 [1] [2] で示してください。</code></pre>
+              </li>
+              <li>応答を Google ドキュメントの新規ファイルにコピペして残す（後で <strong>【学習データ⑨】</strong> の素材にする）</li>
+            </ul>
+            <p><strong>① 引用クリックで原文を確認（15分）</strong></p>
+            <ul>
+              <li>応答の中の引用 [1] [2] を<strong>すべて</strong>クリックして、原文を確認（公式日本語ヘルプの表現では「<strong>引用部分を選択すると、引用元の該当箇所に自動的に移動する</strong>」——画面上は移動先で色付きに見えるので、本シラバスでは <strong>「ハイライト箇所」</strong>と呼ぶことにする）</li>
+              <li>確認する 3 点（第8回と同じ）:
+                <ul>
+                  <li><strong>飛んだ先のソース名</strong>: 自分が投入した【学習データ①〜⑧】のどれか</li>
+                  <li><strong>ハイライト箇所</strong>: 移動先でソース内のどの一文に色が付いているか</li>
+                  <li><strong>AI の解釈とのズレ</strong>: 「ハイライトされた一文」と AI の応答の一文が同じことを言っているか</li>
+                </ul>
+              </li>
+              <li>ズレがあった箇所は、Google ドキュメントに「<strong>原文 / AI の言い回し / 自分の感想</strong>」の 3 行でメモ</li>
+              <li>「<strong>ズレが 1 つもなかった</strong>」場合は、応答が短すぎる可能性がある——もう少し具体的な質問に変えて再実行してみる</li>
+            </ul>
+            <p><strong>② 引用なし箇所を探す（15分）</strong></p>
+            <ul>
+              <li>応答を上から読み直して、<strong>引用 [n] が付いていない一文</strong>に色マーカー（Google ドキュメントなら蛍光ペン）を引く</li>
+              <li>引用なし箇所には主に 3 種類ある:
+                <ul>
+                  <li><strong>つなぎの文</strong>: 「以下にまとめます」「この点は重要です」など、事実主張ではないもの——気にしなくてよい</li>
+                  <li><strong>一般知識の言い換え</strong>: ソースになくても世間で広く知られていそうなこと——保留でよいが念のため記録</li>
+                  <li><strong>具体的な事実主張なのに引用なし</strong>: 数字・人名・年号・固有名詞などが含まれるのに引用が付いていない——<strong>裏取り必須</strong></li>
+                </ul>
+              </li>
+              <li>3 種類のうち最後（裏取り必須）に該当するものを 1 つでも見つけられたら成功。見つからなければ、応答が抽象的すぎる証拠なので、AI に<strong>「数字や固有名詞を含めて」</strong>と頼んで再生成すると検出しやすい</li>
+            </ul>
+            <p><strong>③ 公式情報で裏取り（10分）</strong></p>
+            <ul>
+              <li>②で見つけた「具体的な事実主張なのに引用なし」を 1 件選んで、別タブで<strong>Google 検索</strong>または<strong>該当サービスの公式サイト</strong>で裏取り</li>
+              <li>裏取りの結果が AI の主張と<strong>一致した / 微妙にずれた / 大きく違った</strong>のどれかを Google ドキュメントにメモ</li>
+              <li>「微妙にずれた」「大きく違った」が出たら大成功——これが第4回で扱った「AI のハルシネーション」を自分で検出できた瞬間。今後同じパターンに出会ったらすぐ気づける</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>【学習データ⑨】ファクトチェック手順資料を作成し投入する</h3>
+          <div class="timeline-body">
+            <p><strong>「自分用のチェック手順」を言葉にする（10分）</strong></p>
+            <ul>
+              <li>1 限後半でやった 3 段階を、<strong>自分の言葉で書き直す</strong>のが今日のメインゴール</li>
+              <li>言葉にしておく利点:
+                <ul>
+                  <li>次回以降、AI の応答を見たときに<strong>自然に思い出せる</strong></li>
+                  <li>【学習データ⑨】として NotebookLM に投入すると、自分のAIが<strong>「あなたのチェック基準ではこの応答はどう評価される？」</strong>と聞ける相手になる</li>
+                  <li>第14回（AI育成②：知識の体系化）で振り返るとき、自分の検証姿勢の変化が見える</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>書く内容（20分）</strong></p>
+            <ul>
+              <li>Google ドキュメントを新規作成、ファイル名を <strong><code>【学習データ⑨】ファクトチェック手順資料</code></strong> にする</li>
+              <li>第5〜8回と同じく<strong>見出し1〜3 + 箇条書き</strong>で構造化する</li>
+              <li>項目（最低限）:
+                <ul>
+                  <li><strong>見出し1: ファクトチェック手順資料</strong></li>
+                  <li><strong>見出し2: なぜファクトチェックが必要か</strong> — 第4回と第9回で学んだことを 3〜5 行で自分の言葉で要約</li>
+                  <li><strong>見出し2: 3 段階の検証手順</strong> — ① 引用クリック / ② 引用なし箇所の検出 / ③ 公式情報での裏取り、それぞれを「いつ・どこで・何を見るか」で 2〜3 行ずつ</li>
+                  <li><strong>見出し2: 今日見つけたズレ・引用なし箇所の記録</strong> — 1 限後半でメモした原文 / AI の言い回し / 自分の感想を転記</li>
+                  <li><strong>見出し2: AI に改善案を出させるプロンプト 3 つ</strong> — 2 限後半で使うプロンプトを下書きしておく（テンプレ参照）</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>NotebookLM のソースに追加する（20分）</strong></p>
+            <ul>
+              <li>第2〜8回と同じ手順で、<strong>【学習データ⑨】</strong> をソース追加</li>
+              <li>追加直後に自分のAIに質問:
+                <pre><code>【学習データ⑨】に書いた「3 段階の検証手順」を踏まえて、
+1 限後半で出した私の「AI 活用姿勢 3 つ」の応答を点検してください。
+- 引用なしの一文がないか
+- 引用元と AI の言い回しにズレがないか
+- 数字・固有名詞で裏取りが必要な箇所がないか
+を整理して、引用 [1] [2] を付けて回答してください。</code></pre>
+              </li>
+              <li>自分のAIが<strong>「ファクトチェック相棒」</strong>として動き始めるのを観察する——これは第10回（中間振り返り）で「自分のAIがどう成長したか」を見る素材になる</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「全部の応答にファクトチェックは不要」:</strong> 3 段階の手順を毎回フル稼働させると疲れます。雑談・ブレスト・要約のような<strong>結論を決める前段</strong>では ① だけで十分。レポートに書く・人に説明する・自分の判断の根拠にする、のような<strong>結論を出すための応答</strong>では ②③ まで踏み込む——この使い分けが現実的な運用です。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>AI に改善案を出させて、自分でもう一度評価する</h3>
+          <div class="timeline-body">
+            <p><strong>AI に「自分の応答の弱点」を指摘させる（15分）</strong></p>
+            <ul>
+              <li>1 限後半で出した「AI 活用姿勢 3 つ」の応答について、自分のAIに次のプロンプトを投げる:
+                <pre><code>先ほどあなた（NotebookLM）が出した「AI 活用姿勢 3 つ」の応答について、
+あなた自身が「ここは根拠が薄い」「ここは引用元と微妙にずれている」と
+感じる箇所を 3 つまで指摘してください。
+それぞれについて、改善案も合わせて提示してください。</code></pre>
+              </li>
+              <li>応答の中で AI が「自己批判」した箇所と、自分が 1 限後半で見つけた箇所を比較する</li>
+              <li>典型的な観察パターン:
+                <ul>
+                  <li><strong>AI も自分も同じ箇所を指摘した</strong>: その箇所は確かに弱い——改善案を採用するか検討</li>
+                  <li><strong>自分は気づかなかったが AI が指摘した</strong>: 自分のチェックがまだ甘い箇所——【学習データ⑨】に追記する素材</li>
+                  <li><strong>自分は気になったが AI は指摘しなかった</strong>: AI の自己点検にも限界がある——人間側のチェックがやはり必要、という事実</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>改善案を「そのまま採用しない」評価ステップ（10分）</strong></p>
+            <ul>
+              <li>AI が出した改善案は、たいてい<strong>もっともらしく見える</strong>——だからこそ、採用前に 3 つだけ自問する:
+                <ul>
+                  <li><strong>① その改善案の根拠は応答内で引用されているか？</strong>（引用なしならまた裏取りが要る）</li>
+                  <li><strong>② 改善案を採用すると、元の主張と矛盾しないか？</strong>（AI は応答内で矛盾することがある）</li>
+                  <li><strong>③ 改善案を採用するメリットを自分の言葉で 1 行で書けるか？</strong>（書けないなら、まだ理解できていない）</li>
+                </ul>
+              </li>
+              <li>3 つに 1 つでも「No」が出たら、その改善案は<strong>保留</strong>。AI に追加質問するか、自分で別ソースを探す</li>
+              <li>「Yes」が 3 つ揃った改善案は採用してよい——ただし採用したらコメントで「<strong>採用日 / 採用理由</strong>」を残す（後で振り返るため）</li>
+            </ul>
+            <p><strong>気づきを 1 行でまとめる（5分）</strong></p>
+            <ul>
+              <li>今日の体験を 1 文で書き出す:
+                <pre><code>私にとって AI 出力の検証とは、
+○○○○○ことだと思った。</code></pre>
+              </li>
+              <li>正解はない。「AI と一緒に出典をたどる作業」「自信ある一文ほど疑う合図」「自分の判断の根拠を作るための下準備」など、自分の体感に近い言葉でよい</li>
+              <li>この一文も【学習データ⑨】の末尾に追記しておくと、第14回（AI育成②）で読み返したときに変化が見える</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ ai-communication.html Week 10 「中間振り返り」と同期 -->
+              <li>次回（第10回）: <strong>中間振り返り</strong>——これまでの「自分だけのAI」の成長記録を自分で見直す。改善ポイントを自分のAIに相談し、後半戦の学習テーマを再設定する</li>
+              <li>今日のキーワード <strong>「3 段階の検証手順」「引用クリック」「引用なし箇所」「公式情報での裏取り」「AI に改善案を出させて自分で評価」</strong>を口に出して言えるか確認して退出</li>
+              <li>家では今日授業で見つけた「裏取り必須」箇所を 1 つ実際に検索してみる——【学習データ⑨】に「裏取り結果」を 2〜3 行で追記しておくと、第10回の振り返り素材が増える</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>【学習データ⑨】ファクトチェック手順資料 テンプレ(コピー用)</h2>
+      <p>授業内で書ききれなかった人や<strong>家でゼロから作り直したい人</strong>、<strong>別の Google アカウントで作り直したい人</strong>のために、テンプレ本文をここからコピーできるようにしてある。</p>
+      <p><strong>使い方:</strong></p>
+      <ol>
+        <li>下の「Markdown をコピー」ボタンを押す</li>
+        <li><a href="https://docs.google.com" target="_blank" rel="noopener">Google ドキュメント</a> で新規ドキュメントを開く(ファイル名は <strong>「【学習データ⑨】ファクトチェック手順資料」</strong>)</li>
+        <li>Google ドキュメントの <strong>ツール → 設定 → 全般タブ →「マークダウンを有効にする」</strong>がオンになっているか確認(第5〜8回までに設定した人はそのまま)</li>
+        <li>本文に <strong>編集 →「マークダウンから貼り付け」</strong>で貼り付ける(普通の Ctrl/⌘+V でも内容は使えるので、Markdown 整形にこだわらない人はそのままで OK)→ 空欄を自分の言葉で埋める</li>
+        <li>NotebookLM の自分だけのAIで「ソースを追加」→「ドライブ」→ このドキュメントを選択</li>
+      </ol>
+      <p><strong>個人情報を入れない原則は第1〜8回と同じ。</strong>本名・住所・電話番号・学籍番号は書かない。書ける範囲で OK・空欄でも OK。</p>
+      <button class="copy-md-btn" data-md-source="fact-check-procedure-md">
+        <span class="btn-icon"></span> Markdown をコピー
+      </button>
+<pre id="fact-check-procedure-md" class="md-preview"># ファクトチェック手順資料(NotebookLM 用)
+
+> このシートは「自分だけのAI」の 9 つ目のソースとして使います。
+> 第1〜8回で蓄積した【学習データ①〜⑧】に「AI 応答を自分で点検する手順」を足すことで、自分のAIが「あなたのチェック基準で点検してみてください」と頼める相手になります。
+> 個人情報(本名・住所・電話番号・学籍番号など)は書かないこと。書ける範囲で OK・空欄でも OK。
+
+## ① なぜファクトチェックが必要か
+第4回(AI の能力と限界)と第9回(AI 出力の検証と改善)で学んだことを自分の言葉で 3〜5 行で要約する。
+
+→
+
+## ② 3 段階の検証手順
+AI 応答を読みながら、必要に応じて以下の 3 段階で点検する。全部毎回やる必要はない。
+
+**① 引用クリック**
+- いつ:
+- どこで:
+- 何を見るか:
+
+**② 引用なし箇所の検出**
+- いつ:
+- どこで:
+- 何を見るか:
+- 引用なし箇所の 3 種類(つなぎの文 / 一般知識の言い換え / 具体的事実主張)のうち、どれが「裏取り必須」か:
+
+**③ 公式情報での裏取り**
+- いつ:
+- どこで:
+- 何を見るか:
+- 私がよく使う裏取りの一次情報源(公式サイト / 公式ヘルプ / 公的機関のページなど):
+
+## ③ 今日見つけたズレ・引用なし箇所の記録
+1 限後半で見つけた箇所を転記する。空欄でも OK。
+
+**ズレ 1**
+- AI の応答の該当箇所:
+- 引用元のハイライト原文:
+- 自分の感想(同じ / 微妙にずれた / 大きく違った):
+
+**引用なし箇所 1**
+- AI の応答の該当箇所:
+- 引用なし箇所の種類(つなぎ / 一般知識 / 具体的事実主張):
+- 裏取りの必要性(不要 / 念のため / 必須):
+- 裏取りの結果(公式情報と一致 / 微妙にずれた / 大きく違った):
+
+## ④ AI に改善案を出させるプロンプト 3 つ
+2 限後半で使ったプロンプトを、自分の言い回しに整える形で保存する。次回以降コピーで使えるようにする。
+
+**問い A: AI に自己批判させる**
+
+```
+先ほどあなた(NotebookLM)が出した「○○」の応答について、
+あなた自身が「ここは根拠が薄い」「ここは引用元と微妙にずれている」と
+感じる箇所を 3 つまで指摘してください。
+それぞれについて、改善案も合わせて提示してください。
+```
+
+→ 自分の言い回しに整えた版:
+
+→
+
+**問い B: 引用なし箇所の検出を AI に頼む**
+
+```
+先ほどあなたが出した応答の中で、引用 [1] [2] が付いていない一文を
+すべて列挙してください。
+それぞれの一文について「つなぎの文 / 一般知識の言い換え / 具体的な事実主張」のどれに当たるか分類してください。
+```
+
+→ 自分の言い回しに整えた版:
+
+→
+
+**問い C: 自分のチェック基準で点検させる**
+
+```
+【学習データ⑨】に書いた「3 段階の検証手順」を踏まえて、
+先ほどあなたが出した応答を点検してください。
+- 引用なしの一文がないか
+- 引用元と AI の言い回しにズレがないか
+- 数字・固有名詞で裏取りが必要な箇所がないか
+を整理して、引用 [1] [2] を付けて回答してください。
+```
+
+→ 自分の言い回しに整えた版:
+
+→
+
+## ⑤ 採用 / 保留の判断基準
+AI が出した改善案を採用するかどうかを決める前に、3 つの自問に答える。
+
+**自問 1: その改善案の根拠は応答内で引用されているか？**
+- Yes / No:
+- メモ:
+
+**自問 2: 改善案を採用すると、元の主張と矛盾しないか？**
+- 矛盾しない / 矛盾する:
+- メモ:
+
+**自問 3: 改善案を採用するメリットを自分の言葉で 1 行で書けるか？**
+- 書ける / 書けない:
+- 1 行で書いてみる:
+
+→ 3 つに 1 つでも No が出たら採用は保留する。
+
+## ⑥ 私にとって AI 出力の検証とは(自由記入)
+今日の体験を 1 文で書く。空欄でも OK。
+
+→ 私にとって AI 出力の検証とは、
+</pre>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>【学習データ⑨】ファクトチェック手順資料を完成させて NotebookLM に投入する</strong>
+            <p>授業内で書ききれなかった項目を埋め、第5〜8回で学んだ<strong>見出し1〜3と箇条書き</strong>で構造化した状態でソースに入れる。投入済みかどうかは次回確認します。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>授業で見つけた「裏取り必須」箇所を 1 つ実際に検索する</strong>
+            <p>1 限後半 ② で見つけた「具体的な事実主張なのに引用なし」を 1 件選んで、Google 検索または公式サイトで裏取り。結果（一致 / 微妙にずれた / 大きく違った）と、参照した URL を <strong>【学習データ⑨】の「③ 引用なし箇所 1」</strong> に追記する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>第10回（中間振り返り）に向けて、これまでの自分のAIに 1 つ感想を聞く</strong>
+            <p>NotebookLM のチャットに「<strong>これまでに私が投入した【学習データ①〜⑨】を踏まえて、私の学び方の特徴を引用付きで 3 つ挙げてください</strong>」と投げる。応答を Google ドキュメントに保存しておくと、次回の振り返りの素材になる（応答にも今日学んだ ① 引用クリックを 1〜2 回試して、ズレがあれば【学習データ⑨】の③に追記しておく）。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> — 今日の演習のメイン会場。<strong>【学習データ①〜⑨】</strong> を投入した「自分だけのAI」</li>
+        <li><a href="https://support.google.com/notebooklm" target="_blank" rel="noopener">NotebookLM ヘルプ</a> — 公式ヘルプセンター。インライン引用やソース管理の最新仕様はここから（ヘルプ記事の URL は時々再編されるため、検索バーから機能名を入力するのが確実）</li>
+        <li><a href="https://workspace.google.com/resources/ai/writing-effective-prompts/" target="_blank" rel="noopener">Gemini for Workspace — プロンプト初級ガイド</a> — 第6〜8回でも使った 4 要素（ペルソナ・タスク・背景情報・形式）。AI に「自己批判させる」プロンプトを設計するときも同じ枠組みが使える</li>
+        <li><a href="https://ai.google.dev/gemini-api/docs/prompting-strategies" target="_blank" rel="noopener">Google AI for Developers — Prompt design strategies</a> — 公式の設計戦略。引用を強制させる質問の組み方の根拠</li>
+        <li><a href="https://docs.google.com" target="_blank" rel="noopener">Google ドキュメント</a> — <strong>【学習データ⑨】</strong> の作成会場</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week08.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第8回 自分のAIを使いこなす</span>
+      </a>
+      <a href="../ai-communication.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AIコミュニケーション基礎</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第10回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
