@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第11回 SDD実践プロジェクト②：実装 | 自然言語開発</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+  <!-- 公式情報確認: 2026-06-24 (github.github.com/spec-kit/quickstart.html 実H1「Quick Start Guide」+ /speckit.analyze → /speckit.implement の正式ワークフロー + github/spec-kit README + antigravity.google/docs/mcp（公式 MCP integration docs、HTTP 200 / SPA）+ antigravity.google/docs/cli-reference（/mcp スラッシュコマンド・~/.gemini/config/mcp_config.json）+ docs.github.com/ja/get-started/using-github/github-flow 実H1「GitHub フロー」+ anthropic.com/engineering/harness-design-long-running-apps（ハーネス品質チェックの設計原則）) -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev.html">自然言語開発</a>
+        <span>/</span>
+        <span>第11回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">SDD実践<wbr>プロジェクト<wbr>②：実装</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 11</span>
+            <span class="page-badge">木曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">第10回で固めた <code>spec.md</code> / <code>plan.md</code> / ADR / GitHub Project を起点に、<code>/speckit.implement</code> と <strong>TDD サイクル</strong>（第7回）を組み合わせて 1 タスクずつ Green に変えていく実装回。<strong>MCP サーバー連携</strong>で外部ツール（GitHub・DB・API 等）と接続する体験と、<strong>GitHub Flow（Branch → Commit → PR → Review → Merge）</strong>を 1 周回しきる演習を含む</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value"><code>/speckit.analyze</code> / <code>/speckit.implement</code> / TDD サイクル（Red → Green → Refactor）/ MCP（Model Context Protocol）/ Antigravity CLI の <code>/mcp</code> / <code>~/.gemini/config/mcp_config.json</code> / ハーネスによる品質チェック（事前制御 + 事後制御）/ GitHub Flow / feature ブランチ / Pull Request / レビュー観点</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第10回完了（<code>specs/&lt;NNN&gt;-&lt;feature-slug&gt;/spec.md</code> + <code>plan.md</code> + <code>docs/adr/0001-*.md</code> + <code>tasks.md</code> + GitHub Project の Todo カラムに Issue が並んでいる状態）／第7回完了（vitest 等のテストランナーが <code>npm test</code> で動く）／第8回完了（Antigravity CLI <code>agy</code> セットアップ済・GitHub Actions の <code>test.yml</code> が緑）。<strong>第10回の宿題が未完成の人</strong>は本回 1 限前半の最初の 10 分で最低限の状態（Issue 3 件以上）まで仕上げる</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>第10回で生成した <code>tasks.md</code> の各タスクを、<strong>TDD サイクル（Red → Green → Refactor）</strong>で 1 枚ずつ Green に変えていく流れを 1 周体験する</li>
+        <li><code>/speckit.analyze</code>（仕様・計画・タスクの整合性チェック）を <code>/speckit.implement</code> 前に走らせる<strong>運用習慣</strong>を作る（Spec Kit 公式: <em>"For production features with meaningful ambiguity, run <code>/speckit.analyze</code> before <code>/speckit.implement</code> to check spec/plan/task consistency"</em>）</li>
+        <li>Antigravity CLI の <code>/mcp</code> で <strong>MCP（Model Context Protocol）サーバー</strong>を 1 つ接続し、agy に「外部ツールに繋がる手」を与える体験を持つ（GitHub MCP / Filesystem MCP / Web Fetch MCP のいずれか 1 つを<strong>講師が事前検証済みの最小構成</strong>で配布）</li>
+        <li><strong>ハーネスによる品質チェック</strong>の考え方（Anthropic Engineering "Harness design for long-running application development" 由来）を、自分のリポジトリの <code>test.yml</code>（事前制御）+ コードレビュー（事後制御）と対応付けて 1〜2 行で説明できる</li>
+        <li><strong>GitHub Flow</strong>（公式 6 ステップ: ①分岐を作成 ②変更を加える ③pull request を作成 ④レビューコメントに対処 ⑤pull request をマージ ⑥ブランチを削除）を 1 タスク分で 1 周完走する（feature ブランチ → push → PR → セルフレビュー or ペアレビュー → squash merge → Project 上で Issue が Done に移動 → マージ済みブランチ削除）</li>
+        <li>「実装が止まったとき」の<strong>切り分け手順</strong>（① テスト失敗の原文を読む → ② <code>spec.md</code> の受け入れ基準と照合 → ③ <code>plan.md</code> / ADR の判断と矛盾していないか → ④ agy に状況を全文で渡す）を体に覚えさせる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>SDD 実践プロジェクトの中間地点（Week10 → 11 → 12）</h2>
+      <div class="lesson-tip">
+        <strong>3週連続プロジェクトの 2 週目:</strong> 第10回 <strong>設計</strong>（spec / plan / ADR / Issue 化）→ 本日（第11回 <strong>実装</strong>: TDD + MCP + GitHub Flow）→ 第12回 <strong>検証と改善</strong>（テスト結果分析 + リファクタリング + セキュリティ観点）。今日は「<strong>動くもの</strong>」を増やす日。Issue を 1 枚 Done に移すたびに「今、何枚 Done か」が Project で見えるのが本日の楽しさ。<strong>全タスク完了は目指さなくてよい</strong>——「TDD サイクル 1 周 + GitHub Flow 1 周 + MCP 1 つ接続」を体験すれば本日は合格。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続(90分 + 90分 = 計180分)。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>第10回の振り返り → <code>/speckit.analyze</code> で仕様整合性を確認 → MCP の位置づけ紹介</h3>
+          <div class="timeline-body">
+            <p><strong>第10回宿題の状態チェック(10分)</strong></p>
+            <ul>
+              <li>各自の進級制作リポジトリで以下が揃っているか確認:
+                <ul>
+                  <li><code>specs/&lt;NNN&gt;-&lt;feature-slug&gt;/spec.md</code>（受け入れ基準が <strong>「これが緑になれば完成」</strong>と言える状態）</li>
+                  <li><code>specs/&lt;NNN&gt;-&lt;feature-slug&gt;/plan.md</code></li>
+                  <li><code>docs/adr/0001-&lt;decision-slug&gt;.md</code></li>
+                  <li><code>specs/&lt;NNN&gt;-&lt;feature-slug&gt;/tasks.md</code></li>
+                  <li>GitHub Project の Todo カラムに Issue が <strong>3 件以上</strong>並んでいる</li>
+                </ul>
+              </li>
+              <li>未完成の人は <strong>最低限の状態</strong>（Issue 3 件以上 + spec.md の受け入れ基準）まで本セクション内で仕上げる。今日はあくまで実装回なので、設計の作り込みは家での発展で続ける</li>
+              <li>近くの人と Project の URL を見せ合い「Todo に何件・どんなタイトル」を 1 分ずつ報告</li>
+            </ul>
+            <p><strong><code>/speckit.analyze</code> で仕様・計画・タスクの整合性を確認(15分)</strong></p>
+            <ul>
+              <li><code>agy</code> を起動し、進級制作リポジトリで <code>/speckit.analyze</code> を呼ぶ</li>
+              <li>Spec Kit 公式 docs（Quick Start Guide）は <code>/speckit.clarify</code> / <code>/speckit.checklist</code> / <code>/speckit.analyze</code> を <strong>"regular quality gates"</strong> として位置づけ、<code>/speckit.analyze</code> は <strong>"check spec/plan/task consistency before implementation starts"</strong>（実装に入る前に spec / plan / task の整合性を確認する）役割と説明している。実装後の追加レビューとして再度 <code>/speckit.analyze</code> を回すことも可能</li>
+              <li>典型的に出る指摘例:
+                <ul>
+                  <li>「spec.md の受け入れ基準 2 に対応するタスクが tasks.md に見当たらない」</li>
+                  <li>「plan.md は <code>vitest</code> 採用と書いてあるが、tasks.md は <code>jest</code> のテストを指している」</li>
+                  <li>「ADR-0001 が Leaflet 採用と決めているが、tasks.md は Mapbox SDK の install を含んでいる」</li>
+                </ul>
+              </li>
+              <li>指摘があれば spec.md / plan.md / tasks.md をその場で直す。<strong>整合性を取ってから実装に入る</strong>のが SDD の鉄則（第10回の合言葉「<strong>spec.md は『何が動けば完成か』</strong>」をここでも適用）</li>
+            </ul>
+            <p><strong>MCP（Model Context Protocol）とは何か(15分)</strong></p>
+            <ul>
+              <li>本回で初登場の概念。1 行で言うと「<strong>agy に外部ツールを使わせるための統一プロトコル</strong>」</li>
+              <li>これまでの agy: テキスト生成 + ファイル編集 + シェルコマンド実行（一部）が中心 → <strong>MCP サーバーを繋ぐと、agy が GitHub API・データベース・Web fetch・社内 API 等を「自分の道具」として扱える</strong></li>
+              <li>本授業で扱う MCP の位置づけ:
+                <ul>
+                  <li>第8回ハーネスエンジニアリング入門で扱った「<strong>ハーネスの拡張点</strong>」の 1 つ。Hooks（実行前後で割り込む）に対して、MCP は「<strong>新しい道具を加える</strong>」拡張</li>
+                  <li>本日のゴールは「<strong>とりあえず 1 つ繋がる体験</strong>」。深い活用は第12回以降と進級制作の本実装で</li>
+                </ul>
+              </li>
+              <li>今日繋ぐ候補（講師事前検証済みの最小構成を 1 つ選んで配布、教室の Wi-Fi 状況・認証可否で当日選択）:
+                <ul>
+                  <li><strong>GitHub MCP server</strong>（Issue 一覧取得・PR 操作・file diff 取得が agy から直接叩ける。PAT 要）</li>
+                  <li><strong>Filesystem MCP server</strong>（プロジェクト外のファイルも安全に読み書き可能。設定が一番軽量）</li>
+                  <li><strong>Fetch MCP server</strong>（任意の URL を agy が取得して読み込み。第9回 Map で使った Open-Meteo を agy 内から直接叩ける）</li>
+                </ul>
+              </li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>今日の合言葉:</strong> 「<strong>analyze → implement → test → commit → PR の 1 周を、agy と一緒に体験する</strong>」。失敗してもよい。1 タスク Green になるまでの「<strong>つまずきの場所</strong>」を覚えて持って帰る回。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3><code>/speckit.implement</code> × TDD サイクルで 1 枚目の Issue を Green に変える</h3>
+          <div class="timeline-body">
+            <p><strong>feature ブランチを切る(5分) — GitHub Flow の起点</strong></p>
+            <ul>
+              <li>GitHub Project の Todo カラムから 1 枚目を選び、In progress に移動</li>
+              <li>その Issue 番号と短いタイトルから feature ブランチを作る:
+                <pre><code># Issue #12 「[feat] 地図画面のルーティングを追加」の場合
+git checkout main
+git pull
+git checkout -b feat/12-map-routing
+</code></pre>
+              </li>
+              <li>ブランチ名規約: <strong><code>&lt;type&gt;/&lt;issue-number&gt;-&lt;short-slug&gt;</code></strong>（type は <code>feat</code> / <code>fix</code> / <code>chore</code> / <code>docs</code> 等。短い slug で他の人が一覧で分かるように）。GitHub Docs 公式: <em>「短く分かりやすいブランチ名を付けると、コラボレーターが一覧で進行中の作業を把握できる」</em></li>
+            </ul>
+            <p><strong>TDD サイクル Red(15分)</strong></p>
+            <ul>
+              <li>第7回の復習: <strong>Red → Green → Refactor</strong>。最初に「<strong>失敗するテスト</strong>」を書いて、機能の輪郭を明確にする</li>
+              <li>agy に対する指示の出し方（spec.md と Issue の受け入れ条件を引用するのがコツ）:
+                <pre><code>Issue #12 (spec.md 受け入れ基準 1 に対応) のテストを先に書きます。
+@specs/001-map-feature/spec.md の受け入れ基準 1 を満たすかを確認する
+vitest のテストを src/__tests__/routing.test.js に追加してください。
+
+期待する挙動:
+- 「地図で見る」ボタンを押すと URL が /map に変わる
+- /map では map ページのコンポーネントがレンダリングされる
+- spec.md の非ゴール（ピンの色分け）はテスト対象に含めない
+
+実装はまだ書かないでください。テストだけ追加して、npm test が
+Red(失敗)になることを確認してください。
+</code></pre>
+              </li>
+              <li><code>npm test</code> を回し、書いたテストが <strong>失敗</strong>することを確認（Red 達成）。「期待していた通りに失敗しているか」をテキストで読む（テスト名・期待値・実際値）</li>
+              <li>Red のテキストを<strong>そのまま貼って agy に共有</strong>してから Green に進む（agy にも「今は Red、これから Green に持っていく」と状況を伝える）</li>
+            </ul>
+            <p><strong>TDD サイクル Green(20分) — <code>/speckit.implement</code> を呼ぶ</strong></p>
+            <ul>
+              <li><code>/speckit.implement</code> を呼ぶ。Spec Kit 公式: <em>「<code>/speckit.implement</code> はプランを実行する」</em>。tasks.md と spec.md / plan.md を参照しながら、必要なファイルを編集してくれる</li>
+              <li>本日の指示の出し方（Issue 1 枚分に絞る）:
+                <pre><code>/speckit.implement
+
+tasks.md のうち、Issue #12 「地図画面のルーティングを追加」に
+対応するタスクだけを実装してください。
+他のタスクには触れないでください。
+
+完了条件: src/__tests__/routing.test.js が npm test で Green。
+</code></pre>
+              </li>
+              <li>agy が edit を提案してきたら、<strong>diff を必ず目で確認</strong>してから accept する。事故防止の鉄則は第8回ハーネス回と同じ</li>
+              <li><code>npm test</code> を回し直して Green を確認（Red → Green 達成）</li>
+              <li>Green にならない場合の切り分け順:
+                <ol>
+                  <li><strong>テスト失敗のメッセージ全文</strong>を読む（期待値・実際値・スタックトレース）</li>
+                  <li><strong>spec.md の受け入れ基準</strong>と照合（テストが基準を正しく表現しているか）</li>
+                  <li><strong>plan.md / ADR</strong> の判断と矛盾していないか（例: ADR で Leaflet 採用なのに Mapbox SDK を呼ぼうとしていないか）</li>
+                  <li>上記 3 ステップを終えても解けないとき、<strong>状況を全文（テスト出力 + 直近の diff + 該当 spec 引用）</strong>を agy に渡して相談</li>
+                </ol>
+              </li>
+            </ul>
+            <p><strong>TDD サイクル Refactor(10分)</strong></p>
+            <ul>
+              <li>Green が出たら、コードを<strong>読みやすくする</strong>段階。命名・関数分割・重複削除を行う</li>
+              <li>Refactor 中も <code>npm test</code> が Green であり続けることを確認する（リファクタの安全網がテスト）</li>
+              <li>commit する（<strong>意味の単位</strong>で 1〜3 commit にまとめると後の PR が読みやすい）。例:
+                <pre><code>git add src/__tests__/routing.test.js
+git commit -m "test: add routing test for /map (refs #12)"
+git add src/main.js src/pages/map.html
+git commit -m "feat: add /map route and page component (refs #12)"
+</code></pre>
+              </li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「テストが先」を体感する:</strong> 「実装してからテストを書く」のとは、agy への指示の出し方が変わる。テストが先にあれば「<strong>このテストを Green にして</strong>」の 1 行で目標が伝わる。テストがない状態で「<strong>機能を作って</strong>」と頼むと、agy は<strong>「何ができたら完成か」</strong>を解釈で埋めてしまい、想定外の挙動になりやすい。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>MCP サーバーを 1 つ接続 → 2 枚目以降を TDD で消化 → ハーネスの両輪を意識する</h3>
+          <div class="timeline-body">
+            <p><strong>MCP サーバー接続(20分)</strong></p>
+            <ul>
+              <li>講師事前検証済みの最小構成を配布（GitHub MCP / Filesystem MCP / Fetch MCP のいずれか 1 つ）。設定ファイルは <code>~/.gemini/config/mcp_config.json</code>（Antigravity 公式 docs: <em>「Antigravity 2.0, IDE, and CLI share a central MCP configuration in the file <code>~/.gemini/config/mcp_config.json</code>」</em>）</li>
+              <li>共通フォーマット:
+                <pre><code>{
+  "mcpServers": {
+    "&lt;サーバー名&gt;": {
+      "command": "&lt;実行コマンド&gt;",
+      "args": ["&lt;引数1&gt;", "&lt;引数2&gt;"],
+      "env": {
+        "&lt;ENV_KEY&gt;": "&lt;値 or 環境変数参照&gt;"
+      }
+    }
+  }
+}
+</code></pre>
+              </li>
+              <li>設定後、agy を再起動し <code>/mcp</code> を呼んで <strong>接続済みサーバー一覧</strong>を確認（Antigravity 公式 docs: <em>「<code>/mcp</code> は manage MCP servers のスラッシュコマンド」</em>）</li>
+              <li>動作確認（配布された MCP の種類に合わせて 1 つ実行）:
+                <ul>
+                  <li>GitHub MCP の場合: agy に「現在の Open Issue を MCP 経由で一覧してください」と頼む</li>
+                  <li>Filesystem MCP の場合: agy に「<code>~/Documents</code> のファイル一覧を MCP 経由で取得してください」と頼む</li>
+                  <li>Fetch MCP の場合: agy に「Open-Meteo の <code>/v1/forecast?latitude=34.7&amp;longitude=135.5</code> を MCP 経由で fetch して結果を見せてください」と頼む</li>
+                </ul>
+              </li>
+              <li>つまずいたら<strong>1 タスク以上時間を使わない</strong>。MCP は今日のメイン目的ではなく「<strong>こういう拡張があるんだ</strong>」の体験が目的。失敗したら設定ファイルを <code>git stash</code> して 2 枚目のタスク実装に進む</li>
+            </ul>
+            <p><strong>2 枚目（と可能なら 3 枚目）の Issue を TDD で消化(25分)</strong></p>
+            <ul>
+              <li>1 限後半と同じサイクル（Red → Green → Refactor → commit）を 2 枚目の Issue で繰り返す</li>
+              <li>2 枚目以降は MCP を活用してもよい:
+                <ul>
+                  <li>GitHub MCP がある場合: agy に「<strong>Issue #13 の本文を MCP 経由で取得してから tasks.md と突合して</strong>」と頼める（Issue 番号を渡すだけで agy が文脈を持ってきてくれる）</li>
+                  <li>Fetch MCP がある場合: 第9回で使った Open-Meteo の応答を agy 内で取得してから実装方針を相談できる</li>
+                </ul>
+              </li>
+              <li>2 枚目のブランチは <strong>1 枚目とは別に切る</strong>（1 PR = 1 機能を維持。後の Review が読みやすい）:
+                <pre><code>git checkout main          # main ではなく 1 枚目 PR を含む状態は避ける
+git checkout -b feat/13-popup-display
+</code></pre>
+              </li>
+              <li>1 枚目の PR を出す前に 2 枚目を始めるのが一般的（PR レビュー待ちで自分の手が止まらないように）。<strong>main からブランチを切る</strong>が原則</li>
+            </ul>
+            <p><strong>ハーネスの両輪を意識する(5分)</strong></p>
+            <ul>
+              <li>Anthropic Engineering "Harness design" 由来の 2 軸を、今日の演習に当てはめて整理:
+                <ul>
+                  <li><strong>事前制御（agy がやる前に止める）</strong>: spec.md の受け入れ基準・ADR の判断軸・Plan mode・<code>.geminiignore</code>・MCP のスコープ制限</li>
+                  <li><strong>事後制御（agy がやった後にチェック）</strong>: <code>npm test</code> 緑確認・diff の目視・GitHub Actions の <code>test.yml</code>・PR レビュー</li>
+                </ul>
+              </li>
+              <li>今日 1 枚目で実感したのは「<strong>テスト Red を先に作ると agy の挙動が安定する</strong>」（=テストが事前制御の役を担っている）。Refactor 中も Green を維持できたのは「<strong>テストが事後制御の安全網になっている</strong>」</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「全タスク終わらせる」が目的ではない:</strong> 今日のゴールは <strong>TDD 1 周 + MCP 1 接続 + GitHub Flow 1 周</strong>。3 枚目以降は家で進めて構わない。<strong>1 周をきれいに回す</strong>方が、5 枚を雑に進めるより 2 週間後の自分が助かる。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>GitHub Flow を 1 周完走 — push → PR → レビュー → merge → Project 上で Done に</h3>
+          <div class="timeline-body">
+            <p><strong>1 枚目を push して PR を作る(10分)</strong></p>
+            <ul>
+              <li>GitHub Flow 公式（GitHub Docs ja「GitHub フロー」）の 6 ステップ: <strong>①分岐を作成 → ②変更を加える(commit & push) → ③pull request を作成 → ④レビューコメントに対処 → ⑤pull request をマージ → ⑥ブランチを削除</strong>。本日は 1 タスク分で 1 周完走することに絞る（複雑なレビューラリーは第12回以降と本実装で）</li>
+              <li>push:
+                <pre><code>git push -u origin feat/12-map-routing
+</code></pre>
+              </li>
+              <li>PR 作成（<code>gh</code> CLI 推奨。Web UI でも同等）:
+                <pre><code>gh pr create \
+  --title "feat: 地図画面のルーティングを追加 (#12)" \
+  --body "$(cat &lt;&lt;'EOF'
+## 概要
+spec.md 受け入れ基準 1 に対応。/map ルート追加と map ページコンポーネントの新規作成。
+
+## 関連
+Closes #12
+
+## Test plan
+- [x] vitest の routing.test.js が Green
+- [ ] ブラウザで /map に遷移できる(マージ後 Pages で確認)
+EOF
+)"
+</code></pre>
+              </li>
+              <li>PR 本文に <strong><code>Closes #12</code></strong> を入れると、マージ時に Issue が自動 close される（GitHub Docs 公式機能）</li>
+            </ul>
+            <p><strong>セルフレビュー or ペアレビュー(10分)</strong></p>
+            <ul>
+              <li>近くの人とペアになり、互いの PR の Files Changed タブを 5 分ずつ見る</li>
+              <li>レビュー観点（最低限の 3 点）:
+                <ol>
+                  <li><strong>spec.md の受け入れ基準と diff が対応しているか</strong>（受け入れ基準 1 のテストが追加されているか）</li>
+                  <li><strong>diff に「やらないこと」（非ゴール）に手が伸びていないか</strong>（agy がスコープを超えて変更を加えていないか）</li>
+                  <li><strong>テストが Green か</strong>（CI が緑バッジになっているか、ローカルで <code>npm test</code> が通るか）</li>
+                </ol>
+              </li>
+              <li>1 行コメントでよいので<strong>必ず何か残す</strong>。「LGTM」だけでも OK。レビューは「他人の目を入れる行為そのもの」が価値</li>
+              <li>事前検証: <code>gh pr create</code> / <code>gh pr view</code> / <code>gh pr review</code> はいずれも Codespaces から動作する。失敗したら GitHub Web UI から手動で同等の操作が可能</li>
+            </ul>
+            <p><strong>merge → Project 上で Issue が Done に移動(10分)</strong></p>
+            <ul>
+              <li><strong>Squash merge</strong> を選ぶ（main の履歴を 1 PR = 1 commit に保つ。第8回までで採用している運用）</li>
+              <li>マージ後の確認:
+                <ul>
+                  <li>Issue #12 が自動 close されている（<code>Closes #12</code> の効果）</li>
+                  <li>GitHub Project の Issue 表示が <strong>Todo → In progress → Done</strong> に移動している（Project の自動化が有効な場合）</li>
+                  <li>GitHub Actions の <code>test.yml</code> が main で Green を維持している</li>
+                </ul>
+              </li>
+              <li>main 同期 + <strong>マージ済みブランチを削除</strong>（GitHub Flow ⑥ステップ目「ブランチを削除する」）。次のタスクに進む前に必ず:
+                <pre><code>git checkout main
+git pull
+# マージ済み feature ブランチをローカルから削除
+git branch -d feat/12-map-routing
+# リモート側も削除(squash merge 設定で自動削除されていない場合)
+git push origin --delete feat/12-map-routing
+# 必要なら 2 枚目のブランチを main から切り直し
+</code></pre>
+                ※ GitHub リポジトリ設定で「Automatically delete head branches」を有効にしておくと、リモート側は merge と同時に自動削除される（推奨）
+              </li>
+              <li>1 周完走できれば本日の合格ライン到達。2 枚目以降は時間内であれば同じ流れで、間に合わなければ家での発展へ</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>GitHub Flow が遅いと感じるとき:</strong> 「ブランチを切る → PR → レビュー → マージ」は最初は手数が多く感じる。だが、<strong>「main に直接 push してすぐに動くものを変える」開発スタイル</strong>は、3 人以上のチーム・将来の自分・AI が編集する状況のすべてで事故が起きる。今日の 1 周は「<strong>事故が起きない手数</strong>」を体に通すための時間と捉える。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り&次回予告</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>今日のキーワード: <strong><code>/speckit.analyze</code> / <code>/speckit.implement</code> / TDD サイクル / MCP / <code>~/.gemini/config/mcp_config.json</code> / <code>/mcp</code> / ハーネスの両輪（事前制御 + 事後制御）/ GitHub Flow / feature ブランチ / Pull Request / Squash merge</strong></li>
+              <li>覚えてほしいこと:
+                <ul>
+                  <li><strong>テストが先、実装は後</strong>。Red のメッセージが agy への「何を作るか」の最良の指示書</li>
+                  <li><strong><code>/speckit.analyze</code> → <code>/speckit.implement</code> → test → commit → PR → merge</strong> の 1 周が SDD 実装の最小単位</li>
+                  <li><strong>MCP は道具の追加、Hooks は割り込みの追加</strong>。両方ハーネスの拡張点だが目的が違う</li>
+                  <li><strong>GitHub Flow は事故を防ぐ手数</strong>。最初は遅く感じても、main 直 push よりは長期的に速い</li>
+                </ul>
+              </li>
+              <li>SDD サイクル全体での今日のカバー範囲:
+                <ul>
+                  <li>✅ Spec: 第10回で完成</li>
+                  <li>✅ Plan: 第10回で完成 + 本日 <code>/speckit.analyze</code> で整合性再確認</li>
+                  <li>✅ Tasks: 第10回で Issue 化 + 本日一部消化</li>
+                  <li>✅ Implement: <code>/speckit.implement</code> + TDD + GitHub Flow で 1〜2 枚 Done に</li>
+                </ul>
+              </li>
+              <li>次回(第12回): <strong>SDD実践プロジェクト③：検証と改善</strong>。テスト結果の品質評価、spec と実装の差異分析、リファクタリングと技術的負債の管理、セキュリティ観点でのコードチェック。本日積み残したタスクの消化と、Done になったコードの「<strong>動くだけでなく長く保てるか</strong>」を見る</li>
+              <li>家での発展（任意）: 残った tasks.md の Issue を 2〜3 枚消化 / MCP server をもう 1 つ追加（GitHub MCP の PAT 認証など、教室で配らなかったもの）/ ADR-0001 を読み返して実装後の trade-off を「結果」節に追記</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>1 枚目の PR をマージ済みにする + マージ済みブランチを削除する</strong>
+            <p>授業中に作った <code>feat/&lt;NN&gt;-&lt;slug&gt;</code> ブランチ の PR を、CI 緑・<code>Closes #&lt;NN&gt;</code> 記述付きで <strong>squash merge</strong> までやりきって push。マージ後に Issue が自動 close され、GitHub Project の表示が Done に移動していることを確認。最後に GitHub Flow ⑥ステップ目「ブランチを削除する」として、ローカル (<code>git branch -d feat/&lt;NN&gt;-&lt;slug&gt;</code>) とリモート (<code>git push origin --delete feat/&lt;NN&gt;-&lt;slug&gt;</code>) の両方から feature ブランチを削除する（リポジトリ設定で auto-delete を有効にしていればリモート側は自動）。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>docs/sdd-week11-log.md</code> に 1 周の体験を記録</strong>
+            <p>新規ファイル <code>docs/sdd-week11-log.md</code> に、本日体験した TDD 1 周の流れ（Red のテキスト → Green になるまでの試行 → Refactor で何を直したか）と、MCP 接続で「<strong>つまずいた場所</strong>」を 200〜400 字程度で記録。第12回（検証と改善）で振り返り材料として使う。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>2 枚目以降のタスクを最低 1 枚 着手</strong>
+            <p>家での発展として、2 枚目のタスクの feature ブランチを切り、Red のテストを書くところまでやりきる（Green まで行ければなお良し）。第12回の冒頭で 1 枚 In progress の状態から始められるように。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>MCP サーバー設定を Git で管理</strong>
+            <p>授業で配布された <code>~/.gemini/config/mcp_config.json</code> の <strong>サンプル</strong>（個人 PAT・トークンを<strong>除いた</strong>もの）を <code>docs/mcp-config-sample.json</code> として進級制作リポジトリに置き、README に「自分の環境にどうコピーするか」を 3 行で記す。<strong>個人秘密情報は絶対に commit しない</strong>（PAT を含めて push した場合は GitHub Secret scanning が検知して通知が来る）。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong><code>/speckit.analyze</code> の出力を <code>docs/spec-analyze-week11.md</code> に保存</strong>
+            <p>本日 1 限前半で <code>/speckit.analyze</code> が出した指摘（整合性の問題点・spec/plan/task の不一致）と、それにどう対応したかを 5〜10 行で記録。第12回でこの記録を起点に「<strong>あの時の指摘は本当に解決されたか</strong>」を再点検する。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://github.github.com/spec-kit/" target="_blank" rel="noopener">Spec Kit 公式 docs(github.github.com/spec-kit)</a> — コアプロセス "Spec → Plan → Tasks → Implement" の公式逐語引用</li>
+        <li><a href="https://github.github.com/spec-kit/quickstart.html" target="_blank" rel="noopener">Spec Kit 公式 docs — Quick Start Guide</a> — <code>/speckit.analyze</code> → <code>/speckit.implement</code> の正式ワークフローと「production features with meaningful ambiguity」での <code>/speckit.analyze</code> 先行実行の公式推奨</li>
+        <li><a href="https://github.com/github/spec-kit" target="_blank" rel="noopener">github/spec-kit</a> — Spec Kit 公式リポジトリ。<code>/speckit.*</code> スラッシュコマンド一覧と <code>specify init --integration &lt;agent&gt;</code> 対応エージェント一覧の正本</li>
+        <li><a href="https://antigravity.google/docs/mcp" target="_blank" rel="noopener">Antigravity Editor — MCP Integration(公式)</a> — Antigravity（IDE + CLI）の MCP 統合公式 docs。設定ファイル <code>~/.gemini/config/mcp_config.json</code> と <code>mcpServers</code> オブジェクトの正本</li>
+        <li><a href="https://antigravity.google/docs/cli-reference" target="_blank" rel="noopener">Antigravity CLI — CLI reference(公式)</a> — TUI セッションで使える <code>/agents</code> / <code>/mcp</code> / <code>/diff</code> / <code>/rewind</code> 等のスラッシュコマンド一覧</li>
+        <li><a href="https://docs.github.com/ja/get-started/using-github/github-flow" target="_blank" rel="noopener">GitHub Docs ja — GitHub フロー</a> — ①分岐を作成 → ②変更を加える → ③pull request を作成 → ④レビューコメントに対処 → ⑤pull request をマージ → ⑥ブランチを削除 の 6 ステップ公式 docs</li>
+        <li><a href="https://docs.github.com/ja/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects" target="_blank" rel="noopener">GitHub Docs ja — Projects の について</a> — 第10回からの継続参照。Issue が Done に自動移動する Project の自動化機能の正本</li>
+        <li><a href="https://docs.github.com/ja/issues/tracking-your-work-with-issues" target="_blank" rel="noopener">GitHub Docs ja — 課題であなたの作業を追跡する</a> — <code>Closes #N</code> による Issue 自動 close の公式仕様</li>
+        <li><a href="https://www.anthropic.com/engineering/harness-design-long-running-apps" target="_blank" rel="noopener">Anthropic Engineering — Harness design for long-running application development</a> — 第8回からの継続参照。MCP（道具の追加）と Hooks（割り込みの追加）の位置づけ、事前制御 + 事後制御の両輪の原典</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week10.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第10回 SDD実践プロジェクト①：設計</span>
+      </a>
+      <a href="../natural-language-dev.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">自然言語開発</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第12回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
