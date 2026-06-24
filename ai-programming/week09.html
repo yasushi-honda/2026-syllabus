@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第9回 AIの能力と限界を知る | AI活用プログラミング基礎</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+  <!-- 公式情報確認: 2026-06-24 (support.google.com/gemini/answer/16279220?hl=ja 実H1「Gemini アプリの回答について」+ support.google.com/gemini/answer/14143489?hl=ja 実H1「Gemini アプリの関連ソースを表示する」+ support.google.com/notebooklm/answer/16179559?hl=ja 実H1「NotebookLM でチャットを使用する」+ support.google.com/notebooklm/answer/16269187?hl=ja 実H1「よくある質問」+ workspace.google.com/resources/ai/writing-effective-prompts/ 実H1「ビジネスで効果を発揮する AI プロンプトの書き方」) -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--orange">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-programming.html">AI活用プログラミング基礎</a>
+        <span>/</span>
+        <span>第9回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">AIの能力と<wbr>限界を<wbr>知る</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 9</span>
+            <span class="page-badge">木曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value"><strong>AI は何でも知っている万能ツールではない</strong>——というのを<strong>自分の手で確かめる</strong>個人演習回。第6〜8回でグループ調査・発表会を体験したあとに、もう一度ひとりに戻って、<strong>「AI にわざと間違った回答を作らせる」</strong>「<strong>AI の回答が本当に正しいか自分でチェックする</strong>」の 2 つを試す。「AI は便利だけど信じすぎない」という距離感を体に通す</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">AI の「<strong>もっともらしい間違い</strong>」（公式呼称「ハルシネーション」）/ AI が苦手なこと（最新の出来事・固有名詞の細部・数字・存在しないものを実在のように語る）/ <strong>ファクトチェック</strong>（事実確認）/ <strong>引用・関連ソース</strong>機能（Gemini の関連ソース表示、NotebookLM の引用番号）/ 「<strong>分からないので帰って調べます</strong>」を AI 相手にも使う / 自分用「AI が間違いやすいパターンメモ」</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第3〜4回で作った NotebookLM の<strong>「自分専用 AI ノート」</strong>が開ける状態（家で育てていなくても OK、第3回時点の状態でも演習は可能）／Gemini アプリ（個人 Google アカウントで <code>gemini.google.com</code> にログインできる状態）／第5回プロンプトのコツまとめ（学習データ③）を見返せる状態／メモ用に Google ドキュメントの新規ファイル 1 つ</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>AI に質問して、<strong>もっともらしいけれど間違っている回答（ハルシネーション）</strong>を実際に 1 つ以上引き出して、その瞬間を観察できる</li>
+        <li>AI の回答に対して、<strong>自分で 2 段階のファクトチェック</strong>（① AI の関連ソース・引用を見る ② 別の手段で裏取りする）ができる</li>
+        <li>AI が<strong>特に間違えやすい質問のタイプ</strong>（最新情報・固有名詞の細部・具体的な数字・存在しない人物や本など）を 3 つ以上、自分のメモに書き出せる</li>
+        <li>第6〜8 回のグループ発表で学んだ「<strong>分からないので帰って調べます</strong>」が<strong>AI 相手にも当てはまる</strong>ことを体感する（=「AI が答えてくれた」≠「正解が得られた」）</li>
+        <li>第10回（情報の構造化と AI 育成、【学習データ④】配布）に向けて、<strong>「自分が AI を疑える観察ポイント」</strong>のリストを 1 枚作って持ち帰る</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>大事な前提（毎回投影しておく）</h2>
+      <div class="lesson-tip">
+        <strong>「AI は嘘つき」ではない、「AI は時々間違える」だけ:</strong> Gemini や NotebookLM などの AI は、何百万もの文章を学習した結果、<strong>もっともらしい文章を組み立てるのがとても上手</strong>。だからこそ、間違っているときも<strong>「自信を持って間違える」</strong>。これは AI のしくみ上、避けられないこと。Google 公式（「Gemini アプリの回答について」）も<strong>「Gemini の回答は不正確または不適切な場合があります」</strong>とはっきり書いている。<br>
+        だから今日の主役は<strong>「AI を疑う目」</strong>。AI を使わないわけではなく、<strong>使ったあとに自分で確認する習慣</strong>を身につける。プログラマーや情報系の仕事では、これがそのまま「<strong>AI が書いたコードを信じすぎない</strong>」スキルにつながる（第12回以降の個人テーマで必ず使う）。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続(90分 + 90分 = 計180分)。途中休憩あり。<strong>第6〜8 回のグループ作業から、今日は再び個人演習</strong>。第10回以降に向けて、各自が自分のペースで AI との距離感を作る回。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>第8回発表会の振り返り → 「AI は時々間違える」を 3 つの例で実感する</h3>
+          <div class="timeline-body">
+            <p><strong>第8回課題のシェア(10分)</strong></p>
+            <ul>
+              <li>第8回宿題で書いた「印象に残った発表」「分からないので帰って調べた質問の答え」を、近くの席の人と<strong>1 人 2 分ずつ</strong>口頭でシェア</li>
+              <li>シェアのコツ: 完璧に話さなくてよい。「<strong>えーっと、確か○○グループが</strong>」程度で十分。聞き手は「<strong>へえ、面白い</strong>」と返すだけで OK</li>
+            </ul>
+            <p><strong>「AI は時々間違える」を 3 つの例で実感する(20分)</strong></p>
+            <ul>
+              <li>講師がプロジェクターに大きく Gemini を映し、<strong>講師自身がリアルタイムで質問を投げる</strong>。3 つのタイプを順番に試す:
+                <ol>
+                  <li><strong>最新の出来事の質問</strong>（例: 「先週、○○県で起きた地震の規模は?」）→ AI が古い情報や、別の地震のデータを混ぜて答えるかもしれない</li>
+                  <li><strong>固有名詞の細部の質問</strong>（例: 「<strong>清風情報工科学院の AI 活用プログラミング基礎</strong>の授業内容を教えて」）→ AI は<strong>知らないことを「らしく」答えがち</strong>。実在しない教員名・実在しない教科書名が出てくることが珍しくない</li>
+                  <li><strong>存在しないものを実在のように語らせる質問</strong>（例: 「<strong>有名な小説『青い夕焼け』の作者と発表年は?</strong>」と、実在しない作品名を講師がでっち上げる）→ AI が「これは○○年に△△が発表した小説で…」と<strong>でっち上げの作者と年を返してくる</strong>のを観察</li>
+                </ol>
+              </li>
+              <li>3 つの例のあと、講師が言語化: 「<strong>1, 2, 3 のどれも『分からない』とは言ってこなかった</strong>。これが AI が時々間違える瞬間で、業界では『<strong>ハルシネーション（hallucination）</strong>』と呼ばれている。<strong>幻覚</strong>という意味の英単語」</li>
+              <li>1 行メモ: 「<strong>AI が自信満々に間違える瞬間</strong>を 1 つ目撃した日」と Google ドキュメントの今日のメモに書く</li>
+            </ul>
+            <p><strong>今日の流れの確認(10分)</strong></p>
+            <ul>
+              <li>1 限後半: <strong>自分の手で AI に「もっともらしい嘘」を作らせる演習①</strong>(個人演習)</li>
+              <li>2 限前半: <strong>AI の回答を 2 段階でファクトチェックする演習②</strong>(個人演習)</li>
+              <li>2 限後半: <strong>「自分が AI を疑える観察ポイント」をメモにまとめる</strong></li>
+              <li>大事な姿勢: <strong>「AI に勝とう」ではなく「AI のクセを掴もう」</strong>。今日 1 回でも「あ、また間違えた」を体験できれば合格</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>今日の合言葉:</strong> 「<strong>AI が答えてくれた</strong>」≠「<strong>正解が得られた</strong>」。第8回の「<strong>分からないので帰って調べます</strong>」を、AI 相手にも自分が言う側になる日。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>演習①: AI に「もっともらしい嘘」を作らせてみる（個人演習）</h3>
+          <div class="timeline-body">
+            <p><strong>演習①のルール説明(10分)</strong></p>
+            <ul>
+              <li><strong>目的</strong>: 自分の手で AI を「自信満々に間違えさせる」体験を 1〜3 回作る。怖がらず、わざと意地悪な質問をしてみる</li>
+              <li><strong>使うツール</strong>: <strong>Gemini アプリ</strong>（<code>gemini.google.com</code>）。<strong>自分専用 AI ノート（NotebookLM）は今回使わない</strong>——NotebookLM はソースを限定するので、わざと間違いを引き出すには向かない（NotebookLM は<strong>引用付きで答える設計</strong>なので、第10回以降で扱う「正しく答えさせる」演習に使う）</li>
+              <li><strong>4 タイプの質問例</strong>を試してみる(全部やらなくて OK、自分が試したいものから):
+                <ol>
+                  <li><strong>細かい数字・統計を聞く</strong>: 「<strong>大阪市の昨日の最高気温は?</strong>」「<strong>2026 年現在の日本のスマホ普及率は?</strong>」など、<strong>具体的な数字</strong>を求める質問</li>
+                  <li><strong>マイナーな固有名詞の細部を聞く</strong>: 自分の出身中学・住んでいる町・好きな小規模のお店・近所の公園など、<strong>AI が知らなさそうな具体的な場所</strong>について詳しく聞く</li>
+                  <li><strong>存在しないものを実在のように聞く</strong>: <strong>でっち上げの本・映画・人名・地名</strong>を「実在するもの」のように聞く。例: 「<strong>小説『風の階段』の作者を教えて</strong>」「<strong>○○市立△△高等学校の偏差値は?</strong>」(高校名・小説名は架空でよい)</li>
+                  <li><strong>計算問題を聞く</strong>: <strong>桁の多い掛け算・割り算</strong>（例: 「<strong>3,847 × 6,291 を計算して</strong>」）。AI は意外と計算が苦手で<strong>もっともらしい誤答</strong>を返すことがある (※ Gemini は<strong>AI が内部的に電卓を呼ぶ仕組み</strong>（業界では <strong>Tool Use</strong> と呼ばれる）が働くと正解を返す。この仕組みが働かないときは間違えるので、「<strong>絶対に間違える</strong>」ではなく「<strong>間違えることがある</strong>」のニュアンス)</li>
+                </ol>
+              </li>
+              <li><strong>記録のしかた</strong>: Google ドキュメントの今日のメモに、<strong>「質問」「AI の回答」「あとで自分が確認したらどう違ったか」</strong>を 1 件ずつ書いていく。スクショは不要、テキストで十分</li>
+            </ul>
+            <p><strong>個人演習(30分)</strong></p>
+            <ul>
+              <li>各自、上の 4 タイプから<strong>少なくとも 2 タイプを試す</strong>。「もっともらしい間違い」が引き出せたら、その瞬間を観察する</li>
+              <li>引き出せたら、<strong>その回答が間違いだと自分が確認した手段</strong>もメモする。例: 「<strong>大阪市の昨日の気温は気象庁のサイトで再確認した</strong>」「<strong>自分の出身中学の所在地は実家の住所で分かるので即座にうそだと分かった</strong>」「<strong>『風の階段』を Google で検索したら、同名の作品は存在せず</strong>」</li>
+              <li>引き出せない場合: <strong>質問の聞き方を変える</strong>。「○○について教えて」だと当たり障りない答えが返ってくることが多いので、<strong>具体的な数字・固有名詞・年代</strong>を含む形に変える</li>
+              <li>講師は教室を巡回し、「<strong>これも試してみて</strong>」「<strong>こう聞き直すともっと露骨に出るかも</strong>」と声をかける(回答そのものは直接書かない、各自の手で引き出させる)</li>
+            </ul>
+            <p><strong>近くの席で 2 分共有(10分)</strong></p>
+            <ul>
+              <li>近くの席の人と<strong>「一番びっくりした間違い」を 2 分ずつ口頭でシェア</strong>。「<strong>えー、そんな答え返したの?</strong>」のリアクションが出れば成功</li>
+              <li>シェアのあと講師が 2〜3 例を取り上げて全体に紹介(本人の許可をもらってから)</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「だます」ではなく「観察する」:</strong> AI に意地悪な質問を投げるのは<strong>性能を試している</strong>のであって、AI を否定しているのではない。本気で観察すると「<strong>あ、AI はこのタイプの質問が苦手なんだ</strong>」というパターンが見えてくる。第12回以降の個人テーマで AI を使うときに、<strong>苦手な質問を避ける／必ず裏取りする</strong>判断につながる。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>演習②: AI の回答を 2 段階でファクトチェックする（個人演習）</h3>
+          <div class="timeline-body">
+            <p><strong>2 段階ファクトチェックの説明(10分)</strong></p>
+            <ul>
+              <li>ファクトチェック =「<strong>事実確認</strong>」。AI が言ったことを、<strong>そのまま信じずに自分で確かめる</strong>こと</li>
+              <li>本授業で使う 2 段階の方法:
+                <ol>
+                  <li><strong>第 1 段階: AI 自身に「関連ソース」を出させる</strong>(=AI が参考にした情報源を見る)
+                    <ul>
+                      <li>Gemini: 回答の下にある <strong>「関連ソースを表示」</strong>のボタンを押す。Google 公式ヘルプ <strong>「Gemini アプリの関連ソースを表示する」</strong>に手順あり（<strong>UI 表記は変わることがある</strong>ので、見つからなければ講師に声をかける）</li>
+                      <li>NotebookLM: 回答に<strong>引用番号 [1] [2]</strong> が付くので、クリックすると<strong>元のソースの該当箇所</strong>に飛べる。Google 公式ヘルプ <strong>「NotebookLM でチャットを使用する」</strong> 内に説明あり</li>
+                      <li>第 1 段階で見るもの: <strong>「AI が見たと言っているもの」が本当にその内容なのか</strong>(リンクを開いて確認)</li>
+                    </ul>
+                  </li>
+                  <li><strong>第 2 段階: AI とは別の手段で裏取りする</strong>
+                    <ul>
+                      <li>具体的な数字・日付 → <strong>Google で公式サイトを直接検索</strong>(気象庁・総務省・大学・企業の公式 about ページ等)</li>
+                      <li>本・映画・人物 → <strong>図書館の OPAC・出版社サイト・Wikipedia の出典欄</strong>を見る</li>
+                      <li>近所のお店・場所 → <strong>Google マップで該当の名前を検索</strong>。出てこなければ「実在しない可能性が高い」</li>
+                      <li>「自分の知らない単語」が回答に出てきた → <strong>その単語自体を Google で検索</strong>して、複数の信頼できるサイトで同じ意味として使われているか確認</li>
+                    </ul>
+                  </li>
+                </ol>
+              </li>
+              <li><strong>1 段階だけでは不十分</strong>: 関連ソースを開いてみたら<strong>AI の主張と違うことが書いてあった</strong>、というケースは普通に起こる。<strong>第 2 段階で別経路から裏取りするのが大事</strong></li>
+            </ul>
+            <p><strong>演習②: 個人作業(30分)</strong></p>
+            <ul>
+              <li>各自、<strong>1 限後半で引き出した「もっともらしい間違い」を 1 つ選ぶ</strong>(または、新しく質問を 1 つ投げて回答を得る)</li>
+              <li><strong>選んだ回答に対して 2 段階ファクトチェックを実行</strong>:
+                <ol>
+                  <li>Gemini の「関連ソースを表示」を開いて、ソースが本当に AI の主張通りか確認</li>
+                  <li>Google 検索・Google マップ・公式サイト・図書館サイトなど、AI 以外の手段で裏取り</li>
+                </ol>
+              </li>
+              <li><strong>記録のしかた</strong>: Google ドキュメントに<strong>「質問」「AI の回答」「第 1 段階で分かったこと」「第 2 段階で分かったこと」「最終的に正しかった内容」</strong>を 5 行で書く</li>
+              <li>2 件目もできれば挑戦。1 件だけでも今日は合格</li>
+              <li>講師は巡回し、<strong>「関連ソース」ボタンの場所が分からない</strong>などの操作トラブルに対応(<strong>UI は変わることがあるので、口頭で「画面下のソース表示の部分」など現物に応じて案内</strong>)</li>
+            </ul>
+            <p><strong>近くの席で 2 分共有(10分)</strong></p>
+            <ul>
+              <li>「<strong>裏取りしたら全然違った</strong>」「<strong>関連ソースは合ってたけど、AI の要約が違ってた</strong>」「<strong>関連ソース自体が存在しない URL だった</strong>」など、それぞれの発見を 2 分ずつシェア</li>
+              <li><strong>「関連ソース自体が存在しない URL だった」</strong>のパターンは特に重要。AI は<strong>「もっともらしい URL」を生成することがあり</strong>、リンクをクリックしたら 404 / 違うページに飛ぶことがある</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「裏取り」は AI と上手に付き合う技術:</strong> AI を信じすぎないのは、AI を否定するためではなく、<strong>「AI と一緒により良い答えを出す」</strong>ため。ファクトチェックを習慣にしている人は、AI を恐れずに使える。逆に「AI が答えたから正しいはず」と思う人は、間違いを見落として困ったときに気づかない。第12回以降の個人テーマでも、第13〜15 回の最終発表でも、この習慣がそのまま使える。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>自分用「AI が間違いやすいパターンメモ」を作る</h3>
+          <div class="timeline-body">
+            <p><strong>パターンメモの設計(10分)</strong></p>
+            <ul>
+              <li>今日の演習①と演習②で集めた「<strong>AI が間違えたケース</strong>」を、<strong>パターン別に分類</strong>して 1 枚のメモにまとめる</li>
+              <li>Google ドキュメントの新規ファイル「<strong>AI が間違いやすいパターン（自分用）</strong>」を作って、以下の見出しを書く:
+                <pre><code># AI が間違いやすいパターン（自分用）
+
+## 1. 最新の出来事・新しい情報
+- 例:
+- 自分の対策:
+
+## 2. 固有名詞の細部（地名・人名・建物名）
+- 例:
+- 自分の対策:
+
+## 3. 具体的な数字（統計・日付・金額）
+- 例:
+- 自分の対策:
+
+## 4. 存在しないものを実在のように語る
+- 例:
+- 自分の対策:
+
+## 5. 桁の多い計算
+- 例:
+- 自分の対策:
+
+## 6. その他（自分が気づいたパターン）
+- 例:
+- 自分の対策:
+</code></pre>
+              </li>
+              <li>「<strong>自分の対策</strong>」は短くてよい。例: <strong>「公式サイトを別タブで開いて確認する」「Google マップで実在チェック」「電卓アプリで再計算」「『分からないので帰って調べます』と AI に追加質問する」</strong></li>
+            </ul>
+            <p><strong>個人作業(15分)</strong></p>
+            <ul>
+              <li>各自、今日の体験を当てはめてメモを埋める。<strong>全 6 項目を埋める必要はなく</strong>、自分が体験した 2〜4 項目だけでも OK</li>
+              <li>このメモは<strong>第12回以降の個人テーマで AI を使うときに見返す</strong>ので、未来の自分が読んで分かる形に</li>
+              <li>余力がある人: <strong>第6〜8 回のグループ調査で AI に聞いた質問</strong>を思い出して、今ファクトチェックしたらどうなるかを 1〜2 件追加</li>
+            </ul>
+            <p><strong>近くの席で 2 分共有(5分)</strong></p>
+            <ul>
+              <li>「<strong>自分の対策</strong>」の部分だけ、近くの席の人と 2 分ずつシェア。<strong>他の人の対策で「それいいな」と思ったものは自分のメモに足してよい</strong></li>
+              <li>このメモは<strong>家にも持ち帰る</strong>(Google ドキュメントなのでクラウドに残る)。次回（第10回）以降も必要に応じて更新</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「自分専用」が一番強い:</strong> AI の苦手分野は「最新情報」「固有名詞」「数字」「計算」のように一般論で語られがちだけど、<strong>自分が実際に困ったパターン</strong>を自分の言葉でメモしておくほうが、未来の自分に届きやすい。「<strong>あの時の○○のパターンか</strong>」と思い出せる固有体験のメモが最強。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り&次回予告</h3>
+          <div class="timeline-body">
+            <p><strong>口頭での全体振り返り(7分)</strong></p>
+            <ul>
+              <li>講師の問いかけ: 「<strong>今日、AI に自信満々に間違えられた人?</strong>」「<strong>関連ソースを開いてみて、思ったのと違った人?</strong>」「<strong>『分からないので帰って調べます』と AI に言わせた人?</strong>」で挙手</li>
+              <li>講師から: 今日のキーワード <strong>ハルシネーション / ファクトチェック / 関連ソース / 引用 / 自分用パターンメモ</strong> を黒板に書いて口頭で復習</li>
+              <li>大事な姿勢のまとめ: <strong>「AI は時々間違える」「だから自分の目で確かめる」「それでも AI は便利だから使う」</strong>の 3 つを並べて持ち帰る</li>
+            </ul>
+            <p><strong>次回予告(3分)</strong></p>
+            <ul>
+              <li><strong>第10回</strong>: <strong>情報の構造化と AI 育成</strong>。Google ドキュメントで情報を整理する基本、NotebookLM にきれいに読み込ませる工夫、Audio Overview 機能の体験。<strong>【学習データ④】</strong> 情報整理テクニック資料を配布する回</li>
+              <li>今日作った<strong>「AI が間違いやすいパターン（自分用）」メモ</strong>は、第10回で NotebookLM に取り込む「自分専用 AI ノート」のソースとして使える形に整える宿題に繋がる</li>
+              <li>第11回以降: 「自分だけのAI」を育てる時間 → 個人テーマを決めて壁打ち → 制作 → 仕上げ → 最終発表、と続く</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>「AI が間違いやすいパターン（自分用）」メモを家で 5 行以上に育てる</strong>
+            <p>2 限後半で作ったメモを、家で<strong>あと 5 行以上</strong>追記する。書き足す材料は: ①家で AI に新しい質問を 2〜3 件投げて、ハルシネーションが出るか試す ②今日の演習で出たけれどメモしきれなかった例を追加 ③家族・友達との会話で「あれ?」と思った AI の話を思い出して追加。<strong>5 行以上</strong>の根拠は「<strong>第10回で NotebookLM のソースとして取り込めるサイズ</strong>」(目安)。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>1 件、本気のファクトチェックを最後までやる</strong>
+            <p>家で 10 分だけ、今日授業で<strong>ファクトチェックしきれなかった AI の回答 1 件</strong>を選んで、<strong>2 段階のファクトチェックを最後まで実行</strong>する。記録は Google ドキュメントに「質問」「AI 回答」「第 1 段階」「第 2 段階」「最終正解」の 5 行。「<strong>結局正解は分からなかった</strong>」も立派な結果。「分からないから帰って調べた」と言える人になる練習。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>第6〜8 回のグループ発表で使った AI の回答を見直す</strong>
+            <p>第6〜8 回のグループ調査で<strong>AI に聞いた回答</strong>(グループ共有ドキュメントに残っているはず)を 1〜2 件選んで、<strong>今日学んだファクトチェック</strong>を当ててみる。「あの時は信じて発表したけど、よく見たら…」という発見があれば、グループ共有ドキュメントに<strong>「2026-XX-XX ファクトチェックメモ」</strong>として追記。今後のグループ作業の質が上がる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>「自分専用 AI ノート」(NotebookLM) に今日の気づきを 1 つ追加</strong>
+            <p>第3〜4 回で作った NotebookLM の「自分専用 AI ノート」に、今日のメモ(または抜粋)を<strong>新しいソースとして追加</strong>してみる。第10回以降の自分の AI が「<strong>AI の限界も知っている賢い相棒</strong>」に育つ。追加方法を忘れた人は第3回ページの NotebookLM 操作手順を参照。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://support.google.com/gemini/answer/16279220?hl=ja" target="_blank" rel="noopener">Gemini アプリの回答について（公式ヘルプ）</a> — Google 公式が「<strong>Gemini の回答は不正確または不適切な場合があります</strong>」と明記しているページ。ハルシネーションの公式説明と利用上の注意</li>
+        <li><a href="https://support.google.com/gemini/answer/14143489?hl=ja" target="_blank" rel="noopener">Gemini アプリの関連ソースを表示する（公式ヘルプ）</a> — 演習②第 1 段階で使う「関連ソース表示」機能の公式手順</li>
+        <li><a href="https://support.google.com/notebooklm/answer/16179559?hl=ja" target="_blank" rel="noopener">NotebookLM でチャットを使用する（公式ヘルプ）</a> — NotebookLM の<strong>引用番号 [1] [2]</strong> の機能と、回答が常にソースに基づくしくみの説明</li>
+        <li><a href="https://support.google.com/notebooklm/answer/16269187?hl=ja" target="_blank" rel="noopener">NotebookLM よくある質問（公式ヘルプ）</a> — NotebookLM の能力と限界の公式 FAQ。何ができて何ができないかの正本</li>
+        <li><a href="https://workspace.google.com/resources/ai/writing-effective-prompts/" target="_blank" rel="noopener">ビジネスで効果を発揮する AI プロンプトの書き方（Google Workspace 公式）</a> — 第5回（プロンプトの基本）からの継続参照。<strong>ペルソナ／タスク／背景情報／形式</strong>の 4 要素は、AI に「もっともらしい嘘」をつかせない工夫としても使える</li>
+        <li><a href="../ai-programming.html" class="week-link">AI活用プログラミング基礎 トップ</a> — 親ページの全 15 回の流れと、第10回（情報の構造化と AI 育成・【学習データ④】配布）の見通し</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week08.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第8回 🎤 中間共有会</span>
+      </a>
+      <a href="../ai-programming.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AI活用プログラミング基礎</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第10回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
