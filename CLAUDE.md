@@ -58,6 +58,7 @@ ai-programming/         # AI活用プログラミング基礎の各回詳細ペ�
   week06.html           #   第6回 グループでテーマを決めよう
   week07.html           #   第7回 グループ調査と準備
   week08.html           #   第8回 🎤 中間共有会
+  week09.html           #   第9回 AIの能力と限界を知る
 java-basics-1.html      # Java基礎I（土曜前期）
 java-basics-2.html      # Java基礎II（土曜前期）
 java-spring.html        # Javaフレームワーク（土曜後期）
