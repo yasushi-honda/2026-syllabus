@@ -132,7 +132,7 @@
                   <li><strong>細かい数字・統計を聞く</strong>: 「<strong>大阪市の昨日の最高気温は?</strong>」「<strong>2026 年現在の日本のスマホ普及率は?</strong>」など、<strong>具体的な数字</strong>を求める質問</li>
                   <li><strong>マイナーな固有名詞の細部を聞く</strong>: 自分の出身中学・住んでいる町・好きな小規模のお店・近所の公園など、<strong>AI が知らなさそうな具体的な場所</strong>について詳しく聞く</li>
                   <li><strong>存在しないものを実在のように聞く</strong>: <strong>でっち上げの本・映画・人名・地名</strong>を「実在するもの」のように聞く。例: 「<strong>小説『風の階段』の作者を教えて</strong>」「<strong>○○市立△△高等学校の偏差値は?</strong>」(高校名・小説名は架空でよい)</li>
-                  <li><strong>計算問題を聞く</strong>: <strong>桁の多い掛け算・割り算</strong>（例: 「<strong>3,847 × 6,291 を計算して</strong>」）。AI は意外と計算が苦手で<strong>もっともらしい誤答</strong>を返すことがある (※ Gemini は<strong>必要に応じて電卓ツールを内部で呼ぶ</strong>ことがあり、その場合は正解する。Tool Use の有無で挙動が変わるので、「<strong>絶対に間違える</strong>」ではなく「<strong>間違えることがある</strong>」)</li>
+                  <li><strong>計算問題を聞く</strong>: <strong>桁の多い掛け算・割り算</strong>（例: 「<strong>3,847 × 6,291 を計算して</strong>」）。AI は意外と計算が苦手で<strong>もっともらしい誤答</strong>を返すことがある (※ Gemini は<strong>AI が内部的に電卓を呼ぶ仕組み</strong>（業界では <strong>Tool Use</strong> と呼ばれる）が働くと正解を返す。この仕組みが働かないときは間違えるので、「<strong>絶対に間違える</strong>」ではなく「<strong>間違えることがある</strong>」のニュアンス)</li>
                 </ol>
               </li>
               <li><strong>記録のしかた</strong>: Google ドキュメントの今日のメモに、<strong>「質問」「AI の回答」「あとで自分が確認したらどう違ったか」</strong>を 1 件ずつ書いていく。スクショは不要、テキストで十分</li>
@@ -176,7 +176,7 @@
                 <ol>
                   <li><strong>第 1 段階: AI 自身に「関連ソース」を出させる</strong>(=AI が参考にした情報源を見る)
                     <ul>
-                      <li>Gemini: 回答の下にある <strong>「関連ソースを表示」</strong>(または<strong>「Search related」のようなボタン</strong>)を押す。Google 公式ヘルプ <strong>「Gemini アプリの関連ソースを表示する」</strong>に手順あり</li>
+                      <li>Gemini: 回答の下にある <strong>「関連ソースを表示」</strong>のボタンを押す。Google 公式ヘルプ <strong>「Gemini アプリの関連ソースを表示する」</strong>に手順あり（<strong>UI 表記は変わることがある</strong>ので、見つからなければ講師に声をかける）</li>
                       <li>NotebookLM: 回答に<strong>引用番号 [1] [2]</strong> が付くので、クリックすると<strong>元のソースの該当箇所</strong>に飛べる。Google 公式ヘルプ <strong>「NotebookLM でチャットを使用する」</strong> 内に説明あり</li>
                       <li>第 1 段階で見るもの: <strong>「AI が見たと言っているもの」が本当にその内容なのか</strong>(リンクを開いて確認)</li>
                     </ul>
