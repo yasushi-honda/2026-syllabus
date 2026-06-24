@@ -61,7 +61,7 @@
         <li><code>/speckit.analyze</code>（仕様・計画・タスクの整合性チェック）を <code>/speckit.implement</code> 前に走らせる<strong>運用習慣</strong>を作る（Spec Kit 公式: <em>"For production features with meaningful ambiguity, run <code>/speckit.analyze</code> before <code>/speckit.implement</code> to check spec/plan/task consistency"</em>）</li>
         <li>Antigravity CLI の <code>/mcp</code> で <strong>MCP（Model Context Protocol）サーバー</strong>を 1 つ接続し、agy に「外部ツールに繋がる手」を与える体験を持つ（GitHub MCP / Filesystem MCP / Web Fetch MCP のいずれか 1 つを<strong>講師が事前検証済みの最小構成</strong>で配布）</li>
         <li><strong>ハーネスによる品質チェック</strong>の考え方（Anthropic Engineering "Harness design for long-running application development" 由来）を、自分のリポジトリの <code>test.yml</code>（事前制御）+ コードレビュー（事後制御）と対応付けて 1〜2 行で説明できる</li>
-        <li><strong>GitHub Flow</strong>（公式: 「ブランチを作成 → 変更をコミット → Pull Request を作成 → レビューしてマージする」）を 1 タスク分で 1 周完走する（feature ブランチ → push → PR → セルフレビュー or ペアレビュー → squash merge → Project 上で Issue が Done に移動）</li>
+        <li><strong>GitHub Flow</strong>（公式 6 ステップ: ①分岐を作成 ②変更を加える ③pull request を作成 ④レビューコメントに対処 ⑤pull request をマージ ⑥ブランチを削除）を 1 タスク分で 1 周完走する（feature ブランチ → push → PR → セルフレビュー or ペアレビュー → squash merge → Project 上で Issue が Done に移動 → マージ済みブランチ削除）</li>
         <li>「実装が止まったとき」の<strong>切り分け手順</strong>（① テスト失敗の原文を読む → ② <code>spec.md</code> の受け入れ基準と照合 → ③ <code>plan.md</code> / ADR の判断と矛盾していないか → ④ agy に状況を全文で渡す）を体に覚えさせる</li>
       </ul>
     </div>
@@ -103,7 +103,7 @@
             <p><strong><code>/speckit.analyze</code> で仕様・計画・タスクの整合性を確認(15分)</strong></p>
             <ul>
               <li><code>agy</code> を起動し、進級制作リポジトリで <code>/speckit.analyze</code> を呼ぶ</li>
-              <li>Spec Kit 公式 docs より: <em>「production features with meaningful ambiguity の場合、<code>/speckit.implement</code> の前に <code>/speckit.analyze</code> を実行して spec/plan/task の整合性をチェックする」</em>。実装後の追加レビューとして再度 <code>/speckit.analyze</code> を回すことも可能</li>
+              <li>Spec Kit 公式 docs（Quick Start Guide）は <code>/speckit.clarify</code> / <code>/speckit.checklist</code> / <code>/speckit.analyze</code> を <strong>"regular quality gates"</strong> として位置づけ、<code>/speckit.analyze</code> は <strong>"check spec/plan/task consistency before implementation starts"</strong>（実装に入る前に spec / plan / task の整合性を確認する）役割と説明している。実装後の追加レビューとして再度 <code>/speckit.analyze</code> を回すことも可能</li>
               <li>典型的に出る指摘例:
                 <ul>
                   <li>「spec.md の受け入れ基準 2 に対応するタスクが tasks.md に見当たらない」</li>
@@ -300,7 +300,7 @@ git checkout -b feat/13-popup-display
           <div class="timeline-body">
             <p><strong>1 枚目を push して PR を作る(10分)</strong></p>
             <ul>
-              <li>GitHub Flow 公式（GitHub Docs ja「GitHub フロー」）の 4 ステップ: <strong>ブランチを作成 → 変更をコミット & push → Pull Request を作成 → レビューしてマージする</strong></li>
+              <li>GitHub Flow 公式（GitHub Docs ja「GitHub フロー」）の 6 ステップ: <strong>①分岐を作成 → ②変更を加える(commit & push) → ③pull request を作成 → ④レビューコメントに対処 → ⑤pull request をマージ → ⑥ブランチを削除</strong>。本日は 1 タスク分で 1 周完走することに絞る（複雑なレビューラリーは第12回以降と本実装で）</li>
               <li>push:
                 <pre><code>git push -u origin feat/12-map-routing
 </code></pre>
@@ -332,7 +332,7 @@ EOF
                   <li><strong>spec.md の受け入れ基準と diff が対応しているか</strong>（受け入れ基準 1 のテストが追加されているか）</li>
                   <li><strong>diff に「やらないこと」（非ゴール）に手が伸びていないか</strong>（agy がスコープを超えて変更を加えていないか）</li>
                   <li><strong>テストが Green か</strong>（CI が緑バッジになっているか、ローカルで <code>npm test</code> が通るか）</li>
-                </ul>
+                </ol>
               </li>
               <li>1 行コメントでよいので<strong>必ず何か残す</strong>。「LGTM」だけでも OK。レビューは「他人の目を入れる行為そのもの」が価値</li>
               <li>事前検証: <code>gh pr create</code> / <code>gh pr view</code> / <code>gh pr review</code> はいずれも Codespaces から動作する。失敗したら GitHub Web UI から手動で同等の操作が可能</li>
@@ -347,11 +347,16 @@ EOF
                   <li>GitHub Actions の <code>test.yml</code> が main で Green を維持している</li>
                 </ul>
               </li>
-              <li>main 同期（次のタスクに進む前に必ず）:
+              <li>main 同期 + <strong>マージ済みブランチを削除</strong>（GitHub Flow ⑥ステップ目「ブランチを削除する」）。次のタスクに進む前に必ず:
                 <pre><code>git checkout main
 git pull
-# 必要なら 2 枚目のブランチを main から rebase or 切り直し
+# マージ済み feature ブランチをローカルから削除
+git branch -d feat/12-map-routing
+# リモート側も削除(squash merge 設定で自動削除されていない場合)
+git push origin --delete feat/12-map-routing
+# 必要なら 2 枚目のブランチを main から切り直し
 </code></pre>
+                ※ GitHub リポジトリ設定で「Automatically delete head branches」を有効にしておくと、リモート側は merge と同時に自動削除される（推奨）
               </li>
               <li>1 周完走できれば本日の合格ライン到達。2 枚目以降は時間内であれば同じ流れで、間に合わなければ家での発展へ</li>
             </ul>
@@ -401,8 +406,8 @@ git pull
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>1 枚目の PR をマージ済みにする</strong>
-            <p>授業中に作った <code>feat/&lt;NN&gt;-&lt;slug&gt;</code> ブランチ の PR を、CI 緑・<code>Closes #&lt;NN&gt;</code> 記述付きで <strong>squash merge</strong> までやりきって push。マージ後に Issue が自動 close され、GitHub Project の表示が Done に移動していることを確認。</p>
+            <strong>1 枚目の PR をマージ済みにする + マージ済みブランチを削除する</strong>
+            <p>授業中に作った <code>feat/&lt;NN&gt;-&lt;slug&gt;</code> ブランチ の PR を、CI 緑・<code>Closes #&lt;NN&gt;</code> 記述付きで <strong>squash merge</strong> までやりきって push。マージ後に Issue が自動 close され、GitHub Project の表示が Done に移動していることを確認。最後に GitHub Flow ⑥ステップ目「ブランチを削除する」として、ローカル (<code>git branch -d feat/&lt;NN&gt;-&lt;slug&gt;</code>) とリモート (<code>git push origin --delete feat/&lt;NN&gt;-&lt;slug&gt;</code>) の両方から feature ブランチを削除する（リポジトリ設定で auto-delete を有効にしていればリモート側は自動）。</p>
           </div>
         </div>
         <div class="lesson-task">
@@ -444,7 +449,7 @@ git pull
         <li><a href="https://github.com/github/spec-kit" target="_blank" rel="noopener">github/spec-kit</a> — Spec Kit 公式リポジトリ。<code>/speckit.*</code> スラッシュコマンド一覧と <code>specify init --integration &lt;agent&gt;</code> 対応エージェント一覧の正本</li>
         <li><a href="https://antigravity.google/docs/mcp" target="_blank" rel="noopener">Antigravity Editor — MCP Integration(公式)</a> — Antigravity（IDE + CLI）の MCP 統合公式 docs。設定ファイル <code>~/.gemini/config/mcp_config.json</code> と <code>mcpServers</code> オブジェクトの正本</li>
         <li><a href="https://antigravity.google/docs/cli-reference" target="_blank" rel="noopener">Antigravity CLI — CLI reference(公式)</a> — TUI セッションで使える <code>/agents</code> / <code>/mcp</code> / <code>/diff</code> / <code>/rewind</code> 等のスラッシュコマンド一覧</li>
-        <li><a href="https://docs.github.com/ja/get-started/using-github/github-flow" target="_blank" rel="noopener">GitHub Docs ja — GitHub フロー</a> — ブランチ作成 → コミット & push → Pull Request → レビュー & マージ の 4 ステップ公式 docs</li>
+        <li><a href="https://docs.github.com/ja/get-started/using-github/github-flow" target="_blank" rel="noopener">GitHub Docs ja — GitHub フロー</a> — ①分岐を作成 → ②変更を加える → ③pull request を作成 → ④レビューコメントに対処 → ⑤pull request をマージ → ⑥ブランチを削除 の 6 ステップ公式 docs</li>
         <li><a href="https://docs.github.com/ja/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects" target="_blank" rel="noopener">GitHub Docs ja — Projects の について</a> — 第10回からの継続参照。Issue が Done に自動移動する Project の自動化機能の正本</li>
         <li><a href="https://docs.github.com/ja/issues/tracking-your-work-with-issues" target="_blank" rel="noopener">GitHub Docs ja — 課題であなたの作業を追跡する</a> — <code>Closes #N</code> による Issue 自動 close の公式仕様</li>
         <li><a href="https://www.anthropic.com/engineering/harness-design-long-running-apps" target="_blank" rel="noopener">Anthropic Engineering — Harness design for long-running application development</a> — 第8回からの継続参照。MCP（道具の追加）と Hooks（割り込みの追加）の位置づけ、事前制御 + 事後制御の両輪の原典</li>
