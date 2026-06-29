@@ -248,7 +248,7 @@ console.log(results);</code></pre>
             </ul>
             <p><strong>AI にバグ入り関数を生成させる（15分）</strong></p>
             <ul>
-              <li>Codespaces の<strong>Copilot Chat</strong>（または Gemini）に次のプロンプトを投げる:
+              <li>Codespaces の<strong>Copilot Chat</strong>（または<strong>ブラウザの別タブで開いた Gemini</strong>）に次のプロンプトを投げる。Copilot Student の認証が済んでいない人は Gemini 単体で進めて OK:
                 <pre><code>JavaScript の初学者向けの練習問題として、わざと 1 か所だけバグを入れた関数のコードを 3 つ書いてください。
 - どの関数も 5 行以内
 - バグは「return の書き忘れ」「引数名の typo」「呼び出し時のカッコ忘れ」のどれか
@@ -332,7 +332,16 @@ showList(favorites);</code></pre>
 &lt;h2&gt;最近見つけた良いもの&lt;/h2&gt;
 &lt;ul id="recent-list"&gt;&lt;/ul&gt;</code></pre>
               </li>
-              <li>このとき、関数を使っていない場合は <code>for</code> 文の塊をもう 1 セットコピペする必要があるが、関数があれば<strong><code>showList</code> の中の <code>getElementById</code> を引数で受け取る形に拡張するだけ</strong>で済む（実装は推奨課題に残す）</li>
+              <li>このとき、関数を使っていない場合は <code>for</code> 文の塊をもう 1 セットコピペする必要があるが、関数があれば<strong><code>showList</code> の中の <code>getElementById</code> を引数で受け取る形に拡張するだけ</strong>で済む。シグネチャだけ示すと:
+                <pre><code>function showList(items, targetId) {
+  const ul = document.getElementById(targetId);
+  // 以下は同じ
+}
+
+showList(favorites, "favorite-list");
+showList(recent, "recent-list");</code></pre>
+              </li>
+              <li>実装は推奨課題に残す。<strong>「同じ関数で 2 つのリストを出し分けられる」</strong>が引数のもう一段のご利益、と覚えておく</li>
               <li>「<strong>2 か所目を作ろうとした瞬間に、整理しておいてよかったと感じる</strong>」——これがリファクタリングの効用</li>
             </ul>
           </div>
