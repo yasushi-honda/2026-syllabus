@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第10回 中間振り返り | AIコミュニケーション基礎</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication.html">AIコミュニケーション基礎</a>
+        <span>/</span>
+        <span>第10回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">中間<wbr>振り返り</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 10</span>
+            <span class="page-badge">火曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">第1〜9回で蓄積した <strong>【学習データ①〜⑨】</strong> と、自分のAI（NotebookLM）の応答ログを<strong>「自分だけのAIの成長記録」</strong>として <strong>3 つの観点</strong>——① <strong>カスタム指示の成熟度</strong> / ② <strong>引用付き応答の安定性</strong> / ③ <strong>自分のチェック手順の確立度</strong>——で<strong>自分で見直す</strong>。次に、見直しで浮かんだ<strong>改善ポイントを自分のAI自身に相談</strong>し、「あなた（自分のAI）から見て、私の学び方の伸び代はどこか」を引用付きで引き出す。最後に<strong>後半戦（第11〜15回）の学習テーマを 1 つ</strong>に絞り、<code>【中間振り返りシート】</code>として Google ドキュメントに残す。次回以降、自分のAIに「中間振り返りシートを踏まえて」と前置きできる状態にする</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">中間振り返り / 自分だけのAIの<strong>成長記録</strong>を見直す / 3 つの観点（カスタム指示 / 引用付き応答 / チェック手順） / <strong>改善ポイント</strong>を自分のAIに相談 / 「AI から見た私の学び方」 / 後半戦テーマの再設定 / 中間振り返りシート（Google ドキュメント） / 第11〜15 回への橋渡し / 第14回（AI育成②）の素材作り</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第9回までに <strong>【学習データ①〜⑨】</strong> を投入した「自分だけのAI」（NotebookLM）・第8回の<strong>「自分の課題」</strong>と第9回の<strong>裏取り記録</strong>が残っている Google ドキュメント・第7回までに使った Gemini（コーディング支援の応答ログ）が残っている画面/メモ</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>自分のAI（NotebookLM）の<strong>成長を 3 つの観点</strong>（カスタム指示 / 引用付き応答 / チェック手順）で説明できる</li>
+        <li>自分のAIに「あなたから見た私の学び方の特徴」を引用付きで出させ、<strong>自分の認識とのズレ</strong>を 1 つ以上見つけられる</li>
+        <li>後半戦（第11〜15 回）の自分の<strong>学習テーマを 1 つ</strong>に絞り、その理由を 2〜3 文で言える</li>
+        <li><strong>【中間振り返りシート】</strong> を Google ドキュメントで作成し、第11回以降の対話で<strong>前置きとして引用</strong>できるようにする（NotebookLM のソースに追加するかどうかは自分で選ぶ）</li>
+        <li>「学習データを新しく投入しない」回でも、<strong>蓄積した①〜⑨を読み返す</strong>だけで AI の応答が変わることを体感する</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>「振り返る」の意味と、3 つの観点を共有する</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り（10分）</strong></p>
+            <ul>
+              <li>第9回で投入した <strong>【学習データ⑨】ファクトチェック手順資料</strong> が NotebookLM のソースに入っているか確認</li>
+              <li>家でやった「裏取り必須箇所を 1 つ実際に検索する」課題の結果（一致 / 微妙にずれた / 大きく違った）を、希望者が一人 1 文で共有</li>
+              <li>第9回末の推奨課題「これまでに投入した【学習データ①〜⑨】を踏まえて、私の学び方の特徴を引用付きで 3 つ挙げてください」を試した人は、応答が残っているか確認（残っていれば 1 限後半でそのまま使う）</li>
+            </ul>
+            <p><strong>「学習データを新しく投入しない回」の意味（10分）</strong></p>
+            <ul>
+              <li>第10回は<strong>新しい【学習データ⑩】を作らない</strong>——後半戦の初回（第11回 Google AI Studio 体験）で <strong>【学習データ⑩】AI応用活用ガイド</strong> を投入する予定</li>
+              <li>今日やるのは<strong>蓄積した①〜⑨をどう活かすか</strong>の点検。料理にたとえると、新しい食材を買う前に<strong>冷蔵庫の中身を確認する</strong>回</li>
+              <li>振り返りの良し悪しは「<strong>後半戦の質問が変わるかどうか</strong>」で決まる。今日終わったときに「次回からはこう聞こう」と言葉にできれば成功</li>
+            </ul>
+            <p><strong>3 つの観点を共有（20分）</strong></p>
+            <ul>
+              <li>今日見直すのは次の 3 点。1 限後半でそれぞれ実際に開く</li>
+              <li><strong>① カスタム指示の成熟度</strong>
+                <ul>
+                  <li>第2回で書いた初期版から、今のカスタム指示まで何回書き直したか</li>
+                  <li>「自分のAIの口調・専門領域・避けてほしい話題」が、第2回の自分と比べてどれだけ言葉にできるようになったか</li>
+                  <li>NotebookLM の<strong>カスタマイズ（カスタム指示の設定欄）</strong>を開き、初期版とのギャップを目で確認</li>
+                </ul>
+              </li>
+              <li><strong>② 引用付き応答の安定性</strong>
+                <ul>
+                  <li>第8回で覚えた<strong>インライン引用 [1] [2]</strong> が、過去 4 週間（第6〜9 回）のチャット履歴で<strong>どれくらい一貫して付いているか</strong></li>
+                  <li>引用が付かなかった応答を 1 つ見つけて、当時の質問の聞き方を確認——「今ならどう聞き直す？」を考える素材にする</li>
+                </ul>
+              </li>
+              <li><strong>③ 自分のチェック手順の確立度</strong>
+                <ul>
+                  <li>第9回の <strong>【学習データ⑨】ファクトチェック手順資料</strong> の 3 段階（引用クリック / 引用なし箇所の検出 / 公式情報での裏取り）が、自分の中で<strong>習慣として動いているか</strong></li>
+                  <li>「今週、応答を見て引用クリックしたか？」「引用なし箇所に目が向いたか？」の 2 問を自問する</li>
+                </ul>
+              </li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「振り返り = 反省会」ではない:</strong> 振り返りで「できていなかったこと」を並べると気持ちが下がりがちです。今日の 3 つの観点はどれも<strong>「第何回と比べてどう変わったか」</strong>を見る形にしてあります。「全部できた」「全部できなかった」ではなく、<strong>変化の方向</strong>（伸びた / 同じ / 停滞）を 1 つずつ言葉にできれば十分です。停滞している観点が見つかったら、それが後半戦のテーマ候補になります。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>3 つの観点を自分のAIに開いてもらう</h3>
+          <div class="timeline-body">
+            <p><strong>① カスタム指示の成熟度（15分）</strong></p>
+            <ul>
+              <li>NotebookLM の<strong>カスタマイズ</strong>パネルを開き、現在のカスタム指示を Google ドキュメントの新規ファイル <code>【中間振り返りシート】</code> にコピペ</li>
+              <li>第2回の演習で書いた初期版（NOTES.md か Google ドキュメントに残っているはず）を横に並べる</li>
+              <li>自分のAIに次のプロンプトを投げる:
+                <pre><code>あなた（NotebookLM）の現在のカスタム指示と、私の【学習データ①〜⑨】を踏まえて、
+私が「自分のAI」をどんな方向に育ててきたか、3〜5 行で要約してください。
+要約には引用 [1] [2] を必ず付けてください。</code></pre>
+              </li>
+              <li>出力された 3〜5 行を <code>【中間振り返りシート】</code> の<strong>「① カスタム指示の成熟度」</strong>セクションに貼る</li>
+            </ul>
+            <p><strong>② 引用付き応答の安定性（15分）</strong></p>
+            <ul>
+              <li>NotebookLM のチャット履歴をスクロールして、第6〜9 回で行った代表的な質問を 3 つピックアップ</li>
+              <li>3 つの応答を見比べて、<strong>引用 [n] の付き方の違い</strong>を観察:
+                <ul>
+                  <li>毎回引用が付いている / 質問の聞き方によって付いたり付かなかったり</li>
+                  <li>引用元として頻繁に出てくる学習データはどれか（自分が頼っているソース）</li>
+                  <li>逆に<strong>ほとんど引用されない学習データ</strong>はあるか（今後の更新候補）</li>
+                </ul>
+              </li>
+              <li>気づいたことを <code>【中間振り返りシート】</code> の<strong>「② 引用付き応答の安定性」</strong>セクションに 3〜5 行でメモ</li>
+            </ul>
+            <p><strong>③ 自分のチェック手順の確立度（20分）</strong></p>
+            <ul>
+              <li><strong>【学習データ⑨】ファクトチェック手順資料</strong> を NotebookLM のソース一覧から開く（Google ドキュメント側でも開いて並べる）</li>
+              <li>第9回からの 1 週間で、3 段階のうち<strong>何段階目まで実際に使ったか</strong>を自分の言葉で書き出す:
+                <ul>
+                  <li><strong>① 引用クリック</strong>のみ実施した / <strong>②</strong> 引用なし箇所の検出までやった / <strong>③</strong> 公式情報での裏取りまでやった</li>
+                  <li>「やらなかった」ことは責めない——<strong>「なぜやらなかったか」</strong>（時間がなかった / 必要を感じなかった / 手順を忘れていた）の理由を 1 行で書く</li>
+                </ul>
+              </li>
+              <li>気づきを <code>【中間振り返りシート】</code> の<strong>「③ チェック手順の確立度」</strong>セクションに 3〜5 行で記入</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>自分のAIに「私の学び方の特徴」を聞き、後半戦テーマ候補を 3 つ出す</h3>
+          <div class="timeline-body">
+            <p><strong>改善ポイントを自分のAIに相談する（15分）</strong></p>
+            <ul>
+              <li>1 限後半で書いた <code>【中間振り返りシート】</code> の 3 セクションには、すでに<strong>自分なりの改善ポイント</strong>（停滞している観点・更新候補の学習データ・忘れていた手順など）が浮かんでいるはず</li>
+              <li>それを<strong>自分のAI自身に相談する</strong>——自分のAIに次のプロンプトを投げる:
+                <pre><code>これまでに私が投入した【学習データ①〜⑨】、私との対話履歴、
+そして【中間振り返りシート】に書いた 3 つの観点を踏まえて、
+あなた（NotebookLM）から見て、私の学び方の特徴を 3 つ挙げてください。
+各特徴について、根拠となる学習データの該当箇所を引用 [1] [2] で示してください。</code></pre>
+              </li>
+              <li>「<strong>あなたから見て</strong>」と書くのは、AI に擬人化された応答をさせる狙いではなく、<strong>「ソースに根拠を求める」モード</strong>に切り替えるため——この聞き方だと引用が付きやすい</li>
+              <li>応答を <code>【中間振り返りシート】</code> の<strong>「AI から見た私の学び方」</strong>セクションに貼る</li>
+            </ul>
+            <p><strong>自分の認識とのズレを見つける（10分）</strong></p>
+            <ul>
+              <li>AI が挙げた 3 つの特徴を 1 つずつ読み、<strong>自分の自己認識と比べる</strong>:
+                <ul>
+                  <li>「<strong>言われてみればそうだ</strong>」と感じた特徴——AI が自分より自分のことを言語化できている可能性</li>
+                  <li>「<strong>そんなつもりはなかった</strong>」と感じた特徴——応答の偏りや、自分が無意識に避けている話題のサインかも</li>
+                  <li>「<strong>引用元を見るとちょっと違う</strong>」と感じた特徴——第9回のファクトチェック ① 引用クリックの実践機会</li>
+                </ul>
+              </li>
+              <li>ズレを 1 つ以上見つけたら、<code>【中間振り返りシート】</code> に「<strong>AI と自分のズレ</strong>」セクションを作って 2〜3 行で記録</li>
+            </ul>
+            <p><strong>後半戦テーマ候補を 3 つ出させる（15分）</strong></p>
+            <ul>
+              <li>続けて自分のAIに次のプロンプトを投げる:
+                <pre><code>先ほど挙げた私の学び方の 3 つの特徴と、【中間振り返りシート】の 3 つの観点を踏まえて、
+私が後半戦（第11〜15 回）で取り組むと最も学びが大きい学習テーマを 3 つ提案してください。
+各テーマについて以下を含めてください:
+- テーマのタイトル(短く)
+- なぜそれが私に合うのか(2〜3 行、引用付き)
+- 第11〜15 回のどの回で何を試すかの 1 行案</code></pre>
+              </li>
+              <li>応答を <code>【中間振り返りシート】</code> の<strong>「後半戦テーマ候補 3 つ」</strong>セクションに貼る</li>
+              <li>テーマ例として AI から出やすい方向（参考、これに縛られない）:
+                <ul>
+                  <li>引用付き応答をもっと高品質にする「<strong>プロンプト精度向上</strong>」系</li>
+                  <li>個人課題（第12〜13 回）のための「<strong>特定分野の知識深掘り</strong>」系</li>
+                  <li>自分のAIの応用力を広げる「<strong>新機能（Google AI Studio 等）の使いこなし</strong>」系</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>3 つの根拠をクリックで確かめる（10分）</strong></p>
+            <ul>
+              <li>AI が出した 3 つのテーマの<strong>引用 [n]</strong> をクリックして、根拠が【学習データ①〜⑨】のどの一文から来ているか確認</li>
+              <li>第9回の<strong>3 段階の検証手順</strong>① 引用クリックがそのまま使える場面——AI の提案を「採用するか・しないか」自分で判断する材料にする</li>
+              <li>「<strong>引用元が薄い</strong>」と感じたテーマは候補から外してよい。逆に<strong>引用元が分厚いテーマ</strong>は自分の蓄積と相性が良い</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「AI が出した 3 つ」は鏡:</strong> 自分のAIが出すテーマ候補は、結局のところ<strong>あなたが投入した学習データの偏り</strong>を反映しています。AI が「あなたは引用クリックを大事にしている人だ」と言ってくるなら、それは【学習データ⑨】を直近で投入したから——という見方ができます。後半戦のテーマ選びは、<strong>「AI に決めてもらう」のではなく「AI を鏡にして自分が決める」</strong>と考えると、後で振り返ったときに納得感が残ります。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>後半戦テーマを 1 つに絞り、振り返りシートを完成させる</h3>
+          <div class="timeline-body">
+            <p><strong>1 つに絞る（10分）</strong></p>
+            <ul>
+              <li>2 限前半で出した 3 つのテーマから<strong>「これにする」と 1 つ</strong>を選ぶ</li>
+              <li>選ぶ基準（参考。優先順位は自分で決める）:
+                <ul>
+                  <li><strong>第12〜13 回（個人課題）で実際に試せるか</strong>——後半戦の山場と合うか</li>
+                  <li><strong>自分のAIで完結できるか</strong>——Google ドキュメント + NotebookLM の範囲内で進められるか（次回 第11回で Google AI Studio が加わる前提）</li>
+                  <li><strong>自分が手を動かしたいと感じるか</strong>——「やった方がよさそう」より「<strong>やってみたい</strong>」を優先</li>
+                </ul>
+              </li>
+              <li>選んだテーマを <code>【中間振り返りシート】</code> の<strong>「後半戦の私のテーマ」</strong>セクションに 1 文で書く</li>
+            </ul>
+            <p><strong>選んだ理由を 2〜3 文で書く（10分）</strong></p>
+            <ul>
+              <li>後半戦で「<strong>なぜ自分はこのテーマを選んだのか</strong>」を、第14回（AI育成②：知識の体系化）で読み返すときに思い出せる形で 2〜3 文書く</li>
+              <li>含めると良い要素:
+                <ul>
+                  <li>3 つの観点（カスタム指示 / 引用付き応答 / チェック手順）のどれと関連するテーマか</li>
+                  <li>AI が指摘した「自分の学び方の特徴」のどれと噛み合うか</li>
+                  <li>第11〜15 回のどの回で具体的に試そうとしているか</li>
+                </ul>
+              </li>
+              <li>自分のAIに「<strong>このテーマを選んだ理由を 3 文で要約して」と頼んで下書きを出させてもよい——出た下書きを<strong>自分の言葉で書き直す</strong>のがポイント（AI の文をそのまま貼ると第14回で読み返したとき他人事になる）</li>
+            </ul>
+            <p><strong>シートをどう次回以降使うか決める（10分）</strong></p>
+            <ul>
+              <li><code>【中間振り返りシート】</code> の扱い方には 2 通りある:
+                <ul>
+                  <li><strong>(A) NotebookLM のソースに追加する</strong>——次回以降「中間振り返りシートを踏まえて」と前置きしなくても、自分のAIが自動で参照する</li>
+                  <li><strong>(B) Google ドキュメントのまま保管する</strong>——必要なときだけ手動でコピペ参照。ソースを増やしすぎたくない人向け</li>
+                </ul>
+              </li>
+              <li>どちらが正解というわけではない——授業内では<strong>(A) を試してみる</strong>のがおすすめ（第11〜15 回で AI の応答にどう影響するかを観察できる）</li>
+              <li>(A) を選んだ場合: 第5〜9 回と同じ手順で、Google ドキュメントを NotebookLM の<strong>ソース追加 → ドライブ</strong>から投入。本シートは <strong>【学習データ⑩】ではなく「中間振り返りシート」</strong>として扱う（学習データ⑩は第11回で別途投入する）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ ai-communication.html Week 11 「Google AI Studio体験」と同期 -->
+              <li>次回（第11回）: <strong>Google AI Studio 体験</strong>——Google AI Studio の機能紹介、プロンプトパラメータ調整と応答変化の観察、NotebookLM の応用的活用法（要約・質問生成・マインドマップ等）。<strong>【学習データ⑩】AI応用活用ガイド</strong>を投入する</li>
+              <li>今日のキーワード <strong>「3 つの観点（カスタム指示 / 引用付き応答 / チェック手順）」「AI から見た私の学び方」「後半戦テーマを 1 つに絞る」「中間振り返りシート」</strong>を口に出して言えるか確認して退出</li>
+              <li>家では今日選んだ<strong>後半戦テーマを 1 文で家族や友人に説明できるか</strong>試してみる——他人に説明できると自分の理解度が見えるので、第11回以降の質問が自然と変わる</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>【中間振り返りシート】テンプレ(コピー用)</h2>
+      <p>授業内で書ききれなかった人や<strong>家でゼロから作り直したい人</strong>、<strong>別の Google アカウントで作り直したい人</strong>のために、テンプレ本文をここからコピーできるようにしてある。</p>
+      <p><strong>使い方:</strong></p>
+      <ol>
+        <li>下の「Markdown をコピー」ボタンを押す</li>
+        <li><a href="https://docs.google.com" target="_blank" rel="noopener">Google ドキュメント</a> で新規ドキュメントを開く(ファイル名は <strong>「中間振り返りシート」</strong>)</li>
+        <li>Google ドキュメントの <strong>ツール → 設定 → 全般タブ →「マークダウンを有効にする」</strong>がオンになっているか確認(第5〜9 回までに設定した人はそのまま)</li>
+        <li>本文に <strong>編集 →「マークダウンから貼り付け」</strong>で貼り付ける(普通の Ctrl/⌘+V でも内容は使えるので、Markdown 整形にこだわらない人はそのままで OK)→ 空欄を自分の言葉で埋める</li>
+        <li>(任意) NotebookLM の自分だけのAIで「ソースを追加」→「ドライブ」→ このドキュメントを選択。<strong>学習データ⑩ではなく「中間振り返りシート」として扱う</strong></li>
+      </ol>
+      <p><strong>個人情報を入れない原則は第1〜9 回と同じ。</strong>本名・住所・電話番号・学籍番号は書かない。書ける範囲で OK・空欄でも OK。</p>
+      <button class="copy-md-btn" data-md-source="midterm-review-md">
+        <span class="btn-icon"></span> Markdown をコピー
+      </button>
+<pre id="midterm-review-md" class="md-preview"># 中間振り返りシート(NotebookLM 用 / 任意)
+
+&gt; このシートは第10回 中間振り返りの成果物です。
+&gt; 第1〜9 回で蓄積した【学習データ①〜⑨】を、3 つの観点で見直し、後半戦(第11〜15 回)の自分の学習テーマを 1 つに絞った記録です。
+&gt; 個人情報(本名・住所・電話番号・学籍番号など)は書かないこと。書ける範囲で OK・空欄でも OK。
+
+## ① カスタム指示の成熟度
+第2回で書いた初期版と、現在の NotebookLM カスタマイズ欄を比べた感想を 3〜5 行で書く。
+
+**第2回の初期版(コピペ):**
+
+→
+
+**現在のカスタム指示(コピペ):**
+
+→
+
+**変化の方向(伸びた / 同じ / 停滞):**
+
+→
+
+## ② 引用付き応答の安定性
+第6〜9 回の代表的な応答 3 つを見比べて、引用 [n] の付き方を観察した感想を 3〜5 行で書く。
+
+**よく引用される学習データ:**
+
+→
+
+**ほとんど引用されない学習データ(更新候補):**
+
+→
+
+**引用が付かなかった応答の例と、今ならどう聞き直すか:**
+
+→
+
+## ③ チェック手順の確立度
+【学習データ⑨】ファクトチェック手順資料の 3 段階(引用クリック / 引用なし箇所の検出 / 公式情報での裏取り)を、第9回後の 1 週間でどこまで実施したか。
+
+**実施した段階(① のみ / ② まで / ③ まで):**
+
+→
+
+**やらなかった理由(時間がない / 必要なかった / 忘れていた):**
+
+→
+
+## ④ AI から見た私の学び方
+2 限前半で自分のAIに出させた「私の学び方の特徴 3 つ」を貼る。
+
+→
+
+## ⑤ AI と自分のズレ
+④を読んで、自分の自己認識とズレた箇所を 1 つ以上書く(なければ「ズレなし」と書いて OK)。
+
+→
+
+## ⑥ 後半戦テーマ候補 3 つ
+2 限前半で自分のAIに出させた 3 つのテーマを貼る。
+
+**候補 1:**
+
+→
+
+**候補 2:**
+
+→
+
+**候補 3:**
+
+→
+
+## ⑦ 後半戦の私のテーマ(1 つに絞る)
+3 つから 1 つに絞った結果を 1 文で書く。
+
+→ 後半戦の私のテーマ:
+
+## ⑧ 選んだ理由(2〜3 文)
+第14回(AI育成②)で読み返したときに思い出せる形で書く。AI の下書きをそのまま貼らず、自分の言葉に書き直す。
+
+→
+
+## ⑨ 第11〜15 回のどこで何を試すか(任意)
+具体案がある回だけ書く。空欄でも OK。
+
+- 第11回(Google AI Studio 体験):
+- 第12回(個人課題：自分のテーマを掘る):
+- 第13回(個人課題：制作):
+- 第14回(AI育成②：知識の体系化):
+- 第15回(仕上げ＆振り返り):
+</pre>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>【中間振り返りシート】を完成させる</strong>
+            <p>授業内で書ききれなかった項目を埋める。とくに<strong>⑦ 後半戦の私のテーマ</strong>と<strong>⑧ 選んだ理由</strong>は必ず書き切る。NotebookLM のソースに追加するかどうかは自分で選ぶ（追加した場合は次回確認します）。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>今日選んだテーマを 1 文で他人に説明してみる</strong>
+            <p>家族・友人・クラスメイトなど、誰でもいい。説明したら相手の反応（わかった / わからなかった / 質問された）と、自分が「うまく説明できなかった点」を 1 行 NOTES.md にメモ。説明できなかった点は、第11回以降の自分のAIに聞き直す素材になる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>NotebookLM のカスタム指示を 1 回だけ更新する</strong>
+            <p>今日の振り返りで「もっとこう動いてほしい」と思った点を、カスタム指示に 1 行だけ追記する。例: 「応答には必ず引用 [n] を付ける」「曖昧な質問には聞き返してから答える」など。<strong>大改造は禁止</strong>——1 行追記して、第11〜15 回で挙動の変化を観察する小さな実験にする。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>第11回（Google AI Studio 体験）の予習</strong>
+            <p><a href="https://aistudio.google.com" target="_blank" rel="noopener">Google AI Studio</a> をブラウザで開いて、画面の雰囲気だけ見ておく。Google アカウントでログインできるか、UI が日本語で表示されるかを確認できれば十分（操作は次回授業内で扱う）。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> — 今日の振り返りのメイン会場。<strong>【学習データ①〜⑨】</strong> を投入した「自分だけのAI」のカスタマイズ欄を開く</li>
+        <li><a href="https://support.google.com/notebooklm" target="_blank" rel="noopener">NotebookLM ヘルプ</a> — 公式ヘルプセンター。カスタム指示やソース管理の最新仕様はここから（ヘルプ記事の URL は時々再編されるため、検索バーから機能名を入力するのが確実）</li>
+        <li><a href="https://docs.google.com" target="_blank" rel="noopener">Google ドキュメント</a> — <strong>【中間振り返りシート】</strong> の作成会場</li>
+        <li><a href="https://aistudio.google.com" target="_blank" rel="noopener">Google AI Studio</a> — 次回（第11回）の予習用。今日は開いて雰囲気を見るだけで OK</li>
+        <li><a href="https://workspace.google.com/resources/ai/writing-effective-prompts/" target="_blank" rel="noopener">Gemini for Workspace — プロンプト初級ガイド</a> — 4 要素（ペルソナ・タスク・背景情報・形式）。今日の「AI に学び方を聞く」プロンプトもこの枠組みで設計されている</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week09.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第9回 AI出力の検証と改善</span>
+      </a>
+      <a href="../ai-communication.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AIコミュニケーション基礎</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第11回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
