@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第10回 関数とコード整理＆バグ修正ワーク③ | プログラム基礎 I</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--blue">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../program-basics.html">プログラム基礎 I</a>
+        <span>/</span>
+        <span>第10回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">関数と<wbr>コード整理＆<wbr>バグ修正ワーク③</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 10</span>
+            <span class="page-badge">火曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">第9回までに、サイコロを <code>for</code> 文で 10 回振る・配列をリスト表示する、と<strong>同じような処理を何度も書く場面</strong>が増えてきた。今日は<strong>「処理に名前を付けてまとめる」</strong>仕組み——<code>function</code>（関数）を導入する。引数なし → 引数あり → 戻り値あり、と段階的に手で書き、<strong>サイコロを振る処理を <code>rollDice()</code> という関数</strong>にまとめる。さらに <strong>AI（Copilot/Gemini）に「バグ入り関数」を生成させて読み解いて直す</strong>バグ修正ワーク③で、関数の「定義」と「呼び出し」の境目を体に入れる</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">関数 / <code>function</code> 宣言 / 関数の<strong>定義</strong>と<strong>呼び出し</strong>の違い / 引数（parameter / argument） / 戻り値 / <code>return</code> / 同じ処理に名前を付ける / <code>rollDice()</code> / <code>showList(items)</code> / バグ修正ワーク③（AI が書いた関数を読み解く） / コード整理（リファクタリング）の最初の一歩</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第9回までに作った <strong>GitHub Pages 公開済みリポジトリ</strong>（<code>index.html</code> / <code>game.html</code> / <code>list.html</code>）・Codespaces が起動できる状態・第6回の変数、第7回の <code>if</code> 文、第9回の <code>for</code> 文と配列を一度は手で書いた経験</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li><strong>関数</strong>が「<strong>処理に名前を付けて、何度でも呼び出せるようにまとめたもの</strong>」であることを自分の言葉で説明できる</li>
+        <li><code>function 名前() { ... }</code> の構文で関数を<strong>定義</strong>し、<code>名前()</code> で<strong>呼び出す</strong>を 1 度は手で書く</li>
+        <li>引数（カッコの中で受け取る値）と戻り値（<code>return</code> で返す値）の役割を区別できる</li>
+        <li>第9回の「サイコロ 10 回」を <code>rollDice()</code> 関数を使って書き直し、<strong>同じ機能のまま行数が減る</strong>ことを体感する</li>
+        <li>AI が生成した「バグ入り関数」を読み解き、<strong>エラーメッセージと自分の予想</strong>を頼りに直せる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>「同じ処理を何度も書く面倒さ」を体感する → 関数の必要性を理解する</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り（10分）</strong></p>
+            <ul>
+              <li>第9回で作った <code>list.html</code> を Codespaces で開く（<code>python3 -m http.server 8000</code> → 第1回と同じ手順で Simple Browser）</li>
+              <li><code>favorites</code> 配列の中身を増やしたり減らしたりして、<code>for</code> 文の本体を直さなくても <code>&lt;li&gt;</code> が増減することを再確認</li>
+              <li>家でやった「サイコロ 10 回の結果を画面に表示する」推奨課題ができた人は、簡単に画面共有（強制ではない）</li>
+            </ul>
+            <p><strong>「同じ処理が 3 か所に出てきた」場面を作る（15分）</strong></p>
+            <ul>
+              <li><code>game.html</code> を Codespaces で開き、<code>&lt;script&gt;</code> ブロックに次のような状況を作ってみる:
+                <pre><code>// サイコロを 1 回振る（第8回・第9回で書いた）
+const dice1 = Math.floor(Math.random() * 6) + 1;
+console.log("1 回目:", dice1);
+
+// もう 1 回振りたい
+const dice2 = Math.floor(Math.random() * 6) + 1;
+console.log("2 回目:", dice2);
+
+// さらにもう 1 回（合計 3 回）
+const dice3 = Math.floor(Math.random() * 6) + 1;
+console.log("3 回目:", dice3);</code></pre>
+              </li>
+              <li>保存して Simple Browser を開き、F12 → Console タブで 3 行のログが出ることを確認</li>
+              <li>気づくこと:
+                <ul>
+                  <li>「<code>Math.floor(Math.random() * 6) + 1</code>」が<strong>3 回まったく同じ形で出てくる</strong></li>
+                  <li>第9回の <code>for</code> 文を使えばまとめられるが、<strong>3 か所が離れたところにある場合</strong>は <code>for</code> でまとめにくい</li>
+                  <li>「<strong>サイコロを振る処理に名前を付けて、必要な場所でその名前を呼び出せたら楽</strong>」——これが関数</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>「関数 = 処理に名前を付ける」を予告（15分）</strong></p>
+            <ul>
+              <li>関数を使うとさっきの 3 か所はこうなる（1 限後半で実際に書く、ここは予告だけ）:
+                <pre><code>function rollDice() {
+  return Math.floor(Math.random() * 6) + 1;
+}
+
+console.log("1 回目:", rollDice());
+console.log("2 回目:", rollDice());
+console.log("3 回目:", rollDice());</code></pre>
+              </li>
+              <li>2 つの新しいキーワード:
+                <ul>
+                  <li><strong>定義</strong>: <code>function rollDice() { ... }</code> で「<strong>rollDice という名前の処理</strong>」を一度だけ書く</li>
+                  <li><strong>呼び出し</strong>: <code>rollDice()</code> で「<strong>その処理を実行</strong>」する。何回でも呼び出せる</li>
+                </ul>
+              </li>
+              <li>関数のご利益 3 つ:
+                <ul>
+                  <li><strong>同じ処理を 1 か所にまとめられる</strong>——直すときも 1 か所だけ直せばよい</li>
+                  <li><strong>名前で意味がわかる</strong>——<code>rollDice()</code> と書いてあれば「サイコロを振っている」とすぐわかる</li>
+                  <li><strong>他のファイル・他の人にも使ってもらえる</strong>——名前と引数だけ伝えれば中身を知らなくても使える</li>
+                </ul>
+              </li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「関数 = 1 回書いて何度も呼ぶ」:</strong> 第9回の <code>for</code> 文は「<strong>同じ処理を同じ場所で繰り返す</strong>」仕組みでした。関数は「<strong>同じ処理を別の場所で何度も使う</strong>」仕組みです。両方とも「同じことを何度も書くのは面倒」という感覚から生まれた書き方、という共通点があります。今日学ぶ関数は、後で<code>for</code> 文と組み合わせると<strong>「サイコロを 100 回振って結果を画面に表示する」</strong>のような処理が、たった 5〜6 行で書けるようになります。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>関数を手で書く → サイコロ関数とリスト表示関数を作る</h3>
+          <div class="timeline-body">
+            <p><strong>関数の基本構文（10分）</strong></p>
+            <ul>
+              <li>もっとも単純な関数（引数なし・戻り値なし）から書く:
+                <pre><code>function sayHello() {
+  console.log("こんにちは！");
+}
+
+sayHello();   // → "こんにちは！" と表示される
+sayHello();   // もう 1 回呼べばまた表示される</code></pre>
+              </li>
+              <li>注意する 3 点:
+                <ul>
+                  <li><strong>定義</strong>と<strong>呼び出し</strong>の<strong>2 つで 1 セット</strong>——<code>function sayHello() { ... }</code> だけ書いて呼ばないと何も起きない</li>
+                  <li><strong>カッコ <code>()</code> を忘れない</strong>——<code>sayHello;</code> と書くと関数を呼ばずに「関数そのもの」を指してしまう（エラーは出ないが何も実行されない）</li>
+                  <li><strong>中身は波カッコ <code>{ }</code></strong>——インデント（半角スペース 2 個）で見やすく</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>引数を受け取る関数（10分）</strong></p>
+            <ul>
+              <li>「<strong>名前を変えて挨拶する</strong>」関数:
+                <pre><code>function greet(name) {
+  console.log("こんにちは、" + name + "さん！");
+}
+
+greet("田中");   // → "こんにちは、田中さん！"
+greet("山田");   // → "こんにちは、山田さん！"</code></pre>
+              </li>
+              <li><strong>引数</strong>のしくみ:
+                <ul>
+                  <li><code>function greet(name)</code> の <code>name</code> が<strong>仮引数</strong>（parameter）——「ここに値が入ってくる箱」</li>
+                  <li><code>greet("田中")</code> の <code>"田中"</code> が<strong>実引数</strong>（argument）——「実際に入れる値」</li>
+                  <li>呼び出すときに渡した値が、関数の中で <code>name</code> として使える</li>
+                </ul>
+              </li>
+              <li><strong>よくあるミス</strong>: <code>greet()</code> と引数なしで呼ぶと、<code>name</code> が <code>undefined</code> になって <code>"こんにちは、undefinedさん！"</code> と表示される</li>
+            </ul>
+            <p><strong>戻り値のある関数（10分）</strong></p>
+            <ul>
+              <li><strong>計算した結果を呼び出し元に返す</strong>関数。<code>return</code> を使う:
+                <pre><code>function add(a, b) {
+  return a + b;
+}
+
+const result = add(3, 5);
+console.log(result);   // → 8</code></pre>
+              </li>
+              <li><strong><code>return</code></strong> の意味:
+                <ul>
+                  <li>「<strong>計算結果を呼び出し元に返す</strong>」キーワード</li>
+                  <li><code>return</code> に出会った瞬間に関数は終わる——その後の行は実行されない</li>
+                  <li>関数の呼び出し（<code>add(3, 5)</code>）が「<strong>その結果の値</strong>」として扱えるようになる（<code>const result = ...</code> で受け取れる）</li>
+                </ul>
+              </li>
+              <li><strong>引数なし・戻り値なし</strong>（<code>sayHello()</code>）/ <strong>引数あり・戻り値なし</strong>（<code>greet(name)</code>）/ <strong>引数あり・戻り値あり</strong>（<code>add(a, b)</code>）の 3 パターンを、関数を読むときの目印にする</li>
+            </ul>
+            <p><strong>サイコロを <code>rollDice()</code> 関数にまとめる（20分）</strong></p>
+            <ul>
+              <li><code>game.html</code> の <code>&lt;script&gt;</code> を次のように書き直す:
+                <pre><code>function rollDice() {
+  return Math.floor(Math.random() * 6) + 1;
+}
+
+console.log("1 回目:", rollDice());
+console.log("2 回目:", rollDice());
+console.log("3 回目:", rollDice());</code></pre>
+              </li>
+              <li>保存して Simple Browser を更新。F12 の Console に 3 行のログが出ることを確認</li>
+              <li><strong>第9回の <code>for</code> 文と組み合わせる</strong>——10 回振るのを次のように書く:
+                <pre><code>const results = [];
+for (let i = 0; i &lt; 10; i++) {
+  results.push(rollDice());
+}
+console.log(results);</code></pre>
+              </li>
+              <li>第9回では <code>Math.floor(Math.random() * 6) + 1</code> を <code>for</code> 文の中に直接書いた——今日は <strong><code>rollDice()</code> という名前で呼ぶだけ</strong>になった点を比較する</li>
+              <li>「100 回振りたい」「サイコロを<strong>2 個</strong>振りたい」「<strong>20 面ダイス</strong>にしたい」など、要件が変わったときに直す場所が 1 か所で済むのが関数のご利益</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>バグ修正ワーク③：AI に「バグ入り関数」を生成させて読み解く</h3>
+          <div class="timeline-body">
+            <p><strong>ワークの目的を共有（5分）</strong></p>
+            <ul>
+              <li>第5回（バグ修正ワーク①：スマホ対応 CSS）・第7回（バグ修正ワーク②：<code>if</code> 文）に続く、3 回目のバグ修正ワーク</li>
+              <li>狙い: 「<strong>AI が書いた関数を読んで、何が起きているかを自分で予想する</strong>」感覚を作る。Copilot が普段提案するコードを「採用するか・しないか」自分で判断する練習（第3回の延長線）</li>
+              <li>今日のバグは<strong>関数まわり特有のもの</strong>——引数の渡し忘れ、<code>return</code> の書き忘れ、呼び出し時のカッコ抜け、など</li>
+            </ul>
+            <p><strong>AI にバグ入り関数を生成させる（15分）</strong></p>
+            <ul>
+              <li>Codespaces の<strong>Copilot Chat</strong>（または Gemini）に次のプロンプトを投げる:
+                <pre><code>JavaScript の初学者向けの練習問題として、わざと 1 か所だけバグを入れた関数のコードを 3 つ書いてください。
+- どの関数も 5 行以内
+- バグは「return の書き忘れ」「引数名の typo」「呼び出し時のカッコ忘れ」のどれか
+- バグの場所と原因は答えを別欄に書いてください（コード本体には書かないこと）</code></pre>
+              </li>
+              <li>AI が出した 3 つの関数を <code>game.html</code> の <code>&lt;script&gt;</code>（または新規ファイル <code>bug-quiz.html</code>）にコピペする</li>
+              <li>同じプロンプトでも応答は毎回違う——隣の人と内容が違っても OK。それぞれが自分の問題に取り組む</li>
+            </ul>
+            <p><strong>バグを読み解く（25分）</strong></p>
+            <ul>
+              <li>AI が出した「バグの場所と原因」の<strong>答え合わせ部分は隠して</strong>、まず自分で読む</li>
+              <li>読み方の手順:
+                <ul>
+                  <li><strong>① 関数の定義を読む</strong>——名前・引数・<code>return</code> の有無を確認</li>
+                  <li><strong>② 呼び出し方を読む</strong>——引数の数は合っているか、結果を受け取っているか</li>
+                  <li><strong>③ 実行してみる</strong>——保存して Simple Browser を更新、F12 の Console でエラーを見る</li>
+                  <li><strong>④ エラーメッセージから原因を予想</strong>——<code>undefined</code> が出る、<code>NaN</code>（数値ではない）が出る、何も表示されない、など</li>
+                </ul>
+              </li>
+              <li>3 つとも直せたら、<strong>AI の答え合わせ</strong>を見て自分の予想と比較する</li>
+              <li>「自分は <code>return</code> 抜けだと思ったが、本当は引数名の typo だった」のような<strong>ズレ</strong>こそ学びの素材。NOTES.md に「ズレた箇所」を 1 行メモしておくと、次のバグに会ったときの引き出しが増える</li>
+            </ul>
+            <p><strong>同じ AI にもう 1 回出させる（5分）</strong></p>
+            <ul>
+              <li>時間が余った人は、AI に<strong>「もう 1 セット、今度は引数を 2 つ使う関数で」</strong>などと条件を変えて再生成させる</li>
+              <li>AI の出し方の癖（よくやる typo / よく忘れる構文）が見えてくると、普段 Copilot が提案するコードのチェックも速くなる</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「エラーが出る = 失敗」ではない:</strong> エラーメッセージは<strong>JavaScript が「ここがおかしいよ」と教えてくれる手紙</strong>です。F12 の Console に出るエラーは赤字で目立つので「失敗した」と感じがちですが、本当の失敗は「エラーが出ないのに動きがおかしい」ケース（よくあるのは <code>return</code> 抜けで結果が <code>undefined</code> になるパターン）。エラーが出てくれるのはむしろ親切、と覚えておきましょう。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>第9回の <code>list.html</code> を関数で整理する → コード整理を体感する</h3>
+          <div class="timeline-body">
+            <p><strong>整理の方針を確認（5分）</strong></p>
+            <ul>
+              <li>第9回の <code>list.html</code> では「<strong>配列を <code>for</code> 文で <code>&lt;li&gt;</code> として並べる</strong>」処理を直接書いた</li>
+              <li>今日はこの処理を <code>showList(items)</code> という関数にまとめる——<strong>同じ機能のまま、別の配列にも使い回せる</strong>形にする</li>
+              <li>これが「<strong>リファクタリング（コード整理）</strong>」の最初の一歩——機能を変えずに、形だけ整える</li>
+            </ul>
+            <p><strong><code>showList(items)</code> 関数を作る（15分）</strong></p>
+            <ul>
+              <li><code>list.html</code> の <code>&lt;script&gt;</code> ブロックを次のように書き直す:
+                <pre><code>function showList(items) {
+  const ul = document.getElementById("favorite-list");
+  for (let i = 0; i &lt; items.length; i++) {
+    const li = document.createElement("li");
+    li.textContent = items[i];
+    ul.appendChild(li);
+  }
+}
+
+const favorites = [
+  "好きな食べ物：カレー",
+  "好きな色：青",
+  "好きな音楽：J-POP",
+  "好きな場所：図書館"
+];
+
+showList(favorites);</code></pre>
+              </li>
+              <li>保存して Simple Browser を更新——<strong>第9回と同じリストが表示される</strong>ことを確認（機能は変わっていない）</li>
+              <li>確認ポイント:
+                <ul>
+                  <li><code>showList(items)</code> の <code>items</code> は仮引数——呼び出すときに何の配列を渡してもよい</li>
+                  <li><code>showList(favorites)</code> でも <code>showList(["a", "b", "c"])</code> でも動く（直接配列を渡しても OK）</li>
+                  <li>関数の中の <code>items.length</code> は、渡された配列の長さを自動的に見てくれる（第9回の <code>length</code> のご利益が関数と組み合わさる）</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>「もう 1 つリストを増やす」と楽になる（10分）</strong></p>
+            <ul>
+              <li><code>list.html</code> に<strong>2 つ目の <code>&lt;ul&gt;</code></strong> を追加するシナリオを試す（時間がなければ概念の確認だけで OK）:
+                <pre><code>// HTML 側に追加
+&lt;h2&gt;最近見つけた良いもの&lt;/h2&gt;
+&lt;ul id="recent-list"&gt;&lt;/ul&gt;</code></pre>
+              </li>
+              <li>このとき、関数を使っていない場合は <code>for</code> 文の塊をもう 1 セットコピペする必要があるが、関数があれば<strong><code>showList</code> の中の <code>getElementById</code> を引数で受け取る形に拡張するだけ</strong>で済む（実装は推奨課題に残す）</li>
+              <li>「<strong>2 か所目を作ろうとした瞬間に、整理しておいてよかったと感じる</strong>」——これがリファクタリングの効用</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ program-basics.html Week 11 「DOM操作とイベント」と同期 -->
+              <li>次回（第11回）: <strong>DOM操作とイベント</strong>——今日 <code>document.createElement</code> でちょっと触れた「<strong>HTML を JavaScript で操作する</strong>」を本格的に扱う。クリックイベントで反応する小さなゲームを作る</li>
+              <li>今日のキーワード <strong>「<code>function 名前() { ... }</code>」「定義 と 呼び出し」「引数（カッコの中）」「<code>return</code> で戻り値」「同じ処理に名前を付ける」「リファクタリング」</strong>を口に出して言えるか確認して退出</li>
+              <li>家では <code>rollDice()</code> 関数を改造して、<strong>引数で「サイコロの面の数」を受け取る <code>rollDice(sides)</code></strong>（例: <code>rollDice(20)</code> で 20 面ダイス）にしてみると、引数のご利益が体に入る</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>game.html</code> の <code>rollDice()</code> 関数版を push する</strong>
+            <p>1 限後半で書いた関数版を保存・commit・push して、公開URL（<code>/game.html</code>）の F12 → Console で 3 つのログが出ることを確認する。第9回までの動きが壊れていないこと（ページの見た目）も合わせて確認する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>list.html</code> を <code>showList(items)</code> 関数版に書き換えて push する</strong>
+            <p>2 限後半で書いた関数版を保存・commit・push。公開URL（<code>/list.html</code>）で第9回と<strong>同じリストが表示される</strong>ことを確認（機能が変わっていないこと＝リファクタリング成功）。スマホで開いて崩れていないかも 1 度見ておく。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong><code>rollDice(sides)</code> 改造版を書いてみる</strong>
+            <p>引数で「サイコロの面の数」を受け取る関数にして、<code>rollDice(6)</code>（普通のサイコロ）・<code>rollDice(20)</code>（20 面ダイス）・<code>rollDice(100)</code>（くじ引き）を試す。NOTES.md に「引数を 1 つ増やしただけで <code>rollDice</code> がいろいろ使えるようになった」と 1 行メモする。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>バグ修正ワーク③で気づいた「自分の予想とズレた箇所」を NOTES.md にメモする</strong>
+            <p>2 限前半で AI が出したバグ入り関数のうち、自分の予想と AI の答え合わせがズレた箇所を 1〜3 行で記録する。「<code>return</code> 抜けだと思ったら typo だった」のような具体例で OK。次にバグに会ったときの引き出しが増える。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/function" target="_blank" rel="noopener">MDN — <code>function</code> 宣言</a> — 関数を定義する <code>function</code> 文の公式リファレンス</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Guide/Functions" target="_blank" rel="noopener">MDN — 関数（ガイド）</a> — 関数の使い方を順を追って解説。引数・戻り値・スコープなどの全体像</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/return" target="_blank" rel="noopener">MDN — <code>return</code></a> — 戻り値を返すキーワードの公式リファレンス</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Glossary/Parameter" target="_blank" rel="noopener">MDN 用語集 — 仮引数（parameter）</a> — 「関数の定義側」で受け取る側の用語</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Glossary/Argument" target="_blank" rel="noopener">MDN 用語集 — 実引数（argument）</a> — 「関数の呼び出し側」で渡す側の用語</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week09.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第9回 繰り返しと配列</span>
+      </a>
+      <a href="../program-basics.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">プログラム基礎 I</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第11回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
