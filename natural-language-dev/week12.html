@@ -49,7 +49,7 @@
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
-          <div class="lesson-overview-value">第11回完了（1 枚目の PR がマージ済み・<code>Closes #N</code> で Issue が Done に移動・<code>docs/sdd-week11-log.md</code> に 1 周の記録あり・GitHub Actions <code>test.yml</code> が main で緑）／2 枚目のタスクが最低 Red のテストまで到達（未達なら 1 限前半 10 分で追いつく）／Antigravity CLI <code>agy</code> セッションが起動できる／GitHub リポジトリの Security タブが閲覧できる（Public リポジトリなら Secret scanning・Dependabot alerts が既定で ON）</div>
+          <div class="lesson-overview-value">第11回完了（1 枚目の PR がマージ済み・<code>Closes #N</code> で Issue が Done に移動・<code>docs/sdd-week11-log.md</code> に 1 周の記録あり・GitHub Actions <code>test.yml</code> が main で緑）／2 枚目のタスクが最低 Red のテストまで到達（未達なら 1 限前半 10 分で追いつく）／Antigravity CLI <code>agy</code> セッションが起動できる／GitHub リポジトリの Security タブが閲覧できる（Secret scanning は Public リポジトリで既定 ON。Dependabot alerts は今日 Security タブから Enable する想定）</div>
         </div>
       </div>
     </div>
@@ -61,7 +61,7 @@
         <li><strong>テスト結果を 3 軸で読み直す</strong>: ① coverage（何割のコードがテストで通っているか）② <code>.skip</code> / <code>.todo</code>（意図的に外しているテストがどれくらい残っているか）③ 直近の失敗テストとフレーク（同じ条件で色が変わるテストがあるか）</li>
         <li><strong>Green 維持しながらリファクタリング</strong>する感覚を掴む: 命名・関数分割・重複削除を <code>npm test</code> が緑を維持する範囲で 1 サイクル回す</li>
         <li>技術的負債を「<strong>隠さない・忘れない・過剰対応しない</strong>」ために <code>docs/tech-debt.md</code> を新規追加して棚卸しする（TODO / FIXME / <code>.skip</code> / <code>any</code> 型 / 一時 hack を発生源とセットで記録）</li>
-        <li><strong>セキュリティ観点の最低ライン</strong>を通す: GitHub の Security タブ（Secret scanning + Dependabot alerts）を確認 + Node プロジェクトなら <code>npm audit</code> を回す + OWASP Top 10 のうち進級制作に該当し得る項目（例: A03 Injection / A07 Identification and Authentication Failures）を 1〜2 個に絞って自分のコードと突合</li>
+        <li><strong>セキュリティ観点の最低ライン</strong>を通す: GitHub の Security タブ（Secret scanning + Dependabot alerts）を確認（Dependabot 未有効なら Enable）+ Node プロジェクトなら <code>npm audit</code> を回す + OWASP Top 10 のうち進級制作に該当し得る項目（例: A03 Injection / A07 Identification and Authentication Failures）を 1〜2 個に絞って自分のコードと突合</li>
         <li>本日の作業を新規 ADR（例: <code>docs/adr/0002-*.md</code>）に「<strong>実装後の trade-off 判断</strong>」として 1 本残す（何を直したか・何を負債として先送りしたか・その理由）</li>
       </ul>
     </div>
@@ -102,7 +102,7 @@
             </ul>
             <p><strong><code>/speckit.analyze</code> を実装後に再実行(15分)</strong></p>
             <ul>
-              <li>agy を起動し、進級制作リポジトリで再度 <code>/speckit.analyze</code> を呼ぶ。Spec Kit 公式 docs（Quick Start Guide）は <code>/speckit.analyze</code> を <strong>"a regular quality gate — you can run it before implementation to check spec/plan/task consistency, and re-run it after implementation as an additional review"</strong> と説明しており、<strong>実装後の再実行</strong>は正規ワークフロー</li>
+              <li>agy を起動し、進級制作リポジトリで再度 <code>/speckit.analyze</code> を呼ぶ。Spec Kit 公式 docs（Quick Start Guide）は <strong>"You can repeat <code>/speckit.analyze</code> after implementation as an extra review, but keep the first analysis before <code>/speckit.implement</code> so gaps are caught while the plan and tasks can still be adjusted."</strong> と述べており、<strong>実装後の再実行</strong>を正式に位置づけている（ただし公式は「最初の analyze は implement の前に走らせて、計画・タスクをまだ直せる時点でギャップを捕まえること」を前提として明示している）</li>
               <li>実装後だからこそ出やすい典型的な指摘:
                 <ul>
                   <li>「spec.md の受け入れ基準 2 は<strong>ボタン名を「地図で見る」</strong>と指定しているが、実装は <code>&lt;a href="/map"&gt;マップを開く&lt;/a&gt;</code> になっている（表現ずれ）」</li>
@@ -128,7 +128,7 @@
 
 ### 差異 1: ボタン表記のずれ
 - spec.md 受け入れ基準 2: 「地図で見る」ボタン
-- 実装: `<a href="/map">マップを開く</a>`
+- 実装: `&lt;a href="/map"&gt;マップを開く&lt;/a&gt;`
 - 対応方針: **直す**（1限後半のリファクタ枠で対応、feat/refactor-button-label ブランチ）
 
 ### 差異 2: styles.css 全面書き換え
@@ -329,10 +329,10 @@ Accepted
               <li>今日確認する:
                 <ul>
                   <li>Secret scanning alerts の一覧に<strong>過去に混入した秘密</strong>がないか（授業中に <code>.env</code> を誤 push した / API キーをコード直書きした等）</li>
-                  <li>アラートがあれば、<strong>キーの無効化 → 再発行 → コードから削除 → history からも消去</strong>の 4 手が必要。history の消去は <code>git rebase</code> や BFG Repo-Cleaner を使うが、今日は「<strong>存在の確認</strong>」までで OK（対応は次回以降 or 家で）</li>
+                  <li>アラートがあれば、<strong>キーの無効化 → 再発行 → コードから削除 → history からも消去</strong>の 4 手が必要。history の消去は <code>git filter-repo</code>（GitHub 公式が推奨、旧 <code>git filter-branch</code> の後継）や BFG Repo-Cleaner を使う。<strong><code>git rebase -i</code> は直近コミットの整形用で、全 history にまたがる秘密削除には設計上不足</strong>なので使わない。今日は「<strong>存在の確認</strong>」までで OK（対応は次回以降 or 家で）</li>
                 </ul>
               </li>
-              <li><strong>Dependabot alerts</strong>: 依存パッケージ（package.json 等）のバージョンに<strong>既知の脆弱性</strong>が見つかると自動で Issue 状の警告が出る。GitHub Docs 公式: <em>「Dependabot alerts は、依存関係の脆弱性についてユーザーに通知します」</em>。Public リポジトリでは既定で有効</li>
+              <li><strong>Dependabot alerts</strong>: 依存パッケージ（package.json 等）のバージョンに<strong>既知の脆弱性</strong>が見つかると自動で Issue 状の警告が出る。GitHub Docs 公式: <em>「Dependabot alerts は、依存関係の脆弱性についてユーザーに通知します」</em>。公式 docs は<strong>「リポジトリ管理者や organization オーナーが有効化する」</strong>と説明しており、進級制作リポジトリで未有効の人は Security タブ → Dependabot alerts の <strong>Enable</strong> ボタンを押して今日オンにする（Public リポジトリなら無料）</li>
               <li>今日確認する:
                 <ul>
                   <li>Dependabot alerts が何件出ているか</li>
