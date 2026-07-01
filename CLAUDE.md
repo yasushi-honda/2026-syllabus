@@ -51,6 +51,7 @@ natural-language-dev/   # 自然言語開発の各回詳細ページ
   week09-demo.html      #     第9回 動くデモ MVP（Leaflet 1.9.4 + Open-Meteo Geocoding/Forecast、1 ファイル HTML）
   week10.html           #   第10回 SDD実践プロジェクト①：設計
   week11.html           #   第11回 SDD実践プロジェクト②：実装
+  week12.html           #   第12回 SDD実践プロジェクト③：検証と改善
 ai-programming.html     # AI活用プログラミング基礎（木3・4限）※AIコミュ基礎と共通ベース
 ai-programming/         # AI活用プログラミング基礎の各回詳細ページ
   week01.html           #   第1回 オリエンテーション＆AIってなんだろう？

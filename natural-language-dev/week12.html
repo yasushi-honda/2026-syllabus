@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第12回 SDD実践プロジェクト③：検証と改善 | 自然言語開発</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+  <!-- 公式情報確認: 2026-07-01 (github.github.com/spec-kit/quickstart.html — /speckit.analyze を「実装後」に再度実行して仕様/計画/タスク/実装の差異を検出できる正式ワークフロー / docs.github.com/ja/code-security/secret-scanning/introduction/about-secret-scanning 実H1「シークレット スキャン」/ docs.github.com/ja/code-security/dependabot/dependabot-alerts/about-dependabot-alerts 実H1「Dependabot alerts」/ docs.npmjs.com/cli/v10/commands/npm-audit 実H1「npm-audit」/ owasp.org/www-project-top-ten/ 実H1「OWASP Top Ten Web Application Security Risks」/ docs.github.com/ja/pull-requests/.../about-pull-request-reviews 実H1「プルリクエストのレビューについて」/ anthropic.com/engineering/harness-design-long-running-apps — Harness design 事前制御+事後制御の原典) -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev.html">自然言語開発</a>
+        <span>/</span>
+        <span>第12回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">SDD実践<wbr>プロジェクト<wbr>③：検証と改善</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 12</span>
+            <span class="page-badge">木曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">第11回で Green にした実装を「<strong>本当に spec.md が求めていたものか</strong>」「<strong>長く保てるか</strong>」「<strong>公開して事故が起きないか</strong>」の 3 観点で見直し、SDD サイクルの品質評価パートを回す。<code>/speckit.analyze</code> を<strong>実装後</strong>に再実行して仕様と実装の差異を検出し、テスト結果を coverage・スキップ・失敗の 3 軸で読み直し、リファクタと技術的負債（TODO / FIXME / any 型 / 一時対応）を <code>docs/tech-debt.md</code> に棚卸しし、最後にセキュリティ観点で Secret scanning / Dependabot alerts / <code>npm audit</code> / OWASP Top 10 の該当箇所を通す</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value"><code>/speckit.analyze</code> 実装後再実行 / 仕様と実装の差異分析 / テスト coverage / <code>.skip</code> / <code>.todo</code> / リファクタリング（Green 維持） / 技術的負債の可視化 / <code>docs/tech-debt.md</code> / ADR 追記（実装後の trade-off） / シークレット スキャン / Dependabot alerts / <code>npm audit</code> / OWASP Top 10 / ハーネスの事後制御</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第11回完了（1 枚目の PR がマージ済み・<code>Closes #N</code> で Issue が Done に移動・<code>docs/sdd-week11-log.md</code> に 1 周の記録あり・GitHub Actions <code>test.yml</code> が main で緑）／2 枚目のタスクが最低 Red のテストまで到達（未達なら 1 限前半 10 分で追いつく）／Antigravity CLI <code>agy</code> セッションが起動できる／GitHub リポジトリの Security タブが閲覧できる（Secret scanning は Public リポジトリで既定 ON。Dependabot alerts は今日 Security タブから Enable する想定）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li><code>/speckit.analyze</code> を<strong>実装後</strong>に再度実行し、spec.md / plan.md / tasks.md / 実際のコードのあいだに新しく生まれた差異を検出して <code>docs/spec-analyze-week12.md</code> に記録する（Spec Kit 公式 docs は <code>/speckit.analyze</code> を <strong>"regular quality gates"</strong> の 1 つに位置づけ、実装前だけでなく実装後の追加レビューとしても回せると説明している）</li>
+        <li><strong>テスト結果を 3 軸で読み直す</strong>: ① coverage（何割のコードがテストで通っているか）② <code>.skip</code> / <code>.todo</code>（意図的に外しているテストがどれくらい残っているか）③ 直近の失敗テストとフレーク（同じ条件で色が変わるテストがあるか）</li>
+        <li><strong>Green 維持しながらリファクタリング</strong>する感覚を掴む: 命名・関数分割・重複削除を <code>npm test</code> が緑を維持する範囲で 1 サイクル回す</li>
+        <li>技術的負債を「<strong>隠さない・忘れない・過剰対応しない</strong>」ために <code>docs/tech-debt.md</code> を新規追加して棚卸しする（TODO / FIXME / <code>.skip</code> / <code>any</code> 型 / 一時 hack を発生源とセットで記録）</li>
+        <li><strong>セキュリティ観点の最低ライン</strong>を通す: GitHub の Security タブ（Secret scanning + Dependabot alerts）を確認（Dependabot 未有効なら Enable）+ Node プロジェクトなら <code>npm audit</code> を回す + OWASP Top 10 のうち進級制作に該当し得る項目（例: A03 Injection / A07 Identification and Authentication Failures）を 1〜2 個に絞って自分のコードと突合</li>
+        <li>本日の作業を新規 ADR（例: <code>docs/adr/0002-*.md</code>）に「<strong>実装後の trade-off 判断</strong>」として 1 本残す（何を直したか・何を負債として先送りしたか・その理由）</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>SDD 実践プロジェクトの締めくくり（Week10 → 11 → 12）</h2>
+      <div class="lesson-tip">
+        <strong>3 週連続プロジェクトの 3 週目:</strong> 第10回 <strong>設計</strong>（spec / plan / ADR / Issue 化）→ 第11回 <strong>実装</strong>（<code>/speckit.implement</code> + TDD + MCP + GitHub Flow）→ 本日（第12回 <strong>検証と改善</strong>: <code>/speckit.analyze</code> 再実行 + テスト評価 + リファクタ + セキュリティ）。第11回は「<strong>動くもの</strong>」を増やす日、本日は「<strong>動いたものを整える</strong>」日。全部きれいに直しきる必要はない——「<strong>負債を可視化する</strong>」ことが本日の成果物。<strong>tech-debt.md に書けたものは、忘れてよい</strong>という感覚を体験する回。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続(90分 + 90分 = 計180分)。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>第11回の実装状態レビュー → <code>/speckit.analyze</code> を実装後に再実行 → 差異を記録</h3>
+          <div class="timeline-body">
+            <p><strong>第11回の状態チェック(10分)</strong></p>
+            <ul>
+              <li>各自のリポジトリで以下を確認:
+                <ul>
+                  <li>1 枚目の PR が squash merge 済み、<code>Closes #&lt;N&gt;</code> で Issue が Done に移動している</li>
+                  <li>マージ済み feature ブランチが削除されている（ローカル + リモート）</li>
+                  <li>GitHub Actions <code>test.yml</code> が main で緑</li>
+                  <li><code>docs/sdd-week11-log.md</code> に前回の 1 周の記録がある</li>
+                  <li>2 枚目のタスクが最低 Red のテストまで到達している</li>
+                </ul>
+              </li>
+              <li>未達がある人は 1 限前半のこの 10 分だけで最低 1 枚のマージを追いつく。未達が大きい場合は「本日のゴールを 2 枚目以降の実装ではなく本回の <strong>検証と改善</strong> に集中する」と割り切る</li>
+              <li>近くの人と GitHub Project の URL を見せ合い「Todo・In progress・Done に何枚ずつ」を 1 分ずつ報告</li>
+            </ul>
+            <p><strong><code>/speckit.analyze</code> を実装後に再実行(15分)</strong></p>
+            <ul>
+              <li>agy を起動し、進級制作リポジトリで再度 <code>/speckit.analyze</code> を呼ぶ。Spec Kit 公式 docs（Quick Start Guide）は <strong>"You can repeat <code>/speckit.analyze</code> after implementation as an extra review, but keep the first analysis before <code>/speckit.implement</code> so gaps are caught while the plan and tasks can still be adjusted."</strong> と述べており、<strong>実装後の再実行</strong>を正式に位置づけている（ただし公式は「最初の analyze は implement の前に走らせて、計画・タスクをまだ直せる時点でギャップを捕まえること」を前提として明示している）</li>
+              <li>実装後だからこそ出やすい典型的な指摘:
+                <ul>
+                  <li>「spec.md の受け入れ基準 2 は<strong>ボタン名を「地図で見る」</strong>と指定しているが、実装は <code>&lt;a href="/map"&gt;マップを開く&lt;/a&gt;</code> になっている（表現ずれ）」</li>
+                  <li>「plan.md は <code>vitest</code> 採用と書いてあるが、実装で追加された <code>package.json</code> の script は <code>jest</code> になっている（第11回 <code>/speckit.analyze</code> でも指摘があった項目が実装で復活している）」</li>
+                  <li>「tasks.md にない副作用（<code>styles.css</code> の全面書き換え）が 1 枚目 PR に含まれている（スコープ超過）」</li>
+                  <li>「spec.md の非ゴールに含まれる<strong>ピンの色分け</strong>が、Refactor 中に実装として入っている」</li>
+                </ul>
+              </li>
+              <li>指摘があれば、次のいずれかで対応方針を決める（<strong>この場では対応まではしない</strong>、記録が目的）:
+                <ul>
+                  <li><strong>直す</strong>（1限後半のリファクタ枠で対応）</li>
+                  <li><strong>負債として先送り</strong>（2限前半で <code>docs/tech-debt.md</code> に記録）</li>
+                  <li><strong>spec.md 側を実装に合わせて更新</strong>（実装のほうが正しいと判断した場合。ADR に判断を残す）</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>差異を <code>docs/spec-analyze-week12.md</code> に記録(15分)</strong></p>
+            <ul>
+              <li>新規ファイル <code>docs/spec-analyze-week12.md</code> を作成し、<code>/speckit.analyze</code> の出力と、各指摘への<strong>対応方針</strong>（直す / 負債 / spec 更新）を対にして記録:
+                <pre><code># /speckit.analyze 実装後レビュー (Week12)
+
+## 検出された差異
+
+### 差異 1: ボタン表記のずれ
+- spec.md 受け入れ基準 2: 「地図で見る」ボタン
+- 実装: `&lt;a href="/map"&gt;マップを開く&lt;/a&gt;`
+- 対応方針: **直す**（1限後半のリファクタ枠で対応、feat/refactor-button-label ブランチ）
+
+### 差異 2: styles.css 全面書き換え
+- tasks.md には含まれない副作用
+- 対応方針: **負債として先送り**（tech-debt.md に「T-001 styles.css 全面書き換えの整理」で登録）
+
+...
+</code></pre>
+              </li>
+              <li>この記録は第14回（プロジェクト最終仕上げ）の起点にもなる。<strong>「あの時何を直して何を残したか」</strong>が説明できる状態を作るのが本日の目的</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>今日の合言葉:</strong> 「<strong>Green は品質の入口、出口じゃない</strong>」。テストが全部通ることは<strong>最低ライン</strong>であって、そこから spec との差異・負債・セキュリティを見て初めて「<strong>公開できる</strong>」レベルに近づく。今日は SDD の「後半」を体験する。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>テスト結果を 3 軸で読み直す → Green を維持したままリファクタリング</h3>
+          <div class="timeline-body">
+            <p><strong>テストを 3 軸で読み直す(20分)</strong></p>
+            <ul>
+              <li>Green だけを見て「品質 OK」と判断しないための 3 軸:
+                <ol>
+                  <li><strong>Coverage（実行された行の割合）</strong>: vitest なら <code>npm test -- --coverage</code> または <code>vitest run --coverage</code>（プロジェクトの package.json スクリプト依存）で計測。表示された行カバレッジ・分岐カバレッジのうち<strong>50% を切っている領域</strong>があれば、そこは「テストがない = 変更が壊しやすい」領域</li>
+                  <li><strong><code>.skip</code> / <code>.todo</code></strong>: <code>grep -rn "\.skip\|\.todo" src/</code> で棚卸し。<strong>意図がある skip</strong>（例: 実装が第13回以降）と、<strong>惰性の skip</strong>（Green にする過程で赤いテストを黙らせた）を分ける。惰性の skip は今日中に直すか、tech-debt.md に登録する</li>
+                  <li><strong>直近の失敗テスト / フレーク</strong>: GitHub Actions の <code>test.yml</code> の直近 5〜10 実行を見て、同じコードで色が変わっているテストがないか確認。フレークが 1 件でもあれば tech-debt.md に登録（「T-XXX テスト <code>routing.test.js</code> フレーク疑い、直近 5 実行のうち 1 回赤」）</li>
+                </ol>
+              </li>
+              <li>agy に対する指示例:
+                <pre><code>@src/__tests__/ 以下の .skip / .todo をすべて列挙してください。
+それぞれについて「なぜ skip されているか」の推測を、
+コミットログ (git log -p) と直近の PR コメントから根拠付きで教えてください。
+</code></pre>
+              </li>
+            </ul>
+            <p><strong>Green を維持したままリファクタリング(30分)</strong></p>
+            <ul>
+              <li>本日のリファクタは <strong>Green 維持</strong>が絶対条件。1 変更ごとに <code>npm test</code> を回して、色が変わらないことを確認しながら進める</li>
+              <li>スコープを絞る（本日中に全部直そうとしない）:
+                <ul>
+                  <li><strong>命名だけ</strong>（変数名・関数名・ファイル名の 1〜3 箇所）</li>
+                  <li><strong>関数分割</strong>（30 行超えの関数を 2〜3 個に割る）</li>
+                  <li><strong>重複削除</strong>（3 回以上出てくるコピペを 1 つに集約）</li>
+                </ul>
+              </li>
+              <li>agy に頼むときの指示（<strong>Green 維持を明示する</strong>のがコツ）:
+                <pre><code>src/pages/map.js の handleClick 関数を、
+以下の観点で読みやすくリファクタしてください:
+- 責務が 2 つに見える → 関数を 2 つに分割
+- マジックナンバー 3.14 を定数化
+
+制約:
+- src/__tests__/routing.test.js の Green を維持すること
+- 分割後の関数名は動詞始まりの英語
+- 分割後、npm test の結果を貼って Green を確認してから止まってください
+</code></pre>
+              </li>
+              <li>1 リファクタごとに 1 commit（<code>refactor: extract handleClick into ...</code>）。<strong>意味のない Refactor</strong>（コード形状は変わったが読みやすさに寄与しない）を消すために、コミット単位で自己レビューして「1 分で説明できる Refactor か」を確認</li>
+              <li>Refactor だけの PR を出す（<code>refactor/&lt;area&gt;-&lt;short-slug&gt;</code> ブランチ）:
+                <pre><code>git checkout main &amp;&amp; git pull
+git checkout -b refactor/map-page-cleanup
+# ...Refactor commits...
+git push -u origin refactor/map-page-cleanup
+gh pr create --title "refactor: map ページの命名と分割整理" --body "..."
+</code></pre>
+              </li>
+              <li>Refactor 中に「<strong>Green を維持できないほど大きな変更</strong>」に見えたら、その場でやめる。<strong>それは本当は Refactor ではなく設計変更</strong>。ADR-0002 に判断を書き、tech-debt.md に「T-XXX &lt;area&gt; の設計変更検討」として登録して先送りする</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「Refactor が壊れるとき」の分岐点:</strong> Green を維持できないリファクタは、多くの場合 <strong>そのテストがそもそも実装詳細にべったり</strong>だったことのシグナル。ここで「実装に合わせてテストを書き換える」のは<strong>アンチパターン</strong>（テストが仕様を担保しなくなる）。テスト自体の書き直しが必要なら、それは<strong>別 PR・別 Issue</strong>として立て、spec.md の受け入れ基準に戻って「<strong>何を確認するテストだったか</strong>」から書き直す。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>技術的負債の可視化 → ADR 追記で「なぜ先送りしたか」を残す</h3>
+          <div class="timeline-body">
+            <p><strong>技術的負債とは何か(10分)</strong></p>
+            <ul>
+              <li>1 行の定義（本授業で使う共通理解）: <strong>「今すぐは直さないと決めた、あとで直す必要のある課題」</strong>。<strong>隠す</strong>（気付かないふりをする）でも、<strong>過剰対応する</strong>（今すぐ全部直そうとしてリリースが止まる）でもなく、<strong>可視化して先送りする</strong>のが技術的負債の扱い方</li>
+              <li>本授業での典型的な発生源（進級制作でよく出るもの）:
+                <ul>
+                  <li>Refactor したかったが Green 維持できず途中で止めたコード</li>
+                  <li><code>.skip</code> / <code>.todo</code> のまま残っているテスト</li>
+                  <li>TODO / FIXME コメント</li>
+                  <li>TypeScript <code>any</code> 型（型検査を止めている箇所）</li>
+                  <li>ハードコードした URL / API キー / マジックナンバー</li>
+                  <li>agy が生成した <strong>意味不明な変数名</strong>（<code>data2</code> / <code>tmp</code> / <code>result_final</code> 等）が残っている箇所</li>
+                  <li><code>/speckit.analyze</code> で検出したが今日直さないと決めた差異</li>
+                </ul>
+              </li>
+              <li>負債は<strong>敵ではない</strong>。締切があるプロジェクトで負債ゼロは無理。<strong>負債の一覧が更新され続けている</strong>状態が「健全に開発が進んでいる」証拠</li>
+            </ul>
+            <p><strong><code>docs/tech-debt.md</code> の作成(25分)</strong></p>
+            <ul>
+              <li>新規ファイル <code>docs/tech-debt.md</code> を作成。テンプレート:
+                <pre><code># 技術的負債一覧
+
+- 各項目は「発生源 (どこで見つかったか)」「内容」「対応方針」「優先度」の 4 点セットで記録
+- 優先度: P0 (公開前に必ず直す) / P1 (第14回まで) / P2 (時間があれば) / P3 (今回は見送り)
+
+## T-001 styles.css 全面書き換えの整理
+- 発生源: Week12 /speckit.analyze の実装後レビュー
+- 内容: 1 枚目 PR に tasks.md に無い styles.css の全面書き換えが含まれる
+- 対応方針: 該当 diff を分割し、必要な変更だけ残す。残りを revert
+- 優先度: P1
+
+## T-002 テスト routing.test.js のフレーク疑い
+- 発生源: GitHub Actions test.yml 直近 5 実行のうち 1 回赤
+- 内容: 同じ HEAD で結果が変わる (再現条件不明)
+- 対応方針: agy に「時刻依存 / ランダム依存 / 実行順依存」の 3 仮説を検証させる
+- 優先度: P2
+
+## T-003 src/utils/formatDate.ts の any 型
+- 発生源: 手動 grep -rn "any" src/
+- 内容: 引数 date: any になっており型検査を実質止めている
+- 対応方針: Date | string | number のユニオン型に修正
+- 優先度: P2
+</code></pre>
+              </li>
+              <li>agy に手伝ってもらう検出手順（進級制作の実際のリポジトリで実行）:
+                <pre><code>src/ 以下を対象に、以下を検出して tech-debt.md 用の候補として列挙してください:
+1. TODO / FIXME コメント (行番号付き)
+2. .skip / .todo のテスト
+3. TypeScript の any 型指定 (grep か型情報ベースで)
+4. ハードコードされた URL や http/https 直書き
+5. 3 回以上出てくる同じ数値リテラル (マジックナンバー候補)
+
+出力形式は tech-debt.md のテンプレートに合わせてください。
+私が精査して優先度を付けます。
+</code></pre>
+              </li>
+              <li>agy の列挙結果を鵜呑みにしない。<strong>1 件ずつ自分で該当行を開いて</strong>、本当に負債か（意図された記述ではないか）を確認してから tech-debt.md に採用する</li>
+            </ul>
+            <p><strong>ADR 追記で「なぜ先送りしたか」を残す(15分)</strong></p>
+            <ul>
+              <li>新規 ADR <code>docs/adr/0002-week12-refactor-and-debt.md</code> を追加（第10回で <code>0001-*.md</code> を作った続き）。テンプレート:
+                <pre><code># ADR-0002: Week12 検証と改善で何を直し、何を先送りしたか
+
+## Status
+Accepted
+
+## Context
+第10回で spec/plan/ADR を作成、第11回で実装、本日第12回で検証と改善を行った。
+すべての差異と負債を今日中に直すことはリリース遅延を招くため、
+どれを直しどれを先送りするかの判断が必要になった。
+
+## Decision
+- **直したもの**: /speckit.analyze で検出された表記ずれ (差異 1) と、
+  Green を維持できた命名リファクタ (map.js の handleClick 分割)
+- **先送りしたもの**:
+  - T-001 styles.css 全面書き換えの整理 (P1)
+  - T-002 routing.test.js のフレーク疑い (P2)
+  - T-003 formatDate.ts の any 型 (P2)
+- **spec.md 側を更新したもの**: なし (今回は実装が spec に合わせる方針で統一)
+
+## Consequences
+- 良い: 進級制作の残り期間で優先度順に潰せる状態になった
+- 悪い: T-002 のフレークが第13回・第14回で顕在化する可能性
+- 良い: docs/tech-debt.md がリポジトリ全体の「気になるところ」を一望できるページになった
+</code></pre>
+              </li>
+              <li>ADR は <strong>「なぜそう決めたか」</strong>を書く場所。第14回で振り返るときに「あの判断は正しかったか」を検証する材料になる</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>負債の 3 原則:</strong> ①<strong>隠さない</strong>（見えないところに置くと必ず忘れる）／②<strong>忘れない</strong>（tech-debt.md に書けば忘れてよい、書かないと頭で覚え続けるコストがかかる）／③<strong>過剰対応しない</strong>（今日全部直そうとするとリリースが止まる。優先度を付けて先送りする勇気）。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>セキュリティ観点でのコードチェック — Secret scanning + Dependabot + <code>npm audit</code> + OWASP Top 10</h3>
+          <div class="timeline-body">
+            <p><strong>GitHub の Security タブを見る(10分)</strong></p>
+            <ul>
+              <li>各自のリポジトリで <strong>Security タブ</strong>を開く（<code>https://github.com/&lt;user&gt;/&lt;repo&gt;/security</code>）</li>
+              <li><strong>シークレット スキャン</strong>(公式名: Secret scanning): Public リポジトリでは既定で有効。API キー / トークン / 秘密鍵が commit に混入すると自動検知する。GitHub Docs 公式: <em>「シークレット スキャンは、パートナーの一覧および独自パターンに一致するシークレットについて、リポジトリ全体をスキャンします」</em>。<strong>検知メール</strong>は commit した本人と管理者に届く</li>
+              <li>今日確認する:
+                <ul>
+                  <li>Secret scanning alerts の一覧に<strong>過去に混入した秘密</strong>がないか（授業中に <code>.env</code> を誤 push した / API キーをコード直書きした等）</li>
+                  <li>アラートがあれば、<strong>キーの無効化 → 再発行 → コードから削除 → history からも消去</strong>の 4 手が必要。history の消去は <code>git filter-repo</code>（GitHub 公式が推奨、旧 <code>git filter-branch</code> の後継）や BFG Repo-Cleaner を使う。<strong><code>git rebase -i</code> は直近コミットの整形用で、全 history にまたがる秘密削除には設計上不足</strong>なので使わない。今日は「<strong>存在の確認</strong>」までで OK（対応は次回以降 or 家で）</li>
+                </ul>
+              </li>
+              <li><strong>Dependabot alerts</strong>: 依存パッケージ（package.json 等）のバージョンに<strong>既知の脆弱性</strong>が見つかると自動で Issue 状の警告が出る。GitHub Docs 公式: <em>「Dependabot alerts は、依存関係の脆弱性についてユーザーに通知します」</em>。公式 docs は<strong>「リポジトリ管理者や organization オーナーが有効化する」</strong>と説明しており、進級制作リポジトリで未有効の人は Security タブ → Dependabot alerts の <strong>Enable</strong> ボタンを押して今日オンにする（Public リポジトリなら無料）</li>
+              <li>今日確認する:
+                <ul>
+                  <li>Dependabot alerts が何件出ているか</li>
+                  <li><strong>Severity（重大度）</strong>が Critical / High のものが 1 件でもあれば tech-debt.md に P0 で登録</li>
+                  <li>Dependabot は<strong>自動 PR で修正案</strong>を出せる（設定で有効化）。今日は「そういう機能があると認識する」までで OK</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>Node プロジェクトなら <code>npm audit</code>(10分)</strong></p>
+            <ul>
+              <li>進級制作が Node（package.json あり）を使うプロジェクトなら、ローカルで実行:
+                <pre><code>npm audit
+</code></pre>
+              </li>
+              <li>npm docs 公式（<code>npm-audit</code>）: <em>「プロジェクトで構成されている依存関係の説明をレジストリに送信し、既知の脆弱性のレポートを要求する」</em>。<code>npm audit fix</code> で<strong>自動修正が試みられる</strong>が、breaking change を含む場合は手動で package.json のバージョンを上げる必要がある</li>
+              <li>本日の運用:
+                <ul>
+                  <li><strong>Critical / High</strong> の指摘: tech-debt.md に P0 か P1 で登録し、可能なら <code>npm audit fix</code> を試す。fix 後は <strong>必ず <code>npm test</code> で Green を再確認</strong>（依存バージョンアップが挙動を変えることがある）</li>
+                  <li><strong>Moderate / Low</strong>: tech-debt.md に P2 で登録、今日は手を付けない</li>
+                </ul>
+              </li>
+              <li>Node を使わないプロジェクト（バニラ HTML/CSS/JS のみ、Python 単体等）の場合は <code>npm audit</code> はスキップし、代わりに <code>pip-audit</code>（Python）や、依存の <strong>ロックファイルの日付</strong>を見て「1 年以上更新していない依存があれば tech-debt.md に登録」で代替</li>
+            </ul>
+            <p><strong>OWASP Top 10 を 1〜2 個だけ自分のコードと突合(10分)</strong></p>
+            <ul>
+              <li>OWASP Top 10（実H1: "OWASP Top Ten Web Application Security Risks"）は、Web アプリのセキュリティリスクを重要度順に並べた業界標準のリスト。全部を今日カバーするのは無理なので、<strong>進級制作に該当し得る 1〜2 個に絞る</strong></li>
+              <li>進級制作でよく該当するもの（一部）:
+                <ul>
+                  <li><strong>A01 Broken Access Control</strong>: ログインしていなくても閲覧できてしまうページ / 他人のデータを URL 直打ちで見られる</li>
+                  <li><strong>A03 Injection</strong>: フォーム入力を <code>innerHTML</code> / <code>eval</code> にそのまま流していないか（XSS の温床）／SQL 直文字列連結でクエリを組み立てていないか</li>
+                  <li><strong>A07 Identification and Authentication Failures</strong>: パスワードを平文で保存 / API キーをフロントの JS 直書き / セッション有効期限が無限</li>
+                </ul>
+              </li>
+              <li>agy に頼むときの指示例:
+                <pre><code>OWASP Top 10 の A03 (Injection) と A07 (Identification and Authentication Failures) の
+観点で src/ 以下を眺めてください。以下の 2 パターンを検出してください:
+1. innerHTML / outerHTML / document.write / eval に、ユーザー入力または
+   fetch の応答が直接渡っている箇所
+2. API キーや token が JS ファイルに直書きされている箇所
+   (プレフィックス "sk_" / "ghp_" / "AIza" などのハードコード)
+
+該当箇所を「ファイル名:行番号 + 該当行」で列挙してください。
+私が本物の脆弱性かどうかを判断します。
+</code></pre>
+              </li>
+              <li>agy の結果は<strong>候補</strong>。「サンプルコードでキーがハードコードされているように見える」等の false positive があるので、<strong>該当行を自分で開いて</strong>確認してから tech-debt.md に登録する</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「今日ここまでで OK」の 3 点:</strong> ①GitHub Security タブに<strong>1 度でも目を通した</strong>（アラートがあることを知っている状態）／②<code>npm audit</code> か同等ツールを<strong>1 度は回した</strong>（依存の脆弱性が見える状態）／③OWASP のうち 1〜2 個を<strong>自分のコードと突合した</strong>。全て tech-debt.md に登録できていれば合格。今日全部直す必要はない。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り&次回予告</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>今日のキーワード: <strong><code>/speckit.analyze</code> 実装後再実行 / <code>docs/spec-analyze-week12.md</code> / テスト 3 軸（coverage / .skip / フレーク）/ Green 維持リファクタ / <code>docs/tech-debt.md</code> / 負債の 3 原則（隠さない・忘れない・過剰対応しない）/ ADR-0002 / Secret scanning / Dependabot alerts / <code>npm audit</code> / OWASP Top 10</strong></li>
+              <li>覚えてほしいこと:
+                <ul>
+                  <li><strong>Green は品質の入口</strong>。/speckit.analyze の実装後再実行と 3 軸のテスト読み直しで「本当に spec 通りか」を確認する</li>
+                  <li><strong>Refactor は Green 維持が絶対条件</strong>。壊すなら Refactor ではなく設計変更 → 別 Issue で立てる</li>
+                  <li><strong>負債は隠さず可視化する</strong>。tech-debt.md に書けたものは忘れてよい</li>
+                  <li><strong>セキュリティは今日 1 回目を通す</strong>。Security タブ + <code>npm audit</code> + OWASP Top 10 の 1〜2 個で最低ラインを引く</li>
+                </ul>
+              </li>
+              <li>SDD サイクル全体での今日のカバー範囲:
+                <ul>
+                  <li>✅ Spec: 第10回で作成 + 本日 /speckit.analyze で実装との差異を検出</li>
+                  <li>✅ Plan: 第10回で作成 + 本日再確認</li>
+                  <li>✅ Tasks: 第10回で Issue 化 + 第11回で一部消化 + 本日残りを tech-debt.md へ棚卸し</li>
+                  <li>✅ Implement: 第11回で 1〜2 枚 + 本日 Refactor を追加</li>
+                  <li>✅ Validate: 本日カバー（テスト評価 + spec 差異分析 + セキュリティ）</li>
+                </ul>
+              </li>
+              <li>次回(第13回): <strong>責任あるAI開発</strong>。進級制作で生成された AI コードを倫理的観点で見直す。Anthropic Claude Constitution を教材にした倫理ディスカッション。EU AI Act 等の規制動向。AI 生成コードの著作権・ライセンス問題</li>
+              <li>家での発展（任意）: tech-debt.md の P0 / P1 項目を実際に 1〜2 件直す / Dependabot alerts の Critical を <code>npm audit fix</code> で潰す / 2 枚目のタスクの実装を進め、可能なら PR まで持っていく</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>docs/spec-analyze-week12.md</code> と <code>docs/tech-debt.md</code> を commit</strong>
+            <p>本日 1 限で作成した <code>docs/spec-analyze-week12.md</code>（<code>/speckit.analyze</code> 実装後レビューの記録）と、2 限前半で作成した <code>docs/tech-debt.md</code>（技術的負債一覧）を main に <strong>docs only の 1 PR</strong> として squash merge まで持っていく。<strong>実装は含めない</strong>（負債を直す作業は別 PR、別 Issue）。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>ADR-0002 を commit</strong>
+            <p>本日 2 限前半で作成した <code>docs/adr/0002-week12-refactor-and-debt.md</code> を <strong>docs only の 1 PR</strong>（上記と同一 PR にまとめて可）でマージする。「何を直したか・何を先送りしたか・その理由」の 3 点が読める状態を保つ。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>Refactor PR を最低 1 本マージ</strong>
+            <p>本日 1 限後半で試した Green 維持リファクタのうち、最低 1 本（<code>refactor/&lt;area&gt;-&lt;short-slug&gt;</code> ブランチ）を PR → CI 緑 → squash merge まで到達させる。Refactor だけの PR は Review が読みやすく、レビュアが「動作は変わらないはず」の観点で見る時間が短くなる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>Security タブのスクリーンショットを <code>docs/security-week12.md</code> に貼る</strong>
+            <p>GitHub の Security タブ（Secret scanning + Dependabot alerts）と <code>npm audit</code>（Node プロジェクトの場合）の実行結果のスクリーンショットまたはテキスト出力を <code>docs/security-week12.md</code> に貼り、「本日時点で何件のアラートが出ていたか」の記録を残す。第14回や本実装期間中に「本当に減ったか」を検証する起点になる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>tech-debt.md の P0 / P1 を最低 1 件潰す</strong>
+            <p>本日登録した負債のうち、優先度 P0 か P1 のものを最低 1 件、家で実際に直して PR → マージまで持っていく。tech-debt.md の該当項目を削除（or 「解消」マークを付ける）して commit。<strong>可視化した負債が実際に減る</strong>体験を第13回までに 1 回作る。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://github.github.com/spec-kit/quickstart.html" target="_blank" rel="noopener">Spec Kit 公式 docs — Quick Start Guide</a> — <code>/speckit.analyze</code> を "regular quality gate" として実装前・実装後の両方で回す正式ワークフロー</li>
+        <li><a href="https://github.com/github/spec-kit" target="_blank" rel="noopener">github/spec-kit</a> — Spec Kit 公式リポジトリ。<code>/speckit.*</code> スラッシュコマンド一覧の正本</li>
+        <li><a href="https://antigravity.google/docs/cli-reference" target="_blank" rel="noopener">Antigravity CLI — CLI reference(公式)</a> — TUI セッションで使える <code>/agents</code> / <code>/mcp</code> / <code>/diff</code> / <code>/rewind</code> 等のスラッシュコマンド一覧</li>
+        <li><a href="https://docs.github.com/ja/code-security/secret-scanning/introduction/about-secret-scanning" target="_blank" rel="noopener">GitHub Docs ja — シークレット スキャン</a> — Public リポジトリで既定 ON になる、コード内の API キー等の秘密検知機能の公式仕様</li>
+        <li><a href="https://docs.github.com/ja/code-security/dependabot/dependabot-alerts/about-dependabot-alerts" target="_blank" rel="noopener">GitHub Docs ja — Dependabot alerts</a> — 依存パッケージの既知脆弱性を検出して通知する自動アラートの公式仕様</li>
+        <li><a href="https://docs.npmjs.com/cli/v10/commands/npm-audit" target="_blank" rel="noopener">npm docs — npm-audit</a> — <code>npm audit</code> / <code>npm audit fix</code> の公式リファレンス。依存の脆弱性検出と自動修正の挙動</li>
+        <li><a href="https://owasp.org/www-project-top-ten/" target="_blank" rel="noopener">OWASP Top Ten Web Application Security Risks</a> — Web アプリのセキュリティリスク重要度別上位 10 項目。本日は A01 / A03 / A07 に触れた</li>
+        <li><a href="https://docs.github.com/ja/pull-requests/collaborating-with-pull-requests/reviewing-changes-in-pull-requests/about-pull-request-reviews" target="_blank" rel="noopener">GitHub Docs ja — プルリクエストのレビューについて</a> — Refactor PR や docs PR を分けてマージする運用の元になるレビュー機能の公式仕様</li>
+        <li><a href="https://www.anthropic.com/engineering/harness-design-long-running-apps" target="_blank" rel="noopener">Anthropic Engineering — Harness design for long-running application development</a> — 第8回・第11回からの継続参照。事前制御 + 事後制御の両輪、本日は「事後制御」に軸を置いた</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week11.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第11回 SDD実践プロジェクト②：実装</span>
+      </a>
+      <a href="../natural-language-dev.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">自然言語開発</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第13回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
