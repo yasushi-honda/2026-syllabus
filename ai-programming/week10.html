@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=3">
-  <!-- 公式情報確認: 2026-07-01 (support.google.com/notebooklm/answer/16212820?hl=ja 実H1「NotebookLM で音声解説を生成する」 + 公式表現「アップロードしたソースの主なトピックを2人のAIホストが深く掘り下げて議論する形式で、その詳細な要約を提供するコンテンツ」+ 所要時間「数分」+ 権限「ノートブックの編集アクセスが必要」/ support.google.com/notebooklm/answer/16164461?hl=ja 実H1「NotebookLM の詳細」/ support.google.com/notebooklm/answer/16179559?hl=ja 実H1「NotebookLM でチャットを使用する」/ support.google.com/docs/answer/116338?hl=ja 実H1「ドキュメントにタイトル、見出し、目次を追加する」/ notebooklm.google/ ランディング / workspace.google.com/products/docs/ Google ドキュメント公式) -->
+  <!-- 公式情報確認: 2026-07-01 (support.google.com/notebooklm/answer/16212820?hl=ja 実H1「NotebookLM で音声解説を生成する」 + 公式表現「アップロードしたソースの主なトピックを2人のAIホストが深く掘り下げて議論する形式で、その詳細な要約を提供するコンテンツ」+ 所要時間「数分」+ 権限「ノートブックの編集権限が必要」（公式ヘルプ本文の逐語表現）/ support.google.com/notebooklm/answer/16164461?hl=ja 実H1「NotebookLM の詳細」/ support.google.com/notebooklm/answer/16179559?hl=ja 実H1「NotebookLM でチャットを使用する」/ support.google.com/docs/answer/116338?hl=ja 実H1「ドキュメントにタイトル、見出し、目次を追加する」（プルダウン名は「テキスト スタイル」）/ notebooklm.google/ ランディング / workspace.google.com/products/docs/ Google ドキュメント公式) -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -116,7 +116,7 @@
               <li><strong>【学習データ④】</strong> 「情報整理テクニック資料」を Google Classroom / メール / 共有ドライブから受け取り、各自の学習アカウントにコピーして開く（配布方法は当日の運用に合わせる）</li>
               <li>資料の中身を一通り眺め、以下の 3 点を確認:
                 <ul>
-                  <li><strong>見出しの階層</strong>（H1 → H2 → H3 の使い分け）: <strong>大枠 → 章 → 節</strong>のようにレベルを分けると、AI にも人間にも構造が伝わる</li>
+                  <li><strong>見出しの階層</strong>（見出し 1 → 見出し 2 → 見出し 3 の使い分け、Google ドキュメントの見出しスタイル名）: <strong>大枠 → 章 → 節</strong>のようにレベルを分けると、AI にも人間にも構造が伝わる</li>
                   <li><strong>1 文を短くする</strong>: 1 文が 100 文字を超えたら区切る目安。AI は長すぎる文の主語・述語を取り違えることがある</li>
                   <li><strong>箇条書きは並列項目のとき</strong>だけ使う。因果関係や順序を表現したい時は<strong>番号付きリスト</strong>や<strong>接続詞</strong>で書き分ける</li>
                 </ul>
@@ -143,7 +143,7 @@
             </ul>
             <p><strong>見出しスタイルを使う(15分)</strong></p>
             <ul>
-              <li>Google ドキュメントには<strong>「見出しスタイル」</strong>という機能がある。ツールバーの<strong>「標準テキスト」</strong>と書かれたプルダウンから、<strong>タイトル / 見出し 1 / 見出し 2 / 見出し 3</strong>を選べる</li>
+              <li>Google ドキュメントには<strong>「見出しスタイル」</strong>という機能がある。ツールバーの<strong>「テキスト スタイル」</strong>プルダウン（現在の書式が「標準テキスト」ならその名前で表示されている）から、<strong>タイトル / 見出し 1 / 見出し 2 / 見出し 3</strong>を選べる</li>
               <li>今日の演習の構造を、いま作ったドキュメントに<strong>見出しスタイル</strong>で入力していく:
                 <ul>
                   <li><strong>タイトル</strong>: 「Week10 情報整理まとめ — &lt;自分の名前&gt;」</li>
@@ -176,7 +176,7 @@
               <li>個人 Google アカウントで作った人は自分だけの状態で問題なし。学校 Google アカウントで作った人は、組織のポリシーによって既定の共有範囲が違うことがあるので<strong>「自分だけ」</strong>を選んでおくと安全</li>
             </ul>
             <div class="lesson-tip">
-              <strong>手動装飾と見出しスタイルの違い:</strong> 「文字サイズ大 + 太字」で見出しっぽく見せることは<strong>できる</strong>。でも、AI にとっては<strong>ただの大きい太字</strong>で、「見出し」だとは分からない。見出しスタイルを選ぶと、Google ドキュメントは裏側で「これは H2 見出し」というマークを付けてくれるので、AI（NotebookLM 等）にも構造が伝わる。<strong>見出しスタイルを使うだけで、AI に語らせたときの説明の分かりやすさが変わる</strong>。
+              <strong>手動装飾と見出しスタイルの違い:</strong> 「文字サイズ大 + 太字」で見出しっぽく見せることは<strong>できる</strong>。でも、AI にとっては<strong>ただの大きい太字</strong>で、「見出し」だとは分からない。見出しスタイルを選ぶと、Google ドキュメントは裏側で「これは<strong>見出し 2</strong>」というマークを付けてくれるので、AI（NotebookLM 等）にも構造が伝わる。<strong>見出しスタイルを使うだけで、AI に語らせたときの説明の分かりやすさが変わる</strong>。
             </div>
           </div>
         </div>
@@ -204,7 +204,7 @@
             <p><strong>Google ドキュメントを NotebookLM のソースに追加(15分)</strong></p>
             <ul>
               <li>NotebookLM の画面で<strong>「ソースを追加」</strong>ボタンを押す（画面の左側、既存ソースの一覧の上）</li>
-              <li>ソースの種類の選択肢が出るので<strong>「Google ドキュメント」</strong>を選ぶ（他に「URL」「テキストのコピペ」「PDF」等もある）</li>
+              <li>ソースの種類の選択肢が出るので<strong>「Google ドキュメント」</strong>を選ぶ（2026 年時点で、他にウェブサイトのリンク・YouTube・テキストの直接入力・PDF などのソース種別もある。詳細は参考リンクの NotebookLM 公式ヘルプ参照）</li>
               <li>先ほど作った<strong>「Week10 情報整理まとめ — &lt;自分の名前&gt;」</strong>を選択して<strong>「挿入」</strong>を押す</li>
               <li>NotebookLM が読み込みを開始する（数秒〜数十秒）。完了するとソース一覧に自分のドキュメントが追加され、<strong>ドキュメントの要約とキートピックが自動で表示</strong>される</li>
               <li>ここで<strong>「AI 側から見て、自分のドキュメントがどう見えているか」</strong>を確認する:
@@ -260,10 +260,10 @@
           <div class="timeline-body">
             <p><strong>音声解説を生成する(10分)</strong></p>
             <ul>
-              <li>NotebookLM の画面で<strong>Studio パネル</strong>を開き（右側にある機能パネル）、<strong>「音声解説」</strong>を選ぶ</li>
+              <li>NotebookLM の画面で<strong>Studio パネル</strong>を開き（2026 年時点の UI では画面右側の機能パネル。UI 変更で位置が変わる可能性あり）、<strong>「音声解説」</strong>を選ぶ</li>
               <li>公式ヘルプ「<strong>NotebookLM で音声解説を生成する</strong>」の説明: <em>「アップロードしたソースの主なトピックを 2 人の AI ホストが深く掘り下げて議論する形式で、その詳細な要約を提供するコンテンツ」</em>。要するに、<strong>ラジオ番組風の会話</strong>を、自分のソースから作ってくれる</li>
               <li>生成ボタンを押す。公式が明示している通り<strong>「NotebookLM が音声解説を生成するのに数分かかることがある」</strong>。この待ち時間で次のセクションに進む</li>
-              <li>備考: 音声解説の生成には<strong>ノートブックの編集アクセスが必要</strong>（自分で作ったノートブックなら OK。人から共有されたものは共有権限次第）</li>
+              <li>備考: 音声解説の生成には<strong>ノートブックの編集権限が必要</strong>（公式ヘルプ表現）。自分で作ったノートブックなら OK、人から共有されたものは共有権限次第</li>
             </ul>
             <p><strong>待ち時間の使い方(5分)</strong></p>
             <ul>
@@ -376,8 +376,8 @@
         <li><a href="https://support.google.com/docs/answer/116338?hl=ja" target="_blank" rel="noopener">ドキュメントにタイトル、見出し、目次を追加する（Google ドキュメント 公式ヘルプ）</a> — 今日の 1 限後半で使った<strong>見出しスタイル</strong>と<strong>目次の自動生成</strong>の公式手順</li>
         <li><a href="https://support.google.com/notebooklm/answer/16164461?hl=ja" target="_blank" rel="noopener">NotebookLM の詳細（公式ヘルプ）</a> — NotebookLM が何をするツールなのかの総合説明。利用可能な地域・データの扱いも含む</li>
         <li><a href="https://support.google.com/notebooklm/answer/16179559?hl=ja" target="_blank" rel="noopener">NotebookLM でチャットを使用する（公式ヘルプ）</a> — 2 限前半で体験した<strong>引用番号 [1] [2]</strong> と、返答がソースに基づくしくみの公式説明</li>
-        <li><a href="https://support.google.com/notebooklm/answer/16212820?hl=ja" target="_blank" rel="noopener">NotebookLM で音声解説を生成する（公式ヘルプ）</a> — 2 限後半で使った<strong>音声解説（Audio Overview）</strong>の公式手順。<strong>2 人の AI ホスト</strong>による深掘り会話、生成に数分、編集アクセス必須の公式明示あり</li>
-        <li><a href="https://notebooklm.google/" target="_blank" rel="noopener">NotebookLM 公式サイト（Google）</a> — NotebookLM のトップページ。最新の機能紹介と対応言語（音声解説は 80 以上の言語対応）の一覧</li>
+        <li><a href="https://support.google.com/notebooklm/answer/16212820?hl=ja" target="_blank" rel="noopener">NotebookLM で音声解説を生成する（公式ヘルプ）</a> — 2 限後半で使った<strong>音声解説（Audio Overview）</strong>の公式手順。<strong>2 人の AI ホスト</strong>による深掘り会話、生成に数分、編集権限必須の公式明示あり</li>
+        <li><a href="https://notebooklm.google/" target="_blank" rel="noopener">NotebookLM 公式サイト（Google）</a> — NotebookLM のトップページ。最新の機能紹介と多言語対応状況（対応言語は随時追加されるため、正確な言語数はこの公式ページで確認）</li>
         <li><a href="https://workspace.google.com/products/docs/" target="_blank" rel="noopener">Google ドキュメント公式サイト</a> — Google ドキュメントの機能全体像。共同編集・コメント・提案モード等の追加機能も紹介</li>
         <li><a href="week03.html" class="week-link">第3回 NotebookLM入門</a> — NotebookLM の基本操作とソース追加手順の初出。今日「ソースを追加」で戸惑ったら開く</li>
         <li><a href="week05.html" class="week-link">第5回 プロンプトの基本</a> — 2 限前半のチャット質問で「聞き方を変える」ときの前提。プロンプトのコツ（【学習データ③】）と組み合わせると効く</li>
