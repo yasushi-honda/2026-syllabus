@@ -9,7 +9,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=3">
-  <!-- 公式情報確認: 2026-07-01 (support.google.com/notebooklm/answer/16212820?hl=ja 実H1「NotebookLM で音声解説を生成する」 + 公式表現「アップロードしたソースの主なトピックを2人のAIホストが深く掘り下げて議論する形式で、その詳細な要約を提供するコンテンツ」+ 所要時間「数分」+ 権限「ノートブックの編集権限が必要」（公式ヘルプ本文の逐語表現）/ support.google.com/notebooklm/answer/16164461?hl=ja 実H1「NotebookLM の詳細」/ support.google.com/notebooklm/answer/16179559?hl=ja 実H1「NotebookLM でチャットを使用する」/ support.google.com/docs/answer/116338?hl=ja 実H1「ドキュメントにタイトル、見出し、目次を追加する」（プルダウン名は「テキスト スタイル」）/ notebooklm.google/ ランディング / workspace.google.com/products/docs/ Google ドキュメント公式) -->
+  <!-- 公式情報確認: 2026-07-02 ITパスポート対策改訂分 (support.google.com/notebooklm/answer/16958963?hl=ja 実title「NotebookLM でフラッシュカードやクイズを生成する」+ 公式記述: スタジオ パネルで「フラッシュカード」「クイズ」を選択 / 鉛筆アイコンで生成前カスタマイズ（難易度: 初級・中級・上級、カスタムプロンプト追加）+ 枚数は「番号を選択する」（少ない・標準・多い、カスタマイズパネルとは別節に記載）/ フラッシュカードは「わかった」（チェックマーク）「間違えた」（バツ印）マーク + やり直しは「同じカード」「すべてのカード」「間違えたカードのみ」/ クイズに「ヒント」機能 + カードや回答の「説明」ボタン（公式用語は「解説」ではなく「説明」） / バックグラウンド生成中も作業継続可 / ノートブックの編集権限が必要 // www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/questions.html 実H1「過去問題（問題冊子・解答例）」+ 利用条件逐語「法令に特別の定めがある場合を除き許諾や使用料は必要ありません。（ダウンロードでのご利用も特に問題ございません。）」// www3.jitec.ipa.go.jp/JitesCbt/html/about/about.html 実H1「ｉパスとは」（IPA実施の国家試験・CBT方式・随時実施）// www3.jitec.ipa.go.jp/JitesCbt/html/about/range.html 出題形式「四肢択一式」+ 分野表記「ストラテジ系（経営全般）」「マネジメント系（IT管理）」「テクノロジ系（IT技術）」) -->
+  <!-- 公式情報確認: 2026-07-01 継続利用分 (support.google.com/notebooklm/answer/16212820?hl=ja 実H1「NotebookLM で音声解説を生成する」 + 公式表現「アップロードしたソースの主なトピックを2人のAIホストが深く掘り下げて議論する形式で、その詳細な要約を提供するコンテンツ」+ 所要時間「数分」+ 権限「ノートブックの編集権限が必要」（公式ヘルプ本文の逐語表現）/ support.google.com/notebooklm/answer/16164461?hl=ja 実H1「NotebookLM の詳細」/ support.google.com/notebooklm/answer/16179559?hl=ja 実H1「NotebookLM でチャットを使用する」/ support.google.com/docs/answer/116338?hl=ja 実H1「ドキュメントにタイトル、見出し、目次を追加する」（プルダウン名は「テキスト スタイル」）/ notebooklm.google/ ランディング / workspace.google.com/products/docs/ Google ドキュメント公式) -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -41,15 +42,15 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">AI にとって<strong>読みやすい情報</strong>とはどんな形かを Google ドキュメントで体験し、そのドキュメントをそのまま NotebookLM のソースに投入 → <strong>音声解説（Audio Overview）</strong>で「<strong>自分がまとめた内容を、他人（2 人の AI ホスト）に語ってもらう</strong>」体験をする。<strong>【学習データ④】</strong>「情報整理テクニック資料」を配布して、以降の個人課題（第12回〜）に向けて「<strong>自分の AI に何を渡すか・どんな形で渡すか</strong>」の型を身につける</div>
+          <div class="lesson-overview-value">AI にとって<strong>読みやすい情報</strong>とはどんな形かを Google ドキュメントで体験する回。今回の題材は<strong>ITパスポート試験</strong>（IPA が実施する国家試験）。自分で作った<strong>「ITパスポート対策ノート」</strong>と <strong>IPA 公式サイトの過去問 PDF</strong> を NotebookLM のソースに投入し、Studio の<strong>フラッシュカード</strong>と<strong>クイズ</strong>で「<strong>覚える・確かめる</strong>」を 1 周する。<strong>【学習データ④】</strong>「情報整理テクニック資料」を配布して、以降の個人課題（第12回〜）に向けて「<strong>自分の AI に何を渡すか・どんな形で渡すか</strong>」の型を身につける</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">情報の構造化（見出し／段落／箇条書き／目次）／Google ドキュメントの<strong>見出しスタイル</strong>と<strong>目次</strong>の自動生成／NotebookLM の<strong>ソースを追加</strong>／<strong>音声解説（Audio Overview）</strong>／<strong>2 人の AI ホスト</strong>／<strong>【学習データ④】</strong>情報整理テクニック資料／「<strong>自分がまとめたものを他人に語ってもらう</strong>」体験</div>
+          <div class="lesson-overview-value">情報の構造化（見出し／段落／箇条書き／目次）／Google ドキュメントの<strong>見出しスタイル</strong>と<strong>目次</strong>の自動生成／NotebookLM の<strong>ソースを追加</strong>／<strong>ITパスポート試験</strong>（ストラテジ系／マネジメント系／テクノロジ系）／Studio の<strong>フラッシュカード</strong>と<strong>クイズ</strong>／<strong>【学習データ④】</strong>情報整理テクニック資料／「<strong>覚えたつもりを、問われて確かめる</strong>」体験</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
-          <div class="lesson-overview-value">第9 回宿題の<strong>グループ共有ドキュメント</strong>（「ファクトチェックメモ」と「これからのチェックポイント 5 つ」が入っている Google ドキュメント）が開ける状態／第3〜4 回で作った NotebookLM の<strong>「自分専用 AI ノート」</strong>が開ける状態（家で育てていなくても OK、今日その場で追加する）／Google ドキュメントで<strong>新規ドキュメントを作成できる</strong>状態（個人 Google アカウントまたは学校 Google アカウント）／音声解説の視聴用に<strong>イヤホン or 学校配布のヘッドセット</strong>があると便利（無くても隣に配慮して音量を絞れば OK）</div>
+          <div class="lesson-overview-value">第9 回宿題の<strong>グループ共有ドキュメント</strong>（「ファクトチェックメモ」と「これからのチェックポイント 5 つ」が入っている Google ドキュメント）が開ける状態／第3〜4 回で作った NotebookLM の<strong>「自分専用 AI ノート」</strong>が開ける状態（家で育てていなくても OK、今日その場で追加する）／Google ドキュメントで<strong>新規ドキュメントを作成できる</strong>状態（個人 Google アカウントまたは学校 Google アカウント）／ブラウザで <strong>ITパスポート試験の公式サイト</strong>（IPA）を開き、<strong>過去問 PDF をダウンロードできる</strong>状態</div>
         </div>
       </div>
     </div>
@@ -58,9 +59,9 @@
       <h2>この回のゴール</h2>
       <ul>
         <li>「<strong>AI にとって読みやすい情報の形</strong>」を 3 つ以上、自分の言葉で言えるようになる（例: 見出しが付いている・箇条書きになっている・1 文が短い、など）</li>
-        <li>Google ドキュメントで<strong>見出しスタイル</strong>と<strong>目次の自動生成</strong>を使って、第9 回の「これからのチェックポイント」等の自分のメモを<strong>1 枚の構造化ドキュメント</strong>にまとめられる</li>
-        <li>まとめたドキュメントを NotebookLM の「自分専用 AI ノート」に<strong>新しいソースとして追加</strong>できる</li>
-        <li>NotebookLM の<strong>音声解説（Audio Overview）</strong>を実際に生成し、<strong>2 人の AI ホストが自分のまとめを語ってくれる</strong>体験を持って帰る（生成に数分かかることも公式で明示されているため、待ち時間の使い方も体験する）</li>
+        <li>Google ドキュメントで<strong>見出しスタイル</strong>と<strong>目次の自動生成</strong>を使って、<strong>「ITパスポート対策ノート」</strong>を 1 枚の構造化ドキュメントとして作れる</li>
+        <li>対策ノートと <strong>IPA 公式の過去問 PDF</strong> を NotebookLM の「自分専用 AI ノート」に<strong>新しいソースとして追加</strong>できる</li>
+        <li>NotebookLM Studio の<strong>フラッシュカード</strong>と<strong>クイズ</strong>を実際に生成し、<strong>自己テストを 1 周する</strong>体験を持って帰る（「わかった」「間違えた」のマークを付けて、間違えたカードだけやり直すところまで）</li>
         <li><strong>【学習データ④】情報整理テクニック資料</strong>の中身を一通り眺め、以降の個人課題（第12 回〜）で使いたい 3 つのコツを自分のメモに残す</li>
       </ul>
     </div>
@@ -68,8 +69,8 @@
     <div class="syllabus-section">
       <h2>大事な前提（毎回投影しておく）</h2>
       <div class="lesson-tip">
-        <strong>「散らかったメモは AI にも読めない」:</strong> AI は、実は<strong>人間よりずっと素直</strong>に文字を読む。だから、<strong>見出しが無い長文</strong>や、<strong>関係ない話題が混ざっているノート</strong>を渡すと、AI もどこが大事か分からず「<strong>あたりさわりのない要約</strong>」を返してくる。逆に、<strong>見出し／箇条書き／目次</strong>で構造化された資料を渡すと、AI は「<strong>ここが章、ここが具体例</strong>」と理解しやすくなり、要約や音声解説の質が一気に上がる。<br>
-        今日は「<strong>自分の頭の中を整理する</strong>」ことが、そのまま「<strong>自分の AI を育てる</strong>」ことになる回。Google ドキュメントで整理 → NotebookLM に渡す → 音声解説で聞き直す、の一連の流れを体験する。
+        <strong>「散らかったメモは AI にも読めない」:</strong> AI は、実は<strong>人間よりずっと素直</strong>に文字を読む。だから、<strong>見出しが無い長文</strong>や、<strong>関係ない話題が混ざっているノート</strong>を渡すと、AI もどこが大事か分からず「<strong>あたりさわりのない要約</strong>」を返してくる。逆に、<strong>見出し／箇条書き／目次</strong>で構造化された資料を渡すと、AI は「<strong>ここが章、ここが具体例</strong>」と理解しやすくなり、要約やフラッシュカード・クイズの質が一気に上がる。<br>
+        今日は「<strong>自分の頭の中を整理する</strong>」ことが、そのまま「<strong>自分の AI を育てる</strong>」ことになる回。Google ドキュメントで整理 → NotebookLM に渡す → フラッシュカードとクイズで確かめる、の一連の流れを体験する。
       </div>
     </div>
 
@@ -84,7 +85,7 @@
             <span class="timeline-time">1限 前半</span>
             <span class="timeline-duration">約40分</span>
           </div>
-          <h3>オリエンテーション → 「なぜ情報を整理するのか」 → 【学習データ④】配布</h3>
+          <h3>オリエンテーション → 「なぜ情報を整理するのか」 → 今日の題材（ITパスポート試験）を知る → 【学習データ④】配布</h3>
           <div class="timeline-body">
             <p><strong>第9 回宿題の共有(10分)</strong></p>
             <ul>
@@ -92,7 +93,7 @@
               <li>相手のチェックポイントで「<strong>自分のリストに欲しい</strong>」と思った 1 つを、後で自分のメモに追加する（メモ帳を開いてすぐに書ける状態にしておく）</li>
               <li>ペアワーク後、講師が「<strong>相手からもらったチェックポイントが 1 つ以上あった人?</strong>」で全体に聞く</li>
             </ul>
-            <p><strong>なぜ情報を整理するのか(15分)</strong></p>
+            <p><strong>なぜ情報を整理するのか(10分)</strong></p>
             <ul>
               <li>今日の中心的な問いを講師が投げかける: <strong>「AI に長い文章を渡すのと、見出し付きで整理された 1 枚を渡すの、どっちが良い答えが返ってくると思う?」</strong></li>
               <li>簡単なデモ（講師の画面共有）:
@@ -111,7 +112,14 @@
               </li>
               <li>ここでの合言葉: 「<strong>散らかったメモは AI にも読めない</strong>」。今日はこの合言葉を体験する日</li>
             </ul>
-            <p><strong>【学習データ④】情報整理テクニック資料の配布(15分)</strong></p>
+            <p><strong>今日の題材: ITパスポート試験を知る(10分)</strong></p>
+            <ul>
+              <li>今日の演習の題材は<strong>ITパスポート試験</strong>。<strong>IPA（情報処理推進機構）が実施する国家試験</strong>で、IT を利活用するすべての社会人・学生に向けた、IT の基礎知識を証明できる試験（公式サイト「ｉパスとは」参照）</li>
+              <li>出題は<strong>ストラテジ系（経営全般）／マネジメント系（IT管理）／テクノロジ系（IT技術）</strong>の 3 分野。<strong>CBT 方式</strong>（コンピュータ上で受験）で年間を通じて随時実施され、出題形式は<strong>四肢択一式</strong></li>
+              <li><strong>過去問題が公式サイトで無償公開</strong>されている。公式サイトに「<strong>法令に特別の定めがある場合を除き許諾や使用料は必要ありません。（ダウンロードでのご利用も特に問題ございません。）</strong>」と明記されているので、今日は公式の過去問 PDF をそのまま教材として使う（公式には、使用にあたって別途「留意点」（FAQ）の確認案内もある）</li>
+              <li>今日のねらいの確認: 試験勉強そのものを終わらせる日ではなく、「<strong>情報を整理して AI に渡すと、自分専用のテスト教材が作れる</strong>」という型を持ち帰る日。この型は ITパスポート以外のどんな勉強にも使い回せる</li>
+            </ul>
+            <p><strong>【学習データ④】情報整理テクニック資料の配布(10分)</strong></p>
             <ul>
               <li><strong>【学習データ④】</strong> 「情報整理テクニック資料」を Google Classroom / メール / 共有ドライブから受け取り、各自の学習アカウントにコピーして開く（配布方法は当日の運用に合わせる）</li>
               <li>資料の中身を一通り眺め、以下の 3 点を確認:
@@ -124,7 +132,7 @@
               <li>資料を眺めるときの合言葉: <strong>「後で使いたい 3 つのコツ」</strong>を自分のメモに残す（この 3 つは以降の個人課題で活きる）</li>
             </ul>
             <div class="lesson-tip">
-              <strong>今日の合言葉:</strong> <strong>「自分がまとめたものを、他人（AI ホスト）に語ってもらう」</strong>。他人に語ってもらうと、自分のまとめの<strong>抜けている部分</strong>がよく分かる。今日は 2 限後半の音声解説がその「他人が語り直す」時間になる。
+              <strong>今日の合言葉:</strong> <strong>「覚えたつもりを、問われて確かめる」</strong>。資料を読んで分かったつもりでも、問われると答えられないことがある。今日は 2 限後半のフラッシュカードとクイズがその「問われる」時間になる。
             </div>
           </div>
         </div>
@@ -134,22 +142,22 @@
             <span class="timeline-time">1限 後半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>Google ドキュメントで情報を整理する基本 — 見出し・箇条書き・目次を使いこなす</h3>
+          <h3>Google ドキュメントで情報を整理する基本 — 「ITパスポート対策ノート」を見出し・目次で作る</h3>
           <div class="timeline-body">
             <p><strong>新規 Google ドキュメントを作成(5分)</strong></p>
             <ul>
               <li>Google ドキュメント（<code>docs.google.com</code>）を開き、<strong>空白のドキュメント</strong>を新規作成</li>
-              <li>ファイル名は<strong>「Week10 情報整理まとめ — &lt;自分の名前&gt;」</strong>のように分かる名前にする（後で NotebookLM のソースに投入するときに識別しやすい）</li>
+              <li>ファイル名は<strong>「ITパスポート対策ノート — &lt;自分の名前&gt;」</strong>のように分かる名前にする（後で NotebookLM のソースに投入するときに識別しやすい）</li>
             </ul>
             <p><strong>見出しスタイルを使う(15分)</strong></p>
             <ul>
               <li>Google ドキュメントには<strong>「見出しスタイル」</strong>という機能がある。ツールバーの<strong>「テキスト スタイル」</strong>プルダウン（現在の書式が「標準テキスト」ならその名前で表示されている）から、<strong>タイトル / 見出し 1 / 見出し 2 / 見出し 3</strong>を選べる</li>
-              <li>今日の演習の構造を、いま作ったドキュメントに<strong>見出しスタイル</strong>で入力していく:
+              <li>対策ノートの構造を、いま作ったドキュメントに<strong>見出しスタイル</strong>で入力していく:
                 <ul>
-                  <li><strong>タイトル</strong>: 「Week10 情報整理まとめ — &lt;自分の名前&gt;」</li>
-                  <li><strong>見出し 1</strong>: 「これからのチェックポイント」</li>
-                  <li><strong>見出し 2</strong>: 「1. 数字の裏取り」「2. 最上級表現の出典」「3. マイナー固有名詞の実在確認」... のように第9 回宿題で書いた 5 つを見出し 2 として並べる</li>
-                  <li>それぞれの見出し 2 の下に、<strong>標準テキスト</strong>で 2〜3 行の説明を書く</li>
+                  <li><strong>タイトル</strong>: 「ITパスポート対策ノート — &lt;自分の名前&gt;」</li>
+                  <li><strong>見出し 1</strong>: 「ITパスポートとは」— その下に<strong>標準テキスト</strong>で 2〜3 行、1 限前半で聞いたことを自分の言葉で書く</li>
+                  <li><strong>見出し 1</strong>: 「3つの分野」— その下に<strong>見出し 2</strong> で「ストラテジ系」「マネジメント系」「テクノロジ系」を並べ、それぞれ標準テキストで 1〜2 行の説明を書く</li>
+                  <li><strong>見出し 1</strong>: 「気になる用語」— いまは空のままで OK（このあとの演習で育てていくセクション）</li>
                 </ul>
               </li>
               <li>コツ: <strong>「見た目が大きい・太字」だけの手動装飾は使わない</strong>。必ず<strong>見出しスタイル</strong>を選ぶ。AI にも「これは見出し」だと機械的に伝わる</li>
@@ -165,9 +173,9 @@
             <p><strong>1 文を短くする＋箇条書きに整える(15分)</strong></p>
             <ul>
               <li>いま書いた説明文を、<strong>1 文が 100 文字を超えていたら区切る</strong>目線で読み直す</li>
-              <li>並列の項目（例: 「A・B・C の 3 つに気をつける」）は<strong>箇条書き</strong>に置き換える。ツールバーの<strong>「箇条書き」</strong>ボタン（点付きリスト）を使う</li>
-              <li>手順や順序（例: 「まず A、次に B、最後に C」）は<strong>番号付きリスト</strong>を使う</li>
-              <li>ここまでで、<strong>タイトル / 目次 / 見出し 1 / 見出し 2 / 箇条書き / 番号付きリスト</strong>が入った 1 枚のドキュメントができる。<strong>これが「AI に読みやすい」1 枚の完成形</strong></li>
+              <li>「気になる用語」の下に、聞いたことがある IT 用語を<strong>箇条書き</strong>で 3 つ以上書く（例: 「AI」「クラウド」「セキュリティ」など、いま知っている言葉で OK。正確な意味はこのあと 2 限で AI と一緒に埋めていく）。ツールバーの<strong>「箇条書き」</strong>ボタン（点付きリスト）を使う</li>
+              <li>手順や順序（例: 「まず A、次に B、最後に C」）を書きたいときは<strong>番号付きリスト</strong>を使う</li>
+              <li>ここまでで、<strong>タイトル / 目次 / 見出し 1 / 見出し 2 / 箇条書き</strong>が入った 1 枚のドキュメントができる。<strong>これが「AI に読みやすい」1 枚の完成形</strong></li>
               <li>時間があれば、【学習データ④】で気に入った「後で使いたい 3 つのコツ」を、同じドキュメントの末尾に見出し 1 「情報整理の 3 つのコツ」として追記</li>
             </ul>
             <p><strong>共有設定を確認(5分)</strong></p>
@@ -176,7 +184,7 @@
               <li>個人 Google アカウントで作った人は自分だけの状態で問題なし。学校 Google アカウントで作った人は、組織のポリシーによって既定の共有範囲が違うことがあるので<strong>「自分だけ」</strong>を選んでおくと安全</li>
             </ul>
             <div class="lesson-tip">
-              <strong>手動装飾と見出しスタイルの違い:</strong> 「文字サイズ大 + 太字」で見出しっぽく見せることは<strong>できる</strong>。でも、AI にとっては<strong>ただの大きい太字</strong>で、「見出し」だとは分からない。見出しスタイルを選ぶと、Google ドキュメントは裏側で「これは<strong>見出し 2</strong>」というマークを付けてくれるので、AI（NotebookLM 等）にも構造が伝わる。<strong>見出しスタイルを使うだけで、AI に語らせたときの説明の分かりやすさが変わる</strong>。
+              <strong>手動装飾と見出しスタイルの違い:</strong> 「文字サイズ大 + 太字」で見出しっぽく見せることは<strong>できる</strong>。でも、AI にとっては<strong>ただの大きい太字</strong>で、「見出し」だとは伝わりにくい。見出しスタイルを選ぶと、Google ドキュメントは裏側で「これは<strong>見出し 2</strong>」というマークを付けてくれるので、AI（NotebookLM 等）にも構造が伝わる。<strong>見出しスタイルを使うだけで、AI に語らせたときの説明の分かりやすさが変わる</strong>。
             </div>
           </div>
         </div>
@@ -193,7 +201,7 @@
             <span class="timeline-time">2限 前半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>NotebookLM に「きれいに」読み込ませる工夫 — 自分の 1 枚をソースに追加する</h3>
+          <h3>NotebookLM に「きれいに」読み込ませる工夫 — 対策ノートと公式過去問をソースに追加する</h3>
           <div class="timeline-body">
             <p><strong>「自分専用 AI ノート」を開く(5分)</strong></p>
             <ul>
@@ -201,27 +209,29 @@
               <li>まだ作っていない・見つからない人は、この場で<strong>「新しいノートブック」</strong>を作成（名前は「自分専用 AI ノート」で OK）。第3 回の詳細ページに手順があるので、必要なら参考リンクから開く</li>
               <li>既存のソース一覧を確認: <strong>【学習データ①】自己紹介シート / 【学習データ②】学習目標シート / 【学習データ③】プロンプトのコツまとめ</strong>が入っているか（家で追加していない人は今日入れなくてよい、まず今日の 1 枚を追加することを優先）</li>
             </ul>
-            <p><strong>Google ドキュメントを NotebookLM のソースに追加(15分)</strong></p>
+            <p><strong>対策ノートと公式過去問 PDF をソースに追加(20分)</strong></p>
             <ul>
               <li>NotebookLM の画面で<strong>「ソースを追加」</strong>ボタンを押す（画面の左側、既存ソースの一覧の上）</li>
               <li>ソースの種類の選択肢が出るので<strong>「Google ドキュメント」</strong>を選ぶ（2026 年時点で、他にウェブサイトのリンク・YouTube・テキストの直接入力・PDF などのソース種別もある。詳細は参考リンクの NotebookLM 公式ヘルプ参照）</li>
-              <li>先ほど作った<strong>「Week10 情報整理まとめ — &lt;自分の名前&gt;」</strong>を選択して<strong>「挿入」</strong>を押す</li>
-              <li>NotebookLM が読み込みを開始する（数秒〜数十秒）。完了するとソース一覧に自分のドキュメントが追加され、<strong>ドキュメントの要約とキートピックが自動で表示</strong>される</li>
+              <li>先ほど作った<strong>「ITパスポート対策ノート — &lt;自分の名前&gt;」</strong>を選択して<strong>「挿入」</strong>を押す</li>
+              <li>続けて 2 つ目のソース: IPA 公式サイトの<strong>「過去問題（問題冊子・解答例）」</strong>ページ（参考リンク参照）を開き、<strong>最新回の問題 PDF を 1 つダウンロード</strong>する</li>
+              <li>もう 1 度<strong>「ソースを追加」</strong>を押し、今度はソース種別で <strong>PDF</strong> を選んで、ダウンロードした過去問 PDF をアップロードする</li>
+              <li>NotebookLM が読み込みを開始する（数秒〜数十秒）。完了するとソース一覧に 2 つのソースが追加され、<strong>要約とキートピックが自動で表示</strong>される</li>
               <li>ここで<strong>「AI 側から見て、自分のドキュメントがどう見えているか」</strong>を確認する:
                 <ul>
-                  <li>要約は自分の意図と合っているか</li>
+                  <li>対策ノートの要約は自分の意図と合っているか</li>
                   <li>キートピックは自分が伝えたかったポイントを拾えているか</li>
-                  <li>ズレがあれば、Google ドキュメントに戻って<strong>見出しの言葉を具体化</strong>する（例: 「その他」→「マイナー固有名詞の実在確認」）</li>
+                  <li>ズレがあれば、Google ドキュメントに戻って<strong>見出しの言葉を具体化</strong>する（例: 「その他」→「セキュリティの気になる用語」）</li>
                 </ul>
               </li>
             </ul>
-            <p><strong>チャットで自分のまとめを AI と対話する(20分)</strong></p>
+            <p><strong>チャットで対策ノートと過去問を AI と対話する(15分)</strong></p>
             <ul>
               <li>NotebookLM の画面下部のチャット欄で、以下のような質問を投げてみる:
                 <ul>
-                  <li>「<strong>私のドキュメントを 3 行で要約してください</strong>」</li>
-                  <li>「<strong>私が書いた 5 つのチェックポイントの中で、最も重要そうな 1 つを理由付きで選んでください</strong>」</li>
-                  <li>「<strong>このチェックポイントを実践するとき、初心者がやりがちな失敗を 3 つ挙げてください</strong>」</li>
+                  <li>「<strong>私の対策ノートの『気になる用語』を、初心者向けに 1 つずつ説明してください</strong>」</li>
+                  <li>「<strong>過去問の中から、ストラテジ系・マネジメント系・テクノロジ系それぞれで代表的な問題を 1 問ずつ選んで、何を問うている問題か説明してください</strong>」</li>
+                  <li>「<strong>この過去問で問われている用語のうち、初心者がまず覚えるべきものを 10 個、理由付きで挙げてください</strong>」</li>
                 </ul>
               </li>
               <li>NotebookLM の返答には<strong>引用番号 [1] [2]</strong> が付く（NotebookLM でチャットを使用する 公式ヘルプ）。番号をクリックすると<strong>元のソース（自分のドキュメント）のどこから来た情報か</strong>が分かる</li>
@@ -237,7 +247,7 @@
             <ul>
               <li>今日の体験から気付いたことを、【学習データ④】の余白に自分の言葉で書き足す:
                 <ul>
-                  <li>「<strong>見出しの言葉は具体的にする</strong>」（「その他」ではなく「マイナー固有名詞の実在確認」）</li>
+                  <li>「<strong>見出しの言葉は具体的にする</strong>」（「その他」ではなく「セキュリティの気になる用語」）</li>
                   <li>「<strong>1 セクションに 1 テーマ</strong>」（1 つの見出しの下に無関係な話題を混ぜない）</li>
                   <li>「<strong>先頭に目次があると、AI の要約も全体像から入る</strong>」</li>
                   <li>その他、自分で気付いたこと</li>
@@ -256,50 +266,30 @@
             <span class="timeline-time">2限 後半</span>
             <span class="timeline-duration">約30分</span>
           </div>
-          <h3>音声解説（Audio Overview）を体験 — 2 人の AI ホストに自分のまとめを語ってもらう</h3>
+          <h3>フラッシュカードとクイズで自己テスト — 「覚える・確かめる」を Studio で回す</h3>
           <div class="timeline-body">
-            <p><strong>音声解説を生成する(10分)</strong></p>
+            <p><strong>フラッシュカードを生成する(10分)</strong></p>
             <ul>
-              <li>NotebookLM の画面で<strong>Studio パネル</strong>を開き（2026 年時点の UI では画面右側の機能パネル。UI 変更で位置が変わる可能性あり）、<strong>「音声解説」</strong>を選ぶ</li>
-              <li>公式ヘルプ「<strong>NotebookLM で音声解説を生成する</strong>」の説明: <em>「アップロードしたソースの主なトピックを 2 人の AI ホストが深く掘り下げて議論する形式で、その詳細な要約を提供するコンテンツ」</em>。要するに、<strong>ラジオ番組風の会話</strong>を、自分のソースから作ってくれる</li>
-              <li>生成ボタンを押す。公式が明示している通り<strong>「NotebookLM が音声解説を生成するのに数分かかることがある」</strong>。この待ち時間で次のセクションに進む</li>
-              <li>備考: 音声解説の生成には<strong>ノートブックの編集権限が必要</strong>（公式ヘルプ表現）。自分で作ったノートブックなら OK、人から共有されたものは共有権限次第</li>
+              <li>NotebookLM の画面で<strong>Studio パネル</strong>を開き（2026 年時点の UI では画面右側の機能パネル。UI 変更で位置が変わる可能性あり）、<strong>「フラッシュカード」</strong>を選ぶ（第3 回の練習用ノートで一度触れた機能。今日は自分の教材で本格的に使う）</li>
+              <li>公式ヘルプ「<strong>NotebookLM でフラッシュカードやクイズを生成する</strong>」によると、生成前に<strong>鉛筆アイコン</strong>からカスタマイズできる: <strong>難易度（初級／中級／上級）</strong>とカスタムプロンプトの追加。カードの<strong>枚数（少ない／標準／多い）</strong>も選べる（公式ヘルプの表記は「番号を選択する」）。今日はまず<strong>初級・標準</strong>で生成する</li>
+              <li>備考: 生成には<strong>ノートブックの編集権限が必要</strong>（公式ヘルプ表現）。自分で作ったノートブックなら OK</li>
+              <li>生成はバックグラウンドで進み、生成中もノートブックの作業を続けられる（公式ヘルプ）。待つ間に、対策ノートの「気になる用語」に 1 つ追記しておく</li>
             </ul>
-            <p><strong>待ち時間の使い方(5分)</strong></p>
+            <p><strong>フラッシュカードで自己テストを 1 周する(10分)</strong></p>
             <ul>
-              <li>生成中の数分で、以下のいずれかを進める:
-                <ul>
-                  <li>【学習データ④】から気に入った「後で使いたい 3 つのコツ」を、Google ドキュメントに追記する</li>
-                  <li>2 限前半のチャット履歴を読み返し、「<strong>思ったより良かった質問</strong>」を 1 つメモしておく</li>
-                  <li>隣の人と<strong>「どんなラジオ会話が生成されると思う?</strong>」を予想する（30 秒シェア）</li>
-                </ul>
-              </li>
-              <li>公式が「数分かかる」と明示しているので、<strong>生成が終わっていない = 失敗ではない</strong>。焦らず待つ</li>
+              <li>カードを 1 枚ずつめくり、答えられたかどうかで<strong>「わかった」（チェックマーク）／「間違えた」（バツ印）</strong>のマークを付けていく（公式機能）</li>
+              <li>1 周したら結果を振り返り、やり直しの選択肢から<strong>「間違えたカードのみ」</strong>を選んでもう 1 周する（「同じカード」「すべてのカード」も選べる）</li>
+              <li>「間違えた」カードに出てきた用語のうち気になったものを、Google ドキュメントの<strong>「気になる用語」</strong>セクションに追記する。<strong>これが「情報整理 → AI 育成」のループ</strong>: ノートが育つほど、次に生成するカードも自分に合ったものになる</li>
             </ul>
-            <p><strong>音声解説を聴く(10分)</strong></p>
+            <p><strong>クイズに挑戦する(10分)</strong></p>
             <ul>
-              <li>生成完了通知が出たら、再生ボタンを押して聴く（イヤホン推奨、無い人は音量を絞り隣に配慮）</li>
-              <li>聴きながら以下をメモ:
-                <ul>
-                  <li>「<strong>自分が書いたつもりのないこと</strong>」を AI ホストが話していないか（もしあれば、ソースの表現が曖昧な可能性）</li>
-                  <li>「<strong>ここは伝わってほしかったのに触れられなかった</strong>」箇所はどこか（見出しを具体化する材料）</li>
-                  <li>2 人の AI ホストの<strong>掛け合いの中で、思わぬ気付き</strong>が生まれた瞬間</li>
-                </ul>
-              </li>
-              <li>時間が足りない場合は途中まで聴いて OK（家で最後まで聴き直す前提）</li>
-            </ul>
-            <p><strong>ペアで感想シェア(5分)</strong></p>
-            <ul>
-              <li>近くの人と 2 人ペアで<strong>2 分ずつ</strong>感想を共有:
-                <ul>
-                  <li>「自分のまとめを他人（AI ホスト）に語ってもらう」体験がどう感じたか</li>
-                  <li>「もう一度作り直すなら、ソースの何を直すか」を 1 つ</li>
-                </ul>
-              </li>
-              <li>ここで気付いたことは、そのまま第12 回（個人テーマを決めよう）でのソース作りのヒントになる</li>
+              <li>Studio パネルに戻り、今度は<strong>「クイズ」</strong>を生成して問題に答えていく</li>
+              <li>分からない問題は<strong>「ヒント」</strong>を開いてよい。答え合わせの後は<strong>「説明」ボタン</strong>で、カードや回答の説明を確認する（どちらも公式ヘルプに記載の機能。英語版ヘルプでは "Get explanations" と説明されている）</li>
+              <li>本番の ITパスポートも<strong>四肢択一式</strong>の CBT 方式。「問われて選んで答える」形式に、今日から体で慣れておく</li>
+              <li>時間が余ったら、鉛筆アイコンから難易度を<strong>中級</strong>に上げてもう 1 度生成し、手応えの違いを確かめる</li>
             </ul>
             <div class="lesson-tip">
-              <strong>「他人に語ってもらう」ことの価値:</strong> 自分で書いたまとめを自分で読み直しても、<strong>抜けや偏りに気付きにくい</strong>。他人（AI ホスト）が語り直してくれると、<strong>「自分が本当に書きたかったこと」と「実際にソースに書かれていること」のずれ</strong>がよく見える。この体験は、将来、他人に自分の考えを説明するときにも役立つ視点になる。
+              <strong>「読んで分かった」と「問われて答えられる」は別物:</strong> 資料を読んで分かったつもりでも、カードやクイズで問われると手が止まることがある。この<strong>「答えられなかった場所」こそが、次に勉強すべき場所</strong>。フラッシュカードの「間違えた」マークとクイズの「説明」ボタンは、それを自動で見つけてくれる道具になる。間違えた用語を対策ノートに戻して書き足せば、自分の AI がさらに育つ。
             </div>
           </div>
         </div>
@@ -316,19 +306,19 @@
               <li>講師の問いかけで挙手:
                 <ul>
                   <li>「<strong>Google ドキュメントで見出しスタイルを 1 度でも使った人?</strong>」</li>
-                  <li>「<strong>NotebookLM に自分のドキュメントをソースとして追加できた人?</strong>」</li>
-                  <li>「<strong>音声解説を最後まで（または一部でも）聴けた人?</strong>」</li>
-                  <li>「<strong>『もう一度ソースを作り直したい』と思った人?</strong>」（この人は特に伸びる）</li>
+                  <li>「<strong>対策ノートと過去問 PDF の両方を NotebookLM にソースとして追加できた人?</strong>」</li>
+                  <li>「<strong>フラッシュカードを 1 周できた人?</strong>」</li>
+                  <li>「<strong>クイズで間違えた問題の「説明」を読んで『なるほど』があった人?</strong>」（この人は特に伸びる）</li>
                 </ul>
               </li>
-              <li>講師から今日のキーワードを口頭で復習: <strong>見出しスタイル / 目次の自動生成 / 1 セクション 1 テーマ / ソースを追加 / 引用番号 / 音声解説 / 2 人の AI ホスト / 「他人に語ってもらう」体験</strong></li>
+              <li>講師から今日のキーワードを口頭で復習: <strong>見出しスタイル / 目次の自動生成 / 1 セクション 1 テーマ / ソースを追加 / 引用番号 / フラッシュカード / クイズ / 「覚えたつもりを、問われて確かめる」体験</strong></li>
               <li>大事な姿勢: <strong>「情報を整理する = AI を育てる」</strong>。散らかったメモを渡せば散らかった答え、整理された資料を渡せば整理された答えが返ってくる。この因果関係を今日の体験で覚えて帰る</li>
             </ul>
             <p><strong>次回予告(3分)</strong></p>
             <ul>
               <li><strong>第11 回</strong>: 「<strong>自分だけのAI」を育てる時間</strong>。これまで学んだ知識を自分の AI に整理させる個人作業時間。自分のペースで進める回</li>
-              <li>今日作った<strong>「Week10 情報整理まとめ」の Google ドキュメント</strong>と、それを取り込んだ NotebookLM が、そのまま第11 回のスタート地点になる</li>
-              <li>第12 回以降は<strong>個人テーマを決めて</strong>、そのテーマについて自分の AI と壁打ちしながら深めていく個人課題フェーズに入る</li>
+              <li>今日作った<strong>「ITパスポート対策ノート」の Google ドキュメント</strong>と、それを取り込んだ NotebookLM が、そのまま第11 回のスタート地点になる</li>
+              <li>第12 回以降は<strong>個人テーマを決めて</strong>、そのテーマについて自分の AI と壁打ちしながら深めていく個人課題フェーズに入る。<strong>「ITパスポートに合格する」を個人テーマにする</strong>のも大歓迎</li>
             </ul>
           </div>
         </div>
@@ -342,22 +332,22 @@
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>音声解説を家で最後まで聴く</strong>
-            <p>授業時間内に途中までしか聴けなかった人は、家で最後まで聴く。聴きながら「<strong>ここは伝わってほしかったのに触れられなかった</strong>」箇所を 1〜2 個メモに残す。第11 回で「自分の AI を育てる時間」にそのメモを見返して、ソース（Google ドキュメント）の修正に活かす。</p>
+            <strong>フラッシュカードを家でもう 1 周する</strong>
+            <p>家で NotebookLM を開き、フラッシュカードのやり直しで<strong>「間違えたカードのみ」</strong>を選んでもう 1 周する。それでも間違えた用語を 1〜3 個、対策ノートの<strong>「気になる用語」</strong>に<strong>見出しスタイルと箇条書きを使って</strong>追記する。第11 回の「自分の AI を育てる時間」は、このノートの続きから始まる。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
             <strong>Google ドキュメントに追加のセクションを 1 つ書く</strong>
-            <p>今日作った「Week10 情報整理まとめ」の Google ドキュメントに、<strong>新しい見出し 1 「自分がこれから学びたいこと」</strong>を追加し、その下に見出し 2 で 2〜3 個の項目を書く（例: 「音楽 AI に興味がある」「ゲームでよく使う AI 機能を知りたい」など）。この項目が、第12 回で個人テーマを決めるときの候補になる。<strong>見出しスタイルを必ず使う</strong>ことを忘れずに。</p>
+            <p>今日作った「ITパスポート対策ノート」の Google ドキュメントに、<strong>新しい見出し 1 「自分がこれから学びたいこと」</strong>を追加し、その下に見出し 2 で 2〜3 個の項目を書く（例: 「ITパスポートに合格したい」「音楽 AI に興味がある」など）。この項目が、第12 回で個人テーマを決めるときの候補になる。<strong>見出しスタイルを必ず使う</strong>ことを忘れずに。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
-            <strong>NotebookLM で音声解説を作り直す</strong>
-            <p>Google ドキュメントに新しいセクションを追加した後、NotebookLM に戻ってソースを<strong>「再同期」</strong>し、もう 1 度<strong>音声解説を生成</strong>する。今日の 1 回目とは違う会話が生成されるので、「<strong>ソースの変化がどう会話に反映されたか</strong>」を体験できる。<strong>「情報整理 → AI 育成」のループを 1 周だけ家で回す</strong>のが狙い。</p>
+            <strong>音声解説（Audio Overview）を家で体験する</strong>
+            <p>NotebookLM の Studio パネルで<strong>「音声解説」</strong>を生成すると、公式ヘルプの説明にある通り「アップロードしたソースの主なトピックを <strong>2 人の AI ホスト</strong>が深く掘り下げて議論する形式」のラジオ番組風の会話が、自分のソースから作られる（生成に<strong>数分</strong>かかることがある、と公式に明示あり）。自分のまとめを他人（AI ホスト）に語ってもらうと、<strong>自分のまとめの抜けている部分</strong>がよく分かる。通学時間などに自分のペースで聴ける宿題。</p>
           </div>
         </div>
         <div class="lesson-task">
@@ -376,7 +366,10 @@
         <li><a href="https://support.google.com/docs/answer/116338?hl=ja" target="_blank" rel="noopener">ドキュメントにタイトル、見出し、目次を追加する（Google ドキュメント 公式ヘルプ）</a> — 今日の 1 限後半で使った<strong>見出しスタイル</strong>と<strong>目次の自動生成</strong>の公式手順</li>
         <li><a href="https://support.google.com/notebooklm/answer/16164461?hl=ja" target="_blank" rel="noopener">NotebookLM の詳細（公式ヘルプ）</a> — NotebookLM が何をするツールなのかの総合説明。利用可能な地域・データの扱いも含む</li>
         <li><a href="https://support.google.com/notebooklm/answer/16179559?hl=ja" target="_blank" rel="noopener">NotebookLM でチャットを使用する（公式ヘルプ）</a> — 2 限前半で体験した<strong>引用番号 [1] [2]</strong> と、返答がソースに基づくしくみの公式説明</li>
-        <li><a href="https://support.google.com/notebooklm/answer/16212820?hl=ja" target="_blank" rel="noopener">NotebookLM で音声解説を生成する（公式ヘルプ）</a> — 2 限後半で使った<strong>音声解説（Audio Overview）</strong>の公式手順。<strong>2 人の AI ホスト</strong>による深掘り会話、生成に数分、編集権限必須の公式明示あり</li>
+        <li><a href="https://support.google.com/notebooklm/answer/16958963?hl=ja" target="_blank" rel="noopener">NotebookLM でフラッシュカードやクイズを生成する（公式ヘルプ）</a> — 2 限後半で使った<strong>フラッシュカード</strong>と<strong>クイズ</strong>の公式手順。難易度・枚数のカスタマイズ、「間違えたカードのみ」のやり直し、クイズの「ヒント」、カードや回答の「説明」ボタンの説明あり</li>
+        <li><a href="https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/questions.html" target="_blank" rel="noopener">過去問題（問題冊子・解答例）（ITパスポート試験 公式サイト）</a> — 2 限前半でダウンロードした<strong>公式過去問 PDF</strong> の配布ページ。利用に許諾・使用料が不要なことも明記されている（あわせて「留意点」（FAQ）の確認案内あり）</li>
+        <li><a href="https://www3.jitec.ipa.go.jp/JitesCbt/html/about/about.html" target="_blank" rel="noopener">ｉパスとは（ITパスポート試験 公式サイト）</a> — ITパスポート試験の公式概要。国家試験であること、CBT 方式、3 分野の説明</li>
+        <li><a href="https://support.google.com/notebooklm/answer/16212820?hl=ja" target="_blank" rel="noopener">NotebookLM で音声解説を生成する（公式ヘルプ）</a> — 宿題（推奨）で体験する<strong>音声解説（Audio Overview）</strong>の公式手順。<strong>2 人の AI ホスト</strong>による深掘り会話、生成に数分、編集権限必須の公式明示あり</li>
         <li><a href="https://notebooklm.google/" target="_blank" rel="noopener">NotebookLM 公式サイト（Google）</a> — NotebookLM のトップページ。最新の機能紹介と多言語対応状況（対応言語は随時追加されるため、正確な言語数はこの公式ページで確認）</li>
         <li><a href="https://workspace.google.com/products/docs/" target="_blank" rel="noopener">Google ドキュメント公式サイト</a> — Google ドキュメントの機能全体像。共同編集・コメント・提案モード等の追加機能も紹介</li>
         <li><a href="week03.html" class="week-link">第3回 NotebookLM入門</a> — NotebookLM の基本操作とソース追加手順の初出。今日「ソースを追加」で戸惑ったら開く</li>
