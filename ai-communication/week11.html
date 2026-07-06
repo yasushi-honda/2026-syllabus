@@ -36,16 +36,16 @@
 
   <main class="container syllabus-content">
 
-    <!-- 公式情報確認: 2026-07-07 (Google AI Studio利用規約、Gemini API temperature推奨、NotebookLM Studioレポート機能) -->
+    <!-- 公式情報確認: 2026-07-07 (Google AI Studio利用規約、Gemini API temperature推奨、Grounding with Google Search、AI Studio機能全体像、NotebookLM Studioレポート機能) -->
     <div class="lesson-overview">
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">後半戦（第11〜15回）の初回。第10回の<strong>【中間振り返りシート】</strong>で選んだテーマを胸に、新しいツール<strong>Google AI Studio</strong>を体験する。AI Studioは「<strong>プロフェッショナル/ビジネス目的の開発者向けツール</strong>」と利用規約で明記されているサービスであり、今日の体験は<strong>専門学校のプロフェッショナル・トレーニングの一環</strong>として位置づけて扱う。<strong>temperature（温度）パラメータ</strong>を動かして同じ質問への応答がどう変わるかを観察し、続けて自分のAI（NotebookLM）の<strong>応用機能（マインドマップ、レポート機能で作る概要説明資料・学習ガイド・よくある質問）</strong>を使って【学習データ①〜⑨】を新しい形で整理し直す。今日の気づきを<strong>【学習データ⑩】AI応用活用ガイド</strong>としてまとめ、NotebookLMに投入する</div>
+          <div class="lesson-overview-value">後半戦（第11〜15回）の初回。第10回の<strong>【中間振り返りシート】</strong>で選んだテーマを胸に、新しいツール<strong>Google AI Studio</strong>を体験する。AI Studioは「<strong>プロフェッショナル/ビジネス目的の開発者向けツール</strong>」と利用規約で明記されているサービスであり、今日の体験は<strong>専門学校のプロフェッショナル・トレーニングの一環</strong>として位置づけて扱う。AI Studioにはこの他にも<strong>アプリを自動生成するBuild mode</strong>や<strong>音声・映像でのリアルタイム対話（Live API）</strong>など数多くの機能があるが、今日は<strong>Run Settings（実行設定）</strong>にある2つの機能——<strong>temperature（温度）パラメータ</strong>と<strong>Grounding（Google 検索との連携）</strong>——に絞って体験する。<code>temperature</code>を動かして同じ質問への応答がどう変わるかを観察し、続けて<code>Grounding</code>をオン/オフして最新情報への対応と引用の有無を比較する。さらに自分のAI（NotebookLM）の<strong>応用機能（マインドマップ、レポート機能で作る概要説明資料・学習ガイド・よくある質問）</strong>を使って【学習データ①〜⑨】を新しい形で整理し直す。今日の気づきを<strong>【学習データ⑩】AI応用活用ガイド</strong>としてまとめ、NotebookLMに投入する</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">Google AI Studio / 利用規約の<strong>「プロフェッショナル・ビジネス目的、消費者向けではない」</strong>という位置づけ / <strong>temperature（温度）</strong>パラメータ / 応答の<strong>安定性 vs 多様性</strong> / 「公式が推奨する使い方」を確認してから調整する姿勢 / NotebookLM 応用活用（<strong>マインドマップ・レポート機能（概要説明資料・学習ガイド・よくある質問（FAQ））</strong>） / <strong>【学習データ⑩】</strong>AI応用活用ガイド</div>
+          <div class="lesson-overview-value">Google AI Studio / 利用規約の<strong>「プロフェッショナル・ビジネス目的、消費者向けではない」</strong>という位置づけ / <strong>Run Settings</strong>（実行設定） / <strong>temperature（温度）</strong>パラメータ / 応答の<strong>安定性 vs 多様性</strong> / <strong>Grounding</strong>（Google 検索との連携）と<strong>引用（citations）</strong> / 「公式が推奨する使い方」を確認してから調整する姿勢 / NotebookLM 応用活用（<strong>マインドマップ・レポート機能（概要説明資料・学習ガイド・よくある質問（FAQ））</strong>） / <strong>【学習データ⑩】</strong>AI応用活用ガイド</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
@@ -61,6 +61,8 @@
         <li>無料枠（Unpaid Services）では<strong>入力内容がGoogleのモデル改善に使われ得る</strong>ことを知り、第1〜10回と同じく<strong>個人情報を入れない</strong>原則を守れる</li>
         <li><strong>temperature</strong>パラメータが応答の<strong>ランダム性（決定論的 ⇔ 多様・創造的）</strong>を左右することを、自分の実験結果で説明できる</li>
         <li>「<strong>パラメータは自由に動かしてよいものではなく、公式の推奨を確認してから触るもの</strong>」という姿勢を体験から学ぶ</li>
+        <li><strong>Grounding</strong>（Google 検索との連携）をオン/オフして、<strong>最新情報への対応</strong>と<strong>引用（citations）の有無</strong>がどう変わるかを自分の実験結果で説明できる</li>
+        <li>Groundingの引用が、第5〜9回で慣れ親しんだ<strong>NotebookLMの引用 [1] [2]</strong>と同じ「根拠を示す」考え方であることに気づく</li>
         <li>NotebookLMの<strong>マインドマップ・レポート機能（概要説明資料・学習ガイド・よくある質問（FAQ））</strong>のうち2つ以上を実際に使い、【学習データ①〜⑨】を新しい切り口で眺め直せる</li>
         <li>今日の気づきを<strong>【学習データ⑩】AI応用活用ガイド</strong>としてまとめ、NotebookLMのソースに追加できる</li>
       </ul>
@@ -90,6 +92,7 @@
               <li><strong>重要な位置づけ</strong>: 公式の利用規約（2026-03-23 改定）には<strong>「Google AI StudioとGemini APIの利用は、プロフェッショナル/ビジネス目的でGoogle AIモデルを使って開発する開発者のためのものであり、消費者向けの利用ではない」</strong>と明記されている</li>
               <li>この授業での体験は、<strong>専門学校の情報系プロフェッショナル・トレーニングの一環</strong>として位置づけて扱う——「AIツールの規約を確認してから使う」という今日のこの確認作業自体が、今後 IT の現場で必要になる姿勢の練習でもある</li>
               <li><strong>無料枠を使うときの注意</strong>: 公式には「無料枠（Unpaid Services）を使うと、入力内容や生成された応答がGoogleの製品・モデル改善のために使われ得る」と明記されている。第1回からの原則<strong>「本名・住所・電話番号・学籍番号などの個人情報を入れない」</strong>は、AI Studioでも同じく守る</li>
+              <li><strong>AI Studioの全体像</strong>: 公式ドキュメントによると、AI Studioには他にも<strong>プロンプトだけでアプリを自動生成するBuild mode</strong>・<strong>カメラやマイクを使ったリアルタイム音声/映像対話（Live API）</strong>・関数呼び出しやコード実行・画像/動画の生成など数多くの機能がある。今日はその中の<strong>Run Settings（実行設定）にある2つ（temperature・Grounding）</strong>だけに絞って体験する——「AI Studio ＝ 温度調整だけの場所」ではなく、<strong>今日はごく一部を体験している</strong>ということを頭に入れておく</li>
             </ul>
             <p><strong>ログインして画面を眺める（15分）</strong></p>
             <ul>
@@ -108,34 +111,31 @@
             <span class="timeline-time">1限 後半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>temperatureパラメータを動かして応答変化を観察する</h3>
+          <h3>Run Settingsの2つの機能（temperature・Grounding）を動かして応答変化を観察する</h3>
           <div class="timeline-body">
             <p><strong>temperatureとは何か（10分）</strong></p>
             <ul>
               <li>公式ドキュメントの説明: <strong>「温度はトークン選択のランダム性の程度を制御する。低い温度はより決定論的で限定的な応答に向き、高い温度はより多様・創造的な結果につながりうる」</strong></li>
               <li>Geminiモデルの temperature は<strong>0.0〜2.0</strong>の範囲で設定でき、<strong>1.0 が推奨される既定値</strong></li>
+              <li>公式ドキュメントには<strong>「これらのパラメータは変更可能だが、現行のGeminiモデルでは既定値のまま保つことを強く推奨する。既定値を下げると、ループ（同じような応答を繰り返す）や、複雑な数学・推論タスクでの性能低下につながることがある」</strong>と明記されている——今日の実験では<strong>既定値（1.0）を基準に、上げる方向だけ</strong>を試す</li>
+              <li>「temperature を下げると安定する」という説明はインターネット上によく見かけるが、<strong>それが今のモデルにも当てはまるとは限らない</strong>。AIツールの使い方は公式ドキュメントの<strong>今の記載</strong>を確認してから決める、という第9回のファクトチェックの姿勢がここでも活きる</li>
             </ul>
-            <p><strong>公式の重要な注意を先に確認する（10分）</strong></p>
-            <ul>
-              <li>公式ドキュメントには<strong>「これらのパラメータは変更可能だが、現行のGeminiモデルでは既定値のまま保つことを強く推奨する。既定値を下げると、ループ（同じような応答を繰り返す）や、複雑な数学・推論タスクでの性能低下につながることがある」</strong>と明記されている</li>
-              <li>つまり<strong>「下げて安定させる」方向の調整は、現行モデルでは公式が非推奨としている</strong>——今日の実験では<strong>既定値（1.0）を基準に、上げる方向だけ</strong>を試す</li>
-              <li>ここが今日いちばんのポイント: 「temperature を下げると安定する」という説明はインターネット上によく見かけるが、<strong>それが今のモデルにも当てはまるとは限らない</strong>。AIツールの使い方は公式ドキュメントの<strong>今の記載</strong>を確認してから決める、という第9回のファクトチェックの姿勢がここでも活きる</li>
-            </ul>
-            <p><strong>実験してみる（20分）</strong></p>
+            <p><strong>temperature実験（15分）</strong></p>
             <ul>
               <li>同じ質問（例:「面白い部活動のアイデアを1つ考えて」など、個人情報を含まない当たり障りのない質問）を、<strong>temperature を既定値のまま</strong>と<strong>既定値より高め</strong>の2パターンで、それぞれ2〜3回ずつ実行する</li>
               <li>Googleドキュメントの新規ファイル<strong>「パラメータ実験記録」</strong>に、<strong>使ったプロンプト・設定した temperature の値・応答の違いに気づいた点</strong>を記録する</li>
-              <li>観察のポイント:
-                <ul>
-                  <li>既定値のまま複数回試したとき、<strong>毎回どれくらい似た応答が返るか</strong></li>
-                  <li>高めに設定したとき、<strong>言い回しや提案の内容がどれくらいばらつくか</strong></li>
-                  <li>高くしすぎたときに<strong>話が脱線したり、不自然な応答</strong>が出ないか</li>
-                </ul>
-              </li>
+              <li>観察のポイント: 既定値のまま複数回試したとき<strong>毎回どれくらい似た応答が返るか</strong>、高めに設定したとき<strong>言い回しや提案の内容がどれくらいばらつくか</strong>、高くしすぎたときに<strong>話が脱線したり不自然な応答</strong>が出ないか</li>
+            </ul>
+            <p><strong>Groundingとは何か・実験してみる（15分）</strong></p>
+            <ul>
+              <li><strong>Grounding</strong>（Google 検索との連携）も Run Settings の中の機能の1つ。公式ドキュメントの説明: <strong>「Google 検索によるGroundingは、Geminiモデルをリアルタイムのウェブコンテンツに接続し、より正確な回答と検証可能な情報源の引用を可能にする」</strong>——具体的には<strong>①モデルの知識のカットオフを超えた最新情報にアクセスできる</strong>ことと、<strong>②事実に基づいた回答でハルシネーション（もっともらしい誤り）を減らせる</strong>ことの2点が公式のメリットとして挙げられている</li>
+              <li>生成された応答には<strong>インラインの引用</strong>（文章の一部と参照元URLを結びつける注釈）が付く——これは第5〜9回でずっと使ってきた<strong>NotebookLMの引用 [1] [2] と同じ「根拠を示す」考え方</strong>だと気づけるとよい</li>
+              <li>実験: <strong>最新の情報が必要な質問</strong>（例:「Google AI Studioの最近のアップデートを1つ教えて」など、個人情報を含まない質問）を、<strong>Grounding をオフ</strong>にした状態と<strong>オン</strong>にした状態の両方で試す</li>
+              <li>比較のポイント: オフのときは<strong>知識のカットオフより前の情報しか出ない、または「わからない」と答える</strong>ことがあるのに対し、オンのときは<strong>引用付きで比較的新しい情報</strong>が返ってくるかを確認する。「パラメータ実験記録」に結果を追記する</li>
             </ul>
             <p><strong>気づきの共有（10分）</strong></p>
             <ul>
-              <li>隣の人、または希望者が全体で1〜2人、「既定値と高め、どちらの応答が今日の目的に合っていたか」を1文で共有</li>
+              <li>隣の人、または希望者が全体で1〜2人、「temperatureとGroundingのどちらが今日の目的に合っていたか」「Groundingの引用はNotebookLMの引用とどう似ていたか」のいずれかを1文で共有</li>
             </ul>
           </div>
         </div>
@@ -186,7 +186,7 @@
               <li>Googleドキュメントの新規ファイル<strong>「AI応用活用ガイド」</strong>を作成し、以下をまとめる:
                 <ul>
                   <li>Google AI Studioの位置づけ（プロフェッショナル/ビジネス目的の開発者向けツール）と、個人情報を入れない原則</li>
-                  <li>temperature 実験でわかったこと（1限後半の「パラメータ実験記録」から要点を1〜2行で抜粋）</li>
+                  <li>temperature・Grounding 実験でわかったこと（1限後半の「パラメータ実験記録」から要点を1〜2行ずつ抜粋）</li>
                   <li>NotebookLM の応用機能（マインドマップ・学習ガイド・FAQ）のうち、後半戦で使えそうなもの</li>
                 </ul>
               </li>
@@ -199,7 +199,7 @@
             </ul>
             <p><strong>後半戦テーマとのつながりを確認する（5分）</strong></p>
             <ul>
-              <li>第10回で選んだ後半戦テーマと、今日試した機能（temperature調整・マインドマップ・学習ガイド・FAQ）のどれが関連しそうかを1文で書き留める。第12回（個人課題）で実際に使う機能の候補になる</li>
+              <li>第10回で選んだ後半戦テーマと、今日試した機能（temperature調整・Grounding・マインドマップ・学習ガイド・FAQ）のどれが関連しそうかを1文で書き留める。第12回（個人課題）で実際に使う機能の候補になる</li>
             </ul>
           </div>
         </div>
@@ -214,7 +214,7 @@
             <ul>
               <!-- 親ページ ai-communication.html Week 12 「個人課題：自分のテーマを掘る」と同期 -->
               <li>次回（第12回）: <strong>個人課題：自分のテーマを掘る</strong>——自分が興味のあるテーマを1つ決め、自分のAIと対話しながら知識を深める個人課題に着手する。<strong>【学習データ⑪】</strong>テーマ探索ワークシートを投入する</li>
-              <li>今日のキーワード<strong>「プロフェッショナル・ビジネス目的」「temperature（既定値を確認してから触る）」「マインドマップ」「学習ガイド」「よくある質問（FAQ）」</strong>を口に出して言えるか確認して退出</li>
+              <li>今日のキーワード<strong>「プロフェッショナル・ビジネス目的」「temperature（既定値を確認してから触る）」「Grounding（引用付きで最新情報）」「マインドマップ」「学習ガイド」「よくある質問（FAQ）」</strong>を口に出して言えるか確認して退出</li>
               <li>家では<strong>【学習データ⑩】AI応用活用ガイド</strong>を読み返し、第12回の個人課題テーマ選びのヒントになりそうな箇所を1つ見つけておく</li>
             </ul>
           </div>
@@ -241,7 +241,7 @@
 <pre id="ai-usage-guide-md" class="md-preview"># AI応用活用ガイド(NotebookLM 用 / 【学習データ⑩】)
 
 &gt; このシートは第11回 Google AI Studio体験の成果物です。
-&gt; Google AI Studio の位置づけ、temperatureパラメータ実験、NotebookLMの応用機能(マインドマップ・学習ガイド・FAQ)を試した気づきをまとめた記録です。
+&gt; Google AI Studio の位置づけ、temperature・Groundingパラメータ実験、NotebookLMの応用機能(マインドマップ・学習ガイド・FAQ)を試した気づきをまとめた記録です。
 &gt; 個人情報(本名・住所・電話番号・学籍番号など)は書かないこと。書ける範囲で OK・空欄でも OK。
 
 ## ① Google AI Studioの位置づけ
@@ -268,7 +268,26 @@
 
 →
 
-## ③ NotebookLM応用機能で気づいたこと
+## ③ Grounding実験でわかったこと
+1限後半の「パラメータ実験記録」から、Groundingのオン/オフでどう応答が変わったかの要点を1〜2行で抜粋する。
+
+**試した質問:**
+
+→
+
+**Groundingオフのときの応答:**
+
+→
+
+**Groundingオンのときの応答(引用の有無も含めて):**
+
+→
+
+**NotebookLMの引用[1][2]と似ていた点:**
+
+→
+
+## ④ NotebookLM応用機能で気づいたこと
 マインドマップ・概要説明資料・学習ガイド・よくある質問(FAQ)のうち試したものと、気づいたことを書く。
 
 **試した機能:**
@@ -279,7 +298,7 @@
 
 →
 
-## ④ 後半戦テーマとのつながり
+## ⑤ 後半戦テーマとのつながり
 第10回で選んだ後半戦テーマと、今日試した機能のどれが関連しそうか1文で書く。
 
 →
@@ -293,14 +312,14 @@
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
             <strong>【学習データ⑩】AI応用活用ガイドを完成させ、NotebookLMに投入する</strong>
-            <p>授業内で書ききれなかった項目を埋めてから、ソースとして追加する。特に<strong>④ 後半戦テーマとのつながり</strong>は必ず書き切る——第12回の個人課題テーマ選びに直結する。</p>
+            <p>授業内で書ききれなかった項目を埋めてから、ソースとして追加する。特に<strong>⑤ 後半戦テーマとのつながり</strong>は必ず書き切る——第12回の個人課題テーマ選びに直結する。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>「パラメータ実験記録」を見直し、1文で結論を書く</strong>
-            <p>「今日の目的（当たり障りのない質問への応答を試す）では、既定値と高めのどちらが適していたか」を1文で結論づけて記録に追記する。結論が出なくても「まだ判断できない」と書いて OK。</p>
+            <strong>「パラメータ実験記録」を見直し、temperature・Groundingそれぞれ1文で結論を書く</strong>
+            <p>「今日の目的（当たり障りのない質問への応答を試す）では、既定値と高めのどちらが適していたか」と「最新情報が必要な質問で、Groundingのオン/オフどちらが役立ったか」をそれぞれ1文で結論づけて記録に追記する。結論が出なくても「まだ判断できない」と書いて OK。</p>
           </div>
         </div>
         <div class="lesson-task">
@@ -319,9 +338,11 @@
         <li><a href="https://aistudio.google.com" target="_blank" rel="noopener">Google AI Studio</a> — 今日のメイン会場。Geminiモデルをブラウザ上で試せる開発者向けツール</li>
         <li><a href="https://ai.google.dev/gemini-api/terms" target="_blank" rel="noopener">Gemini API Additional Terms of Service</a> — 「プロフェッショナル/ビジネス目的、消費者向けではない」の記載元。無料枠でのデータ利用についても明記されている</li>
         <li><a href="https://ai.google.dev/gemini-api/docs/prompting-strategies" target="_blank" rel="noopener">Gemini API — Prompt design strategies</a> — temperatureをはじめとする生成パラメータの公式説明。既定値を保つことの推奨理由もここに記載</li>
+        <li><a href="https://ai.google.dev/gemini-api/docs/google-search" target="_blank" rel="noopener">Gemini API — Grounding with Google Search</a> — Groundingの仕組み、引用（citations）、最新情報へのアクセスとハルシネーション削減についての公式説明</li>
         <li><a href="https://support.google.com/notebooklm/answer/16212283?hl=ja" target="_blank" rel="noopener">NotebookLM ヘルプ — NotebookLM でマインドマップを使用する</a> — マインドマップ機能の公式説明</li>
         <li><a href="https://support.google.com/notebooklm/answer/16206563?hl=ja" target="_blank" rel="noopener">NotebookLM ヘルプ — NotebookLM でノートブックを作成する</a> — 「レポートを作成」から概要説明資料・学習ガイド・よくある質問（FAQ）などの種類を選ぶ操作の公式説明</li>
         <li><a href="https://support.google.com/notebooklm/answer/16164461?hl=ja" target="_blank" rel="noopener">NotebookLM ヘルプ — NotebookLM の詳細</a> — 学習ガイド・よくある質問（FAQ）などStudioパネルの機能一覧</li>
+        <li><a href="https://ai.google.dev/gemini-api/docs/ai-studio-quickstart" target="_blank" rel="noopener">Google AI Studio quickstart</a> — Build mode・Live API・画像/動画生成など、今日扱わなかった機能も含めたAI Studio全体の公式ガイド（発展・興味があれば）</li>
       </ul>
     </div>
 
