@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第11回 Google AI Studio体験 | AIコミュニケーション基礎</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication.html">AIコミュニケーション基礎</a>
+        <span>/</span>
+        <span>第11回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">Google AI Studio<wbr>体験</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 11</span>
+            <span class="page-badge">火曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <!-- 公式情報確認: 2026-07-07 (Google AI Studio利用規約、Gemini API temperature推奨、NotebookLM Studioレポート機能) -->
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">後半戦（第11〜15回）の初回。第10回の<strong>【中間振り返りシート】</strong>で選んだテーマを胸に、新しいツール<strong>Google AI Studio</strong>を体験する。AI Studioは「<strong>プロフェッショナル/ビジネス目的の開発者向けツール</strong>」と利用規約で明記されているサービスであり、今日の体験は<strong>専門学校のプロフェッショナル・トレーニングの一環</strong>として位置づけて扱う。<strong>temperature（温度）パラメータ</strong>を動かして同じ質問への応答がどう変わるかを観察し、続けて自分のAI（NotebookLM）の<strong>応用機能（マインドマップ、レポート機能で作る概要説明資料・学習ガイド・よくある質問）</strong>を使って【学習データ①〜⑨】を新しい形で整理し直す。今日の気づきを<strong>【学習データ⑩】AI応用活用ガイド</strong>としてまとめ、NotebookLMに投入する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">Google AI Studio / 利用規約の<strong>「プロフェッショナル・ビジネス目的、消費者向けではない」</strong>という位置づけ / <strong>temperature（温度）</strong>パラメータ / 応答の<strong>安定性 vs 多様性</strong> / 「公式が推奨する使い方」を確認してから調整する姿勢 / NotebookLM 応用活用（<strong>マインドマップ・レポート機能（概要説明資料・学習ガイド・よくある質問（FAQ））</strong>） / <strong>【学習データ⑩】</strong>AI応用活用ガイド</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">Googleアカウントでログインできる状態・第10回の<strong>【中間振り返りシート】</strong>（後半戦テーマが書かれたGoogleドキュメント）・<strong>【学習データ①〜⑨】</strong>を投入済みの「自分だけのAI」（NotebookLM）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>Google AI Studioが<strong>「開発者・プロ向けにGeminiモデルを試す場所」</strong>として位置づけられていることを説明でき、今日の体験が専門学校のプロフェッショナル・トレーニングの一環であることを理解する</li>
+        <li>無料枠（Unpaid Services）では<strong>入力内容がGoogleのモデル改善に使われ得る</strong>ことを知り、第1〜10回と同じく<strong>個人情報を入れない</strong>原則を守れる</li>
+        <li><strong>temperature</strong>パラメータが応答の<strong>ランダム性（決定論的 ⇔ 多様・創造的）</strong>を左右することを、自分の実験結果で説明できる</li>
+        <li>「<strong>パラメータは自由に動かしてよいものではなく、公式の推奨を確認してから触るもの</strong>」という姿勢を体験から学ぶ</li>
+        <li>NotebookLMの<strong>マインドマップ・レポート機能（概要説明資料・学習ガイド・よくある質問（FAQ））</strong>のうち2つ以上を実際に使い、【学習データ①〜⑨】を新しい切り口で眺め直せる</li>
+        <li>今日の気づきを<strong>【学習データ⑩】AI応用活用ガイド</strong>としてまとめ、NotebookLMのソースに追加できる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>Google AI Studioの位置づけを確認する</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り（10分）</strong></p>
+            <ul>
+              <li>第10回で作った<strong>【中間振り返りシート】</strong>を開き、<strong>「⑦ 後半戦の私のテーマ」</strong>を声に出して確認</li>
+              <li>NotebookLMのソースに【中間振り返りシート】を追加した人は、今日から自分のAIがそれを踏まえて応答することを再確認</li>
+            </ul>
+            <p><strong>Google AI Studioとは何か（15分）</strong></p>
+            <ul>
+              <li>Google AI Studio（<a href="https://aistudio.google.com" target="_blank" rel="noopener">aistudio.google.com</a>）は、<strong>Geminiモデルをブラウザ上で試せる場所</strong>。プロンプトを入力してモデルの応答を確認したり、パラメータを調整したりできる</li>
+              <li><strong>重要な位置づけ</strong>: 公式の利用規約（2026-03-23 改定）には<strong>「Google AI StudioとGemini APIの利用は、プロフェッショナル/ビジネス目的でGoogle AIモデルを使って開発する開発者のためのものであり、消費者向けの利用ではない」</strong>と明記されている</li>
+              <li>この授業での体験は、<strong>専門学校の情報系プロフェッショナル・トレーニングの一環</strong>として位置づけて扱う——「AIツールの規約を確認してから使う」という今日のこの確認作業自体が、今後 IT の現場で必要になる姿勢の練習でもある</li>
+              <li><strong>無料枠を使うときの注意</strong>: 公式には「無料枠（Unpaid Services）を使うと、入力内容や生成された応答がGoogleの製品・モデル改善のために使われ得る」と明記されている。第1回からの原則<strong>「本名・住所・電話番号・学籍番号などの個人情報を入れない」</strong>は、AI Studioでも同じく守る</li>
+            </ul>
+            <p><strong>ログインして画面を眺める（15分）</strong></p>
+            <ul>
+              <li>Googleアカウントで <a href="https://aistudio.google.com" target="_blank" rel="noopener">aistudio.google.com</a> にログインできるか確認</li>
+              <li>画面の大まかな構成（プロンプトを入力する欄・モデルを選ぶ場所・応答の調整に関する設定エリア）を眺める。UIは更新されることがあるため、細部が今日説明する配置と違っていても慌てず、名称を手がかりに探す</li>
+              <li>個人情報を含まない簡単な質問を1つ試し、応答が返ってくることを確認するだけで OK（本格的な実験は1限後半で行う）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「使えるツール」と「使ってよいツール」は別の確認事項:</strong> 第1〜10回で NotebookLM や Gemini を使うときも「個人情報を入れない」という<strong>ルールとその理由</strong>を確認してきました。今日 Google AI Studio という新しいツールに触れるときも同じ手順を踏みます——<strong>触る前に「これは誰向けのツールで、何に注意すべきか」を確認する</strong>。この手順そのものが、社会人になってから新しいAIツールに出会うたびに繰り返すことになる習慣です。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>temperatureパラメータを動かして応答変化を観察する</h3>
+          <div class="timeline-body">
+            <p><strong>temperatureとは何か（10分）</strong></p>
+            <ul>
+              <li>公式ドキュメントの説明: <strong>「温度はトークン選択のランダム性の程度を制御する。低い温度はより決定論的で限定的な応答に向き、高い温度はより多様・創造的な結果につながりうる」</strong></li>
+              <li>Geminiモデルの temperature は<strong>0.0〜2.0</strong>の範囲で設定でき、<strong>1.0 が推奨される既定値</strong></li>
+            </ul>
+            <p><strong>公式の重要な注意を先に確認する（10分）</strong></p>
+            <ul>
+              <li>公式ドキュメントには<strong>「これらのパラメータは変更可能だが、現行のGeminiモデルでは既定値のまま保つことを強く推奨する。既定値を下げると、ループ（同じような応答を繰り返す）や、複雑な数学・推論タスクでの性能低下につながることがある」</strong>と明記されている</li>
+              <li>つまり<strong>「下げて安定させる」方向の調整は、現行モデルでは公式が非推奨としている</strong>——今日の実験では<strong>既定値（1.0）を基準に、上げる方向だけ</strong>を試す</li>
+              <li>ここが今日いちばんのポイント: 「temperature を下げると安定する」という説明はインターネット上によく見かけるが、<strong>それが今のモデルにも当てはまるとは限らない</strong>。AIツールの使い方は公式ドキュメントの<strong>今の記載</strong>を確認してから決める、という第9回のファクトチェックの姿勢がここでも活きる</li>
+            </ul>
+            <p><strong>実験してみる（20分）</strong></p>
+            <ul>
+              <li>同じ質問（例:「面白い部活動のアイデアを1つ考えて」など、個人情報を含まない当たり障りのない質問）を、<strong>temperature を既定値のまま</strong>と<strong>既定値より高め</strong>の2パターンで、それぞれ2〜3回ずつ実行する</li>
+              <li>Googleドキュメントの新規ファイル<strong>「パラメータ実験記録」</strong>に、<strong>使ったプロンプト・設定した temperature の値・応答の違いに気づいた点</strong>を記録する</li>
+              <li>観察のポイント:
+                <ul>
+                  <li>既定値のまま複数回試したとき、<strong>毎回どれくらい似た応答が返るか</strong></li>
+                  <li>高めに設定したとき、<strong>言い回しや提案の内容がどれくらいばらつくか</strong></li>
+                  <li>高くしすぎたときに<strong>話が脱線したり、不自然な応答</strong>が出ないか</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>気づきの共有（10分）</strong></p>
+            <ul>
+              <li>隣の人、または希望者が全体で1〜2人、「既定値と高め、どちらの応答が今日の目的に合っていたか」を1文で共有</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>NotebookLMの応用活用法を試す</h3>
+          <div class="timeline-body">
+            <p><strong>マインドマップで①〜⑨を俯瞰する（20分）</strong></p>
+            <ul>
+              <li>自分のAI（NotebookLM）のチャット欄から<strong>マインドマップ</strong>チップを選び、【学習データ①〜⑨】がどのようなツリー構造に整理されるかを確認</li>
+              <li>ブランチを展開・折りたたみしながら眺め、<strong>「自分でも気づいていなかったつながり」</strong>を1つ以上見つける</li>
+              <li>マインドマップ内の気になるノードをクリックし、そのままチャットで<strong>「このノードについてもっと詳しく」</strong>と深掘りしてみる</li>
+            </ul>
+            <p><strong>レポート機能で概要・学習ガイド・FAQ を試す（20分）</strong></p>
+            <ul>
+              <li>Studio パネルの<strong>「レポートを作成」</strong>から生成できる形式には<strong>概要説明資料</strong>（要約）・<strong>学習ガイド</strong>（用語集・一問一答形式の問題）・<strong>よくある質問（FAQ）</strong>（蓄積したソースから想定質問と回答をまとめる）などがある。学習ガイドやFAQは単独ボタンではなく<strong>「レポート」の中から種類を選ぶ</strong>形になっている点に注意</li>
+              <li>まず<strong>概要説明資料</strong>を1つ生成し、【学習データ①〜⑨】がどう要約されるかを確認。自分がこれまで書いてきたメモと比べて「AIならではのまとめ方」を1つ見つける</li>
+              <li>続けて<strong>学習ガイド</strong>または<strong>よくある質問（FAQ）</strong>のどちらか1つも生成してみる</li>
+              <li>生成された内容が、【学習データ①〜⑨】の<strong>どの部分を根拠にしているか</strong>を1つ確認する（第9回のファクトチェック手順①：引用クリックの延長）</li>
+            </ul>
+            <p><strong>気づきをメモする（10分）</strong></p>
+            <ul>
+              <li>マインドマップ・概要説明資料・学習ガイド・FAQ のうち<strong>やってみて役に立ちそうだったもの</strong>を1つ選び、「後半戦のどの場面で使えそうか」を1〜2行でメモ</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>【学習データ⑩】AI応用活用ガイドを作成し、投入する</h3>
+          <div class="timeline-body">
+            <p><strong>ガイドをまとめる（15分）</strong></p>
+            <ul>
+              <li>Googleドキュメントの新規ファイル<strong>「AI応用活用ガイド」</strong>を作成し、以下をまとめる:
+                <ul>
+                  <li>Google AI Studioの位置づけ（プロフェッショナル/ビジネス目的の開発者向けツール）と、個人情報を入れない原則</li>
+                  <li>temperature 実験でわかったこと（1限後半の「パラメータ実験記録」から要点を1〜2行で抜粋）</li>
+                  <li>NotebookLM の応用機能（マインドマップ・学習ガイド・FAQ）のうち、後半戦で使えそうなもの</li>
+                </ul>
+              </li>
+              <li>下の「コピー用テンプレ」を使うと、見出し構成をゼロから考えずに済む</li>
+            </ul>
+            <p><strong>NotebookLMに投入する（10分）</strong></p>
+            <ul>
+              <li>第5〜9回と同じ手順で、自分のAI（NotebookLM）の<strong>「ソースを追加」→「ドライブ」</strong>からこのドキュメントを選択</li>
+              <li>これで<strong>【学習データ①〜⑩】</strong>が揃った状態になる</li>
+            </ul>
+            <p><strong>後半戦テーマとのつながりを確認する（5分）</strong></p>
+            <ul>
+              <li>第10回で選んだ後半戦テーマと、今日試した機能（temperature調整・マインドマップ・学習ガイド・FAQ）のどれが関連しそうかを1文で書き留める。第12回（個人課題）で実際に使う機能の候補になる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ ai-communication.html Week 12 「個人課題：自分のテーマを掘る」と同期 -->
+              <li>次回（第12回）: <strong>個人課題：自分のテーマを掘る</strong>——自分が興味のあるテーマを1つ決め、自分のAIと対話しながら知識を深める個人課題に着手する。<strong>【学習データ⑪】</strong>テーマ探索ワークシートを投入する</li>
+              <li>今日のキーワード<strong>「プロフェッショナル・ビジネス目的」「temperature（既定値を確認してから触る）」「マインドマップ」「学習ガイド」「よくある質問（FAQ）」</strong>を口に出して言えるか確認して退出</li>
+              <li>家では<strong>【学習データ⑩】AI応用活用ガイド</strong>を読み返し、第12回の個人課題テーマ選びのヒントになりそうな箇所を1つ見つけておく</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>【AI応用活用ガイド】テンプレ(コピー用)</h2>
+      <p>授業内で書ききれなかった人や<strong>家でゼロから作り直したい人</strong>のために、テンプレ本文をここからコピーできるようにしてある。</p>
+      <p><strong>使い方:</strong></p>
+      <ol>
+        <li>下の「Markdown をコピー」ボタンを押す</li>
+        <li><a href="https://docs.google.com" target="_blank" rel="noopener">Google ドキュメント</a> で新規ドキュメントを開く(ファイル名は<strong>「AI応用活用ガイド」</strong>)</li>
+        <li>Google ドキュメントの<strong>ツール → 設定 → 全般タブ →「マークダウンを有効にする」</strong>がオンになっているか確認(第5〜10回までに設定した人はそのまま)</li>
+        <li>本文に<strong>編集 →「マークダウンから貼り付け」</strong>で貼り付ける(普通の Ctrl/⌘+V でも内容は使えるので、Markdown 整形にこだわらない人はそのままで OK)→ 空欄を自分の言葉で埋める</li>
+        <li>NotebookLM の自分だけのAIで「ソースを追加」→「ドライブ」→ このドキュメントを選択。<strong>【学習データ⑩】として扱う</strong></li>
+      </ol>
+      <p><strong>個人情報を入れない原則は第1〜10回と同じ。</strong>本名・住所・電話番号・学籍番号は書かない。書ける範囲で OK・空欄でも OK。</p>
+      <button class="copy-md-btn" data-md-source="ai-usage-guide-md">
+        <span class="btn-icon"></span> Markdown をコピー
+      </button>
+<pre id="ai-usage-guide-md" class="md-preview"># AI応用活用ガイド(NotebookLM 用 / 【学習データ⑩】)
+
+&gt; このシートは第11回 Google AI Studio体験の成果物です。
+&gt; Google AI Studio の位置づけ、temperatureパラメータ実験、NotebookLMの応用機能(マインドマップ・学習ガイド・FAQ)を試した気づきをまとめた記録です。
+&gt; 個人情報(本名・住所・電話番号・学籍番号など)は書かないこと。書ける範囲で OK・空欄でも OK。
+
+## ① Google AI Studioの位置づけ
+公式利用規約で「プロフェッショナル/ビジネス目的、消費者向けではない」と明記されていることと、無料枠での入力データの扱いについて、自分の言葉で1〜2行にまとめる。
+
+→
+
+## ② temperatureパラメータ実験でわかったこと
+1限後半の「パラメータ実験記録」から、既定値と高めの設定でどう応答が変わったかの要点を1〜2行で抜粋する。
+
+**試したプロンプト:**
+
+→
+
+**既定値(1.0)での応答の傾向:**
+
+→
+
+**高めに設定した応答の傾向:**
+
+→
+
+**公式が「既定値を下げるのは非推奨」としている理由(自分の言葉で):**
+
+→
+
+## ③ NotebookLM応用機能で気づいたこと
+マインドマップ・概要説明資料・学習ガイド・よくある質問(FAQ)のうち試したものと、気づいたことを書く。
+
+**試した機能:**
+
+→
+
+**気づいたこと(【学習データ①〜⑨】の新しいつながりなど):**
+
+→
+
+## ④ 後半戦テーマとのつながり
+第10回で選んだ後半戦テーマと、今日試した機能のどれが関連しそうか1文で書く。
+
+→
+</pre>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>【学習データ⑩】AI応用活用ガイドを完成させ、NotebookLMに投入する</strong>
+            <p>授業内で書ききれなかった項目を埋めてから、ソースとして追加する。特に<strong>④ 後半戦テーマとのつながり</strong>は必ず書き切る——第12回の個人課題テーマ選びに直結する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>「パラメータ実験記録」を見直し、1文で結論を書く</strong>
+            <p>「今日の目的（当たり障りのない質問への応答を試す）では、既定値と高めのどちらが適していたか」を1文で結論づけて記録に追記する。結論が出なくても「まだ判断できない」と書いて OK。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>NotebookLMの応用機能をもう1つ試してみる</strong>
+            <p>2限前半で試さなかった機能（マインドマップ・概要説明資料・学習ガイド・よくある質問（FAQ）のうち未経験のもの）を家で1つ試し、気づきをNOTES.mdに1〜2行メモする。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://aistudio.google.com" target="_blank" rel="noopener">Google AI Studio</a> — 今日のメイン会場。Geminiモデルをブラウザ上で試せる開発者向けツール</li>
+        <li><a href="https://ai.google.dev/gemini-api/terms" target="_blank" rel="noopener">Gemini API Additional Terms of Service</a> — 「プロフェッショナル/ビジネス目的、消費者向けではない」の記載元。無料枠でのデータ利用についても明記されている</li>
+        <li><a href="https://ai.google.dev/gemini-api/docs/prompting-strategies" target="_blank" rel="noopener">Gemini API — Prompt design strategies</a> — temperatureをはじめとする生成パラメータの公式説明。既定値を保つことの推奨理由もここに記載</li>
+        <li><a href="https://support.google.com/notebooklm/answer/16212283?hl=ja" target="_blank" rel="noopener">NotebookLM ヘルプ — NotebookLM でマインドマップを使用する</a> — マインドマップ機能の公式説明</li>
+        <li><a href="https://support.google.com/notebooklm/answer/16206563?hl=ja" target="_blank" rel="noopener">NotebookLM ヘルプ — NotebookLM でノートブックを作成する</a> — 「レポートを作成」から概要説明資料・学習ガイド・よくある質問（FAQ）などの種類を選ぶ操作の公式説明</li>
+        <li><a href="https://support.google.com/notebooklm/answer/16164461?hl=ja" target="_blank" rel="noopener">NotebookLM ヘルプ — NotebookLM の詳細</a> — 学習ガイド・よくある質問（FAQ）などStudioパネルの機能一覧</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week10.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第10回 中間振り返り</span>
+      </a>
+      <a href="../ai-communication.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AIコミュニケーション基礎</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第12回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>

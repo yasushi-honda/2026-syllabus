@@ -25,6 +25,7 @@ program-basics/         # プログラム基礎 I の各回詳細ページ
   week08.html           #   第8回 🎯ミニ完成② 小ゲーム公開
   week09.html           #   第9回 繰り返しと配列
   week10.html           #   第10回 関数とコード整理＆バグ修正ワーク③
+  week11.html           #   第11回 DOM操作とイベント
 ai-communication.html   # AIコミュニケーション基礎（火3・4限）
 ai-communication/       # AIコミュニケーション基礎の各回詳細ページ
   week01.html           #   第1回 オリエンテーションとAI概論
@@ -37,6 +38,7 @@ ai-communication/       # AIコミュニケーション基礎の各回詳細ペ�
   week08.html           #   第8回 自分のAIを使いこなす
   week09.html           #   第9回 AI出力の検証と改善
   week10.html           #   第10回 中間振り返り
+  week11.html           #   第11回 Google AI Studio体験
 natural-language-dev.html # 自然言語開発（木1・2限）
 natural-language-dev/   # 自然言語開発の各回詳細ページ
   week01.html           #   第1回 オリエンテーション＆前年度の進級制作を振り返る
