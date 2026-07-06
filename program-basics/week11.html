@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第11回 DOM操作とイベント | プログラム基礎 I</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--blue">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../program-basics.html">プログラム基礎 I</a>
+        <span>/</span>
+        <span>第11回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">DOM<wbr>操作と<wbr>イベント</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 11</span>
+            <span class="page-badge">火曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">第9回・第10回で <code>document.getElementById</code> や <code>document.createElement</code> を使い、<strong>HTMLの要素をJavaScriptから触る</strong>体験はすでにしている。今日はこれを正式に<strong>DOM（Document Object Model）</strong>という名前で捉え直し、<code>textContent</code> での書き換えと <code>addEventListener</code> による<strong>クリックイベント</strong>を組み合わせる。第10回で作った <code>rollDice()</code> 関数を<strong>ボタンクリックに接続</strong>し、押すたびにサイコロが振られて結果が画面に表示される「<strong>サイコロクリックゲーム</strong>」を完成させる</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">DOM（Document Object Model） / <code>document.getElementById</code> / <code>textContent</code> による書き換え / <code>addEventListener("click", 関数)</code> / イベントハンドラ / クリックカウンター / 関数を<strong>呼び出さずに渡す</strong>（<code>関数名</code> と <code>関数名()</code> の違い、第10回の続き） / サイコロクリックゲーム</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第10回までに作った <strong>GitHub Pages 公開済みリポジトリ</strong>（<code>index.html</code> / <code>game.html</code> / <code>list.html</code>）・Codespaces が起動できる状態・第10回の <code>rollDice()</code> 関数、第7回の <code>if</code> 文を一度は手で書いた経験</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li><strong>DOM</strong>が「<strong>ブラウザに読み込まれたHTMLをJavaScriptから触れるようにした木構造</strong>」であることを自分の言葉で説明できる</li>
+        <li><code>document.getElementById("id").textContent = "新しい文字"</code> の形で、既存の要素の中身を<strong>1行で書き換えられる</strong></li>
+        <li><code>addEventListener("click", 関数名)</code> の構文で、<strong>ボタンを押したときに関数が呼ばれる</strong>仕組みを手で書ける</li>
+        <li>「<code>関数名()</code>（呼び出す）」と「<code>関数名</code>（呼び出さずに渡す）」の違いを、<code>addEventListener</code> の中で<strong>正しく使い分けられる</strong></li>
+        <li>第10回の <code>rollDice()</code> を <strong>クリックイベントと <code>if</code> 文</strong>と組み合わせて、押すたびに結果とスコアが更新される小さなゲームを1つ完成させる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>「HTMLをJavaScriptから触る」を DOM という名前で捉え直す</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り（10分）</strong></p>
+            <ul>
+              <li>第10回で作った <code>game.html</code>（<code>rollDice()</code> 関数版）と <code>list.html</code>（<code>showList(items)</code> 関数版）を Codespaces で開く（<code>python3 -m http.server 8000</code> → 第1回と同じ手順で Simple Browser）</li>
+              <li>家でやった <code>rollDice(sides)</code> 改造課題ができた人は、簡単に画面共有（強制ではない）</li>
+            </ul>
+            <p><strong>すでに DOM を触っていたことに気づく（15分）</strong></p>
+            <ul>
+              <li><code>list.html</code> の <code>showList(items)</code> 関数を見直す:
+                <pre><code>function showList(items) {
+  const ul = document.getElementById("favorite-list");
+  for (let i = 0; i &lt; items.length; i++) {
+    const li = document.createElement("li");
+    li.textContent = items[i];
+    ul.appendChild(li);
+  }
+}</code></pre>
+              </li>
+              <li>気づくこと: <code>document.getElementById</code>（要素を探す）・<code>document.createElement</code>（要素を作る）・<code>li.textContent</code>（中身を書く）・<code>ul.appendChild</code>（つなげる）——<strong>すでに4つのDOM操作を第9回・第10回で使っていた</strong></li>
+              <li>今日名前を付ける: この「<strong>HTMLがブラウザの中でJavaScriptから触れる木の形</strong>」を <strong>DOM（Document Object Model）</strong>と呼ぶ。<code>document</code> という単語は「この木の根っこ」を指している</li>
+            </ul>
+            <p><strong><code>textContent</code> だけで書き換える実験（15分）</strong></p>
+            <ul>
+              <li>新規ファイル <code>click-game.html</code> を作り、次の最小限のHTMLを書く:
+                <pre><code>&lt;h1 id="message"&gt;まだ何もしていません&lt;/h1&gt;</code></pre>
+              </li>
+              <li>保存して Simple Browser で開き、<strong>F12 → Console タブ</strong>を開いて次の1行を打ち込んでみる:
+                <pre><code>document.getElementById("message").textContent = "書き換わった！";</code></pre>
+              </li>
+              <li>Enter を押した瞬間、<strong>ページの見出しがコードを保存し直さなくても変わる</strong>ことを確認——これが「JavaScriptからHTMLを直接操作する」体験そのもの</li>
+              <li><code>id="message"</code> の要素を <code>document.getElementById("message")</code> で<strong>掴んで</strong>、<code>.textContent = "..."</code> で<strong>中身を差し替える</strong>、の2ステップだけで書き換えが起きている</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「DOM」は新しい概念ではなく「呼び方」:</strong> 第9回の <code>for</code> 文、第10回の関数、そして今日の DOM は、<strong>難易度が急に上がる新技術ではありません</strong>。今日の最初の実験でやったことは、実は第9回・第10回の <code>list.html</code> ですでにやっていた操作と同じです。「知らないうちに DOM を触っていた」と気づくのが、今日いちばん大事な発見です。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3><code>addEventListener</code> でクリックに反応する → クリックカウンターを作る</h3>
+          <div class="timeline-body">
+            <p><strong><code>addEventListener</code> の基本構文（15分）</strong></p>
+            <ul>
+              <li><code>click-game.html</code> に<strong>ボタン</strong>を1つ追加:
+                <pre><code>&lt;h1 id="message"&gt;まだ何もしていません&lt;/h1&gt;
+&lt;button id="my-button"&gt;押してみる&lt;/button&gt;</code></pre>
+              </li>
+              <li><code>&lt;script&gt;</code> に次のコードを書く:
+                <pre><code>function handleClick() {
+  document.getElementById("message").textContent = "押されました！";
+}
+
+const button = document.getElementById("my-button");
+button.addEventListener("click", handleClick);</code></pre>
+              </li>
+              <li>保存して Simple Browser を更新し、ボタンを押すたびに見出しが変わることを確認</li>
+              <li><code>addEventListener("click", handleClick)</code> の意味: 「<strong>この要素が click（クリック）されたら、<code>handleClick</code> という関数を呼び出してください</strong>」とブラウザに<strong>予約</strong>している</li>
+            </ul>
+            <p><strong>よくあるミス：カッコを付けて渡してしまう（10分）</strong></p>
+            <ul>
+              <li>第10回の「<code>sayHello;</code> と <code>sayHello();</code> の違い」がここでも罠になる:
+                <pre><code>// NG: ページを開いた瞬間に1回だけ実行され、クリックしても何も起きない
+button.addEventListener("click", handleClick());
+
+// OK: クリックされるたびに実行される
+button.addEventListener("click", handleClick);</code></pre>
+              </li>
+              <li>理由: <code>handleClick()</code> と書くと<strong>その場で関数を呼び出した結果</strong>（今回は <code>undefined</code>）を渡してしまう。<code>addEventListener</code> には<strong>「呼び出さずに関数そのものを渡す」</strong>必要がある</li>
+              <li>実際に <code>handleClick()</code> と書き換えて動かし、「1回だけ実行されてクリックしても反応しない」を<strong>自分の目で確認</strong>してから正しい形に戻す</li>
+            </ul>
+            <p><strong>クリックカウンターを作る（25分）</strong></p>
+            <ul>
+              <li>「押した回数」を数える<strong>変数</strong>を用意し、押すたびに増やす:
+                <pre><code>let count = 0;
+
+function handleClick() {
+  count = count + 1;
+  document.getElementById("message").textContent = "押した回数: " + count + " 回";
+}
+
+const button = document.getElementById("my-button");
+button.addEventListener("click", handleClick);</code></pre>
+              </li>
+              <li>保存して Simple Browser を更新。ボタンを連打して回数が増えていくことを確認</li>
+              <li><code>let count = 0;</code> を <code>function</code> の<strong>外側</strong>で宣言している点に注意——関数の中で宣言すると、クリックのたびに <code>count</code> が 0 に戻ってしまい数えられない</li>
+              <li>時間が余った人は、<code>count</code> が <strong>10 の倍数</strong>になったら <code>message</code> の文字を変える（<code>if</code> 文の復習、第7回参照）などアレンジしてよい</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3><code>rollDice()</code> をボタンに接続する → サイコロクリックゲームの土台を作る</h3>
+          <div class="timeline-body">
+            <p><strong>サイコロボタンを作る（20分）</strong></p>
+            <ul>
+              <li><code>click-game.html</code> に第10回の <code>rollDice()</code> 関数を追加し、ボタンと接続する:
+                <pre><code>function rollDice() {
+  return Math.floor(Math.random() * 6) + 1;
+}
+
+function handleRoll() {
+  const result = rollDice();
+  document.getElementById("message").textContent = "出た目: " + result;
+}
+
+const rollButton = document.getElementById("my-button");
+rollButton.addEventListener("click", handleRoll);</code></pre>
+              </li>
+              <li>ボタンの表示も <code>&lt;button id="my-button"&gt;サイコロを振る&lt;/button&gt;</code> に変更</li>
+              <li>保存して Simple Browser を更新。押すたびに 1〜6 のランダムな目が表示されることを確認</li>
+              <li>第10回は <code>console.log</code> で結果を確認していたが、今日は<strong>結果を画面（DOM）に表示している</strong>点が進化ポイント</li>
+            </ul>
+            <p><strong><code>if</code> 文と組み合わせてスコアを付ける（30分）</strong></p>
+            <ul>
+              <li>「<strong>6 が出たら得点</strong>」というルールを追加し、試行回数と得点も画面に表示する:
+                <pre><code>let tries = 0;
+let score = 0;
+
+function rollDice() {
+  return Math.floor(Math.random() * 6) + 1;
+}
+
+function handleRoll() {
+  const result = rollDice();
+  tries = tries + 1;
+
+  if (result === 6) {
+    score = score + 1;
+  }
+
+  document.getElementById("message").textContent =
+    "出た目: " + result + "（" + tries + "回目、得点: " + score + "）";
+}
+
+const rollButton = document.getElementById("my-button");
+rollButton.addEventListener("click", handleRoll);</code></pre>
+              </li>
+              <li>保存して Simple Browser を更新。何度もクリックして、<strong>6 が出たときだけ得点が増える</strong>ことを確認</li>
+              <li>確認ポイント:
+                <ul>
+                  <li><code>tries</code>・<code>score</code> はどちらも <code>handleRoll</code> の<strong>外側</strong>で宣言——クリックカウンターと同じ理由</li>
+                  <li><code>if (result === 6)</code> は第7回で書いた条件分岐そのもの——DOM操作の中でも普通に使える</li>
+                  <li>「<strong>関数（<code>rollDice</code>）</strong>」「<strong>条件分岐（<code>if</code>）</strong>」「<strong>DOM操作（<code>textContent</code>）</strong>」「<strong>イベント（<code>addEventListener</code>）</strong>」——第6〜11回の要素が1つの画面に全部つながった</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>ゲームを仕上げる → 見た目とルールを自分好みに整える</h3>
+          <div class="timeline-body">
+            <p><strong>見た目を整える（10分）</strong></p>
+            <ul>
+              <li>第3回のCSSを思い出し、<code>button</code> や <code>#message</code> に色・余白・フォントサイズを付けてボタンらしく見せる（推奨、必須ではない）</li>
+              <li>「得点」の文字だけ大きくしたい場合は、<code>&lt;span id="score-area"&gt;&lt;/span&gt;</code> のように分けて <code>textContent</code> を個別に更新する方法もある（発展、時間が余ったら挑戦）</li>
+            </ul>
+            <p><strong>ルールを自分でアレンジする（15分）</strong></p>
+            <ul>
+              <li>「6 が出たら得点」を、次のように変えてみる（1つ選んで試す）:
+                <ul>
+                  <li><strong>難易度を上げる</strong>: <code>result === 6</code> を <code>result &gt;= 5</code>（5 か 6 で得点）に変える、または <code>rollDice(20)</code> にして「20 が出たら得点」にする</li>
+                  <li><strong>連続記録を数える</strong>: 6 が連続で出た回数を <code>streak</code> という変数で数える（前回 6 だったかを覚えておく必要がある——難しければ次回以降の課題でよい）</li>
+                  <li><strong>リセットボタンを付ける</strong>: 2つ目の <code>&lt;button&gt;</code> を用意し、押すと <code>tries</code>・<code>score</code> を 0 に戻す<code>handleReset</code> 関数を <code>addEventListener</code> で接続する</li>
+                </ul>
+              </li>
+              <li>自分が選んだアレンジを NOTES.md に「何を、なぜ変えたか」1〜2行でメモしておく</li>
+            </ul>
+            <p><strong>動作確認とコミット準備（5分）</strong></p>
+            <ul>
+              <li>Simple Browser で何度かクリックして<strong>エラーが出ないこと</strong>・<strong>得点が正しく増えること</strong>を確認</li>
+              <li>次回（第12回）で <code>index.html</code> にリンクを足して GitHub Pages に公開するため、今日はまず <code>click-game.html</code> をローカルで完成させておく</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ program-basics.html Week 12 「🎯ミニ完成③ インタラクティブ作品公開」と同期 -->
+              <li>次回（第12回）: <strong>🎯ミニ完成③ インタラクティブ作品公開</strong>——今日作った <code>click-game.html</code> を <code>index.html</code> からリンクし、GitHub Pages に公開する。スマホでも動作確認する</li>
+              <li>今日のキーワード <strong>「DOM」「<code>document.getElementById</code>」「<code>textContent</code>」「<code>addEventListener("click", 関数名)</code>」「関数名 と 関数名() の違い」</strong>を口に出して言えるか確認して退出</li>
+              <li>家では今日の <code>click-game.html</code> を push し、公開URLの <code>/click-game.html</code> でボタンが動くか確認しておくと次回がスムーズ</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>click-game.html</code>（サイコロクリックゲーム）を push する</strong>
+            <p>2限前半で書いたスコア付きバージョンを保存・commit・push。ローカルの Simple Browser でボタンを連打し、出た目・試行回数・得点が正しく表示されることを確認してから push する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>2限後半で選んだルールアレンジを完成させる</strong>
+            <p>難易度変更・連続記録・リセットボタンのうち1つを選んで実装し、動作確認する。時間内に終わらなかった場合は家で仕上げて次回冒頭までに push する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong><code>list.html</code> にもボタンを1つ足してみる</strong>
+            <p>第10回の <code>showList(items)</code> に「もう1品追加する」ボタンを付け、<code>addEventListener</code> で配列に要素を <code>push</code> してから <code>showList</code> を呼び直す（配列を空にしてから全部作り直すか、末尾に1つ追加するかは自由）。DOM操作とイベントの組み合わせをもう1パターン体験できる。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/Document_Object_Model/Introduction" target="_blank" rel="noopener">MDN — DOM 入門</a> — DOM（Document Object Model）とは何かを解説した公式ガイド</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/Document/getElementById" target="_blank" rel="noopener">MDN — <code>Document.getElementById()</code></a> — <code>id</code> 属性から要素を取得するメソッドの公式リファレンス</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/Node/textContent" target="_blank" rel="noopener">MDN — <code>Node.textContent</code></a> — 要素の中身のテキストを読み書きするプロパティの公式リファレンス</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/EventTarget/addEventListener" target="_blank" rel="noopener">MDN — <code>EventTarget.addEventListener()</code></a> — イベントハンドラを登録するメソッドの公式リファレンス</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week10.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第10回 関数とコード整理＆バグ修正ワーク③</span>
+      </a>
+      <a href="../program-basics.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">プログラム基礎 I</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第12回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
