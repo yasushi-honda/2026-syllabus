@@ -99,10 +99,12 @@
             </ul>
             <p><strong><code>textContent</code> だけで書き換える実験（15分）</strong></p>
             <ul>
-              <li>新規ファイル <code>click-game.html</code> を作り、次の最小限のHTMLを書く:
-                <pre><code>&lt;h1 id="message"&gt;まだ何もしていません&lt;/h1&gt;</code></pre>
+              <li>新規ファイル <code>click-game.html</code> を作り、次の最小限のHTMLを書く（<strong><code>&lt;meta charset="UTF-8"&gt;</code> を忘れると日本語が文字化けするので必ず入れる</strong>）:
+                <pre><code>&lt;meta charset="UTF-8"&gt;
+&lt;h1 id="message"&gt;まだ何もしていません&lt;/h1&gt;</code></pre>
               </li>
-              <li>保存して Simple Browser で開き、<strong>F12 → Console タブ</strong>を開いて次の1行を打ち込んでみる:
+              <li>保存して開く: <code>game.html</code> を表示している Simple Browser のタブの<strong>アドレスバーの末尾だけ</strong> <code>/click-game.html</code> に書き換えて Enter（サーバーは前半の振り返りで起動済みなのでポート番号はそのまま）。まだ <code>index.html</code> にリンクはないので、この方法で直接開く</li>
+              <li>開けたら <strong>F12 → Console タブ</strong>を開いて次の1行を打ち込んでみる:
                 <pre><code>document.getElementById("message").textContent = "書き換わった！";</code></pre>
               </li>
               <li>Enter を押した瞬間、<strong>ページの見出しがコードを保存し直さなくても変わる</strong>ことを確認——これが「JavaScriptからHTMLを直接操作する」体験そのもの</li>
