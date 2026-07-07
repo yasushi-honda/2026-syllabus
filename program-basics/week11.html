@@ -107,6 +107,7 @@
               <li>開けたら <strong>F12 → Console タブ</strong>を開いて次の1行を打ち込んでみる:
                 <pre><code>document.getElementById("message").textContent = "書き換わった！";</code></pre>
               </li>
+              <li>コピー＆ペーストで貼り付けると、初めて Console を使う場合はブラウザの自己防衛機能（<strong>self-XSS対策</strong>）が働き、貼り付けがブロックされて「<code>allow pasting</code> と入力してください」という警告が出ることがある。その場合は入力欄に半角で <code>allow pasting</code> と打ち込んで Enter を押すと、以降は普通に貼り付けできるようになる<!-- 公式情報確認: 2026-07-07, developer.chrome.com/blog/self-xss --></li>
               <li>Enter を押した瞬間、<strong>ページの見出しがコードを保存し直さなくても変わる</strong>ことを確認——これが「JavaScriptからHTMLを直接操作する」体験そのもの</li>
               <li><code>id="message"</code> の要素を <code>document.getElementById("message")</code> で<strong>掴んで</strong>、<code>.textContent = "..."</code> で<strong>中身を差し替える</strong>、の2ステップだけで書き換えが起きている</li>
             </ul>
