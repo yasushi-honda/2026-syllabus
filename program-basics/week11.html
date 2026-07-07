@@ -94,14 +94,28 @@
   }
 }</code></pre>
               </li>
-              <li>気づくこと: <code>document.getElementById</code>（要素を探す）・<code>document.createElement</code>（要素を作る）・<code>li.textContent</code>（中身を書く）・<code>ul.appendChild</code>（つなげる）——<strong>すでに4つのDOM操作を第9回・第10回で使っていた</strong></li>
+              <li>気づくこと: <code>document.getElementById</code>（要素を探す）・<code>document.createElement</code>（要素を作る）・<code>li.textContent</code>（中身を書く）・<code>ul.appendChild</code>（つなげる）——<strong>すでに4つのDOM操作を第9回・第10回で使っていた</strong>。特に <code>createElement</code> で <code>&lt;li&gt;</code> を<strong>作っただけ</strong>ではまだ画面に何も現れず、最後に <code>ul.appendChild(li)</code> で <code>ul</code>（親）につなげて初めて表示される点に注意——「作る」と「つなげる」は<strong>別の操作</strong></li>
               <li>今日名前を付ける: この「<strong>HTMLがブラウザの中でJavaScriptから触れる木の形</strong>」を <strong>DOM（Document Object Model）</strong>と呼ぶ。<code>document</code> という単語は「この木の根っこ」を指している</li>
             </ul>
             <p><strong><code>textContent</code> だけで書き換える実験（15分）</strong></p>
             <ul>
-              <li>新規ファイル <code>click-game.html</code> を作り、次の最小限のHTMLを書く（<strong><code>&lt;meta charset="UTF-8"&gt;</code> を忘れると日本語が文字化けするので必ず入れる</strong>）:
-                <pre><code>&lt;meta charset="UTF-8"&gt;
-&lt;h1 id="message"&gt;まだ何もしていません&lt;/h1&gt;</code></pre>
+              <li>新規ファイル <code>click-game.html</code> を作る。第9回の <code>list.html</code> と同じく、<strong><code>&lt;!DOCTYPE html&gt;</code> から書く骨組み</strong>を省略しない（<code>&lt;head&gt;</code> 内の <code>&lt;meta charset="UTF-8"&gt;</code> を忘れると日本語が文字化けするので必ず入れる）:
+                <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="ja"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;クリックゲーム&lt;/title&gt;
+  &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1 id="message"&gt;まだ何もしていません&lt;/h1&gt;
+
+  &lt;script&gt;
+    // ここに JavaScript を書く（1限後半で書き足していく）
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
               </li>
               <li>保存して開く: <code>game.html</code> を表示している Simple Browser のタブの<strong>アドレスバーの末尾だけ</strong> <code>/click-game.html</code> に書き換えて Enter（サーバーは前半の振り返りで起動済みなのでポート番号はそのまま）。まだ <code>index.html</code> にリンクはないので、この方法で直接開く</li>
               <li>開けたら <strong>F12 → Console タブ</strong>を開いて次の1行を打ち込んでみる:
@@ -126,20 +140,25 @@
           <div class="timeline-body">
             <p><strong><code>addEventListener</code> の基本構文（15分）</strong></p>
             <ul>
-              <li><code>click-game.html</code> に<strong>ボタン</strong>を1つ追加:
+              <li><code>click-game.html</code> の <code>&lt;h1&gt;</code> の下に<strong>ボタン</strong>を1つ追加する。ボタンにも <code>id="my-button"</code> を付けておく——<code>id="message"</code> と同じで、後で JavaScript から<strong>掴むための目印</strong>になる:
                 <pre><code>&lt;h1 id="message"&gt;まだ何もしていません&lt;/h1&gt;
 &lt;button id="my-button"&gt;押してみる&lt;/button&gt;</code></pre>
               </li>
-              <li><code>&lt;script&gt;</code> に次のコードを書く:
+              <li>テンプレートに用意しておいた <code>&lt;script&gt;</code> の中身（コメント行）を、次のコードに置き換える:
                 <pre><code>function handleClick() {
   document.getElementById("message").textContent = "押されました！";
 }
 
 const button = document.getElementById("my-button");
 button.addEventListener("click", handleClick);</code></pre>
+                上から順に<strong>3つの部品</strong>でできている:
+                <ol>
+                  <li><code>function handleClick() { ... }</code> — ボタンが押されたときに<strong>やってほしい処理</strong>をひとまとめにした関数。中身は今日の最初にやった <code>textContent</code> の書き換えと同じ</li>
+                  <li><code>const button = document.getElementById("my-button");</code> — <code>id="my-button"</code> の要素を<strong>掴んで</strong> <code>button</code> という変数に入れておく。今日の前半で <code>message</code> を掴んだのと同じやり方</li>
+                  <li><code>button.addEventListener("click", handleClick);</code> — 掴んだ <code>button</code> に「<strong><code>click</code>（クリック）されたら <code>handleClick</code> を呼んでください</strong>」と<strong>予約</strong>する。1つ目の引数がイベントの種類（文字列 <code>"click"</code>）、2つ目の引数が<strong>呼び出したい関数そのもの</strong></li>
+                </ol>
               </li>
               <li>保存して Simple Browser を更新し、ボタンを押すたびに見出しが変わることを確認</li>
-              <li><code>addEventListener("click", handleClick)</code> の意味: 「<strong>この要素が click（クリック）されたら、<code>handleClick</code> という関数を呼び出してください</strong>」とブラウザに<strong>予約</strong>している</li>
             </ul>
             <p><strong>よくあるミス：カッコを付けて渡してしまう（10分）</strong></p>
             <ul>
@@ -150,7 +169,7 @@ button.addEventListener("click", handleClick());
 // OK: クリックされるたびに実行される
 button.addEventListener("click", handleClick);</code></pre>
               </li>
-              <li>理由: <code>handleClick()</code> と書くと<strong>その場で関数を呼び出した結果</strong>（今回は <code>undefined</code>）を渡してしまう。<code>addEventListener</code> には<strong>「呼び出さずに関数そのものを渡す」</strong>必要がある</li>
+              <li>コードの実行順で理由を追う: JavaScript は <code>(</code><code>)</code> を見た瞬間に<strong>その場で関数を実行</strong>する。<code>handleClick()</code> と書くと、ページが読み込まれた瞬間に <code>handleClick</code> が1回実行され、その<strong>戻り値</strong>（<code>handleClick</code> は <code>return</code> していないので <code>undefined</code>）が <code>addEventListener</code> の2つ目の引数として渡ってしまう。<code>addEventListener</code> が本当に必要としているのは「<strong>クリックされた瞬間に呼び出す関数そのもの</strong>」であって「関数を1回実行した結果」ではない——だからカッコを付けると壊れる</li>
               <li>実際に <code>handleClick()</code> と書き換えて動かし、「1回だけ実行されてクリックしても反応しない」を<strong>自分の目で確認</strong>してから正しい形に戻す</li>
             </ul>
             <p><strong>クリックカウンターを作る（25分）</strong></p>
@@ -165,9 +184,14 @@ function handleClick() {
 
 const button = document.getElementById("my-button");
 button.addEventListener("click", handleClick);</code></pre>
+                コードの読み方:
+                <ul>
+                  <li><code>let count = 0;</code> を <code>function</code> の<strong>外側</strong>で宣言している点に注意——関数の中で宣言すると、クリックのたびに <code>count</code> が 0 に戻ってしまい数えられない。また <code>const</code> ではなく <code>let</code> を使うのは、<code>count</code> はクリックのたびに値を書き換える（<strong>再代入</strong>する）変数だから（<code>button</code> は書き換えないので <code>const</code> のまま）</li>
+                  <li><code>count = count + 1;</code> — 「今の <code>count</code> の値に 1 を足して、その結果をもう一度 <code>count</code> に入れ直す」という意味。右辺（古い値 + 1）を先に計算してから、左辺の <code>count</code> に代入し直している</li>
+                  <li><code>"押した回数: " + count + " 回"</code> — 文字列と数値を <code>+</code> でつなげると、数値が自動的に文字列に変換されて<strong>1つの文字列</strong>になる（<code>count</code> が <code>3</code> なら <code>"押した回数: 3 回"</code>）</li>
+                </ul>
               </li>
               <li>保存して Simple Browser を更新。ボタンを連打して回数が増えていくことを確認</li>
-              <li><code>let count = 0;</code> を <code>function</code> の<strong>外側</strong>で宣言している点に注意——関数の中で宣言すると、クリックのたびに <code>count</code> が 0 に戻ってしまい数えられない</li>
               <li>時間が余った人は、<code>count</code> が <strong>10 の倍数</strong>になったら <code>message</code> の文字を変える（<code>if</code> 文の復習、第7回参照）などアレンジしてよい</li>
             </ul>
           </div>
@@ -201,10 +225,16 @@ function handleRoll() {
 
 const rollButton = document.getElementById("my-button");
 rollButton.addEventListener("click", handleRoll);</code></pre>
+                コードの読み方（第10回からの変化点）:
+                <ul>
+                  <li><code>function rollDice() { ... }</code> — 第10回でそのまま作った関数。<code>Math.floor(Math.random() * 6) + 1</code> で 1〜6 のランダムな整数を1つ<strong>戻り値として返す</strong>だけで、画面には何も表示しない</li>
+                  <li><code>function handleRoll() { ... }</code> — クリックされたときに実行する新しい関数。中は2ステップ: ① <code>const result = rollDice();</code> で <code>rollDice()</code> を<strong>呼び出し</strong>、戻ってきた数字を <code>result</code> という変数に保存する。② その <code>result</code> を <code>"出た目: " + result</code> という文字列に組み立てて <code>textContent</code> で画面に書き込む</li>
+                  <li><code>const rollButton = ...</code> / <code>rollButton.addEventListener(...)</code> — 1限後半と同じ「掴んで→予約する」の2ステップ。関数名とボタンの変数名が変わっただけで構造は同じ</li>
+                </ul>
               </li>
               <li>ボタンの表示も <code>&lt;button id="my-button"&gt;サイコロを振る&lt;/button&gt;</code> に変更</li>
               <li>保存して Simple Browser を更新。押すたびに 1〜6 のランダムな目が表示されることを確認</li>
-              <li>第10回は <code>console.log</code> で結果を確認していたが、今日は<strong>結果を画面（DOM）に表示している</strong>点が進化ポイント</li>
+              <li>第10回は <code>console.log</code> で結果を確認していたが、今日は<strong>結果を画面（DOM）に表示している</strong>点が進化ポイント——<code>rollDice()</code> 自体は1文字も変えていないことに注目（<strong>関数は呼び出し方を変えるだけで別の場所でも再利用できる</strong>）</li>
             </ul>
             <p><strong><code>if</code> 文と組み合わせてスコアを付ける（30分）</strong></p>
             <ul>
@@ -230,11 +260,18 @@ function handleRoll() {
 
 const rollButton = document.getElementById("my-button");
 rollButton.addEventListener("click", handleRoll);</code></pre>
+                <code>handleRoll</code> の中身を上から順に追う:
+                <ol>
+                  <li><code>const result = rollDice();</code> — まずサイコロを振って結果を確定させる。この <code>result</code> を以降の判定と表示の両方で使い回す（<code>rollDice()</code> をもう一度呼ぶと<strong>別の目</strong>になってしまうので、1回だけ呼んで変数に保存するのがポイント）</li>
+                  <li><code>tries = tries + 1;</code> — クリックカウンターと同じ加算代入。6が出ても出なくても、クリックされたら必ず1増える</li>
+                  <li><code>if (result === 6) { score = score + 1; }</code> — <code>result</code> がちょうど <code>6</code> のときだけ、中の <code>score = score + 1;</code> が実行される。6以外なら <code>if</code> の中は<strong>スキップ</strong>され、<code>score</code> は変わらない</li>
+                  <li><code>"出た目: " + result + "（" + tries + "回目、得点: " + score + "）"</code> — クリックカウンターの文字列連結と同じ仕組みを、変数3つ分に拡張しただけ</li>
+                </ol>
               </li>
               <li>保存して Simple Browser を更新。何度もクリックして、<strong>6 が出たときだけ得点が増える</strong>ことを確認</li>
               <li>確認ポイント:
                 <ul>
-                  <li><code>tries</code>・<code>score</code> はどちらも <code>handleRoll</code> の<strong>外側</strong>で宣言——クリックカウンターと同じ理由</li>
+                  <li><code>tries</code>・<code>score</code> はどちらも <code>handleRoll</code> の<strong>外側</strong>で宣言——クリックカウンターと同じ理由（関数の中で宣言すると毎回リセットされてしまう）</li>
                   <li><code>if (result === 6)</code> は第7回で書いた条件分岐そのもの——DOM操作の中でも普通に使える</li>
                   <li>「<strong>関数（<code>rollDice</code>）</strong>」「<strong>条件分岐（<code>if</code>）</strong>」「<strong>DOM操作（<code>textContent</code>）</strong>」「<strong>イベント（<code>addEventListener</code>）</strong>」——第6〜11回の要素が1つの画面に全部つながった</li>
                 </ul>
