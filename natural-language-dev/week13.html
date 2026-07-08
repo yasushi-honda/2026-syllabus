@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第13回 責任あるAI開発 | 自然言語開発</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+  <!-- 公式情報確認: 2026-07-08 (anthropic.com/constitution — Claude's Constitution 本文・CC0 1.0 Deed 表記 / anthropic.com/news/claude-new-constitution — 発表記事 / creativecommons.org/publicdomain/zero/1.0 — CC0 1.0 Deed 公式 / digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai — EU AI Act の現況・Digital Omnibus による高リスクAIシステム義務の延期 / ai-act-service-desk.ec.europa.eu/.../timeline-implementation-eu-ai-act — 段階的施行の適用開始日一覧 / bunka.go.jp/seisaku/chosakuken/aiandcopyright.html — 文化庁「AIと著作権について」) -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev.html">自然言語開発</a>
+        <span>/</span>
+        <span>第13回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">責任あるAI<wbr>開発</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 13</span>
+            <span class="page-badge">木曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">第10〜12回のSDD実践プロジェクトでは「仕様通りに動くか」「テストが緑か」を評価軸にしてきたが、本日はそれとは別の軸——<strong>倫理的に妥当か</strong>、<strong>規制上のリスクがないか</strong>、<strong>著作権・ライセンス上の論点を理解しているか</strong>——で進級制作のAIコードを見直す。教材は Anthropic の<strong>Claude's Constitution</strong>（CC0で公開された文書）。あわせて<strong>EU AI Act</strong>に代表されるAI規制の動向と、<strong>AI生成コードの著作権・ライセンス問題</strong>を扱う</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">Claude's Constitution（CC0） / Helpfulness / Anthropic's guidelines / Claude's ethics / Hard constraints on behavior / EU AI Act / 禁止されるAI慣行 / GPAIモデルの義務 / 高リスクAIシステム / 文化庁「AIと著作権に関する考え方について」 / 著作権法第30条の4 / ライセンス汚染 / 「責任あるコード」</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">進級制作リポジトリに Codespaces でアクセスできる状態／第10〜12回で作成した <code>spec.md</code>・<code>docs/tech-debt.md</code>・ADR に目を通せる状態／自分と AI とのやりとりの記録（<code>git log</code> や agy/Antigravity CLI とのセッション記録）を振り返れる状態</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>Claude's Constitution の4本柱（<strong>Helpfulness</strong> / <strong>Anthropic's guidelines</strong> / <strong>Claude's ethics</strong> / <strong>Hard constraints on behavior</strong>）を読み、自分が進級制作でAIに委ねた判断がどの柱に関わるかを議論できる</li>
+        <li>Claude's Constitution が<strong>Creative Commons CC0 1.0 Deed</strong>で公開されている事実と、その意味（誰でも許可なく自由に使える）を説明できる</li>
+        <li>EU AI Actが「禁止されるAI慣行」「GPAIモデルの義務」「高リスクAIシステムの義務」という<strong>段階を踏んで施行されてきた／されつつある枠組み</strong>であることを理解し、自分の進級制作にAI規制が関わりうる機能がないか照らし合わせる</li>
+        <li>AI生成コードの著作権・ライセンス問題を「学習データ由来のライセンス汚染」「生成物の著作物性」の2つの論点に分けて整理し、断定を避けて「なぜ議論になっているか」を説明できる</li>
+        <li>進級制作コードを対象に倫理・法的観点のチェックリストを作成し、<code>docs/responsible-ai-week13.md</code> に記録する</li>
+        <li>本日の確認結果と先送り事項をADRに追記する</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>通年テーマ「責任あるコード」を三つの新しい観点で見直す</h2>
+      <div class="lesson-tip">
+        <strong>ここまでの「責任あるコード」の系譜:</strong> 第1回で出会った「責任あるコード」は、第7回（異常系・境界値を書く責任）→第8回（サービス終了への備えを仕組みに落とす責任）→第9回（公式情報をAIに信頼させる責任）と具体例を重ね、第10〜12回のSDD実践プロジェクトでは仕様・テスト・負債・セキュリティの検証として実践してきた。本日はその延長線上で、「動くこと」だけでは測れない<strong>倫理・規制・著作権</strong>という3つの観点から進級制作のAIコードを見直す。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続(90分 + 90分 = 計180分)。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>「責任あるコード」を振り返る → 本日の3つの観点を導入する</h3>
+          <div class="timeline-body">
+            <p><strong>これまでの振り返り(15分)</strong></p>
+            <ul>
+              <li>第1回で出会った「責任あるコード」の系譜を1分ずつ振り返る: 第7回（異常系・境界値）／第8回（サービス終了への備え）／第9回（公式情報の信頼）／第10〜12回（SDD実践プロジェクトでの仕様・品質・負債・セキュリティの検証）</li>
+              <li>ここまでの評価軸は一貫して「動くか」「仕様通りか」だった。本日はそれとは別の3つの軸を導入する: ①<strong>倫理的に妥当か</strong>（Claude's Constitution）②<strong>規制上のリスクがないか</strong>（EU AI Act）③<strong>著作権・ライセンス上の論点を理解しているか</strong></li>
+            </ul>
+            <p><strong>進級制作のAIとのやりとりを振り返る(25分)</strong></p>
+            <ul>
+              <li>各自 <code>git log</code> や agy（Antigravity CLI）とのセッション記録を開き、「AIにどんな判断を任せたか」を5つ以上リストアップする（例: 変数名の付け方／エラーメッセージの文言／どのライブラリを使うか／UIのデザイン／セキュリティに関わる実装の詳細）</li>
+              <li>リストの中から「もしAIの判断が間違っていたら困る」ものを2〜3個選び、近くの人と共有する</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>今日の視点:</strong> これまでの回は「AIが生成したコードは正しく動くか」を検証してきた。今日は「AIが生成したコードは、動く以外の意味でも問題ないか」を検証する回。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>Claude's Constitution（CC0）を読む → 進級制作のAI判断を倫理的観点で議論する</h3>
+          <div class="timeline-body">
+            <p><strong>Claude's Constitution とは何か(15分)</strong></p>
+            <ul>
+              <li>Anthropic 公式（<code>anthropic.com/constitution</code>）は、この文書を<strong>Claude's Constitution</strong>と呼び、<em>"Claude's constitution is a detailed description of Anthropic's intentions for Claude's values and behavior"</em>（Claudeの価値観と振る舞いに関するAnthropicの意図を詳細に説明したもの）と述べている。AIの訓練プロセスに直接関わる文書であることが明記されている</li>
+              <li>Anthropic はこの文書を<strong>Creative Commons CC0 1.0 Deed</strong>のもとで全文公開しており、公式には <em>"meaning it can be freely used by anyone for any purpose without asking for permission"</em>（誰でも許可なく自由に使えるという意味）と説明されている。CC0はパブリックドメイン相当のライセンスで、著作権を放棄する形式の1つ</li>
+              <li>構成は大きく4つ: <strong>Helpfulness</strong>（役に立つことの価値）／<strong>Anthropic's guidelines</strong>（Anthropicのガイドライン）／<strong>Claude's ethics</strong>（Claudeの倫理）／<strong>Hard constraints on behavior</strong>（行動に対する固い制約）</li>
+            </ul>
+            <p><strong>進級制作のAI判断を議論する(35分)</strong></p>
+            <ul>
+              <li>1限前半でリストアップした「AIに任せた判断」を、Claude's Constitution の4つの柱と照らし合わせる:
+                <ul>
+                  <li>その判断は<strong>Helpfulness</strong>（役に立つこと）を優先した結果ではないか</li>
+                  <li>その判断が学生・利用者に実害を与える可能性がある場合、<strong>Hard constraints</strong>（固い制約）に相当する領域ではなかったか</li>
+                </ul>
+              </li>
+              <li>グループ（3〜4人）で「AIが生成したコードのうち、人間が責任を持って検証すべきだったのに見落としていたもの」を1つ選び、なぜ見落としたかを議論する</li>
+              <li>議論の結論を1〜2行でメモに残す（2限前半のADR追記の材料にする）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>公式が明示する立ち位置:</strong> Claude's Constitution は<strong>主にClaude自身に向けて書かれた文書</strong>であり、人間の開発者向けの利用規約ではない。それでも「AIがどんな価値観・優先順位で判断しているか」を知ることは、AIに何を任せてよいかを人間が判断するための材料になる。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>EU AI Actの段階的施行を知る → AI生成コードの著作権・ライセンス論点を整理する</h3>
+          <div class="timeline-body">
+            <p><strong>EU AI Actの規制動向(25分)</strong></p>
+            <ul>
+              <li>EU公式（<code>digital-strategy.ec.europa.eu</code>）は、EU AI Act（Regulation (EU) 2024/1689）を<strong>世界初の包括的なAI法制</strong>と位置づけ、2024年8月1日に発効したと説明している</li>
+              <li>施行は段階を踏んで進む枠組みとして設計されている（EU AI Act Service Desk 公式タイムライン基準）:
+                <ul>
+                  <li>2025年2月2日: 用語の定義・AIリテラシー関連規定、および<strong>禁止されるAI慣行</strong>の適用開始</li>
+                  <li>2025年8月2日: <strong>汎用目的AI（GPAI）モデル</strong>提供者の義務の適用開始</li>
+                  <li>2026年8月2日: 透明性義務や<strong>高リスクAIシステム</strong>（Annex III）関連規定を含む大半のルールの適用開始</li>
+                </ul>
+              </li>
+              <li>2026年6月29日、EU理事会は高リスクAIシステムの一部義務の適用時期を見直す「Digital Omnibus」を最終承認したと EU公式（<code>digital-strategy.ec.europa.eu</code>）が説明している。<strong>確認できた範囲では</strong>、単体で使われる高リスクAIシステム（Annex III、採用選考・与信審査・教育等が対象例）の義務は2027年12月2日へ、規制対象製品に組み込まれる高リスクAIシステム（Annex I、医療機器等）の義務は2028年8月2日へ、それぞれ延期される見通しが示されている（官報公示・正式発効は今後の手続きのため、期日は変更される可能性がある）</li>
+              <li>今日時点で確定しているのは<strong>「AI規制は段階的に施行が進んでいる最中」</strong>という事実。個々の期限は今後も見直される可能性があるため、進級制作でAI関連の機能を公開する際は、<strong>都度最新の公式情報を確認する習慣</strong>が重要</li>
+            </ul>
+            <p><strong>AI生成コードの著作権・ライセンス問題(25分)</strong></p>
+            <ul>
+              <li>論点1: <strong>学習データ由来のライセンス汚染</strong> — AIコード生成モデルは大量の公開コードを学習に使っており、生成されたコードが特定のOSSライセンス（GPL等）の条件を引き継いでしまう可能性が指摘されている。<strong>どの程度・どんな条件で引き継がれるかは議論が続いている論点であり、断定的な結論は出ていない</strong></li>
+              <li>論点2: <strong>生成物の著作物性</strong> — 「AIが生成したコードは誰の著作物か、そもそも著作物として保護されるか」という論点。日本の文化庁は「AIと著作権に関する考え方について」で、AI利用時の著作権法上の考え方の整理を進めており、<strong>開発・学習段階</strong>と<strong>生成・利用段階</strong>を分けて論じる枠組みを示している。<strong>本授業では文化庁の枠組みを議論の出発点として紹介するにとどめ、個々のケースの法的な断定は行わない</strong>（実務での判断は専門家に確認する）</li>
+              <li>進級制作での注意点として整理する:
+                <ul>
+                  <li>agy/Gemini CLI 等が生成したコードに、見慣れないライセンス表記のコメントやコピーライト表記が紛れ込んでいないか確認する習慣を持つ</li>
+                  <li>公開前に依存ライブラリのライセンス一覧を確認する（第12回の <code>npm audit</code> ・<code>docs/tech-debt.md</code> の棚卸しと同じ姿勢）</li>
+                </ul>
+              </li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>断定しないことも「責任あるコード」の一部:</strong> AI規制も著作権の考え方も、現在進行形で変化している領域。「今は分かっていない／議論中である」と正確に説明できることも、「知ったかぶりで断定する」より責任ある態度。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>進級制作コードを倫理・法的チェックリストと照合する</h3>
+          <div class="timeline-body">
+            <p><strong>チェックリストの作成と照合(30分)</strong></p>
+            <ul>
+              <li>新規ファイル <code>docs/responsible-ai-week13.md</code> を作成し、以下の3観点でチェックリストを作る:
+                <pre><code># 責任あるAI開発チェックリスト (Week13)
+
+## (1) 倫理 (Claude's Constitution の観点)
+- [ ] AIに任せた判断のうち、人間が検証すべきだったものを洗い出したか
+- [ ] Helpfulness優先で見落とされた安全面のリスクがないか
+
+## (2) 規制動向 (EU AI Act の観点)
+- [ ] 進級制作にAI関連の機能があるか、あるならどの区分に近いか
+- [ ] 個人情報・生体情報等、規制対象になりやすいデータを扱っていないか
+
+## (3) 著作権・ライセンス (文化庁の考え方の観点)
+- [ ] 依存ライブラリのライセンス一覧を確認したか
+- [ ] 生成コードに見慣れないライセンス表記が混入していないか
+</code></pre>
+              </li>
+              <li>各項目を実際に自分の進級制作リポジトリで確認し、チェックが付かない項目は<strong>先送り事項</strong>としてADRに書く（全部その場で解決しようとしない、第12回の技術的負債の扱いと同じ姿勢）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>チェックリストは1回で完成しなくてよい:</strong> 今日埋まらなかった項目は「まだ確認できていない」と正直に記録することが目的。第14回（プロジェクト最終仕上げ）までに1件でも解消できれば十分な進捗。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り＆次回予告</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>今日のキーワード: <strong>Claude's Constitution（CC0） / Helpfulness / Hard constraints on behavior / EU AI Act / 禁止されるAI慣行 / 高リスクAIシステム / 文化庁「AIと著作権に関する考え方について」 / ライセンス汚染 / <code>docs/responsible-ai-week13.md</code></strong></li>
+              <li>覚えてほしいこと:
+                <ul>
+                  <li>「動くコード」と「責任あるコード」は別の評価軸。本日学んだ倫理・規制・著作権の3観点は、公開前に一度は通すべきチェックポイント</li>
+                  <li>AI規制・著作権の考え方は変化し続ける領域。断定せず「今の時点で分かっていること」を確認する習慣を持つ</li>
+                </ul>
+              </li>
+              <li>「責任あるコード」第4の具体例: 倫理・規制・著作権の3観点でチェックリストを作った＝「動くだけでは足りないことを自覚し、公開前に立ち止まって確認する責任」</li>
+              <li>次回（第14回）: <strong>プロジェクト最終仕上げ</strong>。進級制作の最終調整・テスト・ドキュメント整備。発表準備。プロジェクト全体のADR・振り返りの記録</li>
+              <li>家での発展（任意）: <code>docs/responsible-ai-week13.md</code> の先送り事項のうち1件を実際に確認・修正する／Claude's Constitution の気になった箇所をもう一度読む</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>docs/responsible-ai-week13.md</code> を commit</strong>
+            <p>本日作成した倫理・規制・著作権の3観点チェックリストを、進級制作リポジトリに <strong>docs only の1 PR</strong> として squash merge まで持っていく。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>ADRに本日の確認結果と先送り事項を追記</strong>
+            <p>第10回・第12回で作成したADRの続き（例: <code>docs/adr/0003-week13-responsible-ai.md</code>）として、本日確認できたこと・先送りにしたことを記録する。上記タスクと同一PRでまとめて可。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>依存ライブラリのライセンス一覧を確認する</strong>
+            <p>進級制作の依存パッケージのライセンスを一覧化し、気になるもの（見慣れないライセンス・商用利用に制約があるもの等）があれば <code>docs/tech-debt.md</code> に追記する。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://www.anthropic.com/constitution" target="_blank" rel="noopener">Anthropic — Claude's Constitution</a> — 公式本文。CC0 1.0 Deed での公開表記と、Helpfulness / Anthropic's guidelines / Claude's ethics / Hard constraints on behavior の4本柱</li>
+        <li><a href="https://www.anthropic.com/news/claude-new-constitution" target="_blank" rel="noopener">Anthropic — Claude's new constitution</a> — 公開の背景と目的を説明する発表記事</li>
+        <li><a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener">Creative Commons — CC0 1.0 Deed</a> — Claude's Constitution が採用しているパブリックドメイン相当ライセンスの公式説明</li>
+        <li><a href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" target="_blank" rel="noopener">European Commission — AI Act | Shaping Europe's digital future</a> — EU AI Act の現況と、Digital Omnibus による高リスクAIシステム義務の延期について</li>
+        <li><a href="https://ai-act-service-desk.ec.europa.eu/en/ai-act/timeline/timeline-implementation-eu-ai-act" target="_blank" rel="noopener">EU AI Act Service Desk — Timeline for the Implementation of the EU AI Act</a> — 禁止AI慣行・GPAIモデル義務・高リスクAIシステム義務の適用開始日一覧</li>
+        <li><a href="https://www.bunka.go.jp/seisaku/chosakuken/aiandcopyright.html" target="_blank" rel="noopener">文化庁 — AIと著作権について</a> — 日本におけるAIと著作権に関する考え方の整理（開発・学習段階／生成・利用段階）</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week12.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第12回 SDD実践プロジェクト③：検証と改善</span>
+      </a>
+      <a href="../natural-language-dev.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">自然言語開発</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第14回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
