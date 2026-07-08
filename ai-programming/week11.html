@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第11回 「自分だけのAI」を育てる時間 | AI活用プログラミング基礎</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--orange">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-programming.html">AI活用プログラミング基礎</a>
+        <span>/</span>
+        <span>第11回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">「自分だけのAI」を<wbr>育てる時間</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 11</span>
+            <span class="page-badge">木曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">今回は<strong>新しいツールを学ぶ回ではない</strong>。第1〜10回で作ってきた<strong>Gem</strong>と<strong>NotebookLM の「自分専用 AI ノート」</strong>を、自分のペースで整理し直す<strong>個人作業時間</strong>。<strong>学習データ①〜④</strong>が全部揃っているかを確認し、抜けを埋め、<strong>ITパスポート対策ノート</strong>の宿題を仕上げ、自分のAIと対話しながら「育ってきたAI」の現在地を確かめる</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">自分のAIの<strong>現在地の棚卸し</strong>／<strong>学習データ①〜④</strong>の点検／ITパスポート対策ノートの<strong>仕上げ</strong>／NotebookLM の<strong>ソースを追加</strong>と<strong>引用番号</strong>／Gem と NotebookLM を<strong>使い分けて対話する</strong>／<strong>自分のペースで進める</strong></div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第2回で作った<strong>Gem</strong>が開ける状態／第3〜4回で作った NotebookLM の<strong>「自分専用 AI ノート」</strong>が開ける状態／<strong>【学習データ①〜④】</strong>（自己紹介シート・学習目標シート・プロンプトのコツまとめ・情報整理テクニック資料）のうち、家で追加していないものがあれば手元にある状態／第10回に作った<strong>「ITパスポート対策ノート」</strong>の Google ドキュメントが開ける状態</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>自分の<strong>Gem</strong>と<strong>NotebookLM「自分専用 AI ノート」</strong>に、今どんな情報が入っているかを自分の言葉で説明できる</li>
+        <li><strong>【学習データ①〜④】</strong>のうち、まだ NotebookLM に入れていないものがあれば追加し、全部揃った状態にする</li>
+        <li>第10回の宿題（対策ノートの「気になる用語」「自分がこれから学びたいこと」の追記）を仕上げ、<strong>見出しスタイルと箇条書き</strong>で整った状態にする</li>
+        <li>自分の<strong>Gem</strong>と<strong>NotebookLM</strong>それぞれに同じような質問を投げてみて、<strong>応答の違い</strong>を自分の言葉で説明できる</li>
+        <li>次に自分のAIに<strong>育てたいこと</strong>を1つ、自分のメモに書き残す</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>大事な前提（毎回投影しておく）</h2>
+      <div class="lesson-tip">
+        <strong>「今日は新しいことを覚える日ではない」:</strong> 第1回から第10回まで、Gem の作り方・NotebookLM の使い方・プロンプトの工夫・情報の整理のしかたと、たくさんの新しいことを学んできた。今日はその<strong>手を止めて、自分のAIを見直す日</strong>。新しいツールも、新しい学習データも登場しない。<br>
+        進み方は<strong>1人ひとり違ってよい</strong>。学習データを追加し終えている人は対話の時間を長くとってよいし、まだ整理が終わっていない人はそこにじっくり時間を使ってよい。今日のゴールは「全員が同じ場所まで進む」ことではなく、<strong>「自分のAIが今どんな状態か、自分で説明できるようになる」</strong>こと。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続(90分 + 90分 = 計180分)。途中休憩あり。<strong>今回は個人ワークのみ</strong>。机の上には Gem・NotebookLM・ITパスポート対策ノート（Google ドキュメント）を開けるノート PC を用意しておく。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>今日のねらいを確認する → 自分のAIの現在地を棚卸しする</h3>
+          <div class="timeline-body">
+            <p><strong>今日が個人作業の日であることを確認する(10分)</strong></p>
+            <ul>
+              <li>今日は<strong>新しいツール・新しい学習データが登場しない</strong>回であることを確認する。第1〜10回で作ってきたものを自分のペースで整理し直す時間</li>
+              <li>これまで作ってきたものを一覧で振り返る: <strong>Gem</strong>（第2回）／<strong>NotebookLM「自分専用 AI ノート」</strong>（第3〜4回）／<strong>学習データ①〜④</strong>（第3・4・5・10回）／<strong>ITパスポート対策ノート</strong>（第10回）</li>
+            </ul>
+            <p><strong>自分のAIの現在地を棚卸しする(20分)</strong></p>
+            <ul>
+              <li>次の4点を自分のメモ帳に箇条書きで書き出し、<strong>できている／まだの2択</strong>で自己チェックする:
+                <ul>
+                  <li>Gem に名前・性格・話し方が設定されているか</li>
+                  <li>NotebookLM の「自分専用 AI ノート」に<strong>学習データ①〜④</strong>が全部入っているか</li>
+                  <li>ITパスポート対策ノートに、第10回宿題の<strong>「気になる用語」の追記</strong>が入っているか</li>
+                  <li>ITパスポート対策ノートに、<strong>「自分がこれから学びたいこと」</strong>の見出しが入っているか</li>
+                </ul>
+              </li>
+              <li>「まだ」に丸が付いた項目が、今日の個人ワークで優先的に取り組む場所になる</li>
+            </ul>
+            <p><strong>今日の個人目標を1つ決める(10分)</strong></p>
+            <ul>
+              <li>棚卸しの結果から、<strong>今日重点的に取り組みたいこと</strong>を1つ選んでメモに書く（例: 「学習データ②が抜けているので追加する」「対策ノートの見出しを整理し直す」「Gem に色んな質問をしてみる」など）</li>
+              <li>目標は途中で変えてもよい。まず1つ書き出してから始める</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>NotebookLM のソースを点検し、ITパスポート対策ノートを仕上げる</h3>
+          <div class="timeline-body">
+            <p><strong>学習データ①〜④の点検(15分)</strong></p>
+            <ul>
+              <li>NotebookLM の「自分専用 AI ノート」を開き、ソース一覧を確認する</li>
+              <li><strong>【学習データ①】自己紹介シート／【学習データ②】学習目標シート／【学習データ③】プロンプトのコツまとめ／【学習データ④】情報整理テクニック資料</strong>が全部入っているか照合し、抜けているものがあれば「ソースを追加」から追加する</li>
+              <li>家で追加を済ませている人は、それぞれのソースの<strong>要約が自分の意図と合っているか</strong>を読み直す</li>
+            </ul>
+            <p><strong>ITパスポート対策ノートを仕上げる(20分)</strong></p>
+            <ul>
+              <li>第10回宿題で追記した<strong>「気になる用語」</strong>と<strong>「自分がこれから学びたいこと」</strong>のセクションを、Google ドキュメントで開いて見直す</li>
+              <li>まだ書けていない項目があれば、この時間で書き足す。追記するときは第10回で学んだ型を実践する:
+                <ul>
+                  <li><strong>見出しスタイル</strong>を使う（手動の大文字・太字にしない）</li>
+                  <li><strong>1セクションに1テーマ</strong>を守る</li>
+                  <li>並列の項目は<strong>箇条書き</strong>にする</li>
+                </ul>
+              </li>
+              <li>見出しを追加・変更したら、ドキュメント先頭の目次の<strong>「更新」</strong>ボタンを押して目次を最新化する</li>
+            </ul>
+            <p><strong>ソースを NotebookLM に反映して確認(15分)</strong></p>
+            <ul>
+              <li>対策ノートを書き直した人は、NotebookLM 側のソースが最新の内容を読み込んでいるか確認する（Google ドキュメントをソースにしている場合は自動的に最新版が参照される）</li>
+              <li>NotebookLM が表示する<strong>要約・キートピック</strong>が、自分が今書いた内容と合っているかを見比べる</li>
+              <li>ズレを感じたら、<strong>見出しの言葉をもっと具体的にする</strong>（第10回で学んだコツの実践）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>Gem と NotebookLM を使い分けながら自分のAIと対話する</h3>
+          <div class="timeline-body">
+            <p><strong>Gem との対話(15分)</strong></p>
+            <ul>
+              <li>自分の Gem を開き、今日整理した内容について質問を投げてみる（例: 「ITパスポートの気になる用語について、もっと詳しく教えて」）</li>
+              <li>自分が設定した<strong>性格・話し方</strong>が、応答のトーンにどう表れているかを観察する</li>
+            </ul>
+            <p><strong>NotebookLM との対話(20分)</strong></p>
+            <ul>
+              <li>NotebookLM のチャット欄で、同じような質問をソースに基づいて投げてみる</li>
+              <li>返ってきた応答の<strong>引用番号</strong>を1つ以上クリックし、どのソースのどの部分から来た答えかを確認する</li>
+              <li>気になった点があれば、続けて質問を重ねてみる（第5回で学んだプロンプトの工夫を思い出す）</li>
+            </ul>
+            <p><strong>Gem と NotebookLM の違いをメモに残す(15分)</strong></p>
+            <ul>
+              <li>2つの対話を振り返り、次の観点で気付いたことを自分のメモに書く:
+                <ul>
+                  <li>Gem の応答は<strong>キャラの個性</strong>がどう出ていたか</li>
+                  <li>NotebookLM の応答は<strong>引用番号</strong>でどこまで裏付けを追えたか</li>
+                  <li>同じ質問でも、どちらが今の自分に役立つ答え方だったか</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>近くの人と進捗を共有し、次に育てたいことを決める</h3>
+          <div class="timeline-body">
+            <p><strong>近くの人と進捗を共有する(15分)</strong></p>
+            <ul>
+              <li>近くの人と2人ペアになり、次の2点を<strong>3分ずつ口頭で共有</strong>する:
+                <ul>
+                  <li>今日の個人目標に対して、どこまで進んだか</li>
+                  <li>Gem と NotebookLM のどちらが今の自分に合っていると感じたか</li>
+                </ul>
+              </li>
+              <li>相手の話を聞いて「自分も試してみたい」と思ったことがあれば、自分のメモに1行追加する</li>
+            </ul>
+            <p><strong>次に育てたいことを決める(15分)</strong></p>
+            <ul>
+              <li>第12回から始まる<strong>個人テーマを決めよう</strong>に向けて、自分のAIにこれから<strong>追加したい情報</strong>や<strong>試したいこと</strong>を1つ、自分のメモに書き残す（例: 「好きなアニメについての資料を追加したい」「もっと踏み込んだ質問の仕方を試したい」など）</li>
+              <li>この1つが、次回以降の個人課題の出発点になる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り&次回予告</h3>
+          <div class="timeline-body">
+            <p><strong>口頭での全体振り返り(7分)</strong></p>
+            <ul>
+              <li>講師の問いかけで挙手:
+                <ul>
+                  <li>「<strong>学習データ①〜④が全部揃った人?</strong>」</li>
+                  <li>「<strong>ITパスポート対策ノートの宿題を仕上げられた人?</strong>」</li>
+                  <li>「<strong>Gem と NotebookLM の両方に同じような質問をしてみた人?</strong>」</li>
+                  <li>「<strong>次に育てたいことを1つ決められた人?</strong>」</li>
+                </ul>
+              </li>
+              <li>講師から今日のキーワードを口頭で復習: <strong>自分のAIの現在地の棚卸し／学習データ①〜④の点検／対策ノートの仕上げ／Gem と NotebookLM の使い分け</strong></li>
+              <li>今日進み方が人によって違ったことは自然なこと。大事なのは<strong>「自分のAIが今どんな状態か、自分の言葉で説明できるようになった」</strong>かどうか</li>
+            </ul>
+            <p><strong>次回予告(3分)</strong></p>
+            <ul>
+              <li><strong>第12回</strong>: 「<strong>個人テーマを決めよう</strong>」。自分が興味のあるテーマを1つ決め、自分のAIと壁打ちしながら知識を深める個人課題に着手する回</li>
+              <li>今日の最後に書いた「次に育てたいこと」のメモが、そのまま第12回のテーマ選びの候補になる</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>今日終わらなかった棚卸し項目を家で仕上げる</strong>
+            <p>今日のチェック（学習データ①〜④が揃っているか／対策ノートの宿題が仕上がっているか）で「まだ」が残っていたら、家で仕上げて第12回までに揃えておく。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>「次に育てたいこと」のメモを見返しておく</strong>
+            <p>今日の授業の最後に書いた「次に育てたいこと」のメモを、家でもう1度読み返し、第12回で個人テーマを決めるときにすぐ話せるように準備しておく。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>Gem か NotebookLM のどちらかに、家でもう1つ質問を投げてみる</strong>
+            <p>今日の授業で試した質問以外に、自分が気になっていることを1つ、Gem か NotebookLM に質問してみる。応答の質が、これまで整理してきた情報の量とどう関係しているかを感じてみる。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="week02.html" class="week-link">第2回 自分だけのAIキャラをつくろう（Gem入門）</a> — 今日 Gem との対話で振り返った、性格・話し方の設定手順の初出</li>
+        <li><a href="week03.html" class="week-link">第3回 NotebookLM入門——自分用のノートブックを作ろう</a> — 「自分専用 AI ノート」とソース追加の基本操作</li>
+        <li><a href="week04.html" class="week-link">第4回 NotebookLMで「自分だけのAI」を本格化</a> — 【学習データ②】学習目標シートと、NotebookLM の資料蓄積の考え方</li>
+        <li><a href="week05.html" class="week-link">第5回 プロンプトの基本</a> — 今日の対話で使った、質問の工夫の基本</li>
+        <li><a href="week10.html" class="week-link">第10回 情報の構造化とAI育成</a> — 今日仕上げた「ITパスポート対策ノート」と見出しスタイルの型の初出</li>
+        <li><a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini（Google）</a> — 今日の Gem との対話で開く画面</li>
+        <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM（Google）</a> — 今日の「自分専用 AI ノート」を開く画面</li>
+        <li><a href="https://support.google.com/notebooklm/answer/16179559?hl=ja" target="_blank" rel="noopener">NotebookLM でチャットを使用する（公式ヘルプ）</a> — 今日確認した<strong>引用番号</strong>のしくみの公式説明</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week10.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第10回 情報の構造化とAI育成</span>
+      </a>
+      <a href="../ai-programming.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AI活用プログラミング基礎</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第12回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>

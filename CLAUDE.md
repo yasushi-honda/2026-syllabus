@@ -66,6 +66,7 @@ ai-programming/         # AI活用プログラミング基礎の各回詳細ペ�
   week08.html           #   第8回 🎤 中間共有会
   week09.html           #   第9回 AIの能力と限界を知る
   week10.html           #   第10回 情報の構造化とAI育成
+  week11.html           #   第11回 「自分だけのAI」を育てる時間
 java-basics-1.html      # Java基礎I（土曜前期）
 java-basics-2.html      # Java基礎II（土曜前期）
 java-spring.html        # Javaフレームワーク（土曜後期）
