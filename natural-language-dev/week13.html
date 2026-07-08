@@ -45,7 +45,7 @@
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">Claude's Constitution（CC0） / Being helpful / Following Anthropic's guidelines / Being broadly ethical / Hard constraints on behavior / EU AI Act / 禁止されるAI慣行 / GPAIモデルの義務 / 高リスクAIシステム / 文化庁「AIと著作権に関する考え方について」 / 著作権法第30条の4 / ライセンス汚染 / 「責任あるコード」</div>
+          <div class="lesson-overview-value">Claude's Constitution（CC0） / Being broadly safe / Being broadly ethical / Following Anthropic's guidelines / Being helpful / Hard constraints on behavior / EU AI Act / 禁止されるAI慣行 / GPAIモデルの義務 / 高リスクAIシステム / 文化庁「AIと著作権に関する考え方について」 / 著作権法第30条の4 / ライセンス汚染 / 「責任あるコード」</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
@@ -57,7 +57,7 @@
     <div class="syllabus-section">
       <h2>この回のゴール</h2>
       <ul>
-        <li>Claude's Constitution の3つの柱（<strong>Being helpful</strong> / <strong>Following Anthropic's guidelines</strong> / <strong>Being broadly ethical</strong>）と、その中の<strong>Hard constraints on behavior</strong>（行動に対する固い制約）を読み、自分が進級制作でAIに委ねた判断がどの部分に関わるかを議論できる</li>
+        <li>Claude's Constitution の4つの優先順位（<strong>Being broadly safe</strong> / <strong>Being broadly ethical</strong> / <strong>Following Anthropic's guidelines</strong> / <strong>Being helpful</strong>、対立時はこの順に優先するとAnthropic公式が明示）と、<strong>Being broadly ethical</strong>の中の<strong>Hard constraints on behavior</strong>（行動に対する固い制約）を読み、自分が進級制作でAIに委ねた判断がどの部分に関わるかを議論できる</li>
         <li>Claude's Constitution が<strong>Creative Commons CC0 1.0 Deed</strong>で公開されている事実と、その意味（誰でも許可なく自由に使える）を説明できる</li>
         <li>EU AI Actが「禁止されるAI慣行」「GPAIモデルの義務」「高リスクAIシステムの義務」という<strong>段階を踏んで施行されてきた／されつつある枠組み</strong>であることを理解し、自分の進級制作にAI規制が関わりうる機能がないか照らし合わせる</li>
         <li>AI生成コードの著作権・ライセンス問題を「学習データ由来のライセンス汚染」「生成物の著作物性」の2つの論点に分けて整理し、断定を避けて「なぜ議論になっているか」を説明できる</li>
@@ -113,13 +113,16 @@
             <ul>
               <li>Anthropic 公式（<code>anthropic.com/constitution</code>）は、この文書を<strong>Claude's Constitution</strong>と呼び、<em>"Claude's constitution is a detailed description of Anthropic's intentions for Claude's values and behavior"</em>（Claudeの価値観と振る舞いに関するAnthropicの意図を詳細に説明したもの）と述べている。AIの訓練プロセスに直接関わる文書であることが明記されている</li>
               <li>Anthropic はこの文書を<strong>Creative Commons CC0 1.0 Deed</strong>のもとで全文公開しており、公式には <em>"meaning it can be freely used by anyone for any purpose without asking for permission"</em>（誰でも許可なく自由に使えるという意味）と説明されている。CC0はパブリックドメイン相当のライセンスで、著作権を放棄する形式の1つ</li>
-              <li>構成は大きく3つの柱: <strong>Being helpful</strong>（役に立つこと）／<strong>Following Anthropic's guidelines</strong>（Anthropicのガイドラインに従うこと）／<strong>Being broadly ethical</strong>（広く倫理的であること）。このうち<strong>Being broadly ethical</strong>の中に、状況によらず越えない一線を定めた<strong>Hard constraints on behavior</strong>（行動に対する固い制約）というサブセクションがある</li>
+              <li>Anthropic公式（発表記事 <code>anthropic.com/news/claude-new-constitution</code>）は、Claudeが重視すべき性質として <strong>Being broadly safe</strong>（広く安全であること）／<strong>Being broadly ethical</strong>（広く倫理的であること）／<strong>Following Anthropic's guidelines</strong>（Anthropicのガイドラインに従うこと）／<strong>Being helpful</strong>（本当に役に立つこと）の4つを挙げ、対立が生じた場合は<strong>この順番で優先する</strong>と明示している（公式原文: <em>"In cases of apparent conflict, Claude should generally prioritize these properties in the order in which they are listed."</em>）</li>
+              <li><strong>Being broadly safe</strong>は、人間がAIの行動を監督・修正する能力を損なわないことを扱うセクション。なぜ安全性を倫理よりも先に置くのか、公式は<em>"not because we think safety is ultimately more important than ethics, but because current models can make mistakes or behave in harmful ways due to mistaken beliefs, flaws in their values, or limited understanding of context"</em>（安全性が倫理より根本的に重要だからではなく、現在のモデルは誤った信念・価値観の欠陥・状況理解の限界によって誤った行動をとりうるため）と説明している</li>
+              <li>4つのうち<strong>Being broadly ethical</strong>の中には、状況によらず越えない一線を定めた<strong>Hard constraints on behavior</strong>（行動に対する固い制約）というサブセクションがある</li>
             </ul>
             <p><strong>進級制作のAI判断を議論する(35分)</strong></p>
             <ul>
-              <li>1限前半でリストアップした「AIに任せた判断」を、Claude's Constitution の柱と照らし合わせる:
+              <li>1限前半でリストアップした「AIに任せた判断」を、Claude's Constitution の4つの優先順位と照らし合わせる:
                 <ul>
                   <li>その判断は<strong>Being helpful</strong>（役に立つこと）を優先した結果ではないか</li>
+                  <li>その判断は<strong>Being broadly safe</strong>（人間による監督・修正の余地）を狭めていないか</li>
                   <li>その判断が学生・利用者に実害を与える可能性がある場合、<strong>Hard constraints on behavior</strong>（固い制約）に相当する領域ではなかったか</li>
                 </ul>
               </li>
@@ -191,6 +194,7 @@
 ## (1) 倫理 (Claude's Constitution の観点)
 - [ ] AIに任せた判断のうち、人間が検証すべきだったものを洗い出したか
 - [ ] Being helpful（役に立つこと）優先で見落とされた安全面のリスクがないか
+- [ ] Being broadly safe（人間による監督・修正の余地）を狭めるような、AIの判断を無条件に受け入れた箇所がないか
 
 ## (2) 規制動向 (EU AI Act の観点)
 - [ ] 進級制作にAI関連の機能があるか、あるならどの区分に近いか
@@ -217,7 +221,7 @@
           <h3>振り返り＆次回予告</h3>
           <div class="timeline-body">
             <ul>
-              <li>今日のキーワード: <strong>Claude's Constitution（CC0） / Being helpful / Being broadly ethical / Hard constraints on behavior / EU AI Act / 禁止されるAI慣行 / 高リスクAIシステム / 文化庁「AIと著作権に関する考え方について」 / ライセンス汚染 / <code>docs/responsible-ai-week13.md</code></strong></li>
+              <li>今日のキーワード: <strong>Claude's Constitution（CC0） / Being broadly safe / Being broadly ethical / Following Anthropic's guidelines / Being helpful / Hard constraints on behavior / EU AI Act / 禁止されるAI慣行 / 高リスクAIシステム / 文化庁「AIと著作権に関する考え方について」 / ライセンス汚染 / <code>docs/responsible-ai-week13.md</code></strong></li>
               <li>覚えてほしいこと:
                 <ul>
                   <li>「動くコード」と「責任あるコード」は別の評価軸。本日学んだ倫理・規制・著作権の3観点は、公開前に一度は通すべきチェックポイント</li>
@@ -264,8 +268,8 @@
     <div class="syllabus-section">
       <h2>参考リンク</h2>
       <ul>
-        <li><a href="https://www.anthropic.com/constitution" target="_blank" rel="noopener">Anthropic — Claude's Constitution</a> — 公式本文。CC0 1.0 Deed での公開表記と、Being helpful / Following Anthropic's guidelines / Being broadly ethical の3つの柱、およびそのサブセクション Hard constraints on behavior</li>
-        <li><a href="https://www.anthropic.com/news/claude-new-constitution" target="_blank" rel="noopener">Anthropic — Claude's new constitution</a> — 公開の背景と目的を説明する発表記事</li>
+        <li><a href="https://www.anthropic.com/constitution" target="_blank" rel="noopener">Anthropic — Claude's Constitution</a> — 公式本文。CC0 1.0 Deed での公開表記と、Being broadly safe / Being broadly ethical / Following Anthropic's guidelines / Being helpful の4つの優先順位、およびBeing broadly ethicalのサブセクション Hard constraints on behavior</li>
+        <li><a href="https://www.anthropic.com/news/claude-new-constitution" target="_blank" rel="noopener">Anthropic — Claude's new constitution</a> — 公開の背景と目的、4つの優先順位（安全性を倫理より一時的に優先する理由を含む）を説明する発表記事</li>
         <li><a href="https://creativecommons.org/publicdomain/zero/1.0/" target="_blank" rel="noopener">Creative Commons — CC0 1.0 Deed</a> — Claude's Constitution が採用しているパブリックドメイン相当ライセンスの公式説明</li>
         <li><a href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai" target="_blank" rel="noopener">European Commission — AI Act | Shaping Europe's digital future</a> — EU AI Act の現況と、Digital Omnibus による高リスクAIシステム義務の延期について</li>
         <li><a href="https://ai-act-service-desk.ec.europa.eu/en/ai-act/timeline/timeline-implementation-eu-ai-act" target="_blank" rel="noopener">EU AI Act Service Desk — Timeline for the Implementation of the EU AI Act</a> — 禁止AI慣行・GPAIモデル義務・高リスクAIシステム義務の適用開始日一覧</li>
