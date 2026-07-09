@@ -55,6 +55,7 @@ natural-language-dev/   # 自然言語開発の各回詳細ページ
   week11.html           #   第11回 SDD実践プロジェクト②：実装
   week12.html           #   第12回 SDD実践プロジェクト③：検証と改善
   week13.html           #   第13回 責任あるAI開発
+  fe-exam-ai-study.html #   コラム（授業回外）基本情報技術者試験×AI学習法
 ai-programming.html     # AI活用プログラミング基礎（木3・4限）※AIコミュ基礎と共通ベース
 ai-programming/         # AI活用プログラミング基礎の各回詳細ページ
   week01.html           #   第1回 オリエンテーション＆AIってなんだろう？
