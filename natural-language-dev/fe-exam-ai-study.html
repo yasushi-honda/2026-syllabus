@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=4">
-  <!-- 公式情報確認: 2026-07-09 (ipa.go.jp/shiken/kubun/fe.html — 基本情報技術者試験の試験概要・科目A/B構成・CBT方式随時実施 / ipa.go.jp/shiken/mondai-kaiotu/index.html — 過去問題・解答例公開ページ) -->
+  <!-- 公式情報確認: 2026-07-09 (ipa.go.jp/shiken/kubun/fe.html — 基本情報技術者試験の試験概要・科目A/B構成・CBT方式随時実施 / ipa.go.jp/shiken/mondai-kaiotu/index.html — 過去問題・解答例公開ページ / support.google.com/notebooklm/answer/16958963 — フラッシュカード・クイズ生成機能 / support.google.com/notebooklm/answer/16212820 — 音声解説機能の所要時間・精度注意書き) -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -48,6 +48,7 @@
         <li><strong>過去問演習の伴走をさせる</strong> — IPA公式サイトで公開されている過去問題・解答例をAIに読み込ませ、間違えた問題について「なぜその選択肢を選んでしまったか」を自分の言葉で説明し、AIに壁打ち相手として指摘してもらう。間違えた問題を1問ずつ解説させるより、<strong>複数回分の誤答を並べて「自分の弱い分野のパターン」を言語化させる</strong>使い方が、コンテキストエンジニアリングの実践例になる</li>
         <li><strong>用語・知識の定着に使う</strong> — 頻出用語をAIに説明させ、それを自分の言葉に言い換えて再度AIに確認してもらう。一問一答形式のQ&Aリストを作らせて、通学時間などの隙間時間に見返す</li>
         <li><strong>科目Bの問題を対話で読み解く</strong> — 基本情報技術者試験は<strong>科目A（90分・60問）</strong>と<strong>科目B（100分・20問）</strong>の多肢選択式で構成される。科目Bの擬似言語によるアルゴリズム問題は、変数の値がどう変化していくかをAIとの対話で1行ずつトレースすると理解が深まる。第9回で学んだ「1ステップずつ」の対話作法がそのまま活きる場面</li>
+        <li><strong>NotebookLMで教材をまとめて学習補助教材にする</strong> — 手早く結果を出したい場合は<strong>NotebookLM</strong>も選択肢になる。IPA公式の過去問題PDFや自分のノートをソースとして読み込ませると、ソースの内容に基づいた<strong>フラッシュカード・クイズ・学習ガイド</strong>を自動生成できる（難易度は初級・中級・上級から選択可能）。通学時間には<strong>音声解説</strong>（AIホスト同士の対話形式、生成に数分かかることがある）を聞き流す使い方もできる。公式も「AIによって生成されるため、不正確な情報や音声の乱れが含まれる場合がある」と明記しているため、生成されたクイズ・フラッシュカードの正誤は必ずIPA公式の過去問題・解答例で確認する</li>
       </ul>
     </div>
 
@@ -63,6 +64,7 @@
       <ul>
         <li><a href="https://www.ipa.go.jp/shiken/kubun/fe.html" target="_blank" rel="noopener">IPA — 基本情報技術者試験</a> — 試験の公式概要ページ。科目A・科目Bの構成、CBT方式による実施方式を確認できる</li>
         <li><a href="https://www.ipa.go.jp/shiken/mondai-kaiotu/index.html" target="_blank" rel="noopener">IPA — 過去問題</a> — 公式の過去問題・解答例の公開ページ</li>
+        <li><a href="https://support.google.com/notebooklm/answer/16958963?hl=ja" target="_blank" rel="noopener">NotebookLM ヘルプ — フラッシュカードやクイズを生成する</a> — ソースからのフラッシュカード・クイズ自動生成機能の公式説明</li>
       </ul>
     </div>
 
