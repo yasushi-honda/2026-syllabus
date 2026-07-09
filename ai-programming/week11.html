@@ -3,12 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>第11回 「自分だけのAI」を育てる時間 | AI活用プログラミング基礎</title>
+  <title>第11回 NotebookLMで挑む資格試験勉強 | AI活用プログラミング基礎</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=3">
+  <!-- 公式情報確認: 2026-07-09 (mos.odyssey-com.co.jp/outline/word365.html 実記述:「コンピュータを使った実技試験（CBT）」試験時間50分、出題範囲6領域（文書の管理／文字・段落・セクションの挿入と書式設定／表やリストの管理／参考資料の作成と管理／グラフィック要素の挿入と書式設定／文書の共同作業の管理）/ ipa.go.jp/shiken/kubun/ip.html 実記述: 試験時間120分・出題形式「多肢選択式（四肢択一）」・出題数「100問（小問形式）」・実施方式「CBT方式により随時実施」) -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -24,7 +25,7 @@
       </nav>
       <div class="page-title-area">
         <div>
-          <h1 class="page-title">「自分だけのAI」を<wbr>育てる時間</h1>
+          <h1 class="page-title">NotebookLMで<wbr>挑む資格試験勉強</h1>
           <div class="page-meta-badges">
             <span class="page-badge">Week 11</span>
             <span class="page-badge">木曜 3・4限</span>
@@ -40,15 +41,15 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">今回は<strong>新しいツールを学ぶ回ではない</strong>。第1〜10回で作ってきた<strong>Gem</strong>と<strong>NotebookLM の「自分専用 AI ノート」</strong>を、自分のペースで整理し直す<strong>個人作業時間</strong>。<strong>学習データ①〜④</strong>が全部揃っているかを確認し、抜けを埋め、<strong>ITパスポート対策ノート</strong>の宿題を仕上げ、自分のAIと対話しながら「育ってきたAI」の現在地を確かめる</div>
+          <div class="lesson-overview-value">今回は<strong>新しいツールを学ぶ回ではない</strong>。第1〜10回で育ててきた <strong>Gem</strong>・<strong>NotebookLM</strong> を、<strong>資格試験の勉強</strong>に応用する回。<strong>トラックA: MOS Word</strong>（試験日が近い人向け）と<strong>トラックB: ITパスポート</strong>（第10回で作った対策ノートの続き）の2つに分かれ、自分のペースで進める</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">自分のAIの<strong>現在地の棚卸し</strong>／<strong>学習データ①〜④</strong>の点検／ITパスポート対策ノートの<strong>仕上げ</strong>／NotebookLM の<strong>ソースを追加</strong>と<strong>引用番号</strong>／Gem と NotebookLM を<strong>使い分けて対話する</strong>／<strong>自分のペースで進める</strong></div>
+          <div class="lesson-overview-value"><strong>MOS Word</strong>（実技試験・CBT）／<strong>ITパスポート</strong>（多肢選択式・IPA主催）／NotebookLM での<strong>過去問演習</strong>／<strong>フラッシュカード・クイズ</strong>での自己テスト／AIへの質問で<strong>操作・知識の穴を埋める</strong>／<strong>公式情報で照合する</strong>習慣</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
-          <div class="lesson-overview-value">第2回で作った<strong>Gem</strong>が開ける状態／第3〜4回で作った NotebookLM の<strong>「自分専用 AI ノート」</strong>が開ける状態／<strong>【学習データ①〜④】</strong>（自己紹介シート・学習目標シート・プロンプトのコツまとめ・情報整理テクニック資料）のうち、家で追加していないものがあれば手元にある状態／第10回に作った<strong>「ITパスポート対策ノート」</strong>の Google ドキュメントが開ける状態</div>
+          <div class="lesson-overview-value">第2回で作った<strong>Gem</strong>が開ける状態／第3〜4回で作った NotebookLM の<strong>「自分専用 AI ノート」</strong>が開ける状態／<strong>トラックA</strong>を選ぶ人: Word が開ける状態／<strong>トラックB</strong>を選ぶ人: 第10回で作った<strong>「ITパスポート対策ノート」</strong>が開ける状態</div>
         </div>
       </div>
     </div>
@@ -56,25 +57,23 @@
     <div class="syllabus-section">
       <h2>この回のゴール</h2>
       <ul>
-        <li>自分の<strong>Gem</strong>と<strong>NotebookLM「自分専用 AI ノート」</strong>に、今どんな情報が入っているかを自分の言葉で説明できる</li>
-        <li><strong>【学習データ①〜④】</strong>のうち、まだ NotebookLM に入れていないものがあれば追加し、全部揃った状態にする</li>
-        <li>第10回の宿題（対策ノートの「気になる用語」「自分がこれから学びたいこと」の追記）を仕上げ、<strong>見出しスタイルと箇条書き</strong>で整った状態にする</li>
-        <li>自分の<strong>Gem</strong>と<strong>NotebookLM</strong>それぞれに同じような質問を投げてみて、<strong>応答の違い</strong>を自分の言葉で説明できる</li>
-        <li>次に自分のAIに<strong>育てたいこと</strong>を1つ、自分のメモに書き残す</li>
+        <li>自分が<strong>トラックA（MOS Word）</strong>と<strong>トラックB（ITパスポート）</strong>のどちらに取り組むかを選び、今日の目標を1つ言葉にできる</li>
+        <li>トラックAを選んだ人: Word の出題範囲に沿って実技練習を進め、分からない操作を<strong>Gem・NotebookLMに質問して解決</strong>できる</li>
+        <li>トラックBを選んだ人: 「ITパスポート対策ノート」をNotebookLMで<strong>過去問演習・フラッシュカード・クイズ</strong>で自己テストし、誤答のパターンを言語化できる</li>
+        <li>AIの解説・練習問題を鵜呑みにせず、<strong>公式情報（MOS公式サイト・IPA公式サイト）と照合する</strong>習慣を持てる</li>
       </ul>
     </div>
 
     <div class="syllabus-section">
       <h2>大事な前提（毎回投影しておく）</h2>
       <div class="lesson-tip">
-        <strong>「今日は新しいことを覚える日ではない」:</strong> 第1回から第10回まで、Gem の作り方・NotebookLM の使い方・プロンプトの工夫・情報の整理のしかたと、たくさんの新しいことを学んできた。今日はその<strong>手を止めて、自分のAIを見直す日</strong>。新しいツールも、新しい学習データも登場しない。<br>
-        進み方は<strong>1人ひとり違ってよい</strong>。学習データを追加し終えている人は対話の時間を長くとってよいし、まだ整理が終わっていない人はそこにじっくり時間を使ってよい。今日のゴールは「全員が同じ場所まで進む」ことではなく、<strong>「自分のAIが今どんな状態か、自分で説明できるようになる」</strong>こと。
+        <strong>今日は「試験対策デー」:</strong> 第12回から始まる個人テーマの探究とは別枠で、資格試験の勉強に集中する回。<strong>トラックAはMOS Word</strong>（実技試験・CBT・50分、出題範囲は文書の管理／文字・段落・セクションの挿入と書式設定／表やリストの管理／参考資料の作成と管理／グラフィック要素の挿入と書式設定／文書の共同作業の管理の6領域）、<strong>トラックBはITパスポート</strong>（IPA主催・多肢選択式・120分・100問・CBT方式随時実施）。<strong>どちらか1つを選んでよいし、時間が余れば両方に触れてもよい</strong>。進み方は1人ひとり違ってよく、大事なのは「AIをどう使えば自分の勉強が進むか」を体験すること。
       </div>
     </div>
 
     <div class="syllabus-section">
       <h2>授業の流れ</h2>
-      <p class="lesson-note">2コマ連続(90分 + 90分 = 計180分)。途中休憩あり。<strong>今回は個人ワークのみ</strong>。机の上には Gem・NotebookLM・ITパスポート対策ノート（Google ドキュメント）を開けるノート PC を用意しておく。</p>
+      <p class="lesson-note">2コマ連続(90分 + 90分 = 計180分)。途中休憩あり。<strong>今回は個人ワークのみ</strong>。トラックA・Bどちらも机の上にGem・NotebookLMを開けるノートPCを用意しておく。</p>
 
       <div class="timeline">
 
@@ -83,29 +82,27 @@
             <span class="timeline-time">1限 前半</span>
             <span class="timeline-duration">約40分</span>
           </div>
-          <h3>今日のねらいを確認する → 自分のAIの現在地を棚卸しする</h3>
+          <h3>今日が試験対策デーであることを知る → トラックを選ぶ</h3>
           <div class="timeline-body">
-            <p><strong>今日が個人作業の日であることを確認する(10分)</strong></p>
+            <p><strong>今日の位置づけを確認する(10分)</strong></p>
             <ul>
-              <li>今日は<strong>新しいツール・新しい学習データが登場しない</strong>回であることを確認する。第1〜10回で作ってきたものを自分のペースで整理し直す時間</li>
-              <li>これまで作ってきたものを一覧で振り返る: <strong>Gem</strong>（第2回）／<strong>NotebookLM「自分専用 AI ノート」</strong>（第3〜4回）／<strong>学習データ①〜④</strong>（第3・4・5・10回）／<strong>ITパスポート対策ノート</strong>（第10回）</li>
-            </ul>
-            <p><strong>自分のAIの現在地を棚卸しする(20分)</strong></p>
-            <ul>
-              <li>次の4点を自分のメモ帳に箇条書きで書き出し、<strong>できている／まだの2択</strong>で自己チェックする:
+              <li>今日は<strong>新しいツール・新しい学習データが登場しない</strong>回であることを確認する。第1〜10回で作ってきたGem・NotebookLMを、資格試験の勉強に応用する時間</li>
+              <li>2つのトラックを紹介する:
                 <ul>
-                  <li>Gem に名前・性格・話し方が設定されているか</li>
-                  <li>NotebookLM の「自分専用 AI ノート」に<strong>学習データ①〜④</strong>が全部入っているか</li>
-                  <li>ITパスポート対策ノートに、第10回宿題の<strong>「気になる用語」の追記</strong>が入っているか</li>
-                  <li>ITパスポート対策ノートに、<strong>「自分がこれから学びたいこと」</strong>の見出しが入っているか</li>
+                  <li><strong>トラックA: MOS Word</strong> — 実際にパソコンを操作する<strong>実技試験（CBT・50分）</strong>。試験日が近い人向け</li>
+                  <li><strong>トラックB: ITパスポート</strong> — <strong>IPA（独立行政法人情報処理推進機構）</strong>が実施する<strong>多肢選択式（四肢択一）・120分・100問</strong>の国家試験。第10回で作った「ITパスポート対策ノート」の続き</li>
                 </ul>
               </li>
-              <li>「まだ」に丸が付いた項目が、今日の個人ワークで優先的に取り組む場所になる</li>
             </ul>
-            <p><strong>今日の個人目標を1つ決める(10分)</strong></p>
+            <p><strong>トラックを選び、目標を決める(20分)</strong></p>
             <ul>
-              <li>棚卸しの結果から、<strong>今日重点的に取り組みたいこと</strong>を1つ選んでメモに書く（例: 「学習データ②が抜けているので追加する」「対策ノートの見出しを整理し直す」「Gem に色んな質問をしてみる」など）</li>
-              <li>目標は途中で変えてもよい。まず1つ書き出してから始める</li>
+              <li>自分がどちらのトラックに取り組むかを選ぶ。<strong>どちらも受験予定がなければ、興味のある方でよい</strong></li>
+              <li>今日の目標を1つメモに書く（例: 「Wordの表機能を使いこなせるようになる」「ITパスポートの過去問を10問解く」など）</li>
+            </ul>
+            <p><strong>トラック別の準備(10分)</strong></p>
+            <ul>
+              <li><strong>トラックA</strong>: Wordを開き、MOS公式サイトの出題範囲（6領域）をNotebookLMまたはGemに要約してもらい、今日重点的に練習する領域を1つ選ぶ</li>
+              <li><strong>トラックB</strong>: 第10回で作った「ITパスポート対策ノート」をNotebookLMで開き直し、ソースが最新の状態か確認する</li>
             </ul>
           </div>
         </div>
@@ -115,31 +112,19 @@
             <span class="timeline-time">1限 後半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>NotebookLM のソースを点検し、ITパスポート対策ノートを仕上げる</h3>
+          <h3>トラック別学習① — 実技練習 / 過去問演習</h3>
           <div class="timeline-body">
-            <p><strong>学習データ①〜④の点検(15分)</strong></p>
+            <p><strong>トラックA: Word実技練習(50分)</strong></p>
             <ul>
-              <li>NotebookLM の「自分専用 AI ノート」を開き、ソース一覧を確認する</li>
-              <li><strong>【学習データ①】自己紹介シート／【学習データ②】学習目標シート／【学習データ③】プロンプトのコツまとめ／【学習データ④】情報整理テクニック資料</strong>が全部入っているか照合し、抜けているものがあれば「ソースを追加」から追加する</li>
-              <li>家で追加を済ませている人は、それぞれのソースの<strong>要約が自分の意図と合っているか</strong>を読み直す</li>
+              <li>選んだ領域についてWordを実際に操作しながら練習する</li>
+              <li>操作でつまずいたら、<strong>Gem・NotebookLMに「Wordで〇〇するにはどうすればいいか」と質問</strong>する。第5回で学んだ「具体的に聞く」を実践する</li>
+              <li>AIの回答通りに操作してもうまくいかない場合があることも体験の一つ。<strong>その場合はMOS公式サイトの出題範囲PDFで実際の機能名を確認</strong>する</li>
             </ul>
-            <p><strong>ITパスポート対策ノートを仕上げる(20分)</strong></p>
+            <p><strong>トラックB: 過去問演習(50分)</strong></p>
             <ul>
-              <li>第10回宿題で追記した<strong>「気になる用語」</strong>と<strong>「自分がこれから学びたいこと」</strong>のセクションを、Google ドキュメントで開いて見直す</li>
-              <li>まだ書けていない項目があれば、この時間で書き足す。追記するときは第10回で学んだ型を実践する:
-                <ul>
-                  <li><strong>見出しスタイル</strong>を使う（手動の大文字・太字にしない）</li>
-                  <li><strong>1セクションに1テーマ</strong>を守る</li>
-                  <li>並列の項目は<strong>箇条書き</strong>にする</li>
-                </ul>
-              </li>
-              <li>見出しを追加・変更したら、ドキュメント先頭の目次の<strong>「更新」</strong>ボタンを押して目次を最新化する</li>
-            </ul>
-            <p><strong>ソースを NotebookLM に反映して確認(15分)</strong></p>
-            <ul>
-              <li>対策ノートを書き直した人は、NotebookLM 側のソースが最新の内容を読み込んでいるか確認する（Google ドキュメントをソースにしている場合は自動的に最新版が参照される）</li>
-              <li>NotebookLM が表示する<strong>要約・キートピック</strong>が、自分が今書いた内容と合っているかを見比べる</li>
-              <li>ズレを感じたら、<strong>見出しの言葉をもっと具体的にする</strong>（第10回で学んだコツの実践）</li>
+              <li>IPA公式サイトの過去問題をNotebookLMのソースに追加する（第10回でやったのと同じ手順）</li>
+              <li>NotebookLMのチャットで過去問について質問し、<strong>引用番号</strong>で根拠を確認しながら解く</li>
+              <li>間違えた問題は<strong>「なぜその選択肢を選んでしまったか」</strong>を自分の言葉でメモに残す</li>
             </ul>
           </div>
         </div>
@@ -156,28 +141,17 @@
             <span class="timeline-time">2限 前半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>Gem と NotebookLM を使い分けながら自分のAIと対話する</h3>
+          <h3>トラック別学習② — 練習の続き</h3>
           <div class="timeline-body">
-            <p><strong>Gem との対話(15分)</strong></p>
+            <p><strong>トラックA: Word実技練習の続き(50分)</strong></p>
             <ul>
-              <li>自分の Gem を開き、今日整理した内容について質問を投げてみる（例: 「ITパスポートの気になる用語について、もっと詳しく教えて」）</li>
-              <li>自分が設定した<strong>性格・話し方</strong>が、応答のトーンにどう表れているかを観察する</li>
+              <li>1限で練習した領域の続き、または別の領域に進む</li>
+              <li>つまずいた操作は<strong>その場でメモに残す</strong>（後で自己テストの材料になる）</li>
             </ul>
-            <p><strong>NotebookLM との対話(20分)</strong></p>
+            <p><strong>トラックB: 過去問演習の続き(50分)</strong></p>
             <ul>
-              <li>NotebookLM のチャット欄で、同じような質問をソースに基づいて投げてみる</li>
-              <li>返ってきた応答の<strong>引用番号</strong>を1つ以上クリックし、どのソースのどの部分から来た答えかを確認する</li>
-              <li>気になった点があれば、続けて質問を重ねてみる（第5回で学んだプロンプトの工夫を思い出す）</li>
-            </ul>
-            <p><strong>Gem と NotebookLM の違いをメモに残す(15分)</strong></p>
-            <ul>
-              <li>2つの対話を振り返り、次の観点で気付いたことを自分のメモに書く:
-                <ul>
-                  <li>Gem の応答は<strong>キャラの個性</strong>がどう出ていたか</li>
-                  <li>NotebookLM の応答は<strong>引用番号</strong>でどこまで裏付けを追えたか</li>
-                  <li>同じ質問でも、どちらが今の自分に役立つ答え方だったか</li>
-                </ul>
-              </li>
+              <li>過去問演習を続ける。第10回で学んだ<strong>ストラテジ系・マネジメント系・テクノロジ系</strong>の3分野をバランスよく解いてみる</li>
+              <li>時間が余れば、興味があればトラックAのMOS出題範囲も覗いてみてよい</li>
             </ul>
           </div>
         </div>
@@ -187,22 +161,21 @@
             <span class="timeline-time">2限 後半</span>
             <span class="timeline-duration">約30分</span>
           </div>
-          <h3>近くの人と進捗を共有し、次に育てたいことを決める</h3>
+          <h3>NotebookLMで自己テストする</h3>
           <div class="timeline-body">
-            <p><strong>近くの人と進捗を共有する(15分)</strong></p>
+            <p><strong>フラッシュカード・クイズで自己テスト(20分)</strong></p>
             <ul>
-              <li>近くの人と2人ペアになり、次の2点を<strong>3分ずつ口頭で共有</strong>する:
+              <li>第10回で使った<strong>Studioのフラッシュカード・クイズ</strong>機能を思い出して使う。トラックBの人は対策ノート・過去問ソースから、トラックAの人はMOS出題範囲のソースから生成する</li>
+              <li>間違えた項目は<strong>「間違えたカードのみ」でやり直す</strong>（第10回で確認した機能）</li>
+            </ul>
+            <p><strong>今日の気づきをメモに残す(10分)</strong></p>
+            <ul>
+              <li>次の2点を自分のメモに書く:
                 <ul>
-                  <li>今日の個人目標に対して、どこまで進んだか</li>
-                  <li>Gem と NotebookLM のどちらが今の自分に合っていると感じたか</li>
+                  <li>今日の目標に対して<strong>どこまで進んだか</strong></li>
+                  <li>AIの解説・練習問題で<strong>「これは公式で確認したほうがいい」</strong>と感じた項目が1つでもあったか</li>
                 </ul>
               </li>
-              <li>相手の話を聞いて「自分も試してみたい」と思ったことがあれば、自分のメモに1行追加する</li>
-            </ul>
-            <p><strong>次に育てたいことを決める(15分)</strong></p>
-            <ul>
-              <li>第12回から始まる<strong>個人テーマを決めよう</strong>に向けて、自分のAIにこれから<strong>追加したい情報</strong>や<strong>試したいこと</strong>を1つ、自分のメモに書き残す（例: 「好きなアニメについての資料を追加したい」「もっと踏み込んだ質問の仕方を試したい」など）</li>
-              <li>この1つが、次回以降の個人課題の出発点になる</li>
             </ul>
           </div>
         </div>
@@ -218,19 +191,16 @@
             <ul>
               <li>講師の問いかけで挙手:
                 <ul>
-                  <li>「<strong>学習データ①〜④が全部揃った人?</strong>」</li>
-                  <li>「<strong>ITパスポート対策ノートの宿題を仕上げられた人?</strong>」</li>
-                  <li>「<strong>Gem と NotebookLM の両方に同じような質問をしてみた人?</strong>」</li>
-                  <li>「<strong>次に育てたいことを1つ決められた人?</strong>」</li>
+                  <li>「<strong>今日の目標を達成できた人?</strong>」</li>
+                  <li>「<strong>AIに質問して操作・知識の穴が埋まった人?</strong>」</li>
+                  <li>「<strong>AIの回答を公式情報で確認した人?</strong>」</li>
                 </ul>
               </li>
-              <li>講師から今日のキーワードを口頭で復習: <strong>自分のAIの現在地の棚卸し／学習データ①〜④の点検／対策ノートの仕上げ／Gem と NotebookLM の使い分け</strong></li>
-              <li>今日進み方が人によって違ったことは自然なこと。大事なのは<strong>「自分のAIが今どんな状態か、自分の言葉で説明できるようになった」</strong>かどうか</li>
+              <li>講師から: AIは試験勉強の伴走者として便利だが、<strong>実技試験の操作も知識試験の正誤も、最終的には公式情報・実際の操作で確かめる</strong>のが正しい姿勢。これは第13回の「責任あるコード」にも通じる考え方</li>
             </ul>
             <p><strong>次回予告(3分)</strong></p>
             <ul>
-              <li><strong>第12回</strong>: 「<strong>個人テーマを決めよう</strong>」。自分が興味のあるテーマを1つ決め、自分のAIと壁打ちしながら知識を深める個人課題に着手する回</li>
-              <li>今日の最後に書いた「次に育てたいこと」のメモが、そのまま第12回のテーマ選びの候補になる</li>
+              <li><strong>第12回</strong>: 「<strong>個人テーマを決めよう</strong>」。今日の試験勉強で「AIにどう聞いたら学びが深まったか」の経験を踏まえ、自分が興味のあるテーマを1つ決めて壁打ちを始める回</li>
             </ul>
           </div>
         </div>
@@ -244,22 +214,15 @@
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>今日終わらなかった棚卸し項目を家で仕上げる</strong>
-            <p>今日のチェック（学習データ①〜④が揃っているか／対策ノートの宿題が仕上がっているか）で「まだ」が残っていたら、家で仕上げて第12回までに揃えておく。</p>
-          </div>
-        </div>
-        <div class="lesson-task">
-          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
-          <div>
-            <strong>「次に育てたいこと」のメモを見返しておく</strong>
-            <p>今日の授業の最後に書いた「次に育てたいこと」のメモを、家でもう1度読み返し、第12回で個人テーマを決めるときにすぐ話せるように準備しておく。</p>
+            <strong>今日の学習進捗をメモに残しておく</strong>
+            <p>今日の目標に対する到達度と、次に取り組みたいことを1〜2行、自分のメモに残しておく。第12回で「AIにどう聞いたら学びが深まったか」を振り返るときに使う。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
-            <strong>Gem か NotebookLM のどちらかに、家でもう1つ質問を投げてみる</strong>
-            <p>今日の授業で試した質問以外に、自分が気になっていることを1つ、Gem か NotebookLM に質問してみる。応答の質が、これまで整理してきた情報の量とどう関係しているかを感じてみる。</p>
+            <strong>家でも試験勉強を続ける</strong>
+            <p>受験を予定している人は、家でも同じ要領（NotebookLMへのソース追加・過去問演習・フラッシュカード）で学習を続けてみる。</p>
           </div>
         </div>
       </div>
@@ -268,14 +231,10 @@
     <div class="syllabus-section">
       <h2>参考リンク</h2>
       <ul>
-        <li><a href="week02.html" class="week-link">第2回 自分だけのAIキャラをつくろう（Gem入門）</a> — 今日 Gem との対話で振り返った、性格・話し方の設定手順の初出</li>
-        <li><a href="week03.html" class="week-link">第3回 NotebookLM入門——自分用のノートブックを作ろう</a> — 「自分専用 AI ノート」とソース追加の基本操作</li>
-        <li><a href="week04.html" class="week-link">第4回 NotebookLMで「自分だけのAI」を本格化</a> — 【学習データ②】学習目標シートと、NotebookLM の資料蓄積の考え方</li>
-        <li><a href="week05.html" class="week-link">第5回 プロンプトの基本</a> — 今日の対話で使った、質問の工夫の基本</li>
-        <li><a href="week10.html" class="week-link">第10回 情報の構造化とAI育成</a> — 今日仕上げた「ITパスポート対策ノート」と見出しスタイルの型の初出</li>
-        <li><a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini（Google）</a> — 今日の Gem との対話で開く画面</li>
-        <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM（Google）</a> — 今日の「自分専用 AI ノート」を開く画面</li>
-        <li><a href="https://support.google.com/notebooklm/answer/16179559?hl=ja" target="_blank" rel="noopener">NotebookLM でチャットを使用する（公式ヘルプ）</a> — 今日確認した<strong>引用番号</strong>のしくみの公式説明</li>
+        <li><a href="https://mos.odyssey-com.co.jp/outline/word365.html" target="_blank" rel="noopener">MOS公式サイト — Word 365（一般）</a> — 試験形式（実技試験・CBT・50分）と出題範囲6領域の公式説明</li>
+        <li><a href="https://www.ipa.go.jp/shiken/kubun/ip.html" target="_blank" rel="noopener">IPA — ITパスポート試験</a> — 試験概要（多肢選択式・120分・100問・CBT方式随時実施）の公式ページ</li>
+        <li><a href="week10.html" class="week-link">第10回 情報の構造化とAI育成</a> — 「ITパスポート対策ノート」の作り方とNotebookLMのフラッシュカード・クイズ操作の初出</li>
+        <li><a href="../natural-language-dev/fe-exam-ai-study.html" class="week-link">基本情報技術者試験×AI学習法（自然言語開発のコラム）</a> — 今日と同じ「AIを使った資格試験勉強」の考え方を扱った、別科目向けの読み物</li>
       </ul>
     </div>
 

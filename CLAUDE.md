@@ -68,7 +68,7 @@ ai-programming/         # AI活用プログラミング基礎の各回詳細ペ�
   week08.html           #   第8回 🎤 中間共有会
   week09.html           #   第9回 AIの能力と限界を知る
   week10.html           #   第10回 情報の構造化とAI育成
-  week11.html           #   第11回 「自分だけのAI」を育てる時間
+  week11.html           #   第11回 NotebookLMで挑む資格試験勉強
   week12.html           #   第12回 個人テーマを決めよう
   week13.html           #   第13回 個人課題：探究・制作
   week14.html           #   第14回 🎤 個人課題：仕上げ＆最終発表会
