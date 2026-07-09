@@ -1980,6 +1980,11 @@ a.lesson-nav-item:hover {
   text-align: center;
 }
 
+.lesson-nav--single {
+  display: flex;
+  justify-content: center;
+}
+
 .lesson-nav-item--disabled {
   opacity: 0.3;
 }

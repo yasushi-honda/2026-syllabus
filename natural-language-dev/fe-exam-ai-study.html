@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>基本情報技術者試験×AI学習法 | 自然言語開発</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=4">
+  <!-- 公式情報確認: 2026-07-09 (ipa.go.jp/shiken/kubun/fe.html — 基本情報技術者試験の試験概要・科目A/B構成・CBT方式随時実施 / ipa.go.jp/shiken/mondai-kaiotu/index.html — 過去問題・解答例公開ページ) -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev.html">自然言語開発</a>
+        <span>/</span>
+        <span>コラム</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">基本情報技術者試験<wbr>×AI学習法</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">コラム（授業回外）</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="syllabus-section">
+      <h2>このコラムについて</h2>
+      <p>これは週次の授業回とは独立した読み物です。「自然言語開発」で学ぶ<strong>コンテキストエンジニアリング</strong>や<strong>AIとの協働の作法</strong>は、進級制作だけでなく、<strong>基本情報技術者試験（FE）</strong>のような資格試験の勉強にもそのまま応用できます。授業の合間や家庭学習の時間に目を通してください。</p>
+      <p>基本情報技術者試験は、<strong>独立行政法人情報処理推進機構（IPA）</strong>が実施する試験で、公式サイトは「ITエンジニアの登竜門」と位置づけています。かつては年2回の固定日程での実施でしたが、現在は<strong>CBT方式による随時実施</strong>に移行しており、自分の学習ペースに合わせて受験時期を選べます。</p>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>AIを試験勉強にどう使うか</h2>
+      <ul>
+        <li><strong>過去問演習の伴走をさせる</strong> — IPA公式サイトで公開されている過去問題・解答例をAIに読み込ませ、間違えた問題について「なぜその選択肢を選んでしまったか」を自分の言葉で説明し、AIに壁打ち相手として指摘してもらう。間違えた問題を1問ずつ解説させるより、<strong>複数回分の誤答を並べて「自分の弱い分野のパターン」を言語化させる</strong>使い方が、コンテキストエンジニアリングの実践例になる</li>
+        <li><strong>用語・知識の定着に使う</strong> — 頻出用語をAIに説明させ、それを自分の言葉に言い換えて再度AIに確認してもらう。一問一答形式のQ&Aリストを作らせて、通学時間などの隙間時間に見返す</li>
+        <li><strong>科目Bの問題を対話で読み解く</strong> — 基本情報技術者試験は<strong>科目A（90分・60問）</strong>と<strong>科目B（100分・20問）</strong>の多肢選択式で構成される。科目Bの擬似言語によるアルゴリズム問題は、変数の値がどう変化していくかをAIとの対話で1行ずつトレースすると理解が深まる。第9回で学んだ「1ステップずつ」の対話作法がそのまま活きる場面</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>責任あるAI活用の姿勢を試験勉強にも</h2>
+      <div class="lesson-tip">
+        <strong>第13回「責任あるコード」と同じ姿勢:</strong> AIが生成する解説・練習問題・暗記カードは、必ずしも正確とは限りません。特に法令・数値・用語の定義は誤りが混入することがあります。AIの説明を鵜呑みにせず、<strong>必ずIPA公式サイトの過去問題・解答例と照合する</strong>習慣を持ちましょう。AIは知識を丸ごと肩代わりする道具ではなく、<strong>自分の理解を確かめるための壁打ち相手</strong>として使うのが安全です。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://www.ipa.go.jp/shiken/kubun/fe.html" target="_blank" rel="noopener">IPA — 基本情報技術者試験</a> — 試験の公式概要ページ。科目A・科目Bの構成、CBT方式による実施方式を確認できる</li>
+        <li><a href="https://www.ipa.go.jp/shiken/mondai-kaiotu/index.html" target="_blank" rel="noopener">IPA — 過去問題</a> — 公式の過去問題・解答例の公開ページ</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav lesson-nav--single">
+      <a href="../natural-language-dev.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">戻る</span>
+        <span class="lesson-nav-title">自然言語開発</span>
+      </a>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
