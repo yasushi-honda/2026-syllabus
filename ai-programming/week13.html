@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第13回 個人課題：探究・制作 | AI活用プログラミング基礎</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--orange">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-programming.html">AI活用プログラミング基礎</a>
+        <span>/</span>
+        <span>第13回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">個人課題：<wbr>探究・制作</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 13</span>
+            <span class="page-badge">木曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">第12回で決めたテーマの<strong>探究を深める</strong>回。ただ調べるだけでなく、<strong>「どう聞いたら何が引き出せたか」を対話ログに残す</strong>習慣を身につける。後半では、第14回の最終発表に向けて<strong>発表用メモ・資料の骨子づくり</strong>に着手する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">探究の深掘り／<strong>対話ログの記録</strong>／「どう聞いたら何が引き出せたか」／発表用メモの<strong>骨子づくり</strong>／構成の型（背景・調べた中身・気づき）</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第12回で決めた<strong>テーマ宣言</strong>のメモ／第12回で追加した<strong>初期調査のソース</strong>が入った NotebookLM の「自分専用 AI ノート」／自分の <strong>Gem</strong> が開ける状態</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>第12回で決めたテーマについて、<strong>新しい発見を2つ以上</strong>NotebookLM のソースまたはメモに追加できる</li>
+        <li>AIとのやりとりのうち<strong>「よく引き出せた質問」</strong>を1つ以上、対話ログとして書き残せる</li>
+        <li>第14回の発表に向けて、話す内容の<strong>骨子（構成のメモ）</strong>を作り始められる</li>
+        <li>骨子の中に<strong>「テーマの背景」「調べた中身」「気づき」</strong>の3つの要素が入っていることを確認できる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>大事な前提（毎回投影しておく）</h2>
+      <div class="lesson-tip">
+        <strong>今日は「調べる」と「まとめ始める」の両方をやる日:</strong> 前半は探究を深める時間、後半は第14回の発表に向けた骨子づくりの時間。<strong>骨子は完成させなくてよい</strong>。第14回の1限前半でも仕上げの時間を取るので、今日は「話す内容の大まかな柱」が見えていれば十分。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続(90分 + 90分 = 計180分)。途中休憩あり。<strong>今回も個人ワーク中心</strong>。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の続きを確認する → 探究を再開する</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り(10分)</strong></p>
+            <ul>
+              <li>第12回に書いた<strong>テーマ宣言</strong>と「次に調べたいこと」のメモを読み返す。テーマの角度を少し変えたくなった人は、この時間で微調整してよい</li>
+            </ul>
+            <p><strong>探究を再開する(30分)</strong></p>
+            <ul>
+              <li>「次に調べたいこと」から探究を再開する。NotebookLM に新しいソースを追加する、Gem に深掘りの質問を投げる、どちらでもよい</li>
+              <li><strong>「知っていること」と「まだ知らないこと」</strong>のメモ（第12回で書いたもの）を見ながら、まだ知らない部分を優先的に埋めていく</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>対話ログを記録しながら探究を深める</h3>
+          <div class="timeline-body">
+            <p><strong>対話ログの書き方を知る(10分)</strong></p>
+            <ul>
+              <li>今日から<strong>対話ログ</strong>という習慣を始める。書き方はシンプル: <strong>①どう聞いたか（質問の言葉）②何が返ってきたか（応答の要点）③次にどう聞き直したか</strong>の3点を、自分のメモに1往復ずつ書く</li>
+              <li>すべてのやりとりを記録する必要はない。<strong>「これはよく引き出せた」と感じた質問だけ</strong>を選んで残す</li>
+            </ul>
+            <p><strong>探究を深めながら対話ログを残す(40分)</strong></p>
+            <ul>
+              <li>テーマについて、AIに質問を重ねながら理解を深める。第5回で学んだ<strong>プロンプトの工夫</strong>（具体的に聞く・段階的に聞く等）を意識的に使ってみる</li>
+              <li>手応えのあった質問を見つけたら、その場で<strong>対話ログに1往復メモする</strong>。「なぜこの聞き方だとうまくいったのか」を1行添えられるとなおよい</li>
+              <li>この時間の終わりまでに<strong>対話ログを1つ以上</strong>残すことを目指す</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>発表用メモの骨子づくりを始める</h3>
+          <div class="timeline-body">
+            <p><strong>骨子の型を知る(10分)</strong></p>
+            <ul>
+              <li>第14回の発表に向けて、話す内容を次の3つの要素で骨組みを作る:
+                <ul>
+                  <li><strong>テーマの背景</strong> — なぜこのテーマを選んだか（1〜2文）</li>
+                  <li><strong>調べた中身</strong> — 分かったこと・面白かった発見（2〜3個）</li>
+                  <li><strong>気づき</strong> — 調べてみて感じたこと・次に知りたいこと（1〜2文）</li>
+                </ul>
+              </li>
+              <li>形式は自由。<strong>Google ドキュメントの箇条書きメモでも、スライドでもよい</strong>。話す内容が整理されていることが目的で、見た目の作り込みは求めない</li>
+            </ul>
+            <p><strong>骨子を作る(40分)</strong></p>
+            <ul>
+              <li>自分のAIに<strong>「ここまで調べた内容を、背景・中身・気づきの3つに整理して」</strong>と頼んでみる。AIの整理案をそのまま使わず、<strong>自分の言葉で書き直す</strong>ことを意識する</li>
+              <li>今日の対話ログの中から、発表で紹介したい内容を1つ選んでメモに加える（「こんな聞き方をしたらこんな発見があった」というエピソードは発表の良い材料になる）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>骨子を仕上げ、近くの人と共有する</h3>
+          <div class="timeline-body">
+            <p><strong>骨子の続き(15分)</strong></p>
+            <ul>
+              <li>骨子づくりを続ける。3つの要素すべてが埋まっていなくてもよい。<strong>「背景」だけでも埋まっていれば</strong>、第14回で続きから再開できる</li>
+            </ul>
+            <p><strong>近くの人と共有する(15分)</strong></p>
+            <ul>
+              <li>近くの人と2人ペアになり、<strong>自分のテーマと骨子を2分ずつ口頭で話す</strong></li>
+              <li>相手の話を聞いて、分かりにくかった部分があれば「〇〇についてもう少し詳しく聞きたい」と伝える。この気づきが第14回の骨子仕上げに活きる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り&次回予告</h3>
+          <div class="timeline-body">
+            <p><strong>口頭での全体振り返り(7分)</strong></p>
+            <ul>
+              <li>講師の問いかけで挙手:
+                <ul>
+                  <li>「<strong>対話ログを1つ以上残せた人?</strong>」</li>
+                  <li>「<strong>骨子の『背景』が書けた人?</strong>」</li>
+                  <li>「<strong>ペアで話してみて発見があった人?</strong>」</li>
+                </ul>
+              </li>
+              <li>講師から今日のキーワードを口頭で復習: <strong>対話ログの記録／背景・中身・気づきの3要素</strong></li>
+            </ul>
+            <p><strong>次回予告(3分)</strong></p>
+            <ul>
+              <li><strong>第14回</strong>: 「<strong>個人課題：仕上げ＆最終発表会</strong>」。今日作った骨子を仕上げ、同じ日のうちに<strong>簡潔な個人発表</strong>を行う。前期最後の授業</li>
+              <li>発表は3分前後を予定。完璧なプレゼンは求めない。今日の骨子がそのまま発表の土台になる</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>骨子メモを見返しておく</strong>
+            <p>今日作った「背景・中身・気づき」の骨子メモを、家でもう1度読み返しておく。第14回はここから仕上げを始める。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>骨子を声に出して1回読んでみる</strong>
+            <p>家で5分だけ、骨子メモを声に出して読んでみる。詰まったところがあれば、そこが第14回の仕上げで直す場所になる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>対話ログをもう1つ増やす</strong>
+            <p>家で10分だけ、今日のテーマについてAIに質問を重ね、手応えのあった質問を対話ログに1つ追加する。発表で紹介できるエピソードが増える。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="week05.html" class="week-link">第5回 プロンプトの基本</a> — 今日の対話ログで実践したプロンプトの工夫の初出</li>
+        <li><a href="week08.html" class="week-link">第8回 🎤 中間共有会</a> — 「背景・中身・気づき」の骨子の型のもとになった、グループ発表のスライド構成</li>
+        <li><a href="week12.html" class="week-link">第12回 個人テーマを決めよう</a> — 今日探究を続けているテーマを決めた回</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week12.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第12回 個人テーマを決めよう</span>
+      </a>
+      <a href="../ai-programming.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AI活用プログラミング基礎</span>
+      </a>
+      <a href="week14.html" class="lesson-nav-item" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第14回 🎤 個人課題：仕上げ＆最終発表会</span>
+      </a>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
