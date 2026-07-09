@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第12回 個人テーマを決めよう | AI活用プログラミング基礎</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--orange">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-programming.html">AI活用プログラミング基礎</a>
+        <span>/</span>
+        <span>第12回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">個人テーマを<wbr>決めよう</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 12</span>
+            <span class="page-badge">木曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">ここから最終回（第14回）までの<strong>3回で個人課題に取り組む</strong>。今日はその1回目、<strong>自分が興味のあるテーマを1つ決め</strong>、自分のAI（Gem・NotebookLM）と壁打ちしながら初期調査を始める回。第11回の最後に書いた「次に育てたいこと」のメモが、今日のテーマ選びの出発点になる</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">残り3回の見通し／テーマのブレスト／<strong>テーマを1つに絞り込む</strong>／AIとの壁打ち／NotebookLM への初期調査ソース投入／テーマ宣言</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第2回で作った<strong>Gem</strong>が開ける状態／第3〜4回で作った NotebookLM の<strong>「自分専用 AI ノート」</strong>が開ける状態／第11回の最後に書いた<strong>「次に育てたいこと」</strong>のメモ（あれば手元に）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>残り3回（第12〜14回）で何をする回なのか、全体の見通しを自分の言葉で説明できる</li>
+        <li>自分のAIとの壁打ちを通じて、興味のあるテーマ候補を2〜3個出す</li>
+        <li>候補の中からテーマを<strong>1つに絞り込み</strong>、理由を自分の言葉で説明できる</li>
+        <li>決めたテーマについて、NotebookLM に<strong>初期調査のソースを1つ以上追加</strong>する</li>
+        <li>自分のテーマを<strong>1行のテーマ宣言</strong>としてメモに書き残す</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>大事な前提（毎回投影しておく）</h2>
+      <div class="lesson-tip">
+        <strong>残り3回でどこまで進むか:</strong> 第12回（今日）＝<strong>テーマを決める</strong>、第13回＝<strong>探究を深めて発表の骨子を作る</strong>、第14回＝<strong>仕上げてから発表する</strong>。3回で1つのテーマを最後まで育てる設計。<strong>「完璧なテーマ」を選ぶ必要はない</strong>。自分が「もう少し知りたい」と思える程度の興味があれば十分。決めた後でも、第13回の途中でテーマの角度を微調整してよい。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続(90分 + 90分 = 計180分)。途中休憩あり。<strong>今回も個人ワーク中心</strong>。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>残り3回の見通しを共有する → テーマ候補をブレストする</h3>
+          <div class="timeline-body">
+            <p><strong>残り3回の見通しを共有する(10分)</strong></p>
+            <ul>
+              <li>講師から、第12〜14回で個人課題に取り組む3回構成であることを共有する: 第12回(今日)＝<strong>テーマ決定</strong>、第13回＝<strong>探究・制作</strong>、第14回＝<strong>仕上げ＆最終発表会</strong></li>
+              <li>最終発表会（第14回）は<strong>簡潔な個人発表</strong>であり、完璧なプレゼンは求めないことを先に伝える。今日から逆算して考えすぎず、まずはテーマ決めに集中してよい</li>
+            </ul>
+            <p><strong>第11回のメモを振り返る(10分)</strong></p>
+            <ul>
+              <li>第11回の最後に書いた<strong>「次に育てたいこと」</strong>のメモを読み返す。書けていなかった人は、今のGem・NotebookLMを開いて「最近気になっていること」を思い出すところから始める</li>
+            </ul>
+            <p><strong>テーマ候補をブレストする(20分)</strong></p>
+            <ul>
+              <li>自分のGemまたはNotebookLMに<strong>「私が興味を持ちそうなテーマを3つ提案して」</strong>と聞いてみる。これまでの対話履歴やソースの内容から、AIなりの提案が返ってくる</li>
+              <li>AIの提案に加えて、自分自身でも思いつくテーマを1〜2個メモに書き出す。<strong>候補は多いほうが後で選びやすい</strong></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>テーマを1つに絞り込む</h3>
+          <div class="timeline-body">
+            <p><strong>絞り込みの視点を知る(10分)</strong></p>
+            <ul>
+              <li>候補が複数あるとき、次の3つの視点で比べると決めやすい:
+                <ul>
+                  <li><strong>興味の強さ</strong> — 3回分（次回・次々回も含めて）飽きずに続けられそうか</li>
+                  <li><strong>調べやすさ</strong> — AIに聞いたときに手がかりが得られそうか、情報が見つかりそうか</li>
+                  <li><strong>語りやすさ</strong> — 第14回の発表で人に話しやすい大きさか（広すぎず狭すぎず）</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>AIと壁打ちしながら絞り込む(30分)</strong></p>
+            <ul>
+              <li>候補を1つずつ自分のAIに話し、<strong>「このテーマ、3回分の個人課題にちょうどよさそうか聞いてみる」</strong></li>
+              <li>AIとのやりとりを通じて、候補を1つに絞り込む。<strong>迷ったら「今一番気になっているもの」を選んでよい</strong>（完璧な選択でなくてよい）</li>
+            </ul>
+            <p><strong>テーマ宣言を書く(10分)</strong></p>
+            <ul>
+              <li>決めたテーマを<strong>「私は〇〇について調べる」の1行</strong>で自分のメモに書く</li>
+              <li>近くの人と1行ずつ読み上げて共有する（強制ではない、話したい人だけでよい）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>決めたテーマの初期調査を始める</h3>
+          <div class="timeline-body">
+            <p><strong>初期調査の進め方を確認する(10分)</strong></p>
+            <ul>
+              <li>NotebookLM の「自分専用 AI ノート」を開き、決めたテーマに関する<strong>新しいソースを追加</strong>する準備をする</li>
+              <li>第3回で使った<strong>Fast Research</strong>機能を思い出す。テーマに関するキーワードで検索し、気になる情報源をソースとして取り込める</li>
+            </ul>
+            <p><strong>初期調査を進める(40分)</strong></p>
+            <ul>
+              <li>決めたテーマについて、<strong>ソースを1つ以上</strong>NotebookLM に追加する（Fast Research の検索結果、Webページ、自分でまとめたメモなど形式は問わない）</li>
+              <li>追加したソースにチャットで質問を投げ、<strong>引用番号</strong>を確認しながら理解を深める（第5回で学んだプロンプトの工夫を活かす）</li>
+              <li>まだ絞り込みに迷いがある人は、この時間で<strong>実際に調べてみて</strong>テーマの手応えを確認してもよい（テーマの微調整は今の時点なら間に合う）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>初期調査を続け、気づきをメモに残す</h3>
+          <div class="timeline-body">
+            <p><strong>初期調査の続き(20分)</strong></p>
+            <ul>
+              <li>調査を続け、<strong>「知っていること」と「まだ知らないこと」</strong>を自分のメモに整理する。第13回はここから探究を深めていく</li>
+            </ul>
+            <p><strong>今日の気づきをメモに残す(10分)</strong></p>
+            <ul>
+              <li>次の2点を自分のメモに1〜2行ずつ書く:
+                <ul>
+                  <li>今日調べてみて<strong>意外だったこと・面白かったこと</strong></li>
+                  <li>第13回で<strong>次に調べたいこと</strong></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り&次回予告</h3>
+          <div class="timeline-body">
+            <p><strong>口頭での全体振り返り(7分)</strong></p>
+            <ul>
+              <li>講師の問いかけで挙手:
+                <ul>
+                  <li>「<strong>テーマを1つに決められた人?</strong>」</li>
+                  <li>「<strong>初期調査のソースを追加できた人?</strong>」</li>
+                  <li>「<strong>次に調べたいことを書き出せた人?</strong>」</li>
+                </ul>
+              </li>
+              <li>講師から今日のキーワードを口頭で復習: <strong>テーマの絞り込み／AIとの壁打ち／初期調査</strong></li>
+            </ul>
+            <p><strong>次回予告(3分)</strong></p>
+            <ul>
+              <li><strong>第13回</strong>: 「<strong>個人課題：探究・制作</strong>」。今日決めたテーマの探究を続け、AIとの対話ログを残しながら発表用メモ・資料の骨子づくりに着手する回</li>
+              <li>今日の最後に書いた「次に調べたいこと」のメモが、そのまま第13回の出発点になる</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>テーマ宣言のメモを見返しておく</strong>
+            <p>今日書いた「私は〇〇について調べる」の1行を、家でもう1度読み返しておく。気持ちが変わっていたら第13回冒頭で微調整してよい。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>「次に調べたいこと」を家で1つ試す</strong>
+            <p>今日の最後に書いた「次に調べたいこと」を、家で10分だけ自分のAIに聞いてみる。第13回にそのまま続きから始められる準備になる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>決めたテーマについて、家族や友人に一言話してみる</strong>
+            <p>「私は〇〇について調べている」と誰かに話してみる。人に話すと、自分の中でテーマの輪郭がはっきりすることがある。第14回の発表練習の第一歩にもなる。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="week02.html" class="week-link">第2回 自分だけのAIキャラをつくろう（Gem入門）</a> — 今日の壁打ちで使うGemの作り方の初出</li>
+        <li><a href="week03.html" class="week-link">第3回 NotebookLM入門——自分用のノートブックを作ろう</a> — 今日の初期調査で使うFast Research機能の初出</li>
+        <li><a href="week05.html" class="week-link">第5回 プロンプトの基本</a> — 今日の壁打ち・初期調査で使う質問の工夫の基本</li>
+        <li><a href="week11.html" class="week-link">第11回 「自分だけのAI」を育てる時間</a> — 今日のテーマ選びの出発点になった「次に育てたいこと」のメモを書いた回</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week11.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第11回 「自分だけのAI」を育てる時間</span>
+      </a>
+      <a href="../ai-programming.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AI活用プログラミング基礎</span>
+      </a>
+      <a href="week13.html" class="lesson-nav-item" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第13回 個人課題：探究・制作</span>
+      </a>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
