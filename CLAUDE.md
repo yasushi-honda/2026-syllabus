@@ -39,6 +39,7 @@ ai-communication/       # AIコミュニケーション基礎の各回詳細ペ�
   week09.html           #   第9回 AI出力の検証と改善
   week10.html           #   第10回 中間振り返り
   week11.html           #   第11回 Google AI Studio体験
+  week12.html           #   第12回 個人課題：自分のテーマを掘る
 natural-language-dev.html # 自然言語開発（木1・2限）
 natural-language-dev/   # 自然言語開発の各回詳細ページ
   week01.html           #   第1回 オリエンテーション＆前年度の進級制作を振り返る
