@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第12回 🎯ミニ完成③ インタラクティブ作品公開 | プログラム基礎 I</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--blue">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../program-basics.html">プログラム基礎 I</a>
+        <span>/</span>
+        <span>第12回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">🎯ミニ完成③<wbr> インタラクティブ作品公開</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 12</span>
+            <span class="page-badge">火曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">第11回で作った <code>click-game.html</code>（サイコロクリックゲーム）を <code>index.html</code> からリンクし、<strong>GitHub Pages に公開</strong>する。第4回（プロフィールサイト）・第8回（小ゲーム）に続く<strong>3作目の公開体験</strong>。スマホ実機で動作確認し、クラスメイトからのフィードバックをもとに<strong>自己レビュー</strong>を行う</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">3作目の公開体験 / <code>index.html</code> へのリンク追加 / <code>commit &amp; push</code> による自動再デプロイ / スマホ実機でのタップ動作確認 / クラスメイトへの共有とフィードバック / 3作品の自己レビュー</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第11回で push 済みの<strong><code>click-game.html</code></strong>（サイコロクリックゲーム、スコア機能付き）・第4回で有効化済みの<strong>GitHub Pages</strong>・Codespaces が起動できる状態・スマホ（公開URLを開くため）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li><code>click-game.html</code> を <code>index.html</code> からリンクし、<strong>自分のサイトから遊べる動線</strong>を作れる</li>
+        <li><code>commit &amp; push</code> で GitHub Pages に<strong>自動的に再デプロイ</strong>される流れを、3回目の実践で自分の手順として定着させる</li>
+        <li>公開した <code>click-game.html</code> を<strong>スマホ実機</strong>で開き、<strong>タップ操作でも正しく動く</strong>ことを確認できる</li>
+        <li>クラスメイトに自分の作品を共有し、フィードバックをもとに<strong>自己レビュー</strong>ができる</li>
+        <li><strong>プロフィールサイト・小ゲーム・クリックゲーム</strong>の3作品を振り返り、次回（デバッグ集中回）に向けて<strong>直したい点</strong>を言葉にできる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の宿題を確認する → 見た目を仕上げる</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り（10分）</strong></p>
+            <ul>
+              <li><code>click-game.html</code> を Codespaces で開き直す（<code>python3 -m http.server 8000</code> → 第1回と同じ手順で Simple Browser）</li>
+              <li>第11回の必須課題——<strong>スコア付きバージョンの push</strong>と<strong>ルールアレンジ（難易度変更・連続記録・リセットボタンのいずれか）</strong>ができているかを自分で確認。できていなかった人はここで仕上げる</li>
+            </ul>
+            <p><strong>「3作目」の位置づけを確認する（10分）</strong></p>
+            <ul>
+              <li>第4回の<strong>プロフィールサイト</strong>、第8回の<strong>小ゲーム</strong>に続き、今日 <code>click-game.html</code> を公開すると<strong>公開URLが3本</strong>になる（第8回のtip「公開URLは2つ持っている」の続き）</li>
+              <li>今日のゴールは「<strong>動くものをもう1つ世界に公開する</strong>」こと——盛り込みすぎず、まず公開を最優先にする</li>
+            </ul>
+            <p><strong>見た目を仕上げる（20分）</strong></p>
+            <ul>
+              <li>第3回のCSSを思い出し、ボタン・見出し・得点表示に<strong>色・余白・フォントサイズ</strong>を付けてゲームらしく見せる（推奨、必須ではない）</li>
+              <li>第11回のルールアレンジで<strong>リセットボタン</strong>を選ばなかった人は、時間が余ればここで追加してもよい（<code>tries</code>・<code>score</code> を 0 に戻す <code>handleReset</code> 関数を <code>addEventListener</code> で接続する、第11回参照）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3><code>index.html</code> にリンクを足して <code>commit &amp; push</code></h3>
+          <div class="timeline-body">
+            <p><strong><code>index.html</code> にリンクを足す（15分）</strong></p>
+            <ul>
+              <li>第8回で <code>game.html</code> へのリンクを足したのと同じ手順で、<code>index.html</code> に1行追加する:
+                <pre><code>&lt;p&gt;&lt;a href="click-game.html"&gt;サイコロクリックゲームで遊ぶ&lt;/a&gt;&lt;/p&gt;</code></pre>
+              </li>
+              <li>保存して Simple Browser で <code>index.html</code> を更新し、リンクが表示されることを確認 → クリックして <code>click-game.html</code> に正しく飛ぶか確認</li>
+            </ul>
+            <p><strong><code>commit &amp; push</code> で再デプロイ（15分）</strong></p>
+            <ul>
+              <li>Codespaces 左側の<strong>「ソース管理」（Source Control）</strong>タブを開く</li>
+              <li>変更ファイルとして <code>index.html</code>（リンク追記）と <code>click-game.html</code>（未pushの修正があれば）が一覧に出ているはず</li>
+              <li>コミットメッセージ例: <code>サイコロクリックゲームをトップページからリンク</code></li>
+              <li>「Commit」→「Sync Changes」（または「Push」）で GitHub に反映。<strong>第4回で GitHub Pages はすでに有効化済み</strong>なので、Settings の操作は不要</li>
+              <li>GitHub.com のリポジトリページ →「Actions」タブで <code>pages build and deployment</code> ワークフローの進行状況を確認</li>
+            </ul>
+            <p><strong>公開URLを確認（20分）</strong></p>
+            <ul>
+              <li>公開URL <code>https://&lt;ユーザー名&gt;.github.io/&lt;リポジトリ名&gt;/</code> をブラウザの別タブで開き、追加したリンクから <code>click-game.html</code> に飛べるか確認</li>
+              <li>直接 <code>/click-game.html</code> を開いて、Simple Browser と同じ動作（クリックで出た目・得点が更新される）を再現できるか確認</li>
+              <li><strong>反映待ち時間</strong>: 公式に最大10分（通常は1〜3分）。すぐ反映されない時は Mac: <code>Cmd</code> + <code>Shift</code> + <code>R</code> / Windows: <code>Ctrl</code> + <code>Shift</code> + <code>R</code> でキャッシュをクリア</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>スマホ実機で確認する → クラスメイトに共有してフィードバックをもらう</h3>
+          <div class="timeline-body">
+            <p><strong>スマホ実機で開く（20分）</strong></p>
+            <ul>
+              <li>公開URLをQRコードに変換してスマホで読み取る（第5回と同じ方法）、または LINE などで自分宛に送って開く</li>
+              <li>ボタンを<strong>タップ</strong>して、出た目・試行回数・得点が正しく更新されるか確認——<code>addEventListener("click", ...)</code> は<strong>スマホのタップでもクリックと同じように反応する</strong>（モバイルブラウザの標準的な挙動）ことを実機で体感する</li>
+              <li>第5回で書いた<strong>レスポンシブ（メディアクエリ）</strong>のスタイルが効いていれば、スマホでも崩れずに表示されるはず。崩れていた場合はスクリーンショットを撮って <code>NOTES.md</code> に貼っておく</li>
+            </ul>
+            <p><strong>クラスメイトに共有する（15分）</strong></p>
+            <ul>
+              <li>授業内の連絡手段（Google Classroom やチャット）で、自分の公開URL（トップページ、または <code>/click-game.html</code>）をクラスメイトに共有</li>
+              <li>共有するときは「<strong>ボタンを押すとサイコロが振られます</strong>」のような遊び方の一言を添えるとよい</li>
+              <li>受け取った側は、相手のゲームを<strong>3回以上タップ</strong>して動かしてみる</li>
+            </ul>
+            <p><strong>フィードバックをメモする（15分）</strong></p>
+            <ul>
+              <li>クラスメイトから「面白かった点」「分かりにくかった点」を1つずつでよいので聞く（口頭・チャットどちらでも）</li>
+              <li><code>NOTES.md</code> の末尾に「<strong>公開後フィードバック</strong>」という見出しで記録: 誰の反応か（名前は伏せて「クラスメイトA」でよい）・面白かった点・改善したいと思った点</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>3作品を振り返る自己レビュー</h3>
+          <div class="timeline-body">
+            <p><strong>3作品を並べて振り返る（15分）</strong></p>
+            <ul>
+              <li>自分の公開URL配下の3ページ——<strong>プロフィールサイト（第4回・<code>/</code>）</strong>・<strong>小ゲーム（第8回・<code>/game.html</code>）</strong>・<strong>クリックゲーム（第12回・<code>/click-game.html</code>）</strong>——を順に開く</li>
+              <li>それぞれについて「<strong>何を学んだ回に作ったか</strong>」「<strong>今見て一番気に入っている部分</strong>」を1行ずつ <code>NOTES.md</code> に書く</li>
+            </ul>
+            <p><strong>次回に向けて直したい点をリストアップする（15分）</strong></p>
+            <ul>
+              <li>3作品の中で気になるバグ・直したい見た目・動きが変な箇所を思いつく限りリストアップし、<code>NOTES.md</code> の「<strong>直したいことリスト</strong>」にまとめる</li>
+              <li>クラスメイトからのフィードバックで挙がった「分かりにくかった点」もこのリストに合流させる</li>
+              <li>このリストが<strong>第13回（デバッグ集中回）</strong>でそのまま使う教材になる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ program-basics.html Week 13 「デバッグ集中回（AIなしで直す）」と同期 -->
+              <li>次回（第13回）: <strong>デバッグ集中回（AIなしで直す）</strong>——エラーメッセージを読む練習。あえてAI（Copilot）を使わずに自力でバグを修正する体験。今日作った「直したいことリスト」がそのまま教材になる</li>
+              <li>今日のキーワード <strong>「3作目の公開体験」「<code>index.html</code>へのリンク追加」「<code>commit &amp; push</code>で自動再デプロイ」「スマホでのタップ動作確認」「自己レビュー」</strong>を口に出して言えるか確認して退出</li>
+              <li>家では自分の3つの公開URLを家族・友人に見せて、率直な感想をもう1つもらっておくと次回の教材が増える</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>click-game.html</code> を <code>index.html</code> からリンクして公開する</strong>
+            <p>授業内で公開が間に合わなかった人は家で完成させ、必ず<strong>スマホでも動作確認</strong>してから push する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>NOTES.md</code> に「公開後フィードバック」と「3作品の自己レビュー」を書く</strong>
+            <p>クラスメイトから聞いた反応を最低1件、3作品を見直して気づいた「直したいことリスト」を最低3件、それぞれ記録する。直すかどうかは第13回・第14回で判断してよい。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>見た目やルールをもう1つ改善する</strong>
+            <p>「直したいことリスト」から1つ選んで先に直してみる。次回のデバッグ集中回では<strong>あえてAIを使わずに</strong>直す体験をするので、簡単なものは今のうちに片付けておくと次回に集中しやすい。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://docs.github.com/ja/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site" target="_blank" rel="noopener">GitHub Docs — GitHub Pages サイトの発行ソースの構成</a> — 公開元の設定（第4回・第8回で実施済み、再確認用）</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/EventTarget/addEventListener" target="_blank" rel="noopener">MDN — <code>EventTarget.addEventListener()</code></a> — イベントハンドラを登録するメソッドの公式リファレンス（第11回でも使用）</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week11.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第11回 DOM操作とイベント</span>
+      </a>
+      <a href="../program-basics.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">プログラム基礎 I</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第13回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
