@@ -40,7 +40,7 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">第11回で作った <code>click-game.html</code>（サイコロクリックゲーム）を <code>index.html</code> からリンクし、<strong>GitHub Pages に公開</strong>する。第4回（プロフィールサイト）・第8回（小ゲーム）に続く<strong>3作目の公開体験</strong>。スマホ実機で動作確認し、クラスメイトからのフィードバックをもとに<strong>自己レビュー</strong>を行う</div>
+          <div class="lesson-overview-value">第11回で<strong>DOM操作を統合</strong>して作った <code>click-game.html</code>（サイコロクリックゲーム）を <code>index.html</code> からリンクし、<strong>GitHub Pages に公開</strong>する。第4回（プロフィールサイト）・第8回（小ゲーム）に続く<strong>3作目の公開体験</strong>。スマホ実機で動作確認し、クラスメイトからのフィードバックをもとに<strong>自己レビュー</strong>を行う</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
@@ -100,7 +100,7 @@
             <span class="timeline-time">1限 後半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3><code>index.html</code> にリンクを足して <code>commit &amp; push</code></h3>
+          <h3><code>index.html</code> にリンクを足す → <code>commit &amp; push</code> で公開する</h3>
           <div class="timeline-body">
             <p><strong><code>index.html</code> にリンクを足す（15分）</strong></p>
             <ul>
@@ -143,7 +143,7 @@
             <p><strong>スマホ実機で開く（20分）</strong></p>
             <ul>
               <li>公開URLをQRコードに変換してスマホで読み取る（第5回と同じ方法）、または LINE などで自分宛に送って開く</li>
-              <li>ボタンを<strong>タップ</strong>して、出た目・試行回数・得点が正しく更新されるか確認——<code>addEventListener("click", ...)</code> は<strong>スマホのタップでもクリックと同じように反応する</strong>（モバイルブラウザの標準的な挙動）ことを実機で体感する</li>
+              <li>ボタンを<strong>タップ</strong>して、出た目・試行回数・得点が正しく更新されるか確認——<code>addEventListener("click", ...)</code> は<strong>スマホのタップでもクリックと同じように反応する</strong>（モバイルブラウザがタップを <code>click</code> イベントとして扱う標準的な挙動、参考リンクのMDN解説を参照）ことを実機で体感する</li>
               <li>第5回で書いた<strong>レスポンシブ（メディアクエリ）</strong>のスタイルが効いていれば、スマホでも崩れずに表示されるはず。崩れていた場合はスクリーンショットを撮って <code>NOTES.md</code> に貼っておく</li>
             </ul>
             <p><strong>クラスメイトに共有する（15分）</strong></p>
@@ -165,7 +165,7 @@
             <span class="timeline-time">2限 後半</span>
             <span class="timeline-duration">約30分</span>
           </div>
-          <h3>3作品を振り返る自己レビュー</h3>
+          <h3>3作品を並べる → 自己レビューする</h3>
           <div class="timeline-body">
             <p><strong>3作品を並べて振り返る（15分）</strong></p>
             <ul>
@@ -232,6 +232,7 @@
       <ul>
         <li><a href="https://docs.github.com/ja/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site" target="_blank" rel="noopener">GitHub Docs — GitHub Pages サイトの発行ソースの構成</a> — 公開元の設定（第4回・第8回で実施済み、再確認用）</li>
         <li><a href="https://developer.mozilla.org/ja/docs/Web/API/EventTarget/addEventListener" target="_blank" rel="noopener">MDN — <code>EventTarget.addEventListener()</code></a> — イベントハンドラを登録するメソッドの公式リファレンス（第11回でも使用）</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/Element/click_event" target="_blank" rel="noopener">MDN — <code>Element</code>: <code>click</code> イベント</a> — タップ操作がクリックイベントとして扱われる挙動についての公式リファレンス</li>
       </ul>
     </div>
 
