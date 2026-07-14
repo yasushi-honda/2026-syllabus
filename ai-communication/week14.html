@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第14回 AI育成②：仕上げ＆振り返り | AIコミュニケーション基礎</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication.html">AIコミュニケーション基礎</a>
+        <span>/</span>
+        <span>第14回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">AI育成②：<wbr>仕上げ＆振り返り</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 14</span>
+            <span class="page-badge">火曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">前期最終回。前期で蓄積した<strong>【学習データ①〜⑫】</strong>を見直し、情報の<strong>整理・体系化</strong>を行う。第2回で設定した<strong>カスタム指示</strong>を今の自分に合わせて最終調整し、<strong>「自分だけのAI」を完成</strong>させる。前期の学びを<strong>記録形式で自己振り返り</strong>する（発表はない）。<strong>AI倫理の再確認</strong>と、後期にこの「自分だけのAI」をどう活かすかという<strong>後期への接続</strong>も行う。今日の総仕上げとして<strong>【学習データ⑬】振り返りフレームワーク</strong>をまとめ、NotebookLMに投入する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">知識の体系化 / カスタム指示の最終調整 / <strong>「自分だけのAI」の完成</strong> / 自己振り返り（発表なし） / AI倫理の再確認 / 後期への接続 / <strong>【学習データ⑬】</strong>振り返りフレームワーク</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第13回の<strong>【学習データ⑫】対話ログ整理テンプレート</strong>（「⑤ 次回に向けて整理しておきたいこと」）・<strong>【学習データ①〜⑫】</strong>投入済みの「自分だけのAI」（NotebookLM）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>前期で蓄積した<strong>【学習データ①〜⑫】</strong>を見直し、情報の体系化（整理・分類）ができる</li>
+        <li>カスタム指示（名前・性格・話し方・得意分野）を最終調整し、<strong>「自分だけのAI」を完成</strong>させられる</li>
+        <li>前期の学びを<strong>記録形式で自己振り返り</strong>できる（発表を目的としない）</li>
+        <li>AI利用における倫理的留意点（個人情報を入れない、AIの出力を鵜呑みにしない等）を、前期の実体験を踏まえて再確認できる</li>
+        <li>この「自分だけのAI」を後期以降どう活かすかを考え、接続できる</li>
+        <li>今日の振り返りを<strong>【学習データ⑬】振り返りフレームワーク</strong>としてまとめ、NotebookLMのソースに追加できる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>大事な前提（毎回投影しておく）</h2>
+      <div class="lesson-tip">
+        <strong>今日は発表会ではない:</strong> この授業の個人課題は前期を通じて一貫して<strong>プレゼン発表を最終ゴールにしていません</strong>——「自分だけのAI」をどれだけ育てられたかを、自分自身の記録として残すことが目的です。今日は静かに、自分のペースで前期を振り返る時間として使います。うまく言葉にできない部分があっても構いません。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前期の学習データを眺め直し、体系化の視点を知る</h3>
+          <div class="timeline-body">
+            <p><strong>今日の位置づけを共有する（10分）</strong></p>
+            <ul>
+              <li>講師から、今日が前期最終回であること、発表ではなく<strong>記録として前期を振り返る回</strong>であることを共有する</li>
+            </ul>
+            <p><strong>【学習データ①〜⑫】を並べて眺める（15分）</strong></p>
+            <ul>
+              <li>NotebookLMのソース一覧を開き、第1回からの<strong>【学習データ①〜⑫】</strong>を上から順に眺め直す</li>
+              <li>第11回で使った<strong>マインドマップ</strong>機能で①〜⑫の全体像を俯瞰してもよい</li>
+            </ul>
+            <p><strong>体系化の視点を知る（15分）</strong></p>
+            <ul>
+              <li>何を軸に整理するかの3つの視点を紹介: <strong>時系列</strong>（何をいつ学んだか）・<strong>テーマ別</strong>（プロンプト／ファクトチェック／個人課題 等）・<strong>AIとの関わり方の変化</strong>（最初と今でどう対話が変わったか）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>知識を体系化し、カスタム指示を最終調整する</h3>
+          <div class="timeline-body">
+            <p><strong>知識を体系化する（30分）</strong></p>
+            <ul>
+              <li>自分のAIに「【学習データ①〜⑫】を体系立てて整理して」と頼み、結果を確認する</li>
+              <li>AIの整理結果をそのまま使うのではなく、<strong>自分の言葉でまとめ直す</strong>——第9回のファクトチェックの姿勢と同じく、AIの出力を鵜呑みにしない練習でもある</li>
+            </ul>
+            <p><strong>カスタム指示の最終調整（20分）</strong></p>
+            <ul>
+              <li>第2回で最初に設定した<strong>カスタム指示</strong>（名前・性格・話し方・得意分野）を開き直す</li>
+              <li>前期を通じて変わった自分の興味・学び方に合わせて、カスタム指示を<strong>更新</strong>する</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>「自分だけのAI」を完成させ、前期を自己振り返りする</h3>
+          <div class="timeline-body">
+            <p><strong>「自分だけのAI」の完成（20分）</strong></p>
+            <ul>
+              <li>更新したカスタム指示を保存し、<strong>【学習データ①〜⑫】</strong>すべてが揃った状態の自分のAIと最後に対話してみる</li>
+              <li>最初（第2回）と今とで、応答の質や自分の対話の仕方がどう変わったかを1つ確認する</li>
+            </ul>
+            <p><strong>前期の学びを自己振り返りする（30分）</strong></p>
+            <ul>
+              <li>下の「コピー用テンプレ」を使って<strong>【学習データ⑬】振り返りフレームワーク</strong>を書き始める</li>
+              <li><strong>発表を意識せず</strong>、自分のための記録として率直に書く——うまくいかなかったことも含めてよい</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>AI倫理を再確認し、後期への接続をまとめる</h3>
+          <div class="timeline-body">
+            <p><strong>AI倫理の再確認（15分）</strong></p>
+            <ul>
+              <li>第1回で学んだ<strong>心理的安全性・個人情報を入れない原則</strong>を、前期の実体験を踏まえて振り返る</li>
+              <li>「個人情報を入れなかったことで困った場面はあったか」「AIの出力を鵜呑みにせず検証できた場面はあったか」を思い出す</li>
+            </ul>
+            <p><strong>後期への接続をまとめ、投入する（15分）</strong></p>
+            <ul>
+              <li><strong>【学習データ⑬】振り返りフレームワーク</strong>の「⑤ 後期への接続」を書いて完成させる</li>
+              <li>第5〜13回と同じ手順で、自分のAI（NotebookLM）の<strong>「ソースを追加」→「ドライブ」</strong>からこのドキュメントを選択。これで<strong>【学習データ①〜⑬】</strong>が揃った状態になる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>前期全体の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>前期最終回であることを共有し、第1回からの<strong>「自分だけのAI」</strong>を育ててきた道のりを振り返る</li>
+              <li>今日のキーワード<strong>「知識の体系化」「カスタム指示の最終調整」「自分だけのAIの完成」「AI倫理の再確認」「後期への接続」</strong>を口に出して言えるか確認して退出</li>
+              <li>後期も引き続き自分のAIを使えることを伝え、休み中に気になったことがあれば自分のAIに聞いてみる習慣を続けるよう伝える</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>【振り返りフレームワーク】テンプレ(コピー用)</h2>
+      <p>授業内で書ききれなかった人や<strong>家でゼロから作り直したい人</strong>のために、テンプレ本文をここからコピーできるようにしてある。</p>
+      <p><strong>使い方:</strong></p>
+      <ol>
+        <li>下の「Markdown をコピー」ボタンを押す</li>
+        <li><a href="https://docs.google.com" target="_blank" rel="noopener">Google ドキュメント</a> で新規ドキュメントを開く(ファイル名は<strong>「振り返りフレームワーク」</strong>)</li>
+        <li>Google ドキュメントの <strong>ツール → 設定 → 全般タブ →「マークダウンを有効にする」</strong>がオンになっているか確認(第5〜13回までに設定した人はそのまま)</li>
+        <li>本文に <strong>編集 →「マークダウンから貼り付け」</strong>で貼り付ける(普通の Ctrl/⌘+V でも内容は使えるので、Markdown 整形にこだわらない人はそのままで OK)→ 空欄を自分の言葉で埋める</li>
+        <li>NotebookLM の自分だけのAIで「ソースを追加」→「ドライブ」→ このドキュメントを選択。<strong>【学習データ⑬】として扱う</strong></li>
+      </ol>
+      <p><strong>個人情報を入れない原則は第1〜13回と同じ。</strong>本名・住所・電話番号・学籍番号は書かない。書ける範囲で OK・空欄でも OK。</p>
+      <button class="copy-md-btn" data-md-source="reflection-framework-md">
+        <span class="btn-icon"></span> Markdown をコピー
+      </button>
+<pre id="reflection-framework-md" class="md-preview"># 振り返りフレームワーク(NotebookLM 用 / 【学習データ⑬】)
+
+&gt; このシートは第14回 AI育成②：仕上げ＆振り返りの成果物、前期最終課題です。
+&gt; 発表を目的とせず、自分自身の記録として前期の学びをまとめます。
+&gt; 個人情報(本名・住所・電話番号・学籍番号など)は書かないこと。書ける範囲で OK・空欄でも OK。
+
+## ① 前期で蓄積した学習データの振り返り
+【学習データ①〜⑫】を眺め直し、特に印象に残っているものを2〜3個挙げ、なぜ印象に残ったか書く。
+
+→
+
+## ② カスタム指示の変化
+第2回に最初に設定したカスタム指示と、今日最終調整した内容を比べて、何が変わったか書く。
+
+→
+
+## ③ 「自分だけのAI」との対話で成長したこと
+プロンプトの書き方・AIとの付き合い方で、前期を通じて変わったと思うことを書く。
+
+→
+
+## ④ AI倫理で気をつけてきたこと
+個人情報を入れない・AIの出力を鵜呑みにしない等、前期を通じて意識してきたことを書く。
+
+→
+
+## ⑤ 後期への接続
+この「自分だけのAI」を後期以降どう活かしたいか書く。
+
+→
+</pre>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>【学習データ⑬】振り返りフレームワークを完成させ、NotebookLMに投入する</strong>
+            <p>授業内で書ききれなかった項目を埋めてから、ソースとして追加する。特に<strong>⑤ 後期への接続</strong>は必ず書き切る——後期最初の授業の出発点になる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>自分のAI（NotebookLM・Gemini）を引き続き使ってみる</strong>
+            <p>前期で育てた「自分だけのAI」は後期も引き続き使える。休み中に気になったことがあれば、自分のAIに聞いてみる習慣を続けてみる。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="../ai-communication.html" class="week-link">AIコミュニケーション基礎 トップ</a> — 親ページの全14回の流れ</li>
+        <li><a href="week13.html" class="week-link">第13回 個人課題：制作</a> — 今日体系化する対話ログ整理テンプレートを作った回</li>
+        <li><a href="week02.html" class="week-link">第2回 「自分だけのAI」をつくろう</a> — 今日最終調整するカスタム指示を最初に設定した回</li>
+        <li><a href="week01.html" class="week-link">第1回 オリエンテーションとAI概論</a> — 今日再確認するAI倫理・心理的安全性の原則の初出</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week13.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第13回 個人課題：制作</span>
+      </a>
+      <a href="../ai-communication.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AIコミュニケーション基礎</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">前期最終回</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
