@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第13回 個人課題：制作 | AIコミュニケーション基礎</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication.html">AIコミュニケーション基礎</a>
+        <span>/</span>
+        <span>第13回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">個人課題：<wbr>制作</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 13</span>
+            <span class="page-badge">火曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">残り2回（第13・14回）のうち1回目。第12回で決めた個人課題テーマについて、自分のAI（NotebookLM）との対話を継続し、探究を深める。今日の核は<strong>「対話ログを残す」</strong>こと——これまでのAIとのやり取りを振り返り、<strong>「どう聞いたら何が引き出せたか」</strong>を自分の言葉で言語化する。引用<code>[n]</code>で根拠を確認しながら知識を深める、これまで積み重ねてきたサイクルに加え、<strong>自分自身のプロンプトの工夫そのものを記録・改善する視点</strong>を養う。今日の記録を<strong>【学習データ⑫】対話ログ整理テンプレート</strong>としてまとめ、NotebookLMに投入する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">個人課題の継続 / 対話ログ / <strong>「どう聞いたら何が引き出せたか」</strong> / プロンプトの振り返り / <strong>【学習データ⑫】</strong>対話ログ整理テンプレート</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第12回の<strong>【学習データ⑪】テーマ探索ワークシート</strong>（個人課題テーマ・「まだ分からないこと」欄）・<strong>【学習データ①〜⑪】</strong>投入済みの「自分だけのAI」（NotebookLM）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>第12回で決めた個人課題テーマについて、自分のAIとの対話を継続し、探究を深められる</li>
+        <li>AIとの対話を振り返り、<strong>「どう聞いたら何が引き出せたか」「どう聞いたら手応えがなかったか」</strong>を自分の言葉で言語化できる</li>
+        <li>引用<code>[n]</code>で根拠を確認しながら、新しく分かったことを記録できる（第9回のファクトチェック手順の継続実践）</li>
+        <li>今日の記録を<strong>【学習データ⑫】対話ログ整理テンプレート</strong>としてまとめ、NotebookLMのソースに追加できる</li>
+        <li>第14回（AI育成②：仕上げ＆振り返り）に向けて、「自分のAIに何を教えてきたか」を振り返る準備を始められる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>大事な前提（毎回投影しておく）</h2>
+      <div class="lesson-tip">
+        <strong>今日は「量を増やす」より「質を振り返る」回:</strong> 第12回の「大事な前提」で共有した通り、残り2回（第13・14回）で個人課題を仕上げていきます。今日は個人課題テーマについて対話を<strong>続ける</strong>だけでなく、<strong>これまでの対話の仕方そのものを振り返る</strong>ことに重点を置きます。第6回「伝わる」プロンプトの設計で学んだ「あいまいな指示 vs 明確な指示」の視点を、自分自身の対話ログに当てはめてみる回です。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の振り返り → 対話ログを残す意味を知る</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り（10分）</strong></p>
+            <ul>
+              <li>第12回の<strong>【学習データ⑪】テーマ探索ワークシート</strong>を開き、「② 個人課題テーマ」と「⑤ まだ分からないこと・次回調べたいこと」を読み返す</li>
+            </ul>
+            <p><strong>今日のゴールを共有する（10分）</strong></p>
+            <ul>
+              <li>講師から、今日は個人課題の探究を<strong>続けながら</strong>、これまでのAIとの対話の仕方そのものを<strong>振り返る</strong>回であることを共有する</li>
+              <li>「対話ログ」とは何か——AIに何を聞いて、どんな応答が返ってきたかの記録。ただの作業記録ではなく、<strong>「自分がどう聞くとAIから何を引き出せるか」の実験結果</strong>として捉え直す</li>
+            </ul>
+            <p><strong>対話ログを振り返る視点を知る（20分）</strong></p>
+            <ul>
+              <li>第6回「伝わる」プロンプトの設計で比較した<strong>あいまいな指示 vs 明確な指示</strong>を思い出す</li>
+              <li>今日は自分自身の対話ログを見返し、<strong>「効果的だった聞き方」「あいまいで手応えがなかった聞き方」</strong>を後で分類する予定だと伝える</li>
+              <li>これから対話を続けるときは、<strong>どんな聞き方をしたか</strong>を意識しながら進めるとよい</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>個人課題テーマについて対話を続ける</h3>
+          <div class="timeline-body">
+            <p><strong>自分のAIと対話して探究を続ける（35分）</strong></p>
+            <ul>
+              <li>第12回で決めた個人課題テーマについて、自分のAIに<strong>複数回質問を重ねる</strong>。第12回の「まだ分からないこと」から始めるとスムーズ</li>
+              <li>応答の<strong>引用<code>[n]</code></strong>を確認しながら、根拠が【学習データ①〜⑪】のどこから来ているかを追う</li>
+              <li>意識して<strong>色々な聞き方</strong>を試す——同じ疑問でも、具体的に聞く／背景から聞く／例を求めるなど、聞き方を変えてみる</li>
+            </ul>
+            <p><strong>気づいたことをメモする（15分）</strong></p>
+            <ul>
+              <li>対話の中で<strong>「これは効果的だった」「これはあいまいで手応えがなかった」</strong>と感じたやり取りを、そのつどメモしておく——後で対話ログ整理テンプレートの材料になる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>対話ログを整理し、テンプレートの下書きを作る</h3>
+          <div class="timeline-body">
+            <p><strong>対話ログを整理する（25分）</strong></p>
+            <ul>
+              <li>1限にメモした対話の中から、<strong>「効果的だった聞き方」を2〜3組、「あいまいだった聞き方」があれば1組</strong>選ぶ</li>
+              <li>それぞれについて「なぜ効果的だったか／なぜ手応えがなかったか」を1〜2行で言語化する</li>
+            </ul>
+            <p><strong>テンプレートの下書きを書く（25分）</strong></p>
+            <ul>
+              <li>下の「コピー用テンプレ」を使って<strong>【学習データ⑫】対話ログ整理テンプレート</strong>の下書きを始める</li>
+              <li>①個人課題テーマの再確認 →②対話ログの抜粋 →③気づき、の順に埋めていく</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>探究を続け、テンプレートを完成させて投入する</h3>
+          <div class="timeline-body">
+            <p><strong>探究の続き（15分）</strong></p>
+            <ul>
+              <li>整理した気づきを踏まえ、まだ分からないことについて自分のAIにさらに質問を重ねる</li>
+            </ul>
+            <p><strong>テンプレートを完成させて投入する（15分）</strong></p>
+            <ul>
+              <li>「④ あいまいだった質問・改善した聞き方」「⑤ 次回に向けて整理しておきたいこと」まで書き切る</li>
+              <li>第5〜12回と同じ手順で、自分のAI（NotebookLM）の<strong>「ソースを追加」→「ドライブ」</strong>からこのドキュメントを選択。これで<strong>【学習データ①〜⑫】</strong>が揃った状態になる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ ai-communication.html Week 14 「AI育成②：仕上げ＆振り返り」と同期 -->
+              <li>次回（第14回・最終回）: <strong>AI育成②：仕上げ＆振り返り</strong>——前期で蓄積した情報の見直し・整理・体系化、カスタム指示の最終調整。「自分だけのAI」の完成、記録形式での自己振り返り（発表なし）、AI倫理の再確認、後期への接続。<strong>【学習データ⑬】</strong>振り返りフレームワークを投入する</li>
+              <li>今日のキーワード<strong>「対話ログ」「どう聞いたら何が引き出せたか」「プロンプトの振り返り」「【学習データ⑫】対話ログ整理テンプレート」</strong>を口に出して言えるか確認して退出</li>
+              <li>家では今日整理した「効果的だった聞き方」を、まだ分からないことにもう1回試してみる</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>【対話ログ整理テンプレート】テンプレ(コピー用)</h2>
+      <p>授業内で書ききれなかった人や<strong>家でゼロから作り直したい人</strong>のために、テンプレ本文をここからコピーできるようにしてある。</p>
+      <p><strong>使い方:</strong></p>
+      <ol>
+        <li>下の「Markdown をコピー」ボタンを押す</li>
+        <li><a href="https://docs.google.com" target="_blank" rel="noopener">Google ドキュメント</a> で新規ドキュメントを開く(ファイル名は<strong>「対話ログ整理テンプレート」</strong>)</li>
+        <li>Google ドキュメントの <strong>ツール → 設定 → 全般タブ →「マークダウンを有効にする」</strong>がオンになっているか確認(第5〜12回までに設定した人はそのまま)</li>
+        <li>本文に <strong>編集 →「マークダウンから貼り付け」</strong>で貼り付ける(普通の Ctrl/⌘+V でも内容は使えるので、Markdown 整形にこだわらない人はそのままで OK)→ 空欄を自分の言葉で埋める</li>
+        <li>NotebookLM の自分だけのAIで「ソースを追加」→「ドライブ」→ このドキュメントを選択。<strong>【学習データ⑫】として扱う</strong></li>
+      </ol>
+      <p><strong>個人情報を入れない原則は第1〜12回と同じ。</strong>本名・住所・電話番号・学籍番号は書かない。書ける範囲で OK・空欄でも OK。</p>
+      <button class="copy-md-btn" data-md-source="dialogue-log-md">
+        <span class="btn-icon"></span> Markdown をコピー
+      </button>
+<pre id="dialogue-log-md" class="md-preview"># 対話ログ整理テンプレート(NotebookLM 用 / 【学習データ⑫】)
+
+&gt; このシートは第13回 個人課題：制作の成果物です。
+&gt; 個人課題テーマについての対話ログを振り返り、「どう聞いたら何が引き出せたか」を整理した記録です。
+&gt; 個人情報(本名・住所・電話番号・学籍番号など)は書かないこと。書ける範囲で OK・空欄でも OK。
+
+## ① 個人課題テーマ(再確認)
+第12回の【テーマ探索ワークシート】②の内容をそのまま貼る。
+
+→
+
+## ② 今日/これまでの対話ログ(抜粋)
+効果的だった質問と、その応答の要点を2〜3組書く。
+
+→
+
+## ③ 「どう聞いたら何が引き出せたか」の気づき
+質問の仕方でどう応答が変わったか、比較して分かったことを書く。
+
+→
+
+## ④ あいまいだった質問・改善した聞き方
+うまく引き出せなかった質問と、聞き直して改善した例があれば書く(なければ空欄でOK)。
+
+→
+
+## ⑤ 次回(第14回)に向けて整理しておきたいこと
+第14回で「自分のAIに何を覚えさせたか」を一覧化する準備として、今の時点で覚えていること・重要だと思うことを書く。
+
+→
+</pre>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>【学習データ⑫】対話ログ整理テンプレートを完成させ、NotebookLMに投入する</strong>
+            <p>授業内で書ききれなかった項目を埋めてから、ソースとして追加する。特に<strong>⑤ 次回に向けて整理しておきたいこと</strong>は必ず書き切る——第14回の出発点になる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>個人課題テーマについてさらに1つ対話ログを追加する</strong>
+            <p>まだ分からないことについて、家で自分のAIに1つ質問を投げてみる。どう聞いたかもメモしておくと、第14回の振り返りが楽になる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>第6回の「プロンプト改善ワークシート」を見直す</strong>
+            <p>あいまいな指示と明確な指示の比較を読み返し、今日の対話ログ振り返りと結びつけてみる。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://notebooklm.google.com" target="_blank" rel="noopener">NotebookLM</a> — 今日の探究のメイン会場。<strong>【学習データ①〜⑪】</strong>を投入した「自分だけのAI」を開く</li>
+        <li><a href="https://docs.google.com" target="_blank" rel="noopener">Googleドキュメント</a> — <strong>【対話ログ整理テンプレート】</strong>の作成会場</li>
+        <li><a href="week12.html" class="week-link">第12回 個人課題：自分のテーマを掘る</a> — 今日の出発点となる【学習データ⑪】テーマ探索ワークシートの初出</li>
+        <li><a href="week06.html" class="week-link">第6回 「伝わる」プロンプトの設計</a> — 今日振り返りに使うあいまいな指示 vs 明確な指示の比較の初出</li>
+        <li><a href="week09.html" class="week-link">第9回 AI出力の検証と改善</a> — 引用[n]での根拠確認・ファクトチェック手順の初出</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week12.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第12回 個人課題：自分のテーマを掘る</span>
+      </a>
+      <a href="../ai-communication.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AIコミュニケーション基礎</span>
+      </a>
+      <a href="week14.html" class="lesson-nav-item" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第14回 AI育成②：仕上げ＆振り返り</span>
+      </a>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
