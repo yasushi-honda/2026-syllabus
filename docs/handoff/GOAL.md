@@ -21,14 +21,14 @@ week12.htmlの本文中に「残り4回（第12〜15回）」という前提の�
 - マージ後、3ページ（ai-communication.html, week13.html, week14.html）が本番URLでHTTP 200（証明: curl）
 
 ## 進行中のtasks
-- [ ] ai-communication.html 授業計画表の再編（全14回化、week13-14の2行化、week15統合注記）
-- [ ] content/ai-communication.md 同期
-- [ ] ai-communication/week12.html 回数表記修正（残り4回→残り3回、第12〜15回→第12〜14回）+ lesson-nav「次の回」有効化
-- [ ] ai-communication/week13.html 新規作成（個人課題：制作、学習データ⑫）
-- [ ] ai-communication/week14.html 新規作成（AI育成②：仕上げ＆振り返り統合、学習データ⑬、発表なし）
-- [ ] CLAUDE.md ファイル構成表に新規2ファイル追記
-- [ ] レビュー（code-reviewer + comment-analyzer 並列）、指摘反映
-- [ ] コミット・PR作成・マージ・デプロイ確認
+- [x] ai-communication.html 授業計画表の再編（全14回化、week13-14の2行化、week15統合注記）
+- [x] content/ai-communication.md 同期
+- [x] ai-communication/week12.html 回数表記修正（残り4回→残り3回、第12〜15回→第12〜14回）+ lesson-nav「次の回」有効化
+- [x] ai-communication/week13.html 新規作成（個人課題：制作、学習データ⑫）
+- [x] ai-communication/week14.html 新規作成（AI育成②：仕上げ＆振り返り統合、学習データ⑬、発表なし）
+- [x] CLAUDE.md ファイル構成表に新規2ファイル追記
+- [x] レビュー（code-reviewer + comment-analyzer 並列）、指摘反映（week12残存2箇所修正、week01/week10/week11の波及「全15回→全14回」「第11〜15回→第11〜14回」修正、week14「一覧化」文言追加）
+- [ ] コミット・PR作成・マージ・デプロイ確認（PR #152、追加修正コミット待ち）
 
 ## 🔄 中断点（in-flight）
 なし
