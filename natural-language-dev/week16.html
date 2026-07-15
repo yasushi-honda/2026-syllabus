@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第16回 成果発表＆総括 | 自然言語開発</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev.html">自然言語開発</a>
+        <span>/</span>
+        <span>第16回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">成果発表＆<wbr>総括</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 16（最終回）</span>
+            <span class="page-badge">木曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">前期最終回。第15回で準備した骨子をもとに、<strong>「4月の進級制作」と「前期末の進級制作」を比較する成果発表</strong>を行う（技術選択の根拠、AI活用プロセス、品質管理の工夫、自分の成長を含む）。発表のあとは前期全体を振り返り、<strong>「プロンプト→コンテキスト→ハーネス」という進化</strong>を自分の言葉で確認し、後期への接続を行う</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">成果発表 / Before・After比較 / 技術選択の根拠 / AI活用プロセスの説明責任 / プロンプト→コンテキスト→ハーネスの進化 / 後期への接続</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第15回で作成した発表骨子メモ・<code>docs/adr-summary.md</code>・書き直したREADMEにアクセスできる状態／進級制作をその場でデモできる状態（Codespacesですぐ起動できること）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>自分の進級制作について、<strong>技術選択の根拠・AI活用プロセス・品質管理の工夫・自分の成長</strong>の4点を含む発表を、決められた持ち時間内で行う</li>
+        <li>他の受講生の発表を聞き、<strong>自分と異なるAI活用の工夫を最低1つ</strong>見つけてメモする</li>
+        <li>前期を通じて学んだ「<strong>プロンプトエンジニアリング→コンテキストエンジニアリング→ハーネスエンジニアリング</strong>」という考え方の進化を、自分の言葉で説明できる</li>
+        <li>後期に向けて、自分の進級制作で<strong>次に取り組みたいこと</strong>を1つ以上言語化する</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>前期の集大成——「動くコード」から「語れる成長」へ</h2>
+      <div class="lesson-tip">
+        <strong>前期全体の振り返り:</strong> 第1回「前年度の進級制作を振り返る」から始まり、コンテキストエンジニアリング（第2〜5回）→ AI CLIの使い分けとSDD（第6回）→ TDD（第7回）→ ハーネスエンジニアリング（第8回）→ 実装回（第9回）→ SDD実践プロジェクト（第10〜12回）→ 責任あるAI開発（第13回）→ プロジェクト最終仕上げ（第14〜15回）と積み重ねてきた。本日はその全部を<strong>1つの発表</strong>にまとめて語る回。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続(90分 + 90分 = 計180分)。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>発表準備の最終確認 → グループ内リハーサル</h3>
+          <div class="timeline-body">
+            <p><strong>最終確認(15分)</strong></p>
+            <ul>
+              <li>第15回で作った発表骨子メモを見返し、デモ環境（Codespaces）がすぐ起動できることを確認する</li>
+              <li>持ち時間・発表順を確認する（クラス人数に応じて当日案内）</li>
+            </ul>
+            <p><strong>グループ内リハーサル(25分)</strong></p>
+            <ul>
+              <li>3〜4人のグループに分かれ、1人ずつ発表を通しで練習する（本番より短い持ち時間で可）</li>
+              <li>聞き手は「分かりにくかった箇所」「もっと聞きたい箇所」を1つずつ付箋やコメントで伝える</li>
+              <li>フィードバックを受けて、発表の中で説明を補強すべき箇所に印を付ける</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>成果発表（前半グループ）</h3>
+          <div class="timeline-body">
+            <p><strong>発表(45分)</strong></p>
+            <ul>
+              <li>クラスを前半・後半の2グループに分け、前半グループが発表する（1人あたりの持ち時間は人数に応じて当日調整）</li>
+              <li>発表に含める4点: ①<strong>技術選択の根拠</strong>（ADR振り返りより）②<strong>AI活用プロセス</strong>（第1回Vibe Codingから第10〜14回SDDまでの変化）③<strong>品質管理の工夫</strong>（テスト・ハーネス・負債管理）④<strong>自分の成長</strong>（4月と前期末のBefore/After比較）</li>
+              <li>聞き手は、他の人のAI活用の工夫で<strong>自分と違う点</strong>をメモする</li>
+            </ul>
+            <p><strong>質疑応答(5分)</strong></p>
+            <ul>
+              <li>時間が余れば1〜2件の質疑応答を挟む</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>成果発表（後半グループ）</h3>
+          <div class="timeline-body">
+            <p><strong>発表(45分)</strong></p>
+            <ul>
+              <li>後半グループが同じ形式で発表する</li>
+              <li>前半と同じく、聞き手は他の人のAI活用の工夫をメモする</li>
+            </ul>
+            <p><strong>全体共有(5分)</strong></p>
+            <ul>
+              <li>全発表が終わったところで、「印象に残った工夫」を2〜3人にその場で聞く</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>前期振り返り：プロンプト→コンテキスト→ハーネスの進化</h3>
+          <div class="timeline-body">
+            <p><strong>前期の学びを1本の流れにする(20分)</strong></p>
+            <ul>
+              <li>前期で扱った考え方を時系列で振り返る:
+                <ol>
+                  <li><strong>プロンプトエンジニアリング</strong>（第3〜5回）: 「1回の指示をどう工夫するか」</li>
+                  <li><strong>コンテキストエンジニアリング</strong>（第2〜5回）: 「AIに何をどう伝え続けるか」（<code>GEMINI.md</code>・PRD・ADR）</li>
+                  <li><strong>Spec-Driven Development</strong>（第6回・第10〜12回）: 「仕様を起点に実行可能な計画に落とす」</li>
+                  <li><strong>ハーネスエンジニアリング</strong>（第8回・第12回）: 「テスト・lint・レビューでAIの出力を検証する仕組み」</li>
+                </ol>
+              </li>
+              <li>各自、この4つの考え方のうち<strong>自分が一番実感を持てたもの</strong>を1つ選び、なぜそれが刺さったかを近くの人と話す</li>
+            </ul>
+            <p><strong>後期への接続(10分)</strong></p>
+            <ul>
+              <li>後期に向けて、自分の進級制作で<strong>次に取り組みたいこと</strong>を1つ以上メモする（例: tech-debt.mdに残っている項目、READMEでまだ書けていない部分、試してみたい新しいAIツールなど）</li>
+              <li>前期の総括: 「<strong>動くコードを書く</strong>」ことから始まり、「<strong>AIと協働しながら責任を持って動くコードを作る</strong>」ところまで来た、という前期全体の到達点を確認する</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>前期の締めくくり:</strong> 「責任あるコード」というテーマは、第1回から第16回まで形を変えながら6つの具体例（異常系・境界値／サービス終了への備え／公式情報の信頼／倫理・規制・著作権／負債の解消／伝わる記録）で登場した。後期はこの土台の上に、さらに実践的な開発へと進んでいく。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>前期総括</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>今日のキーワード: <strong>成果発表 / Before・After比較 / プロンプト→コンテキスト→ハーネスの進化 / 後期への接続</strong></li>
+              <li>前期16回で積み上げてきたこと:
+                <ul>
+                  <li>AIとの協働の作法（コンテキストエンジニアリング・SDD・TDD・ハーネスエンジニアリング）</li>
+                  <li>「責任あるコード」という一貫したテーマの6つの具体例</li>
+                  <li>自分の進級制作を4月から前期末まで育て続けた経験そのもの</li>
+                </ul>
+              </li>
+              <li>後期に向けて: 本日メモした「次に取り組みたいこと」を、後期第1回のふりかえりで再度使う</li>
+              <li>前期、お疲れさまでした</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>本日の発表内容を進級制作リポジトリに残す</strong>
+            <p>発表で使ったBefore/After比較・技術選択の根拠のメモを、<code>docs/</code>配下にまとめてcommitする（<code>docs/adr-summary.md</code>と合わせて1つのふりかえりドキュメントにしてもよい）。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>後期に取り組みたいことをメモしておく</strong>
+            <p>本日の振り返りでメモした「次に取り組みたいこと」を、後期第1回で見返せる場所に保存しておく。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week15.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第15回 プロジェクト最終仕上げ②：ドキュメント整備・発表準備</span>
+      </a>
+      <a href="../natural-language-dev.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">自然言語開発</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">前期終了</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
