@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第14回 プロジェクト最終仕上げ①：最終調整・テスト | 自然言語開発</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+  <!-- 公式情報確認: 参考リンクは第12回(2026-07-01確認)からの再掲(npm-audit / Dependabot alerts / Secret scanning)。確認日の詳細は week12.html の同コメント参照 -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev.html">自然言語開発</a>
+        <span>/</span>
+        <span>第14回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">プロジェクト最終<wbr>仕上げ①：<wbr>最終調整・<wbr>テスト</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 14</span>
+            <span class="page-badge">木曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">第10〜13回で積み上げてきたSDD実践プロジェクトの<strong>技術面の仕上げ</strong>に充てる回。第12回で <code>docs/tech-debt.md</code> に棚卸しした技術的負債と、第13回で <code>docs/responsible-ai-week13.md</code> に記録した先送り事項を、<strong>優先度順に実際に潰していく</strong>。ドキュメント整備や発表準備は次回（第15回）に譲り、本日は<strong>動くもの・テストの質を上げること</strong>に集中する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value"><code>docs/tech-debt.md</code> P0/P1消化 / <code>docs/responsible-ai-week13.md</code> 先送り事項の解消 / テストカバレッジ最終確認 / GitHub Project の Done 移動 / <code>npm audit fix</code> / Security タブ再確認 / ADR追記</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第10〜13回の成果物一式（<code>spec.md</code>・<code>plan.md</code>・ADR・<code>docs/tech-debt.md</code>・<code>docs/responsible-ai-week13.md</code>）にアクセスできる状態／Antigravity CLI <code>agy</code> セッションが起動できる／GitHub Project の Todo・In progress・Done の現状が分かる状態</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li><code>docs/tech-debt.md</code> に登録されている項目のうち、<strong>優先度P0を全件・P1を最低1件</strong>実際に解消し、該当項目を「解消」マークに更新する</li>
+        <li><code>docs/responsible-ai-week13.md</code> のチェックリストで先送りにした項目を<strong>最低1件</strong>確認・解消する</li>
+        <li>第12回で読み直したテストの3軸（coverage / <code>.skip</code>・<code>.todo</code> / フレーク）を<strong>再計測</strong>し、Before（第12回時点）と比較して改善したかを確認する</li>
+        <li>GitHub Project の In progress に残っているタスクを、可能な範囲で Done まで進める</li>
+        <li>本日の作業内容と「今回も直しきれなかったもの」を新規ADR（例: <code>docs/adr/0004-week14-final-fixes.md</code>）に記録する</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>「動くだけでは足りない」を仕上げに変える</h2>
+      <div class="lesson-tip">
+        <strong>ここまでの積み上げ:</strong> 第10回（設計）→第11回（実装）→第12回（検証と改善：負債の可視化）→第13回（責任あるAI開発：倫理・規制・著作権のチェック）と重ねてきた。本日は<strong>可視化した負債・先送り事項を実際に減らす</strong>回。全部を解消する必要はないが、「可視化したものが実際に減った」という体験を1つでも作ることが目的。ドキュメント整備・発表準備は次回（第15回）でまとめて扱う。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続(90分 + 90分 = 計180分)。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>残タスクの棚卸し → 本日解消する項目に優先順位を付ける</h3>
+          <div class="timeline-body">
+            <p><strong>現状の棚卸し(20分)</strong></p>
+            <ul>
+              <li>各自、以下の3つのドキュメントを開き直し、現状を確認する:
+                <ul>
+                  <li><code>docs/tech-debt.md</code> — 第12回で登録した項目。優先度P0/P1がいくつ残っているか数える</li>
+                  <li><code>docs/responsible-ai-week13.md</code> — 第13回のチェックリストで「先送り」にした項目</li>
+                  <li>GitHub Project — Todo・In progress に残っているタスクの枚数</li>
+                </ul>
+              </li>
+              <li>近くの人と「残っている項目の数」を1分ずつ報告し合う。多い・少ないで一喜一憂せず、<strong>今日どれを潰すか</strong>に意識を向ける</li>
+            </ul>
+            <p><strong>本日のゴールを1人ずつ決める(20分)</strong></p>
+            <ul>
+              <li>本日中に解消する項目を具体的に選ぶ基準:
+                <ol>
+                  <li><strong>P0（公開前に必ず直す）</strong>を最優先で全部選ぶ</li>
+                  <li>P0が無ければ<strong>P1</strong>から1〜2件</li>
+                  <li>責任あるAI開発（第13回）の先送り事項から1件</li>
+                </ol>
+              </li>
+              <li>選んだ項目を <code>docs/tech-debt.md</code> の該当行にコメントで「本日着手」と印を付ける</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>今日の合言葉:</strong> 「<strong>全部直そうとしない、選んだものを確実に終わらせる</strong>」。第12回で学んだ負債の3原則（隠さない・忘れない・過剰対応しない）の3つ目がそのまま今日にも当てはまる。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>tech-debt.md の P0/P1 を実装で解消する</h3>
+          <div class="timeline-body">
+            <p><strong>負債の解消作業(45分)</strong></p>
+            <ul>
+              <li>選んだ項目ごとに、通常のGitHub Flow（<code>fix/&lt;area&gt;-&lt;short-slug&gt;</code> ブランチ → commit → PR → CI緑 → squash merge）で1件ずつ解消する</li>
+              <li>agy への指示例（第12回で登録した負債を解消する場合）:
+                <pre><code>docs/tech-debt.md の T-002（テストのフレーク疑い）を解消したいです。
+routing.test.js を開き、時刻依存・ランダム依存・実行順依存の
+3仮説を1つずつ検証してください。原因が特定できたら
+修正案を提示し、npm test の結果を貼って Green を確認してから
+止まってください。
+</code></pre>
+              </li>
+              <li>依存パッケージの脆弱性（第12回 Dependabot alerts / <code>npm audit</code>）でCritical・Highが残っている場合は、<code>npm audit fix</code> を試し、<strong>fix後は必ず <code>npm test</code> でGreenを再確認</strong>する（依存バージョンアップが挙動を変えることがあるため）</li>
+              <li>1件解消するごとに、<code>docs/tech-debt.md</code> の該当項目を削除するか「✅ 解消済み（Week14）」に書き換えてcommitする</li>
+            </ul>
+            <p><strong>解消できなかった場合の記録(5分)</strong></p>
+            <ul>
+              <li>時間内に解消しきれなかった項目は、<code>docs/tech-debt.md</code> に「Week14でも着手したが未解消」と正直に追記する。<strong>隠さない</strong>ことが第12回からの一貫した姿勢</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>テストカバレッジを再計測 → Before/After を比較する</h3>
+          <div class="timeline-body">
+            <p><strong>テストの3軸を再計測(20分)</strong></p>
+            <ul>
+              <li>第12回で計測した3軸を再度計測し、数字で比較する:
+                <ol>
+                  <li><strong>Coverage</strong>: <code>npm test -- --coverage</code>（プロジェクトのスクリプト依存）で計測し、第12回の数字と比較</li>
+                  <li><strong><code>.skip</code> / <code>.todo</code></strong>: <code>grep -rn "\.skip\|\.todo" src/</code> で件数を再カウント</li>
+                  <li><strong>フレーク</strong>: GitHub Actions <code>test.yml</code> の直近実行で色が変わっているテストが残っていないか確認</li>
+                </ol>
+              </li>
+              <li>Before（第12回）→ After（本日）の変化を <code>docs/tech-debt.md</code> の末尾か新規メモに1行で残す（例: 「Coverage 62% → 71%、フレーク疑い1件 → 0件」）</li>
+            </ul>
+            <p><strong>GitHub Project を最新状態にする(30分)</strong></p>
+            <ul>
+              <li>In progress に残っているタスクを、本日解消できた分だけ Done に移動する</li>
+              <li>今学期中に着手できないタスクは、Issueに<strong>今回は見送り</strong>とコメントを残し、<code>postponed</code> ラベル等（プロジェクトの運用に合わせる）を付けてクローズせず保留にする。<strong>クローズして忘れる</strong>のではなく、<strong>保留として記録を残す</strong>のが「隠さない」姿勢の実践</li>
+              <li>GitHub Project のスクリーンショットを1枚撮り、後で第15回・第16回の振り返り資料に使えるようにしておく</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>数字で見る効用:</strong> 「頑張った気がする」ではなく、Coverage・件数などの<strong>数字の変化</strong>で進捗を確認する。数字が悪化していた場合も、それ自体が「なぜ悪化したか」を考える材料になる。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>Security タブを再確認 → 責任あるAI開発の先送り事項を1件解消</h3>
+          <div class="timeline-body">
+            <p><strong>Security タブの再確認(15分)</strong></p>
+            <ul>
+              <li>第12回で確認したGitHubの Security タブ（Secret scanning + Dependabot alerts）を開き直し、<strong>Critical・Highのアラートが残っていないか</strong>を確認する</li>
+              <li>残っている場合は本日中に対応するか、<code>docs/tech-debt.md</code> にP0として明示的に登録し直す</li>
+            </ul>
+            <p><strong>責任あるAI開発の先送り事項を1件解消(15分)</strong></p>
+            <ul>
+              <li>第13回 <code>docs/responsible-ai-week13.md</code> でチェックが付かなかった項目から1つ選び、実際に確認・修正する（例: 依存ライブラリのライセンス一覧の確認、見慣れないライセンス表記の除去）</li>
+              <li>解消できたら <code>docs/responsible-ai-week13.md</code> の該当項目にチェックを入れてcommit</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り＆次回予告</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>今日のキーワード: <strong><code>docs/tech-debt.md</code> P0/P1消化 / テストカバレッジ Before/After / GitHub Project Done移動 / Security タブ再確認 / <code>docs/responsible-ai-week13.md</code> 先送り事項解消</strong></li>
+              <li>覚えてほしいこと:
+                <ul>
+                  <li>負債は<strong>可視化して終わりではなく、優先度順に実際に減らす</strong>ところまでが1サイクル</li>
+                  <li>Before/Afterを<strong>数字で</strong>比較すると、成長や改善が本人にも他人にも伝わりやすくなる</li>
+                </ul>
+              </li>
+              <li>「責任あるコード」第5の具体例: 可視化した負債・先送り事項を実際に減らした＝「見つけたことを記録するだけでなく、優先度をつけて対応まで責任を持つ」</li>
+              <li>次回（第15回）: <strong>プロジェクト最終仕上げ②：ドキュメント整備・発表準備</strong>。README整備、ADRの振り返り、「4月の進級制作」と「前期末の進級制作」を比較する発表構成の準備</li>
+              <li>家での発展（任意）: 本日解消しきれなかったP1項目をもう1件進める／Dependabot alertsの残りを<code>npm audit fix</code>で潰す</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>tech-debt.md のP0を全件・P1を最低1件解消してcommit</strong>
+            <p>本日解消した項目を <code>docs/tech-debt.md</code> に反映し、通常の GitHub Flow で main まで squash merge する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>ADR-0004を commit</strong>
+            <p>本日の作業内容（解消したもの・直しきれなかったもの）を新規ADRとして記録し、<strong>docs onlyの1 PR</strong>でマージする。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>テストカバレッジのBefore/Afterを記録する</strong>
+            <p>第12回時点と本日時点のCoverage・<code>.skip</code>件数・フレーク件数を1行で比較し、<code>docs/tech-debt.md</code>末尾か振り返りメモに残す。第16回の成果発表で使える材料になる。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://docs.npmjs.com/cli/v10/commands/npm-audit" target="_blank" rel="noopener">npm docs — npm-audit</a> — <code>npm audit</code> / <code>npm audit fix</code> の公式リファレンス（第12回から継続参照）</li>
+        <li><a href="https://docs.github.com/ja/code-security/dependabot/dependabot-alerts/about-dependabot-alerts" target="_blank" rel="noopener">GitHub Docs ja — Dependabot alerts</a> — 依存パッケージの既知脆弱性アラートの公式仕様（第12回から継続参照）</li>
+        <li><a href="https://docs.github.com/ja/code-security/secret-scanning/introduction/about-secret-scanning" target="_blank" rel="noopener">GitHub Docs ja — シークレット スキャン</a> — Secret scanningの公式仕様（第12回から継続参照）</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week13.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第13回 責任あるAI開発</span>
+      </a>
+      <a href="../natural-language-dev.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">自然言語開発</span>
+      </a>
+      <a href="week15.html" class="lesson-nav-item" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第15回 プロジェクト最終仕上げ②：ドキュメント整備・発表準備</span>
+      </a>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>

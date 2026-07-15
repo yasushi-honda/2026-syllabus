@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第15回 プロジェクト最終仕上げ②：ドキュメント整備・発表準備 | 自然言語開発</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+  <!-- 公式情報確認: 2026-07-16 (docs.github.com/ja/repositories/.../about-readmes 実H1「リポジトリの README ファイルについて」) -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev.html">自然言語開発</a>
+        <span>/</span>
+        <span>第15回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">プロジェクト最終<wbr>仕上げ②：<wbr>ドキュメント整備・<wbr>発表準備</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 15</span>
+            <span class="page-badge">木曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">第14回で<strong>技術面</strong>を仕上げたので、本日は進級制作を<strong>他者に説明できる状態</strong>に整える。README整備、ADRの棚卸しと振り返り（<strong>なぜその判断をしたか</strong>を1本の物語にする）、そして次回（第16回）の成果発表に向けて「<strong>4月の自分のコード</strong>」と「<strong>前期末のコード</strong>」を比較する素材を整理する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">README整備 / ADR振り返り / 技術選択の根拠の言語化 / Before・After比較 / 発表構成 / 「プロンプト→コンテキスト→ハーネス」の進化</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第14回完了（tech-debt.mdのP0解消・ADR-0004作成済み）／進級制作の4月時点のコード（<code>git log</code> の初期コミットや、第1回に振り返った当時のコード）にアクセスできる状態／これまで作成した全ADR（0001〜0004）を読み返せる状態</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>進級制作の <code>README.md</code> を、<strong>初めて見る人が読んでも動かせる状態</strong>（セットアップ手順・機能一覧・技術スタック）に書き直す</li>
+        <li>これまで作成したADR（0001〜0004）を通しで読み返し、「<strong>設計判断の連鎖</strong>」を1つの短い文章にまとめる</li>
+        <li>4月時点の進級制作コードと前期末のコードを見比べ、<strong>変化点を3つ以上</strong>具体的に言語化する（機能・コードの質・AI活用の仕方のいずれでもよい）</li>
+        <li>第16回の成果発表に向けて、<strong>発表の骨子（話す順番・見せる画面・所要時間の目安）</strong>を1枚のメモにまとめる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>「動くコード」から「伝わる記録」へ</h2>
+      <div class="lesson-tip">
+        <strong>視点の切り替え:</strong> 第10〜14回は一貫して「仕様通りに動くか」「テストが緑か」「負債が減ったか」という<strong>コードそのものの品質</strong>を見てきた。本日は視点を変え、「<strong>自分以外の人がこのプロジェクトを理解できるか</strong>」を評価軸にする。README・ADR・発表資料は、コードと同じくらい<strong>責任あるコードの一部</strong>——自分が下した判断を他者が検証できる形で残すことも、AIと協働する開発者の責任の1つ。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続(90分 + 90分 = 計180分)。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>なぜREADMEを書くか → 現状のREADMEを他人の目で読み直す</h3>
+          <div class="timeline-body">
+            <p><strong>READMEの役割(15分)</strong></p>
+            <ul>
+              <li>READMEは「<strong>このプロジェクトを初めて開いた人が最初に読むドキュメント</strong>」。自分にとって当たり前の情報（セットアップ手順・使用言語・起動コマンド）ほど書き漏らしやすい</li>
+              <li>本授業で最低限含める4項目: ①<strong>プロジェクトの概要</strong>（何をするアプリか）②<strong>セットアップ手順</strong>（Codespacesで開いてから動かすまでの手順）③<strong>機能一覧</strong>④<strong>使用した技術スタック</strong>（言語・ライブラリ・AI CLIの活用箇所）</li>
+            </ul>
+            <p><strong>現状のREADMEを他人の目で読み直す(25分)</strong></p>
+            <ul>
+              <li>隣の人とリポジトリを見せ合い、<strong>相手のREADMEだけを見て「どうやってこのアプリを動かすか」を1分で説明できるか</strong>試す。説明できなければ、その部分がREADMEに不足している証拠</li>
+              <li>指摘を受けた項目をメモしておき、1限後半の書き直しに反映する</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>今日の視点:</strong> 「自分は分かっている」と「初めて読む人にも伝わる」は別の基準。他人に読んでもらって初めて見つかる不足がある。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>README を書き直す</h3>
+          <div class="timeline-body">
+            <p><strong>README書き直し(45分)</strong></p>
+            <ul>
+              <li>1限前半で受けた指摘と、4項目のテンプレートを元に <code>README.md</code> を書き直す</li>
+              <li>agy への指示例（ゼロから作る場合と、既存を直す場合の両方に使える）:
+                <pre><code>このリポジトリの README.md を、初めて見る人でも
+セットアップから起動までできる内容に書き直してください。
+含めてほしい項目:
+1. プロジェクトの概要（1〜2文）
+2. セットアップ手順（Codespacesで開いてからの具体的なコマンド）
+3. 主な機能一覧（箇条書き）
+4. 使用技術スタック（言語・主要ライブラリ・活用したAI CLI）
+
+package.json と src/ の構成を見て、実態と合っているか
+確認しながら書いてください。
+</code></pre>
+              </li>
+              <li>agyが生成した内容を<strong>鵜呑みにせず</strong>、実際にセットアップ手順通りに1度動かしてみて、コマンドが実態と合っているか自分で確認する（第4回で学んだ「AIの出力のブレを体感する」姿勢と同じ）</li>
+            </ul>
+            <p><strong>相互レビュー(5分)</strong></p>
+            <ul>
+              <li>書き直したREADMEをもう一度隣の人に見せ、1限前半より説明しやすくなったか確認する</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>ADRを通しで振り返る → 4月と前期末のコードを比較する</h3>
+          <div class="timeline-body">
+            <p><strong>ADRの振り返り(20分)</strong></p>
+            <ul>
+              <li>これまで作成したADR（第10回0001〜第14回0004）を通しで読み返す</li>
+              <li>各ADRの<strong>Decision</strong>（何を決めたか）だけを抜き出し、時系列で並べる。「設計判断がどうつながっているか」の連鎖が見えるはず</li>
+              <li>1つのドキュメント（例: <code>docs/adr-summary.md</code>）に、ADR番号・決めたこと・理由を1行ずつまとめる</li>
+            </ul>
+            <p><strong>4月と前期末のコードを比較する(30分)</strong></p>
+            <ul>
+              <li>第1回で振り返った「4月時点のコード」を <code>git log</code> で開き直し、前期末の現在のコードと見比べる</li>
+              <li>変化点を3つ以上、具体的に書き出す。観点の例:
+                <ul>
+                  <li><strong>機能面</strong>: 何が新しくできるようになったか</li>
+                  <li><strong>コードの質</strong>: テストの有無、命名、関数分割の変化</li>
+                  <li><strong>AI活用の仕方</strong>: 第1回のVibe Codingと、第10〜14回のSDD（仕様→計画→実装→検証）では、AIへの指示の出し方がどう変わったか</li>
+                </ul>
+              </li>
+              <li>agy への指示例:
+                <pre><code>git log --oneline の最初の10件と直近10件を比較して、
+ファイル構成・依存パッケージ・テストの有無にどんな
+違いがあるか要約してください。断定はせず、
+「〜が増えている」「〜が新しく追加されている」という
+観察ベースで教えてください。
+</code></pre>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>発表の骨子を作る</h3>
+          <div class="timeline-body">
+            <p><strong>発表構成メモの作成(30分)</strong></p>
+            <ul>
+              <li>第16回の成果発表（1人あたりの持ち時間は当日案内）に向けて、以下を1枚のメモにまとめる:
+                <ol>
+                  <li><strong>話す順番</strong>: 概要 → 技術選択の根拠（ADR振り返りより）→ Before/After比較 → AI活用プロセスで工夫した点 → 今後の課題</li>
+                  <li><strong>見せる画面</strong>: デモで動かす画面、見せるコードの箇所、READMEのどこを見せるか</li>
+                  <li><strong>所要時間の目安</strong>: 各項目に何分使うか</li>
+                </ol>
+              </li>
+              <li>隣の人とメモを見せ合い、「分かりにくそうな箇所」を1つずつ指摘し合う</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>発表は準備で9割決まる:</strong> 当日にぶっつけ本番で話すのではなく、本日作った骨子メモを見ながら1回は声に出して練習しておくと、第16回当日の緊張が下がる。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り＆次回予告</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>今日のキーワード: <strong>README整備 / <code>docs/adr-summary.md</code> / ADRの連鎖 / Before・After比較 / 発表骨子メモ</strong></li>
+              <li>覚えてほしいこと:
+                <ul>
+                  <li><strong>コードの品質</strong>と<strong>伝わる記録</strong>は別の能力。両方揃って初めて「公開できる」状態になる</li>
+                  <li>ADRを振り返ると、バラバラに見えた各回の判断が<strong>1つの筋の通ったストーリー</strong>になっていることに気づける</li>
+                </ul>
+              </li>
+              <li>「責任あるコード」第6の具体例: README・ADR振り返りを通じて自分の判断を他者が検証できる形にした＝「動くコードを、説明できるコードに変える責任」</li>
+              <li>次回（第16回・最終回）: <strong>成果発表＆総括</strong>。「4月の進級制作」と「前期末の進級制作」を比較する成果発表。前期の振り返り：「プロンプト→コンテキスト→ハーネス」の進化を実感。後期への接続</li>
+              <li>家での発展（任意）: 発表骨子メモを見ながら1回声に出して練習する／READMEをもう一度他の人に読んでもらいフィードバックをもらう</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>README.md を書き直してcommit</strong>
+            <p>本日書き直したREADMEを、<strong>docs onlyの1 PR</strong>としてmainにsquash mergeまで持っていく。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>発表骨子メモを完成させる</strong>
+            <p>第16回当日までに、話す順番・見せる画面・所要時間を明記した発表骨子メモを完成させ、いつでも見返せる場所（リポジトリの<code>docs/</code>や手元のメモアプリ等）に保存しておく。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong><code>docs/adr-summary.md</code> をcommitする</strong>
+            <p>本日作成したADRの振り返りメモをリポジトリに残し、第16回の発表資料としてそのまま使えるようにしておく。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://docs.github.com/ja/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-readmes" target="_blank" rel="noopener">GitHub Docs ja — リポジトリの README ファイルについて</a> — READMEに含めるべき内容についての公式ガイド</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week14.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第14回 プロジェクト最終仕上げ①：最終調整・テスト</span>
+      </a>
+      <a href="../natural-language-dev.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">自然言語開発</span>
+      </a>
+      <a href="week16.html" class="lesson-nav-item" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第16回 成果発表＆総括</span>
+      </a>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
