@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第13回 デバッグ集中回（AIなしで直す） | プログラム基礎 I</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--blue">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../program-basics.html">プログラム基礎 I</a>
+        <span>/</span>
+        <span>第13回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">デバッグ集中回<wbr>（AIなしで直す）</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 13</span>
+            <span class="page-badge">火曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">第12回で <code>NOTES.md</code> に書いた「直したいことリスト」を教材に、今日は<strong>AI（GitHub Copilot）を使わずに</strong>自力でバグを直す。これまでのバグ修正ワーク①〜③は<strong>AIが生成したバグ入りコード</strong>を読み解く練習だったが、今日は<strong>自分の3作品に残る"生きたバグ"</strong>を、<strong>仮説を立てる→<code>console.log</code>で確かめる→直す</strong>というサイクルで自分の力だけで直す</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">エラーメッセージを読む / 仮説→検証→修正 / <code>console.log</code>での原因特定 / AIなしで直す / 修正記録</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第4・8・12回で公開済みの<strong>3作品</strong>（プロフィールサイト・小ゲーム・クリックゲーム）・第12回の<code>NOTES.md</code>「<strong>直したいことリスト</strong>」・Codespaces が起動できる状態</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>エラーメッセージを読み、<strong>「どこで」「何が」</strong>起きているかを自分の言葉で言える</li>
+        <li>AIに頼らず、自分で<strong>原因を推測して修正</strong>を試せる</li>
+        <li><code>console.log</code> で値を確認しながら、原因を絞り込める</li>
+        <li>直せたバグ・直せなかったバグの<strong>両方</strong>を <code>NOTES.md</code> に記録できる</li>
+        <li>エラーは怖いものではなく<strong>手がかり</strong>だと感じられる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>大事な前提（毎回投影しておく）</h2>
+      <div class="lesson-tip">
+        <strong>今日はAIを使わない宣言:</strong> GitHub Copilot の自動補完・チャットを<strong>オフ</strong>にする——これまでのバグ修正ワーク①〜③（AIにバグ入りコードを書かせて直す練習）とは逆に、今日はAIにコードを書かせない。検索して MDN 等のリファレンスを読むのは OK。目的は「AIに頼らなくても自分で直せる」という自信と、エラーメッセージを読む基礎力を育てることにある。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>今日のルールを知る → エラーメッセージの読み方を学ぶ</h3>
+          <div class="timeline-body">
+            <p><strong>今日のルールを共有する（10分）</strong></p>
+            <ul>
+              <li>講師から、今日は<strong>Copilotをオフにして自力で直す</strong>集中回であることを共有。第10回までのバグ修正ワークとの違い（AIが作ったバグ→自分の本物のバグ）を確認</li>
+            </ul>
+            <p><strong>「直したいことリスト」を見直す（10分）</strong></p>
+            <ul>
+              <li>Codespaces で <code>NOTES.md</code> を開き直し、第12回に書いた「直したいことリスト」とクラスメイトからのフィードバックを読み返す</li>
+              <li>今日直す候補を<strong>3つ</strong>選ぶ（簡単そうなもの→難しそうなものの順に並べる）</li>
+            </ul>
+            <p><strong>エラーメッセージの読み方（20分）</strong></p>
+            <ul>
+              <li><code>python3 -m http.server 8000</code> → 第1回と同じ手順で Simple Browser を開く</li>
+              <li>ブラウザの<strong>開発者ツール（コンソール）</strong>を開き、エラーメッセージの構成（赤字のメッセージ・ファイル名・行番号）を確認する</li>
+              <li>わざと存在しない変数を呼ぶなど<strong>簡単なミス</strong>を書いてエラーを1つ出し、読み方を練習する</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>1つ目のバグを自力で直す</h3>
+          <div class="timeline-body">
+            <p><strong>仮説を立てる（15分）</strong></p>
+            <ul>
+              <li>選んだバグについて「たぶんここが原因では」という仮説を <code>NOTES.md</code> に1行書いてから着手する（第10回までの「読み解く」練習の応用）</li>
+            </ul>
+            <p><strong><code>console.log</code> で確かめる（20分）</strong></p>
+            <ul>
+              <li>怪しい箇所の前後に <code>console.log(...)</code> を挟み、実際の値を確認しながら仮説が合っているか検証する</li>
+            </ul>
+            <p><strong>直す（15分）</strong></p>
+            <ul>
+              <li>原因が分かったら修正。直ったら Simple Browser で動作を再確認する</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>2〜3つ目のバグに挑戦する</h3>
+          <div class="timeline-body">
+            <p><strong>続けて挑戦する（30分）</strong></p>
+            <ul>
+              <li>残りのバグにも同じ手順（<strong>仮説→<code>console.log</code>→直す</strong>）で取り組む</li>
+            </ul>
+            <p><strong>詰まった時の作法（20分）</strong></p>
+            <ul>
+              <li>AIに答えを聞く代わりに、「今どこで、何が分からないか」を <code>NOTES.md</code> に言語化してから、講師またはクラスメイトに相談する</li>
+              <li>人に説明しようとするだけで気づくこともある——声に出して自分のコードを説明してみる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>修正記録をまとめる</h3>
+          <div class="timeline-body">
+            <p><strong>修正記録を書く（20分）</strong></p>
+            <ul>
+              <li><code>NOTES.md</code> に「<strong>デバッグ集中回の記録</strong>」という見出しを作り、直したバグは<strong>原因と直し方</strong>を、直せなかったバグは<strong>今分かっていること</strong>を書く</li>
+            </ul>
+            <p><strong>3作品の最終チェック（10分）</strong></p>
+            <ul>
+              <li>3つの公開URLを開き直し、直した修正が<strong>本番（GitHub Pages）にも反映されているか</strong>確認する（<code>commit &amp; push</code> を忘れていないか）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ program-basics.html Week 14 「自由制作＆仕上げ・振り返り」と同期 -->
+              <li>次回（第14回・<strong>前期最終回</strong>）: <strong>自由制作＆振り返り</strong>——これまで学んだ技術を自由に組み合わせて最終作品を作り、公開後は前期の学びを記録形式で振り返る（発表なし）</li>
+              <li>今日のキーワード <strong>「エラーメッセージを読む」「仮説→検証→修正」「<code>console.log</code>での原因特定」「AIなしで直す」「修正記録」</strong>を口に出して言えるか確認して退出</li>
+              <li>直せなかったバグは、次回はAIを使ってよいのでそこで再挑戦してもよいと伝える</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>「直したいことリスト」から最低2件を自力で修正し、原因と直し方を <code>NOTES.md</code> に記録する</strong>
+            <p>授業内で終わらなかった人は家で続けてよいが、<strong>AIを使わず自力で</strong>という条件は変えない。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>直せなかったバグがあれば、今分かっていることを <code>NOTES.md</code> に書き残す</strong>
+            <p>「どこまで分かったか」「何を試したか」を記録しておくと、次回以降の再挑戦がしやすくなる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>開発者ツールのコンソールで <code>console.warn</code> ・<code>console.error</code> も試してみる</strong>
+            <p><code>console.log</code> との表示の違いを見比べ、使い分けを体感する。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Errors" target="_blank" rel="noopener">MDN — JavaScript エラーリファレンス</a> — 代表的なエラーの種類と意味の一覧</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/console/log_static" target="_blank" rel="noopener">MDN — <code>console: log()</code> 静的メソッド</a> — <code>console.log</code> の公式リファレンス</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Learn_web_development/Howto/Tools_and_setup/What_are_browser_developer_tools" target="_blank" rel="noopener">MDN — ブラウザーの開発者ツールとは</a> — コンソールを含む開発者ツール全体の入門解説</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week12.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第12回 🎯ミニ完成③ インタラクティブ作品公開</span>
+      </a>
+      <a href="../program-basics.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">プログラム基礎 I</span>
+      </a>
+      <a href="week14.html" class="lesson-nav-item" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第14回 自由制作＆振り返り</span>
+      </a>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>

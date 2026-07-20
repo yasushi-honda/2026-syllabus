@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第14回 自由制作＆振り返り | プログラム基礎 I</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--blue">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../program-basics.html">プログラム基礎 I</a>
+        <span>/</span>
+        <span>第14回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">自由制作＆<wbr>振り返り</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 14</span>
+            <span class="page-badge">火曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">前期最終回。<strong>前期に学んだHTML/CSS/JavaScriptを自由に組み合わせて</strong>作品を制作する。第13回とは逆に、今日は<strong>AIを使ってよい</strong>——何を手で書き、何をAIに任せるかは<strong>自分でルールを決める</strong>。完成した作品をGitHub Pagesに<strong>公開</strong>し、前期の学びを<strong>記録形式で自己振り返り</strong>する（発表なし）。後期への接続も行う</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">自由制作 / 自分のAI利用ルール / 最終作品の公開 / 記録形式の自己振り返り（発表なし） / 後期への接続</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第4・8・12回で公開済みの<strong>3作品</strong>・第13回の <code>NOTES.md</code>「デバッグ集中回の記録」・Codespaces が起動できる状態</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>これまで学んだ技術を自由に組み合わせて、<strong>自分の作りたいもの</strong>を形にできる</li>
+        <li>「何を手で書き、何をAIに任せるか」を<strong>自分の言葉で決められる</strong></li>
+        <li>最終作品を GitHub Pages に<strong>公開</strong>できる</li>
+        <li>前期の学びを<strong>記録形式で自己振り返り</strong>できる（発表を目的としない）</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>大事な前提（毎回投影しておく）</h2>
+      <div class="lesson-tip">
+        <strong>今日は発表会ではない:</strong> 最終作品は GitHub Pages に公開するが、クラスの前で発表する時間は設けない。前期を通じて大切にしてきた「自分の手で動くものを作る」体験の総仕上げとして、自分のペースで作り、自分の言葉で振り返ることを最優先にする。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前期を振り返る → 今日作るものを決める</h3>
+          <div class="timeline-body">
+            <p><strong>前期の歩みを振り返る（10分）</strong></p>
+            <ul>
+              <li>第4・8・12回で公開した3作品（プロフィールサイト・小ゲーム・クリックゲーム）と、第13回のデバッグ集中回を順に思い出す</li>
+              <li>講師から、今日が<strong>前期最終回</strong>であることを共有</li>
+            </ul>
+            <p><strong>自分のAI利用ルールを決める（10分）</strong></p>
+            <ul>
+              <li>「何を手で書き、何をAIに任せるか」を <code>NOTES.md</code> に1〜3行で宣言する。第13回でAIなしを経験したからこそ、今日は自分の判断で使い分けを選べる</li>
+            </ul>
+            <p><strong>今日作るものを決める（20分）</strong></p>
+            <ul>
+              <li>作るものは自由——既存3作品のどれかを改良してもよいし、新しく作ってもよい</li>
+              <li>テーマ例: <strong>3作品を1つのサイトにまとめる</strong> / <strong>第12回で直せなかったバグを直しつつ機能を1つ追加する</strong> / <strong>新しい小さな作品を1から作る</strong></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>自由制作①（HTML/CSSで骨組みを作る）</h3>
+          <div class="timeline-body">
+            <p><strong>制作（50分）</strong></p>
+            <ul>
+              <li>決めたテーマに沿って HTML/CSS で骨組みを作る。第1〜5回で学んだタグ・レイアウトを自分で選んで組み合わせる</li>
+              <li>迷ったら第4回（プロフィールサイト）・第8回（小ゲーム）の構造を見返してよい</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>自由制作②（JavaScriptで動きを付ける）→ 公開する</h3>
+          <div class="timeline-body">
+            <p><strong>制作（30分）</strong></p>
+            <ul>
+              <li>JavaScript で動きを付ける。第6〜12回で学んだ<strong>変数・条件分岐・繰り返し・配列・関数・DOM操作</strong>のうち、自分の作品に必要なものを選んで使う</li>
+            </ul>
+            <p><strong><code>commit &amp; push</code> で公開（20分）</strong></p>
+            <ul>
+              <li>第4・8・12回と同じ手順（ソース管理タブ→コミット→Sync Changes）で GitHub Pages に公開する</li>
+              <li>公開URLをブラウザの別タブで開き、動作確認する</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>前期の自己振り返り</h3>
+          <div class="timeline-body">
+            <p><strong>振り返りを書く（25分）</strong></p>
+            <ul>
+              <li><code>NOTES.md</code> に「<strong>前期の振り返り</strong>」という見出しを作り、次の3点を記録する: <strong>①前期14回を通じて学んだこと</strong>・<strong>②一番成長を感じたこと</strong>・<strong>③後期にやってみたいこと</strong></li>
+              <li>発表は目的としない。うまくいかなかったことも含めて、率直に書く</li>
+            </ul>
+            <p><strong>4作品を並べて眺める（5分）</strong></p>
+            <ul>
+              <li>プロフィールサイト・小ゲーム・クリックゲーム・今日の最終作品、4つの公開URLを見比べ、一番成長を感じる部分を1つ選んで <code>NOTES.md</code> に書き添える</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>前期全体の振り返りと後期への接続</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>前期最終回であることを改めて共有し、第1回からの歩みをねぎらう</li>
+              <li>今日のキーワード <strong>「自由制作」「自分のAI利用ルール」「最終作品の公開」「記録形式の自己振り返り」「後期への接続」</strong>を口に出して言えるか確認して退出</li>
+              <li>後期も引き続き4つの公開作品を育てていけることを伝える</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>最終作品を GitHub Pages に公開し、<code>NOTES.md</code> に「前期の振り返り」を記録する</strong>
+            <p>授業内で公開が間に合わなかった人は家で完成させる。振り返りの3点（学んだこと・成長・後期への希望）は必ず書き切る。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>4つの公開作品を家族・友人に見せる</strong>
+            <p>前期の集大成として、率直な感想をもらっておく。後期の制作のヒントになることがある。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="../program-basics.html" class="week-link">プログラム基礎 I トップ</a> — 親ページの全14回の流れ</li>
+        <li><a href="week13.html" class="week-link">第13回 デバッグ集中回（AIなしで直す）</a> — 今日の制作で活きる、自力でバグを直した回</li>
+        <li><a href="week01.html" class="week-link">第1回 オリエンテーション＆はじめてのHTML</a> — 前期の出発点、最初に手で書いたHTML</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week13.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第13回 デバッグ集中回（AIなしで直す）</span>
+      </a>
+      <a href="../program-basics.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">プログラム基礎 I</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">前期最終回</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>

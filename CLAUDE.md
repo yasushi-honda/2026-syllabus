@@ -27,6 +27,8 @@ program-basics/         # プログラム基礎 I の各回詳細ページ
   week10.html           #   第10回 関数とコード整理＆バグ修正ワーク③
   week11.html           #   第11回 DOM操作とイベント
   week12.html           #   第12回 🎯ミニ完成③ インタラクティブ作品公開
+  week13.html           #   第13回 デバッグ集中回（AIなしで直す）
+  week14.html           #   第14回 自由制作＆振り返り
 ai-communication.html   # AIコミュニケーション基礎（火3・4限）
 ai-communication/       # AIコミュニケーション基礎の各回詳細ページ
   week01.html           #   第1回 オリエンテーションとAI概論
