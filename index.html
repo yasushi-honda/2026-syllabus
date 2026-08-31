@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>2026年度 前期シラバス | 清風情報工科学院</title>
+  <title>2026年度 シラバス | 清風情報工科学院</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -16,7 +16,8 @@
   <header class="site-header">
     <div class="container">
       <div class="header-content">
-        <div class="header-badge">2026 前期</div>
+        <div class="header-badge semester-panel" data-semester="first" hidden>2026 前期</div>
+        <div class="header-badge semester-panel" data-semester="second">2026 後期</div>
         <h1 class="site-title">シラバス</h1>
         <p class="site-subtitle">清風情報工科学院</p>
         <p class="site-instructor">担当教員：本田 康志</p>
@@ -27,7 +28,13 @@
   <main class="container">
     <section class="schedule-overview">
       <h2 class="section-title">時間割</h2>
-      <div class="timetable-grid">
+
+      <div class="semester-toggle" role="tablist" aria-label="学期切り替え">
+        <button type="button" class="semester-tab" role="tab" data-semester="first" aria-selected="false">前期</button>
+        <button type="button" class="semester-tab is-active" role="tab" data-semester="second" aria-selected="true">後期</button>
+      </div>
+
+      <div class="timetable-grid semester-panel" data-semester="first" hidden>
         <div class="tg-corner"></div>
         <div class="tg-day">
           <span class="tg-day-name">火曜日</span>
@@ -108,6 +115,112 @@
           </a>
         </div>
       </div>
+
+      <div class="timetable-scroll semester-panel" data-semester="second">
+      <div class="timetable-grid timetable-grid--4col">
+        <div class="tg-corner"></div>
+        <div class="tg-day">
+          <span class="tg-day-name">火曜日</span>
+          <span class="tg-day-target">IT ビジネス 2-4年</span>
+        </div>
+        <div class="tg-day">
+          <span class="tg-day-name">水曜日</span>
+          <span class="tg-day-target">対象：調整中</span>
+        </div>
+        <div class="tg-day">
+          <span class="tg-day-name">木曜日</span>
+          <span class="tg-day-target">1・2限: 1年 / 3・4限: 3年</span>
+        </div>
+        <div class="tg-day">
+          <span class="tg-day-name">土曜日</span>
+          <span class="tg-day-target">グローバルIT 留学生</span>
+        </div>
+
+        <div class="tg-time">
+          <span class="tg-time-period">午前</span>
+          <span class="tg-time-num">1・2限</span>
+          <span class="tg-time-hours">9:20<br>12:30</span>
+        </div>
+        <div class="tg-cell">
+          <a href="program-basics-2.html" class="tg-slot tg-slot--blue">
+            <span class="tg-slot-name">プログラム基礎 II</span>
+            <span class="tg-slot-target">ITビジネス 2-4年 / 後期</span>
+            <span class="tg-slot-desc">プログラム基礎Ⅰの続き。授業内容は現在検討中です。</span>
+            <span class="tg-slot-tags"><span class="tg-tag">準備中</span></span>
+            <span class="tg-slot-more">詳細を見る →</span>
+          </a>
+        </div>
+        <div class="tg-cell">
+          <a href="it-passport-technology.html" class="tg-slot tg-slot--amber">
+            <span class="tg-slot-name">ITパスポート テクノロジー系</span>
+            <span class="tg-slot-target">対象：調整中 / 後期</span>
+            <span class="tg-slot-desc">内容は今後公開します。</span>
+            <span class="tg-slot-tags"><span class="tg-tag">準備中</span></span>
+            <span class="tg-slot-more">詳細を見る →</span>
+          </a>
+        </div>
+        <div class="tg-cell">
+          <a href="ai-programming-2.html" class="tg-slot tg-slot--orange">
+            <span class="tg-slot-name">AI活用プログラミング基礎 II</span>
+            <span class="tg-slot-target">情報系 1年 / 後期</span>
+            <span class="tg-slot-desc">AI活用プログラミング基礎の続き。授業内容は現在検討中です。</span>
+            <span class="tg-slot-tags"><span class="tg-tag">準備中</span></span>
+            <span class="tg-slot-more">詳細を見る →</span>
+          </a>
+        </div>
+        <div class="tg-cell">
+          <a href="java-teamdev.html" class="tg-slot tg-slot--indigo">
+            <span class="tg-slot-name">システム開発B</span>
+            <span class="tg-slot-target">グローバルIT 2年 / 後期</span>
+            <span class="tg-slot-desc">Java Servletを用いたWebアプリケーションの制作。</span>
+            <span class="tg-slot-tags"><span class="tg-tag">Java</span><span class="tg-tag">Servlet</span></span>
+            <span class="tg-slot-more">詳細を見る →</span>
+          </a>
+        </div>
+
+        <div class="tg-time">
+          <span class="tg-time-period">午後</span>
+          <span class="tg-time-num">3・4限</span>
+          <span class="tg-time-hours">13:30<br>16:40</span>
+        </div>
+        <div class="tg-cell">
+          <a href="ai-communication-2.html" class="tg-slot tg-slot--purple">
+            <span class="tg-slot-name">AIコミュニケーション基礎 II</span>
+            <span class="tg-slot-target">ITビジネス 2-4年 / 後期</span>
+            <span class="tg-slot-desc">AIコミュニケーション基礎の続き。授業内容は現在検討中です。</span>
+            <span class="tg-slot-tags"><span class="tg-tag">準備中</span></span>
+            <span class="tg-slot-more">詳細を見る →</span>
+          </a>
+        </div>
+        <div class="tg-cell">
+          <a href="system-dev-practice-a2.html" class="tg-slot tg-slot--brown">
+            <span class="tg-slot-name">システム開発実習A II</span>
+            <span class="tg-slot-target">対象：調整中 / 後期</span>
+            <span class="tg-slot-desc">内容は今後公開します。</span>
+            <span class="tg-slot-tags"><span class="tg-tag">準備中</span></span>
+            <span class="tg-slot-more">詳細を見る →</span>
+          </a>
+        </div>
+        <div class="tg-cell">
+          <a href="natural-language-dev-2.html" class="tg-slot tg-slot--green">
+            <span class="tg-slot-name">自然言語開発 II</span>
+            <span class="tg-slot-target">システム 3年 / 後期</span>
+            <span class="tg-slot-desc">自然言語開発の続き。授業内容は現在検討中です。</span>
+            <span class="tg-slot-tags"><span class="tg-tag">準備中</span></span>
+            <span class="tg-slot-more">詳細を見る →</span>
+          </a>
+        </div>
+        <div class="tg-cell">
+          <a href="java-basics-2.html" class="tg-slot tg-slot--pink">
+            <span class="tg-slot-name">プログラミング基礎II(Java)</span>
+            <span class="tg-slot-target">グローバルIT 1年 / 後期</span>
+            <span class="tg-slot-desc">アルゴリズム構築力とオブジェクト指向プログラミングの理解を高める、実践的なグループワーク中心の科目。</span>
+            <span class="tg-slot-tags"><span class="tg-tag">Java</span><span class="tg-tag">OOP</span></span>
+            <span class="tg-slot-more">詳細を見る →</span>
+          </a>
+        </div>
+      </div>
+      </div>
     </section>
 
     <section class="info-section">
@@ -119,8 +232,14 @@
         </div>
         <div class="info-box">
           <h3>開講時期</h3>
-          <p class="info-name">2026年度 前期</p>
-          <p class="info-detail">4月〜9月／土曜のみ後期も先行掲載</p>
+          <div class="semester-panel" data-semester="first" hidden>
+            <p class="info-name">2026年度 前期</p>
+            <p class="info-detail">4月〜9月</p>
+          </div>
+          <div class="semester-panel" data-semester="second">
+            <p class="info-name">2026年度 後期</p>
+            <p class="info-detail">10月〜3月</p>
+          </div>
         </div>
       </div>
     </section>
@@ -134,15 +253,17 @@
 
   <script src="app.js"></script>
   <script>
-    // Timetable toggle: switch 前期/後期 slots within a cell
-    document.querySelectorAll('.tg-cell--toggle').forEach(cell => {
-      const tabs = cell.querySelectorAll('.tg-tab');
-      const slots = cell.querySelectorAll('.tg-slot');
-      tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
-          const targetId = tab.dataset.target;
-          tabs.forEach(t => t.classList.toggle('is-active', t === tab));
-          slots.forEach(s => s.classList.toggle('is-visible', s.id === targetId));
+    // Semester toggle: switch 前期/後期 across the whole page (header badge, timetable, info box)
+    document.querySelectorAll('.semester-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const semester = tab.dataset.semester;
+        document.querySelectorAll('.semester-tab').forEach(t => {
+          const active = t.dataset.semester === semester;
+          t.classList.toggle('is-active', active);
+          t.setAttribute('aria-selected', String(active));
+        });
+        document.querySelectorAll('.semester-panel').forEach(panel => {
+          panel.hidden = panel.dataset.semester !== semester;
         });
       });
     });

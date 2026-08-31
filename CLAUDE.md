@@ -12,7 +12,7 @@
 
 ## ファイル構成
 ```
-index.html              # トップページ（時間割＋4科目カード）
+index.html              # トップページ（前期/後期トグル＋時間割）。初期表示は後期
 program-basics.html     # プログラム基礎 I（火1・2限）
 program-basics/         # プログラム基礎 I の各回詳細ページ
   week01.html           #   第1回 オリエンテーション＆はじめてのHTML
@@ -81,21 +81,28 @@ ai-programming/         # AI活用プログラミング基礎の各回詳細ペ�
   week12.html           #   第12回 個人テーマを決めよう
   week13.html           #   第13回 個人課題：探究・制作
   week14.html           #   第14回 🎤 個人課題：仕上げ＆最終発表会
-java-basics-1.html      # Java基礎I（土曜前期）
-java-basics-2.html      # Java基礎II（土曜前期）
-java-spring.html        # Javaフレームワーク（土曜後期）
-java-teamdev.html       # チーム開発演習（土曜後期）
+java-basics-1.html      # プログラミング基礎(Java)（土曜3・4限／前期）
+java-basics-2.html      # プログラミング基礎II(Java)（土曜3・4限／後期。後期時間割では「プログラム基礎Ⅱ（Java）A」として掲載）
+java-spring.html        # Javaプログラミング（土曜1・2限／前期）
+java-teamdev.html       # システム開発B（土曜1・2限／後期）
+program-basics-2.html   # プログラム基礎Ⅱ（火1・2限／後期。枠組みのみ、内容は今後追加）
+ai-communication-2.html # AIコミュニケーション基礎Ⅱ（火3・4限／後期。枠組みのみ）
+it-passport-technology.html   # ITパスポート テクノロジー系（水1・2限／後期。新設科目、枠組みのみ）
+system-dev-practice-a2.html   # システム開発実習AⅡ（水3・4限／後期。新設科目、枠組みのみ）
+ai-programming-2.html   # AI活用プログラミング基礎Ⅱ（木1・2限／後期。枠組みのみ）
+natural-language-dev-2.html   # 自然言語開発Ⅱ（木3・4限／後期。枠組みのみ）
 styles.css              # 共通スタイル（Editorial Paper Edition ライトテーマ）
-app.js                  # Markdownコピー・タブ切替等
+app.js                  # Markdownコピー等
 favicon.svg             # ファビコン
-content/                # Markdownソース（コピーボタン用）
+content/                # Markdownソース（コピーボタン用。全HTMLページに1対1で対応）
 .github/workflows/      # GitHub Pagesデプロイ設定
 ```
 
 ## 運用ルール
-- 4科目共通のデザイン・レイアウトを維持する
-- 科目ごとのテーマカラー: blue(プログラム基礎), purple(AIコミュ), green(自然言語開発), orange(AI活用プログラミング)
+- 全科目共通のデザイン・レイアウトを維持する
+- 科目ごとのテーマカラー: blue(プログラム基礎), purple(AIコミュ), green(自然言語開発), orange(AI活用プログラミング), red/pink(Java基礎I/II), teal/indigo(Javaプログラミング/システム開発B), amber(ITパスポート テクノロジー系), brown(システム開発実習AⅡ)。Ⅱ系の継続科目は前期の対応科目と同じ色を引き継ぐ
 - HTML変更時は対応するcontent/*.mdも同期する
+- `index.html` は前期/後期の2つの時間割グリッド（`.semester-panel[data-semester="first"|"second"]`）を持つ。初期表示は後期。科目を追加・変更する際は該当する学期のグリッドのみを更新し、もう一方の学期には影響させない
 
 ---
 
@@ -111,6 +118,24 @@ content/                # Markdownソース（コピーボタン用）
 | AIコミュニケーション基礎 | `ai-communication.html` | `ai-communication/` | `page-header--purple` | 火3・4限 | ITビジネスコース 2,3,4年次 |
 | 自然言語開発 | `natural-language-dev.html` | `natural-language-dev/` | `page-header--green` | 木1・2限 | IT・情報処理専攻(システム) 3年次 |
 | AI活用プログラミング基礎 | `ai-programming.html` | `ai-programming/` | `page-header--orange` | 木3・4限 | 情報系学科 1年次 |
+
+上表は週ページ（詳細ディレクトリ）を運用している前期4科目のみが対象。後期科目は現時点で枠組み（親ページ）のみのため、週ページ運用を開始した時点で追記する。
+
+### 後期科目 → テーマ色・配置対応表（2026年度後期、枠組みのみ・週ページ未導入）
+
+| 科目 | 親ページ | テーマ色 | 曜日・時限 | 対象 |
+|------|---------|---------|-----------|------|
+| プログラム基礎Ⅱ | `program-basics-2.html` | `page-header--blue` | 火1・2限 | ITビジネスコース 2,3,4年次 |
+| AIコミュニケーション基礎Ⅱ | `ai-communication-2.html` | `page-header--purple` | 火3・4限 | ITビジネスコース 2,3,4年次 |
+| ITパスポート テクノロジー系 | `it-passport-technology.html` | `page-header--amber` | 水1・2限 | 調整中（新設科目） |
+| システム開発実習AⅡ | `system-dev-practice-a2.html` | `page-header--brown` | 水3・4限 | 調整中（新設科目） |
+| AI活用プログラミング基礎Ⅱ | `ai-programming-2.html` | `page-header--orange` | 木1・2限 | 情報系学科 1年次 |
+| 自然言語開発Ⅱ | `natural-language-dev-2.html` | `page-header--green` | 木3・4限 | IT・情報処理専攻(システム) 3年次 |
+| システム開発B | `java-teamdev.html` | `page-header--indigo` | 土1・2限 | グローバルIT 2年次 |
+| プログラミング基礎II(Java) | `java-basics-2.html` | `page-header--pink` | 土3・4限 | グローバルIT 1年次 |
+
+- **木曜日は前期と時限が入れ替わる**（前期: 1-2限 自然言語開発 / 3-4限 AI活用プログラミング基礎 → 後期: 1-2限 AI活用プログラミング基礎Ⅱ / 3-4限 自然言語開発Ⅱ）。意図的な差異であり、前期側の並びに揃えない
+- 土曜2科目（システム開発B・プログラミング基礎II(Java)）は前期時点で既に完成済みだったページを流用している
 
 ### 科目別プロファイル（毎回参照する固有前提）
 
