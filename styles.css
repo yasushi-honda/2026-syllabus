@@ -42,6 +42,12 @@
   --c-indigo: #3741b8;
   --c-indigo-soft: #e6e8f7;
   --c-indigo-border: #c4c8ea;
+  --c-amber: #8a5f00;         /* AA 4.98:1 on --c-amber-soft */
+  --c-amber-soft: #faf0d6;
+  --c-amber-border: #edd9a0;
+  --c-brown: #6b4226;         /* AA 7.06:1 on --c-brown-soft */
+  --c-brown-soft: #f3e6dc;
+  --c-brown-border: #ddc0ac;
 
   /* Type */
   --font-sans: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -358,6 +364,8 @@ img { max-width: 100%; display: block; }
 .slot--pink   { color: var(--c-pink);   background: var(--c-pink-soft);   border-color: var(--c-pink-border); }
 .slot--teal   { color: var(--c-teal);   background: var(--c-teal-soft);   border-color: var(--c-teal-border); }
 .slot--indigo { color: var(--c-indigo); background: var(--c-indigo-soft); border-color: var(--c-indigo-border); }
+.slot--amber  { color: var(--c-amber);  background: var(--c-amber-soft);  border-color: var(--c-amber-border); }
+.slot--brown  { color: var(--c-brown);  background: var(--c-brown-soft);  border-color: var(--c-brown-border); }
 
 /* ========================================
    Demo CTA — 週ページから動くデモへの誘導ブロック
@@ -637,30 +645,23 @@ img { max-width: 100%; display: block; }
   text-transform: uppercase;
 }
 
-/* Toggle cell (前期/後期 tabs) */
-.tg-cell--toggle {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-2);
-  padding-top: var(--sp-3);
-}
-
-.tg-toggle-tabs {
-  display: flex;
+/* Semester toggle (前期/後期) — switches which .semester-panel is shown */
+.semester-toggle {
+  display: inline-flex;
   gap: 0;
   border-radius: var(--r-sm);
   overflow: hidden;
   border: 1px solid var(--c-border);
   background: var(--c-bg-alt);
+  margin-bottom: var(--sp-4);
 }
 
-.tg-tab {
-  flex: 1;
-  padding: var(--sp-2) var(--sp-3);
+.semester-tab {
+  padding: var(--sp-2) var(--sp-5);
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   background: transparent;
   border: none;
@@ -670,21 +671,35 @@ img { max-width: 100%; display: block; }
   border-right: 1px solid var(--c-border);
 }
 
-.tg-tab:last-child { border-right: none; }
+.semester-tab:last-child { border-right: none; }
 
-.tg-tab:hover { color: var(--c-text); }
+.semester-tab:hover { color: var(--c-text); }
 
-.tg-tab.is-active {
+.semester-tab.is-active {
+  background: var(--c-rule);
   color: var(--c-bg);
 }
 
-.tg-tab--teal.is-active   { background: var(--c-teal); }
-.tg-tab--indigo.is-active { background: var(--c-indigo); }
-.tg-tab--red.is-active    { background: var(--c-red); }
-.tg-tab--pink.is-active   { background: var(--c-pink); }
+.semester-panel[hidden] { display: none !important; }
 
-.tg-cell--toggle .tg-slot { display: none; }
-.tg-cell--toggle .tg-slot.is-visible { display: flex; }
+/* 後期: 4 day columns (火水木土) */
+.timetable-grid--4col {
+  grid-template-columns: minmax(72px, auto) repeat(4, minmax(0, 1fr));
+}
+
+.timetable-scroll {
+  overflow-x: auto;
+}
+
+/* Placeholder note for framework-only pages */
+.tbd-note {
+  border: 1px dashed var(--c-border-strong);
+  border-radius: var(--r-md);
+  background: var(--c-bg-alt);
+  color: var(--c-text-muted);
+  padding: var(--sp-3) var(--sp-4);
+  font-size: 0.88rem;
+}
 
 .tg-slot--blue   { color: var(--c-blue);   background: var(--c-blue-soft);   border-color: var(--c-blue-border); }
 .tg-slot--purple { color: var(--c-purple); background: var(--c-purple-soft); border-color: var(--c-purple-border); }
@@ -694,11 +709,16 @@ img { max-width: 100%; display: block; }
 .tg-slot--pink   { color: var(--c-pink);   background: var(--c-pink-soft);   border-color: var(--c-pink-border); }
 .tg-slot--teal   { color: var(--c-teal);   background: var(--c-teal-soft);   border-color: var(--c-teal-border); }
 .tg-slot--indigo { color: var(--c-indigo); background: var(--c-indigo-soft); border-color: var(--c-indigo-border); }
+.tg-slot--amber  { color: var(--c-amber);  background: var(--c-amber-soft);  border-color: var(--c-amber-border); }
+.tg-slot--brown  { color: var(--c-brown);  background: var(--c-brown-soft);  border-color: var(--c-brown-border); }
 
 /* Tablet: tighten grid */
 @media (max-width: 900px) {
   .timetable-grid {
     grid-template-columns: minmax(56px, auto) repeat(3, minmax(0, 1fr));
+  }
+  .timetable-grid--4col {
+    grid-template-columns: minmax(56px, auto) repeat(4, minmax(0, 1fr));
   }
   .tg-corner,
   .tg-day,
@@ -725,6 +745,11 @@ img { max-width: 100%; display: block; }
   .timetable-grid {
     grid-template-columns: 44px repeat(3, minmax(0, 1fr));
   }
+  /* 4-col (後期) grid stays readable via .timetable-scroll horizontal scroll instead of squeezing */
+  .timetable-grid--4col {
+    grid-template-columns: 56px repeat(4, minmax(140px, 1fr));
+    min-width: 640px;
+  }
   .tg-corner,
   .tg-day,
   .tg-time,
@@ -748,7 +773,7 @@ img { max-width: 100%; display: block; }
   }
   .tg-slot-target { font-size: 0.54rem; }
   .tg-slot-more { font-size: 0.54rem; padding-top: var(--sp-1); }
-  .tg-tab { font-size: 0.58rem; padding: 4px 6px; }
+  .semester-tab { font-size: 0.62rem; padding: var(--sp-2) var(--sp-3); }
   .tg-cell { min-height: 80px; }
 }
 
@@ -1202,6 +1227,8 @@ img { max-width: 100%; display: block; }
 .page-header--pink::before   { background: radial-gradient(circle, rgba(196,54,112,0.10) 0%, transparent 60%); }
 .page-header--teal::before   { background: radial-gradient(circle, rgba(13,122,122,0.10) 0%, transparent 60%); }
 .page-header--indigo::before { background: radial-gradient(circle, rgba(55,65,184,0.10) 0%, transparent 60%); }
+.page-header--amber::before  { background: radial-gradient(circle, rgba(138,95,0,0.10) 0%, transparent 60%); }
+.page-header--brown::before  { background: radial-gradient(circle, rgba(107,66,38,0.10) 0%, transparent 60%); }
 
 .breadcrumb {
   display: flex;
@@ -1264,6 +1291,8 @@ img { max-width: 100%; display: block; }
 .page-header--pink   .page-title::after { background: var(--c-pink); }
 .page-header--teal   .page-title::after { background: var(--c-teal); }
 .page-header--indigo .page-title::after { background: var(--c-indigo); }
+.page-header--amber  .page-title::after { background: var(--c-amber); }
+.page-header--brown  .page-title::after { background: var(--c-brown); }
 
 .page-meta-badges {
   display: flex;
