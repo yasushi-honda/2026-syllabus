@@ -47,48 +47,118 @@
 
     <div class="syllabus-section">
       <h2>授業概要</h2>
-      <div class="tbd-note">AIコミュニケーション基礎の続きとなる科目です。授業概要は今後追加します。</div>
+      <ul>
+        <li>前期「AIコミュニケーション基礎」の続きとなる科目です。前期で育てた「自分だけのAI」（<strong>Gemini Notebook</strong>、旧NotebookLM）を土台に、AIとのコミュニケーションをさらに深めます。</li>
+        <li>後半の柱は<strong>AIエージェントとの協働</strong>です。GitHub Codespaces上のターミナルで<strong>Antigravity CLI（agy）</strong>を使い、自然言語で指示を出しながらWebページやアプリが形になっていく過程を体験します。</li>
+        <li>「チャット型AI」（Gemini Notebook・AI Studio Build）と「エージェント型AI」（agy）、それぞれとの関わり方の違いを体感し、言語化します。</li>
+        <li>agyは全員が触れます。目指すのは高度な技術習得ではなく、<strong>自然言語での対話を重ねながら小さな成功を積み上げ、AIとコミュニケーションを取ることへの自信を持つこと</strong>です。</li>
+        <li>第9〜13回では、agy・AI Studio・Gemini Notebookを自由に組み合わせ、自分が作りたいものをAIとの対話で形にする個人制作に取り組みます（テーマは各自自由）。</li>
+        <li>第14回では簡単な発表会を行い、AIエージェント時代のコミュニケーションについて振り返ります。</li>
+      </ul>
     </div>
 
     <div class="syllabus-section">
       <h2>到達目標</h2>
 
       <h3>知識・理解</h3>
-      <div class="tbd-note">内容は今後追加します。</div>
+      <ol>
+        <li>Gemini Notebook（旧NotebookLM）、AI Studio Build、Antigravity CLI（agy）それぞれの特徴と役割の違いを説明できる。</li>
+        <li>GitHub Codespacesの基本操作、ターミナルでのコマンド実行の考え方を理解している。</li>
+        <li>AIエージェントが自然言語の指示を受けてタスクを進める仕組みの概要を説明できる。</li>
+        <li>曖昧な指示と明確な指示で、AIエージェントの動きがどう変わるかを説明できる。</li>
+        <li>チャット型AIとエージェント型AIそれぞれの得意・不得意を説明できる。</li>
+      </ol>
 
       <h3>思考・判断</h3>
-      <div class="tbd-note">内容は今後追加します。</div>
+      <ol>
+        <li>自分が作りたいものをAIエージェントに伝わる形に言語化できる。</li>
+        <li>AIエージェントの出力（コード・動作）を確認し、意図通りかを判断できる。</li>
+        <li>意図通りに動かない場合、伝え方のどこに問題があったかを推測し、指示を改善できる。</li>
+        <li>AIとの対話を振り返り、「どう伝えたら何が引き出せたか」を言語化できる。</li>
+      </ol>
 
       <h3>スキル・表現</h3>
-      <div class="tbd-note">内容は今後追加します。</div>
+      <ol>
+        <li>GitHub Codespacesを起動し、ターミナルでAntigravity CLI（agy）を実行できる。</li>
+        <li>自然言語での指示を重ね、AIエージェントと協働して作品を育てられる。</li>
+        <li>Gemini Notebook・AI Studio Build・agyを目的に応じて使い分けられる。</li>
+        <li>自分とAIとのやりとりの記録を、他者にわかりやすく共有できる。</li>
+      </ol>
 
       <h3>関心・意欲・態度</h3>
-      <div class="tbd-note">内容は今後追加します。</div>
+      <ol>
+        <li>慣れないターミナル操作やAIエージェントとの対話に、失敗を恐れず挑戦する。</li>
+        <li>小さな成功体験を積み重ね、AIとのコミュニケーションに自信を持つ。</li>
+        <li>他者のAIとの関わり方から学ぼうとする姿勢を持つ。</li>
+      </ol>
     </div>
 
     <div class="syllabus-section">
-      <h2>授業計画</h2>
-      <p>全体の回数・各回のテーマは今後確定します。決まり次第、このページに授業計画表を追加します。</p>
+      <h2>授業計画（全14回）</h2>
+      <div class="table-wrap">
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>週</th>
+              <th>テーマ</th>
+              <th>主な内容・活動</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="week-num">1</td><td class="week-theme">前期振り返り＆後期オリエンテーション</td><td>前期の「自分だけのAI」育成を振り返る。NotebookLMが<strong>Gemini Notebook</strong>に改称されたことを紹介（機能は同じ）。後期のゴール（AIエージェントとの協働でものづくりをする）を提示。</td></tr>
+            <tr><td class="week-num">2</td><td class="week-theme">Gemini Notebookで自分のAIをさらに育てる</td><td>前期の育成を土台に、より高度なカスタム指示・情報整理に挑戦。</td></tr>
+            <tr><td class="week-num">3</td><td class="week-theme">GitHub Codespaces入門①</td><td>アカウント確認・起動・基本操作。ターミナルに触れる第一歩。</td></tr>
+            <tr><td class="week-num">4</td><td class="week-theme">GitHub Codespaces入門②／agy起動</td><td>環境構築の総仕上げ。<code>agy</code>コマンドを起動し最初の対話を体験。🎯「起動できた」という小さな成功体験。</td></tr>
+            <tr><td class="week-num">5</td><td class="week-theme">AIエージェントに指示する①</td><td>簡単なお願い（例：簡単なWebページを作って）をして、agyが代わりにコードを書き実行する様子を観察。</td></tr>
+            <tr><td class="week-num">6</td><td class="week-theme">AIエージェントに指示する②</td><td>指示を重ねて作品を育てていく。「伝え方」でAIの動きが変わることを体感。</td></tr>
+            <tr><td class="week-num">7</td><td class="week-theme">🔧すれ違いワーク</td><td>曖昧な指示でAIが誤解する様子を観察し、伝え方を改善する練習。</td></tr>
+            <tr><td class="week-num">8</td><td class="week-theme">チャット型AIとエージェント型AIの違い</td><td>AI Studio Build（前期の続き）とagyでの体験を比較し、関わり方の違いを言語化。</td></tr>
+            <tr><td class="week-num">9</td><td class="week-theme">自分のプロジェクトを育てる①</td><td>agy/AI Studio/Gemini Notebookを組み合わせ、作りたいものをAIと対話しながら形にする。</td></tr>
+            <tr><td class="week-num">10</td><td class="week-theme">中間相互レビュー・振り返り</td><td>AIとのやりとりの記録を見せ合い、コミュニケーションの工夫を共有。</td></tr>
+            <tr><td class="week-num">11</td><td class="week-theme">自分のプロジェクトを育てる②</td><td>継続制作、機能追加。</td></tr>
+            <tr><td class="week-num">12</td><td class="week-theme">自分のプロジェクトを育てる③</td><td>仕上げ。</td></tr>
+            <tr><td class="week-num">13</td><td class="week-theme">最終調整・対話ログ整理</td><td>「どう伝えたら何ができたか」を記録・言語化。</td></tr>
+            <tr><td class="week-num">14</td><td class="week-theme">🎯発表・振り返り</td><td>簡単な発表会。AIエージェント時代のコミュニケーションについて振り返る。AI倫理の再確認。</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>※授業計画は、学生の理解度や進度、AI技術の進展に応じて柔軟に調整します。<br>※Antigravity CLI（agy）は全員が触れますが、使いこなすレベル感には個人差があってよいものとします。<br>※週ごとの詳細ページは今後順次公開します。</p>
     </div>
 
     <div class="syllabus-section">
       <h2>使用テキスト・参考文献</h2>
-      <div class="tbd-note">内容は今後追加します。</div>
+      <p>特定のテキストは使用しません。授業内で適宜、資料や参考Webサイトを紹介します。</p>
     </div>
 
     <div class="syllabus-section">
       <h2>予習・復習</h2>
-      <div class="tbd-note">内容は今後追加します。</div>
+      <ul>
+        <li><strong>予習:</strong> 必須ではありませんが、「AIに何を作ってほしいか」を考えておくと、個人制作がスムーズになります。</li>
+        <li><strong>復習:</strong> AIエージェントとのやりとりで「どう伝えたら意図通りに動いたか」を振り返り、記録しておきましょう。</li>
+      </ul>
     </div>
 
     <div class="syllabus-section">
       <h2>評価方法・基準</h2>
-      <div class="tbd-note">内容は今後追加します。</div>
+      <p>成果物の完成度だけでなく、AIエージェントとの対話をどれだけ重ね、伝え方を改善しながらコミュニケーション力を高められたかを重視します。</p>
+
+      <div class="eval-item"><span class="eval-pct" style="color:var(--c-purple)">25%</span><span class="eval-label"><strong>AIエージェントとの協働プロセス</strong> — agyとの対話を重ね、伝え方を改善しながら作品を育てられたか。</span></div>
+      <div class="eval-item"><span class="eval-pct" style="color:var(--c-purple)">20%</span><span class="eval-label"><strong>成果物・公開実績</strong> — 個人制作（第9〜13回）の完成度、公開できているか。</span></div>
+      <div class="eval-item"><span class="eval-pct" style="color:var(--c-purple)">15%</span><span class="eval-label"><strong>コミュニケーション力の向上</strong> — 曖昧な指示から明確な指示への改善、対話ログの言語化。</span></div>
+      <div class="eval-item"><span class="eval-pct" style="color:var(--c-purple)">15%</span><span class="eval-label"><strong>Gemini Notebookの継続活用</strong> — 自分のAIをさらに育てられたか。</span></div>
+      <div class="eval-item"><span class="eval-pct" style="color:var(--c-purple)">15%</span><span class="eval-label"><strong>相互レビューへの参加・貢献</strong> — 中間レビューでの共有・フィードバック。</span></div>
+      <div class="eval-item"><span class="eval-pct" style="color:var(--c-purple)">10%</span><span class="eval-label"><strong>主体性</strong> — 慣れない環境への挑戦、粘り強さ。</span></div>
     </div>
 
     <div class="syllabus-section">
       <h2>その他（履修上の注意点）</h2>
-      <div class="tbd-note">内容は今後追加します。</div>
+      <ul>
+        <li>GitHub Codespacesのターミナル操作・Antigravity CLI（agy）は全員必須ですが、使いこなすレベル感には個人差があってよいです。基本操作を身につけつつ、自然言語でAIとやりとりしながらものが出来上がっていく体験を大切にしてください。</li>
+        <li>個人のGoogleアカウントまたは学校提供のGoogle Workspace for Educationアカウントを使用します（前期から継続）。</li>
+        <li>GitHubアカウント・GitHub Codespacesは前期から引き続き使用します。</li>
+        <li>AIツールは日々進化しています（NotebookLMがGemini Notebookに改称されたように）。変化も学びの機会と捉え、一緒に探求していきましょう。</li>
+        <li>体調やメンタル面で不安がある場合は、無理せず担当教員または学校の相談窓口に相談してください。</li>
+      </ul>
     </div>
 
   </main>
