@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第1回 前期振り返り＆後期オリエンテーション | プログラム基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--blue">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../program-basics-2.html">プログラム基礎 II</a>
+        <span>/</span>
+        <span>第1回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">前期振り返り＆<wbr>後期オリエンテーション</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 1</span>
+            <span class="page-badge">火曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">前期の振り返り＋後期のゴール提示</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">振り返り / ゲーム制作 or ECサイト制作 / localStorage</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">前期に公開した3作品（プロフィールサイト・小ゲーム・インタラクティブ作品）のURLが分かる状態</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>前期の学び（HTML/CSS/JSの基礎、3つの公開作品）を振り返り、自分の成長を言語化する</li>
+        <li>後期のゴール（<strong>ゲーム制作</strong> or <strong>ECサイト制作</strong>を選んで完成させる）を理解する</li>
+        <li><code>localStorage</code>で「データが保存される」ことのイメージをつかむ</li>
+        <li>後期の評価方法・全体スケジュールを理解する</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>オリエンテーション</h3>
+          <div class="timeline-body">
+            <p><strong>後期の位置づけ</strong></p>
+            <ul>
+              <li>前期「プログラム基礎Ⅰ」で身につけたHTML/CSS/JSの基礎を土台に、後期はより実践的な<strong>「完成された作品」づくり</strong>に取り組む</li>
+              <li>2〜4年次の混在クラスであることは前期と変わらず——<strong>各自のペースを尊重する</strong>方針を継続</li>
+            </ul>
+            <p><strong>後期シラバスの説明</strong></p>
+            <ul>
+              <li>全14回の流れを俯瞰（データを扱う基礎 → CSS発展 → テーマ選択 → 個人制作 → 中間相互レビュー → 仕上げ → 発表）</li>
+              <li>評価方法の確認（成果物の完成度・公開実績25%、機能実装力20%、相互レビューへの参加15%、デバッグ・修正力15%、AIの批判的活用15%、主体性10%）</li>
+              <li>後期の基本姿勢：前期と同じく<strong>「まず手で書く」</strong>を継続しつつ、オブジェクト・フォーム・localStorageなどより複雑な要素を扱う</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>前期の振り返りワーク</h3>
+          <div class="timeline-body">
+            <p><strong>3つの公開作品を見直す</strong></p>
+            <ul>
+              <li>前期に公開した<strong>プロフィールサイト（第4回）・小ゲーム（第8回）・インタラクティブ作品（第12回）</strong>を、それぞれ自分でブラウザで開いて見直す</li>
+              <li>GitHubリポジトリのコミット履歴を見返し、「どんな順番でコードを書き足していったか」を振り返る</li>
+            </ul>
+            <p><strong>振り返りシートに書き出す</strong></p>
+            <ul>
+              <li>「何を学んだか」「何が一番難しかったか」「AIの提案を採用/不採用にした場面」を、自分の言葉でシートに書き出す</li>
+              <li>書けたらペアやグループで一言共有（任意）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>振り返りは次の一歩のため:</strong> 「できるようになったこと」を言葉にすると、後期に何を積み上げればいいかが見えてきます。うまくいかなかったことも、次に活かせる材料です。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>後期のゴールを知る——ゲーム制作 or ECサイト制作</h3>
+          <div class="timeline-body">
+            <p><strong>成果物を1つ選んで完成させる、という後期の方針</strong></p>
+            <ul>
+              <li>後期は<strong>ゲーム制作</strong>または<strong>ECサイト制作</strong>、自分の興味に合わせてジャンルを選び、企画から実装・公開まで一通り経験する</li>
+              <li>ジャンルの正式決定は第5回。今日はどちらが自分に向いていそうか、軽く考えてみる程度でよい</li>
+            </ul>
+            <p><strong>それぞれの完成イメージ</strong></p>
+            <ul>
+              <li><strong>ゲーム制作</strong>: 盤面やキャラクターを表示し、クリックや入力に応じてスコアや状態が変化する作品</li>
+              <li><strong>ECサイト制作</strong>: 商品一覧を表示し、カートに追加して合計金額が計算される作品</li>
+              <li>どちらも「表示 → 操作 → 反応が返ってくる」という前期のDOM操作・イベントの延長線上にある</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>手始め：localStorageに触れてみる</h3>
+          <div class="timeline-body">
+            <p><strong>「リロードしても消えないデータ」を観察する</strong></p>
+            <ul>
+              <li>教員がボタンを押した回数を記録する簡単なデモ（<code>localStorage</code>を使用）を見せる</li>
+              <li>ページをリロードしても回数が消えずに残ることを、実際に確認する</li>
+              <li>今日は「こういうことができる」というイメージをつかむだけでよい。実装方法は第4回で本格的に学ぶ</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>ゲームのスコア保存もECのカートも、仕組みは同じ:</strong> 今日見た「消えないデータ」の仕組みは、ゲーム制作でもECサイト制作でも共通して使う土台です。第4回で自分の手で実装します。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告＆今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>次回（第2回）: <strong>データを扱う基礎①：オブジェクトと配列の発展</strong>——複数の情報をひとまとめにする「オブジェクト」の書き方を学ぶ</li>
+              <li>前期の3作品のURLは今後も使うので、手元に控えておく</li>
+              <li>「今日一番印象に残ったこと」を1つ言語化して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>前期の振り返りシートを完成させる</strong>
+            <p>授業内で書ききれなかった項目を埋めて保存しておく。第14回の最終振り返りでも見返します。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>ゲーム制作／ECサイト制作、どちらが気になるか考えておく</strong>
+            <p>正式な決定は第5回ですが、今のうちに気になる方向性を考えておくと準備がスムーズです。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/Window/localStorage" target="_blank" rel="noopener">MDN — Window.localStorage</a> — 今日見たデモの仕組みを詳しく知りたい人向け（実装は第4回で扱います）</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <div class="lesson-nav-item lesson-nav-item--disabled">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">---</span>
+      </div>
+      <a href="../program-basics-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">プログラム基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第2回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>

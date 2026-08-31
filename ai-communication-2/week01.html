@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第1回 前期振り返り＆後期オリエンテーション | AIコミュニケーション基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication-2.html">AIコミュニケーション基礎 II</a>
+        <span>/</span>
+        <span>第1回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">前期振り返り＆<wbr>後期オリエンテーション</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 1</span>
+            <span class="page-badge">火曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">前期の振り返り＋Gemini Notebookへの改称紹介＋後期のゴール提示</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">Gemini Notebook（旧NotebookLM） / AIエージェント / Antigravity CLI</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">前期に育てたNotebookLM（Gemini Notebook）へアクセスできる状態</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>前期の学び（「自分だけのAI」育成、【学習データ①〜⑬】）を振り返る</li>
+        <li>NotebookLMが<strong>Gemini Notebook</strong>に改称されたことを知り、変化に慣れる</li>
+        <li>後期のゴール（<strong>AIエージェントとの協働</strong>でものづくりをする）を理解する</li>
+        <li>「チャット型AI」と「エージェント型AI」という新しい軸を知る</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>オリエンテーション</h3>
+          <div class="timeline-body">
+            <p><strong>後期の位置づけ</strong></p>
+            <ul>
+              <li>前期「AIコミュニケーション基礎」で育てた「自分だけのAI」を土台に、後期はAIとのコミュニケーションをさらに深める</li>
+              <li>2〜4年次の混在クラスであることは前期と変わらず——<strong>各自のペースを尊重する</strong>方針を継続</li>
+            </ul>
+            <p><strong>後期シラバスの説明</strong></p>
+            <ul>
+              <li>全14回の流れを俯瞰（Gemini Notebook継続 → Codespaces/agy基礎 → AIエージェントとの対話 → チャット型との比較 → 個人制作 → 発表）</li>
+              <li>評価方法の確認（AIエージェントとの協働プロセス25%、成果物・公開実績20%、コミュニケーション力の向上15%、Gemini Notebookの継続活用15%、相互レビュー15%、主体性10%）</li>
+              <li>後期の基本姿勢：<strong>Antigravity CLI（agy）は全員が触れるが、使いこなすレベル感には個人差があってよい</strong>。目指すのは技術習得よりも、AIとのコミュニケーションに自信を持つこと</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>前期の振り返り＋Gemini Notebookへの改称紹介</h3>
+          <div class="timeline-body">
+            <p><strong>自分のAIを見返す</strong></p>
+            <ul>
+              <li>前期に育てた自分のNotebookLM（→Gemini Notebook）を開き、蓄積した<strong>【学習データ①〜⑬】</strong>を見返す</li>
+              <li>「このAIにどんな性格・話し方を設定したか」を思い出す</li>
+            </ul>
+            <p><strong>NotebookLMからGemini Notebookへ</strong></p>
+            <ul>
+              <li>2026年7月、GoogleはNotebookLMを<strong>Gemini Notebook</strong>に改称した（公式: <a href="https://blog.google/innovation-and-ai/products/gemini-notebook/notebooklm-gemini-notebook/" target="_blank" rel="noopener">Google公式ブログ</a>）</li>
+              <li>スタンドアロン製品としての立場は変わらない——研究・情報整理ツールとしての基本機能はそのまま</li>
+              <li>呼び方やロゴが変わっても、<strong>中身（自分が育てたAI）は同じ</strong>——サービス名の変化にも落ち着いて対応する姿勢を確認する</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>AIツールは日々進化する:</strong> 前期に習った名前が半年で変わることもあります。名前の変化に慌てず、「何ができるか」を見る習慣をつけましょう。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>後期のゴールを知る——AIエージェントとの協働</h3>
+          <div class="timeline-body">
+            <p><strong>「チャット型AI」と「エージェント型AI」</strong></p>
+            <ul>
+              <li>これまで使ってきたGemini NotebookやAI Studioは、<strong>聞けば答えてくれる「チャット型AI」</strong></li>
+              <li>一方<strong>「エージェント型AI」</strong>は、指示を受けて自分でタスクを進める——コードを書き、実行し、結果を確認するところまで自律的に行う</li>
+              <li>この違いを、後期を通じて体感していく</li>
+            </ul>
+            <p><strong>Antigravity CLI（agy）の紹介</strong></p>
+            <ul>
+              <li>GitHub Codespacesのターミナルで動く<strong>AIエージェント</strong>、それが<code>agy</code>（Antigravity CLI）</li>
+              <li>自然言語で「こういうものを作って」と話しかけると、AIが自分の代わりに作業を進めてくれる</li>
+              <li>実際に自分の手で動かすのは第3〜4回から。今日はどんなものか知るだけでよい</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>手始めのデモ体験</h3>
+          <div class="timeline-body">
+            <p><strong>agyが動く様子を観察する</strong></p>
+            <ul>
+              <li>教員がagyを使ったデモを見せる——自然言語で指示すると、コードが書かれ、動くものができていく過程</li>
+              <li>「すごい」「怖い」「よく分からない」——率直な感想でよいので、自分の言葉で言語化してみる</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>今日は見るだけでOK:</strong> 実際に自分の手でCodespacesを起動し、agyを動かすのは第3〜4回です。今日は「こういう世界がある」ということを知るだけで十分です。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告＆今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>次回（第2回）: <strong>Gemini Notebookで自分のAIをさらに育てる</strong>——より高度なカスタム指示・情報整理に挑戦</li>
+              <li>「AIエージェントについて感じたこと」を一言メモして退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>自分のGemini Notebook（NotebookLM）にログインし、蓄積データを確認しておく</strong>
+            <p>前期の【学習データ①〜⑬】がそのまま残っていることを確認する。次回、さらに育てていきます。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>「AIエージェント」について聞いたことがあれば思い出しておく</strong>
+            <p>ニュースやSNSで見聞きしたことがあれば、次回以降の議論の材料になります。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://blog.google/innovation-and-ai/products/gemini-notebook/notebooklm-gemini-notebook/" target="_blank" rel="noopener">Google公式ブログ — NotebookLM is now Gemini Notebook</a> — 改称の公式発表（2026-07-16）</li>
+        <li><a href="https://antigravity.google/docs/cli-install" target="_blank" rel="noopener">Antigravity CLI — Installation & auth（公式）</a> — 今日紹介したagyの公式ドキュメント（インストールは第3〜4回で扱います）</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <div class="lesson-nav-item lesson-nav-item--disabled">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">---</span>
+      </div>
+      <a href="../ai-communication-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AIコミュニケーション基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第2回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
