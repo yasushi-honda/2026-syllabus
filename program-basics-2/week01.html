@@ -154,6 +154,42 @@
               <li>ページをリロードしても回数が消えずに残ることを、実際に確認する</li>
               <li>今日は「こういうことができる」というイメージをつかむだけでよい。実装方法は第4回で本格的に学ぶ</li>
             </ul>
+            <p><strong>デモのコード（コピーしてそのまま動かせます）</strong></p>
+            <p>Codespacesで新規ファイル <code>demo.html</code> を作り、下のコードをそのまま貼り付けて保存する。第1回（前期）と同じ手順（<code>python3 -m http.server 8000</code> →「ポート」タブ→「エディターでプレビュー」）でSimple Browserを開き、ボタンを押してからリロードして「回数が消えない」ことを確認する。</p>
+            <button class="copy-md-btn" data-md-source="localstorage-demo-code">
+              <span class="btn-icon"></span> コードをコピー
+            </button>
+<pre id="localstorage-demo-code" class="md-preview">&lt;!DOCTYPE html&gt;
+&lt;html lang="ja"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;localStorageのデモ&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;ボタンを押した回数を数える&lt;/h1&gt;
+  &lt;p&gt;これまでに &lt;span id="count"&gt;0&lt;/span&gt; 回押されました&lt;/p&gt;
+  &lt;button id="count-btn"&gt;押す&lt;/button&gt;
+
+  &lt;script&gt;
+    // ページを開いたとき、保存されている回数を読み込む（なければ0）
+    let count = Number(localStorage.getItem('clickCount')) || 0;
+    document.getElementById('count').textContent = count;
+
+    document.getElementById('count-btn').addEventListener('click', () => {
+      count = count + 1;
+      document.getElementById('count').textContent = count;
+      // 押すたびに、回数をlocalStorageに保存する
+      localStorage.setItem('clickCount', count);
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+            <p><strong>何が起きているか</strong></p>
+            <ul>
+              <li><code>localStorage.setItem('clickCount', count)</code> — ボタンを押すたびに、回数をブラウザに保存する</li>
+              <li><code>localStorage.getItem('clickCount')</code> — ページを開いた瞬間、保存されている回数を読み込む（保存がなければ<code>0</code>から始まる）</li>
+              <li>この2行だけで、「リロードしても消えないデータ」が実現できている</li>
+            </ul>
             <div class="lesson-tip">
               <strong>ゲームのスコア保存もECのカートも、仕組みは同じ:</strong> 今日見た「消えないデータ」の仕組みは、ゲーム制作でもECサイト制作でも共通して使う土台です。第4回で自分の手で実装します。
             </div>
