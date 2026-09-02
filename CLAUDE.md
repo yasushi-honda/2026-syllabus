@@ -93,8 +93,10 @@ ai-communication-2/     # AIコミュニケーション基礎Ⅱ の各回詳細
   week01.html           #   第1回 前期振り返り＆後期オリエンテーション
 it-passport-technology.html   # ITパスポート テクノロジー系（水1・2限／後期。新設科目、枠組みのみ）
 system-dev-practice-a2.html   # システム開発実習AⅡ（水3・4限／後期。新設科目、枠組みのみ）
-ai-programming-2.html   # AI活用プログラミング基礎Ⅱ（木1・2限／後期。枠組みのみ）
-natural-language-dev-2.html   # 自然言語開発Ⅱ（木3・4限／後期。枠組みのみ）
+ai-programming-2.html   # AI活用プログラミング基礎Ⅱ（木1・2限／後期。授業内容確定済み、週ページ順次作成中）
+ai-programming-2/       # AI活用プログラミング基礎Ⅱ の各回詳細ページ
+  week01.html           #   第1回 前期振り返り＆後期オリエンテーション
+natural-language-dev-2.html   # 自然言語開発Ⅱ（木3・4限／後期。授業内容確定済み、週ページ未作成）
 styles.css              # 共通スタイル（Editorial Paper Edition ライトテーマ）
 app.js                  # Markdownコピー等
 favicon.svg             # ファビコン
@@ -124,8 +126,9 @@ content/                # Markdownソース（コピーボタン用。全HTMLペ
 | AI活用プログラミング基礎 | `ai-programming.html` | `ai-programming/` | `page-header--orange` | 木3・4限 | 情報系学科 1年次 |
 | プログラム基礎Ⅱ（後期） | `program-basics-2.html` | `program-basics-2/` | `page-header--blue` | 火1・2限 | ITビジネスコース 2,3,4年次 |
 | AIコミュニケーション基礎Ⅱ（後期） | `ai-communication-2.html` | `ai-communication-2/` | `page-header--purple` | 火3・4限 | ITビジネスコース 2,3,4年次 |
+| AI活用プログラミング基礎Ⅱ（後期） | `ai-programming-2.html` | `ai-programming-2/` | `page-header--orange` | 木1・2限 | 情報系学科 1年次 |
 
-上表は週ページ（詳細ディレクトリ）を運用している科目が対象。後期の残り6科目は現時点で枠組み（親ページ）のみのため、週ページ運用を開始した時点で追記する。
+上表は週ページ（詳細ディレクトリ）を運用している科目が対象。後期の残り5科目は現時点で枠組み（親ページ）のみのため、週ページ運用を開始した時点で追記する。
 
 ### 後期科目 → テーマ色・配置対応表（2026年度後期。プログラム基礎Ⅱ・AIコミュニケーション基礎Ⅱは上表に統合済み）
 
