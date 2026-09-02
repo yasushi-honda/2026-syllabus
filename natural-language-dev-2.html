@@ -57,6 +57,8 @@
         <li>2026年4月に Vertex AI から再編された<strong>Gemini Enterprise Agent Platform</strong>（Anthropic公式ドキュメント等、移行期のため「Vertex AI」表記が残るサービスもあります）の<strong>Model Garden</strong>を通じて、Claude Code から<strong>Claude（主にSonnet）</strong>を呼び出せる環境を構築します。</li>
         <li><strong>Firebase</strong>・<strong>Cloud Run</strong>・<strong>Firestore</strong>など、実際のクラウドサービスに触れながら、進級制作にクラウド機能を統合していきます。</li>
         <li>Model Gardenへのアクセス申請には<strong>承認まで24〜48時間</strong>かかるため、申請と利用の回を分けて計画的に進めます。</li>
+        <li>本科目は<strong>Claude Code CLI</strong>での操作を主軸とします（Claude Desktopは比較参考として軽く触れる程度）。Google Cloudの操作は<strong>gcloud CLI</strong>、GitHubの操作は<strong>gh CLI</strong>を、Claude Codeから呼び出して進める形を標準パターンとします。</li>
+        <li><strong>Playwright MCP</strong>（ブラウザ操作）や<strong>clasp</strong>（Google Apps Scriptのローカル管理）にも触れ、CLIとMCPを通じてAIエージェントが扱える範囲の広さ・パワフルさを体感します。</li>
         <li>クラウドAIサービスのデータガバナンス（入力データがモデルの学習に使われない設計等）を学び、「個人情報を扱えるレベルの安全設計」がどのように成り立っているかを理解します。</li>
         <li><strong>Budgets &amp; Alerts</strong>を使って、サービス単位でのコスト状況を確認する習慣を身につけます。個々のプロンプト単位の精密な課金確認は本授業の範囲外とし、まずはサービス単位でのコスト意識を持つことを目標とします。</li>
         <li>引き続き<strong>「責任あるコード」</strong>をテーマとし、クラウド環境でのAI活用における検証・品質管理の重要性を学びます。</li>
@@ -73,6 +75,7 @@
         <li>Claude・Geminiなど複数のAIモデルの違いと、それぞれの特性を自分の言葉で説明できる。</li>
         <li>クラウドAIサービスにおけるデータガバナンス（学習への非利用等）の基本的な考え方を理解している。</li>
         <li>Firebase・Cloud Run・Firestoreがそれぞれ何をするサービスかを説明できる。</li>
+        <li>Claude CodeがCLI（gcloud・gh等）やMCP（Playwright MCP等）を通じて外部ツールを操作する仕組みを理解している。</li>
       </ol>
 
       <h3>思考・判断</h3>
@@ -88,6 +91,7 @@
         <li>Claude CodeをGemini Enterprise Agent Platform経由でセットアップし、実際に動かせる。</li>
         <li>Firebase・Cloud Run・Firestoreの基本操作を行い、進級制作にクラウド機能を統合できる。</li>
         <li>Budgets &amp; Alertsでコスト状況を確認し、必要に応じて設定を調整できる。</li>
+        <li>Claude Codeからgcloud CLI・gh CLIを呼び出して基本的な操作を行い、Playwright MCPで自分のアプリの動作をAIエージェントに確認させられる。</li>
       </ol>
 
       <h3>関心・意欲・態度</h3>
@@ -110,19 +114,19 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td class="week-num">1</td><td class="week-theme">前期振り返り＆後期オリエンテーション</td><td>前期に取り組んだ進級制作の<strong>Before/After比較</strong>、AIエージェント（Antigravity CLI）活用の学びを振り返る。後期のゴール——<strong>Google Cloud実アカウントを使ったクラウドネイティブ開発</strong>——を共有し、全16回の流れを俯瞰する。</td></tr>
+            <tr><td class="week-num">1</td><td class="week-theme">前期振り返り＆後期オリエンテーション</td><td>前期に取り組んだ進級制作の<strong>Before/After比較</strong>、AIエージェント（Antigravity CLI）活用の学びを振り返る。後期のゴール——<strong>Google Cloud実アカウントを使ったクラウドネイティブ開発</strong>——を共有し、全16回の流れを俯瞰する。本科目は<strong>Claude Code CLI</strong>での操作を主軸とする方針も確認する（Claude Desktopは参考程度に触れる）。</td></tr>
             <tr><td class="week-num">2</td><td class="week-theme">Google Cloudアカウントを作ろう</td><td>個人のクレジットカードでGoogle Cloudに新規登録し、<strong>$300分・90日間の無料クレジット</strong>（Welcome credit）を確認する。トライアル終了時は自動課金ではなく、明示的にアップグレードしない限りアカウントが自動的にクローズされる仕組みを理解する。<strong>Gemini Enterprise Agent Platform（旧Vertex AI）</strong>の全体像を紹介する。</td></tr>
-            <tr><td class="week-num">3</td><td class="week-theme">Model Gardenへのアクセス申請＋AIモデルの違いを学ぶ</td><td>Model GardenでClaudeモデルへのアクセスを申請する（<strong>承認まで24〜48時間</strong>かかるため、当日は使えない前提で進める）。承認を待つ間、Claude（Sonnet等）・Geminiなど複数のAIモデルの違い・特性について座学で学ぶ。</td></tr>
-            <tr><td class="week-num">4</td><td class="week-theme">Claude Code × Agent Platformを接続しよう</td><td>申請が承認されたことを確認し、<code>/setup-vertex</code>ウィザードでClaude CodeをGemini Enterprise Agent Platform経由で使えるようにセットアップする。動作確認として簡単な依頼を試す。</td></tr>
+            <tr><td class="week-num">3</td><td class="week-theme">Model Gardenへのアクセス申請＋AIエージェントの可能性を広げる</td><td>Model GardenでClaudeモデルへのアクセスを申請する（<strong>承認まで24〜48時間</strong>かかるため、当日は使えない前提で進める）。承認を待つ間、Claude（Sonnet等）・Geminiなど複数のAIモデルの違い・特性を座学で学ぶ。あわせて、Claude CodeがCLI（<strong>gcloud</strong>・<strong>gh</strong>）やMCP（<strong>Playwright MCP</strong>でのブラウザ操作、<strong>clasp</strong>でのGoogle Apps Script管理）を通じて外部ツールを操作できる幅の広さを、教員のデモで体感する。</td></tr>
+            <tr><td class="week-num">4</td><td class="week-theme">Claude Code × Agent Platformを接続しよう</td><td>申請が承認されたことを確認し、<code>/setup-vertex</code>ウィザードでClaude CodeをGemini Enterprise Agent Platform経由で使えるようにセットアップする。動作確認として簡単な依頼を試す。以降、Google Cloudの操作は<strong>gcloud CLI</strong>、GitHubの操作は<strong>gh CLI</strong>をClaude Codeから呼び出す形を標準パターンとする。</td></tr>
             <tr><td class="week-num">5</td><td class="week-theme">セキュリティとデータガバナンスを学ぶ</td><td>クラウドAIサービスにおけるデータガバナンス（入力データがモデルの学習に使われない設計等）を公式資料で確認する。「個人情報を扱えるレベルの安全設計」がどのように成り立っているかを理解し、実際に何を入力してよい／よくないかを話し合う。</td></tr>
-            <tr><td class="week-num">6</td><td class="week-theme">Firebaseに触れてみよう</td><td><strong>Firebase</strong>の基本概念（Hosting等）に触れ、簡単な機能を進級制作に組み込む。</td></tr>
-            <tr><td class="week-num">7</td><td class="week-theme">Cloud Runに触れてみよう</td><td>コンテナベースのサービス<strong>Cloud Run</strong>の基本概念に触れ、簡単なアプリケーションをデプロイする体験をする。</td></tr>
+            <tr><td class="week-num">6</td><td class="week-theme">Firebaseに触れてみよう</td><td><strong>Firebase</strong>の基本概念（Hosting等）に触れ、Claude Codeから<strong>gcloud CLI</strong>を使って簡単な機能を進級制作に組み込む。</td></tr>
+            <tr><td class="week-num">7</td><td class="week-theme">Cloud Runに触れてみよう</td><td>コンテナベースのサービス<strong>Cloud Run</strong>の基本概念に触れ、Claude Codeから<strong>gcloud CLI</strong>で簡単なアプリケーションをデプロイする体験をする。</td></tr>
             <tr><td class="week-num">8</td><td class="week-theme">🎤 中間共有会</td><td>ここまでのクラウド環境構築・学びを共有する。うまくいったこと・つまずいたことを言葉にする。</td></tr>
-            <tr><td class="week-num">9</td><td class="week-theme">Firestoreに触れてみよう</td><td>NoSQLデータベース<strong>Firestore</strong>の基本概念に触れ、簡単なデータの保存・取得を試す。</td></tr>
+            <tr><td class="week-num">9</td><td class="week-theme">Firestoreに触れてみよう</td><td>NoSQLデータベース<strong>Firestore</strong>の基本概念に触れ、Claude Codeから<strong>gcloud CLI</strong>で簡単なデータの保存・取得を試す。</td></tr>
             <tr><td class="week-num">10</td><td class="week-theme">進級制作にクラウド機能を統合①：設計</td><td>進級制作のどこにクラウド機能（Firebase／Cloud Run／Firestore等）を統合するかを計画する。Claude Codeと協働でPRD・ADRを作成する。</td></tr>
-            <tr><td class="week-num">11</td><td class="week-theme">進級制作にクラウド機能を統合②：実装</td><td>第10回の計画に基づき、Claude Code（Gemini Enterprise Agent Platform経由）と協働で実装を進める。</td></tr>
+            <tr><td class="week-num">11</td><td class="week-theme">進級制作にクラウド機能を統合②：実装</td><td>第10回の計画に基づき、Claude Code（Gemini Enterprise Agent Platform経由）と協働で実装を進める。GitHubの操作（PR作成等）も<strong>gh CLI</strong>を使ってClaude Codeから行う。</td></tr>
             <tr><td class="week-num">12</td><td class="week-theme">課金を可視化しよう</td><td><strong>Budgets &amp; Alerts</strong>を設定し、サービス単位でのコスト状況を確認する習慣を身につける。無料クレジット終了後の課金イメージを掴む。</td></tr>
-            <tr><td class="week-num">13</td><td class="week-theme">検証と改善</td><td>実装した機能のテスト・動作確認。無料クレジットの消費状況を踏まえた改善判断。</td></tr>
+            <tr><td class="week-num">13</td><td class="week-theme">検証と改善</td><td>実装した機能のテスト・動作確認。<strong>Playwright MCP</strong>をClaude Codeに追加し、自分が作ったWebアプリをAIエージェントに実際に操作・確認させる。無料クレジットの消費状況を踏まえた改善判断も行う。</td></tr>
             <tr><td class="week-num">14</td><td class="week-theme">責任あるAI開発（クラウド版）</td><td>クラウド環境でのAI活用における検証・品質管理・データガバナンスの観点から、自分の実装を見直す。</td></tr>
             <tr><td class="week-num">15</td><td class="week-theme">最終仕上げ</td><td>進級制作の最終調整、ドキュメント整備。</td></tr>
             <tr><td class="week-num">16</td><td class="week-theme">🎤 最終発表会＆総括</td><td>クラウド機能を統合した進級制作の成果発表。前期・後期を通じた技術の進化を振り返る。</td></tr>
@@ -140,6 +144,8 @@
         <li>Google Cloud — Gemini Enterprise Agent Platform 公式ブログ・ドキュメント（cloud.google.com）</li>
         <li>Anthropic — Claude Code on Google Cloud's Agent Platform 公式ドキュメント（code.claude.com / platform.claude.com）</li>
         <li>Google Cloud — Firebase / Cloud Run / Firestore 公式ドキュメント</li>
+        <li>Microsoft — Playwright MCP 公式リポジトリ（github.com/microsoft/playwright-mcp）</li>
+        <li>Google — clasp（Command Line Apps Script Projects）公式リポジトリ（github.com/google/clasp）</li>
       </ul>
     </div>
 
@@ -168,6 +174,7 @@
         <li>Google Cloudの利用には<strong>個人のクレジットカード</strong>が必要です（新規登録者には$300分・90日間の無料クレジットが提供され、明示的にアップグレードしない限り自動課金は発生しません）。</li>
         <li>Model Gardenへのアクセス申請には承認まで24〜48時間かかります。申請のタイミングを逃さないよう、授業内でスケジュールを確認します。</li>
         <li>サービス名称は変化が速い分野です（例：Vertex AI → Gemini Enterprise Agent Platform、2026年4月）。授業内では執筆時点の最新情報を都度確認しながら進めます。</li>
+        <li><strong>clasp</strong>はGoogle公式リポジトリで開発されていますが、「非公式のGoogleプロダクト」と明記されているツールです。体験・紹介の位置づけで扱います。</li>
         <li>実際に課金が発生しうる環境を扱うため、不安な点があれば早めに担当教員に相談してください。</li>
         <li>体調やメンタル面で不安がある場合は、無理せず担当教員または学校の相談窓口に相談してください。</li>
       </ul>
