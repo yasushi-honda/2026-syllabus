@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="styles.css?v=3">
+  <!-- 公式情報確認: 2026-09-02 (cloud.google.com/free / cloud.google.com/blog/products/ai-machine-learning/the-new-gemini-enterprise-one-platform-for-agent-development / code.claude.com/docs/en/google-vertex-ai / platform.claude.com/docs/en/build-with-claude/claude-on-vertex-ai / cloud.google.com/vertex-ai/generative-ai/docs/data-governance) -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -43,52 +44,133 @@
       <h2>担当教員</h2>
       <p><strong>本田 康志</strong></p>
       <p>非常勤講師 / ヤススシステム代表</p>
+      <div class="message-box">
+        3年次のみなさん、前期はお疲れ様でした。進級制作を通じて、コンテキストエンジニアリング・SDD・TDD・ハーネスエンジニアリングを一通り体験し、AIエージェント（Antigravity CLI）の威力を実感してもらえたと思います。後期はいよいよ<strong>クラウドネイティブな開発</strong>へ踏み出します。Google Cloudの実際のアカウントを作り（$300分の無料クレジット・90日間）、<strong>Gemini Enterprise Agent Platform（旧Vertex AI）</strong>上でClaude Codeを動かし、Firebase・Cloud Run・Firestoreといった本物のクラウドサービスと連携するアプリを作っていきます。個人情報を扱えるレベルの安全設計があることも学びながら、進級制作をクラウドの力でさらに育てていきましょう。
+      </div>
     </div>
 
     <div class="syllabus-section">
       <h2>授業概要</h2>
-      <div class="tbd-note">自然言語開発の続きとなる科目です。授業概要は今後追加します。</div>
+      <ul>
+        <li>前期に育てた進級制作とAIエージェント活用の力を土台に、<strong>Google Cloud</strong>の実アカウントを使ったクラウドネイティブ開発を学ぶ、実践中心の専門科目です。</li>
+        <li>個人のクレジットカードでGoogle Cloudに登録し、新規登録時に提供される<strong>$300分・90日間の無料クレジット</strong>（Welcome credit）を使って学習を進めます。トライアル終了時は自動課金ではなく、明示的にアップグレードしない限りアカウントが自動的にクローズされる仕組みも理解します。</li>
+        <li>2026年4月に Vertex AI から再編された<strong>Gemini Enterprise Agent Platform</strong>（Anthropic公式ドキュメント等、移行期のため「Vertex AI」表記が残るサービスもあります）の<strong>Model Garden</strong>を通じて、Claude Code から<strong>Claude（主にSonnet）</strong>を呼び出せる環境を構築します。</li>
+        <li><strong>Firebase</strong>・<strong>Cloud Run</strong>・<strong>Firestore</strong>など、実際のクラウドサービスに触れながら、進級制作にクラウド機能を統合していきます。</li>
+        <li>Model Gardenへのアクセス申請には<strong>承認まで24〜48時間</strong>かかるため、申請と利用の回を分けて計画的に進めます。</li>
+        <li>クラウドAIサービスのデータガバナンス（入力データがモデルの学習に使われない設計等）を学び、「個人情報を扱えるレベルの安全設計」がどのように成り立っているかを理解します。</li>
+        <li><strong>Budgets &amp; Alerts</strong>を使って、サービス単位でのコスト状況を確認する習慣を身につけます。個々のプロンプト単位の精密な課金確認は本授業の範囲外とし、まずはサービス単位でのコスト意識を持つことを目標とします。</li>
+        <li>引き続き<strong>「責任あるコード」</strong>をテーマとし、クラウド環境でのAI活用における検証・品質管理の重要性を学びます。</li>
+      </ul>
     </div>
 
     <div class="syllabus-section">
       <h2>到達目標</h2>
 
       <h3>知識・理解</h3>
-      <div class="tbd-note">内容は今後追加します。</div>
+      <ol>
+        <li>Google Cloudのアカウント登録・無料クレジット（$300・90日間）・トライアル終了時の自動クローズの仕組みを説明できる。</li>
+        <li>Gemini Enterprise Agent Platform（旧Vertex AI）とModel Gardenの関係、Claude Codeとの連携方法を理解している。</li>
+        <li>Claude・Geminiなど複数のAIモデルの違いと、それぞれの特性を自分の言葉で説明できる。</li>
+        <li>クラウドAIサービスにおけるデータガバナンス（学習への非利用等）の基本的な考え方を理解している。</li>
+        <li>Firebase・Cloud Run・Firestoreがそれぞれ何をするサービスかを説明できる。</li>
+      </ol>
 
       <h3>思考・判断</h3>
-      <div class="tbd-note">内容は今後追加します。</div>
+      <ol>
+        <li>無料クレジットの範囲でどこまで開発を進めるか、コストを意識して判断できる。</li>
+        <li>個人情報や機密情報をAIに入力してよい場面とそうでない場面を、データガバナンスの観点から判断できる。</li>
+        <li>自分の進級制作のどこにクラウド機能を統合すると価値が生まれるかを考えられる。</li>
+      </ol>
 
       <h3>スキル・表現</h3>
-      <div class="tbd-note">内容は今後追加します。</div>
+      <ol>
+        <li>Google Cloudアカウントを作成し、Model Gardenへのアクセス申請を行える。</li>
+        <li>Claude CodeをGemini Enterprise Agent Platform経由でセットアップし、実際に動かせる。</li>
+        <li>Firebase・Cloud Run・Firestoreの基本操作を行い、進級制作にクラウド機能を統合できる。</li>
+        <li>Budgets &amp; Alertsでコスト状況を確認し、必要に応じて設定を調整できる。</li>
+      </ol>
 
       <h3>関心・意欲・態度</h3>
-      <div class="tbd-note">内容は今後追加します。</div>
+      <ol>
+        <li>実際にお金が関わるクラウド環境に対して、責任を持って慎重に取り組む姿勢を持つ。</li>
+        <li>技術の急速な変化（サービス名称の変更等）に対して、公式情報を確認しながら柔軟に対応する姿勢を持つ。</li>
+        <li>前期からの学びを土台に、新しい環境に臆せず挑戦する姿勢を持つ。</li>
+      </ol>
     </div>
 
     <div class="syllabus-section">
-      <h2>授業計画</h2>
-      <p>全体の回数・各回のテーマは今後確定します。決まり次第、このページに授業計画表を追加します。</p>
+      <h2>授業計画（全16回）</h2>
+      <div class="table-wrap">
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>週</th>
+              <th>テーマ</th>
+              <th>主な内容・活動</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="week-num">1</td><td class="week-theme">前期振り返り＆後期オリエンテーション</td><td>前期に取り組んだ進級制作の<strong>Before/After比較</strong>、AIエージェント（Antigravity CLI）活用の学びを振り返る。後期のゴール——<strong>Google Cloud実アカウントを使ったクラウドネイティブ開発</strong>——を共有し、全16回の流れを俯瞰する。</td></tr>
+            <tr><td class="week-num">2</td><td class="week-theme">Google Cloudアカウントを作ろう</td><td>個人のクレジットカードでGoogle Cloudに新規登録し、<strong>$300分・90日間の無料クレジット</strong>（Welcome credit）を確認する。トライアル終了時は自動課金ではなく、明示的にアップグレードしない限りアカウントが自動的にクローズされる仕組みを理解する。<strong>Gemini Enterprise Agent Platform（旧Vertex AI）</strong>の全体像を紹介する。</td></tr>
+            <tr><td class="week-num">3</td><td class="week-theme">Model Gardenへのアクセス申請＋AIモデルの違いを学ぶ</td><td>Model GardenでClaudeモデルへのアクセスを申請する（<strong>承認まで24〜48時間</strong>かかるため、当日は使えない前提で進める）。承認を待つ間、Claude（Sonnet等）・Geminiなど複数のAIモデルの違い・特性について座学で学ぶ。</td></tr>
+            <tr><td class="week-num">4</td><td class="week-theme">Claude Code × Agent Platformを接続しよう</td><td>申請が承認されたことを確認し、<code>/setup-vertex</code>ウィザードでClaude CodeをGemini Enterprise Agent Platform経由で使えるようにセットアップする。動作確認として簡単な依頼を試す。</td></tr>
+            <tr><td class="week-num">5</td><td class="week-theme">セキュリティとデータガバナンスを学ぶ</td><td>クラウドAIサービスにおけるデータガバナンス（入力データがモデルの学習に使われない設計等）を公式資料で確認する。「個人情報を扱えるレベルの安全設計」がどのように成り立っているかを理解し、実際に何を入力してよい／よくないかを話し合う。</td></tr>
+            <tr><td class="week-num">6</td><td class="week-theme">Firebaseに触れてみよう</td><td><strong>Firebase</strong>の基本概念（Hosting等）に触れ、簡単な機能を進級制作に組み込む。</td></tr>
+            <tr><td class="week-num">7</td><td class="week-theme">Cloud Runに触れてみよう</td><td>コンテナベースのサービス<strong>Cloud Run</strong>の基本概念に触れ、簡単なアプリケーションをデプロイする体験をする。</td></tr>
+            <tr><td class="week-num">8</td><td class="week-theme">🎤 中間共有会</td><td>ここまでのクラウド環境構築・学びを共有する。うまくいったこと・つまずいたことを言葉にする。</td></tr>
+            <tr><td class="week-num">9</td><td class="week-theme">Firestoreに触れてみよう</td><td>NoSQLデータベース<strong>Firestore</strong>の基本概念に触れ、簡単なデータの保存・取得を試す。</td></tr>
+            <tr><td class="week-num">10</td><td class="week-theme">進級制作にクラウド機能を統合①：設計</td><td>進級制作のどこにクラウド機能（Firebase／Cloud Run／Firestore等）を統合するかを計画する。Claude Codeと協働でPRD・ADRを作成する。</td></tr>
+            <tr><td class="week-num">11</td><td class="week-theme">進級制作にクラウド機能を統合②：実装</td><td>第10回の計画に基づき、Claude Code（Gemini Enterprise Agent Platform経由）と協働で実装を進める。</td></tr>
+            <tr><td class="week-num">12</td><td class="week-theme">課金を可視化しよう</td><td><strong>Budgets &amp; Alerts</strong>を設定し、サービス単位でのコスト状況を確認する習慣を身につける。無料クレジット終了後の課金イメージを掴む。</td></tr>
+            <tr><td class="week-num">13</td><td class="week-theme">検証と改善</td><td>実装した機能のテスト・動作確認。無料クレジットの消費状況を踏まえた改善判断。</td></tr>
+            <tr><td class="week-num">14</td><td class="week-theme">責任あるAI開発（クラウド版）</td><td>クラウド環境でのAI活用における検証・品質管理・データガバナンスの観点から、自分の実装を見直す。</td></tr>
+            <tr><td class="week-num">15</td><td class="week-theme">最終仕上げ</td><td>進級制作の最終調整、ドキュメント整備。</td></tr>
+            <tr><td class="week-num">16</td><td class="week-theme">🎤 最終発表会＆総括</td><td>クラウド機能を統合した進級制作の成果発表。前期・後期を通じた技術の進化を振り返る。</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>※授業計画は、学生の理解度や進度、クラウドサービスの仕様変更に応じて柔軟に変更する可能性があります。<br>※毎回の授業冒頭で、AI開発関連の最新ニュース・ツールアップデートを共有します。</p>
     </div>
 
     <div class="syllabus-section">
       <h2>使用テキスト・参考文献</h2>
-      <div class="tbd-note">内容は今後追加します。</div>
+      <p>特定のテキストは使用しません。授業内で適宜、公式ドキュメントや技術ブログ等を紹介します。</p>
+      <p>主な参考資料（随時更新）：</p>
+      <ul>
+        <li>Google Cloud — Gemini Enterprise Agent Platform 公式ブログ・ドキュメント（cloud.google.com）</li>
+        <li>Anthropic — Claude Code on Google Cloud's Agent Platform 公式ドキュメント（code.claude.com / platform.claude.com）</li>
+        <li>Google Cloud — Firebase / Cloud Run / Firestore 公式ドキュメント</li>
+      </ul>
     </div>
 
     <div class="syllabus-section">
       <h2>予習・復習</h2>
-      <div class="tbd-note">内容は今後追加します。</div>
+      <ul>
+        <li><strong>予習:</strong> 次回テーマに関連する公式ドキュメントに目を通すと理解が深まります。</li>
+        <li><strong>復習:</strong> 授業で行った設定・気づいたことをリポジトリのdocsやADRに記録しましょう。</li>
+      </ul>
     </div>
 
     <div class="syllabus-section">
       <h2>評価方法・基準</h2>
-      <div class="tbd-note">内容は今後追加します。</div>
+      <p>クラウド環境を責任を持って扱いながら、実際に手を動かして進級制作にクラウド機能を統合できたかを重視します。</p>
+
+      <div class="eval-item"><span class="eval-pct" style="color:var(--c-green)">25%</span><span class="eval-label"><strong>クラウド環境構築・活用の実践</strong> — Google Cloudアカウント作成からClaude Code連携、Firebase／Cloud Run／Firestoreの活用まで、実際に手を動かした度合い。</span></div>
+      <div class="eval-item"><span class="eval-pct" style="color:var(--c-green)">25%</span><span class="eval-label"><strong>実装・コードの品質</strong> — クラウド機能統合の動作、可読性、保守性。</span></div>
+      <div class="eval-item"><span class="eval-pct" style="color:var(--c-green)">20%</span><span class="eval-label"><strong>セキュリティ・コスト意識</strong> — データガバナンスの理解、Budgets &amp; Alertsによるコスト管理の実践。</span></div>
+      <div class="eval-item"><span class="eval-pct" style="color:var(--c-green)">15%</span><span class="eval-label"><strong>開発プロセス</strong> — GitHub Flowの実践、Claude Codeとの協働プロセス。</span></div>
+      <div class="eval-item"><span class="eval-pct" style="color:var(--c-green)">15%</span><span class="eval-label"><strong>発表・責任あるAI開発の実践</strong> — 中間・最終発表への取り組み、検証姿勢。</span></div>
     </div>
 
     <div class="syllabus-section">
       <h2>その他（履修上の注意点）</h2>
-      <div class="tbd-note">内容は今後追加します。</div>
+      <ul>
+        <li>Google Cloudの利用には<strong>個人のクレジットカード</strong>が必要です（新規登録者には$300分・90日間の無料クレジットが提供され、明示的にアップグレードしない限り自動課金は発生しません）。</li>
+        <li>Model Gardenへのアクセス申請には承認まで24〜48時間かかります。申請のタイミングを逃さないよう、授業内でスケジュールを確認します。</li>
+        <li>サービス名称は変化が速い分野です（例：Vertex AI → Gemini Enterprise Agent Platform、2026年4月）。授業内では執筆時点の最新情報を都度確認しながら進めます。</li>
+        <li>実際に課金が発生しうる環境を扱うため、不安な点があれば早めに担当教員に相談してください。</li>
+        <li>体調やメンタル面で不安がある場合は、無理せず担当教員または学校の相談窓口に相談してください。</li>
+      </ul>
     </div>
 
   </main>
