@@ -24,12 +24,12 @@
 
 ## 8. 授業概要
 - 前期に育てた進級制作とAIエージェント活用の力を土台に、**Google Cloud** の実アカウントを使ったクラウドネイティブ開発を学ぶ、実践中心の専門科目です。
-- 個人のクレジットカードでGoogle Cloudに登録し、新規登録時に提供される **$300分・90日間の無料クレジット**（Welcome credit）を使って学習を進めます。トライアル終了時は自動課金ではなく、明示的にアップグレードしない限りアカウントが自動的にクローズされる仕組みも理解します。
-- 2026年4月に Vertex AI から再編された **Gemini Enterprise Agent Platform**（Anthropic公式ドキュメント等、移行期のため「Vertex AI」表記が残るサービスもあります）の **Model Garden** を通じて、Claude Code から **Claude（主にSonnet）** を呼び出せる環境を構築します。
+- 個人のクレジットカードでGoogle Cloudに登録し、新規登録時に提供される **$300分・90日間の無料クレジット**（Welcome credit）を使って学習を進めます。トライアル終了時は自動課金ではなく、アカウントが自動的にクローズされる仕組みです（終了後30日以内なら有料アカウントへのアップグレードで復旧可能）。第12回では、Budgets & Alertsで上限額を設定したうえで有料アカウントへ切り替え、Cloud Run・Firestore等の **Always Free（恒久無料枠）** の範囲内で後半の授業を継続する手順も扱います。
+- 2026年4月に Vertex AI から再編された **Gemini Enterprise Agent Platform** の **Model Garden** を通じて、Claude Code から **Claude（主にSonnet）** を呼び出せる環境を構築します。この呼称はGoogle Cloud公式ブログのものですが、Anthropic公式ドキュメントでは「Google Cloud's Agent Platform, formerly Vertex AI」と表記され、Claude Codeのログイン画面には今も「Google Vertex AI」と表示されます。表記のゆれがあること自体を、サービス名称変化の実例として学びます。
 - **Firebase**・**Cloud Run**・**Firestore** など、実際のクラウドサービスに触れながら、進級制作にクラウド機能を統合していきます。
 - Model Gardenへのアクセス申請には **承認まで24〜48時間** かかるため、申請と利用の回を分けて計画的に進めます。
-- 本科目は **Claude Code CLI** での操作を主軸とします（Claude Desktopは比較参考として軽く触れる程度）。Google Cloudの操作は **gcloud CLI**、GitHubの操作は **gh CLI** を、Claude Codeから呼び出して進める形を標準パターンとします。
-- **Playwright MCP**（ブラウザ操作）や **clasp**（Google Apps Scriptのローカル管理）にも触れ、CLIとMCPを通じてAIエージェントが扱える範囲の広さ・パワフルさを体感します。
+- 本科目は **Claude Code CLI** での操作を主軸とします（Claude Desktopは比較参考として軽く触れる程度）。Google Cloudの操作は **gcloud CLI**（Firebaseは専用の **Firebase CLI**）、GitHubの操作は **gh CLI** を、Claude Codeから呼び出して進める形を標準パターンとします。
+- **Playwright MCP**（ブラウザ操作）や **clasp**（Command Line Apps Script Projects、Google Apps Scriptのローカル管理）にも触れ、CLIとMCPを通じてAIエージェントが扱える範囲の広さ・パワフルさを体感します。
 - クラウドAIサービスのデータガバナンス（入力データがモデルの学習に使われない設計等）を学び、「個人情報を扱えるレベルの安全設計」がどのように成り立っているかを理解します。
 - **Budgets & Alerts** を使って、サービス単位でのコスト状況を確認する習慣を身につけます。個々のプロンプト単位の精密な課金確認は本授業の範囲外とし、まずはサービス単位でのコスト意識を持つことを目標とします。
 - 引き続き **「責任あるコード」** をテーマとし、クラウド環境でのAI活用における検証・品質管理の重要性を学びます。
@@ -37,7 +37,7 @@
 ## 9. 到達目標
 
 ### 知識・理解
-1. Google Cloudのアカウント登録・無料クレジット（$300・90日間）・トライアル終了時の自動クローズの仕組みを説明できる。
+1. Google Cloudのアカウント登録・無料クレジット（$300・90日間）・トライアル終了時の自動クローズと、有料アカウントへの切り替えによるAlways Free（恒久無料枠）継続の仕組みを説明できる。
 2. Gemini Enterprise Agent Platform（旧Vertex AI）とModel Gardenの関係、Claude Codeとの連携方法を理解している。
 3. Claude・Geminiなど複数のAIモデルの違いと、それぞれの特性を自分の言葉で説明できる。
 4. クラウドAIサービスにおけるデータガバナンス（学習への非利用等）の基本的な考え方を理解している。
@@ -66,17 +66,17 @@
 | 週 | テーマ | 主な内容・活動 |
 |:---:|:---|:---|
 | 1 | **前期振り返り＆後期オリエンテーション** | 前期に取り組んだ進級制作のBefore/After比較、AIエージェント（Antigravity CLI）活用の学びを振り返る。後期のゴール——Google Cloud実アカウントを使ったクラウドネイティブ開発——を共有し、全16回の流れを俯瞰する。本科目はClaude Code CLIでの操作を主軸とする方針も確認する（Claude Desktopは参考程度に触れる）。 |
-| 2 | **Google Cloudアカウントを作ろう** | 個人のクレジットカードでGoogle Cloudに新規登録し、$300分・90日間の無料クレジット（Welcome credit）を確認する。トライアル終了時は自動課金ではなく、明示的にアップグレードしない限りアカウントが自動的にクローズされる仕組みを理解する。Gemini Enterprise Agent Platform（旧Vertex AI）の全体像を紹介する。 |
+| 2 | **Google Cloudアカウントを作ろう** | 個人のクレジットカードでGoogle Cloudに新規登録し、$300分・90日間の無料クレジット（Welcome credit）を確認する。トライアル終了時は自動課金ではなく自動的にアカウントがクローズされる仕組みで、90日という期限が全16回の授業期間より短いことも共有し、第12回で有料アカウントへ切り替える予定であることを先に伝えておく。Gemini Enterprise Agent Platform（旧Vertex AI）の全体像を紹介する。 |
 | 3 | **Model Gardenへのアクセス申請＋AIエージェントの可能性を広げる** | Model GardenでClaudeモデルへのアクセスを申請する（承認まで24〜48時間かかるため、当日は使えない前提で進める）。承認を待つ間、Claude（Sonnet等）・Geminiなど複数のAIモデルの違い・特性を座学で学ぶ。あわせて、Claude CodeがCLI（gcloud・gh）やMCP（Playwright MCPでのブラウザ操作、claspでのGoogle Apps Script管理）を通じて外部ツールを操作できる幅の広さを、教員のデモで体感する。 |
-| 4 | **Claude Code × Agent Platformを接続しよう** | 申請が承認されたことを確認し、`/setup-vertex`ウィザードでClaude CodeをGemini Enterprise Agent Platform経由で使えるようにセットアップする。動作確認として簡単な依頼を試す。以降、Google Cloudの操作はgcloud CLI、GitHubの操作はgh CLIをClaude Codeから呼び出す形を標準パターンとする。 |
+| 4 | **Claude Code × Agent Platformを接続しよう** | 申請が承認されたことを確認し、`/setup-vertex`ウィザードでClaude CodeをGemini Enterprise Agent Platform経由で使えるようにセットアップする。ログイン画面には「Google Vertex AI」と表示されることに気づき、サービス名称が移行期にあることを実機で確認する。動作確認として簡単な依頼を試す。以降、Google Cloudの操作はgcloud CLI、GitHubの操作はgh CLIをClaude Codeから呼び出す形を標準パターンとする。 |
 | 5 | **セキュリティとデータガバナンスを学ぶ** | クラウドAIサービスにおけるデータガバナンス（入力データがモデルの学習に使われない設計等）を公式資料で確認する。「個人情報を扱えるレベルの安全設計」がどのように成り立っているかを理解し、実際に何を入力してよい／よくないかを話し合う。 |
-| 6 | **Firebaseに触れてみよう** | Firebaseの基本概念（Hosting等）に触れ、Claude Codeからgcloud CLIを使って簡単な機能を進級制作に組み込む。 |
+| 6 | **Firebaseに触れてみよう** | Firebaseの基本概念（Hosting等）に触れ、Claude Codeから専用のFirebase CLI（`firebase deploy`等）を使って簡単な機能を進級制作に組み込む。 |
 | 7 | **Cloud Runに触れてみよう** | コンテナベースのサービスCloud Runの基本概念に触れ、Claude Codeからgcloud CLIで簡単なアプリケーションをデプロイする体験をする。 |
 | 8 | **🎤 中間共有会** | ここまでのクラウド環境構築・学びを共有する。うまくいったこと・つまずいたことを言葉にする。 |
-| 9 | **Firestoreに触れてみよう** | NoSQLデータベースFirestoreの基本概念に触れ、Claude Codeからgcloud CLIで簡単なデータの保存・取得を試す。 |
+| 9 | **Firestoreに触れてみよう** | NoSQLデータベースFirestoreの基本概念に触れる。データベース自体の作成はgcloud CLI（`gcloud firestore`はDB作成・インデックス管理等のプロビジョニング用途）で行い、ドキュメントの保存・取得はFirestore SDK（Node.js等）を使った数行のスクリプトをClaude Codeと協働で書いて試す。 |
 | 10 | **進級制作にクラウド機能を統合①：設計** | 進級制作のどこにクラウド機能（Firebase／Cloud Run／Firestore等）を統合するかを計画する。Claude Codeと協働でPRD・ADRを作成する。 |
 | 11 | **進級制作にクラウド機能を統合②：実装** | 第10回の計画に基づき、Claude Code（Gemini Enterprise Agent Platform経由）と協働で実装を進める。GitHubの操作（PR作成等）もgh CLIを使ってClaude Codeから行う。 |
-| 12 | **課金を可視化しよう** | Budgets & Alertsを設定し、サービス単位でのコスト状況を確認する習慣を身につける。無料クレジット終了後の課金イメージを掴む。 |
+| 12 | **課金を可視化しよう** | Budgets & Alertsを設定し、サービス単位でのコスト状況を確認する習慣を身につける。無料クレジットは第2回の登録から90日で終了するため、この時点で予算上限を低額（または0円）に設定したうえで有料アカウントへアップグレードし、Cloud Run・Firestore等のAlways Free（恒久無料枠）の範囲内で第13回以降も進級制作を継続できる状態を作る。 |
 | 13 | **検証と改善** | 実装した機能のテスト・動作確認。Playwright MCPをClaude Codeに追加し、自分が作ったWebアプリをAIエージェントに実際に操作・確認させる。無料クレジットの消費状況を踏まえた改善判断も行う。 |
 | 14 | **責任あるAI開発（クラウド版）** | クラウド環境でのAI活用における検証・品質管理・データガバナンスの観点から、自分の実装を見直す。 |
 | 15 | **最終仕上げ** | 進級制作の最終調整、ドキュメント整備。 |
@@ -105,9 +105,9 @@
 | 15% | 発表・責任あるAI開発の実践 | 中間・最終発表への取り組み、検証姿勢。 |
 
 ## 14. その他（履修上の注意点）
-- Google Cloudの利用には **個人のクレジットカード** が必要です（新規登録者には$300分・90日間の無料クレジットが提供され、明示的にアップグレードしない限り自動課金は発生しません）。
+- Google Cloudの利用には **個人のクレジットカード** が必要です（新規登録者には$300分・90日間の無料クレジットが提供され、明示的にアップグレードしない限り自動課金は発生しません）。90日間は全16回の授業期間より短いため、第12回で低額の予算上限を設定したうえで有料アカウントへ切り替え、Always Free（恒久無料枠）の範囲内で継続します。
 - Model Gardenへのアクセス申請には承認まで24〜48時間かかります。申請のタイミングを逃さないよう、授業内でスケジュールを確認します。
-- サービス名称は変化が速い分野です（例：Vertex AI → Gemini Enterprise Agent Platform、2026年4月）。授業内では執筆時点の最新情報を都度確認しながら進めます。
-- **clasp** はGoogle公式リポジトリで開発されていますが、「非公式のGoogleプロダクト」と明記されているツールです。体験・紹介の位置づけで扱います。
+- サービス名称は変化が速い分野です（例：Vertex AI → Gemini Enterprise Agent Platform、2026年4月）。Google公式ブログの呼称とAnthropic公式ドキュメント・Claude Codeのログイン画面表示（「Google Vertex AI」）にも表記のゆれがあります。授業内では執筆時点の最新情報を都度確認しながら進めます。
+- **clasp** はGoogle公式リポジトリ（github.com/google/clasp）で開発されていますが、READMEに「公式にサポートされる製品ではない（not an officially supported Google product）」と明記されているツールです。体験・紹介の位置づけで扱います。
 - 実際に課金が発生しうる環境を扱うため、不安な点があれば早めに担当教員に相談してください。
 - 体調やメンタル面で不安がある場合は、無理せず担当教員または学校の相談窓口に相談してください。
