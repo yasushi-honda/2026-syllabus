@@ -56,7 +56,7 @@
         <li>最初はブラウザだけで完結する<strong>Google AI Studio の Build mode</strong>で、GitHubと連携した簡単なミニアプリづくりを通じて「指示したら形になった」という<strong>コンパクトな成功体験</strong>を積みます。</li>
         <li>続いて、GitHub Codespaces上で動く<strong>Antigravity CLI（agy）</strong>を導入し、ターミナルで自然言語の指示を出しながらAIエージェントと協働する体験へ段階的にレベルアップします。</li>
         <li>学期後半では、各自が並行して取り組む<strong>進級制作</strong>にAIエージェントをどう活かせるかを検討し、実際に小さな改善を加える取り組みへつなげます（前半で作った個人開発の延長として続けることも選べます。進度は一人ひとりの状況に応じて柔軟に調整します）。</li>
-        <li>GitHubアカウント・GitHub Codespaces・GitHub Pagesの基本操作は前期の他授業で経験済みという前提で進めますが、第2回で軽く再確認します。</li>
+        <li>GitHubアカウント・リポジトリの基本操作は前期の他授業で触れている前提で進めますが、理解度には個人差があるため第2回で丁寧に再確認します。<strong>GitHub Codespaces</strong>は本科目で初めて使う学生が多い前提で、導入から丁寧にサポートします。</li>
         <li>引き続き、Googleアカウントがあれば無料枠から使い始められるツールを中心に扱います。Antigravity CLIの無料枠は時期によって変動する可能性があるため、都度公式情報で確認しながら進めます。</li>
         <li>中間・期末に発表の機会を設け、自分が作ったもの・取り組んだプロセスを自分の言葉で伝える経験を積みます。</li>
       </ul>
@@ -68,9 +68,9 @@
       <h3>知識・理解</h3>
       <ol>
         <li>「チャット型AI」と、指示を受けて自分でタスクを進める「AIエージェント」の違いを自分の言葉で説明できる。</li>
-        <li>Google AI Studio の Build mode の基本的な使い方（アプリ作成・GitHub連携・APIキーの発行）を理解している。</li>
+        <li>Google AI Studio の Build mode の基本的な使い方（アプリ作成・GitHub連携・APIキーの自動設定）を理解している。</li>
         <li>Antigravity CLI（agy）の基本的な使い方（インストール・認証・自然言語での指示）を理解している。</li>
-        <li>GitHub・GitHub Codespaces・GitHub Pagesの役割を、前期までの学びを踏まえて再確認している。</li>
+        <li>GitHubの基本操作を前期までの学びを踏まえて再確認し、GitHub Codespaces・GitHub Pagesの役割を新しく理解している。</li>
         <li>AIエージェントが生成した成果物にも確認・検証が必要であることを理解している。</li>
       </ol>
 
@@ -109,8 +109,8 @@
           </thead>
           <tbody>
             <tr><td class="week-num">1</td><td class="week-theme">前期振り返り＆後期オリエンテーション</td><td>前期に育てた自分のNotebookLM（現<strong>Gemini Notebook</strong>）を見返し、これまでの取り組みを振り返る。「聞けば答えてくれる<strong>チャット型AI</strong>」と「指示を受けて自分でタスクを進める<strong>AIエージェント</strong>」という新しい軸を知る。後期14回の流れを俯瞰し、評価方法を確認する。</td></tr>
-            <tr><td class="week-num">2</td><td class="week-theme">GitHub・Codespacesを再確認しよう</td><td>GitHubアカウント・リポジトリ・<strong>GitHub Codespaces</strong>の基本操作を短時間で再確認する（前期の他授業で経験済みの内容を思い出す回）。作った成果物を公開する<strong>GitHub Pages</strong>の仕組みも合わせて確認し、後半の制作で迷わないための土台を整える。</td></tr>
-            <tr><td class="week-num">3</td><td class="week-theme">Google AI Studio Build modeに触れてみよう①</td><td><strong>Google AI Studio の Build mode</strong>を開き、GitHubリポジトリを新規作成、または既存リポジトリをインポートする。自然言語の指示で、ブラウザだけで動く簡単なミニアプリ（例：自己紹介カード、簡易クイズ等）の土台を作る。アプリ作成時に自動発行される無料のGemini APIキーの仕組みも確認する。</td></tr>
+            <tr><td class="week-num">2</td><td class="week-theme">GitHubを再確認し、Codespacesを使ってみよう</td><td>GitHubアカウント・リポジトリの基本操作を短時間で再確認する（前期の他授業で触れた内容の復習、理解度の個人差に配慮）。続けて、本科目で新しく使う<strong>GitHub Codespaces</strong>を教員のデモに沿って実際に起動し、ブラウザだけで開発環境が立ち上がる仕組みを体験する。作った成果物を公開する<strong>GitHub Pages</strong>の仕組みも合わせて紹介し、後半の制作で迷わないための土台を整える。</td></tr>
+            <tr><td class="week-num">3</td><td class="week-theme">Google AI Studio Build modeに触れてみよう①</td><td><strong>Google AI Studio の Build mode</strong>を開き、GitHubリポジトリを新規作成、または既存リポジトリをインポートする。自然言語の指示で、ブラウザだけで動く簡単なミニアプリ（例：自己紹介カード、簡易クイズ等）の土台を作る。アプリ作成時に自分のGemini APIキーが<strong>自動でシークレットとして設定される</strong>仕組みも確認する。</td></tr>
             <tr><td class="week-num">4</td><td class="week-theme">Google AI Studio Build modeで仕上げよう②</td><td>第3回で作ったミニアプリを自然言語の追加指示で改善し、<strong>GitHubへプッシュ</strong>して公開する。「指示したら形になった」というコンパクトな成功体験を、自分の言葉でひとことメモに残す。</td></tr>
             <tr><td class="week-num">5</td><td class="week-theme">Antigravity CLI（agy）を導入しよう</td><td>GitHub Codespaces上に<strong>Antigravity CLI（agy）</strong>をインストールし、Googleアカウントで認証する。教員のデモでAIエージェントがターミナル上で自然言語の指示を実行していく様子を観察する。無料枠は時期によって変動し得ることを公式情報とあわせて確認する。</td></tr>
             <tr><td class="week-num">6</td><td class="week-theme">agyと一緒につくる①</td><td>自分の個人プロジェクト（第3〜4回の続き、または新規）に、agyへの自然言語の指示で小さな機能を1つ追加する演習。</td></tr>
