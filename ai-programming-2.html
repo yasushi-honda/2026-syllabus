@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="styles.css?v=3">
+  <!-- 公式情報確認: 2026-09-02 (antigravity.google/docs/cli/install / antigravity.google/blog/changes-to-antigravity-plans / ai.google.dev/gemini-api/docs/aistudio-build-mode / developers.googleblog.com/an-important-update-transitioning-gemini-cli-to-antigravity-cli) -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -43,52 +44,128 @@
       <h2>担当教員</h2>
       <p><strong>本田 康志</strong></p>
       <p>非常勤講師 / ヤススシステム代表</p>
+      <div class="message-box">
+        前期でNotebookLM（現Gemini Notebook）を使って「自分だけのAI」を育てたみなさん、お疲れ様でした。後期はいよいよ、指示を受けて自分でタスクを進める<strong>AIエージェント</strong>と協働していきます。最初はブラウザだけで動くGoogle AI Studioから、慣れてきたらターミナルで動くAntigravity CLI（agy）へ。最終的には、みなさんが並行して取り組む<strong>進級制作</strong>にAIエージェントを役立てられるところまで、一緒に進んでいきましょう。
+      </div>
     </div>
 
     <div class="syllabus-section">
       <h2>授業概要</h2>
-      <div class="tbd-note">AI活用プログラミング基礎の続きとなる科目です。授業概要は今後追加します。</div>
+      <ul>
+        <li>前期「AI活用プログラミング基礎」でNotebookLM（現Gemini Notebook）を使って「自分だけのAI」を育てた経験を土台に、指示を受けて自分で作業を進める<strong>AIエージェント</strong>と協働する実践中心の科目です。</li>
+        <li>最初はブラウザだけで完結する<strong>Google AI Studio の Build mode</strong>で、GitHubと連携した簡単なミニアプリづくりを通じて「指示したら形になった」という<strong>コンパクトな成功体験</strong>を積みます。</li>
+        <li>続いて、GitHub Codespaces上で動く<strong>Antigravity CLI（agy）</strong>を導入し、ターミナルで自然言語の指示を出しながらAIエージェントと協働する体験へ段階的にレベルアップします。</li>
+        <li>学期後半では、各自が並行して取り組む<strong>進級制作</strong>にAIエージェントをどう活かせるかを検討し、実際に小さな改善を加える取り組みへつなげます（前半で作った個人開発の延長として続けることも選べます。進度は一人ひとりの状況に応じて柔軟に調整します）。</li>
+        <li>GitHubアカウント・リポジトリの基本操作は前期の他授業で触れている前提で進めますが、理解度には個人差があるため第2回で丁寧に再確認します。<strong>GitHub Codespaces</strong>は本科目で初めて使う学生が多い前提で、導入から丁寧にサポートします。</li>
+        <li>引き続き、Googleアカウントがあれば無料枠から使い始められるツールを中心に扱います。Antigravity CLIの無料枠は時期によって変動する可能性があるため、都度公式情報で確認しながら進めます。</li>
+        <li>中間・期末に発表の機会を設け、自分が作ったもの・取り組んだプロセスを自分の言葉で伝える経験を積みます。</li>
+      </ul>
     </div>
 
     <div class="syllabus-section">
       <h2>到達目標</h2>
 
       <h3>知識・理解</h3>
-      <div class="tbd-note">内容は今後追加します。</div>
+      <ol>
+        <li>「チャット型AI」と、指示を受けて自分でタスクを進める「AIエージェント」の違いを自分の言葉で説明できる。</li>
+        <li>Google AI Studio の Build mode の基本的な使い方（アプリ作成・GitHub連携・APIキーの自動設定）を理解している。</li>
+        <li>Antigravity CLI（agy）の基本的な使い方（インストール・認証・自然言語での指示）を理解している。</li>
+        <li>GitHubの基本操作を前期までの学びを踏まえて再確認し、GitHub Codespaces・GitHub Pagesの役割を新しく理解している。</li>
+        <li>AIエージェントが生成した成果物にも確認・検証が必要であることを理解している。</li>
+      </ol>
 
       <h3>思考・判断</h3>
-      <div class="tbd-note">内容は今後追加します。</div>
+      <ol>
+        <li>自分の目的に応じて、Google AI Studio Build modeとAntigravity CLIのどちらを使うかを判断できる。</li>
+        <li>AIエージェントに任せる部分と、自分で確認する部分を場面に応じて切り分けられる。</li>
+        <li>自分の進級制作のどこにAIエージェントを活かせるかを考えられる。</li>
+      </ol>
 
       <h3>スキル・表現</h3>
-      <div class="tbd-note">内容は今後追加します。</div>
+      <ol>
+        <li>Google AI Studio Build modeで、GitHubと連携した簡単なアプリを作成できる。</li>
+        <li>Antigravity CLI（agy）を使い、自然言語の指示で小さな機能を実装できる。</li>
+        <li>自分が作ったもの・取り組んだプロセスについて、自分の言葉で発表できる。</li>
+      </ol>
 
       <h3>関心・意欲・態度</h3>
-      <div class="tbd-note">内容は今後追加します。</div>
+      <ol>
+        <li>新しいAIツールに対して臆せず試してみる姿勢を持つ。</li>
+        <li>うまくいかないときも投げ出さず、小さく試行錯誤を続ける。</li>
+        <li>自分のペースを保ちながら、必要に応じて仲間や教員に相談する。</li>
+      </ol>
     </div>
 
     <div class="syllabus-section">
-      <h2>授業計画</h2>
-      <p>全体の回数・各回のテーマは今後確定します。決まり次第、このページに授業計画表を追加します。</p>
+      <h2>授業計画（全14回）</h2>
+      <div class="table-wrap">
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>週</th>
+              <th>テーマ</th>
+              <th>主な内容・活動</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="week-num">1</td><td class="week-theme">前期振り返り＆後期オリエンテーション</td><td>前期に育てた自分のNotebookLM（現<strong>Gemini Notebook</strong>）を見返し、これまでの取り組みを振り返る。「聞けば答えてくれる<strong>チャット型AI</strong>」と「指示を受けて自分でタスクを進める<strong>AIエージェント</strong>」という新しい軸を知る。後期14回の流れを俯瞰し、評価方法を確認する。</td></tr>
+            <tr><td class="week-num">2</td><td class="week-theme">GitHubを再確認し、Codespacesを使ってみよう</td><td>GitHubアカウント・リポジトリの基本操作を短時間で再確認する（前期の他授業で触れた内容の復習、理解度の個人差に配慮）。続けて、本科目で新しく使う<strong>GitHub Codespaces</strong>を教員のデモに沿って実際に起動し、ブラウザだけで開発環境が立ち上がる仕組みを体験する。作った成果物を公開する<strong>GitHub Pages</strong>の仕組みも合わせて紹介し、後半の制作で迷わないための土台を整える。</td></tr>
+            <tr><td class="week-num">3</td><td class="week-theme">Google AI Studio Build modeに触れてみよう①</td><td><strong>Google AI Studio の Build mode</strong>を開き、GitHubリポジトリを新規作成、または既存リポジトリをインポートする。自然言語の指示で、ブラウザだけで動く簡単なミニアプリ（例：自己紹介カード、簡易クイズ等）の土台を作る。アプリ作成時に自分のGemini APIキーが<strong>自動でシークレットとして設定される</strong>仕組みも確認する。</td></tr>
+            <tr><td class="week-num">4</td><td class="week-theme">Google AI Studio Build modeで仕上げよう②</td><td>第3回で作ったミニアプリを自然言語の追加指示で改善し、<strong>GitHubへプッシュ</strong>して公開する。「指示したら形になった」というコンパクトな成功体験を、自分の言葉でひとことメモに残す。</td></tr>
+            <tr><td class="week-num">5</td><td class="week-theme">Antigravity CLI（agy）を導入しよう</td><td>GitHub Codespaces上に<strong>Antigravity CLI（agy）</strong>をインストールし、Googleアカウントで認証する。教員のデモでAIエージェントがターミナル上で自然言語の指示を実行していく様子を観察する。無料枠は時期によって変動し得ることを公式情報とあわせて確認する。</td></tr>
+            <tr><td class="week-num">6</td><td class="week-theme">agyと一緒につくる①</td><td>自分の個人プロジェクト（第3〜4回の続き、または新規）に、agyへの自然言語の指示で小さな機能を1つ追加する演習。</td></tr>
+            <tr><td class="week-num">7</td><td class="week-theme">agyと一緒につくる②</td><td>第6回の続き。改善・仕上げを行い、GitHub Pagesで公開する。取り組みの過程で気づいたことを振り返りメモに残す。</td></tr>
+            <tr><td class="week-num">8</td><td class="week-theme">🎤 中間共有会</td><td>自分が作った成果物とAIエージェントとのやり取りを5分程度で共有し、質疑応答を行う。完璧さより「やってみた」経験の共有を重視する。</td></tr>
+            <tr><td class="week-num">9</td><td class="week-theme">進級制作とAIエージェントをつなげよう</td><td>各自が並行して取り組む<strong>進級制作</strong>の現状を共有し、AIエージェント（agyまたはAI Studio Build mode）をどこに活かせるかを計画する。前半で作った個人開発の延長として続けることも選べる。進度は一人ひとりの状況に応じて柔軟に調整する。</td></tr>
+            <tr><td class="week-num">10</td><td class="week-theme">進級制作に小さな改善を加える①</td><td>第9回の計画に基づき、進級制作（または個人開発の延長）に小さな改善を1つ実装する。</td></tr>
+            <tr><td class="week-num">11</td><td class="week-theme">進級制作に小さな改善を加える②</td><td>第10回の続き。改善を積み重ね、動作確認とコミット・プッシュまで行う。</td></tr>
+            <tr><td class="week-num">12</td><td class="week-theme">仕上げ①</td><td>取り組んできた成果物の最終調整。</td></tr>
+            <tr><td class="week-num">13</td><td class="week-theme">発表準備</td><td>発表用の資料・メモ作りに着手。</td></tr>
+            <tr><td class="week-num">14</td><td class="week-theme">🎤 最終発表会＆総括</td><td>自分の取り組みとAIエージェントとの協働プロセスについて発表。前期からの学びを振り返る。</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>※授業計画は、学生の理解度や進度に応じて柔軟に変更する可能性があります。特に第9〜11回の進級制作との接続部分は、クラス全体の状況を見ながら調整します。<br>※毎回の授業冒頭で、AI関連の最新ニュース・トピックを共有します。</p>
     </div>
 
     <div class="syllabus-section">
       <h2>使用テキスト・参考文献</h2>
-      <div class="tbd-note">内容は今後追加します。</div>
+      <p>特定のテキストは使用しません。授業内で適宜、公式ドキュメントや参考Webサイトを紹介します。</p>
+      <p>主な参考資料（随時更新）：</p>
+      <ul>
+        <li>Google — Antigravity CLI 公式ドキュメント（antigravity.google/docs）</li>
+        <li>Google — AI Studio Build mode 公式ドキュメント（ai.google.dev/gemini-api/docs/aistudio-build-mode）</li>
+      </ul>
     </div>
 
     <div class="syllabus-section">
       <h2>予習・復習</h2>
-      <div class="tbd-note">内容は今後追加します。</div>
+      <ul>
+        <li><strong>予習:</strong> 必須ではありません。気になるAIエージェント関連のニュースがあれば触れておくと理解が深まります。</li>
+        <li><strong>復習:</strong> 授業で試した指示・気づいたことをGemini Notebook等に記録しましょう。うまくいった指示の言い回しは、次回そのまま使えます。</li>
+      </ul>
     </div>
 
     <div class="syllabus-section">
       <h2>評価方法・基準</h2>
-      <div class="tbd-note">内容は今後追加します。</div>
+      <p>AIエージェントとどれだけ主体的に協働し、実際に動くところまで仕上げられたかを重視します。「上手か下手か」ではなく「どれだけ取り組んだか」を評価します。</p>
+
+      <div class="eval-item"><span class="eval-pct" style="color:var(--c-orange)">30%</span><span class="eval-label"><strong>AIエージェントとの協働プロセス</strong> — Google AI Studio Build mode / Antigravity CLIでの試行錯誤、指示の工夫。</span></div>
+      <div class="eval-item"><span class="eval-pct" style="color:var(--c-orange)">25%</span><span class="eval-label"><strong>制作物の完成度</strong> — ミニアプリ・進級制作への改善実装など、実際に動くところまで仕上げられたか。</span></div>
+      <div class="eval-item"><span class="eval-pct" style="color:var(--c-orange)">20%</span><span class="eval-label"><strong>AI出力の確認・検証の習慣</strong> — AIエージェントの生成物を自分で動かして確かめる姿勢。</span></div>
+      <div class="eval-item"><span class="eval-pct" style="color:var(--c-orange)">15%</span><span class="eval-label"><strong>発表への取り組み</strong> — 中間・最終発表への参加姿勢。完璧さより「自分の言葉で伝えようとする姿勢」を評価。</span></div>
+      <div class="eval-item"><span class="eval-pct" style="color:var(--c-orange)">10%</span><span class="eval-label"><strong>主体性・基本操作</strong> — 授業への積極的参加、GitHub・Google AI Studio・Antigravity CLI等の基本操作習得。</span></div>
     </div>
 
     <div class="syllabus-section">
       <h2>その他（履修上の注意点）</h2>
-      <div class="tbd-note">内容は今後追加します。</div>
+      <ul>
+        <li>個人のGoogleアカウントまたは学校提供のGoogle Workspace for Educationアカウントを使用します。</li>
+        <li>GitHubアカウントが必要です（前期の他授業で取得済みという前提で進めますが、未取得の場合は授業内でサポートします）。</li>
+        <li>Antigravity CLIの無料枠は時期によって変動する可能性があります。具体的な条件は都度公式情報（antigravity.google）で確認しながら進めます。</li>
+        <li><strong>発表や人前で話すことが苦手でも大丈夫です。</strong> 完璧さは求めません。困ったときは担当教員に相談してください。</li>
+        <li>体調やメンタル面で不安がある場合は、無理せず担当教員または学校の相談窓口に相談してください。</li>
+      </ul>
     </div>
 
   </main>
