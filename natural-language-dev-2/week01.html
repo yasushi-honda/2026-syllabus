@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=3">
-  <!-- 公式情報確認: 2026-09-03 (cloud.google.com/free / cloud.google.com/blog/products/ai-machine-learning/the-new-gemini-enterprise-one-platform-for-agent-development / code.claude.com/docs/en/google-vertex-ai) -->
+  <!-- 公式情報確認: 2026-09-03 (cloud.google.com/free / aws.amazon.com/free / aws.amazon.com/free/terms / code.claude.com/docs/en/amazon-bedrock) -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -45,7 +45,7 @@
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">進級制作 / Antigravity CLI / Google Cloud / Claude Code CLI / クラウドネイティブ開発</div>
+          <div class="lesson-overview-value">進級制作 / Antigravity CLI / Google Cloud / AWS Bedrock / Claude Code CLI / クラウドネイティブ開発</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
@@ -81,11 +81,11 @@
             <p><strong>後期の位置づけ</strong></p>
             <ul>
               <li>前期「自然言語開発」では、進級制作を素材にコンテキストエンジニアリング・SDD・TDD・ハーネスエンジニアリングを個人開発で体験し、<strong>Antigravity CLI</strong>というAIエージェントの威力を実感した</li>
-              <li>後期はいよいよ<strong>クラウドネイティブな開発</strong>へ踏み出す。実際のGoogle Cloudアカウントを使い、進級制作をクラウドの力でさらに育てていく</li>
+              <li>後期はいよいよ<strong>クラウドネイティブな開発</strong>へ踏み出す。実際のGoogle Cloud・AWSアカウントを使い、進級制作をクラウドの力でさらに育てていく</li>
             </ul>
             <p><strong>後期シラバスの説明</strong></p>
             <ul>
-              <li>全16回の流れを俯瞰（Google Cloudアカウント登録 → Model Garden申請＆AIエージェントの可能性を広げる → Claude Code接続 → セキュリティ → Firebase/Cloud Run/Firestore → 進級制作へのクラウド機能統合 → 検証・仕上げ → 最終発表会）</li>
+              <li>全16回の流れを俯瞰（Google Cloudアカウント登録 → AWSアカウント登録＆AIエージェントの可能性を広げる → Claude Code × Bedrock接続 → セキュリティ → Firebase/Cloud Run/Firestore → 進級制作へのクラウド機能統合 → 検証・仕上げ → 最終発表会）</li>
               <li>評価方法の確認（クラウド環境構築・活用の実践25%、実装・コードの品質25%、セキュリティ・コスト意識20%、開発プロセス15%、発表・責任あるAI開発の実践15%）</li>
               <li>本科目は<strong>Claude Code CLI</strong>での操作を主軸とする（Claude Desktopは比較参考として軽く触れる程度）。Google Cloudの操作は<strong>gcloud CLI</strong>、GitHubの操作は<strong>gh CLI</strong>を、Claude Codeから呼び出して進める標準パターンを紹介する</li>
             </ul>
@@ -131,16 +131,15 @@
           <div class="timeline-body">
             <p><strong>Google Cloud実アカウントへ</strong></p>
             <ul>
-              <li>個人のクレジットカードでGoogle Cloudに登録し、<strong>$300分・90日間の無料クレジット</strong>（Welcome credit）を使って学習を進めることを予告する（登録は第2回）</li>
-              <li>2026年4月にVertex AIから再編された<strong>Gemini Enterprise Agent Platform</strong>の<strong>Model Garden</strong>を通じて、Claude Code から<strong>Claude（主にSonnet）</strong>を呼び出せる環境を構築していくことを紹介する</li>
+              <li>個人のクレジットカードでGoogle Cloudに登録し、<strong>$300分・90日間の無料クレジット</strong>（Welcome credit）を使って<strong>Firebase・Cloud Run・Firestore</strong>を学んでいくことを予告する（登録は第2回、詳細は第6・7・9回）</li>
             </ul>
-            <p><strong>Firebase・Cloud Run・Firestoreの紹介（名前だけ）</strong></p>
+            <p><strong>AWS Bedrock経由でClaude Codeへ</strong></p>
             <ul>
-              <li><strong>Firebase</strong>・<strong>Cloud Run</strong>・<strong>Firestore</strong>など、実際のクラウドサービスに触れながら、進級制作にクラウド機能を統合していくことを紹介する（詳細は第6・7・9回）</li>
+              <li>Claude Codeは<strong>AWS Bedrock</strong>を経由して接続することを紹介する（登録は第3回）。AWSの新規登録者向けクレジット（最大$200・6ヶ月間）はBedrockにも使えるが、<strong>過去に同じカードでAWSアカウントを作ったことがある場合は特典が付与されない可能性がある</strong>ことを先に共有しておく</li>
             </ul>
             <p><strong>90日間という期限について</strong></p>
             <ul>
-              <li>無料トライアルの90日間は全16回の授業期間より短いため、<strong>本科目では有料アカウントへの切り替えは行わない</strong>方針をあらかじめ共有しておく</li>
+              <li>Google Cloud無料トライアルの90日間は全16回の授業期間より短いため、<strong>Google Cloud側では有料アカウントへの切り替えは行わない</strong>方針をあらかじめ共有しておく（AWSのクレジットは6ヶ月間のため、通常は学期末まで持続する見込み）</li>
             </ul>
           </div>
         </div>
@@ -194,7 +193,7 @@
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
             <strong>個人のクレジットカードを用意しておく</strong>
-            <p>第2回でGoogle Cloudアカウントに登録します。個人のクレジットカードが必要です。</p>
+            <p>第2回でGoogle Cloudアカウント、第3回でAWSアカウントに登録します。いずれも個人のクレジットカードが必要です。AWSは<strong>過去に登録したことのないカード</strong>だと新規登録者向けクレジットを受け取れる可能性が高いため、家族の未使用カードなど心当たりがあれば準備しておくとよい。</p>
           </div>
         </div>
       </div>
@@ -204,8 +203,8 @@
       <h2>参考リンク</h2>
       <ul>
         <li><a href="https://cloud.google.com/free" target="_blank" rel="noopener">Google Cloud — 無料トライアル（公式）</a> — 次回登録する$300分・90日間の無料クレジットの公式情報</li>
-        <li><a href="https://cloud.google.com/blog/products/ai-machine-learning/the-new-gemini-enterprise-one-platform-for-agent-development" target="_blank" rel="noopener">Google Cloud公式ブログ — Gemini Enterprise Agent Platform</a> — 今日紹介した、Vertex AIから再編されたプラットフォームの公式発表（2026年4月）</li>
-        <li><a href="https://code.claude.com/docs/en/google-vertex-ai" target="_blank" rel="noopener">Claude Code on Google Cloud's Agent Platform（公式）</a> — 今日紹介したClaude Codeとの連携の公式ドキュメント（実際に接続するのは第4回）</li>
+        <li><a href="https://aws.amazon.com/free/" target="_blank" rel="noopener">AWS Free Tier（公式）</a> — 第3回で登録するAWSの新規登録者向けクレジットの公式情報</li>
+        <li><a href="https://code.claude.com/docs/en/amazon-bedrock" target="_blank" rel="noopener">Claude Code on Amazon Bedrock（公式）</a> — 今日紹介したClaude Codeとの連携の公式ドキュメント（実際に接続するのは第4回）</li>
       </ul>
     </div>
 
