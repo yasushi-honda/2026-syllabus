@@ -22,7 +22,7 @@ updated: 2026-09-01
 - [ ] ITパスポート テクノロジー系（水1・2限）の内容検討 — 未着手・次回相談
 - [ ] システム開発実習AⅡ（水3・4限）の内容検討 — 未着手・次回相談
 - [x] AI活用プログラミング基礎Ⅱ（木1・2限）授業内容確定（Google AI Studio Build mode→Antigravity CLI（agy）→進級制作への接続、全14回、PR #169）。week01以降は未作成
-- [ ] 自然言語開発Ⅱ（木3・4限）の内容検討 — 未着手・次回相談
+- [x] 自然言語開発Ⅱ（木3・4限）授業内容確定（Google Cloud実アカウント→Gemini Enterprise Agent Platform経由Claude Code→Firebase/Cloud Run/Firestore→進級制作統合、CLI駆動運用・Playwright MCP・clasp、全16回、PR #171）。有料化は回避しトライアル期間内で実操作を完結する設計。week01以降は未作成
 - [x] システム開発B・プログラム基礎Ⅱ(Java)（土曜、既存ページ流用）の後期時間割への統合内容確認（`index.html`後期パネルで`java-teamdev.html`/`java-basics-2.html`双方のリンクを確認済み）
 - [ ] プログラム基礎Ⅱ・AIコミュニケーション基礎Ⅱのweek02以降 — 実施日が近づいた回から順次（未分解）
 
