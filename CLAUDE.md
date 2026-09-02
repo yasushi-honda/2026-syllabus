@@ -130,13 +130,12 @@ content/                # Markdownソース（コピーボタン用。全HTMLペ
 
 上表は週ページ（詳細ディレクトリ）を運用している科目が対象。後期の残り5科目は現時点で枠組み（親ページ）のみのため、週ページ運用を開始した時点で追記する。
 
-### 後期科目 → テーマ色・配置対応表（2026年度後期。プログラム基礎Ⅱ・AIコミュニケーション基礎Ⅱは上表に統合済み）
+### 後期科目 → テーマ色・配置対応表（2026年度後期。プログラム基礎Ⅱ・AIコミュニケーション基礎Ⅱ・AI活用プログラミング基礎Ⅱは上表に統合済み）
 
 | 科目 | 親ページ | テーマ色 | 曜日・時限 | 対象 |
 |------|---------|---------|-----------|------|
 | ITパスポート テクノロジー系 | `it-passport-technology.html` | `page-header--amber` | 水1・2限 | 調整中（新設科目） |
 | システム開発実習AⅡ | `system-dev-practice-a2.html` | `page-header--brown` | 水3・4限 | 調整中（新設科目） |
-| AI活用プログラミング基礎Ⅱ | `ai-programming-2.html` | `page-header--orange` | 木1・2限 | 情報系学科 1年次 |
 | 自然言語開発Ⅱ | `natural-language-dev-2.html` | `page-header--green` | 木3・4限 | IT・情報処理専攻(システム) 3年次 |
 | システム開発B | `java-teamdev.html` | `page-header--indigo` | 土1・2限 | グローバルIT 2年次 |
 | プログラミング基礎II(Java) | `java-basics-2.html` | `page-header--pink` | 土3・4限 | グローバルIT 1年次 |
