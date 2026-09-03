@@ -2005,7 +2005,7 @@ pre,
   flex: 0 0 auto;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 820px) {
   .diagram-flow {
     flex-direction: column;
   }
