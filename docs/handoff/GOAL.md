@@ -26,6 +26,8 @@ updated: 2026-09-01
 - [x] AI活用プログラミング基礎Ⅱ week02作成（教室で学生がGitHub未経験と判明したためGit/GitHub基礎・アカウント準備・組織アカウント説明・Codespaces観察に全面再設計、比較図解/フロー図解コンポーネント新規、PR #177）。week03以降は未作成
 - [x] 自然言語開発Ⅱ（木3・4限）授業内容確定（Google Cloud実アカウント→Firebase/Cloud Run/Firestore、Amazon Bedrock経由Claude Code→進級制作統合、CLI駆動運用・Playwright MCP・clasp、全16回、PR #171）。GCPの$300無料クレジットはClaude等Managed APIパートナーモデルの対象外と判明したため、Claude接続はAWS Bedrockへ設計転換（学生にはAWS新規特典判定・実費発生リスクを開示、PR #174）。両クラウドとも有料化は回避しトライアル/クレジット期間内で実操作を完結する設計
 - [x] 自然言語開発Ⅱ week01作成（前期振り返り、AWS Bedrock接続の予告・リスク開示、PR #174）。week02以降は未作成
+- [x] 自然言語開発Ⅱ week01 実施（2026-09-03）。教室で学生の契約状況が判明: 一部はClaude/ChatGPT契約済み、Claude Code使用経験者もいた。**当初計画（Claude Code CLI主軸・AWS Bedrock必須接続）から、Claude Code / Codex / Antigravity CLIの複合運用（契約状況に応じて選択、どれも不可ならAntigravity）へ現場判断で転換**。AWS登録も「注意点を伝えた上で対応可能な学生のみ実施」に緩和（全員必須ではない）。少人数・基本自律のため講師は机間巡視型。作成テーマはゲーム/ECサイト等のインスタント制作、やや高難度課題も検討中
+- [x] 自然言語開発Ⅱ 複合運用を正式カリキュラムとして教材へ反映（2026-09-03、親ページ・content/md・week01.html・index.htmlの4ファイル）。事実確認: Codex CLIは公式の機能比較表でPlus（$20/月〜）以上のプランでの利用が明記されており、Freeプランでの動作は保証されていない（一次ソース: learn.chatgpt.com/docs/pricing、Playwright実レンダリングで確認）。Antigravity CLI（agy）はGoogleアカウント認証のみで追加契約不要。pr-review-toolkit（code-reviewer+comment-analyzer）並列レビューでCritical 3件・Important 4件を検出・全修正（Codex Free断定の誤り、第6/7/9/13回セルのClaude Code限定表現残留、content/md同期漏れ、index.html旧記述等）
 - [x] システム開発B・プログラム基礎Ⅱ(Java)（土曜、既存ページ流用）の後期時間割への統合内容確認（`index.html`後期パネルで`java-teamdev.html`/`java-basics-2.html`双方のリンクを確認済み）
 - [ ] プログラム基礎Ⅱ・AIコミュニケーション基礎Ⅱのweek02以降 — 実施日が近づいた回から順次（未分解）
 
