@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第2回 GitHubを始めよう＋Codespacesを使ってみよう | AI活用プログラミング基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=4">
+  <!-- 公式情報確認: 2026-09-03 (docs.github.com/en/get-started/using-git/about-git / docs.github.com/en/get-started/onboarding/getting-started-with-your-github-account / docs.github.com/en/organizations/collaborating-with-groups-in-organizations/about-organizations / github.com/pricing) -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--orange">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-programming-2.html">AI活用プログラミング基礎 II</a>
+        <span>/</span>
+        <span>第2回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">GitHubを始めよう＋<wbr>Codespacesを使ってみよう</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 2</span>
+            <span class="page-badge">木曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">Git/GitHubの基礎（バージョン管理・コミット・ブランチ）とアカウント準備＋組織アカウントの紹介＋GitHub Codespacesの仕組みを知る</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">Git / GitHub / コミット / ブランチ / Organization（組織アカウント）/ GitHub Codespaces / AIエージェント</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">GitHubアカウント登録に使う個人のメールアドレス</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>「チャット型AI」と「AIエージェント」の違いを図解であらためて確認する</li>
+        <li>本科目でAIエージェントが<strong>GitHub Codespaces上のGitリポジトリを相手に動く協働者</strong>であることを理解する</li>
+        <li><strong>Git</strong>の基本概念（バージョン管理・コミット・ブランチ）を知る</li>
+        <li><strong>GitHub</strong>アカウントを準備する（未登録なら新規登録、既存ならログイン）</li>
+        <li><strong>組織アカウント（Organization）</strong>の仕組みを説明レベルで知る</li>
+        <li><strong>GitHub Codespaces</strong>が起動する仕組みを知る</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>チャット型AIとAIエージェントの違いを振り返る</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り</strong></p>
+            <div class="diagram-compare">
+              <div class="diagram-compare-side diagram-compare-side--a">
+                <div class="diagram-compare-label">Chat-type AI</div>
+                <div class="diagram-compare-title">チャット型AI</div>
+                <div class="diagram-compare-flow">
+                  <span>あなた</span><span aria-hidden="true">→</span><span>質問</span><span aria-hidden="true">→</span><span>チャット型AI</span><span aria-hidden="true">→</span><span>回答</span>
+                </div>
+                <ul class="diagram-compare-list">
+                  <li>例：Gemini Notebook（旧NotebookLM）</li>
+                  <li>聞けば答えてくれる</li>
+                  <li>やり取りは会話の中で完結する</li>
+                </ul>
+              </div>
+              <div class="diagram-vs">VS</div>
+              <div class="diagram-compare-side diagram-compare-side--b">
+                <div class="diagram-compare-label">AI Agent</div>
+                <div class="diagram-compare-title">AIエージェント</div>
+                <div class="diagram-compare-flow">
+                  <span>あなた</span><span aria-hidden="true">→</span><span>指示</span><span aria-hidden="true">→</span><span>AIエージェント</span><span aria-hidden="true">→</span><span>ファイル編集・実行・確認</span>
+                </div>
+                <ul class="diagram-compare-list">
+                  <li>例：Antigravity CLI（agy、第5回から）</li>
+                  <li>指示を受けて自分でタスクを進める</li>
+                  <li><strong>実際にコードベースに変更を加える</strong></li>
+                </ul>
+              </div>
+            </div>
+            <p>今日の流れ：AIエージェントとGit/GitHubの関係を知る → Gitの基本とGitHubアカウント登録 → 組織アカウントを知る → GitHub Codespacesの仕組みを知る</p>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>AIエージェントの文脈でGit/GitHubを知る意味を理解する</h3>
+          <div class="timeline-body">
+            <p><strong>AIエージェントとGitの関係</strong></p>
+            <ul>
+              <li>AIエージェント自体は、Gitリポジトリでなくても動作できる汎用的な仕組み。ただし本科目では、リポジトリを元に作られるクラウド開発環境<strong>GitHub Codespaces</strong>（中でGitリポジトリを直接操作できる）で<strong>Antigravity CLI（agy、第5回から）</strong>を使う</li>
+              <li>本科目で扱う<strong>Gemini Notebook</strong>（チャット型AI）と<strong>Antigravity CLI（agy）</strong>（AIエージェント）を比べると、agyは指示を受けて<strong>実際にファイルへ変更を加える</strong>点が大きな傾向の違いにあたる</li>
+              <li><strong>Gitは変更を自動で記録する仕組みではない</strong>。ステージング・コミットという操作をして初めて、変更が履歴として残る——これは人間（あるいは人間の指示を受けたAIエージェント）が意図的に行う操作</li>
+            </ul>
+            <p><strong>だからこそGit/GitHubの理解が土台になる</strong></p>
+            <ul>
+              <li>コミットという記録の仕組みを理解していれば、AIエージェントが行った変更を後から確認できる</li>
+              <li>意図しない変更があった場合に、コミット単位で元に戻せる</li>
+              <li>複数人（人間同士、あるいは人間とAIエージェント）が同じプロジェクトで安全に共同作業できる</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>今日はまだ手を動かしません:</strong> ここまでは考え方の説明です。実際にAIエージェントと一緒に手を動かすのは第5回からです。今日は「なぜGit/GitHubを学ぶ必要があるのか」を理解するだけで十分です。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>Gitの基本を知り、GitHubアカウントを登録する</h3>
+          <div class="timeline-body">
+            <p><strong>Gitとは何か</strong></p>
+            <ul>
+              <li><strong>Git</strong>は、最も人気の高い分散型バージョン管理システム。<strong>分散型</strong>とは、開発者一人ひとりがプロジェクトの履歴をまるごと手元に持てる仕組みのこと——だからこそ、変更・決定・進行状況の全体的な履歴をいつでも手元で確認できる（公式: <a href="https://docs.github.com/en/get-started/using-git/about-git" target="_blank" rel="noopener">About Git</a>）</li>
+            </ul>
+            <div class="diagram-flow">
+              <div class="diagram-flow-step">
+                <div class="diagram-flow-step-label">Step 1</div>
+                <div class="diagram-flow-step-name">作業ディレクトリ</div>
+              </div>
+              <span class="diagram-flow-arrow" aria-hidden="true">→</span>
+              <div class="diagram-flow-step">
+                <div class="diagram-flow-step-label">Step 2</div>
+                <div class="diagram-flow-step-name">ステージング</div>
+              </div>
+              <span class="diagram-flow-arrow" aria-hidden="true">→</span>
+              <div class="diagram-flow-step">
+                <div class="diagram-flow-step-label">Step 3</div>
+                <div class="diagram-flow-step-name">コミット</div>
+              </div>
+              <span class="diagram-flow-arrow" aria-hidden="true">→</span>
+              <div class="diagram-flow-step">
+                <div class="diagram-flow-step-label">Step 4</div>
+                <div class="diagram-flow-step-name">GitHubへプッシュ</div>
+              </div>
+            </div>
+            <ul>
+              <li><strong>コミット</strong>——変更の状態を記録するスナップショット。写真を撮るようなもの</li>
+              <li><strong>ブランチ</strong>——複数の作業ラインを並行して進められる仕組み</li>
+            </ul>
+            <p><strong>GitHubとは何か</strong></p>
+            <ul>
+              <li><strong>GitHub</strong>は、Gitリポジトリをホスティングするプラットフォーム。Issue・プルリクエスト・コードレビューといった、共同作業のための機能を提供する</li>
+              <li>つまり「Git＝仕組み」「GitHub＝それを使ってオンラインで共同作業する場所」という関係</li>
+            </ul>
+            <p><strong>GitHubアカウントを準備する</strong></p>
+            <ul>
+              <li>すでに前期の他授業等でGitHubアカウントを<strong>持っている</strong>人は、そのアカウントでログインして使う（新規登録し直す必要はない）</li>
+              <li><strong>持っていない</strong>人は、<a href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a> にアクセスし、画面の案内に沿って新規登録する。登録後の初期設定の詳細は公式ガイド（<a href="https://docs.github.com/en/get-started/onboarding/getting-started-with-your-github-account" target="_blank" rel="noopener">Getting started with your GitHub account</a>）を参照</li>
+              <li>新規登録する場合は、強固で他で使い回していないパスワードを設定する</li>
+              <li>登録後、メールアドレスの確認（verify）を行うと、選択したプランで利用可能な機能が使えるようになる</li>
+              <li>安全のため、まだ設定していなければ<strong>2段階認証（2FA）</strong>の設定が強く推奨されている</li>
+              <li>プランは<strong>GitHub Free</strong>で十分（後から変更も可能）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>組織アカウントを知り、Codespacesの仕組みを知る</h3>
+          <div class="timeline-body">
+            <p><strong>組織アカウント（Organization）を知る</strong></p>
+            <ul>
+              <li><strong>Organization</strong>は、複数人が共同でプロジェクトに取り組むための共有アカウント。公式には「ビジネスやオープンソースプロジェクトが多数のプロジェクト間で協力できる共有アカウント」と説明される（公式: <a href="https://docs.github.com/en/organizations/collaborating-with-groups-in-organizations/about-organizations" target="_blank" rel="noopener">About organizations</a>）</li>
+              <li>個人アカウントが前提となる仕組みで、それぞれが自分の個人アカウントでログインしたまま、同じOrganizationに参加して共同作業する</li>
+              <li>メンバーごとに役割（ロール）を割り当てて、アクセス権限を細かく管理できる</li>
+              <li><strong>GitHub Freeのままでも無料でOrganizationを作成できる</strong>（一部のプライベートリポジトリ機能には制限あり）</li>
+              <li>今日は説明だけにとどめ、実際の作成は行わない。複数人で1つのプロジェクトに取り組む場面（学校の内外を問わず）で使われる仕組みとして知っておく</li>
+            </ul>
+            <p><strong>GitHub Codespacesの仕組みを知る</strong></p>
+            <ul>
+              <li>教員が用意したリポジトリから<strong>GitHub Codespaces</strong>を起動する様子をデモで見せる——ブラウザだけで開発環境が立ち上がる仕組みを観察する</li>
+              <li>作った成果物を公開する<strong>GitHub Pages</strong>という仕組みがあることも一言紹介する（実際に使うのは第4回）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>今日は見るだけでOK:</strong> 自分の手でGitHub Codespacesを使うのは第5回（Antigravity CLI導入）からです。今日は「こういう仕組みで開発環境が立ち上がる」ということを知るだけで十分です。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告＆今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>次回（第3回）：<strong>Google AI Studio Build modeに触れてみよう①</strong>——今日使ったGitHubアカウントを使い、自然言語の指示でミニアプリの土台を作る</li>
+              <li>「Git/GitHubについて分かったこと・まだよく分からないこと」を一言メモして退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>今日使ったGitHubアカウントでログインできることを確認しておく</strong>
+            <p>新規登録が授業内で完了できなかった場合は、次回までに完了させておく。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>2段階認証（2FA）を設定しておく</strong>
+            <p>まだ設定していない場合、時間のあるときに済ませておくと安心です。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://docs.github.com/en/get-started/using-git/about-git" target="_blank" rel="noopener">About Git（公式）</a> — Gitの基本概念についての公式ドキュメント</li>
+        <li><a href="https://docs.github.com/en/get-started/onboarding/getting-started-with-your-github-account" target="_blank" rel="noopener">Getting started with your GitHub account（公式）</a> — アカウント登録・初期設定の公式ガイド</li>
+        <li><a href="https://docs.github.com/en/organizations/collaborating-with-groups-in-organizations/about-organizations" target="_blank" rel="noopener">About organizations（公式）</a> — 組織アカウントについての公式ドキュメント</li>
+        <li><a href="https://github.com/pricing" target="_blank" rel="noopener">Pricing · Plans for every developer（公式）</a> — GitHubの料金プラン一覧</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week01.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第1回 前期振り返り＆後期オリエンテーション</span>
+      </a>
+      <a href="../ai-programming-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AI活用プログラミング基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第3回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>

@@ -96,6 +96,7 @@ system-dev-practice-a2.html   # システム開発実習AⅡ（水3・4限／後
 ai-programming-2.html   # AI活用プログラミング基礎Ⅱ（木1・2限／後期。授業内容確定済み、週ページ順次作成中）
 ai-programming-2/       # AI活用プログラミング基礎Ⅱ の各回詳細ページ
   week01.html           #   第1回 前期振り返り＆後期オリエンテーション
+  week02.html           #   第2回 GitHubを始めよう＋Codespacesを使ってみよう
 natural-language-dev-2.html   # 自然言語開発Ⅱ（木3・4限／後期。授業内容確定済み、週ページ順次作成中）
 natural-language-dev-2/       # 自然言語開発Ⅱ の各回詳細ページ
   week01.html           #   第1回 前期振り返り＆後期オリエンテーション
@@ -242,6 +243,7 @@ done
 
 - 200以外が返ったら原則差し替え
 - ただし **Gemini (`gemini.google.com`) は curl では 502** が返る（Google側のbot対策）。ブラウザでは正常動作するため例外として採用可
+- 同様に **`github.com/signup` は curl・Playwright実ブラウザともに403**（Cloudflare/DataDome系のbot検証チャレンジ）を返すことがある。人間の通常アクセスには影響しない既知のパターンのため、Playwrightのスナップショットで「ロボット確認」等のbot対策チャレンジ画面であることを確認できれば例外として採用可。汎化: **bot対策の強いドメイン（サインアップ・ログイン系URLに多い）で200以外が返った場合は、まずPlaywrightで実レンダリングし、bot対策チャレンジ画面かどうかを確認してから採否を判断する**
 
 ### 執筆前ファクトチェック必須（外部サービスの存在・料金・状態）
 
