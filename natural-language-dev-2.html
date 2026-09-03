@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="styles.css?v=4">
-  <!-- 公式情報確認: 2026-09-03 (cloud.google.com/free / cloud.google.com/signup-faqs / docs.cloud.google.com/free/docs/free-cloud-features / code.claude.com/docs/en/amazon-bedrock / aws.amazon.com/free/terms / aws.amazon.com/free/registration-faqs / aws.amazon.com/about-aws/whats-new/2025/07/aws-free-tier-credits-month-free-plan / docs.aws.amazon.com/bedrock/latest/userguide/model-access.html / docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html / docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-budgets-budgetsaction.html / cloud.google.com/vertex-ai/generative-ai/docs/data-governance / docs.cloud.google.com/sdk/gcloud/reference/firestore / github.com/microsoft/playwright-mcp / github.com/google/clasp / developers.openai.com/codex/pricing / learn.chatgpt.com/docs/pricing / antigravity.google/docs/cli/install) -->
+  <!-- 公式情報確認: 2026-09-04 (cloud.google.com/free / cloud.google.com/signup-faqs / docs.cloud.google.com/free/docs/free-cloud-features / code.claude.com/docs/en/amazon-bedrock / aws.amazon.com/free/terms / aws.amazon.com/free/registration-faqs / aws.amazon.com/about-aws/whats-new/2025/07/aws-free-tier-credits-month-free-plan / docs.aws.amazon.com/bedrock/latest/userguide/model-access.html / docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html / docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-budgets-budgetsaction.html / cloud.google.com/vertex-ai/generative-ai/docs/data-governance / docs.cloud.google.com/sdk/gcloud/reference/firestore / github.com/microsoft/playwright-mcp / github.com/google/clasp / developers.openai.com/codex/pricing / learn.chatgpt.com/docs/pricing / antigravity.google/docs/cli/install / antigravity.google/pricing) -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -70,7 +70,7 @@
       <h3>知識・理解</h3>
       <ol>
         <li>Google Cloudのアカウント登録・無料クレジット（$300・90日間）の仕組みと、トライアル終了後はリソースへアクセスできなくなることを理解し、終了前に記録を残しておく重要性を説明できる。</li>
-        <li>Claude Code／Codex CLI／Antigravity CLIそれぞれの契約要件（Claude契約またはAWS Bedrock、ChatGPT Plus以上、Googleアカウントのみ）の違いを理解し、自分がどれを使うか判断できる。AWSアカウント登録・Bedrockを選ぶ場合は、過去のアカウント履歴によって新規特典の可否が変わりうるリスクも理解している。</li>
+        <li>Claude Code／Codex CLI／Antigravity CLIそれぞれの契約要件（Claude契約またはAWS Bedrock、ChatGPTアカウント——まずFreeで試し必要ならPlus以上——、Googleアカウントのみ）の違いを理解し、自分がどれを使うか判断できる。AWSアカウント登録・Bedrockを選ぶ場合は、過去のアカウント履歴によって新規特典の可否が変わりうるリスクも理解している。</li>
         <li>Claude・GPT・Geminiなど複数のAIモデルの違いと、それぞれの特性を自分の言葉で説明できる。</li>
         <li>クラウドAIサービスにおけるデータガバナンス（学習への非利用等）の基本的な考え方を理解している。</li>
         <li>Firebase・Cloud Run・Firestoreがそれぞれ何をするサービスかを説明できる。</li>
@@ -173,7 +173,7 @@
       <h2>その他（履修上の注意点）</h2>
       <ul>
         <li>Google Cloudの利用には<strong>個人のクレジットカード</strong>が必要です（新規登録者には$300分・90日間の無料クレジットが提供され、明示的にアップグレードしない限り自動課金は発生しません）。90日間は全16回の授業期間より短いため、<strong>Google Cloud側では有料アカウントへの切り替えは行いません</strong>。トライアル終了後はリソースにアクセスできなくなるため、終了前に成果を記録（スクリーンショット・実行ログ・録画）しておく運用とします。</li>
-        <li>本科目は<strong>Claude Code／Codex CLI／Antigravity CLI</strong>の複合運用です。<strong>Codex CLIを使う場合はまずChatGPT Freeアカウントで動作を試してください</strong>（公式の機能比較表はPlus（$20/月〜）以上のプランのみを対象としており、Freeで動作しない場合はPlus以上への加入を検討します）。<strong>Antigravity CLI（agy）はGoogleアカウントでの認証のみで追加契約は不要</strong>です。いずれの契約もない、またはPlus加入をしたくない学生はAntigravity CLIで進めてください。</li>
+        <li>本科目は<strong>Claude Code／Codex CLI／Antigravity CLI</strong>の複合運用です。<strong>Codex CLIを使う場合はまずChatGPT Freeアカウントで動作を試してください</strong>（公式の機能比較表はPlus（$20/月〜）以上のプランのみを対象としており、Freeで動作しない場合はPlus以上への加入を検討します）。<strong>Antigravity CLI（agy）はGoogleアカウントでの認証のみで追加契約は不要</strong>ですが、<strong>無償枠には週次のレート制限があり、上限に達すると翌週まで待つか有料プランへのアップグレードが必要になる場合があります</strong>（Google公式）。いずれの契約もない、またはPlus加入をしたくない学生はAntigravity CLIで進めてください。</li>
         <li><strong>Claude Codeを個人契約なしで使いたい学生のみ</strong>、AWSの利用に<strong>個人のクレジットカード</strong>が必要です。登録時は無料クレジットの対象となる<strong>Free Plan</strong>を選びます（Paid Planとの選択画面が表示されます）。新規登録者には最大$200・6ヶ月間のクレジットが提供されますが、AWS公式規約では<strong>新規特典は1人（1エンティティ）につき1アカウントまで</strong>とされ、既存のAWSアカウント保有者は対象外です。<strong>クレジットカード番号が判定に使われるかどうかを含め、具体的な判定基準はAWS公式では非公開</strong>のため、対象になるかどうかは登録してみないと分かりません。対象外の場合、Claude Code経由の利用は登録初日から実費（従量課金、金額は利用状況により変動）が発生します。過去のAWS利用状況に不安がある場合は、登録前に担当教員に相談してください。</li>
         <li>AWSの<strong>Free Plan</strong>アカウントは、公式規約上<strong>評価目的での利用に限られ、機微なデータの処理には使わないこと</strong>とされています。進級制作にAWS Bedrock経由でClaude Codeを接続する際も、実在する個人情報等の機微なデータは入力しない運用を徹底してください（第5回のデータガバナンス学習ともあわせて確認します）。</li>
         <li><strong>clasp</strong>はGoogle公式リポジトリ（github.com/google/clasp）で開発されていますが、READMEに「公式にサポートされる製品ではない（not an officially supported Google product）」と明記されているツールです。体験・紹介の位置づけで扱います。</li>
