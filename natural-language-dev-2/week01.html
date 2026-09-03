@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第1回 前期振り返り＆後期オリエンテーション | 自然言語開発 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=3">
+  <!-- 公式情報確認: 2026-09-03 (cloud.google.com/free / aws.amazon.com/free / aws.amazon.com/free/terms / code.claude.com/docs/en/amazon-bedrock) -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev-2.html">自然言語開発 II</a>
+        <span>/</span>
+        <span>第1回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">前期振り返り＆<wbr>後期オリエンテーション</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 1</span>
+            <span class="page-badge">木曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">進級制作Before/After比較の振り返り＋クラウドネイティブ開発という後期のゴール提示</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">進級制作 / Antigravity CLI / Google Cloud / Amazon Bedrock / Claude Code CLI / クラウドネイティブ開発</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">進級制作リポジトリへのアクセス（前期末時点の状態を確認できる状態）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>前期に取り組んだ進級制作の<strong>Before/After比較</strong>を振り返る</li>
+        <li>前期のAIエージェント（Antigravity CLI）活用の学びを言語化する</li>
+        <li>後期のゴール——<strong>Google Cloud実アカウントを使ったクラウドネイティブ開発</strong>——を理解する</li>
+        <li>本科目が<strong>Claude Code CLI</strong>での操作を主軸とする方針を知る</li>
+        <li>評価方法を確認する</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>オリエンテーション</h3>
+          <div class="timeline-body">
+            <p><strong>後期の位置づけ</strong></p>
+            <ul>
+              <li>前期「自然言語開発」では、進級制作を素材にコンテキストエンジニアリング・SDD・TDD・ハーネスエンジニアリングを個人開発で体験し、<strong>Antigravity CLI</strong>というAIエージェントの威力を実感した</li>
+              <li>後期はいよいよ<strong>クラウドネイティブな開発</strong>へ踏み出す。実際のGoogle Cloud・AWSアカウントを使い、進級制作をクラウドの力でさらに育てていく</li>
+            </ul>
+            <p><strong>後期シラバスの説明</strong></p>
+            <ul>
+              <li>全16回の流れを俯瞰（Google Cloudアカウント登録 → AWSアカウント登録＆AIエージェントの可能性を広げる → Claude Code × Bedrock接続 → セキュリティ → Firebase/Cloud Run/Firestore → 進級制作へのクラウド機能統合 → 検証・仕上げ → 最終発表会）</li>
+              <li>評価方法の確認（クラウド環境構築・活用の実践25%、実装・コードの品質25%、セキュリティ・コスト意識20%、開発プロセス15%、発表・責任あるAI開発の実践15%）</li>
+              <li>本科目は<strong>Claude Code CLI</strong>での操作を主軸とする（Claude Desktopは比較参考として軽く触れる程度）。Google Cloudの操作は<strong>gcloud CLI</strong>、GitHubの操作は<strong>gh CLI</strong>を、Claude Codeから呼び出して進める標準パターンを紹介する</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>進級制作のBefore/After比較を振り返る</h3>
+          <div class="timeline-body">
+            <p><strong>前期末の進級制作を見返す</strong></p>
+            <ul>
+              <li>進級制作リポジトリをCodespaces等で開き、前期末（9月）時点のコードを確認する</li>
+              <li>前期第16回で行った「4月の進級制作」と「前期末の進級制作」のBefore/After比較を思い出す</li>
+              <li>コンテキストエンジニアリング・SDD・TDD・ハーネスエンジニアリングを通じて、どこがどう変わったかを1〜2行で言語化する</li>
+            </ul>
+            <p><strong>Antigravity CLI活用の学びを振り返る</strong></p>
+            <ul>
+              <li>ガイド（事前制御）とセンサー（事後検証）の両輪、GitHub Flowでの協働——前期に身につけた「AIを信用するために、AIを疑う仕組みを先に置く」という姿勢を再確認する</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>後期も同じ進級制作を素材にする:</strong> 後期は新しいものを一から作るのではなく、前期で育てた進級制作にクラウドの力を積み上げていきます。積み上げ型の成長が、後期も引き続き見える化されます。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>後期のゴールを知る——クラウドネイティブ開発へ</h3>
+          <div class="timeline-body">
+            <p><strong>Google Cloud実アカウントへ</strong></p>
+            <ul>
+              <li>個人のクレジットカードでGoogle Cloudに登録し、<strong>$300分・90日間の無料クレジット</strong>（Welcome credit）を使って<strong>Firebase・Cloud Run・Firestore</strong>を学んでいくことを予告する（登録は第2回、詳細は第6・7・9回）</li>
+            </ul>
+            <p><strong>Amazon Bedrock経由でClaude Codeへ</strong></p>
+            <ul>
+              <li>Claude Codeは<strong>Amazon Bedrock</strong>を経由して接続することを紹介する（登録は第3回）。AWSの新規登録者向けクレジット（最大$200・6ヶ月間）はBedrockにも使えるが、AWS公式規約では<strong>新規特典が1人1アカウントまで</strong>とされ既存のAWSアカウント保有者は対象外になること、<strong>カード番号が判定に使われるかは非公開</strong>であることを先に共有しておく</li>
+            </ul>
+            <p><strong>90日間という期限について</strong></p>
+            <ul>
+              <li>Google Cloud無料トライアルの90日間は全16回の授業期間より短いため、<strong>Google Cloud側では有料アカウントへの切り替えは行わない</strong>方針をあらかじめ共有しておく（AWSのクレジットは6ヶ月間のため、通常は学期末まで持続する見込み）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>クラウド環境の課金ポイントを観察する</h3>
+          <div class="timeline-body">
+            <p><strong>コンソール画面から課金の仕組みを確認する</strong></p>
+            <ul>
+              <li>教員がGoogle Cloudのコンソール画面、またはClaude Codeからgcloud CLIを呼び出す様子を見せる</li>
+              <li>課金が発生するリソース（プロジェクト・API呼び出し等）と、コスト管理画面（Budgets &amp; Alerts）がどこにあるかを確認する</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>今日は見るだけでOK:</strong> 実際に自分の手でGoogle Cloudアカウントを作るのは第2回からです。今日は「どこにコスト管理の仕組みがあるか」を知るだけで十分です。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告＆今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>次回（第2回）: <strong>Google Cloudアカウントを作ろう</strong>——個人のクレジットカードが必要になるため、忘れずに準備しておく</li>
+              <li>「クラウドネイティブ開発について感じたこと」を一言メモして退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>進級制作リポジトリの最新状態を確認しておく</strong>
+            <p>前期末のコードがpush済みであることを確認する。次回以降、このリポジトリにクラウド機能を積み上げていきます。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>個人のクレジットカードを用意しておく</strong>
+            <p>第2回でGoogle Cloudアカウント、第3回でAWSアカウントに登録します。いずれも個人のクレジットカードが必要です。AWSは本人が<strong>過去にAWSアカウントを作成したことがない</strong>場合に新規登録者向けクレジットの対象になりやすいが、判定基準は非公開のため確実ではない。心当たりがあり不安な場合は、登録前に担当教員に相談するとよい。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://cloud.google.com/free" target="_blank" rel="noopener">Google Cloud — 無料トライアル（公式）</a> — 次回登録する$300分・90日間の無料クレジットの公式情報</li>
+        <li><a href="https://aws.amazon.com/free/" target="_blank" rel="noopener">AWS Free Tier（公式）</a> — 第3回で登録するAWSの新規登録者向けクレジットの公式情報</li>
+        <li><a href="https://code.claude.com/docs/en/amazon-bedrock" target="_blank" rel="noopener">Claude Code on Amazon Bedrock（公式）</a> — 今日紹介したClaude Codeとの連携の公式ドキュメント（実際に接続するのは第4回）</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <div class="lesson-nav-item lesson-nav-item--disabled">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">---</span>
+      </div>
+      <a href="../natural-language-dev-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">自然言語開発 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第2回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>

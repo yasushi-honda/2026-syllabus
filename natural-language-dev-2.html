@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="styles.css?v=3">
-  <!-- 公式情報確認: 2026-09-02 (cloud.google.com/free / cloud.google.com/signup-faqs / docs.cloud.google.com/free/docs/free-cloud-features / cloud.google.com/blog/products/ai-machine-learning/the-new-gemini-enterprise-one-platform-for-agent-development / code.claude.com/docs/en/google-vertex-ai / platform.claude.com/docs/en/build-with-claude/claude-on-vertex-ai / cloud.google.com/vertex-ai/generative-ai/docs/data-governance / docs.cloud.google.com/sdk/gcloud/reference/firestore / github.com/microsoft/playwright-mcp / github.com/google/clasp) -->
+  <!-- 公式情報確認: 2026-09-03 (cloud.google.com/free / cloud.google.com/signup-faqs / docs.cloud.google.com/free/docs/free-cloud-features / code.claude.com/docs/en/amazon-bedrock / aws.amazon.com/free/terms / aws.amazon.com/free/registration-faqs / aws.amazon.com/about-aws/whats-new/2025/07/aws-free-tier-credits-month-free-plan / docs.aws.amazon.com/bedrock/latest/userguide/model-access.html / docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html / docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-budgets-budgetsaction.html / cloud.google.com/vertex-ai/generative-ai/docs/data-governance / docs.cloud.google.com/sdk/gcloud/reference/firestore / github.com/microsoft/playwright-mcp / github.com/google/clasp) -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -45,22 +45,20 @@
       <p><strong>本田 康志</strong></p>
       <p>非常勤講師 / ヤススシステム代表</p>
       <div class="message-box">
-        3年次のみなさん、前期はお疲れ様でした。進級制作を通じて、コンテキストエンジニアリング・SDD・TDD・ハーネスエンジニアリングを一通り体験し、AIエージェント（Antigravity CLI）の威力を実感してもらえたと思います。後期はいよいよ<strong>クラウドネイティブな開発</strong>へ踏み出します。Google Cloudの実際のアカウントを作り（$300分の無料クレジット・90日間）、<strong>Gemini Enterprise Agent Platform（旧Vertex AI）</strong>上でClaude Codeを動かし、Firebase・Cloud Run・Firestoreといった本物のクラウドサービスと連携するアプリを作っていきます。個人情報を扱えるレベルの安全設計があることも学びながら、進級制作をクラウドの力でさらに育てていきましょう。
+        3年次のみなさん、前期はお疲れ様でした。進級制作を通じて、コンテキストエンジニアリング・SDD・TDD・ハーネスエンジニアリングを一通り体験し、AIエージェント（Antigravity CLI）の威力を実感してもらえたと思います。後期はいよいよ<strong>クラウドネイティブな開発</strong>へ踏み出します。Google Cloudの実際のアカウントを作り、Firebase・Cloud Run・Firestoreといった本物のクラウドサービスと連携するアプリを作っていきます。さらに<strong>Amazon Bedrock</strong>経由でClaude Codeを動かし、ハーネスエンジニアリングをより本格的に体験します。個人情報を扱えるレベルの安全設計があることも学びながら、進級制作をクラウドの力でさらに育てていきましょう。
       </div>
     </div>
 
     <div class="syllabus-section">
       <h2>授業概要</h2>
       <ul>
-        <li>前期に育てた進級制作とAIエージェント活用の力を土台に、<strong>Google Cloud</strong>の実アカウントを使ったクラウドネイティブ開発を学ぶ、実践中心の専門科目です。</li>
-        <li>個人のクレジットカードでGoogle Cloudに登録し、新規登録時に提供される<strong>$300分・90日間の無料クレジット</strong>（Welcome credit）を使って学習を進めます。トライアル終了時は自動課金ではなく、アカウントが自動的にクローズされる仕組みです。90日という期限は全16回（9月〜1月）の授業期間より短いため、<strong>本科目では有料アカウントへの切り替えは行わず</strong>、クラウドの実操作は第13回頃までのトライアル期間内で終える計画とします。トライアル終了後の回は、それまでに残したスクリーンショット・実行ログ・録画をもとに検証・発表を進めます。</li>
-        <li>2026年4月に Vertex AI から再編された<strong>Gemini Enterprise Agent Platform</strong>の<strong>Model Garden</strong>を通じて、Claude Code から<strong>Claude（主にSonnet）</strong>を呼び出せる環境を構築します。この呼称はGoogle Cloud公式ブログのものですが、Anthropic公式ドキュメントでは「Google Cloud's Agent Platform, formerly Vertex AI」と表記され、Claude Codeのログイン画面には今も「Google Vertex AI」と表示されます。表記のゆれがあること自体を、サービス名称変化の実例として学びます。</li>
-        <li><strong>Firebase</strong>・<strong>Cloud Run</strong>・<strong>Firestore</strong>など、実際のクラウドサービスに触れながら、進級制作にクラウド機能を統合していきます。</li>
-        <li>Model Gardenへのアクセス申請には<strong>承認まで24〜48時間</strong>かかるため、申請と利用の回を分けて計画的に進めます。</li>
+        <li>前期に育てた進級制作とAIエージェント活用の力を土台に、<strong>Google Cloud</strong>・<strong>AWS</strong>の実アカウントを使ったクラウドネイティブ開発を学ぶ、実践中心の専門科目です。</li>
+        <li>個人のクレジットカードでGoogle Cloudに登録し、新規登録時に提供される<strong>$300分・90日間の無料クレジット</strong>（Welcome credit）で<strong>Firebase・Cloud Run・Firestore</strong>を学びます。トライアル終了時は自動的にアカウントがクローズされる仕組みで、90日間は全16回（9月〜1月）の授業期間より短いため、<strong>Google Cloud側では有料アカウントへの切り替えは行わず</strong>、実操作は第13回頃までのトライアル期間内で終える計画とします。</li>
+        <li>Claude Codeは<strong>Amazon Bedrock</strong>経由で接続します。AWSの新規登録者向けクレジット（最大$200・6ヶ月間）はBedrockにも使えますが、AWS公式規約では<strong>新規特典は1人（1エンティティ）につき1アカウントまで</strong>とされ、既存のAWSアカウント保有者は対象外です。<strong>クレジットカード番号が判定に使われるかどうかを含め、具体的な判定基準はAWS公式では非公開</strong>のため、本人が過去にAWSアカウントを持っていたかどうかで対象可否が変わりうることを理解しておきます。対象外の場合、登録初日から実費（従量課金、金額は利用状況により変動）が発生します。過去の利用有無に心当たりがなく不安な場合は、事前に担当教員に相談してください。Bedrockのモデルアクセスは申請後<strong>すぐに承認される</strong>ため、待ち時間なく利用を始められます。</li>
         <li>本科目は<strong>Claude Code CLI</strong>での操作を主軸とします（Claude Desktopは比較参考として軽く触れる程度）。Google Cloudの操作は<strong>gcloud CLI</strong>（Firebaseは専用の<strong>Firebase CLI</strong>）、GitHubの操作は<strong>gh CLI</strong>を、Claude Codeから呼び出して進める形を標準パターンとします。</li>
         <li><strong>Playwright MCP</strong>（ブラウザ操作）や<strong>clasp</strong>（Command Line Apps Script Projects、Google Apps Scriptのローカル管理）にも触れ、CLIとMCPを通じてAIエージェントが扱える範囲の広さ・パワフルさを体感します。</li>
         <li>クラウドAIサービスのデータガバナンス（入力データがモデルの学習に使われない設計等）を学び、「個人情報を扱えるレベルの安全設計」がどのように成り立っているかを理解します。</li>
-        <li><strong>Budgets &amp; Alerts</strong>を使って、サービス単位でのコスト状況を確認する習慣を身につけます。個々のプロンプト単位の精密な課金確認は本授業の範囲外とし、まずはサービス単位でのコスト意識を持つことを目標とします。</li>
+        <li>Google Cloudの<strong>Budgets &amp; Alerts</strong>やAWSのコスト管理機能を使って、サービス単位でのコスト状況を確認する習慣を身につけます。既定のアラート機能は<strong>通知のみで支出を自動的に止めるものではない</strong>ことを理解します（AWSには閾値超過時にIAMポリシー適用等で自動的に利用を制限できる<strong>Budgets Actions</strong>という追加設定機能もありますが、既定では無効で本授業では扱いません）。個々のプロンプト単位の精密な課金確認は本授業の範囲外とし、まずはサービス単位でのコスト意識を持つことを目標とします。</li>
         <li>引き続き<strong>「責任あるコード」</strong>をテーマとし、クラウド環境でのAI活用における検証・品質管理の重要性を学びます。</li>
       </ul>
     </div>
@@ -71,7 +69,7 @@
       <h3>知識・理解</h3>
       <ol>
         <li>Google Cloudのアカウント登録・無料クレジット（$300・90日間）の仕組みと、トライアル終了後はリソースへアクセスできなくなることを理解し、終了前に記録を残しておく重要性を説明できる。</li>
-        <li>Gemini Enterprise Agent Platform（旧Vertex AI）とModel Gardenの関係、Claude Codeとの連携方法を理解している。</li>
+        <li>AWSアカウント登録・Bedrockの仕組みと、過去のアカウント履歴によって新規特典の可否が変わりうるリスクを理解している。</li>
         <li>Claude・Geminiなど複数のAIモデルの違いと、それぞれの特性を自分の言葉で説明できる。</li>
         <li>クラウドAIサービスにおけるデータガバナンス（学習への非利用等）の基本的な考え方を理解している。</li>
         <li>Firebase・Cloud Run・Firestoreがそれぞれ何をするサービスかを説明できる。</li>
@@ -87,10 +85,10 @@
 
       <h3>スキル・表現</h3>
       <ol>
-        <li>Google Cloudアカウントを作成し、Model Gardenへのアクセス申請を行える。</li>
-        <li>Claude CodeをGemini Enterprise Agent Platform経由でセットアップし、実際に動かせる。</li>
+        <li>Google Cloudアカウントを作成し、AWSアカウントを作成してBedrockを有効化できる。</li>
+        <li>Claude CodeをAmazon Bedrock経由でセットアップし、実際に動かせる。</li>
         <li>Firebase・Cloud Run・Firestoreの基本操作を行い、進級制作にクラウド機能を統合できる。</li>
-        <li>Budgets &amp; Alertsでコスト状況を確認し、必要に応じて設定を調整できる。</li>
+        <li>Google CloudのBudgets &amp; AlertsやAWSの予算アラート等のコスト管理機能でコスト状況を確認し、必要に応じて設定を調整できる。</li>
         <li>Claude Codeからgcloud CLI・gh CLIを呼び出して基本的な操作を行い、Playwright MCPで自分のアプリの動作をAIエージェントに確認させられる。</li>
       </ol>
 
@@ -114,22 +112,22 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td class="week-num">1</td><td class="week-theme">前期振り返り＆後期オリエンテーション</td><td>前期に取り組んだ進級制作の<strong>Before/After比較</strong>、AIエージェント（Antigravity CLI）活用の学びを振り返る。後期のゴール——<strong>Google Cloud実アカウントを使ったクラウドネイティブ開発</strong>——を共有し、全16回の流れを俯瞰する。本科目は<strong>Claude Code CLI</strong>での操作を主軸とする方針も確認する（Claude Desktopは参考程度に触れる）。</td></tr>
-            <tr><td class="week-num">2</td><td class="week-theme">Google Cloudアカウントを作ろう</td><td>個人のクレジットカードでGoogle Cloudに新規登録し、<strong>$300分・90日間の無料クレジット</strong>（Welcome credit）を確認する。トライアル終了時は自動課金ではなく自動的にアカウントがクローズされる仕組みで、90日という期限が全16回の授業期間より短いことも共有する。<strong>本科目では有料アカウントへの切り替えは行わず</strong>、第13回頃までのトライアル期間内でクラウドの実操作を終える計画であることを伝えておく。<strong>Gemini Enterprise Agent Platform（旧Vertex AI）</strong>の全体像を紹介する。</td></tr>
-            <tr><td class="week-num">3</td><td class="week-theme">Model Gardenへのアクセス申請＋AIエージェントの可能性を広げる</td><td>Model GardenでClaudeモデルへのアクセスを申請する（<strong>承認まで24〜48時間</strong>かかるため、当日は使えない前提で進める）。承認を待つ間、Claude（Sonnet等）・Geminiなど複数のAIモデルの違い・特性を座学で学ぶ。あわせて、Claude CodeがCLI（<strong>gcloud</strong>・<strong>gh</strong>）やMCP（<strong>Playwright MCP</strong>でのブラウザ操作、<strong>clasp</strong>でのGoogle Apps Script管理）を通じて外部ツールを操作できる幅の広さを、教員のデモで体感する。</td></tr>
-            <tr><td class="week-num">4</td><td class="week-theme">Claude Code × Agent Platformを接続しよう</td><td>申請が承認されたことを確認し、<code>/setup-vertex</code>ウィザードでClaude CodeをGemini Enterprise Agent Platform経由で使えるようにセットアップする。<strong>ログイン画面には「Google Vertex AI」と表示される</strong>ことに気づき、サービス名称が移行期にあることを実機で確認する。動作確認として簡単な依頼を試す。以降、Google Cloudの操作は<strong>gcloud CLI</strong>、GitHubの操作は<strong>gh CLI</strong>をClaude Codeから呼び出す形を標準パターンとする。</td></tr>
+            <tr><td class="week-num">1</td><td class="week-theme"><a href="natural-language-dev-2/week01.html" class="week-link">前期振り返り＆後期オリエンテーション</a></td><td>前期に取り組んだ進級制作の<strong>Before/After比較</strong>、AIエージェント（Antigravity CLI）活用の学びを振り返る。後期のゴール——<strong>Google Cloud実アカウントを使ったクラウドネイティブ開発</strong>——を共有し、全16回の流れを俯瞰する。本科目は<strong>Claude Code CLI</strong>での操作を主軸とする方針も確認する（Claude Desktopは参考程度に触れる）。</td></tr>
+            <tr><td class="week-num">2</td><td class="week-theme">Google Cloudアカウントを作ろう</td><td>個人のクレジットカードでGoogle Cloudに新規登録し、<strong>$300分・90日間の無料クレジット</strong>（Welcome credit）を確認する。トライアル終了時は自動課金ではなく自動的にアカウントがクローズされる仕組みで、90日という期限が全16回の授業期間より短いことも共有する。<strong>Google Cloud側では有料アカウントへの切り替えは行わず</strong>、第13回頃までのトライアル期間内でFirebase・Cloud Run・Firestoreの実操作を終える計画であることを伝えておく。</td></tr>
+            <tr><td class="week-num">3</td><td class="week-theme">AWSアカウントを作り、Bedrockを有効化しよう＋AIエージェントの可能性を広げる</td><td>個人のクレジットカードでAWSに新規登録する。登録時に「Free Plan」と「Paid Plan」の選択画面が表示されるため、無料クレジットの対象となる<strong>Free Plan</strong>を選ぶよう伝える。新規登録者向けクレジット（最大$200・6ヶ月間）を確認するとともに、AWS公式規約では<strong>新規特典が1人1アカウントまで</strong>とされ既存のAWSアカウント保有者は対象外になること、<strong>カード番号が判定に使われるかは非公開</strong>であることを共有し、過去の利用状況に不安がある場合は教員に相談するよう伝える。<strong>Amazon Bedrock</strong>を有効化し、Claudeモデルへのアクセスをリクエストする（<strong>申請後すぐに承認される</strong>ため待ち時間はない）。第4回でBedrockを実際に呼び出す前に、<strong>AWSの予算アラート（Budgets）を低めのしきい値で設定</strong>しておく（通知の反映には<strong>8〜12時間程度のタイムラグ</strong>があり即座には気づけないため、初回の動作確認は少量の依頼に留めることも合わせて伝える）。あわせて、Claude CodeがCLI（<strong>gcloud</strong>・<strong>gh</strong>）やMCP（<strong>Playwright MCP</strong>でのブラウザ操作、<strong>clasp</strong>でのGoogle Apps Script管理）を通じて外部ツールを操作できる幅の広さを、教員のデモで体感する。</td></tr>
+            <tr><td class="week-num">4</td><td class="week-theme">Claude Code × Amazon Bedrockを接続しよう</td><td>初めて<code>claude</code>コマンドを起動すると表示されるログインプロンプトで「3rd-party platform」→「Amazon Bedrock」を選び、ウィザードに沿ってAWSの認証方法・リージョン・利用モデルを設定する（<code>/setup-bedrock</code>は接続後に認証情報やリージョンを変更したいときに使う再設定コマンド）。既定では上位モデル（Opus）が優先されるため、環境変数<code>ANTHROPIC_MODEL</code>（または<code>/model</code>コマンド）で本科目の主軸である<strong>Sonnet</strong>を主モデルとして明示指定する設定も確認する。第3回で設定した予算アラートが有効になっていることを確認したうえで、動作確認として少量の簡単な依頼を試したのち、以降はGoogle Cloudの操作は<strong>gcloud CLI</strong>、GitHubの操作は<strong>gh CLI</strong>をClaude Codeから呼び出す形を標準パターンとする。</td></tr>
             <tr><td class="week-num">5</td><td class="week-theme">セキュリティとデータガバナンスを学ぶ</td><td>クラウドAIサービスにおけるデータガバナンス（入力データがモデルの学習に使われない設計等）を公式資料で確認する。「個人情報を扱えるレベルの安全設計」がどのように成り立っているかを理解し、実際に何を入力してよい／よくないかを話し合う。</td></tr>
             <tr><td class="week-num">6</td><td class="week-theme">Firebaseに触れてみよう</td><td><strong>Firebase</strong>の基本概念（Hosting等）に触れ、Claude Codeから専用の<strong>Firebase CLI</strong>（<code>firebase deploy</code>等）を使って簡単な機能を進級制作に組み込む。</td></tr>
             <tr><td class="week-num">7</td><td class="week-theme">Cloud Runに触れてみよう</td><td>コンテナベースのサービス<strong>Cloud Run</strong>の基本概念に触れ、Claude Codeから<strong>gcloud CLI</strong>で簡単なアプリケーションをデプロイする体験をする。</td></tr>
             <tr><td class="week-num">8</td><td class="week-theme">🎤 中間共有会</td><td>ここまでのクラウド環境構築・学びを共有する。うまくいったこと・つまずいたことを言葉にする。</td></tr>
             <tr><td class="week-num">9</td><td class="week-theme">Firestoreに触れてみよう</td><td>NoSQLデータベース<strong>Firestore</strong>の基本概念に触れる。データベース自体の作成は<strong>gcloud CLI</strong>（<code>gcloud firestore</code>はDB作成・インデックス管理等のプロビジョニング用途）で行い、ドキュメントの保存・取得は<strong>Firestore SDK</strong>（Node.js等）を使った数行のスクリプトをClaude Codeと協働で書いて試す。</td></tr>
             <tr><td class="week-num">10</td><td class="week-theme">進級制作にクラウド機能を統合①：設計</td><td>進級制作のどこにクラウド機能（Firebase／Cloud Run／Firestore等）を統合するかを計画する。Claude Codeと協働でPRD・ADRを作成する。</td></tr>
-            <tr><td class="week-num">11</td><td class="week-theme">進級制作にクラウド機能を統合②：実装</td><td>第10回の計画に基づき、Claude Code（Gemini Enterprise Agent Platform経由）と協働で実装を進める。GitHubの操作（PR作成等）も<strong>gh CLI</strong>を使ってClaude Codeから行う。</td></tr>
-            <tr><td class="week-num">12</td><td class="week-theme">課金を可視化しよう</td><td><strong>Budgets &amp; Alerts</strong>を設定し、サービス単位でのコスト状況を確認する習慣を身につける。<strong>Budgets &amp; Alertsは通知機能であり、支出や課金を自動的に止めるものではない</strong>ことを理解する。無料クレジットの残高・残り日数を確認し、トライアル終了が近いことを踏まえて、以降はスクリーンショット・実行ログ・録画で作業成果を記録に残す準備を始める。</td></tr>
-            <tr><td class="week-num">13</td><td class="week-theme">検証と改善</td><td>実装した機能のテスト・動作確認。<strong>Playwright MCP</strong>をClaude Codeに追加し、自分が作ったWebアプリをAIエージェントに実際に操作・確認させる。無料トライアル終了が近い場合は、動作の様子をスクリーンショットや録画で記録しておく。</td></tr>
+            <tr><td class="week-num">11</td><td class="week-theme">進級制作にクラウド機能を統合②：実装</td><td>第10回の計画に基づき、Claude Code（Amazon Bedrock経由）と協働で実装を進める。GitHubの操作（PR作成等）も<strong>gh CLI</strong>を使ってClaude Codeから行う。</td></tr>
+            <tr><td class="week-num">12</td><td class="week-theme">課金を可視化しよう</td><td>Google Cloudの<strong>Budgets &amp; Alerts</strong>を新たに設定するとともに、第3回から使ってきたAWSの予算アラートの履歴を振り返り、サービス横断でコスト状況を確認する習慣を身につける。<strong>既定のアラートは通知のみで、支出や課金を自動的に止めるものではない</strong>ことを理解する（AWSには自動制限機能<strong>Budgets Actions</strong>もあるが既定では無効で本授業では扱わない）。Google Cloud無料クレジットの残高・残り日数を確認し、トライアル終了が近いことを踏まえて、以降はスクリーンショット・実行ログ・録画で作業成果を記録に残す準備を始める（AWSのクレジットは6ヶ月間のため、通常は学期末まで持続する見込み）。</td></tr>
+            <tr><td class="week-num">13</td><td class="week-theme">検証と改善</td><td>実装した機能のテスト・動作確認。<strong>Playwright MCP</strong>をClaude Codeに追加し、自分が作ったWebアプリをAIエージェントに実際に操作・確認させる。Google Cloudの無料トライアル終了が近い場合は、動作の様子をスクリーンショットや録画で記録しておく。</td></tr>
             <tr><td class="week-num">14</td><td class="week-theme">責任あるAI開発（クラウド版）</td><td>クラウド環境でのAI活用における検証・品質管理・データガバナンスの観点から、自分の実装を見直す。</td></tr>
-            <tr><td class="week-num">15</td><td class="week-theme">最終仕上げ</td><td>進級制作の最終調整、ドキュメント整備。無料トライアルが終了している場合は、記録した実行結果・スクリーンショットをもとに整理する。</td></tr>
-            <tr><td class="week-num">16</td><td class="week-theme">🎤 最終発表会＆総括</td><td>クラウド機能を統合した進級制作の成果発表（無料トライアル終了後はスクリーンショットや録画を用いる）。前期・後期を通じた技術の進化を振り返る。</td></tr>
+            <tr><td class="week-num">15</td><td class="week-theme">最終仕上げ</td><td>進級制作の最終調整、ドキュメント整備。Google Cloudの無料トライアルが終了している場合は、記録した実行結果・スクリーンショットをもとに整理する。</td></tr>
+            <tr><td class="week-num">16</td><td class="week-theme">🎤 最終発表会＆総括</td><td>クラウド機能を統合した進級制作の成果発表（Google Cloud分の無料トライアル終了後はスクリーンショットや録画を用いる）。前期・後期を通じた技術の進化を振り返る。</td></tr>
           </tbody>
         </table>
       </div>
@@ -141,9 +139,9 @@
       <p>特定のテキストは使用しません。授業内で適宜、公式ドキュメントや技術ブログ等を紹介します。</p>
       <p>主な参考資料（随時更新）：</p>
       <ul>
-        <li>Google Cloud — Gemini Enterprise Agent Platform 公式ブログ・ドキュメント（cloud.google.com）</li>
-        <li>Anthropic — Claude Code on Google Cloud's Agent Platform 公式ドキュメント（code.claude.com / platform.claude.com）</li>
         <li>Google Cloud — Firebase / Cloud Run / Firestore 公式ドキュメント</li>
+        <li>Anthropic — Claude Code on Amazon Bedrock 公式ドキュメント（code.claude.com）</li>
+        <li>Amazon Web Services — Bedrockモデルアクセス公式ドキュメント（docs.aws.amazon.com）</li>
         <li>Microsoft — Playwright MCP 公式リポジトリ（github.com/microsoft/playwright-mcp）</li>
         <li>Google — clasp（Command Line Apps Script Projects）公式リポジトリ（github.com/google/clasp）</li>
       </ul>
@@ -171,9 +169,9 @@
     <div class="syllabus-section">
       <h2>その他（履修上の注意点）</h2>
       <ul>
-        <li>Google Cloudの利用には<strong>個人のクレジットカード</strong>が必要です（新規登録者には$300分・90日間の無料クレジットが提供され、明示的にアップグレードしない限り自動課金は発生しません）。90日間は全16回の授業期間より短いため、<strong>本科目では有料アカウントへの切り替えは行いません</strong>。トライアル終了後はリソースにアクセスできなくなるため、終了前に成果を記録（スクリーンショット・実行ログ・録画）しておく運用とします。</li>
-        <li>Model Gardenへのアクセス申請には承認まで24〜48時間かかります。申請のタイミングを逃さないよう、授業内でスケジュールを確認します。</li>
-        <li>サービス名称は変化が速い分野です（例：Vertex AI → Gemini Enterprise Agent Platform、2026年4月）。Google公式ブログの呼称とAnthropic公式ドキュメント・Claude Codeのログイン画面表示（「Google Vertex AI」）にも表記のゆれがあります。授業内では執筆時点の最新情報を都度確認しながら進めます。</li>
+        <li>Google Cloudの利用には<strong>個人のクレジットカード</strong>が必要です（新規登録者には$300分・90日間の無料クレジットが提供され、明示的にアップグレードしない限り自動課金は発生しません）。90日間は全16回の授業期間より短いため、<strong>Google Cloud側では有料アカウントへの切り替えは行いません</strong>。トライアル終了後はリソースにアクセスできなくなるため、終了前に成果を記録（スクリーンショット・実行ログ・録画）しておく運用とします。</li>
+        <li>AWSの利用にも<strong>個人のクレジットカード</strong>が必要です。登録時は無料クレジットの対象となる<strong>Free Plan</strong>を選びます（Paid Planとの選択画面が表示されます）。新規登録者には最大$200・6ヶ月間のクレジットが提供されますが、AWS公式規約では<strong>新規特典は1人（1エンティティ）につき1アカウントまで</strong>とされ、既存のAWSアカウント保有者は対象外です。<strong>クレジットカード番号が判定に使われるかどうかを含め、具体的な判定基準はAWS公式では非公開</strong>のため、対象になるかどうかは登録してみないと分かりません。対象外の場合、Claude Code経由の利用は登録初日から実費（従量課金、金額は利用状況により変動）が発生します。過去のAWS利用状況に不安がある場合は、登録前に担当教員に相談してください。</li>
+        <li>AWSの<strong>Free Plan</strong>アカウントは、公式規約上<strong>評価目的での利用に限られ、機微なデータの処理には使わないこと</strong>とされています。進級制作にAWS Bedrock経由でClaude Codeを接続する際も、実在する個人情報等の機微なデータは入力しない運用を徹底してください（第5回のデータガバナンス学習ともあわせて確認します）。</li>
         <li><strong>clasp</strong>はGoogle公式リポジトリ（github.com/google/clasp）で開発されていますが、READMEに「公式にサポートされる製品ではない（not an officially supported Google product）」と明記されているツールです。体験・紹介の位置づけで扱います。</li>
         <li>実際に課金が発生しうる環境を扱うため、不安な点があれば早めに担当教員に相談してください。</li>
         <li>体調やメンタル面で不安がある場合は、無理せず担当教員または学校の相談窓口に相談してください。</li>
