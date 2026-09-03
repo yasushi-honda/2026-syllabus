@@ -118,16 +118,16 @@
           </div>
           <h3>AIエージェントの文脈でGit/GitHubを知る意味を理解する</h3>
           <div class="timeline-body">
-            <p><strong>AIエージェントはGitリポジトリの中で動く</strong></p>
+            <p><strong>AIエージェントとGitの関係</strong></p>
             <ul>
-              <li>第5回から使う<strong>Antigravity CLI（agy）</strong>のようなAIエージェントは、指示を受けてファイルを編集し、その変更を記録しながら作業を進める</li>
-              <li>チャット型AIとの決定的な違いは、<strong>実際にコードベース（＝Gitリポジトリ）に変更を加える</strong>点にある</li>
-              <li>つまりAIエージェントは、人間の共同作業者と同じように、Gitの仕組みの中で動く「協働者」になる</li>
+              <li>AIエージェント自体は、Gitリポジトリでなくても動作できる汎用的な仕組み。ただし本科目では、GitHub Codespaces（＝Gitリポジトリの中の開発環境）で<strong>Antigravity CLI（agy、第5回から）</strong>を使う</li>
+              <li>チャット型AIとの決定的な違いは、指示を受けて<strong>実際にファイルへ変更を加える</strong>点にある</li>
+              <li><strong>Gitは変更を自動で記録する仕組みではない</strong>。ステージング・コミットという操作をして初めて、変更が履歴として残る——これは人間（あるいは人間の指示を受けたAIエージェント）が意図的に行う操作</li>
             </ul>
             <p><strong>だからこそGit/GitHubの理解が土台になる</strong></p>
             <ul>
-              <li>AIエージェントが何を・いつ変更したかを追跡できる</li>
-              <li>意図しない変更があった場合に、元に戻せる</li>
+              <li>コミットという記録の仕組みを理解していれば、AIエージェントが行った変更を後から確認できる</li>
+              <li>意図しない変更があった場合に、コミット単位で元に戻せる</li>
               <li>複数人（人間同士、あるいは人間とAIエージェント）が同じプロジェクトで安全に共同作業できる</li>
             </ul>
             <div class="lesson-tip">
@@ -184,13 +184,14 @@
               <li><strong>GitHub</strong>は、Gitリポジトリをホスティングするプラットフォーム。Issue・プルリクエスト・コードレビューといった、共同作業のための機能を提供する</li>
               <li>つまり「Git＝仕組み」「GitHub＝それを使ってオンラインで共同作業する場所」という関係</li>
             </ul>
-            <p><strong>GitHubアカウントを登録する</strong></p>
+            <p><strong>GitHubアカウントを準備する</strong></p>
             <ul>
-              <li><a href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a> から、画面の案内に沿ってアカウントを作成する（公式: <a href="https://docs.github.com/en/get-started/onboarding/getting-started-with-your-github-account" target="_blank" rel="noopener">Getting started with your GitHub account</a>）</li>
-              <li>強固で他で使い回していないパスワードを設定する</li>
+              <li>すでに前期の他授業等でGitHubアカウントを<strong>持っている</strong>人は、そのアカウントでログインして使う（新規登録し直す必要はない）</li>
+              <li><strong>持っていない</strong>人は、<a href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a> から、画面の案内に沿って新規登録する（公式: <a href="https://docs.github.com/en/get-started/onboarding/getting-started-with-your-github-account" target="_blank" rel="noopener">Getting started with your GitHub account</a>）</li>
+              <li>新規登録する場合は、強固で他で使い回していないパスワードを設定する</li>
               <li>登録後、メールアドレスの確認（verify）を行うと全機能が使えるようになる</li>
-              <li>安全のため、<strong>2段階認証（2FA）</strong>の設定が強く推奨されている</li>
-              <li>プランは<strong>GitHub Free</strong>を選べば十分（後から変更も可能）</li>
+              <li>安全のため、まだ設定していなければ<strong>2段階認証（2FA）</strong>の設定が強く推奨されている</li>
+              <li>プランは<strong>GitHub Free</strong>で十分（後から変更も可能）</li>
             </ul>
           </div>
         </div>
@@ -226,7 +227,7 @@
           <h3>次回予告＆今日の振り返り</h3>
           <div class="timeline-body">
             <ul>
-              <li>次回（第3回）：<strong>Google AI Studio Build modeに触れてみよう①</strong>——今日登録したGitHubアカウントを使い、自然言語の指示でミニアプリの土台を作る</li>
+              <li>次回（第3回）：<strong>Google AI Studio Build modeに触れてみよう①</strong>——今日使ったGitHubアカウントを使い、自然言語の指示でミニアプリの土台を作る</li>
               <li>「Git/GitHubについて分かったこと・まだよく分からないこと」を一言メモして退出</li>
             </ul>
           </div>
@@ -241,8 +242,8 @@
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>今日登録したGitHubアカウントでログインできることを確認しておく</strong>
-            <p>授業内で登録が完了できなかった場合は、次回までに完了させておく。</p>
+            <strong>今日使ったGitHubアカウントでログインできることを確認しておく</strong>
+            <p>新規登録が授業内で完了できなかった場合は、次回までに完了させておく。</p>
           </div>
         </div>
         <div class="lesson-task">
