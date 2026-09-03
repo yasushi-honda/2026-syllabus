@@ -21,8 +21,10 @@ updated: 2026-09-01
 - [x] AIコミュニケーション基礎Ⅱ week01作成（agyインストールコマンド含む、PR #162, #166）
 - [ ] ITパスポート テクノロジー系（水1・2限）の内容検討 — 未着手・次回相談
 - [ ] システム開発実習AⅡ（水3・4限）の内容検討 — 未着手・次回相談
-- [x] AI活用プログラミング基礎Ⅱ（木1・2限）授業内容確定（Google AI Studio Build mode→Antigravity CLI（agy）→進級制作への接続、全14回、PR #169）。week01以降は未作成
-- [x] 自然言語開発Ⅱ（木3・4限）授業内容確定（Google Cloud実アカウント→Gemini Enterprise Agent Platform経由Claude Code→Firebase/Cloud Run/Firestore→進級制作統合、CLI駆動運用・Playwright MCP・clasp、全16回、PR #171）。有料化は回避しトライアル期間内で実操作を完結する設計。week01以降は未作成
+- [x] AI活用プログラミング基礎Ⅱ（木1・2限）授業内容確定（Google AI Studio Build mode→Antigravity CLI（agy）→進級制作への接続、全14回、PR #169）
+- [x] AI活用プログラミング基礎Ⅱ week01作成（前期振り返り、Google AI Studio/Antigravity CLI紹介、PR #173）。week02以降は未作成
+- [x] 自然言語開発Ⅱ（木3・4限）授業内容確定（Google Cloud実アカウント→Firebase/Cloud Run/Firestore、Amazon Bedrock経由Claude Code→進級制作統合、CLI駆動運用・Playwright MCP・clasp、全16回、PR #171）。GCPの$300無料クレジットはClaude等Managed APIパートナーモデルの対象外と判明したため、Claude接続はAWS Bedrockへ設計転換（学生にはAWS新規特典判定・実費発生リスクを開示、PR #174）。両クラウドとも有料化は回避しトライアル/クレジット期間内で実操作を完結する設計
+- [x] 自然言語開発Ⅱ week01作成（前期振り返り、AWS Bedrock接続の予告・リスク開示、PR #174）。week02以降は未作成
 - [x] システム開発B・プログラム基礎Ⅱ(Java)（土曜、既存ページ流用）の後期時間割への統合内容確認（`index.html`後期パネルで`java-teamdev.html`/`java-basics-2.html`双方のリンクを確認済み）
 - [ ] プログラム基礎Ⅱ・AIコミュニケーション基礎Ⅱのweek02以降 — 実施日が近づいた回から順次（未分解）
 
