@@ -40,11 +40,11 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">前期は「カスタム指示」欄に性格・話し方を自由記述した。今日は<strong>チャットを設定</strong>から選べる<strong>会話スタイル（デフォルト／学習ガイド／カスタム）</strong>と<strong>応答の長さ</strong>、<strong>ソースの選択的な参照</strong>を使いこなし、自分のAIをより高度に育てる</div>
+          <div class="lesson-overview-value">前期は「カスタム指示」欄に性格・話し方を自由記述した。今日は<strong>チャットを設定</strong>から選べる<strong>会話スタイル（デフォルト／学習ガイド／カスタム）</strong>と<strong>回答の長さ</strong>、<strong>ソースの選択的な参照</strong>を使いこなし、自分のAIをより高度に育てる</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">チャットを設定 / 会話スタイル（デフォルト・学習ガイド・カスタム） / 応答の長さ / ソースの選択的参照</div>
+          <div class="lesson-overview-value">チャットを設定 / 会話スタイル（デフォルト・学習ガイド・カスタム） / 回答の長さ / ソースの選択的参照</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
@@ -58,7 +58,7 @@
       <ul>
         <li>Gemini Notebookの<strong>「チャットを設定」</strong>画面から会話スタイルを切り替えられる</li>
         <li>3つの会話スタイル（<strong>デフォルト・学習ガイド・カスタム</strong>）の違いを、実際の応答を比較して説明できる</li>
-        <li>応答の長さ（デフォルト／長め／短め）を目的に応じて選べる</li>
+        <li>回答の長さ（デフォルト／長め／短め）を目的に応じて選べる</li>
         <li>複数ソースがある状態で、<strong>特定のソースだけを選択</strong>してチャットに答えさせられる</li>
         <li>「Gemini Notebookの回答はソースに含まれる内容のみに基づく」という仕組みを体感する</li>
       </ul>
@@ -90,7 +90,7 @@
             </ul>
             <p><strong>今日の全体像を知る（15分）</strong></p>
             <ul>
-              <li>Gemini Notebookには、カスタム指示欄への自由記述とは別に、<strong>「チャットを設定」</strong>という画面から選べる<strong>3つの会話スタイル</strong>がある（公式: Google Gemini Notebook ヘルプ「Gemini Notebookでチャットを使用する」）</li>
+              <li>前期に書いた自由記述は、実は<strong>「チャットを設定」</strong>という画面にある<strong>カスタム</strong>スタイルの入力欄に書いていたもの。今日はこの画面全体を開き、カスタムを含む<strong>3つの会話スタイル</strong>を使い分ける（公式: Google Gemini Notebook ヘルプ「Gemini Notebook でチャットを使用する」）</li>
               <li>今日はこの「チャットを設定」画面と、<strong>ソースを選んでチャットに使う</strong>方法の2本立てで、自分のAIをさらに育てる</li>
             </ul>
           </div>
@@ -101,9 +101,9 @@
             <span class="timeline-time">1限 後半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>「チャットを設定」で会話スタイルと応答の長さを試す</h3>
+          <h3>「チャットを設定」で会話スタイルと回答の長さを試す</h3>
           <div class="timeline-body">
-            <p><strong>「チャットを設定」画面を開く（10分）</strong></p>
+            <p><strong>「チャットを設定」画面を開く（15分）</strong></p>
             <ul>
               <li>Gemini Notebookのチャットパネルから<strong>「チャットを設定」</strong>を開く（公式の操作位置。UIは随時更新されるため、授業当日に一緒に確認する）</li>
               <li>選べる<strong>3つの会話スタイル</strong>（公式の説明）:
@@ -113,18 +113,24 @@
                   <li><strong>カスタム</strong>: 特定のスタイルを選択する場合や、役割を提案する場合に最適——前期に使った自由記述はこのスタイルにあたる</li>
                 </ul>
               </li>
-              <li>あわせて<strong>応答の長さ</strong>（デフォルト／長め／短め）も選べることを確認</li>
+              <li>あわせて<strong>回答の長さ</strong>（デフォルト／長め／短め）も選べることを確認</li>
+              <li>スタイルと長さを選んだら、<strong>必ず[保存]を選択する</strong>（公式手順の最後のステップ。保存しないと切り替えが反映されない）</li>
             </ul>
             <p><strong>同じ質問で3つのスタイルを比較する（30分）</strong></p>
             <ul>
               <li>自分の【学習データ】のどれか1つを題材に、<strong>同じ質問</strong>を3つのスタイルそれぞれで投げてみる:
                 <pre><code>この資料の内容を、要点を押さえて説明してください</code></pre>
               </li>
-              <li>①<strong>デフォルト</strong>で質問 → 応答をメモ</li>
-              <li>②<strong>学習ガイド</strong>に切り替えて同じ質問 → 応答をメモ（質問し返してくる、段階的に説明する等の違いに注目）</li>
-              <li>③<strong>カスタム</strong>（前期に自分が設定した内容）に切り替えて同じ質問 → 応答をメモ</li>
-              <li>応答の長さも「長め」「短め」で1回ずつ試し、同じスタイルでも長さでどう変わるか観察する</li>
+              <li>①<strong>デフォルト</strong>を選んで保存 → 質問して応答をメモ</li>
+              <li>②<strong>学習ガイド</strong>に切り替えて保存 → 同じ質問をして応答をメモ（質問し返してくる、段階的に説明する等の違いに注目）</li>
+              <li>③<strong>カスタム</strong>（前期に自分が設定した内容）に切り替えて保存 → 同じ質問をして応答をメモ</li>
+              <li>回答の長さも「長め」「短め」で1回ずつ試し、同じスタイルでも長さでどう変わるか観察する</li>
               <li>3つを見比べて、「<strong>自分のAIをどんな目的で使いたいか</strong>」によってスタイルを使い分けられることに気づく</li>
+            </ul>
+            <p><strong>設定を保存して反映を確認する（5分）</strong></p>
+            <ul>
+              <li>最後に使いたいスタイルへ戻して<strong>[保存]</strong>——保存を忘れると次回起動時に元のスタイルに戻ってしまう</li>
+              <li>チャットパネルを一度閉じて開き直し、選んだスタイルが保持されているか確認する</li>
             </ul>
             <div class="lesson-tip">
               <strong>「学習ガイド」は勉強のための会話スタイル:</strong> 公式に「教育コンテンツに最適」と説明されている通り、学習ガイドは新しい概念を理解する場面に向いています。逆に、自分のキャラクター（前期に設定した話し方）を保ちたいときは<strong>カスタム</strong>のままでよい——場面によって使い分けるのがポイントです。
@@ -148,7 +154,7 @@
           <div class="timeline-body">
             <p><strong>「ソースのみに基づく」という仕組みを再確認（10分）</strong></p>
             <ul>
-              <li>Gemini Notebookの回答は<strong>ノートブックに投入したソースに含まれる内容のみ</strong>に基づく（公式の説明。ウェブ検索やその他のツールを使うGeminiアプリとの違いでもある）</li>
+              <li>Gemini Notebookの回答は<strong>ノートブックに投入したソースに含まれる内容のみ</strong>に基づく（公式の説明）。ウェブ検索やその他のツールも参照するGeminiアプリとは、この点が異なる</li>
               <li>ソースにない内容を聞くと「この質問には答えられません」等と返ってくることがある——これは<strong>不具合ではなく仕様</strong>であることを確認</li>
             </ul>
             <p><strong>特定のソースだけを選んで質問する（30分）</strong></p>
@@ -225,7 +231,7 @@
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
-            <strong>公式ヘルプ「Gemini Notebookでチャットを使用する」を眺める</strong>
+            <strong>公式ヘルプ「Gemini Notebook でチャットを使用する」を眺める</strong>
             <p>下記の参考リンクから公式ヘルプを開き、授業で触れなかった機能を1つ見つけてメモする。</p>
           </div>
         </div>
@@ -235,7 +241,7 @@
     <div class="syllabus-section">
       <h2>参考リンク</h2>
       <ul>
-        <li><a href="https://support.google.com/gemininotebook/answer/16179559?hl=ja" target="_blank" rel="noopener">Gemini Notebook ヘルプ — Gemini Notebookでチャットを使用する</a> — 会話スタイル（デフォルト・学習ガイド・カスタム）と応答の長さの公式説明</li>
+        <li><a href="https://support.google.com/gemininotebook/answer/16179559?hl=ja" target="_blank" rel="noopener">Gemini Notebook ヘルプ — Gemini Notebook でチャットを使用する</a> — 会話スタイル（デフォルト・学習ガイド・カスタム）と回答の長さの公式説明</li>
         <li><a href="https://support.google.com/gemininotebook/answer/16215270?hl=ja" target="_blank" rel="noopener">Gemini Notebook ヘルプ — ノートブックの新しいソースを追加または検索する</a> — ソースの追加・管理・選択に関する公式説明</li>
       </ul>
     </div>
