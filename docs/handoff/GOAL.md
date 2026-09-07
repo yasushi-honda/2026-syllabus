@@ -1,5 +1,5 @@
 ---
-updated: 2026-09-01
+updated: 2026-09-08
 ---
 
 ## 現在のミッション
@@ -29,7 +29,9 @@ updated: 2026-09-01
 - [x] 自然言語開発Ⅱ week01 実施（2026-09-03）。教室で学生の契約状況が判明: 一部はClaude/ChatGPT契約済み、Claude Code使用経験者もいた。**当初計画（Claude Code CLI主軸・AWS Bedrock必須接続）から、Claude Code / Codex / Antigravity CLIの複合運用（契約状況に応じて選択、どれも不可ならAntigravity）へ現場判断で転換**。AWS登録も「注意点を伝えた上で対応可能な学生のみ実施」に緩和（全員必須ではない）。少人数・基本自律のため講師は机間巡視型。作成テーマはゲーム/ECサイト等のインスタント制作、やや高難度課題も検討中
 - [x] 自然言語開発Ⅱ 複合運用を正式カリキュラムとして教材へ反映（2026-09-03、親ページ・content/md・week01.html・index.htmlの4ファイル）。事実確認: Codex CLIは公式の機能比較表でPlus（$20/月〜）以上のプランでの利用が明記されており、Freeプランでの動作は保証されていない（一次ソース: learn.chatgpt.com/docs/pricing、Playwright実レンダリングで確認）。Antigravity CLI（agy）はGoogleアカウント認証のみで追加契約不要。pr-review-toolkit（code-reviewer+comment-analyzer）並列レビューでCritical 3件・Important 4件を検出・全修正（Codex Free断定の誤り、第6/7/9/13回セルのClaude Code限定表現残留、content/md同期漏れ、index.html旧記述等）
 - [x] システム開発B・プログラム基礎Ⅱ(Java)（土曜、既存ページ流用）の後期時間割への統合内容確認（`index.html`後期パネルで`java-teamdev.html`/`java-basics-2.html`双方のリンクを確認済み）
-- [ ] プログラム基礎Ⅱ・AIコミュニケーション基礎Ⅱのweek02以降 — 実施日が近づいた回から順次（未分解）
+- [x] プログラム基礎Ⅱ week02作成（データを扱う基礎①：オブジェクトと配列の発展。前期第9回`list.html`の`favorites`配列を「オブジェクトの配列」に発展させる実習、PR #182）。pr-review-toolkit（code-reviewer/comment-analyzer）でImportant 4件検出・全修正（Simple Browser非indexファイル遷移手順の欠落、既カスタマイズ済みfavoritesとの矛盾＋重複指示、テンプレートリテラル未紹介、week3予告が親ページ正本を超過）
+- [x] AIコミュニケーション基礎Ⅱ week02作成→再設計（PR #183, #184）。初稿はGemini Notebookの「チャットを設定」（会話スタイル・回答長）とソース選択的参照を扱う内容で作成（pr-review-toolkit でCritical 1件・Important 3件検出・全修正: 公式必須ステップ「保存」欠落、「応答の長さ」→「回答の長さ」用語統一等）。ユーザーから**「Week1でAIエージェント協働をゴールに掲げていながらWeek2がチャット型AIのみで完結しているのはおかしい」**と設計上の指摘を受け、2限後半（30分）を「第5回でagyに渡す指示文を、Gemini Notebookに相談しながら下書きする」演習に組み替え。チャット型AI→エージェント型AIへの橋渡しとして再設計（Codespaces/agy自体の技術導入はWeek3-4のまま変更せず）。再設計PRでもpr-review-toolkitがCritical 1件（content/ai-communication-2.md同期漏れ）・Important 3件（新演習が同ページ内「ソースのみに基づく」仕様と衝突するリスク、第5回参照の同期マーカー欠落、課題①の授業内足場消失）を検出、全修正の上マージ
+- [ ] プログラム基礎Ⅱ・AIコミュニケーション基礎Ⅱのweek03以降 — 実施日が近づいた回から順次（未分解）
 
 ## 🔄 中断点（in-flight）
 なし
