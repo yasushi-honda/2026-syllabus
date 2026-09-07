@@ -88,6 +88,7 @@ java-teamdev.html       # システム開発B（土曜1・2限／後期）
 program-basics-2.html   # プログラム基礎Ⅱ（火1・2限／後期。授業内容確定済み、週ページ順次作成中）
 program-basics-2/       # プログラム基礎Ⅱ の各回詳細ページ
   week01.html           #   第1回 前期振り返り＆後期オリエンテーション
+  week02.html           #   第2回 データを扱う基礎①：オブジェクトと配列の発展
 ai-communication-2.html # AIコミュニケーション基礎Ⅱ（火3・4限／後期。授業内容確定済み、週ページ順次作成中）
 ai-communication-2/     # AIコミュニケーション基礎Ⅱ の各回詳細ページ
   week01.html           #   第1回 前期振り返り＆後期オリエンテーション
