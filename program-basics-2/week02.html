@@ -44,7 +44,7 @@
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">オブジェクト / プロパティ（キーと値） / ドット記法 / オブジェクトの配列 / <code>for</code>文との組み合わせ</div>
+          <div class="lesson-overview-value">オブジェクト / プロパティ（キーと値） / ドット記法 / オブジェクトの配列 / テンプレートリテラル / <code>for</code>文との組み合わせ</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
@@ -83,7 +83,8 @@
             </ul>
             <p><strong>前期第9回の<code>list.html</code>を開き直す（10分）</strong></p>
             <ul>
-              <li>Codespacesで<code>list.html</code>を開く（第1回と同じ手順：<code>python3 -m http.server 8000</code> →「エディターでプレビュー」→ Simple Browser）</li>
+              <li><code>python3 -m http.server 8000</code> を起動し、第1回（前期）と同じ手順で「ポート」タブ→「エディターでプレビュー」→ Simple Browserを開く（表示されるのは<code>index.html</code>）</li>
+              <li><code>index.html</code>の「お気に入りリストを見る」リンクから<code>list.html</code>に移動する。<strong>リンクが見当たらない場合は、アドレスバーの末尾だけを<code>/list.html</code>に書き換えてEnter</strong></li>
               <li><code>favorites</code>配列（文字列の配列）と、<code>for</code>文で<code>&lt;li&gt;</code>を並べる仕組みを見直す</li>
             </ul>
             <p><strong>「もっと情報を持たせたい」という要求から限界を体感する（20分）</strong></p>
@@ -162,7 +163,7 @@ console.log(me.hobby);         // "読書"</code></pre>
             </ul>
             <p><strong><code>list.html</code>の<code>favorites</code>配列を書き換える（30分）</strong></p>
             <ul>
-              <li>現在の<code>favorites</code>（文字列の配列）：
+              <li>前期第9回のテンプレ例（<code>favorites</code>は文字列の配列だった。すでに自分の項目に書き換え済みの人は、以下は「型」として読み、自分の項目でそのまま置き換えて考える）：
                 <pre><code>const favorites = [
   "好きな食べ物：カレー",
   "好きな色：青",
@@ -170,7 +171,7 @@ console.log(me.hobby);         // "読書"</code></pre>
   "好きな場所：図書館"
 ];</code></pre>
               </li>
-              <li>これを<strong>オブジェクトの配列</strong>に書き換える：
+              <li>各要素を<strong>オブジェクト</strong>に包み、<strong>オブジェクトの配列</strong>に書き換える（自分の項目がある人は、その内容で同じ形に変換する）：
                 <pre><code>const favorites = [
   { category: "好きな食べ物", value: "カレー" },
   { category: "好きな色",     value: "青" },
@@ -178,7 +179,7 @@ console.log(me.hobby);         // "読書"</code></pre>
   { category: "好きな場所",   value: "図書館" }
 ];</code></pre>
               </li>
-              <li><code>for</code>文の中身も、配列の要素（オブジェクト）のプロパティにドット記法でアクセスする形に書き換える：
+              <li><code>for</code>文の中身も、配列の要素（オブジェクト）のプロパティにドット記法でアクセスする形に書き換える。<code>` `</code>（バッククォート）で囲み中に<code>${ }</code>で値を埋め込む書き方を<strong>テンプレートリテラル</strong>と呼ぶ——複数のプロパティを1つの文字列に組み立てるときに便利：
                 <pre><code>const ul = document.getElementById("favorite-list");
 
 for (let i = 0; i &lt; favorites.length; i++) {
@@ -187,7 +188,7 @@ for (let i = 0; i &lt; favorites.length; i++) {
   ul.appendChild(li);
 }</code></pre>
               </li>
-              <li>保存してSimple Browserを更新——前期と同じ見た目（4項目の箇条書き）が表示されれば成功。<strong>データの持ち方を変えても、表示結果は変えられる</strong>ことを確認</li>
+              <li>保存してSimple Browserを更新——書き換え前と同じ見た目（箇条書き）が表示されれば成功。<strong>データの持ち方を変えても、表示結果は変えられる</strong>ことを確認</li>
               <li>うまく動かないときはF12→Consoleタブ。よくあるエラー：<code>favorites[i].category</code>のスペルミス、テンプレートリテラル（バッククォート<code>` `</code>）の閉じ忘れ</li>
             </ul>
             <p><strong>プロパティを1つ増やしてみる（10分）</strong></p>
@@ -207,10 +208,10 @@ for (let i = 0; i &lt; favorites.length; i++) {
           </div>
           <h3>自分のオブジェクトの配列に発展させる演習</h3>
           <div class="timeline-body">
-            <p><strong>自分の項目に書き換える</strong></p>
+            <p><strong>各項目に<code>reason</code>を追加し、項目数を整える</strong></p>
             <ul>
-              <li>テンプレの4項目を<strong>自分自身のお気に入り</strong>に書き換える（4〜6項目程度、それぞれ<code>reason</code>も添える）</li>
-              <li>項目数を変えても<code>for</code>文が<code>favorites.length</code>で自動追従することを、前期第9回同様に確認する</li>
+              <li>自分の<code>favorites</code>（前期第9回で書き換え済みの項目、またはテンプレのまま作業していた人は自分自身のお気に入りに書き換える）の<strong>各オブジェクトに<code>reason</code>プロパティを追加</strong>する</li>
+              <li>項目数が4〜6個になるよう調整する（<code>for</code>文は<code>favorites.length</code>で自動追従するので、項目を増減しても<code>for</code>文側を直す必要はない）</li>
             </ul>
             <p><strong>余裕があれば：プロパティをもう1つ増やす</strong></p>
             <ul>
@@ -229,7 +230,7 @@ for (let i = 0; i &lt; favorites.length; i++) {
           <div class="timeline-body">
             <ul>
               <!-- 親ページ program-basics-2.html Week 3 「データを扱う基礎②：フォーム入力を受け取る」と同期 -->
-              <li>次回（第3回）: <strong>データを扱う基礎②：フォーム入力を受け取る</strong>——<code>&lt;input&gt;</code>要素から値を取得し、ユーザーの入力でオブジェクトの配列を増やす方法を学ぶ</li>
+              <li>次回（第3回）: <strong>データを扱う基礎②：フォーム入力を受け取る</strong>——<code>&lt;input&gt;</code>要素から値を取得する方法、簡単なバリデーション。ユーザーの入力に応じて画面を変化させる練習</li>
               <li>今日のキーワード「<strong>オブジェクト<code>{ }</code></strong>」「<strong>ドット記法</strong>」「<strong>オブジェクトの配列</strong>」を口に出して言えるか確認して退出</li>
             </ul>
           </div>
