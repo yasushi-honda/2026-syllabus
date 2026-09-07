@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第2回 データを扱う基礎①：オブジェクトと配列の発展 | プログラム基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=4">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--blue">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../program-basics-2.html">プログラム基礎 II</a>
+        <span>/</span>
+        <span>第2回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">データを扱う基礎①：<wbr>オブジェクトと配列の発展</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 2</span>
+            <span class="page-badge">火曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">複数の情報をひとまとめにする<strong>オブジェクト</strong>の書き方を学ぶ。前期第9回で作った<code>list.html</code>の配列（<code>favorites</code>）を、文字列の配列から<strong>オブジェクトの配列</strong>に発展させる</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">オブジェクト / プロパティ（キーと値） / ドット記法 / オブジェクトの配列 / テンプレートリテラル / <code>for</code>文との組み合わせ</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">前期第9回で公開した<code>list.html</code>（<code>favorites</code>配列でお気に入りをリスト表示するページ）にアクセスできる状態</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li><strong>オブジェクト</strong>が「複数の情報をひとつの変数にまとめる入れ物」であることを自分の言葉で説明できる</li>
+        <li><code>{ key: value }</code>の書き方でオブジェクトを宣言し、<strong>ドット記法</strong>（<code>obj.key</code>）でプロパティを取り出せる</li>
+        <li>配列の中にオブジェクトを複数入れる<strong>「オブジェクトの配列」</strong>を書ける</li>
+        <li><code>for</code>文と組み合わせて、オブジェクトの配列の中身を画面にリスト表示できる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>「バラバラの変数」の限界を体感する → オブジェクトの必要性に気づく</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り（10分）</strong></p>
+            <ul>
+              <li>前期に公開した3作品（プロフィールサイト・小ゲーム・インタラクティブ作品）と、後期のゴール（ゲーム制作 or ECサイト制作）を思い出す</li>
+              <li>今日は後期で使う新しい道具「オブジェクト」を学ぶ回であることを確認</li>
+            </ul>
+            <p><strong>前期第9回の<code>list.html</code>を開き直す（10分）</strong></p>
+            <ul>
+              <li><code>python3 -m http.server 8000</code> を起動し、第1回（前期）と同じ手順で「ポート」タブ→「エディターでプレビュー」→ Simple Browserを開く（表示されるのは<code>index.html</code>）</li>
+              <li><code>index.html</code>の「お気に入りリストを見る」リンクから<code>list.html</code>に移動する。<strong>リンクが見当たらない場合は、アドレスバーの末尾だけを<code>/list.html</code>に書き換えてEnter</strong></li>
+              <li><code>favorites</code>配列（文字列の配列）と、<code>for</code>文で<code>&lt;li&gt;</code>を並べる仕組みを見直す</li>
+            </ul>
+            <p><strong>「もっと情報を持たせたい」という要求から限界を体感する（20分）</strong></p>
+            <ul>
+              <li>「好きな食べ物：カレー」という文字列だけでなく、<strong>「なぜ好きか」という理由も一緒に持たせたい</strong>とする</li>
+              <li>素朴に試すなら、文字列を長くする（<code>"好きな食べ物：カレー（理由：辛いから）"</code>）か、<strong>別々の変数に分ける</strong>（<code>food1</code>, <code>reason1</code>, <code>food2</code>, <code>reason2</code>...）しかない</li>
+              <li>前期第9回で「同じことを10回書くのは面倒」と感じてfor文にたどり着いたのと同じように、「<strong>1つのものに複数の情報をまとめて持たせたい</strong>」という感覚が、今日学ぶオブジェクトが登場する理由</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>配列は「同じ種類の物の集まり」、オブジェクトは「1つの物が持つ複数の情報」:</strong> <code>favorites</code>配列は「お気に入りの一覧」という同じ種類の集まりでした。今日学ぶオブジェクトは、「1つのお気に入り」が持つ「カテゴリ」「内容」「理由」のような<strong>複数の情報をひとまとめ</strong>にする書き方です。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>オブジェクトの基本を手で書く</h3>
+          <div class="timeline-body">
+            <p><strong>オブジェクトの書き方（15分）</strong></p>
+            <ul>
+              <li>オブジェクトは<strong>波括弧<code>{ }</code></strong>で「キー：値」の組を並べて書く。F12の Console タブに直接打ち込んで確認する：
+                <pre><code>const me = {
+  name: "本田 太郎",
+  favoriteColor: "青",
+  hobby: "読書"
+};
+
+console.log(me.name);          // "本田 太郎"
+console.log(me.favoriteColor); // "青"
+console.log(me.hobby);         // "読書"</code></pre>
+              </li>
+              <li>注意点3つ：
+                <ul>
+                  <li><strong>キー（<code>name</code>など）はクォート不要</strong>、値が文字列なら<code>""</code>で囲む</li>
+                  <li>プロパティの取り出しは<strong>ドット記法 <code>obj.key</code></strong>——配列の<code>arr[0]</code>とは書き方が違う</li>
+                  <li>キーと値の組の<strong>数はいくつでもよい</strong>（1個でも10個でも）</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>プロパティを書き換える（10分）</strong></p>
+            <ul>
+              <li><code>me.hobby = "映画鑑賞";</code>のように<strong>代入で書き換えられる</strong>ことを確認</li>
+              <li><code>console.log(me);</code>でオブジェクト全体をログに出し、Consoleの表示（<code>{name: "...", favoriteColor: "...", hobby: "..."}</code>）を観察</li>
+            </ul>
+            <p><strong>演習：自分の自己紹介オブジェクトを作る（25分）</strong></p>
+            <ul>
+              <li>F12のConsoleで、<strong>自分自身</strong>を表すオブジェクトを作る。プロパティは最低4つ（例：<code>name</code>, <code>favoriteColor</code>, <code>hobby</code>, <code>dream</code>など自由に）</li>
+              <li>作ったら<code>console.log(自分の変数名.プロパティ名)</code>で1つずつ取り出して表示できるか確認</li>
+              <li>個人情報（本名・住所・電話番号）は書かない原則は授業共通。「クラスメイトに見せてもOKな範囲」で書く</li>
+              <li>ペアで画面を見せ合い、相手のオブジェクトから1つプロパティを読み上げてもらう（任意）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3><code>list.html</code>を「オブジェクトの配列」に発展させる</h3>
+          <div class="timeline-body">
+            <p><strong>「配列の中にオブジェクトを入れる」という発想（10分）</strong></p>
+            <ul>
+              <li>配列は「同じ種類の物」を並べる入れ物。<strong>その1つ1つをオブジェクトにする</strong>と、「情報が複数ある物の一覧」が作れる</li>
+              <li>これが<strong>「オブジェクトの配列」</strong>——ゲーム制作でもECサイト制作でも、後期の作品づくりで繰り返し使う形</li>
+            </ul>
+            <p><strong><code>list.html</code>の<code>favorites</code>配列を書き換える（30分）</strong></p>
+            <ul>
+              <li>前期第9回のテンプレ例（<code>favorites</code>は文字列の配列だった。すでに自分の項目に書き換え済みの人は、以下は「型」として読み、自分の項目でそのまま置き換えて考える）：
+                <pre><code>const favorites = [
+  "好きな食べ物：カレー",
+  "好きな色：青",
+  "好きな音楽：J-POP",
+  "好きな場所：図書館"
+];</code></pre>
+              </li>
+              <li>各要素を<strong>オブジェクト</strong>に包み、<strong>オブジェクトの配列</strong>に書き換える（自分の項目がある人は、その内容で同じ形に変換する）：
+                <pre><code>const favorites = [
+  { category: "好きな食べ物", value: "カレー" },
+  { category: "好きな色",     value: "青" },
+  { category: "好きな音楽",   value: "J-POP" },
+  { category: "好きな場所",   value: "図書館" }
+];</code></pre>
+              </li>
+              <li><code>for</code>文の中身も、配列の要素（オブジェクト）のプロパティにドット記法でアクセスする形に書き換える。<code>` `</code>（バッククォート）で囲み中に<code>${ }</code>で値を埋め込む書き方を<strong>テンプレートリテラル</strong>と呼ぶ——複数のプロパティを1つの文字列に組み立てるときに便利：
+                <pre><code>const ul = document.getElementById("favorite-list");
+
+for (let i = 0; i &lt; favorites.length; i++) {
+  const li = document.createElement("li");
+  li.textContent = `${favorites[i].category}：${favorites[i].value}`;
+  ul.appendChild(li);
+}</code></pre>
+              </li>
+              <li>保存してSimple Browserを更新——書き換え前と同じ見た目（箇条書き）が表示されれば成功。<strong>データの持ち方を変えても、表示結果は変えられる</strong>ことを確認</li>
+              <li>うまく動かないときはF12→Consoleタブ。よくあるエラー：<code>favorites[i].category</code>のスペルミス、テンプレートリテラル（バッククォート<code>` `</code>）の閉じ忘れ</li>
+            </ul>
+            <p><strong>プロパティを1つ増やしてみる（10分）</strong></p>
+            <ul>
+              <li>各オブジェクトに<code>reason</code>（理由）プロパティを追加：
+                <pre><code>{ category: "好きな食べ物", value: "カレー", reason: "辛いものが好きだから" }</code></pre>
+              </li>
+              <li><code>li.textContent</code>の中身も<code>reason</code>を含む形に書き換えて表示を確認する</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>自分のオブジェクトの配列に発展させる演習</h3>
+          <div class="timeline-body">
+            <p><strong>各項目に<code>reason</code>を追加し、項目数を整える</strong></p>
+            <ul>
+              <li>自分の<code>favorites</code>（前期第9回で書き換え済みの項目、またはテンプレのまま作業していた人は自分自身のお気に入りに書き換える）の<strong>各オブジェクトに<code>reason</code>プロパティを追加</strong>する</li>
+              <li>項目数が4〜6個になるよう調整する（<code>for</code>文は<code>favorites.length</code>で自動追従するので、項目を増減しても<code>for</code>文側を直す必要はない）</li>
+            </ul>
+            <p><strong>余裕があれば：プロパティをもう1つ増やす</strong></p>
+            <ul>
+              <li>例：<code>emoji</code>プロパティ（絵文字1文字）を追加し、<code>li.textContent</code>の先頭に表示してみる</li>
+              <li>「オブジェクトのプロパティはいくつでも自由に増やせる」ことを体感する</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ program-basics-2.html Week 3 「データを扱う基礎②：フォーム入力を受け取る」と同期 -->
+              <li>次回（第3回）: <strong>データを扱う基礎②：フォーム入力を受け取る</strong>——<code>&lt;input&gt;</code>要素から値を取得する方法、簡単なバリデーション。ユーザーの入力に応じて画面を変化させる練習</li>
+              <li>今日のキーワード「<strong>オブジェクト<code>{ }</code></strong>」「<strong>ドット記法</strong>」「<strong>オブジェクトの配列</strong>」を口に出して言えるか確認して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>list.html</code>をオブジェクトの配列版に書き換えてpushする</strong>
+            <p>授業内で完成しなかった人は家で仕上げ、4〜6項目それぞれに<code>category</code>・<code>value</code>・<code>reason</code>を持たせた状態で公開URLを更新する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>家でプロパティをもう1つ増やしてみる</strong>
+            <p><code>emoji</code>など自由なプロパティを1つ追加し、表示に反映されるか確認する。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/Object_initializer" target="_blank" rel="noopener">MDN — オブジェクト初期化子</a> — 今日学んだ<code>{ key: value }</code>の書き方の公式リファレンス</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/Property_accessors" target="_blank" rel="noopener">MDN — プロパティアクセサー</a> — ドット記法（<code>obj.key</code>）とブラケット記法（<code>obj["key"]</code>）の公式リファレンス</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week01.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第1回 前期振り返り＆後期オリエンテーション</span>
+      </a>
+      <a href="../program-basics-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">プログラム基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第3回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
