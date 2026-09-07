@@ -92,6 +92,7 @@ program-basics-2/       # プログラム基礎Ⅱ の各回詳細ページ
 ai-communication-2.html # AIコミュニケーション基礎Ⅱ（火3・4限／後期。授業内容確定済み、週ページ順次作成中）
 ai-communication-2/     # AIコミュニケーション基礎Ⅱ の各回詳細ページ
   week01.html           #   第1回 前期振り返り＆後期オリエンテーション
+  week02.html           #   第2回 Gemini Notebookで自分のAIをさらに育てる
 it-passport-technology.html   # ITパスポート テクノロジー系（水1・2限／後期。授業内容確定済み、週ページ未作成）
 system-dev-practice-a2.html   # システム開発実習AⅡ（水3・4限／後期。新設科目、枠組みのみ）
 ai-programming-2.html   # AI活用プログラミング基礎Ⅱ（木1・2限／後期。授業内容確定済み、週ページ順次作成中）

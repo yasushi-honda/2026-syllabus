@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第2回 Gemini Notebookで自分のAIをさらに育てる | AIコミュニケーション基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=4">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication-2.html">AIコミュニケーション基礎 II</a>
+        <span>/</span>
+        <span>第2回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">Gemini Notebookで<wbr>自分のAIを<wbr>さらに育てる</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 2</span>
+            <span class="page-badge">火曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">前期は「カスタム指示」欄に性格・話し方を自由記述した。今日は<strong>チャットを設定</strong>から選べる<strong>会話スタイル（デフォルト／学習ガイド／カスタム）</strong>と<strong>回答の長さ</strong>、<strong>ソースの選択的な参照</strong>を使いこなし、自分のAIをより高度に育てる</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">チャットを設定 / 会話スタイル（デフォルト・学習ガイド・カスタム） / 回答の長さ / ソースの選択的参照</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">前期に育てたGemini Notebook（旧NotebookLM）にアクセスでき、<strong>【学習データ①〜⑬】</strong>がソースに入っている状態</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>Gemini Notebookの<strong>「チャットを設定」</strong>画面から会話スタイルを切り替えられる</li>
+        <li>3つの会話スタイル（<strong>デフォルト・学習ガイド・カスタム</strong>）の違いを、実際の応答を比較して説明できる</li>
+        <li>回答の長さ（デフォルト／長め／短め）を目的に応じて選べる</li>
+        <li>複数ソースがある状態で、<strong>特定のソースだけを選択</strong>してチャットに答えさせられる</li>
+        <li>「Gemini Notebookの回答はソースに含まれる内容のみに基づく」という仕組みを体感する</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の振り返り＋前期の「カスタム指示」を思い出す</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り（10分）</strong></p>
+            <ul>
+              <li>第1回で確認した「Gemini Notebookへの改称」「チャット型AI／エージェント型AI」の違いを一言ずつ振り返る</li>
+              <li>自分のGemini Notebookを開き、<strong>【学習データ①〜⑬】</strong>がソースに残っていることを確認</li>
+            </ul>
+            <p><strong>前期の「カスタム指示」を思い出す（15分）</strong></p>
+            <ul>
+              <li>前期第2回で、AIに「名前・性格・話し方」を設定した<strong>カスタム指示欄</strong>を開き直す</li>
+              <li>自分が書いた内容（呼び名・話し方の希望）を読み返し、半年前の自分がどんな設定をしたかを振り返る</li>
+              <li>今日は、このカスタム指示欄をさらに使いこなす<strong>もう一段上の方法</strong>を学ぶ、という位置づけを共有する</li>
+            </ul>
+            <p><strong>今日の全体像を知る（15分）</strong></p>
+            <ul>
+              <li>前期に書いた自由記述は、実は<strong>「チャットを設定」</strong>という画面にある<strong>カスタム</strong>スタイルの入力欄に書いていたもの。今日はこの画面全体を開き、カスタムを含む<strong>3つの会話スタイル</strong>を使い分ける（公式: Google Gemini Notebook ヘルプ「Gemini Notebook でチャットを使用する」）</li>
+              <li>今日はこの「チャットを設定」画面と、<strong>ソースを選んでチャットに使う</strong>方法の2本立てで、自分のAIをさらに育てる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>「チャットを設定」で会話スタイルと回答の長さを試す</h3>
+          <div class="timeline-body">
+            <p><strong>「チャットを設定」画面を開く（15分）</strong></p>
+            <ul>
+              <li>Gemini Notebookのチャットパネルから<strong>「チャットを設定」</strong>を開く（公式の操作位置。UIは随時更新されるため、授業当日に一緒に確認する）</li>
+              <li>選べる<strong>3つの会話スタイル</strong>（公式の説明）:
+                <ul>
+                  <li><strong>デフォルト</strong>: 一般的なリサーチやブレインストーミングに最適</li>
+                  <li><strong>学習ガイド</strong>: 教育コンテンツに最適。新しい概念を効率よく理解し、スキルを習得するのに役立つ</li>
+                  <li><strong>カスタム</strong>: 特定のスタイルを選択する場合や、役割を提案する場合に最適——前期に使った自由記述はこのスタイルにあたる</li>
+                </ul>
+              </li>
+              <li>あわせて<strong>回答の長さ</strong>（デフォルト／長め／短め）も選べることを確認</li>
+              <li>スタイルと長さを選んだら、<strong>必ず[保存]を選択する</strong>（公式手順の最後のステップ。保存しないと切り替えが反映されない）</li>
+            </ul>
+            <p><strong>同じ質問で3つのスタイルを比較する（30分）</strong></p>
+            <ul>
+              <li>自分の【学習データ】のどれか1つを題材に、<strong>同じ質問</strong>を3つのスタイルそれぞれで投げてみる:
+                <pre><code>この資料の内容を、要点を押さえて説明してください</code></pre>
+              </li>
+              <li>①<strong>デフォルト</strong>を選んで保存 → 質問して応答をメモ</li>
+              <li>②<strong>学習ガイド</strong>に切り替えて保存 → 同じ質問をして応答をメモ（質問し返してくる、段階的に説明する等の違いに注目）</li>
+              <li>③<strong>カスタム</strong>（前期に自分が設定した内容）に切り替えて保存 → 同じ質問をして応答をメモ</li>
+              <li>回答の長さも「長め」「短め」で1回ずつ試し、同じスタイルでも長さでどう変わるか観察する</li>
+              <li>3つを見比べて、「<strong>自分のAIをどんな目的で使いたいか</strong>」によってスタイルを使い分けられることに気づく</li>
+            </ul>
+            <p><strong>設定を保存して反映を確認する（5分）</strong></p>
+            <ul>
+              <li>最後に使いたいスタイルへ戻して<strong>[保存]</strong>——保存を忘れると次回起動時に元のスタイルに戻ってしまう</li>
+              <li>チャットパネルを一度閉じて開き直し、選んだスタイルが保持されているか確認する</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「学習ガイド」は勉強のための会話スタイル:</strong> 公式に「教育コンテンツに最適」と説明されている通り、学習ガイドは新しい概念を理解する場面に向いています。逆に、自分のキャラクター（前期に設定した話し方）を保ちたいときは<strong>カスタム</strong>のままでよい——場面によって使い分けるのがポイントです。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>ソースを選択して「聞きたい範囲」を絞り込む</h3>
+          <div class="timeline-body">
+            <p><strong>「ソースのみに基づく」という仕組みを再確認（10分）</strong></p>
+            <ul>
+              <li>Gemini Notebookの回答は<strong>ノートブックに投入したソースに含まれる内容のみ</strong>に基づく（公式の説明）。ウェブ検索やその他のツールも参照するGeminiアプリとは、この点が異なる</li>
+              <li>ソースにない内容を聞くと「この質問には答えられません」等と返ってくることがある——これは<strong>不具合ではなく仕様</strong>であることを確認</li>
+            </ul>
+            <p><strong>特定のソースだけを選んで質問する（30分）</strong></p>
+            <ul>
+              <li>[ソース]パネルで、<strong>【学習データ】を1〜2件だけチェック</strong>し、他のソースのチェックを外す（公式の操作: ソースパネルでソースを個別に選択するとチャットに使うソースを絞り込める）</li>
+              <li>その状態で質問:
+                <pre><code>今チェックしているソースの内容だけをもとに、
+要点を3つ教えてください</code></pre>
+              </li>
+              <li>次に<strong>全ソースのチェックを戻して</strong>同じ質問をし、応答の範囲がどう変わるかを比較する</li>
+              <li>観察ポイント: ソースを絞ると<strong>その資料に書いていないことは出てこなくなる</strong>——「情報を絞り込む」ことがAIとの対話でも有効な整理術であることに気づく</li>
+            </ul>
+            <p><strong>使いどころを考える（10分）</strong></p>
+            <ul>
+              <li>「たくさんソースがある状態で、特定の資料についてだけ深掘りしたいとき」にソース選択が便利、という場面をペアで1つ挙げてみる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>自分のAIの設定を選び直す</h3>
+          <div class="timeline-body">
+            <p><strong>今の自分に合うスタイルを選ぶ</strong></p>
+            <ul>
+              <li>1限後半で比較した3つのスタイルから、<strong>今の自分に一番合うもの</strong>を1つ選んで設定する</li>
+              <li><strong>カスタム</strong>を選んだ場合は、前期に書いた指示文を読み返し、必要なら書き足す・書き換える（「もっと簡潔に」「もっと質問し返してほしい」等）</li>
+            </ul>
+            <p><strong>選んだ理由を言語化する</strong></p>
+            <ul>
+              <li>「なぜそのスタイルを選んだか」を1〜2文でメモに残す——後日、別のスタイルを試すときの比較材料になる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ ai-communication-2.html Week 3 「GitHub Codespaces入門①」と同期 -->
+              <li>次回（第3回）: <strong>GitHub Codespaces入門①</strong>——アカウント確認・起動・基本操作。ターミナルに触れる第一歩</li>
+              <li>今日のキーワード「<strong>チャットを設定</strong>」「<strong>学習ガイド</strong>」「<strong>ソースの選択的参照</strong>」を口に出して言えるか確認して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>「チャットを設定」で会話スタイルを1つ選び、選んだ理由をメモに残す</strong>
+            <p>デフォルト・学習ガイド・カスタムのいずれかを選択し、「なぜそれを選んだか」を1〜2文で言語化する。次回、他の学生と見せ合える状態にしておく。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>ソースを選択して質問した結果を1回記録する</strong>
+            <p>特定のソースだけをチェックして質問した結果と、全ソースで質問した結果の違いを1〜2行でメモする。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>公式ヘルプ「Gemini Notebook でチャットを使用する」を眺める</strong>
+            <p>下記の参考リンクから公式ヘルプを開き、授業で触れなかった機能を1つ見つけてメモする。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://support.google.com/gemininotebook/answer/16179559?hl=ja" target="_blank" rel="noopener">Gemini Notebook ヘルプ — Gemini Notebook でチャットを使用する</a> — 会話スタイル（デフォルト・学習ガイド・カスタム）と回答の長さの公式説明</li>
+        <li><a href="https://support.google.com/gemininotebook/answer/16215270?hl=ja" target="_blank" rel="noopener">Gemini Notebook ヘルプ — ノートブックの新しいソースを追加または検索する</a> — ソースの追加・管理・選択に関する公式説明</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week01.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第1回 前期振り返り＆後期オリエンテーション</span>
+      </a>
+      <a href="../ai-communication-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AIコミュニケーション基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第3回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
