@@ -40,11 +40,11 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">前期は「カスタム指示」欄に性格・話し方を自由記述した。今日は<strong>チャットを設定</strong>から選べる<strong>会話スタイル（デフォルト／学習ガイド／カスタム）</strong>と<strong>回答の長さ</strong>、<strong>ソースの選択的な参照</strong>を使いこなし、自分のAIをより高度に育てる</div>
+          <div class="lesson-overview-value">前期は「カスタム指示」欄に性格・話し方を自由記述した。今日は<strong>チャットを設定</strong>から選べる<strong>会話スタイル（デフォルト／学習ガイド／カスタム）</strong>と<strong>回答の長さ</strong>、<strong>ソースの選択的な参照</strong>を使いこなす。後半は、そこで磨いた「伝え方」を使って<strong>第5回でagyに渡す指示文</strong>をNotebookに相談しながら下書きし、チャット型AIからエージェント型AIへの橋渡しをする</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">チャットを設定 / 会話スタイル（デフォルト・学習ガイド・カスタム） / 回答の長さ / ソースの選択的参照</div>
+          <div class="lesson-overview-value">チャットを設定 / 会話スタイル（デフォルト・学習ガイド・カスタム） / 回答の長さ / ソースの選択的参照 / agyへの指示メモ</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
@@ -61,6 +61,7 @@
         <li>回答の長さ（デフォルト／長め／短め）を目的に応じて選べる</li>
         <li>複数ソースがある状態で、<strong>特定のソースだけを選択</strong>してチャットに答えさせられる</li>
         <li>「Gemini Notebookの回答はソースに含まれる内容のみに基づく」という仕組みを体感する</li>
+        <li>第5回でagyに渡す指示文を、Gemini Notebookに相談しながら下書きできる</li>
       </ul>
     </div>
 
@@ -179,17 +180,32 @@
             <span class="timeline-time">2限 後半</span>
             <span class="timeline-duration">約30分</span>
           </div>
-          <h3>自分のAIの設定を選び直す</h3>
+          <h3>今日のNotebookを、来週以降agyに渡す「指示メモ」づくりに使う</h3>
           <div class="timeline-body">
-            <p><strong>今の自分に合うスタイルを選ぶ</strong></p>
+            <p><strong>今日と第5回のつながりを共有する（5分）</strong></p>
             <ul>
-              <li>1限後半で比較した3つのスタイルから、<strong>今の自分に一番合うもの</strong>を1つ選んで設定する</li>
-              <li><strong>カスタム</strong>を選んだ場合は、前期に書いた指示文を読み返し、必要なら書き足す・書き換える（「もっと簡潔に」「もっと質問し返してほしい」等）</li>
+              <li>第5回「AIエージェントに指示する①」では、agyに向けて自然言語で「こういうものを作って」と伝える活動を行う。<strong>曖昧な指示と明確な指示でagyの動きがどう変わるか</strong>を、後期を通じて確認していく</li>
+              <li>今日の後半は、その「<strong>明確な指示</strong>」を先取りして練習する時間——チャット型AIのGemini Notebookに相談しながら、<strong>エージェント型AIのagyに渡す指示文</strong>を下書きする</li>
             </ul>
-            <p><strong>選んだ理由を言語化する</strong></p>
+            <p><strong>Notebookに相談しながら指示文を練る（20分）</strong></p>
             <ul>
-              <li>「なぜそのスタイルを選んだか」を1〜2文でメモに残す——後日、別のスタイルを試すときの比較材料になる</li>
+              <li>第5回でagyに作ってほしい<strong>簡単なWebページ</strong>（例: 自己紹介ページ、好きなものの一覧ページなど自由）を思い浮かべる</li>
+              <li>Gemini Notebookのチャット（今日設定した<strong>学習ガイド</strong>または<strong>カスタム</strong>、好きなスタイルでよい）に相談する:
+                <pre><code>GitHub Codespaces上のAIエージェントに「簡単なWebページを
+作って」と頼むとき、曖昧にならないように指示文を考えたい
+です。私が作りたいのは（作りたいものを説明）です。
+この内容を、エージェントに伝わりやすい指示文に整えてください</code></pre>
+              </li>
+              <li>返ってきた提案を読み、<strong>自分の言葉で1つの指示文</strong>に確定させる（Notebookの提案をそのまま丸写しにせず、自分が納得する表現に直す）</li>
             </ul>
+            <p><strong>「agyへの指示メモ」として保存する（5分）</strong></p>
+            <ul>
+              <li>Googleドキュメントを新規作成し、ファイル名を<code>agyへの指示メモ</code>にして指示文を貼り付け保存する</li>
+              <li>第5回まで削除せずに残しておく——今日の自分が、数週間後の自分に指示文を手渡す形になる</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「AIに相談しながら指示を練る→別のAIに実際に渡す」という型:</strong> 今日はGemini Notebookを「考えをまとめる相棒」として使いました。第5回では、この指示文を今度は自分の手でagyに直接渡します。チャット型AIとエージェント型AIを役割分担で使い分けるこの流れは、後期を通じて繰り返し登場します。
+            </div>
           </div>
         </div>
 
@@ -203,7 +219,8 @@
             <ul>
               <!-- 親ページ ai-communication-2.html Week 3 「GitHub Codespaces入門①」と同期 -->
               <li>次回（第3回）: <strong>GitHub Codespaces入門①</strong>——アカウント確認・起動・基本操作。ターミナルに触れる第一歩</li>
-              <li>今日のキーワード「<strong>チャットを設定</strong>」「<strong>学習ガイド</strong>」「<strong>ソースの選択的参照</strong>」を口に出して言えるか確認して退出</li>
+              <li>「agyへの指示メモ」は<strong>第5回まで手元に保管</strong>しておく</li>
+              <li>今日のキーワード「<strong>チャットを設定</strong>」「<strong>学習ガイド</strong>」「<strong>ソースの選択的参照</strong>」「<strong>agyへの指示メモ</strong>」を口に出して言えるか確認して退出</li>
             </ul>
           </div>
         </div>
@@ -226,6 +243,13 @@
           <div>
             <strong>ソースを選択して質問した結果を1回記録する</strong>
             <p>特定のソースだけをチェックして質問した結果と、全ソースで質問した結果の違いを1〜2行でメモする。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>「agyへの指示メモ」を完成させ、Googleドキュメントに保存しておく</strong>
+            <p>授業内で書ききれなかった人は家で仕上げる。第5回「AIエージェントに指示する①」で実際に使うので、削除せず手元に残しておくこと。</p>
           </div>
         </div>
         <div class="lesson-task">
