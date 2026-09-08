@@ -88,7 +88,7 @@
               <li><code>favorites</code>配列（文字列の配列）と、<code>for</code>文で<code>&lt;li&gt;</code>を並べる仕組みを見直す</li>
             </ul>
             <div class="lesson-tip">
-              <strong>前期「プログラム基礎 I」を受けていない人・<code>list.html</code>が見当たらない人へ:</strong> 下のテンプレートをコピーして、リポジトリのルートに新規ファイル<code>list.html</code>を作成してください（手順は前期第9回と同じ——ファイル一覧で右クリック→New File）。中身は前期の受講者が第9回で作った状態と同じ「文字列の配列を<code>for</code>文でリスト表示するページ」です。保存してSimple Browserで開き、4項目の箇条書きが表示されればOK——これを土台に、このあとの手順を一緒に進められます。GitHubリポジトリ自体がまだない場合は、先に担当教員に声をかけてください。
+              <strong>前期「プログラム基礎 I」を受けていない人・<code>list.html</code>が見当たらない人へ:</strong> 下のテンプレートをコピーして、リポジトリのルートに新規ファイル<code>list.html</code>を作成してください（手順は前期第9回と同じ——ファイル一覧で右クリック→New File）。中身は前期の受講者が第9回で作った表示の仕組み（文字列の配列を<code>for</code>文でリスト表示するページ）と同じです（装飾用の<code>style.css</code>の読み込みは含みません）。保存したら、Simple Browserで<code>index.html</code>を開き直し、<strong>アドレスバーの末尾だけを<code>/list.html</code>に書き換えてEnter</strong>——4項目の箇条書きが表示されればOK。最後に、自分の<code>index.html</code>に<code>&lt;p&gt;&lt;a href="list.html"&gt;お気に入りリストを見る&lt;/a&gt;&lt;/p&gt;</code>を1行追加しておくと（前期第9回で履修者が行ったのと同じ手順）、以降はリンクからも<code>list.html</code>に辿れて、課題で公開URLを提出するときにもトップページから見てもらえます。GitHubリポジトリ自体がまだない場合は、先に担当教員に声をかけてください。時間内に終わらなくても大丈夫——後半の演習時間で個別にフォローします。
             </div>
             <button class="copy-md-btn" data-md-source="list-html-starter-template">
               <span class="btn-icon"></span> list.htmlの雛形をコピー
@@ -104,6 +104,7 @@
   &lt;h1&gt;私のお気に入り&lt;/h1&gt;
   &lt;p&gt;配列に入れたものを &lt;code&gt;for&lt;/code&gt; 文で全部表示します&lt;/p&gt;
   &lt;ul id="favorite-list"&gt;&lt;/ul&gt;
+  &lt;p&gt;&lt;a href="index.html"&gt;トップに戻る&lt;/a&gt;&lt;/p&gt;
 
   &lt;script&gt;
     const favorites = [
