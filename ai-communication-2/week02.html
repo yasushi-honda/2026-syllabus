@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>第2回 Gemini Notebookで自分のAIをさらに育てる | AIコミュニケーション基礎 II</title>
+  <title>第2回 学習ガイドでAntigravity CLIを理解し、改めて使う | AIコミュニケーション基礎 II</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -24,7 +24,7 @@
       </nav>
       <div class="page-title-area">
         <div>
-          <h1 class="page-title">Gemini Notebookで<wbr>自分のAIを<wbr>さらに育てる</h1>
+          <h1 class="page-title">学習ガイドで理解する<wbr>Antigravity CLI</h1>
           <div class="page-meta-badges">
             <span class="page-badge">Week 2</span>
             <span class="page-badge">火曜 3・4限</span>
@@ -40,15 +40,15 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">前期は「カスタム指示」欄に性格・話し方を自由記述した。今日は<strong>チャットを設定</strong>から選べる<strong>会話スタイル（デフォルト／学習ガイド／カスタム）</strong>と<strong>回答の長さ</strong>、<strong>ソースの選択的な参照</strong>を使いこなす。後半は、そこで磨いた「伝え方」を使って<strong>第5回でagyに渡す指示文</strong>をNotebookに相談しながら下書きし、チャット型AIからエージェント型AIへの橋渡しをする</div>
+          <div class="lesson-overview-value">前回（第1回）、自分の手でCodespacesを起動し<strong>Antigravity CLI（agy）</strong>に一度触れた。今日はまずGemini Notebookに公式ドキュメントを追加し、<strong>会話スタイル「学習ガイド」</strong>で対話しながら「エージェント型AIとは何か」「なぜagyを使うのか」を理解する。後半は<strong>Codespacesを開き直し</strong>、理解した内容を意識しながらagyに改めて触れる</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">チャットを設定 / 会話スタイル（デフォルト・学習ガイド・カスタム） / 回答の長さ / ソースの選択的参照 / agyへの指示メモ</div>
+          <div class="lesson-overview-value">学習ガイド / ソースの追加（Webページ） / エージェント型AI / Antigravity CLI（agy） / Codespacesの再開（resume） / 概念と体験の往復</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
-          <div class="lesson-overview-value">前期に育てたGemini Notebook（旧NotebookLM）にアクセスでき、<strong>【学習データ①〜⑬】</strong>がソースに入っている状態</div>
+          <div class="lesson-overview-value">前期に育てたGemini Notebookにアクセスできる状態。前回（第1回）で自分の手で起動したCodespaces環境・使用したリポジトリにアクセスできる状態（見当たらない場合は担当教員に確認）</div>
         </div>
       </div>
     </div>
@@ -56,12 +56,12 @@
     <div class="syllabus-section">
       <h2>この回のゴール</h2>
       <ul>
-        <li>Gemini Notebookの<strong>「チャットを設定」</strong>画面から会話スタイルを切り替えられる</li>
-        <li>3つの会話スタイル（<strong>デフォルト・学習ガイド・カスタム</strong>）の違いを、実際の応答を比較して説明できる</li>
-        <li>回答の長さ（デフォルト／長め／短め）を目的に応じて選べる</li>
-        <li>複数ソースがある状態で、<strong>特定のソースだけを選択</strong>してチャットに答えさせられる</li>
-        <li>「Gemini Notebookの回答はソースに含まれる内容のみに基づく」という仕組みを体感する</li>
-        <li>第5回でagyに渡す指示文を、Gemini Notebookに相談しながら下書きできる</li>
+        <li>Gemini Notebookに<strong>新しいソース（Webページ）</strong>を追加できる</li>
+        <li>会話スタイルを<strong>「学習ガイド」</strong>に切り替え、本来の使い道（新しい概念の理解）で使える</li>
+        <li>学習ガイドとの対話を通じて、<strong>「Antigravity CLIとは何か」「チャット型AIとの違い」</strong>を自分の言葉で説明できる</li>
+        <li>Codespacesを<strong>再開（resume）</strong>し、agyがそのまま使える状態を確認できる（動かない場合のみ再インストール・再認証で対処できる）</li>
+        <li>学んだ概念を意識しながらagyに指示を出し、応答を観察できる</li>
+        <li>今日の気づきを「agyへの指示メモ」に反映できる（第5回で使用）</li>
       </ul>
     </div>
 
@@ -76,23 +76,22 @@
             <span class="timeline-time">1限 前半</span>
             <span class="timeline-duration">約40分</span>
           </div>
-          <h3>前回の振り返り＋前期の「カスタム指示」を思い出す</h3>
+          <h3>前回のagy体験を振り返り、今日の流れを知る</h3>
           <div class="timeline-body">
-            <p><strong>前回の振り返り（10分）</strong></p>
+            <p><strong>前回の振り返り（15分）</strong></p>
             <ul>
-              <li>第1回で確認した「Gemini Notebookへの改称」「チャット型AI／エージェント型AI」の違いを一言ずつ振り返る</li>
-              <li>自分のGemini Notebookを開き、<strong>【学習データ①〜⑬】</strong>がソースに残っていることを確認</li>
+              <li>第1回で実際にCodespacesを起動し、<strong>自分の手でagyに触れた</strong>体験を思い出す。動いた瞬間の感想（「すごい」「怖い」「よく分からない」等）をペアで共有</li>
+              <li>「なんとなく動かした」で終わっている人が大半のはず——今日はそこに<strong>「なぜそう動くのか」の理解</strong>を重ねる回であることを共有する</li>
             </ul>
-            <p><strong>前期の「カスタム指示」を思い出す（15分）</strong></p>
+            <p><strong>前期の「カスタム指示」を軽く思い出す（10分）</strong></p>
             <ul>
-              <li>前期第2回で、AIに「名前・性格・話し方」を設定した<strong>カスタム指示欄</strong>を開き直す</li>
-              <li>自分が書いた内容（呼び名・話し方の希望）を読み返し、半年前の自分がどんな設定をしたかを振り返る</li>
-              <li>今日は、このカスタム指示欄をさらに使いこなす<strong>もう一段上の方法</strong>を学ぶ、という位置づけを共有する</li>
+              <li>前期に設定した「チャットを設定」の<strong>カスタム指示欄</strong>を開き直し、半年前の自分がどんな設定をしたかを確認する（今日の主役ではないため短時間で済ませる）</li>
             </ul>
             <p><strong>今日の全体像を知る（15分）</strong></p>
             <ul>
-              <li>前期に書いた自由記述は、実は<strong>「チャットを設定」</strong>という画面にある<strong>カスタム</strong>スタイルの入力欄に書いていたもの。今日はこの画面全体を開き、カスタムを含む<strong>3つの会話スタイル</strong>を使い分ける（公式: Google Gemini Notebook ヘルプ「Gemini Notebook でチャットを使用する」）</li>
-              <li>今日はこの「チャットを設定」画面と、<strong>ソースを選んでチャットに使う</strong>方法の2本立てで、自分のAIをさらに育てる</li>
+              <li><strong>前半</strong>: Gemini Notebookに公式ドキュメントを新しいソースとして追加し、<strong>「学習ガイド」</strong>スタイルで対話しながらAntigravity CLIの仕組みを理解する</li>
+              <li><strong>後半</strong>: 理解した内容を持って、<strong>Codespacesでagyに改めて触れる</strong></li>
+              <li>「チャット型AIで理解を深めてから、エージェント型AIを使う」——この往復は後期を通じて繰り返す型であることを共有する</li>
             </ul>
           </div>
         </div>
@@ -102,40 +101,36 @@
             <span class="timeline-time">1限 後半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>「チャットを設定」で会話スタイルと回答の長さを試す</h3>
+          <h3>学習ガイドでAntigravity CLIを理解する</h3>
           <div class="timeline-body">
-            <p><strong>「チャットを設定」画面を開く（15分）</strong></p>
+            <p><strong>新しいソースを追加する（10分）</strong></p>
             <ul>
-              <li>Gemini Notebookのチャットパネルから<strong>「チャットを設定」</strong>を開く（公式の操作位置。UIは随時更新されるため、授業当日に一緒に確認する）</li>
-              <li>選べる<strong>3つの会話スタイル</strong>（公式の説明）:
-                <ul>
-                  <li><strong>デフォルト</strong>: 一般的なリサーチやブレインストーミングに最適</li>
-                  <li><strong>学習ガイド</strong>: 教育コンテンツに最適。新しい概念を効率よく理解し、スキルを習得するのに役立つ</li>
-                  <li><strong>カスタム</strong>: 特定のスタイルを選択する場合や、役割を提案する場合に最適——前期に使った自由記述はこのスタイルにあたる</li>
-                </ul>
+              <li>Gemini Notebookの[ソース]パネルで<strong>「追加」</strong>を選び、<strong>ウェブサイトのURL</strong>を貼り付けてソースとして取り込む（公式手順: Gemini Notebook ヘルプ「ノートブックの新しいソースを追加または検索する」）</li>
+              <li>追加するURL:
+                <pre><code>https://antigravity.google/docs/cli/overview</code></pre>
+                （公式: Antigravity CLI Overview——「なぜAntigravity CLIが必要か」「他ツールとの比較」がまとまっている）
               </li>
-              <li>あわせて<strong>回答の長さ</strong>（デフォルト／長め／短め）も選べることを確認</li>
-              <li>スタイルと長さを選んだら、<strong>必ず[保存]を選択する</strong>（公式手順の最後のステップ。保存しないと切り替えが反映されない）</li>
+              <li>取り込み完了後、[ソース]一覧に新しいソースが表示されることを確認する</li>
             </ul>
-            <p><strong>同じ質問で3つのスタイルを比較する（30分）</strong></p>
+            <p><strong>「学習ガイド」に切り替える（5分）</strong></p>
             <ul>
-              <li>自分の【学習データ】のどれか1つを題材に、<strong>同じ質問</strong>を3つのスタイルそれぞれで投げてみる:
-                <pre><code>この資料の内容を、要点を押さえて説明してください</code></pre>
+              <li>Gemini Notebookのチャットパネルから<strong>「チャットを設定」</strong>を開き、会話スタイルを<strong>「学習ガイド」</strong>に切り替えて<strong>[保存]</strong>（公式: 教育コンテンツに最適で、新しい概念を効率よく理解するのに役立つスタイル）</li>
+              <li>[ソース]パネルで、<strong>今追加したソースだけをチェック</strong>し、他のソース（前期の【学習データ①〜⑬】）のチェックを外す——チェックしたソースの内容だけに基づいて回答が返ってくる（公式: Gemini Notebookの回答はチェックしたソースのみに基づく）</li>
+            </ul>
+            <p><strong>学習ガイドと対話しながら理解を深める（30分）</strong></p>
+            <ul>
+              <li>まず質問してみる:
+                <pre><code>Antigravity CLIとは何か、初心者にも分かるように説明してください</code></pre>
               </li>
-              <li>①<strong>デフォルト</strong>を選んで保存 → 質問して応答をメモ</li>
-              <li>②<strong>学習ガイド</strong>に切り替えて保存 → 同じ質問をして応答をメモ（質問し返してくる、段階的に説明する等の違いに注目）</li>
-              <li>③<strong>カスタム</strong>（前期に自分が設定した内容）に切り替えて保存 → 同じ質問をして応答をメモ</li>
-              <li>回答の長さも「長め」「短め」で1回ずつ試し、同じスタイルでも長さでどう変わるか観察する</li>
-              <li>3つを見比べて、「<strong>自分のAIをどんな目的で使いたいか</strong>」によってスタイルを使い分けられることに気づく</li>
-            </ul>
-            <p><strong>設定を保存して反映を確認する（5分）</strong></p>
-            <ul>
-              <li>3つのうち<strong>今の自分に一番合うもの</strong>を1つ選んで戻し、<strong>[保存]</strong>——保存を忘れると次回起動時に元のスタイルに戻ってしまう</li>
-              <li>チャットパネルを一度閉じて開き直し、選んだスタイルが保持されているか確認する</li>
-              <li>「なぜそのスタイルを選んだか」を1〜2文でメモに残す——後日、別のスタイルを試すときの比較材料になる</li>
+              <li>続けて掘り下げる:
+                <pre><code>チャット型AIとエージェント型AIは何が違いますか？</code></pre>
+                <pre><code>なぜAntigravity CLIのようなツールが必要なのですか？</code></pre>
+              </li>
+              <li><strong>学習ガイドは一度に答えを出さず、質問を返してくることがある</strong>——公式の「新しい概念を効率よく理解し、スキルを習得するのに役立つ」という説明の通り、焦らず対話を続ける</li>
+              <li>対話の中から、<strong>自分にとって新しい発見を3つ</strong>メモに残す</li>
             </ul>
             <div class="lesson-tip">
-              <strong>「学習ガイド」は勉強のための会話スタイル:</strong> 公式に「教育コンテンツに最適」と説明されている通り、学習ガイドは新しい概念を理解する場面に向いています。逆に、自分のキャラクター（前期に設定した話し方）を保ちたいときは<strong>カスタム</strong>のままでよい——場面によって使い分けるのがポイントです。
+              <strong>「学習ガイド」は勉強のための会話スタイル:</strong> 公式に「教育コンテンツに最適」と説明されている通り、新しい概念を理解する場面に向いています。デフォルトのスタイルとは違い、段階的に問い返してくることがある——焦らずその感覚を体験してください。
             </div>
           </div>
         </div>
@@ -152,27 +147,38 @@
             <span class="timeline-time">2限 前半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>ソースを選択して「聞きたい範囲」を絞り込む</h3>
+          <h3>Codespacesを開き直し、改めてagyに触れる</h3>
           <div class="timeline-body">
-            <p><strong>「ソースのみに基づく」という仕組みを再確認（10分）</strong></p>
+            <p><strong>前回のリポジトリ・Codespacesを開き直す（10分）</strong></p>
             <ul>
-              <li>Gemini Notebookの回答は<strong>ノートブックに投入したソースに含まれる内容のみ</strong>に基づく（公式の説明）。ウェブ検索やその他のツールも参照するGeminiアプリとは、この点が異なる</li>
-              <li>ソースにない内容を聞くと「この質問には答えられません」等と返ってくることがある——これは<strong>不具合ではなく仕様</strong>であることを確認</li>
+              <li>前回（第1回）で使用したリポジトリを開き、<strong>停止していたCodespaceを再開（resume）</strong>する——「Create codespace」で新規作成しない</li>
+              <li>リポジトリや前回の環境が見当たらない場合は、先に担当教員に確認する</li>
             </ul>
-            <p><strong>特定のソースだけを選んで質問する（30分）</strong></p>
+            <p><strong>agyの動作を確認する（10分）</strong></p>
             <ul>
-              <li>[ソース]パネルで、<strong>【学習データ】を1〜2件だけチェック</strong>し、他のソースのチェックを外す（公式の操作: ソースパネルでソースを個別に選択するとチャットに使うソースを絞り込める）</li>
-              <li>その状態で質問:
-                <pre><code>今チェックしているソースの内容だけをもとに、
-要点を3つ教えてください</code></pre>
+              <li>同じCodespaceを再開した場合、<strong>前回インストールしたagyはそのまま残っている</strong>（公式: 停止したCodespaceを再開すると、ファイルシステムやインストール済みのツールは保持される）——再インストールは不要</li>
+              <li>ターミナルで<code>agy</code>と入力して起動を確認する。動かない場合や見つからない場合のみ、以下のコマンドで再インストールする（公式: <a href="https://antigravity.google/docs/cli/install" target="_blank" rel="noopener">Antigravity CLI — Installation &amp; auth</a>）</li>
+              <button class="copy-md-btn" data-md-source="agy-reinstall-command">
+                <span class="btn-icon"></span> コマンドをコピー
+              </button>
+<pre id="agy-reinstall-command" class="md-preview">curl -fsSL https://antigravity.google/cli/install.sh | bash</pre>
+              <li>認証セッションが切れている場合のみ、表示される認可URLをブラウザで開きGoogleアカウントで再認証する</li>
+            </ul>
+            <p><strong>理解した概念を意識しながらagyに触れる（25分）</strong></p>
+            <ul>
+              <li>まずagy自身について聞いてみる:
+                <pre><code>あなたは何ができますか？自分の役割を自己紹介してください</code></pre>
               </li>
-              <li>次に<strong>全ソースのチェックを戻して</strong>同じ質問をし、応答の範囲がどう変わるかを比較する</li>
-              <li>観察ポイント: ソースを絞ると<strong>その資料に書いていないことは出てこなくなる</strong>——「情報を絞り込む」ことがAIとの対話でも有効な整理術であることに気づく</li>
+              <li>次に簡単なお願いをしてみる（例: <code>シンプルな自己紹介ページを作って</code>）——<strong>本格的な制作は第5回</strong>。今日は「学習ガイドで学んだ仕組みが、実際の動きにどう表れるか」を観察するのが目的</li>
+              <li>観察ポイント: 自然言語の指示がコードに変換され実行されるまでの流れが、Notebookで読んだ<strong>「Why Antigravity CLI」</strong>の説明とどう対応しているか</li>
             </ul>
-            <p><strong>使いどころを考える（10分）</strong></p>
+            <p><strong>気づきをメモする（5分）</strong></p>
             <ul>
-              <li>「たくさんソースがある状態で、特定の資料についてだけ深掘りしたいとき」にソース選択が便利、という場面をペアで1つ挙げてみる</li>
+              <li>「今日理解が深まったこと」「まだよく分からないこと」を1つずつメモに残す</li>
             </ul>
+            <div class="lesson-tip">
+              <strong>前回との違いを意識する:</strong> 前回は「動くのを見た／触ってみた」だけでした。今日は学習ガイドで得た概念と結びつけながら観察する——同じ操作でも「分かって使う」のと「なんとなく使う」のとでは見えるものが変わります。
+            </div>
           </div>
         </div>
 
@@ -181,33 +187,30 @@
             <span class="timeline-time">2限 後半</span>
             <span class="timeline-duration">約30分</span>
           </div>
-          <h3>今日のNotebookを、第5回agyに渡す「指示メモ」づくりに使う</h3>
+          <h3>今日の気づきを「agyへの指示メモ」に反映する</h3>
           <div class="timeline-body">
             <!-- 親ページ ai-communication-2.html Week 5 「AIエージェントに指示する①」と同期 -->
             <p><strong>今日と第5回のつながりを共有する（5分）</strong></p>
             <ul>
-              <li>第5回「AIエージェントに指示する①」では、agyに向けて自然言語で「こういうものを作って」と伝える活動を行う。<strong>曖昧な指示と明確な指示でagyの動きがどう変わるか</strong>は、特に第7回「すれ違いワーク」で掘り下げるが、その土台となる「明確な指示」を今日から準備しておく</li>
-              <li>今日の後半は、その「<strong>明確な指示</strong>」を先取りして練習する時間——チャット型AIのGemini Notebookに相談しながら、<strong>エージェント型AIのagyに渡す指示文</strong>を下書きする</li>
+              <li>第5回「AIエージェントに指示する①」では、agyに向けて自然言語で「こういうものを作って」と伝える活動を行う。今日学んだ「エージェント型AIの仕組み」と、2限前半で体験した「実際の動き」を踏まえて、指示文を具体化する</li>
             </ul>
-            <p><strong>ソースを選び、Notebookに相談しながら指示文を練る（20分）</strong></p>
+            <p><strong>Notebookに戻り、指示メモを見直す（20分）</strong></p>
             <ul>
-              <li>第5回でagyに作ってほしい<strong>簡単なWebページ</strong>（例: 自己紹介ページ、好きなものの一覧ページなど自由）を思い浮かべる</li>
-              <li>2限前半で練習した<strong>ソースの選択的参照</strong>を使い、[ソース]パネルで前期<strong>【学習データ③】プロンプトのコツまとめ資料</strong>と<strong>【学習データ⑥】プロンプト改善ワークシート</strong>だけをチェックする（この2つには「明確な指示の書き方」のコツがまとまっている）</li>
-              <li>その状態でGemini Notebookのチャット（今日設定した<strong>学習ガイド</strong>または<strong>カスタム</strong>、好きなスタイルでよい）に相談する:
-                <pre><code>このソースにあるプロンプトのコツを踏まえて、次の依頼文を
+              <li>Googleドキュメント<code>agyへの指示メモ</code>を開く（無ければ新規作成）</li>
+              <li>[ソース]パネルで、前期<strong>【学習データ③】プロンプトのコツまとめ資料</strong>・<strong>【学習データ⑥】プロンプト改善ワークシート</strong>と、今日追加した<strong>Antigravity CLI Overview</strong>の3つだけをチェックする</li>
+              <li>その状態でGemini Notebookのチャット（デフォルト・学習ガイド・カスタム、好きなスタイルでよい）に相談する:
+                <pre><code>このソースの内容を踏まえて、次の依頼文を
 曖昧さのない指示文に整えてください。
 依頼したい内容: （作りたいWebページの説明）</code></pre>
               </li>
               <li>返ってきた提案を読み、<strong>自分の言葉で1つの指示文</strong>に確定させる（Notebookの提案をそのまま丸写しにせず、自分が納得する表現に直す）</li>
-              <li>ソースを絞らずに同じ質問をすると、【学習データ】全体を参照した一般的な答えになったり「この質問には答えられません」と返ることがある——<strong>関連するソースを選んでから聞く</strong>ことの効果を、2限前半に続けてもう一度体感する</li>
             </ul>
-            <p><strong>「agyへの指示メモ」として保存する（5分）</strong></p>
+            <p><strong>保存する（5分）</strong></p>
             <ul>
-              <li>Googleドキュメントを新規作成し、ファイル名を<code>agyへの指示メモ</code>にして指示文を貼り付け保存する</li>
-              <li>第5回まで削除せずに残しておく——今日の自分が、数週間後の自分に指示文を手渡す形になる</li>
+              <li><code>agyへの指示メモ</code>に指示文を貼り付けて保存する。第5回まで削除せずに残しておく</li>
             </ul>
             <div class="lesson-tip">
-              <strong>「AIに相談しながら指示を練る→別のAIに実際に渡す」という型:</strong> 今日はGemini Notebookを「考えをまとめる相棒」として使いました。第5回では、この指示文を今度は自分の手でagyに直接渡します。チャット型AIとエージェント型AIを役割分担で使い分けるこの流れは、後期を通じて繰り返し登場します。
+              <strong>「理解する→使う→振り返って言語化する」という一巡:</strong> 今日は学習ガイドで理解し、Codespacesで使い、最後にNotebookで振り返って言語化しました。この一巡は、後期を通じて繰り返し登場するAIとの向き合い方の基本形です。
             </div>
           </div>
         </div>
@@ -220,10 +223,9 @@
           <h3>次回予告と今日の振り返り</h3>
           <div class="timeline-body">
             <ul>
-              <!-- 親ページ ai-communication-2.html Week 3 「GitHub Codespaces入門①」と同期 -->
               <li>次回（第3回）: <strong>GitHub Codespaces入門①</strong>——アカウント確認・起動・基本操作。ターミナルに触れる第一歩</li>
               <li>「agyへの指示メモ」は<strong>第5回まで手元に保管</strong>しておく</li>
-              <li>今日のキーワード「<strong>チャットを設定</strong>」「<strong>学習ガイド</strong>」「<strong>ソースの選択的参照</strong>」「<strong>agyへの指示メモ</strong>」を口に出して言えるか確認して退出</li>
+              <li>今日のキーワード「<strong>学習ガイド</strong>」「<strong>エージェント型AI</strong>」「<strong>Codespacesの再開（resume）</strong>」「<strong>agyへの指示メモ</strong>」を口に出して言えるか確認して退出</li>
             </ul>
           </div>
         </div>
@@ -237,15 +239,15 @@
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>「チャットを設定」で会話スタイルを1つ選び、選んだ理由をメモに残す</strong>
-            <p>デフォルト・学習ガイド・カスタムのいずれかを選択し、「なぜそれを選んだか」を1〜2文で言語化する。次回、他の学生と見せ合える状態にしておく。</p>
+            <strong>学習ガイドとの対話で分かったことを3つ、メモに残す</strong>
+            <p>「Antigravity CLIとは何か」「チャット型AIとの違い」について、対話を通じて理解できたことを3つ言語化する。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>ソースを選択して質問した結果を1回記録する</strong>
-            <p>特定のソースだけをチェックして質問した結果と、全ソースで質問した結果の違いを1〜2行でメモする。</p>
+            <strong>Codespacesでagyに触れた気づきを1つ記録する</strong>
+            <p>「今日理解が深まったこと」「まだよく分からないこと」のどちらか1つを1〜2行でメモする。</p>
           </div>
         </div>
         <!-- 親ページ ai-communication-2.html Week 5 「AIエージェントに指示する①」と同期 -->
@@ -259,8 +261,8 @@
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
-            <strong>公式ヘルプ「Gemini Notebook でチャットを使用する」を眺める</strong>
-            <p>下記の参考リンクから公式ヘルプを開き、授業で触れなかった機能を1つ見つけてメモする。</p>
+            <strong>公式「Antigravity CLI Overview」を読み返す</strong>
+            <p>下記の参考リンクから公式ドキュメントを開き、授業で触れなかった内容を1つ見つけてメモする。</p>
           </div>
         </div>
       </div>
@@ -269,8 +271,10 @@
     <div class="syllabus-section">
       <h2>参考リンク</h2>
       <ul>
-        <li><a href="https://support.google.com/gemininotebook/answer/16179559?hl=ja" target="_blank" rel="noopener">Gemini Notebook ヘルプ — Gemini Notebook でチャットを使用する</a> — 会話スタイル（デフォルト・学習ガイド・カスタム）と回答の長さの公式説明</li>
-        <li><a href="https://support.google.com/gemininotebook/answer/16215270?hl=ja" target="_blank" rel="noopener">Gemini Notebook ヘルプ — ノートブックの新しいソースを追加または検索する</a> — ソースの追加・管理・選択に関する公式説明</li>
+        <li><a href="https://antigravity.google/docs/cli/overview" target="_blank" rel="noopener">Antigravity CLI — Overview（公式）</a> — 今日Notebookに追加したソース。「なぜAntigravity CLIが必要か」の公式説明</li>
+        <li><a href="https://antigravity.google/docs/cli/install" target="_blank" rel="noopener">Antigravity CLI — Installation &amp; auth（公式）</a> — 今日の再インストール手順の公式ドキュメント</li>
+        <li><a href="https://support.google.com/gemininotebook/answer/16179559?hl=ja" target="_blank" rel="noopener">Gemini Notebook ヘルプ — Gemini Notebook でチャットを使用する</a> — 会話スタイル（学習ガイドを含む）の公式説明</li>
+        <li><a href="https://support.google.com/gemininotebook/answer/16215270?hl=ja" target="_blank" rel="noopener">Gemini Notebook ヘルプ — ノートブックの新しいソースを追加または検索する</a> — ウェブサイトのURLをソースとして追加する公式手順</li>
       </ul>
     </div>
 

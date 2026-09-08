@@ -40,15 +40,15 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">前期の振り返り＋Gemini Notebookへの改称紹介＋後期のゴール提示</div>
+          <div class="lesson-overview-value">前期の振り返り＋Gemini Notebookへの改称紹介＋後期のゴール提示＋Antigravity CLI（agy）に一斉ガイドで触れる</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">Gemini Notebook（旧NotebookLM） / AIエージェント / Antigravity CLI</div>
+          <div class="lesson-overview-value">Gemini Notebook（旧NotebookLM） / AIエージェント / Antigravity CLI / GitHub Codespaces</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
-          <div class="lesson-overview-value">前期に育てたNotebookLM（Gemini Notebook）へアクセスできる状態</div>
+          <div class="lesson-overview-value">前期に育てたNotebookLM（Gemini Notebook）へアクセスできる状態。GitHubアカウント（ログイン可能な状態、未作成の場合は当日サポート）</div>
         </div>
       </div>
     </div>
@@ -60,6 +60,7 @@
         <li>NotebookLMが<strong>Gemini Notebook</strong>に改称されたことを知り、変化に慣れる</li>
         <li>後期のゴール（<strong>AIエージェントとの協働</strong>でものづくりをする）を理解する</li>
         <li>「チャット型AI」と「エージェント型AI」という新しい軸を知る</li>
+        <li>自分の手でCodespacesを起動し、agyをインストール・認証して<strong>簡単に話しかけてみる</strong></li>
       </ul>
     </div>
 
@@ -138,7 +139,7 @@
             <ul>
               <li>GitHub Codespacesのターミナルで動く<strong>AIエージェント</strong>、それが<code>agy</code>（Antigravity CLI）</li>
               <li>自然言語で「こういうものを作って」と話しかけると、AIが自分の代わりに作業を進めてくれる</li>
-              <li>実際に自分の手で動かすのは第3〜4回から。今日はどんなものか知るだけでよい</li>
+              <li>今日は全員で一斉ガイド形式で自分の手を動かして触れてみる。自分のペースで使いこなすのは第3〜4回から</li>
             </ul>
           </div>
         </div>
@@ -148,22 +149,29 @@
             <span class="timeline-time">2限 後半</span>
             <span class="timeline-duration">約30分</span>
           </div>
-          <h3>手始めのデモ体験</h3>
+          <h3>手を動かして触れてみる——全員で一斉ガイド</h3>
           <div class="timeline-body">
-            <p><strong>今日のデモ環境（参考）</strong></p>
-            <p>本回のデモはGitHub Codespaces上で実行する。Codespacesは起動のたびに新しい環境になるため、毎回以下のコマンドでのインストールが必要（公式: <a href="https://antigravity.google/docs/cli/install" target="_blank" rel="noopener">Antigravity CLI — Installation &amp; auth</a>）。</p>
+            <p><strong>今日は一斉ガイド形式で進める（参考）</strong></p>
+            <p>個別のトラブル対応をする時間がないため、教員の画面を見ながら全員で同じ手順を一斉に進める。詰まったら手を挙げてその場で確認する。</p>
+            <p><strong>Codespacesを起動する（5分）</strong></p>
+            <ul>
+              <li>教員が案内する授業用リポジトリを開き、「Code」ボタン→「Codespaces」→「Create codespace on main」</li>
+              <li>ブラウザ上にVS Codeの画面が立ち上がることを確認</li>
+            </ul>
+            <p><strong>agyをインストール・認証する（15分）</strong></p>
+            <p>Codespacesのターミナルに、次のコマンドをそのまま貼り付けてEnter（公式: <a href="https://antigravity.google/docs/cli/install" target="_blank" rel="noopener">Antigravity CLI — Installation &amp; auth</a>）。</p>
             <button class="copy-md-btn" data-md-source="agy-install-command">
               <span class="btn-icon"></span> コマンドをコピー
             </button>
 <pre id="agy-install-command" class="md-preview">curl -fsSL https://antigravity.google/cli/install.sh | bash</pre>
-            <p>インストール後<code>agy</code>を実行すると認証が求められる。表示される認可URLをブラウザで開き、Googleアカウントでサインインしてコードを貼り付ける。ヘッダーにメールアドレスが表示されれば準備完了（学生自身がこの手順を行うのは第3〜4回）。</p>
-            <p><strong>agyが動く様子を観察する</strong></p>
+            <p>インストール後<code>agy</code>を実行すると認証が求められる。表示される認可URLをブラウザで開き、Googleアカウントでサインインしてコードを貼り付ける。ヘッダーにメールアドレスが表示されれば準備完了</p>
+            <p><strong>agyに話しかけてみる（10分）</strong></p>
             <ul>
-              <li>教員がagyを使ったデモを見せる——自然言語で指示すると、コードが書かれ、動くものができていく過程</li>
+              <li>自然言語で話しかけてみる。例: <code>あなたが何をできるか、自己紹介してください</code></li>
               <li>「すごい」「怖い」「よく分からない」——率直な感想でよいので、自分の言葉で言語化してみる</li>
             </ul>
             <div class="lesson-tip">
-              <strong>今日は見るだけでOK:</strong> 実際に自分の手でCodespacesを起動し、agyを動かすのは第3〜4回です。今日は「こういう世界がある」ということを知るだけで十分です。
+              <strong>今日は「動く瞬間に自分で立ち会う」ことが目標:</strong> 深く使いこなす必要はありません。次回（第2回）はGemini Notebookの学習ガイドで今日感じた「なぜこう動くのか」を理解し、その後改めて今日と同じ手順でagyに触れます。自分のペースで使いこなすのは第3〜4回からです。
             </div>
           </div>
         </div>
@@ -176,7 +184,7 @@
           <h3>次回予告＆今日の振り返り</h3>
           <div class="timeline-body">
             <ul>
-              <li>次回（第2回）: <strong>Gemini Notebookで自分のAIをさらに育てる</strong>——より高度なカスタム指示・情報整理に挑戦</li>
+              <li>次回（第2回）: <strong>学習ガイドで理解するAntigravity CLI</strong>——今日触れたagyについて、Gemini Notebookの学習ガイドで理解を深め、改めて使ってみる</li>
               <li>「AIエージェントについて感じたこと」を一言メモして退出</li>
             </ul>
           </div>
@@ -196,6 +204,13 @@
           </div>
         </div>
         <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>今日起動したリポジトリ・Codespacesにアクセスできることを確認しておく</strong>
+            <p>次回（第2回）は今日と同じCodespaceを開き直して使う。リポジトリのURLを控えておく。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
             <strong>「AIエージェント」について聞いたことがあれば思い出しておく</strong>
@@ -209,7 +224,7 @@
       <h2>参考リンク</h2>
       <ul>
         <li><a href="https://blog.google/innovation-and-ai/products/gemini-notebook/notebooklm-gemini-notebook/" target="_blank" rel="noopener">Google公式ブログ — NotebookLM is now Gemini Notebook</a> — 改称の公式発表（2026-07-16）</li>
-        <li><a href="https://antigravity.google/docs/cli-install" target="_blank" rel="noopener">Antigravity CLI — Installation & auth（公式）</a> — 今日紹介したagyの公式ドキュメント（インストールは第3〜4回で扱います）</li>
+        <li><a href="https://antigravity.google/docs/cli/install" target="_blank" rel="noopener">Antigravity CLI — Installation & auth（公式）</a> — 今日実行したインストール・認証手順の公式ドキュメント</li>
       </ul>
     </div>
 
@@ -224,7 +239,7 @@
       </a>
       <a href="week02.html" class="lesson-nav-item" style="text-align:right">
         <span class="lesson-nav-label">次の回</span>
-        <span class="lesson-nav-title">第2回 Gemini Notebookで自分のAIをさらに育てる</span>
+        <span class="lesson-nav-title">第2回 学習ガイドで理解するAntigravity CLI</span>
       </a>
     </nav>
 
