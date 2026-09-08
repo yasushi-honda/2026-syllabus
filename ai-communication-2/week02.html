@@ -151,17 +151,18 @@
           <div class="timeline-body">
             <p><strong>前回のリポジトリ・Codespacesを開き直す（10分）</strong></p>
             <ul>
-              <li>前回（第1回）で使用したリポジトリを開き、Codespacesを起動する</li>
+              <li>前回（第1回）で使用したリポジトリを開き、<strong>停止していたCodespaceを再開（resume）</strong>する——「Create codespace」で新規作成しない</li>
               <li>リポジトリや前回の環境が見当たらない場合は、先に担当教員に確認する</li>
             </ul>
-            <p><strong>agyを再インストール・再認証する（10分）</strong></p>
+            <p><strong>agyの動作を確認する（10分）</strong></p>
             <ul>
-              <li>Codespacesは<strong>起動のたびに新しい環境になる</strong>ため、前回と同じコマンドを再度実行する（公式: <a href="https://antigravity.google/docs/cli/install" target="_blank" rel="noopener">Antigravity CLI — Installation &amp; auth</a>）</li>
+              <li>同じCodespaceを再開した場合、<strong>前回インストールしたagyはそのまま残っている</strong>（公式: 停止したCodespaceを再開すると、ファイルシステムやインストール済みのツールは保持される）——再インストールは不要</li>
+              <li>ターミナルで<code>agy</code>と入力して起動を確認する。動かない場合や見つからない場合のみ、以下のコマンドで再インストールする（公式: <a href="https://antigravity.google/docs/cli/install" target="_blank" rel="noopener">Antigravity CLI — Installation &amp; auth</a>）</li>
               <button class="copy-md-btn" data-md-source="agy-reinstall-command">
                 <span class="btn-icon"></span> コマンドをコピー
               </button>
 <pre id="agy-reinstall-command" class="md-preview">curl -fsSL https://antigravity.google/cli/install.sh | bash</pre>
-              <li>インストール後<code>agy</code>を実行し、前回と同じ手順で認証（表示される認可URLをブラウザで開き、Googleアカウントでサインインしてコードを貼り付ける）</li>
+              <li>認証セッションが切れている場合のみ、表示される認可URLをブラウザで開きGoogleアカウントで再認証する</li>
             </ul>
             <p><strong>理解した概念を意識しながらagyに触れる（25分）</strong></p>
             <ul>
