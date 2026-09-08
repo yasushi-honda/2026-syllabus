@@ -1,5 +1,5 @@
 ---
-updated: 2026-09-08
+updated: 2026-09-08 (セッション2)
 ---
 
 ## 現在のミッション
@@ -30,8 +30,11 @@ updated: 2026-09-08
 - [x] 自然言語開発Ⅱ 複合運用を正式カリキュラムとして教材へ反映（2026-09-03、親ページ・content/md・week01.html・index.htmlの4ファイル）。事実確認: Codex CLIは公式の機能比較表でPlus（$20/月〜）以上のプランでの利用が明記されており、Freeプランでの動作は保証されていない（一次ソース: learn.chatgpt.com/docs/pricing、Playwright実レンダリングで確認）。Antigravity CLI（agy）はGoogleアカウント認証のみで追加契約不要。pr-review-toolkit（code-reviewer+comment-analyzer）並列レビューでCritical 3件・Important 4件を検出・全修正（Codex Free断定の誤り、第6/7/9/13回セルのClaude Code限定表現残留、content/md同期漏れ、index.html旧記述等）
 - [x] システム開発B・プログラム基礎Ⅱ(Java)（土曜、既存ページ流用）の後期時間割への統合内容確認（`index.html`後期パネルで`java-teamdev.html`/`java-basics-2.html`双方のリンクを確認済み）
 - [x] プログラム基礎Ⅱ week02作成（データを扱う基礎①：オブジェクトと配列の発展。前期第9回`list.html`の`favorites`配列を「オブジェクトの配列」に発展させる実習、PR #182）。pr-review-toolkit（code-reviewer/comment-analyzer）でImportant 4件検出・全修正（Simple Browser非indexファイル遷移手順の欠落、既カスタマイズ済みfavoritesとの矛盾＋重複指示、テンプレートリテラル未紹介、week3予告が親ページ正本を超過）
+- [x] プログラム基礎Ⅱ week02に前期未履修者向けコピー可能な雛形を追加（PR #186-188）。ユーザー指摘: プログラム基礎IIは経験混在クラスで前期未履修者がいるが、list.html作成前提の演習に前提が崩れる学生への救済経路が無かった。①list.html雛形（PR #186、code-reviewer/comment-analyzer並列レビュー）②リポジトリ・index.html自体が無い学生向けに前期week01/04への事前準備導線（PR #187、当日10分では完結しない旨明記）③さらにユーザー指摘「0からindex.html/style.cssを書かせるのは負荷が高い」を受けindex.html・style.cssのコピー可能な雛形も追加（PR #188、list.html雛形にstyle.cssリンクを復元し正本と完全一致）
 - [x] AIコミュニケーション基礎Ⅱ week02作成→再設計（PR #183, #184）。初稿はGemini Notebookの「チャットを設定」（会話スタイル・回答長）とソース選択的参照を扱う内容で作成（pr-review-toolkit でCritical 1件・Important 3件検出・全修正: 公式必須ステップ「保存」欠落、「応答の長さ」→「回答の長さ」用語統一等）。ユーザーから**「Week1でAIエージェント協働をゴールに掲げていながらWeek2がチャット型AIのみで完結しているのはおかしい」**と設計上の指摘を受け、2限後半（30分）を「第5回でagyに渡す指示文を、Gemini Notebookに相談しながら下書きする」演習に組み替え。チャット型AI→エージェント型AIへの橋渡しとして再設計（Codespaces/agy自体の技術導入はWeek3-4のまま変更せず）。再設計PRでもpr-review-toolkitがCritical 1件（content/ai-communication-2.md同期漏れ）・Important 3件（新演習が同ページ内「ソースのみに基づく」仕様と衝突するリスク、第5回参照の同期マーカー欠落、課題①の授業内足場消失）を検出、全修正の上マージ
+- [x] AIコミュニケーション基礎Ⅱ week02をさらに再設計——「学習ガイドでAntigravity CLIを理解する」回に（PR #189）。ユーザー指摘: 依然Gemini Notebook汎用機能ツアーが中心でagy言及が最後30分のみと偏っていた。1限=公式Antigravity CLI Overviewをソース追加し学習ガイドスタイルで概念理解、2限前半=Codespacesを再開しagyに改めて触れる、2限後半=指示メモ更新、に全面再設計。ユーザー確認で「学生は第1回で自分の手でCodespaces起動・agy利用済み」と判明し、week01.html（従来「教員デモのみ」と記述）を実態に合わせて「全員一斉ガイドでのハンズオン」に同時書き換え。**codex review 4ラウンド実施**でP1×1・P2×5を検出・全解決（week01/週02の前提矛盾、GitHub Codespaces公式仕様の誤り「起動のたびに新環境」→正しくはresumeで環境保持・既定30日間削除されない、week01 nav残留、week02内「前回学んだ」の虚偽前提2箇所、ゴール文言が例外対応を必須目標のように記載、親ページWeek1行の正本原則違反）。**保留・別途相談**: week01で第1回にCodespaces/agy一式を前倒ししたため、親ページ第3回「Codespaces入門①」・第4回「Codespaces入門②/agy起動」の記述と内容重複（週ページ未作成のため実害はまだ無い）
 - [ ] プログラム基礎Ⅱ・AIコミュニケーション基礎Ⅱのweek03以降 — 実施日が近づいた回から順次（未分解）
+- [ ] AIコミュニケーション基礎Ⅱ 第3回「Codespaces入門①」・第4回「Codespaces入門②/agy起動」の親ページ記述見直し — 第1回で当該内容を前倒し済みのため重複。週ページ未作成で実害なし、着手はユーザーとの相談後（次回セッション最優先で確認）
 
 ## 🔄 中断点（in-flight）
 なし
