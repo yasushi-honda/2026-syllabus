@@ -62,7 +62,7 @@
 
 | 日 | テーマ | 主な内容・活動 |
 |:---:|:---|:---|
-| 1 | **つくる場所をつくる／スマホで開く** | 講座の狙いと5日間の流れを共有し、学年混成チームを編成する（役割はドライバー／ナビゲーターの交代制）。撮影と個人情報の取り扱いルールを確認する。Antigravity CLI（agy）でAIエージェントに指示を出し、最小限のWebページを作る。VS Codeのポート転送をPublicに設定して発行されたHTTPS URLをQRコードで配布し、各自のスマートフォンで自分の作ったページを開く。カメラを呼び出し映像が表示されるところまで進め、なぜHTTPS（secure context）が必要なのかを確認する。 |
+| 1 | **つくる場所をつくる／スマホで開く** | 講座の狙いと5日間の流れを共有し、学年混成チームを編成する（役割はドライバー／ナビゲーターの交代制）。撮影と個人情報の取り扱いルールを確認する。Antigravity CLI（agy）でAIエージェントに指示を出し、最小限のWebページを作る。VS Codeのポート転送をPublicに設定（初回のみGitHubアカウントでのサインインが必要）して発行されたHTTPS URLをQRコードで配布し、各自のスマートフォンで自分の作ったページを開く。カメラを呼び出し映像が表示されるところまで進め、なぜHTTPS（secure context）が必要なのかを確認する。 |
 | 2 | **カメラの中身をプログラムで触る** | カメラ映像をcanvasに取り出し、静止画として扱う。色を変える・文字を重ねるなど簡単な加工を試す。AIレシピA「その場で見るAI」（MediaPipe Tasksによる手・顔・姿勢の検出）を体験し、検出結果に応じて画面を動かす。ここまでの体験を踏まえ、チームで作りたいものの種を出し合う。 |
 | 3 | **AIを載せる／設計を決める** | AIレシピB「考えるAI」（撮影した写真をPC上のサーバ経由でGemini APIへ送る構成）を体験する。APIキーをブラウザ側に置いてはいけない理由と、通信量を抑えるための画像の圧縮・縮小を確認する。あわせて、公開URLを知る誰でもサーバを呼び出せてしまうこと、ブラウザに持たせる合言葉だけでは本物のアクセス制限にならないことに気づき、サーバ側で呼び出し回数の上限（レート制限）を設ける仕組みを作る。チームで企画を1つに絞り、AIエージェントに渡す仕様（何を作るか・画面・データの流れ）を整理してから実装を始め、実機で最初の動作確認を行う。 |
 | 4 | **🎤 中間デモ／つくりこむ** | 各チーム3分程度の中間デモを行い、他チームのスマートフォンで実際に触ってもらいながらフィードバックを受け取る。フィードバックを反映しながら実装を進める。AIエージェントにうまく動かない状況を説明する練習（エラーの伝え方）にも取り組む。 |
@@ -73,10 +73,10 @@
 
 ## 11. 使用テキスト・参考文献
 - 特定のテキストは使用しません。授業内で適宜、公式ドキュメントを紹介します。
-- 主な参考資料（随時更新）：Google — Antigravity CLI Installation & Auth 公式ドキュメント（antigravity.google）、Google AI Edge — Hand landmarks detection guide for Web 公式ガイド（ai.google.dev）、GitHub — Forwarding ports in your codespace 公式ドキュメント（docs.github.com）、Microsoft — Port Forwarding（Visual Studio Code）公式ドキュメント（code.visualstudio.com）、MDN — MediaDevices: getUserMedia() method（developer.mozilla.org）
+- 主な参考資料（随時更新）：Google — Antigravity CLI Installation & Auth 公式ドキュメント（antigravity.google）、Google AI Edge — Hand landmarks detection guide for Web 公式ガイド（ai.google.dev）、GitHub — Forwarding ports in your codespace 公式ドキュメント（docs.github.com）、Microsoft — Port Forwarding（Visual Studio Code）公式ドキュメント（code.visualstudio.com）、MDN — MediaDevices: getUserMedia() method（developer.mozilla.org）、Google — Plans 公式ドキュメント（antigravity.google、無償枠の利用制限について記載）
 
 ## 12. 予習・復習
-- **予習:** 特にありません。5日間の中で必要な知識はその都度共有します。
+- **予習:** GitHubアカウントをまだ持っていない場合は、事前に作成しておいてください（Day1でVS Codeのポート転送をPublicに設定する際、初回のみGitHubアカウントでのサインインが必要です）。それ以外に必要な知識は5日間の中でその都度共有します。
 - **復習:** その日にAIエージェントとのやり取りでうまくいったこと・つまずいたことを、簡単にメモしておきましょう。
 
 ## 13. 評価方法・基準

@@ -110,7 +110,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td class="week-num">1</td><td class="week-theme">つくる場所をつくる／スマホで開く</td><td>講座の狙いと5日間の流れを共有し、<strong>学年混成チーム</strong>を編成する（役割はドライバー／ナビゲーターの交代制）。<strong>撮影と個人情報の取り扱いルール</strong>を確認する。Antigravity CLI（agy）でAIエージェントに指示を出し、最小限のWebページを作る。VS Codeの<strong>ポート転送</strong>をPublicに設定して発行されたHTTPS URLをQRコードで配布し、各自のスマートフォンで自分の作ったページを開く。カメラを呼び出し映像が表示されるところまで進め、なぜHTTPS（secure context）が必要なのかを確認する。</td></tr>
+            <tr><td class="week-num">1</td><td class="week-theme">つくる場所をつくる／スマホで開く</td><td>講座の狙いと5日間の流れを共有し、<strong>学年混成チーム</strong>を編成する（役割はドライバー／ナビゲーターの交代制）。<strong>撮影と個人情報の取り扱いルール</strong>を確認する。Antigravity CLI（agy）でAIエージェントに指示を出し、最小限のWebページを作る。VS Codeの<strong>ポート転送</strong>をPublicに設定（初回のみ<strong>GitHubアカウントでのサインイン</strong>が必要）して発行されたHTTPS URLをQRコードで配布し、各自のスマートフォンで自分の作ったページを開く。カメラを呼び出し映像が表示されるところまで進め、なぜHTTPS（secure context）が必要なのかを確認する。</td></tr>
             <tr><td class="week-num">2</td><td class="week-theme">カメラの中身をプログラムで触る</td><td>カメラ映像をcanvasに取り出し、静止画として扱う。色を変える・文字を重ねるなど簡単な加工を試す。<strong>AIレシピA「その場で見るAI」</strong>（MediaPipe Tasksによる手・顔・姿勢の検出）を体験し、検出結果に応じて画面を動かす。ここまでの体験を踏まえ、チームで作りたいものの種を出し合う。</td></tr>
             <tr><td class="week-num">3</td><td class="week-theme">AIを載せる／設計を決める</td><td><strong>AIレシピB「考えるAI」</strong>（撮影した写真をPC上のサーバ経由でGemini APIへ送る構成）を体験する。<strong>APIキーをブラウザ側に置いてはいけない</strong>理由と、通信量を抑えるための画像の圧縮・縮小を確認する。あわせて、<strong>公開URLを知る誰でもサーバを呼び出せてしまう</strong>こと、ブラウザに持たせる合言葉だけでは本物のアクセス制限にならないことに気づき、<strong>サーバ側で呼び出し回数の上限（レート制限）を設ける</strong>仕組みを作る。チームで企画を1つに絞り、AIエージェントに渡す仕様（何を作るか・画面・データの流れ）を整理してから実装を始め、実機で最初の動作確認を行う。</td></tr>
             <tr><td class="week-num">4</td><td class="week-theme">🎤 中間デモ／つくりこむ</td><td>各チーム3分程度の<strong>中間デモ</strong>を行い、他チームのスマートフォンで実際に触ってもらいながらフィードバックを受け取る。フィードバックを反映しながら実装を進める。AIエージェントに<strong>うまく動かない状況を説明する練習</strong>（エラーの伝え方）にも取り組む。</td></tr>
@@ -131,13 +131,14 @@
         <li>GitHub — Forwarding ports in your codespace 公式ドキュメント（docs.github.com）</li>
         <li>Microsoft — Port Forwarding（Visual Studio Code）公式ドキュメント（code.visualstudio.com）</li>
         <li>MDN — MediaDevices: getUserMedia() method（developer.mozilla.org）</li>
+        <li>Google — Plans 公式ドキュメント（antigravity.google、無償枠の利用制限について記載）</li>
       </ul>
     </div>
 
     <div class="syllabus-section">
       <h2>予習・復習</h2>
       <ul>
-        <li><strong>予習:</strong> 特にありません。5日間の中で必要な知識はその都度共有します。</li>
+        <li><strong>予習:</strong> GitHubアカウントをまだ持っていない場合は、事前に作成しておいてください（Day1でVS Codeのポート転送をPublicに設定する際、初回のみGitHubアカウントでのサインインが必要です）。それ以外に必要な知識は5日間の中でその都度共有します。</li>
         <li><strong>復習:</strong> その日にAIエージェントとのやり取りでうまくいったこと・つまずいたことを、簡単にメモしておきましょう。</li>
       </ul>
     </div>
