@@ -1,5 +1,5 @@
 ---
-updated: 2026-09-08 (セッション2)
+updated: 2026-09-10 (セッション3)
 ---
 
 ## 現在のミッション
@@ -38,6 +38,8 @@ updated: 2026-09-08 (セッション2)
 - [x] 自然言語開発Ⅱ week02作成（2026-09-09、明日9/10・第2回に向けて作成。「Google Cloudアカウントを作ろう」——$300分・90日間の無料クレジット、登録時の一時的な保留、90日経過/クレジット使い切り時の自動閉鎖と30日間の復元猶予期間、Budgets & Alertsの場所確認、PR #194）。codex review（high）+ pr-review-toolkit（code-reviewer/comment-analyzer）並列レビューを実施。code-reviewerがImportant 1件検出: 承認リクエスト（保留）の解除期間を「数日〜1か月以内」（free-cloud-featuresページの一般記述）と書いていたが、この質問に直接答えるcloud.google.com/signup-faqsは「銀行により異なるが1〜14営業日」とより具体的に明記（Playwrightでアコーディオンを展開し本文を直接確認）。両者は矛盾ではなくsignup-faqsがより精密なため、そちらの文言に統一して修正。comment-analyzerはCritical 0件、事実確認は全項目公式ソースと一致
 - [x] 自然言語開発Ⅱ 概要・week02をAIエージェント協働体験主軸へ再構成（2026-09-09、PR #195, #196）。ユーザー指摘: 教室の実態は学生の契約状況が多様（Claude Code既存ユーザー、ChatGPT有料契約者等）で、GCPの無料クレジットだけではClaudeが使えないため、「大きく見てコーディングAIエージェントを使って実感していってもらう」内容として本科目を捉え直すべき。①week02（PR #195）: 「$300クレジットが使えない場面」にClaude（Model as a Service該当）が含まれることを明示し、第3回への橋渡しlesson-tipを追加。②親ページ（PR #196）: 担当教員メッセージ・授業概要の記述順序を「クラウドネイティブ開発を学ぶ専門科目」先頭から「複数のコーディングAIエージェントと契約状況に応じて柔軟に協働する経験」先頭へ入れ替え、GCPクレジット除外とAWS Bedrock選択肢の論理接続を明示。事実根拠（Model as a Service除外）はcloud.google.com/free/docs/free-cloud-featuresで確認済み。AWS Bedrockのクレジット適用可否はaws.amazon.com/free等の公式ソースで概ね確認したが、re:Post実例でモデル単位の例外報告もあり完全な断定はできないため、既存の保守的な表現（判定基準は非公開）は維持
 - [x] 自然言語開発Ⅱ 週3のAWS Bedrock登録手順を最新仕様に修正（2026-09-09、PR #198）。ユーザー指示「週3のAWS Bedrock登録手順も同じ方針で見直す」を受けPlaywright実レンダリングで再確認した結果、docs.aws.amazon.com/bedrock/latest/userguide/model-access.html の内容が2026-09-04時点の確認から変化していたと判明。旧「モデルごとに手動でアクセスをリクエストして承認を待つ」→新「既定で有効、Anthropicモデルのみ初回Use caseフォーム送信で即座にアクセス可」。親ページ授業概要bullet・第3回スケジュールセルを修正（HTML・content/md同期）、CLAUDE.mdの地雷リストに「クラウドAPI/CLIの操作フローは料金/プラン以上に短期間で変わりうる」教訓を追記。codex review（medium）指摘0件。Budgets通知の8〜12時間タイムラグは再確認の結果、現在も正確と確認（変更なし）
+
+- [x] 秋の集中講座（時間割枠外・後期スピンオフ企画）親ページ草案作成（2026-09-10）。対象: IT・情報処理専攻(システム) 1〜3年次の学年混成チーム（3〜4人×6チーム以上）、全5日間・各日180分。AIエージェント（Antigravity CLI）と協働し、学生自身のスマートフォンのカメラを使うアプリを開発。原案の「LAN直結」は調査の結果、①`getUserMedia()`等がsecure context必須でHTTP LANでは静止画のみに制限される、②学生スマホが学校Wi-Fiに繋げない可能性、の2点から不採用とし、VS Codeのポート転送（Public設定・HTTPS URL）に設計変更。アプリ内AIは2レシピ（A: MediaPipe Tasksでブラウザ内検出、B: サーバ経由Gemini API）を用意。新テーマ色`slate`を追加（既存10色を使い切っていたため）。`autumn-intensive.html`・`content/autumn-intensive.md`・`index.html`（後期パネルのみ）・`styles.css`・CLAUDE.mdを変更。**保留・要確認（実施前に学校側で確認が必要、日別詳細ページ作成前に解消すること）**: ①学生スマホの通信環境（学校Wi-Fi接続可否、モバイル回線の電波状況）②ポート visibility のPublic設定が組織ポリシーで制限されていないか③Antigravity CLIの学校PCへのインストール可否（Codespacesのようなコンテナ内ではOAuth/keyring認証が通らない可能性の報告があり、ローカルPC+VS Codeポート転送を主経路とする設計にした）④Antigravity CLI無料枠のレート制限が30人規模チーム運用で足りるか⑤レシピB用のGemini APIキーの発行・配布方法。日別詳細ページは未作成
 
 ## 🔄 中断点（in-flight）
 なし

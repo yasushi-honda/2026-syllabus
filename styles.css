@@ -48,6 +48,9 @@
   --c-brown: #6b4226;         /* AA 7.06:1 on --c-brown-soft */
   --c-brown-soft: #f3e6dc;
   --c-brown-border: #ddc0ac;
+  --c-slate: #3d5a73;         /* AA 6.08:1 on --c-slate-soft */
+  --c-slate-soft: #e9eef3;
+  --c-slate-border: #c9d3dc;
 
   /* Type */
   --font-sans: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -868,6 +871,7 @@ img { max-width: 100%; display: block; }
 .card--pink   .card-accent { background: var(--c-pink); }
 .card--teal   .card-accent { background: var(--c-teal); }
 .card--indigo .card-accent { background: var(--c-indigo); }
+.card--slate  .card-accent { background: var(--c-slate); }
 
 .card-body {
   padding: var(--sp-6) var(--sp-6) var(--sp-5);
@@ -915,6 +919,7 @@ img { max-width: 100%; display: block; }
 .card--pink   .card-title { border-bottom: 2px solid var(--c-pink);   display: inline-block; padding-bottom: 2px; }
 .card--teal   .card-title { border-bottom: 2px solid var(--c-teal);   display: inline-block; padding-bottom: 2px; }
 .card--indigo .card-title { border-bottom: 2px solid var(--c-indigo); display: inline-block; padding-bottom: 2px; }
+.card--slate  .card-title { border-bottom: 2px solid var(--c-slate);  display: inline-block; padding-bottom: 2px; }
 
 .card-target {
   font-size: 0.82rem;
@@ -1229,6 +1234,7 @@ img { max-width: 100%; display: block; }
 .page-header--indigo::before { background: radial-gradient(circle, rgba(55,65,184,0.10) 0%, transparent 60%); }
 .page-header--amber::before  { background: radial-gradient(circle, rgba(138,95,0,0.10) 0%, transparent 60%); }
 .page-header--brown::before  { background: radial-gradient(circle, rgba(107,66,38,0.10) 0%, transparent 60%); }
+.page-header--slate::before  { background: radial-gradient(circle, rgba(61,90,115,0.10) 0%, transparent 60%); }
 
 .breadcrumb {
   display: flex;
@@ -1293,6 +1299,7 @@ img { max-width: 100%; display: block; }
 .page-header--indigo .page-title::after { background: var(--c-indigo); }
 .page-header--amber  .page-title::after { background: var(--c-amber); }
 .page-header--brown  .page-title::after { background: var(--c-brown); }
+.page-header--slate  .page-title::after { background: var(--c-slate); }
 
 .page-meta-badges {
   display: flex;
