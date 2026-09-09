@@ -94,7 +94,7 @@ ai-communication-2/     # AIコミュニケーション基礎Ⅱ の各回詳細
   week01.html           #   第1回 前期振り返り＆後期オリエンテーション
   week02.html           #   第2回 Gemini Notebookで自分のAIをさらに育てる
 it-passport-technology.html   # ITパスポート テクノロジー系（水1・2限／後期。授業内容確定済み、週ページ未作成）
-system-dev-practice-a2.html   # システム開発実習AⅡ（水3・4限／後期。新設科目、枠組みのみ）
+system-dev-practice-a2.html   # システム開発実習AⅡ（水3・4限／後期。授業内容確定済み、週ページ未作成）
 ai-programming-2.html   # AI活用プログラミング基礎Ⅱ（木1・2限／後期。授業内容確定済み、週ページ順次作成中）
 ai-programming-2/       # AI活用プログラミング基礎Ⅱ の各回詳細ページ
   week01.html           #   第1回 前期振り返り＆後期オリエンテーション
@@ -141,7 +141,7 @@ content/                # Markdownソース（コピーボタン用。全HTMLペ
 | 科目 | 親ページ | テーマ色 | 曜日・時限 | 対象 |
 |------|---------|---------|-----------|------|
 | ITパスポート テクノロジー系 | `it-passport-technology.html` | `page-header--amber` | 水1・2限 | グローバルIT 2年次（全員が外国人留学生） |
-| システム開発実習AⅡ | `system-dev-practice-a2.html` | `page-header--brown` | 水3・4限 | 調整中（新設科目） |
+| システム開発実習AⅡ | `system-dev-practice-a2.html` | `page-header--brown` | 水3・4限 | IT・情報処理専攻(システム) 2年次 |
 | システム開発B | `java-teamdev.html` | `page-header--indigo` | 土1・2限 | グローバルIT 2年次 |
 | プログラミング基礎II(Java) | `java-basics-2.html` | `page-header--pink` | 土3・4限 | グローバルIT 1年次 |
 
