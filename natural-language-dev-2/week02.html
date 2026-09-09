@@ -167,11 +167,15 @@
               <li>90日間は全16回の授業期間（9月〜1月）より短いため、<strong>本科目ではGoogle Cloud側の有料アカウントへの切り替えは行わない</strong></li>
               <li>第13回頃までにFirebase・Cloud Run・Firestoreの実操作を終える計画とし、トライアル終了が近づいたら動作の記録（スクリーンショット・実行ログ・録画）を残す運用にする（詳しくは第12・13回で扱う）</li>
             </ul>
-            <p><strong>$300クレジットが使えない場面（参考）</strong></p>
+            <p><strong>$300クレジットが使えない場面</strong></p>
             <ul>
               <li>AI Studio の Gemini API の費用、マネージドAPIとして提供される生成AIパートナーモデル（Model as a Service）には使えない（Google公式）</li>
+              <li>この「Model as a Service」には、AIエージェントで使う<strong>Claude（Anthropic）</strong>へのアクセスも含まれる。つまり、今日作ったGoogle Cloudアカウントの$300クレジットだけでは、Claude Codeの利用料はまかなえない</li>
               <li>GPUの追加、Google Cloud Marketplaceの利用、割り当ての増加リクエストなど、一部の操作は無料トライアル中は制限される（Google公式）——本科目で使うFirebase・Cloud Run・Firestoreの基本操作には影響しない</li>
             </ul>
+            <div class="lesson-tip">
+              <strong>だからこそ次回、自分に合うAIエージェントを選ぶ:</strong> 既にClaude契約（Claude Pro等）やChatGPTアカウントがある人はそのまま使えます。いずれの契約もない人は、個人のクレジットカードでAmazon Bedrockに登録すればClaudeにアクセスできる選択肢もあります（第3回で対象者のみ案内）。どうしても難しい人はAntigravity CLI（agy）——Googleアカウントの認証のみで追加契約不要——を使います。本科目は特定のAIエージェントを使わせることが目的ではなく、<strong>自分の状況に合ったコーディングAIエージェントと協働する経験そのもの</strong>を大切にします。
+            </div>
           </div>
         </div>
 
