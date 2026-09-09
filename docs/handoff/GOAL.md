@@ -25,7 +25,7 @@ updated: 2026-09-08 (セッション2)
 - [x] AI活用プログラミング基礎Ⅱ week01作成（前期振り返り、Google AI Studio/Antigravity CLI紹介、PR #173, #176）
 - [x] AI活用プログラミング基礎Ⅱ week02作成（教室で学生がGitHub未経験と判明したためGit/GitHub基礎・アカウント準備・組織アカウント説明・Codespaces観察に全面再設計、比較図解/フロー図解コンポーネント新規、PR #177）。week03以降は未作成
 - [x] 自然言語開発Ⅱ（木3・4限）授業内容確定（Google Cloud実アカウント→Firebase/Cloud Run/Firestore、Amazon Bedrock経由Claude Code→進級制作統合、CLI駆動運用・Playwright MCP・clasp、全16回、PR #171）。GCPの$300無料クレジットはClaude等Managed APIパートナーモデルの対象外と判明したため、Claude接続はAWS Bedrockへ設計転換（学生にはAWS新規特典判定・実費発生リスクを開示、PR #174）。両クラウドとも有料化は回避しトライアル/クレジット期間内で実操作を完結する設計
-- [x] 自然言語開発Ⅱ week01作成（前期振り返り、AWS Bedrock接続の予告・リスク開示、PR #174）。week02以降は未作成
+- [x] 自然言語開発Ⅱ week01作成（前期振り返り、AWS Bedrock接続の予告・リスク開示、PR #174）
 - [x] 自然言語開発Ⅱ week01 実施（2026-09-03）。教室で学生の契約状況が判明: 一部はClaude/ChatGPT契約済み、Claude Code使用経験者もいた。**当初計画（Claude Code CLI主軸・AWS Bedrock必須接続）から、Claude Code / Codex / Antigravity CLIの複合運用（契約状況に応じて選択、どれも不可ならAntigravity）へ現場判断で転換**。AWS登録も「注意点を伝えた上で対応可能な学生のみ実施」に緩和（全員必須ではない）。少人数・基本自律のため講師は机間巡視型。作成テーマはゲーム/ECサイト等のインスタント制作、やや高難度課題も検討中
 - [x] 自然言語開発Ⅱ 複合運用を正式カリキュラムとして教材へ反映（2026-09-03、親ページ・content/md・week01.html・index.htmlの4ファイル）。事実確認: Codex CLIは公式の機能比較表でPlus（$20/月〜）以上のプランでの利用が明記されており、Freeプランでの動作は保証されていない（一次ソース: learn.chatgpt.com/docs/pricing、Playwright実レンダリングで確認）。Antigravity CLI（agy）はGoogleアカウント認証のみで追加契約不要。pr-review-toolkit（code-reviewer+comment-analyzer）並列レビューでCritical 3件・Important 4件を検出・全修正（Codex Free断定の誤り、第6/7/9/13回セルのClaude Code限定表現残留、content/md同期漏れ、index.html旧記述等）
 - [x] システム開発B・プログラム基礎Ⅱ(Java)（土曜、既存ページ流用）の後期時間割への統合内容確認（`index.html`後期パネルで`java-teamdev.html`/`java-basics-2.html`双方のリンクを確認済み）
@@ -35,6 +35,7 @@ updated: 2026-09-08 (セッション2)
 - [x] AIコミュニケーション基礎Ⅱ week02をさらに再設計——「学習ガイドでAntigravity CLIを理解する」回に（PR #189）。ユーザー指摘: 依然Gemini Notebook汎用機能ツアーが中心でagy言及が最後30分のみと偏っていた。1限=公式Antigravity CLI Overviewをソース追加し学習ガイドスタイルで概念理解、2限前半=Codespacesを再開しagyに改めて触れる、2限後半=指示メモ更新、に全面再設計。ユーザー確認で「学生は第1回で自分の手でCodespaces起動・agy利用済み」と判明し、week01.html（従来「教員デモのみ」と記述）を実態に合わせて「全員一斉ガイドでのハンズオン」に同時書き換え。**codex review 4ラウンド実施**でP1×1・P2×5を検出・全解決（week01/週02の前提矛盾、GitHub Codespaces公式仕様の誤り「起動のたびに新環境」→正しくはresumeで環境保持・既定30日間削除されない、week01 nav残留、week02内「前回学んだ」の虚偽前提2箇所、ゴール文言が例外対応を必須目標のように記載、親ページWeek1行の正本原則違反）。**保留・別途相談**: week01で第1回にCodespaces/agy一式を前倒ししたため、親ページ第3回「Codespaces入門①」・第4回「Codespaces入門②/agy起動」の記述と内容重複（週ページ未作成のため実害はまだ無い）
 - [ ] プログラム基礎Ⅱ・AIコミュニケーション基礎Ⅱのweek03以降 — 実施日が近づいた回から順次（未分解）
 - [x] AIコミュニケーション基礎Ⅱ 第3回・第4回の親ページ記述見直し（2026-09-09）。ユーザー相談の結果、第3回「ターミナルってなんだろう？」（`ls`/`cd`/`pwd`等の基本コマンドとディレクトリ構造の考え方）、第4回「良い指示・悪い指示を見分ける」（曖昧/具体的な指示の比較ワーク＋第2回の指示メモをブラッシュアップし第5回に備える）に再設計。親ページ・content/md の2ファイルを同期更新。週ページ未作成のため実害なし
+- [x] 自然言語開発Ⅱ week02作成（2026-09-09、明日9/10・第2回に向けて作成。「Google Cloudアカウントを作ろう」——$300分・90日間の無料クレジット、登録時の一時的な保留、90日経過/クレジット使い切り時の自動閉鎖と30日間の復元猶予期間、Budgets & Alertsの場所確認、PR #194）。codex review（high）+ pr-review-toolkit（code-reviewer/comment-analyzer）並列レビューを実施。code-reviewerがImportant 1件検出: 承認リクエスト（保留）の解除期間を「数日〜1か月以内」（free-cloud-featuresページの一般記述）と書いていたが、この質問に直接答えるcloud.google.com/signup-faqsは「銀行により異なるが1〜14営業日」とより具体的に明記（Playwrightでアコーディオンを展開し本文を直接確認）。両者は矛盾ではなくsignup-faqsがより精密なため、そちらの文言に統一して修正。comment-analyzerはCritical 0件、事実確認は全項目公式ソースと一致
 
 ## 🔄 中断点（in-flight）
 なし
