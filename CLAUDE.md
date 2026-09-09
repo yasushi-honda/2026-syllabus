@@ -102,6 +102,7 @@ ai-programming-2/       # AI活用プログラミング基礎Ⅱ の各回詳細
 natural-language-dev-2.html   # 自然言語開発Ⅱ（木3・4限／後期。授業内容確定済み、週ページ順次作成中）
 natural-language-dev-2/       # 自然言語開発Ⅱ の各回詳細ページ
   week01.html           #   第1回 前期振り返り＆後期オリエンテーション
+  week02.html           #   第2回 Google Cloudアカウントを作ろう
 styles.css              # 共通スタイル（Editorial Paper Edition ライトテーマ）
 app.js                  # Markdownコピー等
 favicon.svg             # ファビコン

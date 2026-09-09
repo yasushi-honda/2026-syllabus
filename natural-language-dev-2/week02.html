@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第2回 Google Cloudアカウントを作ろう | 自然言語開発 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=4">
+  <!-- 公式情報確認: 2026-09-09 (cloud.google.com/free / cloud.google.com/signup-faqs / cloud.google.com/free/docs/free-cloud-features / cloud.google.com/billing/docs/how-to/budgets、Playwright実レンダリングでcloud.google.com/free/docs/free-cloud-features本文を直接確認) -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev-2.html">自然言語開発 II</a>
+        <span>/</span>
+        <span>第2回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">Google Cloud<wbr>アカウントを作ろう</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 2</span>
+            <span class="page-badge">木曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">個人のクレジットカードでGoogle Cloud無料トライアルに登録し、$300分・90日間の無料クレジットの仕組みを理解する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">Google Cloud無料トライアル / $300ウェルカムクレジット / 90日間 / 自動クローズ / Budgets &amp; Alerts</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">個人のクレジットカード（第1回の課題で準備済み）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>Google Cloudの<strong>無料トライアル</strong>に個人のクレジットカードで登録できる</li>
+        <li>$300分・<strong>90日間の無料クレジット</strong>（Welcome credit）の仕組みと、対象条件を理解する</li>
+        <li>登録時にクレジットカードへ発生する「一時的な保留」が<strong>実際の請求ではない</strong>ことを理解し、安心して登録できる</li>
+        <li>トライアル終了時（90日経過またはクレジット使い切り）に<strong>自動的にアカウントが閉鎖される</strong>仕組みを理解し、本科目では有料アカウントへの切り替えを行わない方針を確認する</li>
+        <li>Cloud請求レポートとBudgets &amp; Alertsの場所を知る</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>今日はGoogle Cloudアカウントを作る</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り</strong></p>
+            <ul>
+              <li>後期のゴール——<strong>Google Cloud実アカウントを使ったクラウドネイティブ開発</strong>——を思い出す</li>
+              <li>今日から実際にGoogle Cloudアカウントを作り、Firebase・Cloud Run・Firestoreへの入り口に立つ</li>
+            </ul>
+            <p><strong>クレジットカードが必要な理由と安心材料</strong></p>
+            <ul>
+              <li>登録には有効なクレジットカード（または他の支払い方法）が必須。国によっては銀行口座の確認が必要になる場合もある（Google公式）</li>
+              <li>登録完了後、支払い情報を確認するための<strong>承認リクエスト（信用照会）</strong>が発生する。これは<strong>一時的な保留</strong>であり、金額は<strong>$0.00〜$1.00程度</strong>、<strong>実際の請求ではない</strong>（Googleによる引き落としは行われない）。<strong>銀行により異なるが1〜14営業日ほどで解除される</strong>（14日を過ぎても保留が残る場合は銀行に確認）（Google公式）</li>
+              <li>この保留は「本人確認」「不正行為の防止」「無料トライアルアカウントの作成」のために使われる（Google公式）</li>
+            </ul>
+            <p><strong>無料トライアルの対象条件</strong></p>
+            <ul>
+              <li>以下の<strong>両方</strong>を満たす人が対象:「①過去にGoogle Cloud・Google Maps Platform・Firebaseを<strong>有料</strong>で利用したことがない」「②過去にこの無料トライアルに登録したことがない」（Google公式）</li>
+              <li>ほとんどの人は初めての登録で対象になるはずだが、心当たりがある人は登録前に担当教員に相談する</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>実際に登録する</h3>
+          <div class="timeline-body">
+            <p><strong>無料トライアルへの登録</strong></p>
+            <ul>
+              <li><a href="https://console.cloud.google.com/" target="_blank" rel="noopener">console.cloud.google.com</a> にアクセスし、Googleアカウントでログインする（前期から使っている個人のGoogleアカウントでよい）</li>
+              <li>案内に沿って個人情報・クレジットカード情報を入力し、登録を完了する</li>
+              <li>登録が完了すると<strong>「My First Project」</strong>という名前の新しいプロジェクトと、<strong>「My Billing Account」</strong>という名前の無料トライアルの請求先アカウントが自動的に作られる（Google公式）</li>
+            </ul>
+            <p><strong>$300クレジットを確認する</strong></p>
+            <ul>
+              <li>Cloud請求レポート画面で、$300分のウェルカムクレジットが表示されていることを確認する</li>
+              <li>「無料トライアル期間中は課金されない」「自動請求は行われず契約も不要」であることを画面上でも確認する（Google公式）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>保留が表示されても慌てない:</strong> カード明細やアプリの通知に「Google」からの少額（$0.00〜$1.00）の保留が表示されることがありますが、これは確認のための一時的なものです。銀行によって異なりますが1〜14営業日ほどで自然に消えます（14日を過ぎても残っている場合は銀行に確認しましょう）。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>コンソールを探検する</h3>
+          <div class="timeline-body">
+            <p><strong>クレジット残高・残り日数の確認場所</strong></p>
+            <ul>
+              <li>Cloud請求レポートで、$300クレジットの残高と無料トライアルの残り日数を確認できることを確かめる</li>
+            </ul>
+            <p><strong>Budgets &amp; Alerts を試しに設定してみる</strong></p>
+            <ul>
+              <li>コスト管理画面（<strong>Budgets &amp; Alerts</strong>）の場所を確認し、低めのしきい値（例: $5）で予算アラートを1つ作ってみる</li>
+              <li>今日は「場所を知って触ってみる」ところまで。本格的な活用は第12回で扱う</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>アラートは通知のみ:</strong> Budgets &amp; Alertsのしきい値に達しても、支出や課金が自動的に止まるわけではありません。あくまで「知らせてくれる」機能です（第12回で詳しく扱います）。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>90日間トライアルのルールを理解する</h3>
+          <div class="timeline-body">
+            <p><strong>トライアル終了時の挙動</strong></p>
+            <ul>
+              <li>90日が経過するか、$300クレジットを使い切ると、無料トライアルの請求先アカウントは<strong>自動的に閉鎖</strong>される（自動的に有料課金が始まるわけではない）（Google公式）</li>
+              <li>閉鎖後は<strong>30日間の復元猶予期間</strong>があり、この間に有料アカウントへアップグレードすればリソースを復元できる可能性がある。猶予期間を過ぎるとリソースは完全に削除される（Google公式）</li>
+            </ul>
+            <p><strong>本科目での方針</strong></p>
+            <ul>
+              <li>90日間は全16回の授業期間（9月〜1月）より短いため、<strong>本科目ではGoogle Cloud側の有料アカウントへの切り替えは行わない</strong></li>
+              <li>第13回頃までにFirebase・Cloud Run・Firestoreの実操作を終える計画とし、トライアル終了が近づいたら動作の記録（スクリーンショット・実行ログ・録画）を残す運用にする（詳しくは第12・13回で扱う）</li>
+            </ul>
+            <p><strong>$300クレジットが使えない場面（参考）</strong></p>
+            <ul>
+              <li>AI Studio の Gemini API の費用、マネージドAPIとして提供される生成AIパートナーモデル（Model as a Service）には使えない（Google公式）</li>
+              <li>GPUの追加、Google Cloud Marketplaceの利用、割り当ての増加リクエストなど、一部の操作は無料トライアル中は制限される（Google公式）——本科目で使うFirebase・Cloud Run・Firestoreの基本操作には影響しない</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告＆今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>次回（第3回）: <strong>AIエージェントを選ぼう（AWS登録は対象者のみ）</strong>——Claude Code／Codex CLI／Antigravity CLIから自分が使うものを決める</li>
+              <li>「Google Cloudアカウント作成で感じたこと」を一言メモして退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>Google Cloudアカウントの登録を完了させておく</strong>
+            <p>授業内で完了しなかった場合は、家で続きを行い、$300クレジットが表示されていることまで確認してください。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>自分の契約状況を確認しておく</strong>
+            <p>Claude契約（Claude Pro等）やChatGPTアカウントを持っているかどうかを確認しておいてください。第3回で使うAIエージェントを決めます。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://cloud.google.com/free" target="_blank" rel="noopener">Free Trial and Free Tier Services and Products | Google Cloud</a> — $300クレジット・90日間の無料トライアルの公式概要</li>
+        <li><a href="https://cloud.google.com/free/docs/free-cloud-features" target="_blank" rel="noopener">Free Google Cloud features and trial offer | Google Cloud Free Program | Google Cloud Documentation</a> — 対象条件・登録手順・トライアル終了時の挙動（30日間の復元猶予期間を含む）の公式詳細</li>
+        <li><a href="https://cloud.google.com/signup-faqs" target="_blank" rel="noopener">Google Cloud Free Trial FAQs | Google Cloud</a> — 登録に関するよくある質問（公式）</li>
+        <li><a href="https://cloud.google.com/billing/docs/how-to/budgets" target="_blank" rel="noopener">Create, edit, or delete budgets and budget alerts | Cloud Billing | Google Cloud Documentation</a> — 今日触れたBudgets &amp; Alertsの公式ドキュメント（本格活用は第12回）</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week01.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第1回 前期振り返り＆後期オリエンテーション</span>
+      </a>
+      <a href="../natural-language-dev-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">自然言語開発 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第3回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
