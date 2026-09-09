@@ -103,6 +103,7 @@ natural-language-dev-2.html   # 自然言語開発Ⅱ（木3・4限／後期。�
 natural-language-dev-2/       # 自然言語開発Ⅱ の各回詳細ページ
   week01.html           #   第1回 前期振り返り＆後期オリエンテーション
   week02.html           #   第2回 Google Cloudアカウントを作ろう
+autumn-intensive.html   # 秋の集中講座（時間割枠外・後期スピンオフ企画・全5日間。授業内容確定済み、日別詳細ページ未作成）
 styles.css              # 共通スタイル（Editorial Paper Edition ライトテーマ）
 app.js                  # Markdownコピー等
 favicon.svg             # ファビコン
@@ -112,7 +113,7 @@ content/                # Markdownソース（コピーボタン用。全HTMLペ
 
 ## 運用ルール
 - 全科目共通のデザイン・レイアウトを維持する
-- 科目ごとのテーマカラー: blue(プログラム基礎), purple(AIコミュ), green(自然言語開発), orange(AI活用プログラミング), red/pink(Java基礎I/II), teal/indigo(Javaプログラミング/システム開発B), amber(ITパスポート テクノロジー系), brown(システム開発実習AⅡ)。Ⅱ系の継続科目は前期の対応科目と同じ色を引き継ぐ
+- 科目ごとのテーマカラー: blue(プログラム基礎), purple(AIコミュ), green(自然言語開発), orange(AI活用プログラミング), red/pink(Java基礎I/II), teal/indigo(Javaプログラミング/システム開発B), amber(ITパスポート テクノロジー系), brown(システム開発実習AⅡ), slate(秋の集中講座)。Ⅱ系の継続科目は前期の対応科目と同じ色を引き継ぐ
 - HTML変更時は対応するcontent/*.mdも同期する
 - `index.html` は前期/後期の2つの時間割グリッド（`.semester-panel[data-semester="first"|"second"]`）を持つ。初期表示は後期。科目を追加・変更する際は該当する学期のグリッドのみを更新し、もう一方の学期には影響させない
 
@@ -145,6 +146,7 @@ content/                # Markdownソース（コピーボタン用。全HTMLペ
 | システム開発実習AⅡ | `system-dev-practice-a2.html` | `page-header--brown` | 水3・4限 | IT・情報処理専攻(システム) 2年次 |
 | システム開発B | `java-teamdev.html` | `page-header--indigo` | 土1・2限 | グローバルIT 2年次 |
 | プログラミング基礎II(Java) | `java-basics-2.html` | `page-header--pink` | 土3・4限 | グローバルIT 1年次 |
+| 秋の集中講座 | `autumn-intensive.html` | `page-header--slate` | 時間割枠外（全5日間） | IT・情報処理専攻(システム) 1〜3年次（学年混成チーム） |
 
 - **木曜日は前期と時限が入れ替わる**（前期: 1-2限 自然言語開発 / 3-4限 AI活用プログラミング基礎 → 後期: 1-2限 AI活用プログラミング基礎Ⅱ / 3-4限 自然言語開発Ⅱ）。意図的な差異であり、前期側の並びに揃えない
 - 土曜2科目（システム開発B・プログラミング基礎II(Java)）は前期時点で既に完成済みだったページを流用している
