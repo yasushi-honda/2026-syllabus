@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="styles.css?v=5">
   <!-- 公式情報確認: 2026-09-04 (cloud.google.com/free / cloud.google.com/signup-faqs / docs.cloud.google.com/free/docs/free-cloud-features / code.claude.com/docs/en/amazon-bedrock / aws.amazon.com/free/terms / aws.amazon.com/free/registration-faqs / aws.amazon.com/about-aws/whats-new/2025/07/aws-free-tier-credits-month-free-plan / docs.aws.amazon.com/bedrock/latest/userguide/model-access.html / docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html / docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-budgets-budgetsaction.html / cloud.google.com/vertex-ai/generative-ai/docs/data-governance / docs.cloud.google.com/sdk/gcloud/reference/firestore / github.com/microsoft/playwright-mcp / github.com/google/clasp / developers.openai.com/codex/pricing / learn.chatgpt.com/docs/pricing / antigravity.google/docs/cli/install / antigravity.google/pricing) -->
   <!-- 公式情報再確認: 2026-09-09 (Playwright実レンダリングで直接確認) docs.aws.amazon.com/bedrock/latest/userguide/model-access.html — Bedrockのモデルアクセスは「モデルごとに手動リクエスト→承認待ち」から「既定で有効、Anthropicモデルのみ初回Use caseフォーム送信で即座にアクセス可」という仕組みに変更されていたため本文修正。docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html — Budgetsの8-12時間タイムラグの記述は現在も正確と確認 -->
-  <!-- 公式情報確認: 2026-09-10 (learn.chatgpt.com/docs/custom-prompts / learn.chatgpt.com/docs/agent-approvals-security / antigravity.google/docs/cli/best-practices / antigravity.google/docs/cli/modes / antigravity.google/docs/cli/plugins) — 第4回にハーネス（AGENTS.md）・スキル・auto mode相当設定の3エージェント横断解説を追加。「full-auto」は現行のCodex CLI公式docに用語が存在しないため使用せず、config.tomlのapproval_policy/sandbox_modeで表記 -->
+  <!-- 公式情報確認: 2026-09-10 (learn.chatgpt.com/docs/custom-prompts / learn.chatgpt.com/docs/agent-approvals-security / antigravity.google/docs/cli/best-practices / antigravity.google/docs/cli/modes / antigravity.google/docs/cli/plugins / agents.md / learn.chatgpt.com/docs/agent-configuration/agents-md / learn.chatgpt.com/docs/build-skills / code.claude.com/docs/en/memory) — 第4回にハーネス（AGENTS.md）・スキル・auto mode相当設定の3エージェント横断解説を追加。「full-auto」は現行のCodex CLI公式docに用語が存在しないため使用せず、config.tomlのapproval_policy/sandbox_modeで表記。AGENTS.mdがオープン標準でありCodex CLI・Antigravity CLIが直接読み、Claude Codeもimportで読める、という主張はagents.md／learn.chatgpt.com/docs/agent-configuration/agents-md／code.claude.com/docs/en/memoryの3ソースで裏付け -->
 
 </head>
 <body>
@@ -148,11 +148,15 @@
         <li>Amazon Web Services — Bedrockモデルアクセス公式ドキュメント（docs.aws.amazon.com）</li>
         <li>OpenAI — ChatGPT Pricing 公式ドキュメント（learn.chatgpt.com、Codexプラン要件を含む）</li>
         <li>Google — Antigravity CLI Installation &amp; Auth 公式ドキュメント（antigravity.google）</li>
+        <li>agents.md — AGENTS.md 公式サイト（agents.md、オープン標準・Linux Foundation傘下のAgentic AI Foundationによる運営について）</li>
+        <li>OpenAI — Custom instructions with AGENTS.md 公式ドキュメント（learn.chatgpt.com、Codex CLIのAGENTS.mdネイティブサポートについて）</li>
         <li>OpenAI — Custom Prompts 公式ドキュメント（learn.chatgpt.com、Skillsへの移行方針を含む）</li>
+        <li>OpenAI — Build skills 公式ドキュメント（learn.chatgpt.com、SKILL.mdの形式について）</li>
         <li>OpenAI — Agent approvals &amp; security 公式ドキュメント（learn.chatgpt.com、承認ポリシー・サンドボックスモード）</li>
-        <li>Google — Best Practices（Antigravity CLI）公式ドキュメント（antigravity.google、AGENTS.md/GEMINI.mdについて）</li>
+        <li>Anthropic — How Claude remembers your project 公式ドキュメント（code.claude.com、Claude CodeによるAGENTS.mdのimportについて）</li>
+        <li>Google — Best practices for Antigravity CLI 公式ドキュメント（antigravity.google、AGENTS.md/GEMINI.mdについて）</li>
         <li>Google — Choose an execution mode（Antigravity CLI）公式ドキュメント（antigravity.google、実行モードについて）</li>
-        <li>Google — Plugins &amp; Skills（Antigravity CLI）公式ドキュメント（antigravity.google、Skillsについて）</li>
+        <li>Google — Plugins &amp; skills（Antigravity CLI）公式ドキュメント（antigravity.google、Skillsについて）</li>
         <li>Microsoft — Playwright MCP 公式リポジトリ（github.com/microsoft/playwright-mcp）</li>
         <li>Google — clasp（Command Line Apps Script Projects）公式リポジトリ（github.com/google/clasp）</li>
       </ul>
