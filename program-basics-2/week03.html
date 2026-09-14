@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第3回 データを扱う基礎②：フォーム入力を受け取る | プログラム基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=5">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--blue">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../program-basics-2.html">プログラム基礎 II</a>
+        <span>/</span>
+        <span>第3回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">データを扱う基礎②：<wbr>フォーム入力を受け取る</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 3</span>
+            <span class="page-badge">火曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value"><code>&lt;input&gt;</code>要素から値を取得する方法、簡単なバリデーション。第2回でオブジェクトの配列に発展させた<code>list.html</code>に、フォームから新しい項目を追加できる機能を作り、ユーザーの入力に応じて画面を変化させる練習をする</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value"><code>&lt;input&gt;</code>要素 / <code>.value</code> / <code>addEventListener</code> / 配列への<code>push</code> / 再描画 / 簡単なバリデーション</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第2回で「オブジェクトの配列」版に書き換えた<code>list.html</code>にアクセスできる状態。<strong>見当たらない・書き換えが終わっていない人</strong>は、下記「1限前半」の完成版テンプレートをコピーして使ってよい</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li><code>&lt;input&gt;</code>要素の<strong><code>.value</code></strong>プロパティで、ユーザーが入力した文字列を取得できる</li>
+        <li><code>addEventListener</code>で<strong>ボタンのクリック</strong>をきっかけに、入力値を読み取る処理を書ける</li>
+        <li>読み取った値を<strong>配列に<code>push</code></strong>し、画面を<strong>再描画</strong>できる</li>
+        <li>空欄のまま送信しようとした場合に処理を止める、<strong>簡単なバリデーション</strong>を書ける</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>「毎回コードを書き換える」の面倒さから、フォームの必要性に気づく</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り（10分）</strong></p>
+            <ul>
+              <li>第2回で<code>list.html</code>の<code>favorites</code>配列を「文字列の配列」から「オブジェクトの配列」に発展させたことを思い出す</li>
+              <li>新しいお気に入りを1つ増やしたいとき、これまでは<strong>コードを直接書き換えていた</strong>ことを確認する</li>
+            </ul>
+            <p><strong><code>list.html</code>を開き直す（10分）</strong></p>
+            <ul>
+              <li><code>python3 -m http.server 8000</code>を起動し、第1回（前期）と同じ手順で「ポート」タブ→「エディターでプレビュー」→ Simple Browserを開く</li>
+              <li><code>index.html</code>から<code>list.html</code>に移動する（アドレスバーの末尾を<code>/list.html</code>に書き換えてもよい）</li>
+              <li>第2回で書いた<code>favorites</code>配列（オブジェクトの配列）と<code>for</code>文の再描画部分を見直す</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong><code>list.html</code>が見当たらない・第2回の書き換えが終わっていない人へ:</strong> 下のテンプレートをコピーして<code>list.html</code>の中身をまるごと置き換えてください。第2回終了時点の完成形（オブジェクトの配列で4項目を表示する状態）です。
+            </div>
+            <button class="copy-md-btn" data-md-source="list-html-week2-complete-template">
+              <span class="btn-icon"></span> list.htmlの雛形（第2回完成版）をコピー
+            </button>
+<pre id="list-html-week2-complete-template" class="md-preview">&lt;!DOCTYPE html&gt;
+&lt;html lang="ja"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;お気に入りリスト&lt;/title&gt;
+  &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;私のお気に入り&lt;/h1&gt;
+  &lt;ul id="favorite-list"&gt;&lt;/ul&gt;
+  &lt;p&gt;&lt;a href="index.html"&gt;トップに戻る&lt;/a&gt;&lt;/p&gt;
+
+  &lt;script&gt;
+    const favorites = [
+      { category: "好きな食べ物", value: "カレー", reason: "辛いものが好きだから" },
+      { category: "好きな色",     value: "青",     reason: "空の色だから" },
+      { category: "好きな音楽",   value: "J-POP",  reason: "歌詞が心に残るから" },
+      { category: "好きな場所",   value: "図書館", reason: "静かで集中できるから" }
+    ];
+
+    const ul = document.getElementById("favorite-list");
+
+    for (let i = 0; i &lt; favorites.length; i++) {
+      const li = document.createElement("li");
+      li.textContent = `${favorites[i].category}：${favorites[i].value}（${favorites[i].reason}）`;
+      ul.appendChild(li);
+    }
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+            <p><strong>今日の目標を共有する（20分）</strong></p>
+            <ul>
+              <li>「新しいお気に入りを増やしたいとき、コードを書き換えずに済ませたい」という要求から、<strong>フォームから入力を受け取る</strong>という今日のテーマにつなげる</li>
+              <li>後期後半の作品づくり（ゲーム制作ならスコア入力・名前入力、ECサイト制作なら商品検索・数量入力）で必ず使う技術であることを共有する</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3><code>&lt;input&gt;</code>要素の基本を手で書く</h3>
+          <div class="timeline-body">
+            <p><strong><code>&lt;input&gt;</code>要素を画面に置く（15分）</strong></p>
+            <ul>
+              <li>Codespacesで新規ファイル<code>input-demo.html</code>を作り、下のコードを貼り付けて保存する</li>
+              <button class="copy-md-btn" data-md-source="input-demo-template">
+                <span class="btn-icon"></span> input-demo.htmlの雛形をコピー
+              </button>
+<pre id="input-demo-template" class="md-preview">&lt;!DOCTYPE html&gt;
+&lt;html lang="ja"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;inputのデモ&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;input type="text" id="name-input" placeholder="名前を入力"&gt;
+  &lt;button id="greet-btn"&gt;あいさつする&lt;/button&gt;
+  &lt;p id="greet-result"&gt;&lt;/p&gt;
+
+  &lt;script&gt;
+    document.getElementById("greet-btn").addEventListener("click", () =&gt; {
+      const name = document.getElementById("name-input").value;
+      document.getElementById("greet-result").textContent = `こんにちは、${name}さん！`;
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+              <li>Simple Browserで<code>/input-demo.html</code>を開き、名前を入力してボタンを押すと挨拶が表示されることを確認する</li>
+            </ul>
+            <p><strong>何が起きているか（15分）</strong></p>
+            <ul>
+              <li><code>&lt;input type="text" id="name-input"&gt;</code>——文字を入力できる部品。<code>id</code>で後からJavaScriptから取り出せるようにする</li>
+              <li><code>document.getElementById("name-input").value</code>——<strong><code>.value</code></strong>プロパティで、入力欄に<strong>今入っている文字列</strong>を取得できる。<code>.textContent</code>（表示テキストの読み書き）とは別物であることに注意</li>
+              <li><code>addEventListener("click", ...)</code>——前期第11回で学んだイベント処理と同じ仕組み。「ボタンが押された瞬間」に<code>.value</code>を読み取っている</li>
+            </ul>
+            <p><strong>演習：入力欄を増やしてみる（20分）</strong></p>
+            <ul>
+              <li><code>input-demo.html</code>に<code>&lt;input&gt;</code>をもう1つ追加し（例：好きな食べ物）、ボタンを押したときに2つの値を組み合わせて表示する</li>
+              <li>ヒント：<code>&lt;input&gt;</code>を追加する場合は<code>id</code>を別の名前にする（同じ<code>id</code>は使えない）</li>
+              <li>できた人は、入力欄を空のまま送信するとどう表示されるか試してみる（次のパートで扱う「バリデーション」の必要性を体感する）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3><code>list.html</code>にフォームを追加し、新しいお気に入りを追加できるようにする</h3>
+          <div class="timeline-body">
+            <p><strong>フォーム部分をHTMLに追加する（10分）</strong></p>
+            <ul>
+              <li><code>list.html</code>の<code>&lt;ul id="favorite-list"&gt;&lt;/ul&gt;</code>の<strong>直前</strong>に、以下を追加する：</li>
+              <pre><code>&lt;div&gt;
+  &lt;input type="text" id="input-category" placeholder="カテゴリ（例：好きな食べ物）"&gt;
+  &lt;input type="text" id="input-value" placeholder="内容（例：カレー）"&gt;
+  &lt;input type="text" id="input-reason" placeholder="理由（例：辛いから）"&gt;
+  &lt;button id="add-btn"&gt;追加する&lt;/button&gt;
+&lt;/div&gt;</code></pre>
+            </ul>
+            <p><strong>再描画をひとつの関数にまとめる（15分）</strong></p>
+            <ul>
+              <li>第2回で書いた<code>for</code>文の再描画部分を、<strong>何度でも呼び出せる関数<code>render</code></strong>にまとめる。まず<code>&lt;ul&gt;&lt;/ul&gt;</code>の中身を空にしてから描き直す点がポイント：</li>
+              <pre><code>const ul = document.getElementById("favorite-list");
+
+function render() {
+  ul.innerHTML = "";
+  for (let i = 0; i &lt; favorites.length; i++) {
+    const li = document.createElement("li");
+    li.textContent = `${favorites[i].category}：${favorites[i].value}（${favorites[i].reason}）`;
+    ul.appendChild(li);
+  }
+}
+
+render();</code></pre>
+              <li>保存してSimple Browserを更新——書き換え前と同じ一覧が表示されれば成功（<code>render()</code>を1回呼んでいるだけなので、見た目は変わらない）</li>
+            </ul>
+            <p><strong>「追加する」ボタンの処理を書く（25分）</strong></p>
+            <ul>
+              <li><code>render()</code>関数の下に、以下を追加する：</li>
+              <pre><code>document.getElementById("add-btn").addEventListener("click", () =&gt; {
+  const category = document.getElementById("input-category").value;
+  const value = document.getElementById("input-value").value;
+  const reason = document.getElementById("input-reason").value;
+
+  favorites.push({ category, value, reason });
+  render();
+});</code></pre>
+              <li>3つの入力欄に値を入れて「追加する」を押し、一覧に新しい項目が増えることを確認する</li>
+              <li><code>{ category, value, reason }</code>は<code>{ category: category, value: value, reason: reason }</code>の省略記法——変数名とキー名が同じときに使える書き方であることを紹介する</li>
+              <li>うまく動かないときはF12→Consoleタブでエラーを確認。よくあるミス：<code>id</code>のスペルミス、<code>render</code>の呼び出し忘れ</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>簡単なバリデーションを追加する</h3>
+          <div class="timeline-body">
+            <p><strong>空欄のまま追加できてしまう問題を確認する（5分）</strong></p>
+            <ul>
+              <li>入力欄を空のまま「追加する」を押すと、空っぽの項目が一覧に増えてしまうことを確認する</li>
+            </ul>
+            <p><strong><code>if</code>文で入力チェックを追加する（20分）</strong></p>
+            <ul>
+              <li>前期第7回で学んだ<code>if</code>文を使い、<code>category</code>と<code>value</code>が空文字列でないかを確認してから<code>push</code>する：</li>
+              <pre><code>document.getElementById("add-btn").addEventListener("click", () =&gt; {
+  const category = document.getElementById("input-category").value;
+  const value = document.getElementById("input-value").value;
+  const reason = document.getElementById("input-reason").value;
+
+  if (category === "" || value === "") {
+    alert("カテゴリと内容は入力してください");
+    return;
+  }
+
+  favorites.push({ category, value, reason });
+  render();
+
+  document.getElementById("input-category").value = "";
+  document.getElementById("input-value").value = "";
+  document.getElementById("input-reason").value = "";
+});</code></pre>
+              <li><code>return;</code>——条件に一致したらそこで処理を止め、以降の<code>push</code>や<code>render</code>を実行させない</li>
+              <li>最後の3行——追加が成功したら入力欄を空文字列に戻す。次の入力をしやすくする工夫</li>
+              <li>空欄のまま送信するとアラートが出て追加されないこと、正しく入力すると追加され入力欄が空になることの両方を確認する</li>
+            </ul>
+            <p><strong>余裕があれば（5分）</strong></p>
+            <ul>
+              <li><code>reason</code>も必須にする、または「同じカテゴリは追加できないようにする」等、自分なりのチェックを追加してみる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ program-basics-2.html Week 4 「🎯ミニ完成① 保存できる作品を公開」と同期 -->
+              <li>次回（第4回）: <strong>🎯ミニ完成① 保存できる作品を公開</strong>——<code>localStorage</code>を使い、リロードしても消えないデータを持つ小さな作品を制作しGitHub Pagesに公開する。今日フォームから追加できるようにした仕組みが土台になる</li>
+              <li>今日のキーワード「<strong><code>.value</code></strong>」「<strong><code>addEventListener</code></strong>」「<strong>バリデーション</strong>」を口に出して言えるか確認して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>list.html</code>をフォームから追加できる状態にしてpushする</strong>
+            <p>授業内で完成しなかった人は家で仕上げ、3つの入力欄・「追加する」ボタン・空欄チェックが動く状態で公開URLを更新する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>自分なりのバリデーションを1つ追加してみる</strong>
+            <p><code>reason</code>を必須にする、文字数の上限を決める等、自由に工夫してみる。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/HTML/Reference/Elements/input" target="_blank" rel="noopener">MDN — &lt;input&gt;：入力欄要素</a> — 今日使った<code>&lt;input&gt;</code>要素の公式リファレンス</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/EventTarget/addEventListener" target="_blank" rel="noopener">MDN — EventTarget: addEventListener() メソッド</a> — ボタンクリックを検知する仕組みの公式リファレンス</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week02.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第2回 データを扱う基礎①：オブジェクトと配列の発展</span>
+      </a>
+      <a href="../program-basics-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">プログラム基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第4回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
