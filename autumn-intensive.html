@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="styles.css?v=5">
-  <!-- 公式情報確認: 2026-09-10 (antigravity.google/docs/cli/install / ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker/web_js / docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace / code.visualstudio.com/docs/debugtest/port-forwarding / developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia) -->
+  <!-- 公式情報確認: 2026-09-15 (antigravity.google/docs/cli/install / ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker/web_js / docs.github.com/ja/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace / docs.github.com/en/billing/.../about-billing-for-github-codespaces / developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia / github.com/google-antigravity/antigravity-cli/issues/10 / ai.google.dev/gemini-api/terms / ai.google.dev/gemini-api/docs/live-api / ai.google.dev/gemini-api/docs/pricing) -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -53,9 +53,10 @@
       <h2>授業概要</h2>
       <ul>
         <li>通常の時間割枠に入らない、後期のスピンオフ企画です。<strong>IT・情報処理専攻(システム) 1〜3年次の学年混成チーム</strong>（3〜4人 × 6チーム以上）で、5日間かけて<strong>AIエージェントと協働してWebアプリを開発</strong>します。</li>
-        <li>作るのは、<strong>自分たちのスマートフォンのカメラ</strong>を使うWebアプリです。PC側で<strong>Antigravity CLI（agy）</strong>を使ってAIエージェントに指示を出しながら開発し、VS Codeの<strong>ポート転送</strong>機能で公開したHTTPSのURLを、QRコードでチームメンバーのスマートフォンに配って開きます。</li>
+        <li>作るのは、<strong>自分たちのスマートフォンのカメラ</strong>を使うWebアプリです。チームで1つの<strong>GitHub Codespaces</strong>を起動し、<strong>Antigravity CLI（agy）</strong>を使ってAIエージェントに指示を出しながら開発します。他の科目（AIコミュニケーション基礎Ⅱ等）と同じ環境なので、操作に迷いにくいのが利点です。Codespacesの<strong>ポート転送</strong>機能で公開したHTTPSのURLを、QRコードでチームメンバーのスマートフォンに配って開きます。</li>
         <li>カメラ映像をブラウザで扱うには<strong>secure context（HTTPS）</strong>が必須です。「なぜHTTPSが要るのか」という制約に触れることが、Day1の重要な学びになります。</li>
-        <li>アプリに載せるAIは2種類から選べます。<strong>レシピA「その場で見るAI」</strong>は、MediaPipe Tasksを使い手や顔の動きをブラウザ内だけでリアルタイムに検出します（通信ほぼゼロ）。<strong>レシピB「考えるAI」</strong>は、撮った写真をPC上の簡易サーバ経由でGemini APIに送り、判定や説明を返します。<strong>APIキーは絶対にブラウザ側に置かない</strong>という、実務で最も重要な設計原則をここで体験します。あわせて、<strong>公開したURLを知っていれば誰でもサーバを呼び出せてしまいます</strong>。ブラウザに持たせる合言葉は通信を見れば誰でも取り出せるため<strong>本物のアクセス制限にはならない</strong>ことを確認し、代わりに<strong>サーバ側で呼び出し回数の上限（レート制限）を設ける</strong>など、被害を現実的に抑える工夫を一緒に作ります。</li>
+        <li>アプリに載せるAIは2種類から選べます。<strong>レシピA「その場で見るAI」</strong>は、MediaPipe Tasksを使い手や顔の動きをブラウザ内だけでリアルタイムに検出します（通信ほぼゼロ）。<strong>レシピB「考えるAI」</strong>は、撮った写真をCodespaces上の簡易サーバ経由で<strong>Google AI Studio</strong>（<code>aistudio.google.com</code>）で発行する無料のGemini APIキーを使ってGemini APIに送り、判定や説明を返します。<strong>APIキーは絶対にブラウザ側に置かない</strong>という、実務で最も重要な設計原則をここで体験します。あわせて、<strong>公開したURLを知っていれば誰でもサーバを呼び出せてしまいます</strong>。ブラウザに持たせる合言葉は通信を見れば誰でも取り出せるため<strong>本物のアクセス制限にはならない</strong>ことを確認し、代わりに<strong>サーバ側で呼び出し回数の上限（レート制限）を設ける</strong>など、被害を現実的に抑える工夫を一緒に作ります。<strong>無料のAPIキーで送信したデータはGoogleのサービス改善に使われ、人間のレビュアーが内容を確認する場合がある</strong>ため、他人の顔が写った画像を送る際のセキュリティ・プライバシー上の注意点として必ず共有します（公式: Gemini API Additional Terms of Service）。</li>
+        <li>時間に余裕があるチーム向けの<strong>発展的な選択肢（レシピC「お喋りAI」）</strong>として、Gemini Live APIを使ったリアルタイム音声対話アプリ（可愛いキャラクターのペルソナを設定する等）にも挑戦できます。ただしAPIキーをサーバ側で守りながら一時的なトークン（ephemeral token）を発行する、レシピBよりも難易度の高い構成が公式に推奨されているため、<strong>必須課題ではなく余力があるチームのみ</strong>の位置づけとします。</li>
         <li>学生のスマートフォンが学校のWi-Fiに接続できない環境も想定し、<strong>通信はモバイル回線でも成立する構成</strong>（インターネット経由のポート転送）を基本とします。撮影した画像はその場で圧縮してから送るなど、通信量を抑える工夫も学びます。</li>
         <li>撮影を伴う開発のため、<strong>肖像権・個人情報の取り扱いルール</strong>をDay1で必ず共有します。</li>
         <li>Day4に中間デモ、Day5に成果発表会を行い、<strong>他チームのスマートフォンで実際に動かしてもらう</strong>ことを目標にします。</li>
@@ -69,8 +70,9 @@
       <ol>
         <li>ブラウザでカメラ映像を扱うには、通信が暗号化された安全な環境（secure context / HTTPS）が必要であることを理解している。</li>
         <li>AIエージェント（Antigravity CLI）が、人間の指示をコードに変換して実行する仕組みの概要を理解している。</li>
-        <li>自分のPCで動かしたプログラムを、インターネット経由でスマートフォンから開く仕組み（ポート転送）の概要を理解している。</li>
+        <li>GitHub Codespaces上で動かしたプログラムを、インターネット経由でスマートフォンから開く仕組み（ポート転送）の概要を理解している。</li>
         <li>AIモデルのAPIキーを、ブラウザ側のコードに書いてはいけない理由を理解している。</li>
+        <li>無料のAPIキーで送信したデータが、サービス提供元の改善に使われる場合があることを理解している。</li>
         <li>チーム開発における役割分担（ドライバー／ナビゲーター）の意味を理解している。</li>
       </ol>
 
@@ -110,9 +112,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td class="week-num">1</td><td class="week-theme">つくる場所をつくる／スマホで開く</td><td>講座の狙いと5日間の流れを共有し、<strong>学年混成チーム</strong>を編成する（役割はドライバー／ナビゲーターの交代制）。<strong>撮影と個人情報の取り扱いルール</strong>を確認する。Antigravity CLI（agy）でAIエージェントに指示を出し、最小限のWebページを作る。VS Codeの<strong>ポート転送</strong>をPublicに設定（初回のみ<strong>GitHubアカウントでのサインイン</strong>が必要）して発行されたHTTPS URLをQRコードで配布し、各自のスマートフォンで自分の作ったページを開く。カメラを呼び出し映像が表示されるところまで進め、なぜHTTPS（secure context）が必要なのかを確認する。</td></tr>
+            <tr><td class="week-num">1</td><td class="week-theme">つくる場所をつくる／スマホで開く</td><td>講座の狙いと5日間の流れを共有し、<strong>学年混成チーム</strong>を編成する（役割はドライバー／ナビゲーターの交代制。チームで1つのリポジトリを作成し、その日のドライバーのアカウントで<strong>GitHub Codespaces</strong>を起動——翌日以降は同じCodespaceを<strong>再開（resume）</strong>して続ける）。<strong>撮影と個人情報の取り扱いルール</strong>を確認する。Antigravity CLI（agy）でAIエージェントに指示を出し、最小限のWebページを作る。Codespacesの<strong>ポート転送</strong>をPublicに設定して発行されたHTTPS URLをQRコードで配布し、各自のスマートフォンで自分の作ったページを開く。カメラを呼び出し映像が表示されるところまで進め、なぜHTTPS（secure context）が必要なのかを確認する。</td></tr>
             <tr><td class="week-num">2</td><td class="week-theme">カメラの中身をプログラムで触る</td><td>カメラ映像をcanvasに取り出し、静止画として扱う。色を変える・文字を重ねるなど簡単な加工を試す。<strong>AIレシピA「その場で見るAI」</strong>（MediaPipe Tasksによる手・顔・姿勢の検出）を体験し、検出結果に応じて画面を動かす。ここまでの体験を踏まえ、チームで作りたいものの種を出し合う。</td></tr>
-            <tr><td class="week-num">3</td><td class="week-theme">AIを載せる／設計を決める</td><td><strong>AIレシピB「考えるAI」</strong>（撮影した写真をPC上のサーバ経由でGemini APIへ送る構成）を体験する。<strong>APIキーをブラウザ側に置いてはいけない</strong>理由と、通信量を抑えるための画像の圧縮・縮小を確認する。あわせて、<strong>公開URLを知る誰でもサーバを呼び出せてしまう</strong>こと、ブラウザに持たせる合言葉だけでは本物のアクセス制限にならないことに気づき、<strong>サーバ側で呼び出し回数の上限（レート制限）を設ける</strong>仕組みを作る。チームで企画を1つに絞り、AIエージェントに渡す仕様（何を作るか・画面・データの流れ）を整理してから実装を始め、実機で最初の動作確認を行う。</td></tr>
+            <tr><td class="week-num">3</td><td class="week-theme">AIを載せる／設計を決める</td><td><strong>AIレシピB「考えるAI」</strong>（撮影した写真をCodespaces上のサーバ経由で、Google AI Studioで発行した無料APIキーを使いGemini APIへ送る構成）を体験する。<strong>APIキーをブラウザ側に置いてはいけない</strong>理由、通信量を抑えるための画像の圧縮・縮小、<strong>無料APIキーで送ったデータがGoogleのサービス改善に使われる</strong>という利用規約上の注意点を確認する。あわせて、<strong>公開URLを知る誰でもサーバを呼び出せてしまう</strong>こと、ブラウザに持たせる合言葉だけでは本物のアクセス制限にならないことに気づき、<strong>サーバ側で呼び出し回数の上限（レート制限）を設ける</strong>仕組みを作る。チームで企画を1つに絞り、AIエージェントに渡す仕様（何を作るか・画面・データの流れ）を整理してから実装を始め、実機で最初の動作確認を行う。余力があるチームは、発展として<strong>レシピC「お喋りAI」</strong>（Gemini Live APIによる音声対話）の構成を調べ始めてもよい。</td></tr>
             <tr><td class="week-num">4</td><td class="week-theme">🎤 中間デモ／つくりこむ</td><td>各チーム3分程度の<strong>中間デモ</strong>を行い、他チームのスマートフォンで実際に触ってもらいながらフィードバックを受け取る。フィードバックを反映しながら実装を進める。AIエージェントに<strong>うまく動かない状況を説明する練習</strong>（エラーの伝え方）にも取り組む。</td></tr>
             <tr><td class="week-num">5</td><td class="week-theme">🎤 成果発表会／仕上げて見せる</td><td>当日利用する通信環境での最終動作確認と発表準備を行う。<strong>成果発表会</strong>（1チーム7分程度）で作品を発表し、他チームのスマートフォンで実際に動かしてもらう。相互フィードバックのあと、5日間の振り返りと、この先どう続けていくかを話し合う。</td></tr>
           </tbody>
@@ -129,16 +131,18 @@
         <li>Google — Antigravity CLI Installation &amp; Auth 公式ドキュメント（antigravity.google）</li>
         <li>Google AI Edge — Hand landmarks detection guide for Web 公式ガイド（ai.google.dev）</li>
         <li>GitHub — Forwarding ports in your codespace 公式ドキュメント（docs.github.com）</li>
-        <li>Microsoft — Port Forwarding（Visual Studio Code）公式ドキュメント（code.visualstudio.com）</li>
+        <li>GitHub — About billing for GitHub Codespaces 公式ドキュメント（docs.github.com、月間無料枠について記載）</li>
         <li>MDN — MediaDevices: getUserMedia() method（developer.mozilla.org）</li>
         <li>Google — Plans 公式ドキュメント（antigravity.google、無償枠の利用制限について記載）</li>
+        <li>Google — Gemini API Additional Terms of Service（ai.google.dev、無料版の利用データがサービス改善に使われる旨を記載）</li>
+        <li>Google — Gemini API Live API overview（ai.google.dev、レシピC「お喋りAI」の公式リファレンス。ephemeral tokenの推奨について記載）</li>
       </ul>
     </div>
 
     <div class="syllabus-section">
       <h2>予習・復習</h2>
       <ul>
-        <li><strong>予習:</strong> GitHubアカウントをまだ持っていない場合は、事前に作成しておいてください（Day1でVS Codeのポート転送をPublicに設定する際、初回のみGitHubアカウントでのサインインが必要です）。それ以外に必要な知識は5日間の中でその都度共有します。</li>
+        <li><strong>予習:</strong> GitHubアカウントをまだ持っていない場合は、事前に作成しておいてください（GitHub Codespacesの起動に必要です）。それ以外に必要な知識は5日間の中でその都度共有します。</li>
         <li><strong>復習:</strong> その日にAIエージェントとのやり取りでうまくいったこと・つまずいたことを、簡単にメモしておきましょう。</li>
       </ul>
     </div>
@@ -157,10 +161,12 @@
     <div class="syllabus-section">
       <h2>その他（履修上の注意点）</h2>
       <ul>
-        <li>カメラを使うアプリを作る講座のため、<strong>他人を撮影する場面が発生します</strong>。撮影前に必ず声をかけ、同意を得てください。撮った映像・画像を許可なく外部に公開・共有しないでください。</li>
-        <li>アプリの公開にはVS Codeの<strong>ポート転送（Public設定）</strong>を使います。Publicにしたポートは<strong>URLを知っている人なら誰でも認証なしでアクセスできます</strong>。個人情報や機微な内容を映さない・入力しない運用を徹底してください。</li>
-        <li><strong>AIレシピB「考えるAI」</strong>を使うチームは、Gemini APIのAPIキーを<strong>サーバ側のコードにのみ置き、ブラウザ側のコード（HTML・JavaScript）には絶対に書かない</strong>でください。ブラウザに書いたキーは誰でも見られる状態になります。<strong>それだけでは不十分で</strong>、公開URLを知っている人なら誰でもサーバを呼び出せてしまいます。ブラウザに持たせる合言葉（トークン）は、通信を見れば誰でも取り出せてしまうため<strong>本物のアクセス制限にはなりません</strong>。<strong>サーバ側で呼び出し回数の上限（レート制限）を設ける</strong>など、現実的に被害を抑える工夫を一緒に作ってください。対策がないと、他の人にAPIの利用上限を消費されたり、想定外の課金が発生する可能性があります。</li>
-        <li><strong>Antigravity CLI（agy）はGoogleアカウントでの認証のみで追加契約は不要</strong>ですが、無償枠には利用制限があります。上限に達した場合はチーム内で待つ・使う頻度を調整するなどして対応してください（Google公式）。</li>
+        <li>カメラを使うアプリを作る講座のため、<strong>他人を撮影する場面が発生します</strong>。撮影前に必ず声をかけ、同意を得てください。撮った映像・画像を許可なく外部に公開・共有しないでください。<strong>レシピB「考えるAI」で撮影した画像をAPIに送る場合</strong>、その画像は外部（Google）のサーバに送信されることになるため、同意を得る際はその点も伝えてください。</li>
+        <li>アプリの公開にはGitHub Codespacesの<strong>ポート転送（Public設定）</strong>を使います。「ポート」タブでポートを右クリック→「ポートの可視性」→「パブリック」を選択（公式: Forwarding ports in your codespace）。Publicにしたポートは<strong>URLを知っている人なら誰でも認証なしでアクセスできます</strong>。個人情報や機微な内容を映さない・入力しない運用を徹底してください。</li>
+        <li><strong>AIレシピB「考えるAI」</strong>を使うチームは、<strong>Google AI Studio</strong>（<code>aistudio.google.com</code>）でGemini APIの無料APIキーを発行します。APIキーは<strong>サーバ側のコードにのみ置き、ブラウザ側のコード（HTML・JavaScript）には絶対に書かない</strong>でください。ブラウザに書いたキーは誰でも見られる状態になります。<strong>それだけでは不十分で</strong>、公開URLを知っている人なら誰でもサーバを呼び出せてしまいます。ブラウザに持たせる合言葉（トークン）は、通信を見れば誰でも取り出せてしまうため<strong>本物のアクセス制限にはなりません</strong>。<strong>サーバ側で呼び出し回数の上限（レート制限）を設ける</strong>など、現実的に被害を抑える工夫を一緒に作ってください。対策がないと、他の人にAPIの利用上限を消費されたり、想定外の課金が発生する可能性があります。あわせて、<strong>無料のAPIキー（Unpaid Services）で送信したデータはGoogleのサービス改善に使われ、人間のレビュアーが内容を確認する場合がある</strong>ことを公式利用規約（Gemini API Additional Terms of Service）で確認しています。撮影した人物の同意を得る際は、この点もあわせて説明してください。</li>
+        <li>余力があるチームが<strong>レシピC「お喋りAI」（Gemini Live API）</strong>に挑戦する場合も、APIキーの扱いはレシピBと同じ原則です。公式はブラウザに直接APIキーを埋め込まず、<strong>サーバ側で発行する一時的なトークン（ephemeral token）</strong>を使う構成を推奨しています。実装難易度が高いため、必須課題としては求めません。</li>
+        <li><strong>Antigravity CLI（agy）はGoogleアカウントでの認証のみで追加契約は不要</strong>ですが、無償枠には利用制限があります。上限に達した場合はチーム内で待つ・使う頻度を調整するなどして対応してください（Google公式）。Codespaceを再開（resume）したのにagyが反応しない場合は、認証セッションが切れている可能性があるため再認証してください（他科目でも同様の事例あり）。</li>
+        <li><strong>GitHub Codespacesは個人のGitHubアカウントごとに月120時間の無料枠</strong>があります（GitHub公式、2-coreマシンでは実質60時間相当）。本講座の使用量（1人あたり5日×180分＝15時間程度）は無料枠に十分収まりますが、他の授業でもCodespacesを使っている場合は月間の消費量が積み重なる点に留意してください。</li>
         <li>スマートフォンの通信環境（学校のWi-Fiに接続できるか、モバイル回線の電波状況・データ通信量）は当日までに確認します。案内があるまでは各自のスマートフォンのデータ通信量に留意してください。</li>
         <li>体調やメンタル面で不安がある場合は、無理せず担当教員または学校の相談窓口に相談してください。</li>
       </ul>
