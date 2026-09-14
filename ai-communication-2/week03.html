@@ -92,6 +92,7 @@
               <li><strong>後半</strong>: <code>/rewind</code>で安全に試行錯誤し、<code>@</code>でファイルを指定し、画像を貼り付けて伝える</li>
               <li>前回・前々回で使用したリポジトリを開き、<strong>停止していたCodespaceを再開（resume）</strong>する——「Create codespace」で新規作成しない</li>
               <li>第2回で自己紹介ページを作った人は、今日はそのページを育てていく。<strong>作っていない・見当たらない人</strong>は、agyに「シンプルな自己紹介ページ（<code>index.html</code>）を作って」と依頼するところから始める</li>
+              <li>今日は変更結果を画面で確認しながら進める。Codespacesのターミナルで<code>python3 -m http.server 8000</code>を実行し、「ポート」タブ→<strong>「エディターでプレビュー」</strong>（画面アイコン）でSimple Browserを開いておく</li>
             </ul>
           </div>
         </div>
@@ -114,7 +115,7 @@
               <li>自己紹介ページ（<code>index.html</code>）に対して、一気に次のように依頼する：
               <pre><code>好きなものを3つ紹介するセクションを追加して</code></pre>
               </li>
-              <li>agyがどんな順序で作業するか、応答をよく観察する（何も聞かれずにいきなりファイルが変更される場合が多いはず）</li>
+              <li>agyがどんな順序で作業するか、応答をよく観察する（何も聞かれずにいきなりファイルが変更される場合が多いはず）。完了したらSimple Browserを更新し、実際に追加されたか確認する</li>
             </ul>
             <p><strong>次に「探索→計画→実行」の3段階で試す（25分）</strong></p>
             <ul>
@@ -160,15 +161,15 @@
               <li>まずagyに、わざと大胆な依頼をしてみる：
               <pre><code>index.htmlの見出しの文字色を全部赤に変えて</code></pre>
               </li>
-              <li>Simple Browserで結果を確認し、「思っていたのと違う」「やっぱり元に戻したい」と感じたら、<code>/rewind</code>（または<code>/undo</code>）と打つ（公式: Using AGY CLI — Quick Tips「Use <code>/rewind</code> or <code>/undo</code> to rewind the conversation history」）</li>
-              <li>会話とファイルの変更が、依頼する前の状態に戻ることを確認する</li>
+              <li>Simple Browserを開き直して結果を確認し、「思っていたのと違う」「やっぱり元に戻したい」と感じたら、<code>/rewind</code>（または<code>/undo</code>）と打つ（公式: Using AGY CLI — Quick Tips「Use <code>/rewind</code> or <code>/undo</code> to rewind the conversation history」——公式の説明は「<strong>会話履歴</strong>」を戻すとしており、ファイルの変更まで戻るとは明記されていない）</li>
+              <li>Simple Browserをもう一度更新し、<strong>ファイルの見た目まで実際に元に戻ったかどうかを自分の目で確認する</strong>。戻っていなければ、agyに「さっきの変更を取り消して」と改めて頼む必要があることに気づく</li>
             </ul>
             <p><strong>気づきをまとめる（10分）</strong></p>
             <ul>
               <li>「<code>/rewind</code>があると分かって、依頼の仕方はどう変わりそうか」を1つメモに残す</li>
             </ul>
             <div class="lesson-tip">
-              <strong>失敗を恐れず試せるのが<code>/rewind</code>の強み:</strong> 「変な結果になったらどうしよう」という不安があると、思い切った依頼がしにくくなります。<code>/rewind</code>でいつでも戻せると知っていれば、色々な指示を気軽に試せます。
+              <strong><code>/rewind</code>は会話を戻す機能:</strong> 「変な結果になったらどうしよう」という不安を減らしてくれる便利な機能ですが、公式に明記されているのは「会話履歴を戻す」ことだけで、ファイルの変更まで自動的に戻る保証はありません。<code>/rewind</code>を使ったあとは、<strong>実際にファイルがどうなったかを自分の目で確認する</strong>習慣をつけましょう。
             </div>
           </div>
         </div>
@@ -187,8 +188,8 @@
             </ul>
             <p><strong>画像を貼り付けて伝える（15分）</strong></p>
             <ul>
-              <li>Simple Browserで自己紹介ページを表示し、OSのスクリーンショット機能（Windowsは<code>Win+Shift+S</code>、Macは<code>Cmd+Shift+4</code>等）で画面の一部を撮ってクリップボードにコピーする</li>
-              <li>agyのプロンプト入力欄にカーソルを合わせ、<code>ctrl+v</code>で貼り付ける（公式: Best Practices — Attaching visual evidence「capture a screenshot or video recording, copy it, and press <code>ctrl+v</code> inside the prompt box to attach it」）</li>
+              <li>Simple Browserに表示されている自己紹介ページを、OSのスクリーンショット機能（Windowsは<code>Win+Shift+S</code>、Macは<code>Cmd+Shift+4</code>等）で画面の一部を撮ってクリップボードにコピーする</li>
+              <li>agyのプロンプト入力欄にカーソルを合わせ、貼り付ける（Windowsは<code>Ctrl+V</code>、Macは<code>Cmd+V</code>。公式: Best Practices — Attaching visual evidence「capture a screenshot or video recording, copy it, and press <code>ctrl+v</code> inside the prompt box to attach it」）</li>
               <li>貼り付けた画像を見せながら「この部分のレイアウトをこう変えたい」のように、<strong>言葉で説明しにくいことを画像で補う</strong>依頼をしてみる</li>
             </ul>
           </div>
