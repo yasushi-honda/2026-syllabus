@@ -78,7 +78,7 @@
           <div class="timeline-body">
             <p><strong>前回の振り返り（10分）</strong></p>
             <ul>
-              <li>第2回で学んだ「agyはワークスペース（起動したディレクトリ）を基準に作業する」という仕組みを思い出す</li>
+              <li>第2回で学習ガイドを使い理解した「エージェント型AIとは何か」「なぜagyを使うのか」、そしてCodespacesを開き直して改めてagyに触れたことを思い出す</li>
               <li>これまでは自然言語で「作って」「教えて」と話しかけるだけだったことを確認する</li>
             </ul>
             <p><strong>「もっと便利に使えるはず」という問いかけ（10分）</strong></p>
@@ -127,7 +127,7 @@
               <li>2つのやり方を比べて、「見通しが立つ」「想定外の変更が起きにくい」等の違いをペアで話し合う</li>
             </ul>
             <div class="lesson-tip">
-              <strong>大きな依頼ほど「探索→計画→実行」が効く:</strong> 公式ドキュメントでも「複雑な変更ほど3段階に分けると精度が上がる」と説明されています。簡単な依頼はいきなり実行させてもよいですが、規模が大きい・失敗すると困る依頼ほど、この型を意識してみましょう。
+              <strong>大きな依頼ほど「探索→計画→実行」が効く:</strong> 公式ドキュメント（Best Practices）は「自律型ローカルエージェントは、複雑な変更を探索・計画・実行の3段階に分けたときに最も高い精度で動作する」（意訳）と説明しています。簡単な依頼はいきなり実行させてもよいですが、規模が大きい・失敗すると困る依頼ほど、この型を意識してみましょう。
             </div>
           </div>
         </div>
@@ -153,7 +153,7 @@
             </ul>
             <p><strong><code>/clear</code>で新規セッションを試す（10分）</strong></p>
             <ul>
-              <li><code>/clear</code>と打つと、会話がリセットされ新しいセッションが始まることを確認する（ファイル自体は消えない——消えるのは「会話の記憶」だけであることを強調する）</li>
+              <li><code>/clear</code>と打つと、会話がリセットされ新しいセッションが始まることを確認する（公式: Using AGY CLI — Quick Tips「Use <code>/clear</code> to clear the prompt and start a new conversation session」）。実際にそれまで作ったファイルが消えるかどうかを<code>ls</code>で自分の手で確かめてみる</li>
             </ul>
             <p><strong><code>/rewind</code>で会話を巻き戻す（20分）</strong></p>
             <ul>
@@ -185,7 +185,7 @@
               <li>プロンプト入力欄で<code>@</code>と打つと、リポジトリ内のファイル候補が一覧表示されることを確認する（公式: Using AGY CLI — Quick Tips「<code>@</code> will trigger path suggestions」）</li>
               <li><code>@index.html</code>のようにファイルを指定してから、「この中の見出しを1つ、絵文字付きに変えて」のように依頼してみる。<strong>「どのファイルの話か」をagyに正確に伝えられる</strong>ことを確認する</li>
             </ul>
-            <p><strong>余裕があれば：画像を貼り付けて伝える（15分）</strong></p>
+            <p><strong>画像を貼り付けて伝える（15分）</strong></p>
             <ul>
               <li>Simple Browserで自己紹介ページを表示し、OSのスクリーンショット機能（Windowsは<code>Win+Shift+S</code>、Macは<code>Cmd+Shift+4</code>等）で画面の一部を撮ってクリップボードにコピーする</li>
               <li>agyのプロンプト入力欄にカーソルを合わせ、<code>ctrl+v</code>で貼り付ける（公式: Best Practices — Attaching visual evidence「capture a screenshot or video recording, copy it, and press <code>ctrl+v</code> inside the prompt box to attach it」）</li>
