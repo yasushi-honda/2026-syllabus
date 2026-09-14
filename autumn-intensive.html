@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="styles.css?v=5">
-  <!-- 公式情報確認: 2026-09-15 (antigravity.google/docs/cli/install / ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker/web_js / docs.github.com/ja/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace / docs.github.com/en/billing/.../about-billing-for-github-codespaces / developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia / github.com/google-antigravity/antigravity-cli/issues/10 / ai.google.dev/gemini-api/terms / ai.google.dev/gemini-api/docs/live-api / ai.google.dev/gemini-api/docs/pricing) -->
+  <!-- 公式情報確認: 2026-09-15 (antigravity.google/docs/cli/install / ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker/web_js / docs.github.com/ja/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace / docs.github.com/en/codespaces/developing-in-a-codespace/opening-an-existing-codespace / docs.github.com/en/billing/.../about-billing-for-github-codespaces / developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia / github.com/google-antigravity/antigravity-cli/issues/10 / ai.google.dev/gemini-api/terms / ai.google.dev/gemini-api/docs/live-api / ai.google.dev/gemini-api/docs/pricing) -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -112,7 +112,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td class="week-num">1</td><td class="week-theme">つくる場所をつくる／スマホで開く</td><td>講座の狙いと5日間の流れを共有し、<strong>学年混成チーム</strong>を編成する（役割はドライバー／ナビゲーターの交代制。チームで1つのリポジトリを作成し、その日のドライバーのアカウントで<strong>GitHub Codespaces</strong>を起動——翌日以降は同じCodespaceを<strong>再開（resume）</strong>して続ける）。<strong>撮影と個人情報の取り扱いルール</strong>を確認する。Antigravity CLI（agy）でAIエージェントに指示を出し、最小限のWebページを作る。Codespacesの<strong>ポート転送</strong>をPublicに設定して発行されたHTTPS URLをQRコードで配布し、各自のスマートフォンで自分の作ったページを開く。カメラを呼び出し映像が表示されるところまで進め、なぜHTTPS（secure context）が必要なのかを確認する。</td></tr>
+            <tr><td class="week-num">1</td><td class="week-theme">つくる場所をつくる／スマホで開く</td><td>講座の狙いと5日間の流れを共有し、<strong>学年混成チーム</strong>を編成する。チームで1つのリポジトリを作成し、<strong>代表者1名のアカウントで<code>GitHub Codespaces</code>を起動</strong>する（Codespacesは<strong>作成者本人しか再開できない</strong>ため、5日間同じアカウントで起動・再開（resume）し続ける——公式: Opening an existing codespace「You can only open your own codespaces」）。役割はドライバー／ナビゲーターの交代制だが、<strong>ログインするGitHubアカウントは代表者のまま</strong>とし、画面の前でキーボードを持つ人（ドライバー）だけを交代する。<strong>撮影と個人情報の取り扱いルール</strong>を確認する。Antigravity CLI（agy）でAIエージェントに指示を出し、最小限のWebページを作る。Codespacesの<strong>ポート転送</strong>をPublicに設定して発行されたHTTPS URLをQRコードで配布し、各自のスマートフォンで自分の作ったページを開く。カメラを呼び出し映像が表示されるところまで進め、なぜHTTPS（secure context）が必要なのかを確認する。</td></tr>
             <tr><td class="week-num">2</td><td class="week-theme">カメラの中身をプログラムで触る</td><td>カメラ映像をcanvasに取り出し、静止画として扱う。色を変える・文字を重ねるなど簡単な加工を試す。<strong>AIレシピA「その場で見るAI」</strong>（MediaPipe Tasksによる手・顔・姿勢の検出）を体験し、検出結果に応じて画面を動かす。ここまでの体験を踏まえ、チームで作りたいものの種を出し合う。</td></tr>
             <tr><td class="week-num">3</td><td class="week-theme">AIを載せる／設計を決める</td><td><strong>AIレシピB「考えるAI」</strong>（撮影した写真をCodespaces上のサーバ経由で、Google AI Studioで発行した無料APIキーを使いGemini APIへ送る構成）を体験する。<strong>APIキーをブラウザ側に置いてはいけない</strong>理由、通信量を抑えるための画像の圧縮・縮小、<strong>無料APIキーで送ったデータがGoogleのサービス改善に使われる</strong>という利用規約上の注意点を確認する。あわせて、<strong>公開URLを知る誰でもサーバを呼び出せてしまう</strong>こと、ブラウザに持たせる合言葉だけでは本物のアクセス制限にならないことに気づき、<strong>サーバ側で呼び出し回数の上限（レート制限）を設ける</strong>仕組みを作る。チームで企画を1つに絞り、AIエージェントに渡す仕様（何を作るか・画面・データの流れ）を整理してから実装を始め、実機で最初の動作確認を行う。余力があるチームは、発展として<strong>レシピC「お喋りAI」</strong>（Gemini Live APIによる音声対話）の構成を調べ始めてもよい。</td></tr>
             <tr><td class="week-num">4</td><td class="week-theme">🎤 中間デモ／つくりこむ</td><td>各チーム3分程度の<strong>中間デモ</strong>を行い、他チームのスマートフォンで実際に触ってもらいながらフィードバックを受け取る。フィードバックを反映しながら実装を進める。AIエージェントに<strong>うまく動かない状況を説明する練習</strong>（エラーの伝え方）にも取り組む。</td></tr>
@@ -131,6 +131,7 @@
         <li>Google — Antigravity CLI Installation &amp; Auth 公式ドキュメント（antigravity.google）</li>
         <li>Google AI Edge — Hand landmarks detection guide for Web 公式ガイド（ai.google.dev）</li>
         <li>GitHub — Forwarding ports in your codespace 公式ドキュメント（docs.github.com）</li>
+        <li>GitHub — Opening an existing codespace 公式ドキュメント（docs.github.com、Codespaceは作成者本人しか開けない旨を記載）</li>
         <li>GitHub — About billing for GitHub Codespaces 公式ドキュメント（docs.github.com、月間無料枠について記載）</li>
         <li>MDN — MediaDevices: getUserMedia() method（developer.mozilla.org）</li>
         <li>Google — Plans 公式ドキュメント（antigravity.google、無償枠の利用制限について記載）</li>

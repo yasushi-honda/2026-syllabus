@@ -64,7 +64,7 @@
 
 | 日 | テーマ | 主な内容・活動 |
 |:---:|:---|:---|
-| 1 | **つくる場所をつくる／スマホで開く** | 講座の狙いと5日間の流れを共有し、学年混成チームを編成する（役割はドライバー／ナビゲーターの交代制。チームで1つのリポジトリを作成し、その日のドライバーのアカウントでGitHub Codespacesを起動——翌日以降は同じCodespaceを再開（resume）して続ける）。撮影と個人情報の取り扱いルールを確認する。Antigravity CLI（agy）でAIエージェントに指示を出し、最小限のWebページを作る。Codespacesのポート転送をPublicに設定して発行されたHTTPS URLをQRコードで配布し、各自のスマートフォンで自分の作ったページを開く。カメラを呼び出し映像が表示されるところまで進め、なぜHTTPS（secure context）が必要なのかを確認する。 |
+| 1 | **つくる場所をつくる／スマホで開く** | 講座の狙いと5日間の流れを共有し、学年混成チームを編成する。チームで1つのリポジトリを作成し、代表者1名のアカウントでGitHub Codespacesを起動する（Codespacesは作成者本人しか再開できないため、5日間同じアカウントで起動・再開（resume）し続ける——公式: Opening an existing codespace「You can only open your own codespaces」）。役割はドライバー／ナビゲーターの交代制だが、ログインするGitHubアカウントは代表者のままとし、画面の前でキーボードを持つ人（ドライバー）だけを交代する。撮影と個人情報の取り扱いルールを確認する。Antigravity CLI（agy）でAIエージェントに指示を出し、最小限のWebページを作る。Codespacesのポート転送をPublicに設定して発行されたHTTPS URLをQRコードで配布し、各自のスマートフォンで自分の作ったページを開く。カメラを呼び出し映像が表示されるところまで進め、なぜHTTPS（secure context）が必要なのかを確認する。 |
 | 2 | **カメラの中身をプログラムで触る** | カメラ映像をcanvasに取り出し、静止画として扱う。色を変える・文字を重ねるなど簡単な加工を試す。AIレシピA「その場で見るAI」（MediaPipe Tasksによる手・顔・姿勢の検出）を体験し、検出結果に応じて画面を動かす。ここまでの体験を踏まえ、チームで作りたいものの種を出し合う。 |
 | 3 | **AIを載せる／設計を決める** | AIレシピB「考えるAI」（撮影した写真をCodespaces上のサーバ経由で、Google AI Studioで発行した無料APIキーを使いGemini APIへ送る構成）を体験する。APIキーをブラウザ側に置いてはいけない理由、通信量を抑えるための画像の圧縮・縮小、無料APIキーで送ったデータがGoogleのサービス改善に使われるという利用規約上の注意点を確認する。あわせて、公開URLを知る誰でもサーバを呼び出せてしまうこと、ブラウザに持たせる合言葉だけでは本物のアクセス制限にならないことに気づき、サーバ側で呼び出し回数の上限（レート制限）を設ける仕組みを作る。チームで企画を1つに絞り、AIエージェントに渡す仕様（何を作るか・画面・データの流れ）を整理してから実装を始め、実機で最初の動作確認を行う。余力があるチームは、発展としてレシピC「お喋りAI」（Gemini Live APIによる音声対話）の構成を調べ始めてもよい。 |
 | 4 | **🎤 中間デモ／つくりこむ** | 各チーム3分程度の中間デモを行い、他チームのスマートフォンで実際に触ってもらいながらフィードバックを受け取る。フィードバックを反映しながら実装を進める。AIエージェントにうまく動かない状況を説明する練習（エラーの伝え方）にも取り組む。 |
@@ -75,7 +75,7 @@
 
 ## 11. 使用テキスト・参考文献
 - 特定のテキストは使用しません。授業内で適宜、公式ドキュメントを紹介します。
-- 主な参考資料（随時更新）：Google — Antigravity CLI Installation & Auth 公式ドキュメント（antigravity.google）、Google AI Edge — Hand landmarks detection guide for Web 公式ガイド（ai.google.dev）、GitHub — Forwarding ports in your codespace 公式ドキュメント（docs.github.com）、GitHub — About billing for GitHub Codespaces 公式ドキュメント（docs.github.com、月間無料枠について記載）、MDN — MediaDevices: getUserMedia() method（developer.mozilla.org）、Google — Plans 公式ドキュメント（antigravity.google、無償枠の利用制限について記載）、Google — Gemini API Additional Terms of Service（ai.google.dev、無料版の利用データがサービス改善に使われる旨を記載）、Google — Gemini API Live API overview（ai.google.dev、レシピC「お喋りAI」の公式リファレンス。ephemeral tokenの推奨について記載）
+- 主な参考資料（随時更新）：Google — Antigravity CLI Installation & Auth 公式ドキュメント（antigravity.google）、Google AI Edge — Hand landmarks detection guide for Web 公式ガイド（ai.google.dev）、GitHub — Forwarding ports in your codespace 公式ドキュメント（docs.github.com）、GitHub — Opening an existing codespace 公式ドキュメント（docs.github.com、Codespaceは作成者本人しか開けない旨を記載）、GitHub — About billing for GitHub Codespaces 公式ドキュメント（docs.github.com、月間無料枠について記載）、MDN — MediaDevices: getUserMedia() method（developer.mozilla.org）、Google — Plans 公式ドキュメント（antigravity.google、無償枠の利用制限について記載）、Google — Gemini API Additional Terms of Service（ai.google.dev、無料版の利用データがサービス改善に使われる旨を記載）、Google — Gemini API Live API overview（ai.google.dev、レシピC「お喋りAI」の公式リファレンス。ephemeral tokenの推奨について記載）
 
 ## 12. 予習・復習
 - **予習:** GitHubアカウントをまだ持っていない場合は、事前に作成しておいてください（GitHub Codespacesの起動に必要です）。それ以外に必要な知識は5日間の中でその都度共有します。
