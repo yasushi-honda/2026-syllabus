@@ -164,7 +164,7 @@
   &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;</pre>
-              <li>Simple Browserで<code>/input-demo.html</code>を開き、名前を入力してボタンを押すと挨拶が表示されることを確認する</li>
+              <li>Simple Browserのアドレスバーの末尾だけを<code>/input-demo.html</code>に書き換えてEnter。名前を入力してボタンを押すと挨拶が表示されることを確認する</li>
             </ul>
             <p><strong>何が起きているか（15分）</strong></p>
             <ul>
@@ -253,7 +253,7 @@ render();</code></pre>
             </ul>
             <p><strong><code>if</code>文で入力チェックを追加する（20分）</strong></p>
             <ul>
-              <li>前期第7回で学んだ<code>if</code>文を使い、<code>category</code>と<code>value</code>が空文字列でないかを確認してから<code>push</code>する：</li>
+              <li>前期第7回で学んだ<code>if</code>文を使い、<code>category</code>と<code>value</code>が空文字列でないかを確認してから<code>push</code>する。<strong>2限前半で書いた<code>addEventListener</code>のブロックをまるごと</strong>以下のコードに置き換える（そのまま追記すると、クリック時に2つの処理が同時に動いて項目が二重に追加されてしまうので注意）：</li>
               <pre><code>document.getElementById("add-btn").addEventListener("click", () =&gt; {
   const category = document.getElementById("input-category").value;
   const value = document.getElementById("input-value").value;
@@ -323,7 +323,7 @@ render();</code></pre>
     <div class="syllabus-section">
       <h2>参考リンク</h2>
       <ul>
-        <li><a href="https://developer.mozilla.org/ja/docs/Web/HTML/Reference/Elements/input" target="_blank" rel="noopener">MDN — &lt;input&gt;：入力欄要素</a> — 今日使った<code>&lt;input&gt;</code>要素の公式リファレンス</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/HTML/Reference/Elements/input" target="_blank" rel="noopener">MDN — &lt;input&gt;：入力要素</a> — 今日使った<code>&lt;input&gt;</code>要素の公式リファレンス</li>
         <li><a href="https://developer.mozilla.org/ja/docs/Web/API/EventTarget/addEventListener" target="_blank" rel="noopener">MDN — EventTarget: addEventListener() メソッド</a> — ボタンクリックを検知する仕組みの公式リファレンス</li>
       </ul>
     </div>
