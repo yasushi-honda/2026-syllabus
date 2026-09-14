@@ -141,10 +141,10 @@
           <div class="timeline-body">
             <p><strong><code>&lt;input&gt;</code>要素を画面に置く（15分）</strong></p>
             <ul>
-              <li>Codespacesで新規ファイル<code>input-demo.html</code>を作り、下のコードを貼り付けて保存する</li>
-              <button class="copy-md-btn" data-md-source="input-demo-template">
-                <span class="btn-icon"></span> input-demo.htmlの雛形をコピー
-              </button>
+              <li>Codespacesで新規ファイル<code>input-demo.html</code>を作り、下のコードを貼り付けて保存する
+                <button class="copy-md-btn" data-md-source="input-demo-template">
+                  <span class="btn-icon"></span> input-demo.htmlの雛形をコピー
+                </button>
 <pre id="input-demo-template" class="md-preview">&lt;!DOCTYPE html&gt;
 &lt;html lang="ja"&gt;
 &lt;head&gt;
@@ -164,6 +164,7 @@
   &lt;/script&gt;
 &lt;/body&gt;
 &lt;/html&gt;</pre>
+              </li>
               <li>Simple Browserのアドレスバーの末尾だけを<code>/input-demo.html</code>に書き換えてEnter。名前を入力してボタンを押すと挨拶が表示されることを確認する</li>
             </ul>
             <p><strong>何が起きているか（15分）</strong></p>
@@ -197,17 +198,18 @@
           <div class="timeline-body">
             <p><strong>フォーム部分をHTMLに追加する（10分）</strong></p>
             <ul>
-              <li><code>list.html</code>の<code>&lt;ul id="favorite-list"&gt;&lt;/ul&gt;</code>の<strong>直前</strong>に、以下を追加する：</li>
+              <li><code>list.html</code>の<code>&lt;ul id="favorite-list"&gt;&lt;/ul&gt;</code>の<strong>直前</strong>に、以下を追加する：
               <pre><code>&lt;div&gt;
   &lt;input type="text" id="input-category" placeholder="カテゴリ（例：好きな食べ物）"&gt;
   &lt;input type="text" id="input-value" placeholder="内容（例：カレー）"&gt;
   &lt;input type="text" id="input-reason" placeholder="理由（例：辛いから）"&gt;
   &lt;button id="add-btn"&gt;追加する&lt;/button&gt;
 &lt;/div&gt;</code></pre>
+              </li>
             </ul>
             <p><strong>再描画をひとつの関数にまとめる（15分）</strong></p>
             <ul>
-              <li>第2回で書いた<code>for</code>文の再描画部分を、<strong>何度でも呼び出せる関数<code>render</code></strong>にまとめる。まず<code>&lt;ul&gt;&lt;/ul&gt;</code>の中身を空にしてから描き直す点がポイント：</li>
+              <li>第2回で書いた<code>for</code>文の再描画部分を、<strong>何度でも呼び出せる関数<code>render</code></strong>にまとめる。まず<code>&lt;ul&gt;&lt;/ul&gt;</code>の中身を空にしてから描き直す点がポイント：
               <pre><code>const ul = document.getElementById("favorite-list");
 
 function render() {
@@ -220,11 +222,12 @@ function render() {
 }
 
 render();</code></pre>
+              </li>
               <li>保存してSimple Browserを更新——書き換え前と同じ一覧が表示されれば成功（<code>render()</code>を1回呼んでいるだけなので、見た目は変わらない）</li>
             </ul>
             <p><strong>「追加する」ボタンの処理を書く（25分）</strong></p>
             <ul>
-              <li><code>render()</code>関数の下に、以下を追加する：</li>
+              <li><code>render()</code>関数の下に、以下を追加する：
               <pre><code>document.getElementById("add-btn").addEventListener("click", () =&gt; {
   const category = document.getElementById("input-category").value;
   const value = document.getElementById("input-value").value;
@@ -233,6 +236,7 @@ render();</code></pre>
   favorites.push({ category, value, reason });
   render();
 });</code></pre>
+              </li>
               <li>3つの入力欄に値を入れて「追加する」を押し、一覧に新しい項目が増えることを確認する</li>
               <li><code>{ category, value, reason }</code>は<code>{ category: category, value: value, reason: reason }</code>の省略記法——変数名とキー名が同じときに使える書き方であることを紹介する</li>
               <li>うまく動かないときはF12→Consoleタブでエラーを確認。よくあるミス：<code>id</code>のスペルミス、<code>render</code>の呼び出し忘れ</li>
@@ -253,7 +257,7 @@ render();</code></pre>
             </ul>
             <p><strong><code>if</code>文で入力チェックを追加する（20分）</strong></p>
             <ul>
-              <li>前期第7回で学んだ<code>if</code>文を使い、<code>category</code>と<code>value</code>が空文字列でないかを確認してから<code>push</code>する。<strong>2限前半で書いた<code>addEventListener</code>のブロックをまるごと</strong>以下のコードに置き換える（そのまま追記すると、クリック時に2つの処理が同時に動いて項目が二重に追加されてしまうので注意）：</li>
+              <li>前期第7回で学んだ<code>if</code>文を使い、<code>category</code>と<code>value</code>が空文字列でないかを確認してから<code>push</code>する。<strong>2限前半で書いた<code>addEventListener</code>のブロックをまるごと</strong>以下のコードに置き換える（そのまま追記すると、クリック時に2つの処理が同時に動いて項目が二重に追加されてしまうので注意）：
               <pre><code>document.getElementById("add-btn").addEventListener("click", () =&gt; {
   const category = document.getElementById("input-category").value;
   const value = document.getElementById("input-value").value;
@@ -271,6 +275,7 @@ render();</code></pre>
   document.getElementById("input-value").value = "";
   document.getElementById("input-reason").value = "";
 });</code></pre>
+              </li>
               <li><code>return;</code>——条件に一致したらそこで処理を止め、以降の<code>push</code>や<code>render</code>を実行させない</li>
               <li>最後の3行——追加が成功したら入力欄を空文字列に戻す。次の入力をしやすくする工夫</li>
               <li>空欄のまま送信するとアラートが出て追加されないこと、正しく入力すると追加され入力欄が空になることの両方を確認する</li>
