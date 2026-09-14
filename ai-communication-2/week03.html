@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>第3回 ターミナルってなんだろう？ | AIコミュニケーション基礎 II</title>
+  <title>第3回 agyをもっと使いこなす | AIコミュニケーション基礎 II</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -24,7 +24,7 @@
       </nav>
       <div class="page-title-area">
         <div>
-          <h1 class="page-title">ターミナルって<wbr>なんだろう？</h1>
+          <h1 class="page-title">agyをもっと<wbr>使いこなす</h1>
           <div class="page-meta-badges">
             <span class="page-badge">Week 3</span>
             <span class="page-badge">火曜 3・4限</span>
@@ -40,11 +40,11 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value"><code>ls</code>・<code>cd</code>・<code>pwd</code>等の基本コマンドを試しながら、ターミナルの使い方とディレクトリ（フォルダ）構造の考え方を学ぶ。<strong>agy</strong>が裏側でファイルを操作している「場所」を自分の手でも確かめる回</div>
+          <div class="lesson-overview-value">公式ベストプラクティス「<strong>探索→計画→実行</strong>」の進め方、<code>/rewind</code>で安全に試行錯誤する方法、<code>@</code>によるファイル参照、画像を貼り付けて伝える方法など、agyを日々の作業でもっと便利に使うテクニックを学ぶ</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">ターミナル / <code>pwd</code> / <code>ls</code> / <code>cd</code> / ディレクトリ構造 / 絶対パス・相対パス</div>
+          <div class="lesson-overview-value">探索→計画→実行 / スラッシュコマンド / <code>/rewind</code> / <code>@</code>ファイル参照 / 画像貼り付け（<code>ctrl+v</code>）</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
@@ -56,11 +56,10 @@
     <div class="syllabus-section">
       <h2>この回のゴール</h2>
       <ul>
-        <li><code>pwd</code>で「今どこにいるか」を確認できる</li>
-        <li><code>ls</code>で「その場所に何があるか」を一覧表示できる</li>
-        <li><code>cd</code>で別のディレクトリに移動できる</li>
-        <li>ディレクトリが「フォルダの中にフォルダ」という<strong>木構造</strong>になっていることを、自分の言葉で説明できる</li>
-        <li><strong>agy</strong>がファイルを作成・編集したとき、ターミナルで場所と結果を自分で確認できる</li>
+        <li>公式ベストプラクティス「<strong>探索→計画→実行</strong>」の3段階を理解し、実際に使える</li>
+        <li><code>/rewind</code>で会話を巻き戻せることを知り、<strong>安心して試行錯誤</strong>できる</li>
+        <li><code>@</code>キーでファイルを指定しながらagyに指示を出せる</li>
+        <li><code>ctrl+v</code>で画像を貼り付け、視覚的に伝えられることを知っている</li>
       </ul>
     </div>
 
@@ -75,24 +74,24 @@
             <span class="timeline-time">1限 前半</span>
             <span class="timeline-duration">約40分</span>
           </div>
-          <h3>「agyは裏で何をしているのか」という疑問から、今日のテーマへ</h3>
+          <h3>「話しかけるだけ」からもう一歩、今日の全体像を知る</h3>
           <div class="timeline-body">
             <p><strong>前回の振り返り（10分）</strong></p>
             <ul>
-              <li>第2回で学習ガイドを使いAntigravity CLI（agy）の仕組みを理解し、Codespacesを再開して改めてagyに触れたことを思い出す</li>
-              <li>agyに「簡単な自己紹介ページを作って」と頼むと、実際にファイルが作られコードが書かれたことを振り返る</li>
+              <li>第2回で学んだ「agyはワークスペース（起動したディレクトリ）を基準に作業する」という仕組みを思い出す</li>
+              <li>これまでは自然言語で「作って」「教えて」と話しかけるだけだったことを確認する</li>
             </ul>
-            <p><strong>「それはどこに、どうやって？」という疑問（10分）</strong></p>
+            <p><strong>「もっと便利に使えるはず」という問いかけ（10分）</strong></p>
             <ul>
-              <li>agyが作ったファイルは<strong>どこに保存されているのか</strong>、どうやって「そこ」を見つけて作業しているのかを問いかける</li>
-              <li>ペアで「見当がつくか」を話し合う（正解を出す必要はない、疑問を持つことが目的）</li>
+              <li>agyには、ただ話しかける以外にも<strong>公式が推奨する進め方</strong>や<strong>便利な操作</strong>がいくつも用意されていることを共有する</li>
+              <li>今日はその中から4つ（探索→計画→実行・スラッシュコマンド・<code>@</code>ファイル参照・画像貼り付け）を体験する</li>
             </ul>
             <p><strong>今日の全体像を知る（20分）</strong></p>
             <ul>
-              <li><strong>ターミナル</strong>は「文字で操作するコンピュータの窓口」——ファイルエクスプローラーでマウスを使ってやることを、文字のコマンドでやる場所であることを共有する</li>
-              <li>今日は<code>pwd</code>・<code>ls</code>・<code>cd</code>という3つの基本コマンドを使い、ターミナルの中で自分が「今どこにいて」「何があって」「どう動けるか」を確かめていく</li>
+              <li><strong>前半</strong>: 公式ベストプラクティス「探索→計画→実行」を体験する</li>
+              <li><strong>後半</strong>: <code>/rewind</code>で安全に試行錯誤し、<code>@</code>でファイルを指定し、画像を貼り付けて伝える</li>
               <li>前回・前々回で使用したリポジトリを開き、<strong>停止していたCodespaceを再開（resume）</strong>する——「Create codespace」で新規作成しない</li>
-              <li>画面下部の<strong>ターミナル</strong>パネルの位置を再確認する（無ければ<code>Ctrl + `</code>または「表示」→「ターミナル」）</li>
+              <li>第2回で自己紹介ページを作った人は、今日はそのページを育てていく。<strong>作っていない・見当たらない人</strong>は、agyに「シンプルな自己紹介ページ（<code>index.html</code>）を作って」と依頼するところから始める</li>
             </ul>
           </div>
         </div>
@@ -102,26 +101,33 @@
             <span class="timeline-time">1限 後半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>基本コマンド3つを手で打つ：<code>pwd</code>・<code>ls</code>・<code>cd</code></h3>
+          <h3>公式ベストプラクティス「探索→計画→実行」を体験する</h3>
           <div class="timeline-body">
-            <p><strong><code>pwd</code>——今どこにいるかを確認する（10分）</strong></p>
+            <p><strong>公式の進め方を知る（10分）</strong></p>
             <ul>
-              <li>ターミナルに<code>pwd</code>（print working directory）と打ってEnter。表示された文字列が「今自分がいる場所（カレントディレクトリ）」であることを確認する</li>
-              <li>この文字列を<strong>パス</strong>と呼ぶことを紹介する</li>
+              <li>Antigravity CLI公式のベストプラクティスには、複雑な依頼は<strong>「探索（Exploration）」「計画（Planning）」「実行（Execution）」</strong>の3段階に分けるとよいと書かれている（公式: Best Practices — "Explore, plan, then execute"）</li>
+              <li>①まずコードベースを調べさせる ②実装計画（どのファイルを、どう変更するか）を立てさせる ③その計画を確認・承認してから実行させる、という流れ</li>
+              <li>公式の例文（意訳）: 「ルーターが<code>/docs/:page</code>をどう解決しているか調べて。<code>/docs/best-practices</code>を追加する実装計画を書いて」——調査と計画を先に頼み、実行は別に指示している点がポイント</li>
             </ul>
-            <p><strong><code>ls</code>——そこに何があるかを見る（15分）</strong></p>
+            <p><strong>まず「いきなり実行」を試す（15分）</strong></p>
             <ul>
-              <li><code>ls</code>（list）と打つと、今いる場所にあるファイルやディレクトリの一覧が表示されることを確認する。<code>index.html</code>や<code>list.html</code>等、これまでの授業で作ったファイルが見えるはず</li>
-              <li><code>ls -la</code>を試し、<code>ls</code>だけでは見えない「隠しファイル」（<code>.</code>で始まるファイル、<code>.git</code>など）や、ファイルの詳細情報も表示されることを紹介する（今日は「こういう情報も見える」と知るだけでよい）</li>
+              <li>自己紹介ページ（<code>index.html</code>）に対して、一気に次のように依頼する：
+              <pre><code>好きなものを3つ紹介するセクションを追加して</code></pre>
+              </li>
+              <li>agyがどんな順序で作業するか、応答をよく観察する（何も聞かれずにいきなりファイルが変更される場合が多いはず）</li>
             </ul>
-            <p><strong><code>cd</code>——別の場所に移動する（20分）</strong></p>
+            <p><strong>次に「探索→計画→実行」の3段階で試す（25分）</strong></p>
             <ul>
-              <li><code>cd</code>（change directory）の後にディレクトリ名を続けると、そこに移動できることを確認する。プログラム基礎の授業で使っているリポジトリに、週ごとのディレクトリ（<code>week01/</code>等）があれば<code>cd week01</code>で移動し、<code>pwd</code>・<code>ls</code>で確認する</li>
-              <li><code>cd ..</code>——<strong>1つ上の階層に戻る</strong>特別な書き方。移動後、再度<code>pwd</code>で今どこにいるか確認する</li>
-              <li>演習：<code>cd</code>で2〜3か所を移動し、その都度<code>pwd</code>・<code>ls</code>で「今どこにいて、何があるか」を確認する。迷子になったら<code>cd ..</code>を繰り返せば、階層を1つずつ遡ってリポジトリのルートまで戻れることを紹介する</li>
+              <li>同じような依頼を、今度は3段階に分けて出してみる：
+              <pre><code>①探索: index.htmlの今の構造を調べて、どんなセクションがあるか教えて
+②計画: 好きなものを3つ紹介するセクションを追加する実装計画を立てて
+③実行: その計画通りに実行して</code></pre>
+              </li>
+              <li>②の計画が提示されたら、<strong>内容を読んで納得してから</strong>③を指示する（気になる点があれば、③の前に「〇〇の部分を変えて」と計画を修正させてもよい）</li>
+              <li>2つのやり方を比べて、「見通しが立つ」「想定外の変更が起きにくい」等の違いをペアで話し合う</li>
             </ul>
             <div class="lesson-tip">
-              <strong>ターミナルは「今いる場所」を常に持っている:</strong> ファイルエクスプローラーで今どのフォルダを開いているか目で見えるのと同じように、ターミナルも「今いる場所（カレントディレクトリ）」を内部に持っています。<code>pwd</code>はそれを文字で見せてくれるコマンドです。
+              <strong>大きな依頼ほど「探索→計画→実行」が効く:</strong> 公式ドキュメントでも「複雑な変更ほど3段階に分けると精度が上がる」と説明されています。簡単な依頼はいきなり実行させてもよいですが、規模が大きい・失敗すると困る依頼ほど、この型を意識してみましょう。
             </div>
           </div>
         </div>
@@ -138,30 +144,31 @@
             <span class="timeline-time">2限 前半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>ディレクトリの木構造と、agyの動きをターミナルで追う</h3>
+          <h3>スラッシュコマンドで安全に試行錯誤する</h3>
           <div class="timeline-body">
-            <p><strong>ディレクトリは「フォルダの中にフォルダ」の木構造（15分）</strong></p>
+            <p><strong><code>?</code>でヘルプ一覧を見る（10分）</strong></p>
             <ul>
-              <li>Googleドキュメントに、リポジトリのディレクトリ構造を木の絵で描いてみる（一番上がリポジトリのルート、その下に<code>week01/</code>等の枝が伸びる。参考までに、ホワイトボードなど教室にある物理的な道具を使ってもよい）</li>
-              <li><strong>絶対パス</strong>（ファイルシステムの一番上、<code>/</code>から見た完全な道順。<code>pwd</code>で表示される<code>/workspaces/...</code>のような文字列がこれにあたる）と<strong>相対パス</strong>（今いる場所から見た道順）の違いを、木の絵を指しながら説明する。木の絵の「一番上」はリポジトリのルートだが、実際のファイルシステムではさらに上に<code>/</code>があることも触れる</li>
-              <li><code>mkdir</code>（make directory）で新しいディレクトリを1つ作ってみる。<code>ls</code>で増えたことを確認する</li>
+              <li>プロンプト入力欄で<code>?</code>とだけ打つと、使えるスラッシュコマンドの一覧が表示されることを確認する（公式: Using AGY CLI — Quick Tips）</li>
+              <li>一覧の中から、今日使う<code>/rewind</code>と<code>/clear</code>を見つけておく</li>
             </ul>
-            <p><strong>agyに指示を出し、ターミナルで結果を追う（30分）</strong></p>
+            <p><strong><code>/clear</code>で新規セッションを試す（10分）</strong></p>
             <ul>
-              <li><code>pwd</code>で今の場所を確認してから、agyに次のように依頼する（<code>README.md</code>等リポジトリに既にありそうな名前だと「ファイルが増えたか」を確認しづらいので、授業用の一意なファイル名を使う）：
-              <pre><code>自己紹介を書いたagy-note.mdというファイルを作ってください</code></pre>
+              <li><code>/clear</code>と打つと、会話がリセットされ新しいセッションが始まることを確認する（ファイル自体は消えない——消えるのは「会話の記憶」だけであることを強調する）</li>
+            </ul>
+            <p><strong><code>/rewind</code>で会話を巻き戻す（20分）</strong></p>
+            <ul>
+              <li>まずagyに、わざと大胆な依頼をしてみる：
+              <pre><code>index.htmlの見出しの文字色を全部赤に変えて</code></pre>
               </li>
-              <li>agyの応答が終わったら、<strong><code>Ctrl+D</code>を押してagyのセッションを終了し、シェル（ターミナル）に戻る</strong>——agyが動いている間は<code>ls</code>等もagyへの指示として送られてしまうため、シェルコマンドとして実行するにはagyを一度終了する必要がある（公式: Antigravity CLI Using — Keybindings「Exit CLI: <code>ctrl+d</code>」）</li>
-              <li>シェルに戻ったら、<strong>agyに頼らず自分の手で</strong><code>ls</code>を打ち、<code>agy-note.md</code>が増えていることを確認する</li>
-              <li><code>cat agy-note.md</code>（catはファイルの中身をそのまま表示するコマンド）で、agyが書いた内容をターミナルで直接読む</li>
-              <li>観察ポイント：agyは「今いるディレクトリ」を基準にファイルを作っている——今日はじめて確認する「agyはワークスペースを起点に作業する」という仕組みが、実際のファイルの場所として目に見える形で確認できる</li>
+              <li>Simple Browserで結果を確認し、「思っていたのと違う」「やっぱり元に戻したい」と感じたら、<code>/rewind</code>（または<code>/undo</code>）と打つ（公式: Using AGY CLI — Quick Tips「Use <code>/rewind</code> or <code>/undo</code> to rewind the conversation history」）</li>
+              <li>会話とファイルの変更が、依頼する前の状態に戻ることを確認する</li>
             </ul>
-            <p><strong>気づきをメモする（5分）</strong></p>
+            <p><strong>気づきをまとめる（10分）</strong></p>
             <ul>
-              <li>「agyが裏で何をしていたか、今日で分かったこと」を1つメモに残す</li>
+              <li>「<code>/rewind</code>があると分かって、依頼の仕方はどう変わりそうか」を1つメモに残す</li>
             </ul>
             <div class="lesson-tip">
-              <strong>agyも「今いる場所」から作業している:</strong> 公式ドキュメント（Getting Started）にある通り、agyは起動したディレクトリ（ワークスペース）を基準にファイルを読み書きします。今日<code>pwd</code>・<code>ls</code>で確認した「場所」の感覚は、agyの動きを理解するための土台になります。
+              <strong>失敗を恐れず試せるのが<code>/rewind</code>の強み:</strong> 「変な結果になったらどうしよう」という不安があると、思い切った依頼がしにくくなります。<code>/rewind</code>でいつでも戻せると知っていれば、色々な指示を気軽に試せます。
             </div>
           </div>
         </div>
@@ -171,19 +178,18 @@
             <span class="timeline-time">2限 後半</span>
             <span class="timeline-duration">約30分</span>
           </div>
-          <h3>演習：ディレクトリを作り、agyと一緒にファイルを増やす</h3>
+          <h3><code>@</code>でファイルを指定する／画像で伝える</h3>
           <div class="timeline-body">
-            <p><strong>一連の流れを自分の手で行う</strong></p>
+            <p><strong><code>@</code>でファイルパスを補完しながら指示する（15分）</strong></p>
             <ul>
-              <li><code>mkdir</code>で自分の好きな名前の新しいディレクトリを作る</li>
-              <li><code>cd</code>でそのディレクトリに移動し、<code>pwd</code>で今の場所を確認する</li>
-              <li>agyに「このディレクトリに、好きな一言を書いたメモファイルを作って（ファイル名は自由に決めてもらってよい）」のように依頼する</li>
-              <li>応答が終わったら<code>Ctrl+D</code>でagyのセッションを終了し、シェルに戻ってから<code>ls</code>でファイルが増えたことを確認し、<code>cat</code>で中身を読む</li>
-              <li><code>cd ..</code>で元の場所に戻り、<code>pwd</code>で確認する</li>
+              <li>プロンプト入力欄で<code>@</code>と打つと、リポジトリ内のファイル候補が一覧表示されることを確認する（公式: Using AGY CLI — Quick Tips「<code>@</code> will trigger path suggestions」）</li>
+              <li><code>@index.html</code>のようにファイルを指定してから、「この中の見出しを1つ、絵文字付きに変えて」のように依頼してみる。<strong>「どのファイルの話か」をagyに正確に伝えられる</strong>ことを確認する</li>
             </ul>
-            <p><strong>余裕があれば</strong></p>
+            <p><strong>余裕があれば：画像を貼り付けて伝える（15分）</strong></p>
             <ul>
-              <li>さらにもう1段階、ディレクトリの中にディレクトリを作り、木構造が深くなる様子を<code>pwd</code>の表示の変化で確認する</li>
+              <li>Simple Browserで自己紹介ページを表示し、OSのスクリーンショット機能（Windowsは<code>Win+Shift+S</code>、Macは<code>Cmd+Shift+4</code>等）で画面の一部を撮ってクリップボードにコピーする</li>
+              <li>agyのプロンプト入力欄にカーソルを合わせ、<code>ctrl+v</code>で貼り付ける（公式: Best Practices — Attaching visual evidence「capture a screenshot or video recording, copy it, and press <code>ctrl+v</code> inside the prompt box to attach it」）</li>
+              <li>貼り付けた画像を見せながら「この部分のレイアウトをこう変えたい」のように、<strong>言葉で説明しにくいことを画像で補う</strong>依頼をしてみる</li>
             </ul>
           </div>
         </div>
@@ -197,7 +203,7 @@
           <div class="timeline-body">
             <ul>
               <li>次回（第4回）: <strong>良い指示・悪い指示を見分ける</strong>——曖昧な指示と具体的な指示を比較するワークを行い、AIエージェントの動きがどう変わるかを体感する</li>
-              <li>今日のキーワード「<strong><code>pwd</code></strong>」「<strong><code>ls</code></strong>」「<strong><code>cd</code></strong>」「<strong>絶対パス・相対パス</strong>」を口に出して言えるか確認して退出</li>
+              <li>今日のキーワード「<strong>探索→計画→実行</strong>」「<strong><code>/rewind</code></strong>」「<strong><code>@</code>ファイル参照</strong>」を口に出して言えるか確認して退出</li>
             </ul>
           </div>
         </div>
@@ -211,15 +217,15 @@
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>「agyが裏で何をしていたか、今日で分かったこと」を1つメモに残す</strong>
-            <p>2限前半のagyへの依頼と、ターミナルでの確認を通じて理解できたことを1〜2行で言語化する。</p>
+            <strong>「<code>/rewind</code>があると分かって、依頼の仕方はどう変わりそうか」のメモを完成させる</strong>
+            <p>授業内で書ききれなかった人は家で仕上げる。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
-            <strong>家で<code>pwd</code>・<code>ls</code>・<code>cd</code>をもう一度触ってみる</strong>
-            <p>Codespacesを再開し、今日作ったディレクトリやファイルを<code>ls</code>で確認できるか試す。</p>
+            <strong>家で「探索→計画→実行」をもう一度試してみる</strong>
+            <p>自己紹介ページに別の追加依頼をする際、3段階に分けて指示できるか試す。</p>
           </div>
         </div>
       </div>
@@ -228,9 +234,8 @@
     <div class="syllabus-section">
       <h2>参考リンク</h2>
       <ul>
-        <li><a href="https://developer.mozilla.org/ja/docs/Learn_web_development/Getting_started/Environment_setup/Command_line" target="_blank" rel="noopener">MDN — コマンドライン短期集中講座</a> — 今日使った<code>pwd</code>・<code>ls</code>・<code>cd</code>を含む、ターミナルの基本コマンドの解説</li>
-        <li><a href="https://antigravity.google/docs/cli/getting-started" target="_blank" rel="noopener">Antigravity CLI — Getting Started（公式）</a> — agyがワークスペース（起動したディレクトリ）を基準に作業する仕組みの公式説明</li>
-        <li><a href="https://antigravity.google/docs/cli/using/" target="_blank" rel="noopener">Antigravity CLI — Using AGY CLI（公式）</a> — 今日使った<code>Ctrl+D</code>（Exit CLI）を含むキーバインディングの公式一覧</li>
+        <li><a href="https://antigravity.google/docs/cli/best-practices/" target="_blank" rel="noopener">Antigravity CLI — Best Practices（公式）</a> — 今日学んだ「探索→計画→実行」（Explore, plan, then execute）と画像添付（Attaching visual evidence）の公式解説</li>
+        <li><a href="https://antigravity.google/docs/cli/using/" target="_blank" rel="noopener">Antigravity CLI — Using AGY CLI（公式）</a> — <code>/rewind</code>・<code>@</code>ファイル参照を含むQuick Tips、スラッシュコマンド一覧の公式解説</li>
       </ul>
     </div>
 
