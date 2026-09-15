@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第4回 良い指示・悪い指示を見分ける | AIコミュニケーション基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=5">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication-2.html">AIコミュニケーション基礎 II</a>
+        <span>/</span>
+        <span>第4回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">良い指示・悪い指示を<wbr>見分ける</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 4</span>
+            <span class="page-badge">火曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">曖昧な指示と具体的な指示を比較するワークを行い、<strong>AIエージェントの動きがどう変わるか</strong>を体感する。第2回で下書きした<strong>指示メモ</strong>をブラッシュアップし、第5回のagy実践に備える</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">曖昧な指示 / 具体的な指示 / 自然言語とスラッシュコマンドの違い / 指示メモのブラッシュアップ</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第1〜3回で使用したリポジトリ・Codespaces環境にアクセスできる状態。第2回で作成した「agyへの指示メモ」（Googleドキュメント）（見当たらない場合は担当教員に確認）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>曖昧な指示と具体的な指示で、<strong>AIエージェントの動きがどう変わるか</strong>を説明できる</li>
+        <li>自然言語での指示（<strong>言い方次第で結果が変わる</strong>）と、スラッシュコマンド（<strong>言い方に関係なく同じ動作をする</strong>）の違いを説明できる</li>
+        <li>曖昧な表現を、具体的な表現に自分で書き直せる</li>
+        <li>第2回で下書きした「agyへの指示メモ」を、より具体的な表現にブラッシュアップできる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>「言い方」で結果が変わることに気づく</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り（10分）</strong></p>
+            <ul>
+              <li>第3回で使った<code>Shift+Tab</code>での実行モード切替、<code>/model</code>・<code>/usage</code>・<code>/rewind</code>などのスラッシュコマンドを思い出す。ペアで「どれが一番便利だと感じたか」を1つ共有する</li>
+            </ul>
+            <p><strong>自然言語とスラッシュコマンドの違いに気づく（15分）</strong></p>
+            <ul>
+              <li>前回までに使用したリポジトリを開き、<strong>停止していたCodespaceを再開（resume）</strong>する——「Create codespace」で新規作成しない。第3回と同じ手順で<code>python3 -m http.server 8000</code>を実行し、「ポート」タブ→<strong>「エディターでプレビュー」</strong>（画面アイコン）でSimple Browserを開いておく</li>
+              <li>問いかける: 「前回使った<code>/model</code>は、どんな打ち方をしても同じように<strong>使用中のモデルを選ぶパネル</strong>を開いてくれましたね。では、もし『今どのモデルを使ってる？』と<strong>自然言語</strong>で聞いたら、agyは毎回同じように答えてくれるでしょうか？」</li>
+              <li>ペアで予想を話し合ってから、次の2つを実際にagyへ送って比較する:
+              <pre><code>/model</code></pre>
+              <pre><code>今どのモデルを使っているか教えて</code></pre>
+              </li>
+              <li>観察ポイント: <code>/model</code>は<strong>決まったパネル</strong>を確実に開くのに対し、自然言語の質問は<strong>AIがその都度文章で解釈して答える</strong>ため、聞き方や文脈によって答え方・詳しさが変わりうることに気づく（公式: Slash commands overview「Slash commands provide quick shortcuts for invoking specialized agent workflows, reasoning modes, interactive planning tools, and background automations」。この一文はスラッシュコマンドが決まった動作を呼び出すショートカットであることの公式説明で、自然言語との比較自体は公式に明記されたものではないため、今日は実際に試して体感で確かめる）</li>
+              <li>今日のテーマにつなげる: 「スラッシュコマンドは言い方を気にしなくていいが、<strong>自然言語の指示は言い方次第で結果が変わる</strong>——だから『良い指示・悪い指示』を見分ける力が必要になる」</li>
+            </ul>
+            <p><strong>今日の全体像を知る（15分）</strong></p>
+            <ul>
+              <li><strong>1限後半</strong>: 曖昧な指示と具体的な指示を実際に比較し、AIエージェントの動きの違いを体感する</li>
+              <li><strong>2限前半・後半</strong>: 第2回で下書きした「agyへの指示メモ」を、今日学んだ視点で具体的な表現にブラッシュアップする</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>曖昧な指示と具体的な指示を比較する</h3>
+          <div class="timeline-body">
+            <p><strong>まず曖昧な指示を試す（15分）</strong></p>
+            <ul>
+              <li>第3回までに育てた自己紹介ページ（<code>index.html</code>）に対して、あえて曖昧な依頼をする：
+              <pre><code>いい感じにして</code></pre>
+              </li>
+              <li>Simple Browserで結果を確認し、「何が変わったか」「自分が想像していたものと同じか」をペアで話し合う。agyが何かしら変更を加えてくる場合も、<strong>意図と違う結果になりやすい</strong>ことを確認する</li>
+            </ul>
+            <p><strong>同じ意図を具体的な指示にしてみる（20分）</strong></p>
+            <ul>
+              <li>「いい感じ」で本当は何を求めていたのかをペアで言語化してから、具体的な指示に書き直す。例:
+              <pre><code>見出し（h1）の文字を大きく太字にして、
+背景色を薄い水色（#e0f7fa）に変えて</code></pre>
+              </li>
+              <li>同じ自己紹介ページに対して実行し、Simple Browserで結果を確認する。<strong>曖昧な指示のときとの違い</strong>（想像していた通りの結果になったか）をペアで比較する</li>
+              <li>「対象（何を）」「変化（どうする）」「基準（どのくらい・何色等）」の3つを含めると具体的になりやすい、という気づきをメモに残す</li>
+            </ul>
+            <p><strong>もう1組、自分たちで試す（15分）</strong></p>
+            <ul>
+              <li>ペアで曖昧な依頼を1つ考え、①曖昧なまま送る→②具体化して送り直す、の2段階を実際に試す。結果をSimple Browserで見比べる</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>出力形式を指定するのも「具体的な指示」のひとつ:</strong> 「対象・変化・基準」に加えて、<strong>結果をどんな形で受け取りたいか</strong>を指定するのも具体化の一種です。たとえば「変更内容を<code>changes.html</code>という別ファイルにまとめて、変更前後を並べて表示して」のように出力形式まで指定すると、AIの解釈の余地がさらに減ります。作った<code>changes.html</code>は、Simple Browserのアドレスバーの<strong>末尾だけ</strong>を<code>/changes.html</code>に書き換えると確認できます。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>「agyへの指示メモ」を見直す</h3>
+          <div class="timeline-body">
+            <p><strong>指示メモを開き直す（10分）</strong></p>
+            <ul>
+              <li>第2回で作成したGoogleドキュメント「agyへの指示メモ」を開く。当時Gemini Notebookと相談しながら書いた指示文を読み返す</li>
+              <li>今日学んだ「対象・変化・基準」の視点で、<strong>曖昧な表現が残っていないか</strong>を自分でチェックする</li>
+            </ul>
+            <p><strong>曖昧な部分を洗い出す（15分）</strong></p>
+            <ul>
+              <li>指示文の中から、「いい感じ」「うまく」「おしゃれに」のような<strong>解釈の余地がある言葉</strong>を探し、蛍光ペン機能等で印をつける</li>
+              <li>見つからない場合も、「もし自分がこの指示だけを読んで初めて作業するとしたら、迷う部分はないか」を想像して確認する</li>
+            </ul>
+            <p><strong>ペアで読み合ってフィードバックする（15分）</strong></p>
+            <ul>
+              <li>指示メモをペアで交換して読み合い、「ここは人によって解釈が分かれそう」という箇所を指摘し合う</li>
+              <li>指摘をもらった部分を、「対象・変化・基準」を意識して書き直す</li>
+            </ul>
+            <p><strong>書き直す（10分）</strong></p>
+            <ul>
+              <li>洗い出した曖昧な表現を、具体的な表現に書き直す。第5回で実際にこの指示文を使うため、<strong>読み手（agy）が迷わない文章</strong>になっているかを最終確認する</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>具体的すぎても不自由になる:</strong> 何もかも細かく指定すると、AIエージェントの得意な「提案してもらう」良さが失われることもあります。今日の狙いは「意図が伝わらない曖昧さ」をなくすことであって、全てを固定することではありません。迷ったときは「これを読んだ人（AI）が違う解釈をしないか」を基準に判断しましょう。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>指示メモを仕上げる</h3>
+          <div class="timeline-body">
+            <p><strong>最終稿を仕上げる（20分）</strong></p>
+            <ul>
+              <li>書き直した指示文を読み返し、自分の言葉で納得できる最終稿に整える</li>
+              <li>可能であれば、実際にagyへ送ってみて、意図通りの結果になるかを確認する</li>
+            </ul>
+            <p><strong>保存する（10分）</strong></p>
+            <ul>
+              <li>「agyへの指示メモ」を保存する。<strong>第5回まで削除せずに残しておく</strong>——次回はこの指示文を使って、AIエージェントに実際の制作を依頼する</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>次回（第5回）: <strong>AIエージェントに指示する①</strong>——今日仕上げた「agyへの指示メモ」を使い、agyに簡単なお願いをして、代わりにコードを書き実行する様子を観察する</li>
+              <li>今日のキーワード「<strong>曖昧な指示・具体的な指示</strong>」「<strong>自然言語とスラッシュコマンドの違い</strong>」を口に出して言えるか確認して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>「agyへの指示メモ」の最終稿を完成させ、保存する</strong>
+            <p>授業内で書ききれなかった人は家で仕上げる。第5回で実際に使用するので、削除せず手元に残しておくこと。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>家で「曖昧な指示→具体的な指示」の書き換えをもう1つ試す</strong>
+            <p>身の回りの依頼事（家族や友人へのお願い等）を1つ選び、agyへの指示のつもりで具体化してみる。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://antigravity.google/docs/slash-commands/" target="_blank" rel="noopener">Google Antigravity — Slash commands overview（公式）</a> — スラッシュコマンドが「あらかじめ用意された動作を呼び出すショートカット」であることの公式解説</li>
+        <li><a href="https://antigravity.google/docs/cli/reference/" target="_blank" rel="noopener">Antigravity CLI — CLI reference（公式）</a> — 全スラッシュコマンドの一覧。今日扱わなかった<code>/help</code>（ヘルプパネルを開く）・<code>/diff</code>（変更内容を差分表示するビューアを開く）・<code>/copy</code>（直前の応答をクリップボードにコピー）なども便利</li>
+        <li><a href="https://antigravity.google/docs/cli/best-practices/" target="_blank" rel="noopener">Antigravity CLI — Best Practices（公式）</a> — 第3回で学んだ「探索→計画→実行」の公式解説（振り返り用）</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week03.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第3回 agyをもっと使いこなす</span>
+      </a>
+      <a href="../ai-communication-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AIコミュニケーション基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第5回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
