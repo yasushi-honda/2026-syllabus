@@ -82,19 +82,19 @@
             </ul>
             <p><strong>自然言語とスラッシュコマンドの違いに気づく（15分）</strong></p>
             <ul>
-              <li>問いかける: 「前回使った<code>/rewind</code>は、どんな打ち方をしても同じように会話を巻き戻しましたね。では、もし『元に戻して』『さっきの取り消して』と<strong>自然言語</strong>でお願いしていたら、agyは毎回同じように動いてくれたでしょうか？」</li>
+              <li>前回までに使用したリポジトリを開き、<strong>停止していたCodespaceを再開（resume）</strong>する——「Create codespace」で新規作成しない。第3回と同じ手順で<code>python3 -m http.server 8000</code>を実行し、「ポート」タブ→<strong>「エディターでプレビュー」</strong>（画面アイコン）でSimple Browserを開いておく</li>
+              <li>問いかける: 「前回使った<code>/model</code>は、どんな打ち方をしても同じように<strong>使用中のモデルを選ぶパネル</strong>を開いてくれましたね。では、もし『今どのモデルを使ってる？』と<strong>自然言語</strong>で聞いたら、agyは毎回同じように答えてくれるでしょうか？」</li>
               <li>ペアで予想を話し合ってから、次の2つを実際にagyへ送って比較する:
-              <pre><code>/rewind</code></pre>
-              <pre><code>さっきの変更を元に戻して</code></pre>
+              <pre><code>/model</code></pre>
+              <pre><code>今どのモデルを使っているか教えて</code></pre>
               </li>
-              <li>観察ポイント: <code>/rewind</code>は<strong>決まった動作</strong>を確実に呼び出すのに対し、自然言語の指示は<strong>AIがその都度解釈する</strong>ため、言い回しや文脈によって伝わり方が変わりうることに気づく（公式: Slash commands overview「Slash commands provide quick shortcuts for invoking specialized agent workflows, reasoning modes, interactive planning tools, and background automations」——スラッシュコマンドは"あらかじめ用意された動作を呼び出すショートカット"であるのに対し、自然言語の指示はAIモデルが都度解釈するという違いがある）</li>
+              <li>観察ポイント: <code>/model</code>は<strong>決まったパネル</strong>を確実に開くのに対し、自然言語の質問は<strong>AIがその都度文章で解釈して答える</strong>ため、聞き方や文脈によって答え方・詳しさが変わりうることに気づく（公式: Slash commands overview「Slash commands provide quick shortcuts for invoking specialized agent workflows, reasoning modes, interactive planning tools, and background automations」。この一文はスラッシュコマンドが決まった動作を呼び出すショートカットであることの公式説明で、自然言語との比較自体は公式に明記されたものではないため、今日は実際に試して体感で確かめる）</li>
               <li>今日のテーマにつなげる: 「スラッシュコマンドは言い方を気にしなくていいが、<strong>自然言語の指示は言い方次第で結果が変わる</strong>——だから『良い指示・悪い指示』を見分ける力が必要になる」</li>
             </ul>
             <p><strong>今日の全体像を知る（15分）</strong></p>
             <ul>
               <li><strong>1限後半</strong>: 曖昧な指示と具体的な指示を実際に比較し、AIエージェントの動きの違いを体感する</li>
               <li><strong>2限前半・後半</strong>: 第2回で下書きした「agyへの指示メモ」を、今日学んだ視点で具体的な表現にブラッシュアップする</li>
-              <li>前回までに使用したリポジトリを開き、<strong>停止していたCodespaceを再開（resume）</strong>する——「Create codespace」で新規作成しない</li>
             </ul>
           </div>
         </div>
@@ -127,7 +127,7 @@
               <li>ペアで曖昧な依頼を1つ考え、①曖昧なまま送る→②具体化して送り直す、の2段階を実際に試す。結果をSimple Browserで見比べる</li>
             </ul>
             <div class="lesson-tip">
-              <strong>出力形式を指定するのも「具体的な指示」のひとつ:</strong> 「対象・変化・基準」に加えて、<strong>結果をどんな形で受け取りたいか</strong>を指定するのも具体化の一種です。たとえば「変更内容を<code>changes.html</code>という別ファイルにまとめて、変更前後を並べて表示して」のように出力形式まで指定すると、AIの解釈の余地がさらに減ります。作った説明ファイルはいつも通りSimple Browserで確認できます。
+              <strong>出力形式を指定するのも「具体的な指示」のひとつ:</strong> 「対象・変化・基準」に加えて、<strong>結果をどんな形で受け取りたいか</strong>を指定するのも具体化の一種です。たとえば「変更内容を<code>changes.html</code>という別ファイルにまとめて、変更前後を並べて表示して」のように出力形式まで指定すると、AIの解釈の余地がさらに減ります。作った<code>changes.html</code>は、Simple Browserのアドレスバーの<strong>末尾だけ</strong>を<code>/changes.html</code>に書き換えると確認できます。
             </div>
           </div>
         </div>
