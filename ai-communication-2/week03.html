@@ -40,11 +40,11 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">公式ベストプラクティス「<strong>探索→計画→実行</strong>」の進め方、<code>/rewind</code>で安全に試行錯誤する方法、<code>@</code>によるファイル参照、画像を貼り付けて伝える方法など、agyを日々の作業でもっと便利に使うテクニックを学ぶ</div>
+          <div class="lesson-overview-value">公式ベストプラクティス「<strong>探索→計画→実行</strong>」の進め方、<code>Shift+Tab</code>で切り替える3つの実行モード（<code>default</code>／<code>accept-edits</code>／<code>plan</code>）、<code>/model</code>・<code>/usage</code>・<code>/rewind</code>などよく使うスラッシュコマンド、<code>@</code>によるファイル参照、画像を貼り付けて伝える方法など、agyを日々の作業でもっと便利に使うテクニックを学ぶ</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">探索→計画→実行 / 実行モード（<code>Shift+Tab</code>） / <code>/model</code> / <code>/usage</code> / <code>/rewind</code> / <code>@</code>ファイル参照 / 画像貼り付け（<code>ctrl+v</code>）</div>
+          <div class="lesson-overview-value">探索→計画→実行 / <code>/model</code> / <code>/usage</code> / 実行モード（<code>Shift+Tab</code>） / <code>/rewind</code> / <code>@</code>ファイル参照 / 画像貼り付け（<code>ctrl+v</code>）</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
@@ -57,11 +57,11 @@
       <h2>この回のゴール</h2>
       <ul>
         <li>公式ベストプラクティス「<strong>探索→計画→実行</strong>」の3段階を理解し、実際に使える</li>
+        <li><code>/model</code>でモデルを切り替え、<code>/usage</code>で利用状況を確認できる</li>
+        <li><code>Shift+Tab</code>で<code>default</code>／<code>accept-edits</code>／<code>plan</code>の3つの実行モードを切り替えられる</li>
         <li><code>/rewind</code>で会話を巻き戻せることを知り、<strong>安心して試行錯誤</strong>できる</li>
         <li><code>@</code>キーでファイルを指定しながらagyに指示を出せる</li>
         <li><code>ctrl+v</code>で画像を貼り付け、視覚的に伝えられることを知っている</li>
-        <li><code>Shift+Tab</code>で<code>default</code>／<code>accept-edits</code>／<code>plan</code>の3つの実行モードを切り替えられる</li>
-        <li><code>/model</code>でモデルを切り替え、<code>/usage</code>で利用状況を確認できる</li>
       </ul>
     </div>
 
@@ -86,12 +86,12 @@
             <p><strong>「もっと便利に使えるはず」という問いかけ（10分）</strong></p>
             <ul>
               <li>agyには、ただ話しかける以外にも<strong>公式が推奨する進め方</strong>や<strong>便利な操作</strong>がいくつも用意されていることを共有する</li>
-              <li>今日はその中から5つ（探索→計画→実行・実行モード切替とよく使うコマンド・<code>@</code>ファイル参照・画像貼り付け）を体験する</li>
+              <li>今日はその中から5つ（探索→計画→実行・よく使うコマンド・実行モード切替・<code>@</code>ファイル参照・画像貼り付け）を体験する</li>
             </ul>
             <p><strong>今日の全体像を知る（20分）</strong></p>
             <ul>
               <li><strong>1限後半</strong>: 公式ベストプラクティス「探索→計画→実行」を体験する</li>
-              <li><strong>2限前半</strong>: <code>Shift+Tab</code>で実行モードを切り替え、<code>/model</code>・<code>/usage</code>・<code>/rewind</code>などよく使うコマンドを試す</li>
+              <li><strong>2限前半</strong>: <code>/model</code>・<code>/usage</code>で状態を確認し、<code>Shift+Tab</code>で実行モードを切り替え、<code>/rewind</code>で安全に試行錯誤する</li>
               <li><strong>2限後半</strong>: <code>@</code>でファイルを指定し、画像を貼り付けて伝える</li>
               <li>前回・前々回で使用したリポジトリを開き、<strong>停止していたCodespaceを再開（resume）</strong>する——「Create codespace」で新規作成しない</li>
               <li>第2回で自己紹介ページを作った人は、今日はそのページを育てていく。<strong>作っていない・見当たらない人</strong>は、agyに「シンプルな自己紹介ページ（<code>index.html</code>）を作って」と依頼するところから始める</li>
@@ -148,7 +148,7 @@
             <span class="timeline-time">2限 前半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>実行モードとよく使うコマンドを知る</h3>
+          <h3>よく使うコマンドと実行モードを知る</h3>
           <div class="timeline-body">
             <p><strong><code>?</code>でヘルプ一覧を見る（5分）</strong></p>
             <ul>
@@ -161,12 +161,12 @@
             </ul>
             <p><strong><code>Shift+Tab</code>で実行モードを切り替える（15分）</strong></p>
             <ul>
-              <li>agyには<strong>3つの実行モード</strong>がある（公式: Choose an execution mode）: <code>default</code>（ファイルを変更する前に差分を見せて確認を待つ、既定のモード）、<code>accept-edits</code>（確認を待たずに自動でファイル変更を承認する）、<code>plan</code>（コードを書く前に調査・計画をまとめる）</li>
+              <li>agyには<strong>3つの実行モード</strong>がある（公式: Choose an execution mode）: <code>default</code>（ファイルを変更する前に差分を見せて確認を待つ、既定のモード）、<code>accept-edits</code>（確認を待たずに自動でファイル変更を承認する）、<code>plan</code>（コードを書く前に分析して手順をまとめる）</li>
               <li>プロンプト入力欄で<code>Shift+Tab</code>を押すと、<code>default → accept-edits → plan → default</code>の順にモードが切り替わることを確認する（公式: 「Press <code>Shift+Tab</code> inside the prompt box to cycle through the active sequence」）</li>
               <li><code>plan</code>モードに切り替えてから、1限後半で手で3段階に分けた依頼と似た内容をひとつの文で頼んでみる：
               <pre><code>好きな食べ物を紹介するセクションを追加して</code></pre>
               </li>
-              <li>公式には「<code>/plan</code>という指示を自動で先頭に付け、コードを書く前に分析・手順の概要を作る」（意訳、公式: 「Prepends the <code>/plan</code> instruction prefix to analyze and outline steps before writing code」）とあり、1限後半で自分たちが手でやった「探索→計画」の部分を、<code>plan</code>モードなら自動でやってくれることに気づく。計画に納得したら実行させ、終わったら<code>default</code>に戻しておく</li>
+              <li>公式には「<code>/plan</code>という指示を自動で先頭に付け、コードを書く前に分析・手順の概要を作る」（意訳、公式: 「Prepends the <code>/plan</code> instruction prefix to analyze and outline steps before writing code」）とあり、1限後半で自分たちが手でやった「探索→計画」に<strong>近い動き</strong>を、<code>plan</code>モードなら自動でやってくれることに気づく（公式の説明は「分析して手順をまとめる」とだけあり、「探索」という言葉は明記されていない点に注意）。計画に納得したら実行させ、終わったら<code>default</code>に戻しておく</li>
             </ul>
             <div class="lesson-tip">
               <strong>accept-editsモードは便利だが要注意:</strong> 確認なしで即座にファイルが書き換わるモードなので、小さな試行錯誤には便利ですが、大きな変更や失敗すると困る作業では<code>default</code>モードに戻すことをおすすめします。「今どのモードか」を意識する習慣をつけましょう。
