@@ -44,7 +44,7 @@
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">探索→計画→実行 / スラッシュコマンド / <code>/rewind</code> / <code>@</code>ファイル参照 / 画像貼り付け（<code>ctrl+v</code>）</div>
+          <div class="lesson-overview-value">探索→計画→実行 / 実行モード（<code>Shift+Tab</code>） / <code>/model</code> / <code>/usage</code> / <code>/rewind</code> / <code>@</code>ファイル参照 / 画像貼り付け（<code>ctrl+v</code>）</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
@@ -60,6 +60,8 @@
         <li><code>/rewind</code>で会話を巻き戻せることを知り、<strong>安心して試行錯誤</strong>できる</li>
         <li><code>@</code>キーでファイルを指定しながらagyに指示を出せる</li>
         <li><code>ctrl+v</code>で画像を貼り付け、視覚的に伝えられることを知っている</li>
+        <li><code>Shift+Tab</code>で<code>default</code>／<code>accept-edits</code>／<code>plan</code>の3つの実行モードを切り替えられる</li>
+        <li><code>/model</code>でモデルを切り替え、<code>/usage</code>で利用状況を確認できる</li>
       </ul>
     </div>
 
@@ -84,12 +86,13 @@
             <p><strong>「もっと便利に使えるはず」という問いかけ（10分）</strong></p>
             <ul>
               <li>agyには、ただ話しかける以外にも<strong>公式が推奨する進め方</strong>や<strong>便利な操作</strong>がいくつも用意されていることを共有する</li>
-              <li>今日はその中から4つ（探索→計画→実行・スラッシュコマンド・<code>@</code>ファイル参照・画像貼り付け）を体験する</li>
+              <li>今日はその中から5つ（探索→計画→実行・実行モード切替とよく使うコマンド・<code>@</code>ファイル参照・画像貼り付け）を体験する</li>
             </ul>
             <p><strong>今日の全体像を知る（20分）</strong></p>
             <ul>
-              <li><strong>前半</strong>: 公式ベストプラクティス「探索→計画→実行」を体験する</li>
-              <li><strong>後半</strong>: <code>/rewind</code>で安全に試行錯誤し、<code>@</code>でファイルを指定し、画像を貼り付けて伝える</li>
+              <li><strong>1限後半</strong>: 公式ベストプラクティス「探索→計画→実行」を体験する</li>
+              <li><strong>2限前半</strong>: <code>Shift+Tab</code>で実行モードを切り替え、<code>/model</code>・<code>/usage</code>・<code>/rewind</code>などよく使うコマンドを試す</li>
+              <li><strong>2限後半</strong>: <code>@</code>でファイルを指定し、画像を貼り付けて伝える</li>
               <li>前回・前々回で使用したリポジトリを開き、<strong>停止していたCodespaceを再開（resume）</strong>する——「Create codespace」で新規作成しない</li>
               <li>第2回で自己紹介ページを作った人は、今日はそのページを育てていく。<strong>作っていない・見当たらない人</strong>は、agyに「シンプルな自己紹介ページ（<code>index.html</code>）を作って」と依頼するところから始める</li>
               <li>今日は変更結果を画面で確認しながら進める。Codespacesのターミナルで<code>python3 -m http.server 8000</code>を実行し、「ポート」タブ→<strong>「エディターでプレビュー」</strong>（画面アイコン）でSimple Browserを開いておく</li>
@@ -145,28 +148,40 @@
             <span class="timeline-time">2限 前半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>スラッシュコマンドで安全に試行錯誤する</h3>
+          <h3>実行モードとよく使うコマンドを知る</h3>
           <div class="timeline-body">
-            <p><strong><code>?</code>でヘルプ一覧を見る（10分）</strong></p>
+            <p><strong><code>?</code>でヘルプ一覧を見る（5分）</strong></p>
             <ul>
-              <li>プロンプト入力欄で<code>?</code>とだけ打つと、使えるスラッシュコマンドの一覧が表示されることを確認する（公式: Using AGY CLI — Quick Tips）</li>
-              <li>一覧の中から、今日使う<code>/rewind</code>と<code>/clear</code>を見つけておく</li>
+              <li>プロンプト入力欄で<code>?</code>とだけ打つと、使えるスラッシュコマンドの一覧が表示されることを確認する（公式: Using AGY CLI — Quick Tips）。一覧の中から、今日使う<code>/model</code>・<code>/usage</code>・<code>/rewind</code>・<code>/clear</code>を見つけておく</li>
             </ul>
-            <p><strong><code>/clear</code>で新規セッションを試す（10分）</strong></p>
+            <p><strong><code>/model</code>と<code>/usage</code>：よく使う2つのコマンド（15分）</strong></p>
+            <ul>
+              <li><code>/model</code>と打つと、使用する推論モデルを選べる（公式: CLI Reference「Choose your preferred reasoning model (persists across sessions)」——一度選ぶと次回のセッションでも同じモデルが使われ続ける）。どんなモデルが並んでいるか一覧を眺めてみる</li>
+              <li><code>/usage</code>（または<code>/quota</code>）と打つと、モデルごとの利用状況を確認できるパネルが開く（公式: Model Quotas (/usage)「refreshes your model configuration and quota status from the backend and opens an interactive TUI panel」）。残りのリクエスト数・トークン数を確認し、<code>Esc</code>または<code>q</code>で閉じる</li>
+            </ul>
+            <p><strong><code>Shift+Tab</code>で実行モードを切り替える（15分）</strong></p>
+            <ul>
+              <li>agyには<strong>3つの実行モード</strong>がある（公式: Choose an execution mode）: <code>default</code>（ファイルを変更する前に差分を見せて確認を待つ、既定のモード）、<code>accept-edits</code>（確認を待たずに自動でファイル変更を承認する）、<code>plan</code>（コードを書く前に調査・計画をまとめる）</li>
+              <li>プロンプト入力欄で<code>Shift+Tab</code>を押すと、<code>default → accept-edits → plan → default</code>の順にモードが切り替わることを確認する（公式: 「Press <code>Shift+Tab</code> inside the prompt box to cycle through the active sequence」）</li>
+              <li><code>plan</code>モードに切り替えてから、1限後半で手で3段階に分けた依頼と似た内容をひとつの文で頼んでみる：
+              <pre><code>好きな食べ物を紹介するセクションを追加して</code></pre>
+              </li>
+              <li>公式には「<code>/plan</code>という指示を自動で先頭に付け、コードを書く前に分析・手順の概要を作る」（意訳、公式: 「Prepends the <code>/plan</code> instruction prefix to analyze and outline steps before writing code」）とあり、1限後半で自分たちが手でやった「探索→計画」の部分を、<code>plan</code>モードなら自動でやってくれることに気づく。計画に納得したら実行させ、終わったら<code>default</code>に戻しておく</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>accept-editsモードは便利だが要注意:</strong> 確認なしで即座にファイルが書き換わるモードなので、小さな試行錯誤には便利ですが、大きな変更や失敗すると困る作業では<code>default</code>モードに戻すことをおすすめします。「今どのモードか」を意識する習慣をつけましょう。
+            </div>
+            <p><strong><code>/clear</code>で新規セッションを試す（5分）</strong></p>
             <ul>
               <li><code>/clear</code>と打つと、会話がリセットされ新しいセッションが始まることを確認する（公式: Using AGY CLI — Quick Tips「Use <code>/clear</code> to clear the prompt and start a new conversation session」）。実際にそれまで作ったファイルが消えるかどうかを<code>ls</code>で自分の手で確かめてみる</li>
             </ul>
-            <p><strong><code>/rewind</code>で会話を巻き戻す（20分）</strong></p>
+            <p><strong><code>/rewind</code>で会話を巻き戻す（10分）</strong></p>
             <ul>
               <li>まずagyに、わざと大胆な依頼をしてみる：
               <pre><code>index.htmlの見出しの文字色を全部赤に変えて</code></pre>
               </li>
               <li>Simple Browserを開き直して結果を確認し、「思っていたのと違う」「やっぱり元に戻したい」と感じたら、<code>/rewind</code>（または<code>/undo</code>）と打つ（公式: Using AGY CLI — Quick Tips「Use <code>/rewind</code> or <code>/undo</code> to rewind the conversation history」——公式の説明は「<strong>会話履歴</strong>」を戻すとしており、ファイルの変更まで戻るとは明記されていない）</li>
               <li>Simple Browserをもう一度更新し、<strong>ファイルの見た目まで実際に元に戻ったかどうかを自分の目で確認する</strong>。戻っていなければ、agyに「さっきの変更を取り消して」と改めて頼む必要があることに気づく</li>
-            </ul>
-            <p><strong>気づきをまとめる（10分）</strong></p>
-            <ul>
-              <li>「<code>/rewind</code>があると分かって、依頼の仕方はどう変わりそうか」を1つメモに残す</li>
             </ul>
             <div class="lesson-tip">
               <strong><code>/rewind</code>は会話を戻す機能:</strong> 「変な結果になったらどうしよう」という不安を減らしてくれる便利な機能ですが、公式に明記されているのは「会話履歴を戻す」ことだけで、ファイルの変更まで自動的に戻る保証はありません。<code>/rewind</code>を使ったあとは、<strong>実際にファイルがどうなったかを自分の目で確認する</strong>習慣をつけましょう。
@@ -204,7 +219,7 @@
           <div class="timeline-body">
             <ul>
               <li>次回（第4回）: <strong>良い指示・悪い指示を見分ける</strong>——曖昧な指示と具体的な指示を比較するワークを行い、AIエージェントの動きがどう変わるかを体感する</li>
-              <li>今日のキーワード「<strong>探索→計画→実行</strong>」「<strong><code>/rewind</code></strong>」「<strong><code>@</code>ファイル参照</strong>」を口に出して言えるか確認して退出</li>
+              <li>今日のキーワード「<strong>探索→計画→実行</strong>」「<strong>実行モード（<code>Shift+Tab</code>）</strong>」「<strong><code>/rewind</code></strong>」「<strong><code>@</code>ファイル参照</strong>」を口に出して言えるか確認して退出</li>
             </ul>
           </div>
         </div>
@@ -218,8 +233,8 @@
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>「<code>/rewind</code>があると分かって、依頼の仕方はどう変わりそうか」のメモを完成させる</strong>
-            <p>授業内で書ききれなかった人は家で仕上げる。</p>
+            <strong>「<code>/rewind</code>があると分かって、依頼の仕方はどう変わりそうか」のメモを1つ書く</strong>
+            <p>授業内の体験を踏まえて、家で1〜2行にまとめる。</p>
           </div>
         </div>
         <div class="lesson-task">
@@ -237,6 +252,9 @@
       <ul>
         <li><a href="https://antigravity.google/docs/cli/best-practices/" target="_blank" rel="noopener">Antigravity CLI — Best Practices（公式）</a> — 今日学んだ「探索→計画→実行」（Explore, plan, then execute）と画像添付（Attaching visual evidence）の公式解説</li>
         <li><a href="https://antigravity.google/docs/cli/using/" target="_blank" rel="noopener">Antigravity CLI — Using AGY CLI（公式）</a> — <code>/rewind</code>・<code>@</code>ファイル参照を含むQuick Tips、スラッシュコマンド一覧の公式解説</li>
+        <li><a href="https://antigravity.google/docs/cli/modes/" target="_blank" rel="noopener">Antigravity CLI — Choose an execution mode（公式）</a> — <code>Shift+Tab</code>での実行モード切替（<code>default</code>／<code>accept-edits</code>／<code>plan</code>）の公式解説</li>
+        <li><a href="https://antigravity.google/docs/cli/commands/usage/" target="_blank" rel="noopener">Antigravity CLI — Model Quotas (/usage)（公式）</a> — <code>/usage</code>（<code>/quota</code>）コマンドの公式解説</li>
+        <li><a href="https://antigravity.google/docs/cli/reference/" target="_blank" rel="noopener">Antigravity CLI — CLI Reference（公式）</a> — <code>/model</code>を含む全スラッシュコマンドの一覧</li>
       </ul>
     </div>
 
