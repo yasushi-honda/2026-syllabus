@@ -95,6 +95,8 @@ ai-communication-2/     # AIコミュニケーション基礎Ⅱ の各回詳細
   week01.html           #   第1回 前期振り返り＆後期オリエンテーション
   week02.html           #   第2回 学習ガイドで理解するAntigravity CLI
   week03.html           #   第3回 agyをもっと使いこなす
+  week04.html           #   第4回 良い指示・悪い指示を見分ける
+  week05.html           #   第5回 AIエージェントに指示する①
 it-passport-technology.html   # ITパスポート テクノロジー系（水1・2限／後期。授業内容確定済み、週ページ未作成）
 system-dev-practice-a2.html   # システム開発実習AⅡ（水3・4限／後期。授業内容確定済み、週ページ未作成）
 ai-programming-2.html   # AI活用プログラミング基礎Ⅱ（木1・2限／後期。授業内容確定済み、週ページ順次作成中）

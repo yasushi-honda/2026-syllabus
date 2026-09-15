@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第5回 AIエージェントに指示する① | AIコミュニケーション基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=5">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication-2.html">AIコミュニケーション基礎 II</a>
+        <span>/</span>
+        <span>第5回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">AIエージェントに<wbr>指示する①</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 5</span>
+            <span class="page-badge">火曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">第2回でNotebookに相談しながら下書きし、第4回でブラッシュアップした<strong>指示メモ</strong>を使い、agyに簡単なお願い（例：簡単なWebページを作って）をして、代わりにコードを書き実行する様子を観察する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">指示メモの実践 / エージェントの作業を観察する / 意図と結果を比べる / 追加の指示</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第1〜4回で使用したリポジトリ・Codespaces環境にアクセスできる状態。第4回で仕上げた「agyへの指示メモ」（Googleドキュメント）（見当たらない場合は担当教員に確認）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>「agyへの指示メモ」を使って、agyに実際のまとまった依頼を送れる</li>
+        <li>agyが<strong>どんな順番で作業するか</strong>（ファイルの変更・ターミナルの出力等）を観察し、自分の言葉で説明できる</li>
+        <li>自分が送った指示と、実際にできた結果を比べ、<strong>ズレがあれば理由を考えられる</strong></li>
+        <li>観察した気づきをもとに、追加の指示を1つ送って作品を育てられる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>「指示メモ」を見直し、環境を整える</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り（10分）</strong></p>
+            <ul>
+              <li>第4回で学んだ「曖昧な指示→具体的な指示」の書き換えを思い出す。第4回で仕上げた「agyへの指示メモ」をGoogleドキュメントで開き、最終稿になっているか確認する</li>
+            </ul>
+            <p><strong>環境を整える（10分）</strong></p>
+            <ul>
+              <li>前回までに使用したリポジトリを開き、<strong>停止していたCodespaceを再開（resume）</strong>する——「Create codespace」で新規作成しない</li>
+              <li>これまでと同じ手順で<code>python3 -m http.server 8000</code>を実行し、「ポート」タブ→<strong>「エディターでプレビュー」</strong>（画面アイコン）でSimple Browserを開いておく</li>
+            </ul>
+            <p><strong>今日の全体像を知る（20分）</strong></p>
+            <ul>
+              <li>これまで（第2〜4回）は、既にある自己紹介ページへの<strong>小さな修正</strong>を練習してきた。今日は「agyへの指示メモ」に書いた<strong>まとまった依頼</strong>を初めて送り、agyがどう作業するかをじっくり観察する</li>
+              <li><strong>1限後半</strong>: 指示メモを送り、agyの作業の様子を観察する</li>
+              <li><strong>2限前半</strong>: 「何を言ったら何が起きたか」を言語化し、意図と結果を比べる</li>
+              <li><strong>2限後半</strong>: ペアで成果物を見せ合い、今日の気づきをまとめる</li>
+              <li>第3回で学んだ<code>Shift+Tab</code>の実行モードを思い出す。今日のようなまとまった依頼では、<code>plan</code>モードに切り替えてから送ると、agyが先に計画を見せてくれる（実行前に内容を確認できるため、人によっては安心感につながる）。使うかどうかは任意</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>指示メモを送り、agyの作業を観察する</h3>
+          <div class="timeline-body">
+            <p><strong>送る前に最終確認する（5分）</strong></p>
+            <ul>
+              <li>「agyへの指示メモ」の指示文を読み返し、「対象・変化・基準」（第4回で学んだ具体化の視点）が入っているかを最後にチェックする</li>
+            </ul>
+            <p><strong>指示メモを実際に送る（10分）</strong></p>
+            <ul>
+              <li>指示メモの内容をagyのプロンプト入力欄に貼り付けて送る。<code>plan</code>モードを使う場合は、送る前に<code>Shift+Tab</code>で切り替えておく</li>
+              <li><code>plan</code>モードの場合は、提示された計画を読んで納得してから実行させる（気になる点があれば「〇〇の部分を変えて」と計画を修正させてもよい）</li>
+              <li><code>plan</code>モードを使わず<code>default</code>モードのまま送った場合は、ファイルを変更する前に<strong>差分が表示されて承認待ちになる</strong>ことがある（第3回で学んだ通り）。止まったように見えても失敗ではないので、内容を確認して承認し、そのまま先に進める</li>
+            </ul>
+            <p><strong>作業の様子を観察する（25分）</strong></p>
+            <ul>
+              <li>agyが実行している間、<strong>起きていることを口に出しながらペアで観察する</strong>。観察の視点:
+                <ul>
+                  <li>①どんな順番で作業しているか（調べる→計画する→ファイルを変更する、等）</li>
+                  <li>②途中で質問や確認が入るか</li>
+                  <li>③どのファイルが、どう変わったか</li>
+                </ul>
+              </li>
+              <li>完了したら、Codespacesの<strong>エクスプローラー</strong>で変更されたファイル一覧を確認する（変更されたファイルには印がつく）</li>
+            </ul>
+            <p><strong>Simple Browserで結果を確認する（10分）</strong></p>
+            <ul>
+              <li>できあがったページをSimple Browserで開き、実際の見た目を確認する。<code>index.html</code>以外のファイル名で作られた場合は、Simple Browserのアドレスバーの<strong>末尾だけ</strong>を<code>/ファイル名.html</code>に書き換えると表示できる（第4回と同じ手順）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>今日は「観察」が主役:</strong> うまくできたかどうかより、<strong>agyがどう動いたかをよく見る</strong>ことを優先しましょう。次の2限で、見たことを言葉にする時間をしっかり取ります。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>「言ったこと」と「起きたこと」を比べる</h3>
+          <div class="timeline-body">
+            <p><strong>観察したことを書き出す（20分）</strong></p>
+            <ul>
+              <li>Googleドキュメント等に、次の3点を書き出す:
+                <ul>
+                  <li>① 自分が送った指示文（そのまま貼り付ける）</li>
+                  <li>② agyが実際にした作業（見た順番に、短く要約する）</li>
+                  <li>③ できあがった結果（Simple Browserで見た内容を説明する）</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>意図と結果を比べる（15分）</strong></p>
+            <ul>
+              <li>自分が思っていた通りにできたか、それとも<strong>ズレ</strong>があったかをペアで話し合う</li>
+              <li>ズレがあった場合は、指示文のどの部分が原因だったかを考える（第4回で学んだ「対象・変化・基準」のどれかが曖昧だった可能性がある）</li>
+            </ul>
+            <p><strong>追加の指示を1つ試す（15分）</strong></p>
+            <ul>
+              <li>観察して気づいたことをもとに、追加の指示を1つ考えてagyに送ってみる（例:「もう少し○○してほしい」を具体的な表現にして送る）</li>
+              <li>Simple Browserで変化を確認する。この「指示を重ねる」やり方は次回（第6回）でさらに深める</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>成果物を見せ合い、気づきをまとめる</h3>
+          <div class="timeline-body">
+            <p><strong>ペアで成果物を見せ合う（15分）</strong></p>
+            <ul>
+              <li>お互いのSimple Browserを見せ合い、「どんな指示を送ったらこうなったか」を説明し合う</li>
+              <li>同じような依頼でも、指示文の書き方によって結果が違うことがあれば話題にする</li>
+            </ul>
+            <p><strong>今日の気づきをまとめる（15分）</strong></p>
+            <ul>
+              <li>「AIエージェントに指示する」ことについて、今日の体験を通じて分かったことを1〜2行でメモに残す</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>次回（第6回）: <strong>AIエージェントに指示する②</strong>——指示を重ねて作品を育てていく。「伝え方」でAIの動きが変わることをさらに体感する</li>
+              <li>今日のキーワード「<strong>エージェントの作業を観察する</strong>」「<strong>意図と結果を比べる</strong>」を口に出して言えるか確認して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>「言ったこと・起きたこと・結果」のメモを完成させる</strong>
+            <p>授業内で書ききれなかった人は家で仕上げる。次回、指示を重ねる際に見返す。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>家でもう1つ、追加の指示を試してみる</strong>
+            <p>今日の作品に、気になった部分の改善を1つ追加で依頼してみる。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://antigravity.google/docs/cli/modes/" target="_blank" rel="noopener">Antigravity CLI — Choose an execution mode（公式）</a> — 第3回で学んだ<code>Shift+Tab</code>での実行モード切替の公式解説（振り返り用）</li>
+        <li><a href="https://antigravity.google/docs/cli/best-practices/" target="_blank" rel="noopener">Antigravity CLI — Best Practices（公式）</a> — 「探索→計画→実行」の公式解説（振り返り用）</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week04.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第4回 良い指示・悪い指示を見分ける</span>
+      </a>
+      <a href="../ai-communication-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AIコミュニケーション基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第6回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
