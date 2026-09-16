@@ -41,7 +41,7 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">GitHubアカウント登録を完了させ、自分のリポジトリを新規作成してGitHub Codespacesを自分で起動し、Antigravity CLI（agy）を導入して最初の指示を出す</div>
+          <div class="lesson-overview-value">GitHubアカウント登録を完了させ、自分のリポジトリを新規作成してGitHub Codespacesを自分で起動し、Antigravity CLI（agy）を導入して簡単なゲームを作ってもらう</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
@@ -61,7 +61,7 @@
         <li>自分のGitHubアカウントに<strong>新しいリポジトリ</strong>を作成する</li>
         <li><strong>GitHub Codespaces</strong>を自分の手で起動する</li>
         <li>Codespaces上に<strong>Antigravity CLI（agy）</strong>をインストール・認証する</li>
-        <li>agyに自然言語で指示を出し、最初の変更を自分の目で確認する</li>
+        <li>agyに自然言語で簡単なゲームを作ってもらい、「指示したら形になった」を体験する</li>
       </ul>
     </div>
 
@@ -176,22 +176,25 @@
             <span class="timeline-time">2限 後半</span>
             <span class="timeline-duration">約30分</span>
           </div>
-          <h3>agyに最初の仕事を頼む</h3>
+          <h3>agyに簡単なゲームを作ってもらう</h3>
           <div class="timeline-body">
-            <p><strong>自己紹介させる</strong></p>
+            <p><strong>まずは話しかけてみる</strong></p>
             <ul>
               <li>自然言語で話しかけてみる。例: <code>あなたが何をできるか、自己紹介してください</code></li>
-              <li>「すごい」「怖い」「よく分からない」——率直な感想でよいので、自分の言葉で言語化してみる</li>
             </ul>
-            <p><strong>小さなファイルを1つ作らせる</strong></p>
+            <p><strong>ゲームを1つ作ってもらう</strong></p>
             <ul>
-              <li>例: <code>profile.md というファイルを作って、あなたの名前と今日感じたことを書いてください</code></li>
-              <li>左のファイルツリーに<code>profile.md</code>が現れることを自分の目で確認する</li>
-              <li>ファイルを開き、agyが書いた中身を実際に読んでみる——<strong>AIエージェントが本当にファイルへ変更を加えた</strong>ことを体感する</li>
+              <li>例: <code>ブラウザで遊べる簡単なテトリスを作ってください</code> / <code>ブラウザで動くシンプルなボンバーマン風のゲームを作ってください</code>——テトリス・ボンバーマン・じゃんけん等、好きなお題を選んでよい</li>
+              <li>完成度は気にしない。「指示したら形になった」という体験が今日のゴール</li>
+              <li>agyがファイルを作り、コードを書き進める様子をそのまま見守る</li>
+            </ul>
+            <p><strong>分からないことはagyに聞く</strong></p>
+            <ul>
+              <li>表示の仕方が分からない・エラーが出た・次に何をすればいいか分からない——そんな時は<code>これはどういう意味ですか？</code><code>動かないので直してください</code>のように、agy自身に聞いてよい</li>
             </ul>
             <p><strong>変更をGitHubに記録する</strong></p>
             <ul>
-              <li>例: <code>profile.mdの変更をコミットして、GitHubにプッシュしてください</code></li>
+              <li>例: <code>ここまでの変更をコミットして、GitHubにプッシュしてください</code></li>
               <li>第2回で学んだ「コミット＝変更の記録」「プッシュ＝GitHubへ送る」を、agyへの指示で実践する</li>
               <li><strong>ここでプッシュしておかないと、Codespaces内だけの変更のままでGitHubには残らない</strong>——次回以降も同じ手順で必ずプッシュする</li>
             </ul>
@@ -206,7 +209,7 @@
           <h3>次回予告＆今日の振り返り</h3>
           <div class="timeline-body">
             <ul>
-              <li>次回（第4回）：<strong>agyと一緒につくる①</strong>——今日作成したリポジトリに、agyへの自然言語の指示で小さな機能を1つ追加する</li>
+              <li>次回（第4回）：<strong>agyと一緒につくる①</strong>——今日作ったゲームに、agyへの自然言語の指示で小さな機能を1つ追加する</li>
               <li>今日作成したリポジトリは、第6回にGoogle AI Studio Build modeから読み込み直します。名前を覚えておいてください</li>
               <li>「GitHub・Codespaces・agyについて分かったこと・まだよく分からないこと」を一言メモして退出</li>
             </ul>
@@ -222,15 +225,15 @@
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>profile.mdの変更がGitHubにプッシュされていることを確認しておく</strong>
-            <p>今日作成した自分のリポジトリをGitHub上で開き、profile.mdが反映されているか確認する。プッシュできていない場合は、次回授業の冒頭で完了させる。第6回にGoogle AI Studio Build modeから同じリポジトリを読み込み直すため、リポジトリ名も控えておく。Codespace自体は停止したままでよい（次回resumeで再開する）。</p>
+            <strong>今日作ったゲームの変更がGitHubにプッシュされていることを確認しておく</strong>
+            <p>今日作成した自分のリポジトリをGitHub上で開き、agyが作ったファイル一式が反映されているか確認する。プッシュできていない場合は、次回授業の冒頭で完了させる。第6回にGoogle AI Studio Build modeから同じリポジトリを読み込み直すため、リポジトリ名も控えておく。Codespace自体は停止したままでよい（次回resumeで再開する）。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
             <strong>agyに他の指示も試してみる</strong>
-            <p>時間のあるときに、profile.mdの内容を書き換えさせる等、簡単な指示を追加で試しておくと次回スムーズです。</p>
+            <p>時間のあるときに、ゲームのルールを変えてみる・見た目の色を変えてみる等、簡単な指示を追加で試しておくと次回スムーズです。</p>
           </div>
         </div>
       </div>
