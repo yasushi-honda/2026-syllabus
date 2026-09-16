@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第3回 GitHubの続き＋Codespacesを自分で起動＋agyを導入しよう | AI活用プログラミング基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=5">
+  <!-- 公式情報確認: 2026-09-17 (docs.github.com/en/pull-requests/how-tos/work-with-forks/fork-a-repo / docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository / docs.github.com/en/codespaces/about-codespaces/understanding-the-codespace-lifecycle / docs.github.com/en/billing/concepts/product-billing/github-codespaces / antigravity.google/docs/cli/install) -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--orange">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-programming-2.html">AI活用プログラミング基礎 II</a>
+        <span>/</span>
+        <span>第3回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">GitHubの続き＋<wbr>Codespacesを自分で起動＋<wbr>agyを導入しよう</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 3</span>
+            <span class="page-badge">木曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">GitHubアカウント登録を完了させ、授業用リポジトリをフォークしてGitHub Codespacesを自分で起動し、Antigravity CLI（agy）を導入して最初の指示を出す</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">GitHub / フォーク / GitHub Codespaces / Antigravity CLI（agy）/ 認証 / AIエージェント</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第2回で準備したGitHubアカウント（ログインできる状態）。<strong>まだ登録・確認が終わっていない人</strong>は、今日の1限前半で個別にフォローするのでそのまま来てください。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>前回終わらなかった<strong>GitHubアカウント登録</strong>を完了し、全員がログインできる状態にする</li>
+        <li>授業用リポジトリを自分のアカウントに<strong>フォーク</strong>する</li>
+        <li><strong>GitHub Codespaces</strong>を自分の手で起動する</li>
+        <li>Codespaces上に<strong>Antigravity CLI（agy）</strong>をインストール・認証する</li>
+        <li>agyに自然言語で指示を出し、最初の変更を自分の目で確認する</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の続き——GitHubアカウントを全員そろえる</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り</strong></p>
+            <ul>
+              <li>Git（バージョン管理・コミット・ブランチ）とGitHub（Gitをホスティングするプラットフォーム）の関係を1分で振り返る</li>
+              <li>AIエージェントが指示を受けてファイルに変更を加える存在であり、その変更をGitが記録する——という前回の要点を再確認する</li>
+            </ul>
+            <p><strong>アカウントの状態ごとに個別フォローする</strong></p>
+            <ul>
+              <li><strong>ログインできる</strong>人：待たずに次の「1限後半」のフォーク作業へ進んでよい</li>
+              <li><strong>登録したがメール確認（verify）が済んでいない</strong>人：受信箱を確認し、確認メール内のリンクを開く</li>
+              <li><strong>まだ登録していない</strong>人：<a href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a> から新規登録する。教員が個別にサポートする</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>早く終わった人へ:</strong> 全員がそろうのを待つ必要はありません。ログインできることを確認できたら、そのまま1限後半のリポジトリのフォーク作業を先に始めてください。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>授業用リポジトリをフォークし、Codespacesを自分で起動する</h3>
+          <div class="timeline-body">
+            <p><strong>今日は一斉ガイド形式で進める（参考）</strong></p>
+            <p>教員の画面を見ながら全員で同じ手順を一斉に進める。詰まったら手を挙げてその場で確認する。</p>
+            <p><strong>リポジトリをフォークする</strong></p>
+            <ul>
+              <li>教員が案内する授業用リポジトリを開き、右上の「Fork」ボタンから<strong>自分のアカウントへフォーク</strong>する（公式: <a href="https://docs.github.com/en/pull-requests/how-tos/work-with-forks/fork-a-repo" target="_blank" rel="noopener">Fork a repository</a>）</li>
+              <li><strong>なぜ各自フォークするのか：</strong>このリポジトリは第6回にGoogle AI Studioから読み込み直すため、自分がアクセス権を持つコピーが必要になる</li>
+            </ul>
+            <p><strong>Codespacesを起動する</strong></p>
+            <ul>
+              <li>フォークした<strong>自分の</strong>リポジトリを開き、「Code」ボタン→「Codespaces」→「Create codespace on main」（公式: <a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository" target="_blank" rel="noopener">Creating a codespace for a repository</a>）</li>
+              <li>ブラウザ上にVS Codeの画面が立ち上がることを確認する</li>
+              <li>左のファイルツリー、真ん中のエディタ、下のターミナル——第2回の教員デモで見た画面と同じ位置構成になっていることを確認する</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>使い終わったら停止する習慣を:</strong> GitHub Codespacesの無料枠には月ごとの上限があります（プランによって条件が異なるため、都度公式情報で確認してください）。今日の授業が終わったら、Codespacesの一覧画面から今日使った環境を停止しておきましょう。次回は「Create codespace」で新規作成せず、同じ環境を再開（resume）します——停止・再開（rebuildしない限り）は環境ごと保持されます（公式: <a href="https://docs.github.com/en/codespaces/about-codespaces/understanding-the-codespace-lifecycle" target="_blank" rel="noopener">Understanding the codespace lifecycle</a>「Any saved changes in your codespace will still be available when you next start it.」）。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>agyをインストールして認証する</h3>
+          <div class="timeline-body">
+            <p><strong>なぜCodespacesの中に入れるのか</strong></p>
+            <ul>
+              <li>第1回の教員デモで紹介した<strong>Antigravity CLI（agy）</strong>を、今日は自分のCodespaces上で動かす</li>
+              <li>agyはターミナルで自然言語の指示を受け取り、実際にファイルへ変更を加える——<strong>AIエージェント</strong>としての動き方をこれから体感していく</li>
+            </ul>
+            <p><strong>インストールする</strong></p>
+            <p>Codespacesのターミナルに、次のコマンドをそのまま貼り付けてEnter（公式: <a href="https://antigravity.google/docs/cli/install" target="_blank" rel="noopener">Antigravity CLI — Installation &amp; auth</a>）。</p>
+            <button class="copy-md-btn" data-md-source="agy-install-command">
+              <span class="btn-icon"></span> コマンドをコピー
+            </button>
+<pre id="agy-install-command" class="md-preview">curl -fsSL https://antigravity.google/cli/install.sh | bash</pre>
+            <p><strong>認証する</strong></p>
+            <ul>
+              <li>インストール後<code>agy</code>を実行すると認証が求められる</li>
+              <li>表示される認可URLをブラウザで開き、Googleアカウントでサインインしてコードを貼り付ける</li>
+              <li>ヘッダーにメールアドレスが表示されれば準備完了</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>うまくいかない時:</strong> 認証画面が開かない・コマンドがエラーになる場合は、ターミナルでもう一度<code>agy</code>と入力してみてください。それでも動かない場合は手を挙げて教員に相談してください。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>agyに最初の仕事を頼む</h3>
+          <div class="timeline-body">
+            <p><strong>自己紹介させる</strong></p>
+            <ul>
+              <li>自然言語で話しかけてみる。例: <code>あなたが何をできるか、自己紹介してください</code></li>
+              <li>「すごい」「怖い」「よく分からない」——率直な感想でよいので、自分の言葉で言語化してみる</li>
+            </ul>
+            <p><strong>小さなファイルを1つ作らせる</strong></p>
+            <ul>
+              <li>例: <code>profile.md というファイルを作って、あなたの名前と今日感じたことを書いてください</code></li>
+              <li>左のファイルツリーに<code>profile.md</code>が現れることを自分の目で確認する</li>
+              <li>ファイルを開き、agyが書いた中身を実際に読んでみる——<strong>AIエージェントが本当にファイルへ変更を加えた</strong>ことを体感する</li>
+            </ul>
+            <p><strong>変更をGitHubに記録する</strong></p>
+            <ul>
+              <li>例: <code>profile.mdの変更をコミットして、GitHubにプッシュしてください</code></li>
+              <li>第2回で学んだ「コミット＝変更の記録」「プッシュ＝GitHubへ送る」を、agyへの指示で実践する</li>
+              <li><strong>ここでプッシュしておかないと、Codespaces内だけの変更のままでGitHubには残らない</strong>——次回以降も同じ手順で必ずプッシュする</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告＆今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>次回（第4回）：<strong>agyと一緒につくる①</strong>——今日フォークしたリポジトリに、agyへの自然言語の指示で小さな機能を1つ追加する</li>
+              <li>今日フォークしたリポジトリは、第6回にGoogle AI Studio Build modeから読み込み直します。名前を覚えておいてください</li>
+              <li>「GitHub・Codespaces・agyについて分かったこと・まだよく分からないこと」を一言メモして退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>profile.mdの変更がGitHubにプッシュされていることを確認しておく</strong>
+            <p>フォークした自分のリポジトリをGitHub上で開き、profile.mdが反映されているか確認する。プッシュできていない場合は、次回授業の冒頭で完了させる。第6回にGoogle AI Studio Build modeから同じリポジトリを読み込み直すため、リポジトリ名も控えておく。Codespace自体は停止したままでよい（次回resumeで再開する）。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>agyに他の指示も試してみる</strong>
+            <p>時間のあるときに、profile.mdの内容を書き換えさせる等、簡単な指示を追加で試しておくと次回スムーズです。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://docs.github.com/en/pull-requests/how-tos/work-with-forks/fork-a-repo" target="_blank" rel="noopener">Fork a repository（公式）</a> — リポジトリのフォーク手順</li>
+        <li><a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository" target="_blank" rel="noopener">Creating a codespace for a repository（公式）</a> — Codespacesの起動手順</li>
+        <li><a href="https://docs.github.com/en/codespaces/about-codespaces/understanding-the-codespace-lifecycle" target="_blank" rel="noopener">Understanding the codespace lifecycle（公式）</a> — 停止・再開（resume）時の挙動</li>
+        <li><a href="https://docs.github.com/en/billing/concepts/product-billing/github-codespaces" target="_blank" rel="noopener">GitHub Codespaces billing（公式）</a> — 無料枠の条件（プランにより異なる）</li>
+        <li><a href="https://antigravity.google/docs/cli/install" target="_blank" rel="noopener">Antigravity CLI — Installation &amp; auth（公式）</a> — 今日使ったagyのインストール・認証手順</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week02.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第2回 GitHubを始めよう＋Codespacesを使ってみよう</span>
+      </a>
+      <a href="../ai-programming-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AI活用プログラミング基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第4回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
