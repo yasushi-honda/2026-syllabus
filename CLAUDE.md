@@ -108,6 +108,7 @@ natural-language-dev-2.html   # 自然言語開発Ⅱ（木3・4限／後期。�
 natural-language-dev-2/       # 自然言語開発Ⅱ の各回詳細ページ
   week01.html           #   第1回 前期振り返り＆後期オリエンテーション
   week02.html           #   第2回 Google Cloudアカウントを作ろう
+  week03.html           #   第3回 AIエージェントを選ぼう（AWS登録は対象者のみ）
 autumn-intensive.html   # 秋の集中講座（時間割枠外・後期スピンオフ企画・全5日間。授業内容確定済み、日別詳細ページ未作成）
 styles.css              # 共通スタイル（Editorial Paper Edition ライトテーマ）
 app.js                  # Markdownコピー等

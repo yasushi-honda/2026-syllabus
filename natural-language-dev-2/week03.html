@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第3回 AIエージェントを選ぼう（AWS登録は対象者のみ） | 自然言語開発 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=5">
+  <!-- 公式情報再確認: 2026-09-17 (docs.aws.amazon.com/bedrock/latest/userguide/model-access.html を直接WebFetchで再確認——「既定で有効、Anthropicモデルのみ初回Use caseフォーム送信で即座にアクセス可」の挙動は2026-09-09時点から変更なし。他の事実は親ページ2026-09-09再確認済みの内容を踏襲: aws.amazon.com/free / aws.amazon.com/free/terms / docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html / learn.chatgpt.com/docs/pricing / antigravity.google/docs/cli/install / github.com/microsoft/playwright-mcp / github.com/google/clasp) -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev-2.html">自然言語開発 II</a>
+        <span>/</span>
+        <span>第3回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">AIエージェントを選ぼう<wbr>（AWS登録は対象者のみ）</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 3</span>
+            <span class="page-badge">木曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">各自の契約状況（Claude契約・ChatGPTアカウントの有無）を確認し、使うAIエージェント（Claude Code／Codex CLI／Antigravity CLI）を決める。対象者はAmazon Bedrock経由でClaudeにアクセスできるようAWSに新規登録する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">Claude Code / Codex CLI / Antigravity CLI / Amazon Bedrock / AWS新規登録 / Use caseフォーム / Budgets</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第2回で確認した自分の契約状況（Claude契約・ChatGPTアカウントの有無）。AWSに新規登録する可能性がある人は個人のクレジットカード</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>自分の契約状況を整理し、今日から使う<strong>AIエージェント</strong>（Claude Code／Codex CLI／Antigravity CLI）を決める</li>
+        <li>（対象者のみ）<strong>AWS</strong>に新規登録し、Free Planの新規特典の条件を理解する</li>
+        <li>（対象者のみ）<strong>Amazon Bedrock</strong>でAnthropicモデルへのアクセスを有効化する</li>
+        <li>AIエージェントがCLIやMCPを通じて外部ツールを操作できる幅の広さを知る</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>契約状況を確認し、使うAIエージェントを決める</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り</strong></p>
+            <ul>
+              <li>Google Cloudの$300クレジットは、Claude等のマネージドAPIとして提供される生成AIパートナーモデル（Model as a Service）には使えない——だからこそ今日、Claudeを含むAIエージェントへの接続経路を選ぶ</li>
+            </ul>
+            <p><strong>4つの選択肢を知る</strong></p>
+            <ul>
+              <li><strong>既にClaude契約（Claude Pro等）がある人</strong>→ そのままClaude Codeを使う（接続設定は第4回）</li>
+              <li><strong>ChatGPTアカウントがある人</strong>→ Codex CLIを使う。まずFreeプランで動作を試し、公式の機能比較表はPlus（$20/月〜）以上のプランのみを対象としているため、動かない場合はPlus以上への加入を検討する</li>
+              <li><strong>いずれの契約もない、またはしたくない人</strong>→ <strong>Antigravity CLI（agy）</strong>——Googleアカウントの認証のみで追加契約不要——を使う（前期から使ってきたもの）</li>
+              <li><strong>Claude Codeを個人契約なしで使いたい人</strong>→ AWSに新規登録し、<strong>Amazon Bedrock</strong>経由で接続する選択肢もある（今日の1限後半〜2限前半で対応）</li>
+            </ul>
+            <p><strong>自分がどれに当てはまるか決める</strong></p>
+            <ul>
+              <li>特定のAIエージェントを使いこなすことがゴールではなく、<strong>自分の状況に合ったAIエージェントと協働する経験そのもの</strong>を大切にする、という本科目の方針を再確認する</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>迷ったらAntigravity CLIでOK:</strong> 前期から使ってきたツールなので、追加の登録や判断に迷う要素がありません。AWS登録やPlus加入で不安がある人は、まずAntigravity CLIで進めても本科目の学びは十分に得られます。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>AWSに新規登録する（対象者のみ）</h3>
+          <div class="timeline-body">
+            <p><strong>今日は選んだ経路ごとに進度が分かれる</strong></p>
+            <ul>
+              <li><strong>AWS登録の対象者</strong>（Claude Codeを個人契約なしで使いたい人）：この時間でAWSに新規登録する</li>
+              <li><strong>対象外の人</strong>（既にClaude契約がある／Codex CLIを選んだ／Antigravity CLIを選んだ）：ChatGPTアカウントのログイン確認や前期のAntigravity CLI環境の見直し等、各自の準備を進めてよい。手が空いたら対象者のサポートに回ってもよい</li>
+            </ul>
+            <p><strong>AWSアカウントを新規登録する</strong></p>
+            <ul>
+              <li><a href="https://aws.amazon.com/free/" target="_blank" rel="noopener">aws.amazon.com/free</a> にアクセスし、個人のクレジットカードで新規登録する</li>
+              <li>登録時に「Free Plan」と「Paid Plan」の選択画面が表示されるので、<strong>Free Plan</strong>を選ぶ（アップグレードしない限り課金されない）</li>
+              <li>新規登録者には<strong>最大$200・6ヶ月間</strong>のクレジットが提供される（公式: <a href="https://aws.amazon.com/free/" target="_blank" rel="noopener">AWS Free Tier</a>）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>過去にAWSアカウントを持っていたことがある人へ:</strong> AWS公式規約では<strong>新規特典は1人（1エンティティ）につき1アカウントまで</strong>とされ、既存のAWSアカウント保有者は対象外です（公式: <a href="https://aws.amazon.com/free/terms/" target="_blank" rel="noopener">AWS Free Tier Terms</a>）。<strong>クレジットカード番号が判定に使われるかどうかを含め、具体的な判定基準は非公開</strong>のため、対象になるかは登録してみないと分かりません。対象外の場合、登録初日から実費（従量課金）が発生します。心当たりがある人は登録前に手を挙げて教員に相談してください。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>Amazon Bedrockのモデルアクセスを有効化する（対象者のみ）</h3>
+          <div class="timeline-body">
+            <p><strong>Bedrockのモデルアクセスを確認する</strong></p>
+            <ul>
+              <li>AWSマネジメントコンソールでAmazon Bedrockを開き、モデルカタログから<strong>Anthropic</strong>のモデルを選ぶ</li>
+              <li>Anthropicモデルは初回のみ<strong>利用目的（Use case）フォーム</strong>の送信が必要（個人開発者は会社ウェブサイトの代わりに、GitHubプロフィールやポートフォリオURL等で代用できる）</li>
+              <li>モデルアクセス自体は<strong>既定で有効</strong>になっており、フォーム送信後は<strong>即座に</strong>使えるようになる——「モデルごとに手動でリクエストして承認を待つ」という旧来の手順は不要（公式: <a href="https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html" target="_blank" rel="noopener">Request access to models</a>「Access to the model is granted immediately after use case details are successfully submitted.」）</li>
+            </ul>
+            <p><strong>予算アラート（Budgets）を設定する</strong></p>
+            <ul>
+              <li>第4回でBedrockを実際に呼び出す前に、AWSの<strong>予算アラート（Budgets）</strong>を低めのしきい値（例: $5）で設定しておく</li>
+              <li>通知の反映には<strong>8〜12時間程度のタイムラグ</strong>がある点に注意する（公式: <a href="https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html" target="_blank" rel="noopener">Managing your costs with budgets</a>）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>対象外の人はこの時間で:</strong> Codex CLIを選んだ人はChatGPTアカウントでログインできるか確認、Antigravity CLIを選んだ人は前期の環境（Codespaces・agyの認証状態）を見直しておくと第4回の接続がスムーズです。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>AIエージェントが扱える範囲の広さを知る（教員デモ）</h3>
+          <div class="timeline-body">
+            <p><strong>CLIを通じて外部ツールを操作する</strong></p>
+            <ul>
+              <li>Google Cloudの操作は<strong>gcloud CLI</strong>、GitHubの操作は<strong>gh CLI</strong>を、使用中のAIエージェントから呼び出す——これが本科目の標準パターンになることを教員のデモで見る</li>
+            </ul>
+            <p><strong>MCPを通じて外部ツールを操作する</strong></p>
+            <ul>
+              <li><strong>Playwright MCP</strong>（公式: <a href="https://github.com/microsoft/playwright-mcp" target="_blank" rel="noopener">microsoft/playwright-mcp</a>）——AIエージェントがブラウザを直接操作し、自分のアプリの動作を確認できる様子をデモで見る（実際に使うのは第13回）</li>
+              <li><strong>clasp</strong>（公式: <a href="https://github.com/google/clasp" target="_blank" rel="noopener">google/clasp</a>）——Google Apps ScriptをローカルからAIエージェント経由で管理する様子をデモで見る。READMEに明記の通り<strong>Google公式にサポートされる製品ではない</strong>点も共有する</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>今日のポイント:</strong> CLIやMCPを通じて、AIエージェントが扱える範囲はターミナルの外——ブラウザ・クラウドサービス・外部ツールにまで広がっています。「AIエージェント＝チャット」という前期までのイメージを、今日で少し更新しましょう。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告＆今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>次回（第4回）：<strong>AIエージェントを接続しよう</strong>——3エージェント共通の仕組み（ハーネス・スキル・確認プロンプト設定）を先に押さえてから、今日決めた経路でそれぞれ接続する</li>
+              <li>「自分がどのAIエージェントを選んだか・その理由」を一言メモして退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>自分が使うAIエージェントを決めておく</strong>
+            <p>Claude Code／Codex CLI／Antigravity CLIのいずれかを決め、第4回の接続手順にそのまま進めるようにしておいてください。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>（AWS登録した人のみ）Bedrockのモデルアクセスと予算アラートの設定を完了させておく</strong>
+            <p>授業内で完了しなかった場合は、家で続きを行ってください。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html" target="_blank" rel="noopener">Request access to models（公式）</a> — Amazon Bedrockのモデルアクセスの仕組み</li>
+        <li><a href="https://aws.amazon.com/free/" target="_blank" rel="noopener">AWS Free Tier（公式）</a> — 新規登録特典（最大$200・6ヶ月間）の概要</li>
+        <li><a href="https://aws.amazon.com/free/terms/" target="_blank" rel="noopener">AWS Free Tier Terms（公式）</a> — 新規特典の対象条件（1人1アカウントまで等）</li>
+        <li><a href="https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html" target="_blank" rel="noopener">Managing your costs with budgets（公式）</a> — Budgetsの通知タイムラグについて</li>
+        <li><a href="https://learn.chatgpt.com/docs/pricing" target="_blank" rel="noopener">ChatGPT Pricing（公式）</a> — Codex CLIのプラン要件</li>
+        <li><a href="https://github.com/microsoft/playwright-mcp" target="_blank" rel="noopener">microsoft/playwright-mcp（公式）</a> — 今日紹介したPlaywright MCP</li>
+        <li><a href="https://github.com/google/clasp" target="_blank" rel="noopener">google/clasp（公式）</a> — 今日紹介したclasp</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week02.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第2回 Google Cloudアカウントを作ろう</span>
+      </a>
+      <a href="../natural-language-dev-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">自然言語開発 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第4回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
