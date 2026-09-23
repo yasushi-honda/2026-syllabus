@@ -110,6 +110,7 @@ natural-language-dev-2/       # 自然言語開発Ⅱ の各回詳細ページ
   week01.html           #   第1回 前期振り返り＆後期オリエンテーション
   week02.html           #   第2回 Google Cloudアカウントを作ろう
   week03.html           #   第3回 AIエージェントを選ぼう（AWS登録は対象者のみ）
+  week04.html           #   第4回 AIエージェントを接続しよう
 autumn-intensive.html   # 秋の集中講座（時間割枠外・後期スピンオフ企画・全5日間。授業内容確定済み、日別詳細ページ未作成）
 styles.css              # 共通スタイル（Editorial Paper Edition ライトテーマ）
 app.js                  # Markdownコピー等
@@ -366,6 +367,7 @@ done
 | 留学生向け科目でページ全体をブラウザ翻訳（Chrome翻訳等）に丸投げできると想定する | 本番のITパスポート試験は日本語で実施されるため、専門用語まで母語に翻訳されると本番で用語が読めなくなる。**用語は `translate="no"` で翻訳から保護**し、「用語は日本語のまま覚える」原則を明示する（詳細: 「留学生向け科目の共通ルール」） | ITパスポート テクノロジー系 設計時 |
 | クラウドAPI/CLIの操作フロー（「モデルアクセスをリクエストして承認を待つ」等）を、**一度確認済みだからと5日程度の間隔でも再確認せず**教材に使い続ける | Amazon Bedrockのモデルアクセスは、2026-09-04時点の確認から2026-09-09の再確認までの間に「モデルごとに手動でリクエストして承認を待つ」UXから「既定で有効、Anthropicモデルのみ初回Use caseフォーム送信で即座にアクセス可」という仕組みに変わっていた（docs.aws.amazon.com/bedrock/latest/userguide/model-access.html）。**操作手順・UIフローの記述は、料金/プラン以上に短期間で変わりうる**前提を持ち、週ページ作成直前に毎回再確認する | 自然言語開発Ⅱ week03記述見直し（2026-09-09） |
 | Codespaces上のAntigravity CLI（agy）を複数回の授業で使い続ける週ページで、Codespace再開（resume）時にagyの認証が引き継がれる前提で書く | 公式リポジトリのIssue（google-antigravity/antigravity-cli #10、closed）で「コンテナを再起動するたびにOAuthログインをやり直す必要がある」報告あり（原因はagyが`org.freedesktop.secrets`（DBus）ベースの認証情報保存を使うため、環境によっては保持されない）。**ただし検証環境はGitHub Codespacesではなく報告者独自のDockerコンテナで、クローズも報告者自身の環境設定ワークアラウンドによる自己解決**（Google側の修正コミットではない）——本校のCodespaces環境にそのまま当てはまるかは未確認。断定はできないため「**再度ログインを求められる場合がある**」と条件付きで書き、Codespaces固有の確認ではないことを匂わせつつ、第◯回と同じ再認証手順への参照を添える。Codespacesの停止→resumeを挟む週（ai-programming-2/natural-language-dev-2/ai-communication-2のagy系週）は毎回この可能性を考慮する | AI活用プログラミング基礎Ⅱ week04作成（2026-09-23） |
+| Claude Code on Amazon Bedrockで既定モデル（Opus）からSonnetへ切り替える手順を「環境変数`ANTHROPIC_MODEL`を設定する」と書く | 公式ドキュメント（code.claude.com/docs/en/amazon-bedrock）を再確認した結果、個人が対話的に接続する`/setup-bedrock`ウィザードには**モデルを固定（pin）するステップが組み込まれており、そこでSonnetを選ぶのが実際の操作**。環境変数`ANTHROPIC_MODEL`は複数ユーザーへの一括デプロイ・CI等向けの手動設定手段であり、個人の初回接続手順としては遠回り。PR #202（2026-09-10）時点の親ページ記述を再確認し、週ページ化のタイミングで親ページ・content/md側も修正した | 自然言語開発Ⅱ week04作成（2026-09-23） |
 
 ### レビュー手順（必ず実行）
 
