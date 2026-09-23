@@ -60,6 +60,7 @@
       <ul>
         <li>停止していたCodespaceを<strong>再開（resume）</strong>し、前回作ったゲームをもう一度動かせる状態にする</li>
         <li>自分のゲームに<strong>追加したい機能を1つ</strong>考える</li>
+        <li>自然言語の指示と<strong>スラッシュコマンド</strong>（<code>/model</code>・<code>/usage</code>等）の違いを知る</li>
         <li>agyへの<strong>自然言語の指示</strong>で機能を実装してもらう</li>
         <li>ブラウザで動作を確認しながら、期待通りでなければ<strong>指示をやり直す</strong></li>
         <li>変更を<strong>コミット・プッシュ</strong>してGitHubに記録する</li>
@@ -121,6 +122,14 @@
             <ul>
               <li>自分のゲームに合わせて、次のような機能から1つ選ぶ（他に思いついたものでもよい）</li>
               <li><strong>スコア表示</strong>を追加する／<strong>難易度</strong>を選べるようにする／<strong>リスタートボタン</strong>を付ける／<strong>背景色やブロックの色</strong>を変えられるようにする／ゲームオーバー時に<strong>メッセージ</strong>を表示する</li>
+            </ul>
+            <p><strong>自然言語の指示と、スラッシュコマンドの違いを知る</strong></p>
+            <ul>
+              <li>ここまでagyには「◯◯を作ってください」のような<strong>自然言語</strong>で話しかけてきた。実はagyには、<code>/</code>から始まる<strong>スラッシュコマンド</strong>という、決まった動作を確実に呼び出す入力方法もある</li>
+              <li>比べてみる: <code>今どのモデルを使っていますか？</code>と自然言語で聞いた場合と、<code>/model</code>と入力した場合を両方試す——自然言語の質問はagyがそのつど文章で解釈して答えるのに対し、<code>/model</code>は毎回同じモデル選択画面を確実に開く</li>
+              <li><code>/model</code>では<strong>Gemini</strong>系のほか、<strong>Claude Sonnet 4.6</strong>・<strong>Claude Opus 4.6</strong>・<strong>GPT-OSS-120b</strong>にも切り替えられる（利用できるモデルは契約プランによって異なる。公式: <a href="https://antigravity.google/docs/models/" target="_blank" rel="noopener">Models</a>「Availability depends on your plan」）</li>
+              <li><code>/usage</code>（別名<code>/quota</code>）と入力すると、モデルの利用量（クォータ）を確認できる</li>
+              <li>他にどんなスラッシュコマンドがあるかは<code>/help</code>で一覧できる（本ページ末尾の参考セクションにも一部を掲載）</li>
             </ul>
             <p><strong>agyへの指示の出し方——曖昧な指示と具体的な指示の違い</strong></p>
             <ul>
@@ -225,17 +234,14 @@
     </div>
 
     <div class="syllabus-section">
-      <h2>覚えておくと便利なスラッシュコマンド</h2>
-      <p>agyのセッション中に<code>/</code>から始まる文字を打つと呼び出せる、覚えておくと便利なコマンドがいくつかあります（公式: <a href="https://antigravity.google/docs/cli/reference/" target="_blank" rel="noopener">CLI Reference</a>）。</p>
+      <h2>スラッシュコマンド早見表</h2>
+      <p>1限後半で紹介した<code>/model</code>・<code>/usage</code>に加え、覚えておくと便利なコマンドの一覧です（公式: <a href="https://antigravity.google/docs/cli/reference/" target="_blank" rel="noopener">CLI Reference</a>）。</p>
       <ul>
-        <li><code>/model</code> — 使用するモデルを切り替える。<strong>Gemini</strong>系のほか、<strong>Claude Sonnet 4.6</strong>・<strong>Claude Opus 4.6</strong>・<strong>GPT-OSS-120b</strong>にも切り替えられる（利用できるモデルは契約プランによって異なる。公式: <a href="https://antigravity.google/docs/models/" target="_blank" rel="noopener">Models</a>「Availability depends on your plan」）。一度選ぶとセッションをまたいで設定が保持される</li>
-        <li><code>/usage</code>（別名<code>/quota</code>）— 選んでいるモデルの利用量（クォータ）を確認する。「今どれくらい使っているか」が気になったらこのコマンド</li>
-        <li><code>/help</code> — 使えるコマンドの一覧を表示する。他にどんなコマンドがあるか気になったらこれで確認できる</li>
-        <li><code>/clear</code> — ターミナルの表示とそれまでの会話の記憶（コンテキスト）をリセットする。agyの様子がおかしくなったときや、新しい話題に切り替えたいときに使う</li>
+        <li><code>/model</code> — 使用するモデルを切り替える（Gemini／Claude／GPT-OSS）</li>
+        <li><code>/usage</code>（別名<code>/quota</code>）— モデルの利用量（クォータ）を確認する</li>
+        <li><code>/help</code> — 使えるコマンドの一覧を表示する</li>
+        <li><code>/clear</code> — ターミナルの表示と会話の記憶（コンテキスト）をリセットする。agyの様子がおかしくなったときや、新しい話題に切り替えたいときに使う</li>
       </ul>
-      <div class="lesson-tip">
-        <strong>試してみよう:</strong> 今日の演習の合間に<code>/usage</code>で自分がどれくらいモデルを使ったか覗いてみたり、<code>/model</code>でClaudeに切り替えて同じ指示を試してみたりするのもおすすめです。
-      </div>
     </div>
 
     <div class="syllabus-section">
