@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第4回 agyと一緒につくる① | AI活用プログラミング基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=5">
+  <!-- 公式情報確認: 2026-09-23 (docs.github.com/en/codespaces/developing-in-a-codespace/opening-an-existing-codespace / docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace / docs.github.com/en/codespaces/about-codespaces/understanding-the-codespace-lifecycle / antigravity.google/docs/cli/install / github.com/google-antigravity/antigravity-cli issue #10) -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--orange">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-programming-2.html">AI活用プログラミング基礎 II</a>
+        <span>/</span>
+        <span>第4回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">agyと一緒に<wbr>つくる①</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 4</span>
+            <span class="page-badge">木曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">前回agyと一緒に作ったゲームに、自然言語の指示で小さな機能を1つ追加する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">Antigravity CLI（agy）/ Codespaceの再開（resume）/ 機能追加の指示 / ブラウザでの動作確認 / コミット・プッシュ</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第3回で作成した自分のリポジトリとゲーム。Codespace自体は停止したままでOK——今日は「resume（再開）」で続きから始める。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>停止していたCodespaceを<strong>再開（resume）</strong>し、前回作ったゲームをもう一度動かせる状態にする</li>
+        <li>自分のゲームに<strong>追加したい機能を1つ</strong>考える</li>
+        <li>agyへの<strong>自然言語の指示</strong>で機能を実装してもらう</li>
+        <li>ブラウザで動作を確認しながら、期待通りでなければ<strong>指示をやり直す</strong></li>
+        <li>変更を<strong>コミット・プッシュ</strong>してGitHubに記録する</li>
+      </ul>
+      <div class="lesson-tip">
+        <strong>今日の優先順位:</strong> 完成度の高さよりも、「指示する→形になる→確認する→違ったら伝え直す」のサイクルを1回でも多く体験することを優先します。思った通りに動かなくても、agyにもう一度伝え直せば大丈夫です。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>Codespaceを再開し、前回のゲームをもう一度動かす</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り</strong></p>
+            <ul>
+              <li>前回、agyへの自然言語の指示だけでテトリスやボンバーマンなどのゲームが形になったこと、変更をコミット・プッシュしたことを1分で振り返る</li>
+            </ul>
+            <p><strong>Codespaceを再開（resume）する</strong></p>
+            <ul>
+              <li>前回作成した<strong>自分の</strong>リポジトリを開く——第3回と<strong>同じリポジトリ内</strong>で作業する（新しいリポジトリは作らない）。「Code」ボタン→「Codespaces」タブを開く</li>
+              <li>一覧に前回のCodespace（停止中）が表示されるので、それを<strong>クリックして再開する</strong>——「Create codespace on main」で<strong>新しく作り直さない</strong>こと。新規作成すると前回の変更が入っていない別の環境になってしまう（公式: <a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/opening-an-existing-codespace" target="_blank" rel="noopener">Opening an existing codespace</a>）</li>
+              <li>起動には少し時間がかかることがある。待っている間に次の準備を進めてよい</li>
+            </ul>
+            <p><strong>ゲームをブラウザで確認できるようにする</strong></p>
+            <ul>
+              <li>Codespacesのターミナルで <code>python3 -m http.server 8000</code> を実行する（前回agyが作ったファイル一式があるフォルダで実行すること）</li>
+              <li>画面下部の<strong>「ポート」タブ</strong>を開き、<strong>8000番</strong>の行の<strong>「エディターでプレビュー」</strong>（画面アイコン）を選ぶと、エディタ内に<strong>Simple Browser</strong>が開く（公式: <a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace" target="_blank" rel="noopener">Forwarding ports in your codespace</a>）</li>
+              <li>前回作ったゲームが表示されれば準備完了。<strong>「ブラウザーで開く」</strong>（地球儀アイコン）は外部ブラウザを開くため、学校環境ではSimple Browserのほうを選ぶ</li>
+              <li>ゲームではなく<strong>ファイル一覧</strong>が表示された場合は、一覧からゲームのファイル（例: <code>tetris.html</code>）をクリックするか、Simple Browserの<strong>アドレスバーの末尾だけ</strong> <code>/tetris.html</code> のように書き換える（URL全体を書き換えない）</li>
+            </ul>
+            <p><strong>agyを起動する</strong></p>
+            <ul>
+              <li>http.serverを動かしているターミナルはそのままにして、ターミナルパネル右上の<strong>「＋」</strong>で新しいターミナルを開く</li>
+              <li>新しいターミナルで<code>agy</code>と入力してEnter——起動できれば準備完了</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>agyがもう一度ログインを求めてきたら:</strong> Codespaceを停止・再開した後、agyが再度認可URLを表示して<strong>ログインをやり直す</strong>ことがあります（同種の事象がコンテナ環境で報告された例が公式リポジトリのIssueにあり、原因はDBus経由の認証情報保存が環境によっては効かないためとされています）。その場合は第3回と同じ手順——認可URLをCtrl（Macの場合はCmd）+クリックで開く→Googleアカウントでサインイン→表示されたコードをターミナルに貼り付け——でもう一度認証すれば使えるようになります。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>機能を1つ選んで、agyに自然言語で伝える</h3>
+          <div class="timeline-body">
+            <p><strong>追加したい機能を考える</strong></p>
+            <ul>
+              <li>自分のゲームに合わせて、次のような機能から1つ選ぶ（他に思いついたものでもよい）</li>
+              <li><strong>スコア表示</strong>を追加する／<strong>難易度</strong>を選べるようにする／<strong>リスタートボタン</strong>を付ける／<strong>背景色やブロックの色</strong>を変えられるようにする／ゲームオーバー時に<strong>メッセージ</strong>を表示する</li>
+            </ul>
+            <p><strong>agyへの指示の出し方——曖昧な指示と具体的な指示の違い</strong></p>
+            <ul>
+              <li>曖昧な指示の例: <code>もっと面白くして</code> ——agyがどう変えればよいか判断しづらく、思っていたのと違う結果になりやすい</li>
+              <li>具体的な指示の例: <code>画面の右上に現在のスコアを表示してください。ブロックを1つ消すごとにスコアを10点増やしてください</code> ——<strong>何を・どこに・どう動いてほしいか</strong>が伝わっている</li>
+              <li>最初から完璧な指示文を考えなくてよい。まず出してみて、agyの実装を見てから「ここは違う、こうしてほしい」と伝え直せばよい</li>
+            </ul>
+            <p><strong>実際に指示を出す</strong></p>
+            <ul>
+              <li>選んだ機能をagyに自然言語で伝える</li>
+              <li>agyがファイルを編集していく様子を見守る。途中で「〇〇の位置でよいですか」のように聞かれたら、自分の希望を答える</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>ブラウザで確認しながら、うまくいくまでagyと対話する</h3>
+          <div class="timeline-body">
+            <p><strong>Simple Browserで確認する</strong></p>
+            <ul>
+              <li>agyの作業が終わったら、Simple Browserの<strong>更新ボタン</strong>で再読み込みする——ファイルを保存しただけでは自動で反映されない</li>
+              <li>思った通りに動いているか確認する</li>
+            </ul>
+            <p><strong>期待通りでなければ、伝え直す</strong></p>
+            <ul>
+              <li>例: <code>スコアの表示位置がずれています。画面右上に収まるようにしてください</code></li>
+              <li>エラーが出て何が起きているか分からない時は、そのまま<code>これはどういう意味ですか？</code>とagyに聞いてよい</li>
+              <li>「指示→確認→伝え直す」を何度か繰り返して、自分が思った動きに近づけていく</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>早く終わった人へ:</strong> もう1つ機能を追加してみましょう。隣の人が悩んでいたら、どんな指示を出したか教え合ってみるのもおすすめです。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>今日の変更をコミット・プッシュする</h3>
+          <div class="timeline-body">
+            <p><strong>変更をGitHubに記録する</strong></p>
+            <ul>
+              <li>例: <code>ここまでの変更をコミットして、GitHubにプッシュしてください</code></li>
+              <li>GitHub上で自分のリポジトリを開き、ファイルが更新されていることを確認する</li>
+            </ul>
+            <p><strong>次回・第6回に向けて</strong></p>
+            <ul>
+              <li>このリポジトリは第5回でさらに改善・公開し、<strong>第6回にGoogle AI Studio Build modeから読み込み直す</strong>予定。リポジトリ名を忘れずに控えておく</li>
+              <li>今日も使い終わったらCodespacesの一覧から停止しておく（次回もresumeで再開する）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告＆今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>次回（第5回）：<strong>agyと一緒につくる②</strong>——今日までの内容を改善・仕上げして、GitHub Pagesで公開する</li>
+              <li>「今日追加した機能・agyに指示を出してみて気づいたこと」を一言メモして退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>今日追加した機能の変更がGitHubにプッシュされていることを確認しておく</strong>
+            <p>自分のリポジトリをGitHub上で開き、agyが編集したファイルが反映されているか確認する。プッシュできていない場合は、次回授業の冒頭で完了させる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>時間があればもう1つ機能を試す</strong>
+            <p>今日出した指示以外にも、どんな指示なら思った通りに動くか、簡単な機能で試しておくと第5回の仕上げがスムーズになります。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/opening-an-existing-codespace" target="_blank" rel="noopener">Opening an existing codespace（公式）</a> — 停止したCodespaceを再開する手順</li>
+        <li><a href="https://docs.github.com/en/codespaces/about-codespaces/understanding-the-codespace-lifecycle" target="_blank" rel="noopener">Understanding the codespace lifecycle（公式）</a> — 停止・再開（resume）時の挙動</li>
+        <li><a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace" target="_blank" rel="noopener">Forwarding ports in your codespace（公式）</a> — ポート転送とSimple Browserでのプレビュー</li>
+        <li><a href="https://antigravity.google/docs/cli/install" target="_blank" rel="noopener">Antigravity CLI — Installation &amp; auth（公式）</a> — agyのインストール・認証手順（第3回と同じ）</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week03.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第3回 GitHubの続き＋Codespacesを自分で起動＋agyを導入しよう</span>
+      </a>
+      <a href="../ai-programming-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AI活用プログラミング基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第5回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
