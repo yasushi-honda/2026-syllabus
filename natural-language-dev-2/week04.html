@@ -10,7 +10,7 @@
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=5">
   <!-- 公式情報確認: 2026-09-24 (developer.mozilla.org/en-US/docs/Web/API/WebSocket / docs.cloud.google.com/run/docs/triggering/websockets / fortinet.com/resources/cyberglossary/network-address-translation) -->
-  <!-- 実授業ベースの全面書き換え: 前回（第3回相当の実授業）でagy／Codex CLIへの「対戦ゲーム機能を追加して」という指示だけで6人同時対戦のローカルネットワーク対戦ゲームが実装された実体験を踏まえ、当初予定の「AIエージェントを接続しよう」から差し替え。実装コードは残っていないため、断定はせず「一般的にAIエージェントがこの種の機能を実装する際によく使う技術」として解説する構成 -->
+  <!-- 実授業ベースの全面書き換え: 前回（第3回相当の実授業）で、クラス内1人の学生がagy／Codex CLIへの「対戦ゲーム機能を追加して」という指示だけで6人同時対戦のローカルネットワーク対戦ゲームを実装し、他の学生はパスコードで参加した実体験を踏まえ、当初予定の「AIエージェントを接続しよう」から差し替え。実装コードは残っていないため、断定はせず「一般的にAIエージェントがこの種の機能を実装する際によく使う技術」として解説する構成。ユーザー追加指示（2026-09-24）: 対戦ゲーム化したのは1人だけという実態の反映、図解を主体とした説明への強化 -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -42,7 +42,7 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">前回、AIエージェントへの指示だけで動いた「6人同時対戦のリアルタイム対戦ゲーム」を振り返り、その裏側の技術と、世界中の誰とでも対戦できるようにするために必要な発想を読み解く</div>
+          <div class="lesson-overview-value">前回、1人の学生がAIエージェントへの指示だけで実装した「6人同時対戦のリアルタイム対戦ゲーム」を教材に、その裏側の構造をクラス全体で図解しながら読み解き、世界中の誰とでも対戦できるようにするために必要な発想を理解する</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
@@ -50,7 +50,7 @@
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
-          <div class="lesson-overview-value">前回作った対戦ゲームのプロジェクトが残っていれば開ける状態にしておく（消えていても今日は問題なく進められる）</div>
+          <div class="lesson-overview-value">特になし。実装した本人はプロジェクトを開ける状態にしておくとよい</div>
         </div>
       </div>
     </div>
@@ -58,13 +58,13 @@
     <div class="syllabus-section">
       <h2>この回のゴール</h2>
       <ul>
-        <li>前回動いた「6人同時対戦」が、裏側でどんな技術を使っていた可能性が高いかをAIエージェントと一緒に読み解く</li>
+        <li>1人の学生が作った「6人同時対戦」が、裏側でどんな技術を使っていた可能性が高いかを<strong>図解</strong>で読み解く</li>
         <li><strong>サーバー</strong>役のPCと、パスコードで区別される<strong>ルーム（部屋）</strong>の関係を理解する</li>
         <li>なぜ「学校WiFi内でしか」動かなかったのかを、<strong>ローカルネットワーク</strong>と<strong>NAT</strong>の仕組みから理解する</li>
-        <li>世界中の誰とでも遊べるようにするには何が必要かを考える</li>
+        <li>世界中の誰とでも遊べるようにするには何が必要かを、図解で理解する</li>
       </ul>
       <div class="lesson-tip">
-        <strong>今日の位置づけ:</strong> 前回のプロジェクトのコードが残っていなくても大丈夫です。今日は「AIエージェントがこの種の機能を実装するときに、一般的にどんな技術を使うか」をAIエージェントへの質問や図解を通じて理解することが目的です。断定できない部分は「〜という技術が使われていた可能性が高い」という形で扱います。
+        <strong>今日の位置づけ:</strong> 対戦ゲームを実装したのはクラスで1人だけです。今日はその1人の体験を教材に、「AIエージェントがこの種の機能を実装するときに、一般的にどんな技術を使うか」を、実装した本人の説明や図解を通じてクラス全体で理解することが目的です。断定できない部分は「〜という技術が使われていた可能性が高い」という形で扱います。
       </div>
     </div>
 
@@ -83,18 +83,18 @@
           <div class="timeline-body">
             <p><strong>前回の振り返り</strong></p>
             <ul>
-              <li>前回、AIエージェント（agy／Codex CLI）に「対戦ゲーム機能を追加して」と指示しただけで、学校WiFi上に<strong>6人同時対戦</strong>のリアルタイム対戦ゲームが実装されたことを振り返る</li>
-              <li>誰か1人が「部屋」を作り、他の人がその<strong>パスコード</strong>を入力して参加する仕組みだったことを思い出す</li>
+              <li>前回、<strong>1人の学生</strong>がAIエージェント（agy／Codex CLI）に「対戦ゲーム機能を追加して」と指示しただけで、学校WiFi上に<strong>6人同時対戦</strong>のリアルタイム対戦ゲームが実装されたことを振り返る</li>
+              <li>作った本人が「部屋」を作り、他の人がその<strong>パスコード</strong>を入力して参加する仕組みだったことを思い出す</li>
             </ul>
             <p><strong>疑問を持つ</strong></p>
             <ul>
-              <li>「あのとき、画面の裏側で何が起きていたのか？」をペアやグループで話し合う</li>
-              <li>仮説を立ててみる: 「自分のキャラクターを動かしたことが、どうやって他の人の画面にも反映されたのか」</li>
+              <li>「あのとき、画面の裏側で何が起きていたのか？」をクラス全体で考える</li>
+              <li>仮説を立ててみる: 「1人が動かしたキャラクターが、どうやって他の5人の画面にも反映されたのか」</li>
             </ul>
-            <p><strong>AIエージェントに聞いてみる</strong></p>
+            <p><strong>実装した本人に聞いてみる</strong></p>
             <ul>
-              <li>前回のプロジェクトが残っている人は、agyやCodex CLIを開き<code>このゲームの対戦機能はどんな仕組みで動いていますか？初心者にも分かるように説明してください</code>と聞いてみる</li>
-              <li>プロジェクトが残っていない人・別の経路を使っていた人は、周りで聞けた内容を教え合う</li>
+              <li>作った本人が、みんなの前でagyやCodex CLIを開き<code>このゲームの対戦機能はどんな仕組みで動いていますか？初心者にも分かるように説明してください</code>と聞き、出てきた答えをクラスで共有する</li>
+              <li>他の人は、その答えを聞きながら「なるほど」と思ったポイントをメモする</li>
             </ul>
             <p><strong>教員からの補足</strong></p>
             <ul>
@@ -111,14 +111,26 @@
           </div>
           <h3>「サーバー」と「部屋（ルーム）」の関係を図解する</h3>
           <div class="timeline-body">
-            <p><strong>前回の体験を図に起こす</strong></p>
-            <ul>
-              <li>「サーバー役だったPC」と「パスコードで入った各プレイヤーのブラウザ」の関係を、Googleドキュメント等で簡単な図にしてみる</li>
-              <li>誰がサーバー役だったか、そのとき何をクリック・入力したかを思い出しながら描く</li>
-            </ul>
+            <p><strong>図で構造を確認する</strong></p>
+            <div class="diagram-hub">
+              <div class="diagram-hub-server">
+                <div class="diagram-hub-server-label">Host</div>
+                <div class="diagram-hub-server-name">サーバー役のPC<br>（部屋を作った本人）</div>
+              </div>
+              <div class="diagram-hub-connector"></div>
+              <div class="diagram-hub-clients">
+                <div class="diagram-hub-client">プレイヤー1<br>（作った本人）</div>
+                <div class="diagram-hub-client">プレイヤー2</div>
+                <div class="diagram-hub-client">プレイヤー3</div>
+                <div class="diagram-hub-client">プレイヤー4</div>
+                <div class="diagram-hub-client">プレイヤー5</div>
+                <div class="diagram-hub-client">プレイヤー6</div>
+              </div>
+              <p class="diagram-hub-caption">上の「サーバー役のPC」と下の「プレイヤー1」は同じ人（実装した本人）の同じPC——1台のPCがサーバー役とプレイヤーの1人を兼ねていたと考えられる。全員が同じ「学校WiFi」の中にいて、パスコードで同じ部屋（サーバー役のPC）につながっていた</p>
+            </div>
             <p><strong>サーバーの役割を理解する</strong></p>
             <ul>
-              <li>サーバー役のPCが、全員の操作（キャラクターの移動・攻撃等）をいったん受け取り、それを全員に配り直す——「ハブ」のような役割を果たしていたと考えられる</li>
+              <li>この図を見ながら、サーバー役のPCが全員の操作（キャラクターの移動・攻撃等）をいったん受け取り、それを全員に配り直す——「ハブ」のような役割を果たしていたと考えられることを確認する</li>
               <li>自分の操作が他の人の画面に反映されるまでの流れ: 「自分の操作 → サーバー → 他の全員」という経路をたどっていたと考えられる</li>
             </ul>
             <p><strong>「部屋（ルーム）」の意味を考える</strong></p>
@@ -127,7 +139,7 @@
             </ul>
             <p><strong>考えてみる: サーバー役がいなくなったら？</strong></p>
             <ul>
-              <li>もしサーバー役の人が途中でノートPCを閉じてしまったら、対戦はどうなっていたと思うか話し合う</li>
+              <li>図の中央（サーバー役のPC）が消えたら、まわりの6つの箱はどうなるかを図を指さしながら話し合う</li>
               <li>サーバーが1台に集中している構造では、その1台が止まると全員が影響を受ける——という弱点に気づく</li>
             </ul>
           </div>
@@ -151,11 +163,33 @@
             <ul>
               <li>「もし週末に、家から同じ部屋のパスコードを入力してアクセスしようとしたら、うまくいったと思いますか？」</li>
             </ul>
-            <p><strong>ローカルネットワークとグローバルネットワークの違い</strong></p>
+            <p><strong>ローカルネットワークとグローバルネットワークの違いを図で見る</strong></p>
             <ul>
               <li>家庭のWiFiと学校のWiFiは、それぞれ別の「ローカルネットワーク」（同じルーターの内側の範囲）であることを整理する</li>
-              <li>インターネット全体を指す「グローバルネットワーク」と、自分の家や学校の中だけの「ローカルネットワーク」の違いを図で確認する</li>
             </ul>
+            <div class="diagram-compare">
+              <div class="diagram-compare-side diagram-compare-side--a">
+                <div class="diagram-compare-label">Local Network</div>
+                <div class="diagram-compare-title">ローカルネットワーク（前回）</div>
+                <div class="diagram-compare-flow">学校WiFi内の6人 → サーバー役のPC</div>
+                <ul class="diagram-compare-list">
+                  <li>同じルーター（学校WiFi）の内側だけで通信できる</li>
+                  <li>NATにより、外部（インターネット）からサーバー役PCへ直接アクセスできない</li>
+                  <li>だから家や外出先からは同じ部屋に入れなかったと考えられる</li>
+                </ul>
+              </div>
+              <div class="diagram-vs">VS</div>
+              <div class="diagram-compare-side diagram-compare-side--b">
+                <div class="diagram-compare-label">Global Network</div>
+                <div class="diagram-compare-title">グローバルネットワーク（目標）</div>
+                <div class="diagram-compare-flow">世界中の誰でも → 公開されたサーバー</div>
+                <ul class="diagram-compare-list">
+                  <li>インターネット上のどこからでもアクセスできる公開アドレスが必要</li>
+                  <li>個人のPCではなく、誰でも辿り着ける場所にサーバーを置く必要がある</li>
+                  <li>これなら家からも、海外からもアクセスできる</li>
+                </ul>
+              </div>
+            </div>
             <p><strong>NAT（ネットワークアドレス変換）を知る</strong></p>
             <ul>
               <li><strong>NAT</strong>（Network Address Translation、ネットワークアドレス変換）は、ルーターの内側（学校や家の中だけで使うプライベートなアドレス）と外側（インターネット上のグローバルなアドレス）を変換する仕組み（解説: <a href="https://www.fortinet.com/resources/cyberglossary/network-address-translation" target="_blank" rel="noopener">What is NAT (Network Address Translation)?</a>、Fortinet）</li>
@@ -179,7 +213,21 @@
             <ul>
               <li>「サーバー役を、誰かの個人PCではなく、みんなが外から確実にアクセスできる場所に置けばいい」という発想に気づく</li>
             </ul>
-            <p><strong>クラウドにサーバーを置く、という考え方</strong></p>
+            <p><strong>クラウドにサーバーを置く、という考え方を図で見る</strong></p>
+            <div class="diagram-hub">
+              <div class="diagram-hub-server diagram-hub-server--cloud">
+                <div class="diagram-hub-server-label">Cloud Server</div>
+                <div class="diagram-hub-server-name">クラウド上のサーバー<br>（例: Cloud Run）</div>
+              </div>
+              <div class="diagram-hub-connector"></div>
+              <div class="diagram-hub-clients">
+                <div class="diagram-hub-client">学校からの<br>プレイヤー</div>
+                <div class="diagram-hub-client">家からの<br>プレイヤー</div>
+                <div class="diagram-hub-client">友達の家からの<br>プレイヤー</div>
+                <div class="diagram-hub-client">海外からの<br>プレイヤー</div>
+              </div>
+              <p class="diagram-hub-caption">誰でもアクセスできる公開アドレスを持つクラウド上のサーバーなら、ネットワークが違っても同じ部屋に入れる</p>
+            </div>
             <ul>
               <li>クラウド（<strong>Cloud Run</strong>等）にサーバーを置くと、インターネット上のどこからでもアクセスできる公開アドレスが手に入る——これが第7回で学ぶCloud Runにつながることを予告する</li>
               <li>Cloud RunはWebSocket通信にも対応している（公式: <a href="https://docs.cloud.google.com/run/docs/triggering/websockets" target="_blank" rel="noopener">Using WebSockets</a>）。ただし接続時間には既定5分・最大60分の上限があり再接続が必要になること、複数のサーバーが同時に動く構成ではプレイヤー情報を共有する仕組み（<strong>Firestore</strong>等、第9回で学ぶ）が必要になることにも触れておく</li>
@@ -221,8 +269,15 @@
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
-            <strong>プロジェクトが残っている人は、AIエージェントにもっと詳しく聞いてみる</strong>
+            <strong>（実装した本人）AIエージェントにもっと詳しく聞いてみる</strong>
             <p><code>使われている技術をもっと詳しく教えてください</code>のように深掘りして質問し、分かったことをメモしておくと今後の理解が深まります。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>（それ以外の人）自分でも似た機能をAIエージェントに作ってもらう</strong>
+            <p>今日の図解を思い出しながら、自分のAIエージェントに<code>簡単なチャット機能を作ってください</code>のようなリアルタイム性のある機能を頼んでみると、今日の仕組みが自分ごととして理解しやすくなります。</p>
           </div>
         </div>
       </div>
