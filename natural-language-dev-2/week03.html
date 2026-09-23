@@ -10,6 +10,7 @@
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=5">
   <!-- 公式情報再確認: 2026-09-17 (docs.aws.amazon.com/bedrock/latest/userguide/model-access.html を直接WebFetchで再確認——「既定で有効、Anthropicモデルのみ初回Use caseフォーム送信で即座にアクセス可」の挙動は2026-09-09時点から変更なし。他の事実は親ページ2026-09-09再確認済みの内容を踏襲: aws.amazon.com/free / aws.amazon.com/free/terms / docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html / learn.chatgpt.com/docs/pricing / antigravity.google/docs/cli/install / github.com/microsoft/playwright-mcp / github.com/google/clasp) -->
+  <!-- 公式情報追加確認: 2026-09-24 (code.claude.com/docs/en/amazon-bedrock。旧第4回にあったClaude Code Bedrock接続ウィザード・Sonnetモデル固定手順を、第4回の全面書き換えに伴い本ページへ移設) -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -146,6 +147,7 @@
             <ul>
               <li>Bedrockを実際に呼び出す前に、AWSの<strong>予算アラート（Budgets）</strong>を低めのしきい値（例: $5）で設定しておく</li>
               <li>通知の反映には<strong>8〜12時間程度のタイムラグ</strong>がある点に注意する（公式: <a href="https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html" target="_blank" rel="noopener">Managing your costs with budgets</a>）</li>
+              <li>Claude Codeを接続する際は、初回<code>claude</code>起動時のログインプロンプトで「3rd-party platform」→「Amazon Bedrock」を選び、ウィザードの案内に沿ってAWSの認証方法・リージョン・モデルを設定する。<strong>モデルを固定（pin）する画面では、既定で優先される上位モデル（Opus）ではなくSonnetを選ぶ</strong>——Opusは1トークンあたりの料金がSonnetより高いため（公式: <a href="https://code.claude.com/docs/en/amazon-bedrock" target="_blank" rel="noopener">Claude Code on Amazon Bedrock</a>「Opus models have a higher per-token price than Sonnet models」）</li>
             </ul>
             <div class="lesson-tip">
               <strong>対象外の人はこの時間で:</strong> Codex CLIを選んだ人はChatGPTアカウントでログインできるか確認、Antigravity CLIを選んだ人は前期の環境（Codespaces・agyの認証状態）を見直しておくと、今後の接続がスムーズです。
@@ -183,9 +185,12 @@
           <h3>次回予告＆今日の振り返り</h3>
           <div class="timeline-body">
             <ul>
-              <li>次回（第4回）：<strong>対戦ゲームの仕組みを読み解こう</strong>——今日決めた経路で接続したAIエージェントと一緒に、実際に動かしたアプリの裏側の技術を読み解く</li>
+              <li>次回（第4回）：<strong>対戦ゲームの仕組みを読み解こう</strong>——接続したAIエージェントと一緒に、実際に動かしたアプリの裏側の技術を読み解く</li>
               <li>「自分がどのAIエージェントを選んだか・その理由」を一言メモして退出</li>
             </ul>
+            <div class="lesson-tip">
+              <strong>実際の授業では:</strong> AIエージェントを選んで接続した後、その場で<code>対戦ゲーム機能を追加して</code>とagy／Codex CLIに指示し、学校WiFi上で6人同時対戦のリアルタイム対戦ゲームができあがる体験もありました。時間が余ったら、自分のAIエージェントにも簡単な機能追加を指示してみましょう。
+            </div>
           </div>
         </div>
 
@@ -216,6 +221,7 @@
       <h2>参考リンク</h2>
       <ul>
         <li><a href="https://docs.aws.amazon.com/bedrock/latest/userguide/model-access.html" target="_blank" rel="noopener">Request access to models（公式）</a> — Amazon Bedrockのモデルアクセスの仕組み</li>
+        <li><a href="https://code.claude.com/docs/en/amazon-bedrock" target="_blank" rel="noopener">Claude Code on Amazon Bedrock（公式）</a> — 接続ウィザードとSonnetへのモデル固定手順</li>
         <li><a href="https://aws.amazon.com/free/" target="_blank" rel="noopener">AWS Free Tier（公式）</a> — 新規登録特典（最大$200・6ヶ月間）の概要</li>
         <li><a href="https://aws.amazon.com/free/terms/" target="_blank" rel="noopener">AWS Free Tier Terms（公式）</a> — 新規特典の対象条件（1人1アカウントまで等）</li>
         <li><a href="https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html" target="_blank" rel="noopener">Managing your costs with budgets（公式）</a> — Budgetsの通知タイムラグについて</li>

@@ -118,7 +118,7 @@
             </ul>
             <p><strong>サーバーの役割を理解する</strong></p>
             <ul>
-              <li>サーバー役のPCが、全員の操作（キャラクターの移動・攻撃等）をいったん受け取り、それを全員に配り直している——「ハブ」のような役割を果たしていたことを理解する</li>
+              <li>サーバー役のPCが、全員の操作（キャラクターの移動・攻撃等）をいったん受け取り、それを全員に配り直す——「ハブ」のような役割を果たしていたと考えられる</li>
               <li>自分の操作が他の人の画面に反映されるまでの流れ: 「自分の操作 → サーバー → 他の全員」という経路をたどっていたと考えられる</li>
             </ul>
             <p><strong>「部屋（ルーム）」の意味を考える</strong></p>
@@ -158,7 +158,8 @@
             </ul>
             <p><strong>NAT（ネットワークアドレス変換）を知る</strong></p>
             <ul>
-              <li>ルーターの内側にあるPCは、外部（インターネット）から直接アクセスできない仕組みになっている——これを<strong>NAT</strong>（Network Address Translation）と呼ぶ（公式: <a href="https://www.fortinet.com/resources/cyberglossary/network-address-translation" target="_blank" rel="noopener">What is NAT (Network Address Translation)?</a>「NAT can provide a measure of security by... preventing devices on the internal network from being accessed directly from the internet」）</li>
+              <li><strong>NAT</strong>（Network Address Translation、ネットワークアドレス変換）は、ルーターの内側（学校や家の中だけで使うプライベートなアドレス）と外側（インターネット上のグローバルなアドレス）を変換する仕組み（解説: <a href="https://www.fortinet.com/resources/cyberglossary/network-address-translation" target="_blank" rel="noopener">What is NAT (Network Address Translation)?</a>、Fortinet）</li>
+              <li>この仕組みの結果として、ルーターの内側にあるPCは、外部（インターネット）から直接アクセスできない——「This can be useful for preventing attacks that target specific IP addresses or for preventing devices on the internal network from being accessed directly from the internet」（同解説より）</li>
               <li>だからこそ、サーバー役のPCに学校の外からはたどり着けなかった、と考えられる</li>
             </ul>
             <div class="lesson-tip">
@@ -231,7 +232,7 @@
       <h2>参考リンク</h2>
       <ul>
         <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSocket" target="_blank" rel="noopener">WebSocket - Web APIs（公式）</a> — 今日紹介したリアルタイム双方向通信の技術</li>
-        <li><a href="https://www.fortinet.com/resources/cyberglossary/network-address-translation" target="_blank" rel="noopener">What is NAT (Network Address Translation)?（公式）</a> — ローカルネットワークの外からアクセスできない理由</li>
+        <li><a href="https://www.fortinet.com/resources/cyberglossary/network-address-translation" target="_blank" rel="noopener">What is NAT (Network Address Translation)?（解説）</a> — ローカルネットワークの外からアクセスできない理由</li>
         <li><a href="https://docs.cloud.google.com/run/docs/triggering/websockets" target="_blank" rel="noopener">Using WebSockets（公式）</a> — Cloud RunでのWebSocket対応（第7回の予告）</li>
       </ul>
     </div>
