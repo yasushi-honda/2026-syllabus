@@ -2052,12 +2052,12 @@ pre,
 }
 
 .diagram-hub-server--cloud {
-  background: var(--c-blue-soft);
-  border-color: var(--c-blue);
+  background: var(--c-orange-soft);
+  border-color: var(--c-orange);
 }
 
 .diagram-hub-server--cloud .diagram-hub-server-label {
-  color: var(--c-blue);
+  color: var(--c-orange);
 }
 
 .diagram-hub-server-name {
@@ -2111,6 +2111,7 @@ pre,
   position: absolute;
   top: -16px;
   left: 50%;
+  transform: translateX(-50%);
   width: 2px;
   height: 16px;
   background: var(--c-border-strong);
@@ -2123,9 +2124,28 @@ pre,
   margin-top: var(--sp-3);
 }
 
+@media (max-width: 760px) {
+  .diagram-hub-clients {
+    flex-direction: column;
+    align-items: center;
+    gap: var(--sp-2);
+  }
+  .diagram-hub-clients::before {
+    display: none;
+  }
+  .diagram-hub-client {
+    flex: 0 1 auto;
+    width: 100%;
+    max-width: 220px;
+  }
+  .diagram-hub-client::before {
+    top: -10px;
+    height: 10px;
+  }
+}
+
 @media (max-width: 480px) {
   .diagram-hub-client {
-    flex: 0 1 88px;
     font-size: 0.75rem;
     padding: var(--sp-2) var(--sp-3);
   }
