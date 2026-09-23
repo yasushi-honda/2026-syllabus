@@ -83,7 +83,7 @@
             </ul>
             <p><strong>4つの選択肢を知る</strong></p>
             <ul>
-              <li><strong>既にClaude契約（Claude Pro等）がある人</strong>→ そのままClaude Codeを使う（接続設定は第4回）</li>
+              <li><strong>既にClaude契約（Claude Pro等）がある人</strong>→ そのままClaude Codeを使う（<code>claude</code>コマンドを起動しブラウザ認証するだけで使い始められる）</li>
               <li><strong>ChatGPTアカウントがある人</strong>→ Codex CLIを使う。まずFreeプランで動作を試し、公式の機能比較表はPlus（$20/月〜）以上のプランのみを対象としているため、動かない場合はPlus以上への加入を検討する</li>
               <li><strong>いずれの契約もない、またはしたくない人</strong>→ <strong>Antigravity CLI（agy）</strong>——Googleアカウントの認証のみで追加契約不要——を使う（前期から使ってきたもの）</li>
               <li><strong>Claude Codeを個人契約なしで使いたい人</strong>→ AWSに新規登録し、<strong>Amazon Bedrock</strong>経由で接続する選択肢もある（今日の1限後半〜2限前半で対応）</li>
@@ -144,11 +144,11 @@
             </ul>
             <p><strong>予算アラート（Budgets）を設定する</strong></p>
             <ul>
-              <li>第4回でBedrockを実際に呼び出す前に、AWSの<strong>予算アラート（Budgets）</strong>を低めのしきい値（例: $5）で設定しておく</li>
+              <li>Bedrockを実際に呼び出す前に、AWSの<strong>予算アラート（Budgets）</strong>を低めのしきい値（例: $5）で設定しておく</li>
               <li>通知の反映には<strong>8〜12時間程度のタイムラグ</strong>がある点に注意する（公式: <a href="https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html" target="_blank" rel="noopener">Managing your costs with budgets</a>）</li>
             </ul>
             <div class="lesson-tip">
-              <strong>対象外の人はこの時間で:</strong> Codex CLIを選んだ人はChatGPTアカウントでログインできるか確認、Antigravity CLIを選んだ人は前期の環境（Codespaces・agyの認証状態）を見直しておくと第4回の接続がスムーズです。
+              <strong>対象外の人はこの時間で:</strong> Codex CLIを選んだ人はChatGPTアカウントでログインできるか確認、Antigravity CLIを選んだ人は前期の環境（Codespaces・agyの認証状態）を見直しておくと、今後の接続がスムーズです。
             </div>
           </div>
         </div>
@@ -183,7 +183,7 @@
           <h3>次回予告＆今日の振り返り</h3>
           <div class="timeline-body">
             <ul>
-              <li>次回（第4回）：<strong>AIエージェントを接続しよう</strong>——3エージェント共通の仕組み（ハーネス・スキル・確認プロンプト設定）を先に押さえてから、今日決めた経路でそれぞれ接続する</li>
+              <li>次回（第4回）：<strong>対戦ゲームの仕組みを読み解こう</strong>——今日決めた経路で接続したAIエージェントと一緒に、実際に動かしたアプリの裏側の技術を読み解く</li>
               <li>「自分がどのAIエージェントを選んだか・その理由」を一言メモして退出</li>
             </ul>
           </div>
@@ -198,8 +198,8 @@
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>自分が使うAIエージェントを決めておく</strong>
-            <p>Claude Code／Codex CLI／Antigravity CLIのいずれかを決め、第4回の接続手順にそのまま進めるようにしておいてください。</p>
+            <strong>自分が使うAIエージェントを決め、実際に使える状態にしておく</strong>
+            <p>Claude Code／Codex CLI／Antigravity CLIのいずれかを決め、次回までに接続・認証を済ませ、簡単な指示のやり取りができる状態にしておいてください。</p>
           </div>
         </div>
         <div class="lesson-task">
@@ -236,7 +236,7 @@
       </a>
       <a href="week04.html" class="lesson-nav-item" style="text-align:right">
         <span class="lesson-nav-label">次の回</span>
-        <span class="lesson-nav-title">第4回 AIエージェントを接続しよう</span>
+        <span class="lesson-nav-title">第4回 対戦ゲームの仕組みを読み解こう</span>
       </a>
     </nav>
 
