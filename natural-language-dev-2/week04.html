@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=5">
-  <!-- 公式情報確認: 2026-09-23 (agents.md / code.claude.com/docs/en/amazon-bedrock / learn.chatgpt.com/docs/config-file/config-reference / antigravity.google/docs/skills/ / antigravity.google/docs/cli/modes/ / antigravity.google/docs/cli/install) -->
+  <!-- 公式情報確認: 2026-09-23 (agents.md / code.claude.com/docs/en/memory / code.claude.com/docs/en/quickstart / code.claude.com/docs/en/amazon-bedrock / aws.amazon.com/blogs/machine-learning/accelerate-ai-development-with-amazon-bedrock-api-keys / learn.chatgpt.com/docs/codex/cli / learn.chatgpt.com/docs/config-file/config-reference / antigravity.google/docs/skills/ / antigravity.google/docs/cli/modes/ / antigravity.google/docs/cli/install) -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -63,7 +63,7 @@
         <li><strong>gcloud CLI・gh CLI</strong>をAIエージェント経由で呼び出す標準パターンを体験する</li>
       </ul>
       <div class="lesson-tip">
-        <strong>今日は人によって進み方が分かれます:</strong> Claude Code（Bedrock経由）組・Codex CLI組・Antigravity CLI組で手順が異なります。自分が選んだ経路のセクションだけを見て進めれば大丈夫です。詰まったら遠慮なく手を挙げてください。
+        <strong>今日は人によって進み方が分かれます:</strong> Claude Code（個人契約）組・Claude Code（Bedrock経由）組・Codex CLI組・Antigravity CLI組で手順が異なります。自分が選んだ経路のセクションだけを見て進めれば大丈夫です。詰まったら遠慮なく手を挙げてください。
       </div>
     </div>
 
@@ -87,7 +87,7 @@
             <p><strong>①ハーネス（指示書ファイル）</strong></p>
             <ul>
               <li>プロジェクトの決まりごとを書いておくファイルを「ハーネス」と呼ぶ。<code>AGENTS.md</code>は<strong>ベンダー中立のオープン標準</strong>で、特定の企業ではなく複数の開発者が共同で策定した（公式: <a href="https://agents.md" target="_blank" rel="noopener">agents.md</a>「Rather than introducing another proprietary file, we chose a name and format that could work for anyone」）</li>
-              <li><strong>Codex CLI・Antigravity CLI</strong>は<code>AGENTS.md</code>を直接読み込む。<strong>Claude Code</strong>も取り込める仕組みを持つ（公式: Claude Codeメモリードキュメント「Claude can also read a repository's AGENTS.md files, on their own or alongside CLAUDE.md」）——Claude Code独自の<code>CLAUDE.md</code>と役割は同じだと考えてよい</li>
+              <li><strong>Codex CLI・Antigravity CLI</strong>は<code>AGENTS.md</code>を直接読み込む。<strong>Claude Code</strong>も取り込める仕組みを持つ（公式: <a href="https://code.claude.com/docs/en/memory" target="_blank" rel="noopener">How Claude remembers your project</a>「Claude can also read a repository's AGENTS.md files, on their own or alongside CLAUDE.md」）——Claude Code独自の<code>CLAUDE.md</code>と役割は同じだと考えてよい</li>
             </ul>
             <p><strong>②スキル</strong></p>
             <ul>
@@ -97,7 +97,7 @@
             </ul>
             <p><strong>③確認プロンプトを減らす設定</strong></p>
             <ul>
-              <li>どちらのエージェントも「<strong>ファイル編集は自動、コマンド実行やワークスペース外・ネットワークアクセスは確認</strong>」という考え方の設定を持つ</li>
+              <li>どのエージェントも「<strong>ファイル編集は自動、コマンド実行やワークスペース外・ネットワークアクセスは確認</strong>」という考え方の設定を持つ</li>
               <li><strong>Codex CLI</strong>は<code>config.toml</code>の<code>approval_policy = "on-request"</code>（既定値）+ <code>sandbox_mode = "workspace-write"</code>の組み合わせ（公式: <a href="https://learn.chatgpt.com/docs/config-file/config-reference" target="_blank" rel="noopener">Configuration Reference</a>）</li>
               <li><strong>Antigravity CLI</strong>は<code>accept-edits</code>モード——<code>Shift+Tab</code>で切り替えられる。ただし<strong>シェルコマンドの実行はどのモードでも別途確認が必要</strong>（公式: <a href="https://antigravity.google/docs/cli/modes/" target="_blank" rel="noopener">Choose an execution mode</a>「run_command still goes through your tool permission rules in every mode」）</li>
             </ul>
@@ -112,18 +112,28 @@
           </div>
           <h3>前回決めた経路で接続する</h3>
           <div class="timeline-body">
+            <p><strong>Claude Code（個人契約）組</strong></p>
+            <ol>
+              <li>未インストールの場合はターミナルで次のコマンドを実行する（公式: <a href="https://code.claude.com/docs/en/quickstart" target="_blank" rel="noopener">Quickstart</a>）: <code>curl -fsSL https://claude.ai/install.sh | bash</code></li>
+              <li>ターミナルで<code>claude</code>と入力して起動する</li>
+              <li>初回のログインプロンプトで、自分の<strong>Claude契約（Pro等）</strong>のアカウントでブラウザ認証する</li>
+              <li>動作確認として、簡単な質問を投げてみる（例: <code>あなたが何をできるか教えてください</code>）</li>
+            </ol>
             <p><strong>Claude Code（Amazon Bedrock経由）組</strong></p>
             <ol>
+              <li>未インストールの場合は上記と同じコマンドでインストールする</li>
               <li>ターミナルで<code>claude</code>と入力して起動する</li>
               <li>初回のログインプロンプトで<strong>「3rd-party platform」→「Amazon Bedrock」</strong>を選ぶ。既にサインイン済みでいきなりチャット画面が出た場合は、<code>/setup-bedrock</code>と入力してウィザードを開く</li>
-              <li>ウィザードの案内に沿って、<strong>AWSの認証方法</strong>（環境に応じてAWSプロファイル・アクセスキー等から選ぶ）→<strong>リージョン</strong>→<strong>利用するモデル</strong>の順に設定する</li>
-              <li>モデルを固定（pin）する画面では、既定で優先される上位モデル（Opus）ではなく<strong>Sonnet</strong>を選ぶ——Opusは1トークンあたりの料金がSonnetより高く、第3回で設定した予算アラートを節約するため（公式: <a href="https://code.claude.com/docs/en/amazon-bedrock" target="_blank" rel="noopener">Claude Code on Amazon Bedrock</a>「Opus models have a higher per-token price than Sonnet models」）</li>
-              <li>設定は自動的に保存される。動作確認として、簡単な質問を投げてみる（例: <code>あなたが何をできるか教えてください</code>）</li>
+              <li>ウィザードでは<strong>AWSの認証方法</strong>を選ぶ。第3回で登録したばかりでAWS CLIの設定がまだの人は、AWSマネジメントコンソールで<strong>Amazon Bedrockコンソール</strong>を開き、左ナビゲーションの<strong>「API keys」</strong>→<strong>「Generate short-term API key」</strong>（または long-term）でBedrock APIキーを発行しておくのが一番簡単（公式: <a href="https://aws.amazon.com/blogs/machine-learning/accelerate-ai-development-with-amazon-bedrock-api-keys/" target="_blank" rel="noopener">Accelerate AI development with Amazon Bedrock API keys</a>）。ウィザードの認証方法の選択肢では<strong>「Amazon Bedrock API key」</strong>を選び、発行したキーを貼り付ける</li>
+              <li>続けて<strong>リージョン</strong>→<strong>利用するモデル</strong>の順に設定する</li>
+              <li>モデルを固定（pin）する画面では、既定で優先される上位モデル（Opus）ではなく<strong>Sonnet</strong>を選ぶ——Opusは1トークンあたりの料金がSonnetより高く、第3回で設定した予算の範囲内で利用料金を抑えるため（公式: <a href="https://code.claude.com/docs/en/amazon-bedrock" target="_blank" rel="noopener">Claude Code on Amazon Bedrock</a>「Opus models have a higher per-token price than Sonnet models」）</li>
+              <li>設定は自動的に保存される。動作確認として、簡単な質問を投げてみる</li>
             </ol>
             <p><strong>Codex CLI組</strong></p>
             <ol>
+              <li>未インストールの場合はターミナルで次のコマンドを実行する（公式: <a href="https://learn.chatgpt.com/docs/codex/cli" target="_blank" rel="noopener">Codex CLI</a>）: <code>curl -fsSL https://chatgpt.com/codex/install.sh | sh</code></li>
               <li>ターミナルで<code>codex</code>と入力して起動する</li>
-              <li>ChatGPTアカウントでログインする画面が表示されるので、第3回に確認した自分のアカウントでサインインする</li>
+              <li>初回起動時に表示されるサインイン方法の選択で<strong>「Sign in with ChatGPT」</strong>を選び、第3回に確認した自分のアカウントでサインインする</li>
               <li>動作確認として、簡単な質問を投げてみる</li>
             </ol>
             <p><strong>Antigravity CLI組</strong></p>
@@ -182,7 +192,7 @@
             <p><strong>実際に試してみる</strong></p>
             <ul>
               <li>自分が接続したAIエージェントに<code>gcloud --versionを実行してください</code>、または<code>gh --versionを実行してください</code>のように頼んでみる</li>
-              <li>①で確認した「確認プロンプトを減らす設定」があっても、<strong>コマンド実行は別途確認を求められる</strong>ことが多い——その場で許可・拒否を選べることを体感する</li>
+              <li>③で確認した「確認プロンプトを減らす設定」があっても、<strong>コマンド実行は別途確認を求められる</strong>ことが多い——その場で許可・拒否を選べることを体感する</li>
             </ul>
             <div class="lesson-tip">
               <strong>今日のポイント:</strong> 以降の授業では、Google Cloudの操作はgcloud CLI、GitHubの操作はgh CLIを、使用中のAIエージェントから呼び出す形が標準パターンになります。今日はまず「呼び出せること」を確認できれば十分です。
@@ -231,7 +241,11 @@
       <h2>参考リンク</h2>
       <ul>
         <li><a href="https://agents.md" target="_blank" rel="noopener">agents.md（公式）</a> — AGENTS.mdの仕様とベンダー中立性について</li>
+        <li><a href="https://code.claude.com/docs/en/memory" target="_blank" rel="noopener">How Claude remembers your project（公式）</a> — Claude CodeがAGENTS.mdを取り込む仕組み</li>
+        <li><a href="https://code.claude.com/docs/en/quickstart" target="_blank" rel="noopener">Quickstart（公式）</a> — Claude Codeのインストール・ログイン手順</li>
         <li><a href="https://code.claude.com/docs/en/amazon-bedrock" target="_blank" rel="noopener">Claude Code on Amazon Bedrock（公式）</a> — 今日使った接続ウィザード・モデル固定の詳細</li>
+        <li><a href="https://aws.amazon.com/blogs/machine-learning/accelerate-ai-development-with-amazon-bedrock-api-keys/" target="_blank" rel="noopener">Accelerate AI development with Amazon Bedrock API keys（公式）</a> — Bedrock APIキーの発行手順</li>
+        <li><a href="https://learn.chatgpt.com/docs/codex/cli" target="_blank" rel="noopener">Codex CLI（公式）</a> — Codex CLIのインストール・ログイン手順</li>
         <li><a href="https://learn.chatgpt.com/docs/config-file/config-reference" target="_blank" rel="noopener">Configuration Reference（公式）</a> — Codex CLIのapproval_policy・sandbox_mode設定</li>
         <li><a href="https://antigravity.google/docs/skills/" target="_blank" rel="noopener">Agent Skills（公式）</a> — Antigravity CLIのSKILL.md形式について</li>
         <li><a href="https://antigravity.google/docs/cli/modes/" target="_blank" rel="noopener">Choose an execution mode（公式）</a> — Antigravity CLIのaccept-editsモードについて</li>
