@@ -3,13 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>第4回 AIエージェントを接続しよう | 自然言語開発 II</title>
+  <title>第4回 対戦ゲームの仕組みを読み解こう | 自然言語開発 II</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=5">
-  <!-- 公式情報確認: 2026-09-23 (agents.md / code.claude.com/docs/en/memory / code.claude.com/docs/en/quickstart / code.claude.com/docs/en/amazon-bedrock / aws.amazon.com/blogs/machine-learning/accelerate-ai-development-with-amazon-bedrock-api-keys / learn.chatgpt.com/docs/codex/cli / learn.chatgpt.com/codex/agent-approvals-security / learn.chatgpt.com/docs/config-file/config-reference / antigravity.google/docs/skills/ / antigravity.google/docs/cli/modes/ / antigravity.google/docs/cli/install) -->
+  <!-- 公式情報確認: 2026-09-24 (developer.mozilla.org/en-US/docs/Web/API/WebSocket / docs.cloud.google.com/run/docs/triggering/websockets / fortinet.com/resources/cyberglossary/network-address-translation) -->
+  <!-- 実授業ベースの全面書き換え: 前回（第3回相当の実授業）でagy／Codex CLIへの「対戦ゲーム機能を追加して」という指示だけで6人同時対戦のローカルネットワーク対戦ゲームが実装された実体験を踏まえ、当初予定の「AIエージェントを接続しよう」から差し替え。実装コードは残っていないため、断定はせず「一般的にAIエージェントがこの種の機能を実装する際によく使う技術」として解説する構成 -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -25,7 +26,7 @@
       </nav>
       <div class="page-title-area">
         <div>
-          <h1 class="page-title">AIエージェントを<wbr>接続しよう</h1>
+          <h1 class="page-title">対戦ゲームの<wbr>仕組みを読み解こう</h1>
           <div class="page-meta-badges">
             <span class="page-badge">Week 4</span>
             <span class="page-badge">木曜 3・4限</span>
@@ -41,15 +42,15 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">3つのAIエージェント（Claude Code／Codex CLI／Antigravity CLI）に共通する仕組みを先に押さえてから、前回決めた経路でそれぞれ接続する</div>
+          <div class="lesson-overview-value">前回、AIエージェントへの指示だけで動いた「6人同時対戦のリアルタイム対戦ゲーム」を振り返り、その裏側の技術と、世界中の誰とでも対戦できるようにするために必要な発想を読み解く</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">ハーネス（AGENTS.md）/ スキル（SKILL.md）/ 確認プロンプトを減らす設定 / Amazon Bedrock / gcloud CLI・gh CLI</div>
+          <div class="lesson-overview-value">WebSocket / サーバーとルーム（部屋） / ローカルネットワーク / NAT（ネットワークアドレス変換） / グローバルネットワーク</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
-          <div class="lesson-overview-value">前回決めた「今日から使うAIエージェント」。AWSに登録した人は、Bedrockのモデルアクセスと予算アラートの設定を完了しておく。</div>
+          <div class="lesson-overview-value">前回作った対戦ゲームのプロジェクトが残っていれば開ける状態にしておく（消えていても今日は問題なく進められる）</div>
         </div>
       </div>
     </div>
@@ -57,13 +58,13 @@
     <div class="syllabus-section">
       <h2>この回のゴール</h2>
       <ul>
-        <li>3エージェントに共通する3つの仕組み——<strong>ハーネス・スキル・確認プロンプトを減らす設定</strong>——を理解する</li>
-        <li>前回決めた経路で、自分の<strong>AIエージェントを接続</strong>する</li>
-        <li>接続したAIエージェントに実際に指示を出し、<strong>動作を確認</strong>する</li>
-        <li><strong>gcloud CLI・gh CLI</strong>をAIエージェント経由で呼び出す標準パターンを体験する</li>
+        <li>前回動いた「6人同時対戦」が、裏側でどんな技術を使っていた可能性が高いかをAIエージェントと一緒に読み解く</li>
+        <li><strong>サーバー</strong>役のPCと、パスコードで区別される<strong>ルーム（部屋）</strong>の関係を理解する</li>
+        <li>なぜ「学校WiFi内でしか」動かなかったのかを、<strong>ローカルネットワーク</strong>と<strong>NAT</strong>の仕組みから理解する</li>
+        <li>世界中の誰とでも遊べるようにするには何が必要かを考える</li>
       </ul>
       <div class="lesson-tip">
-        <strong>今日は人によって進み方が分かれます:</strong> Claude Code（個人契約）組・Claude Code（Bedrock経由）組・Codex CLI組・Antigravity CLI組で手順が異なります。自分が選んだ経路のセクションだけを見て進めれば大丈夫です。詰まったら遠慮なく手を挙げてください。
+        <strong>今日の位置づけ:</strong> 前回のプロジェクトのコードが残っていなくても大丈夫です。今日は「AIエージェントがこの種の機能を実装するときに、一般的にどんな技術を使うか」をAIエージェントへの質問や図解を通じて理解することが目的です。断定できない部分は「〜という技術が使われていた可能性が高い」という形で扱います。
       </div>
     </div>
 
@@ -78,30 +79,28 @@
             <span class="timeline-time">1限 前半</span>
             <span class="timeline-duration">約40分</span>
           </div>
-          <h3>接続の前に、3エージェント共通の仕組みを押さえる</h3>
+          <h3>「なぜ動いたのか」を考える</h3>
           <div class="timeline-body">
             <p><strong>前回の振り返り</strong></p>
             <ul>
-              <li>自分の契約状況に応じて、<strong>Claude Code／Codex CLI／Antigravity CLI</strong>（Claude Codeは個人契約またはAmazon Bedrock経由）のいずれかを選んだことを1分で振り返る</li>
+              <li>前回、AIエージェント（agy／Codex CLI）に「対戦ゲーム機能を追加して」と指示しただけで、学校WiFi上に<strong>6人同時対戦</strong>のリアルタイム対戦ゲームが実装されたことを振り返る</li>
+              <li>誰か1人が「部屋」を作り、他の人がその<strong>パスコード</strong>を入力して参加する仕組みだったことを思い出す</li>
             </ul>
-            <p><strong>①ハーネス（指示書ファイル）</strong></p>
+            <p><strong>疑問を持つ</strong></p>
             <ul>
-              <li>プロジェクトの決まりごとを書いておくファイルを「ハーネス」と呼ぶ。<code>AGENTS.md</code>は<strong>ベンダー中立のオープン標準</strong>で、特定の企業ではなく複数の開発者が共同で策定した（公式: <a href="https://agents.md" target="_blank" rel="noopener">agents.md</a>「Rather than introducing another proprietary file, we chose a name and format that could work for anyone」）</li>
-              <li><strong>Codex CLI・Antigravity CLI</strong>は<code>AGENTS.md</code>を直接読み込む。<strong>Claude Code</strong>も取り込める仕組みを持つ（公式: <a href="https://code.claude.com/docs/en/memory" target="_blank" rel="noopener">How Claude remembers your project</a>「Claude can also read a repository's AGENTS.md files, on their own or alongside CLAUDE.md」）——Claude Code独自の<code>CLAUDE.md</code>と役割は同じだと考えてよい</li>
+              <li>「あのとき、画面の裏側で何が起きていたのか？」をペアやグループで話し合う</li>
+              <li>仮説を立ててみる: 「自分のキャラクターを動かしたことが、どうやって他の人の画面にも反映されたのか」</li>
             </ul>
-            <p><strong>②スキル</strong></p>
+            <p><strong>AIエージェントに聞いてみる</strong></p>
             <ul>
-              <li>再利用可能な手順をMarkdownでまとめ、スラッシュコマンドとして呼び出せるようにする仕組み。3エージェントとも<code>SKILL.md</code>という共通の形式を使う</li>
-              <li><strong>Codex CLI</strong>では、以前あった<code>custom prompts</code>という仕組みが非推奨になり、<code>SKILL.md</code>形式のスキルに置き換わった</li>
-              <li><strong>Antigravity CLI</strong>では、プロジェクト直下の<code>.agents/skills/</code>配下にYAML front matter付きの<code>SKILL.md</code>を置く（公式: <a href="https://antigravity.google/docs/skills/" target="_blank" rel="noopener">Agent Skills</a>「Skills are organized as directory bundles containing a required <code>SKILL.md</code> file」）</li>
+              <li>前回のプロジェクトが残っている人は、agyやCodex CLIを開き<code>このゲームの対戦機能はどんな仕組みで動いていますか？初心者にも分かるように説明してください</code>と聞いてみる</li>
+              <li>プロジェクトが残っていない人・別の経路を使っていた人は、周りで聞けた内容を教え合う</li>
             </ul>
-            <p><strong>③確認プロンプトを減らす設定</strong></p>
+            <p><strong>教員からの補足</strong></p>
             <ul>
-              <li>どのエージェントも「<strong>ファイル編集は自動、コマンド実行やワークスペース外・ネットワークアクセスは確認</strong>」という考え方の設定を持つ</li>
-              <li><strong>Codex CLI</strong>は（gitで管理されたプロジェクトの場合）既定で<code>config.toml</code>の<code>approval_policy = "on-request"</code> + <code>sandbox_mode = "workspace-write"</code>の組み合わせが推奨される（公式: <a href="https://learn.chatgpt.com/codex/agent-approvals-security" target="_blank" rel="noopener">Agent approvals &amp; security</a>「Version-controlled folders: Auto (workspace write + on-request approvals)」、設定項目の詳細は<a href="https://learn.chatgpt.com/docs/config-file/config-reference" target="_blank" rel="noopener">Configuration Reference</a>）</li>
-              <li><strong>Antigravity CLI</strong>は<code>accept-edits</code>モード——<code>Shift+Tab</code>で切り替えられる。ただし<strong>シェルコマンドの実行はどのモードでも別途確認が必要</strong>（公式: <a href="https://antigravity.google/docs/cli/modes/" target="_blank" rel="noopener">Choose an execution mode</a>「Tool permission rules configured via <code>/permissions</code> or <code>--dangerously-skip-permissions</code> continue to govern shell commands (<code>run_command</code>) across all execution modes.」）</li>
+              <li>出てきた答えの中でよく挙がるキーワード（WebSocket、リアルタイム通信、部屋／ルーム、パスコード）を整理する</li>
+              <li>この種の「複数人がリアルタイムに情報をやり取りする」機能を、AIコーディングエージェントが実装する際によく使う技術として<strong>WebSocket</strong>を紹介する——サーバーとブラウザが接続したままになり、双方向にデータを送り合える仕組み（公式: <a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSocket" target="_blank" rel="noopener">WebSocket - Web APIs</a>）</li>
             </ul>
-            <p>これを踏まえて、それぞれの接続手順に進む。</p>
           </div>
         </div>
 
@@ -110,41 +109,27 @@
             <span class="timeline-time">1限 後半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>前回決めた経路で接続する</h3>
+          <h3>「サーバー」と「部屋（ルーム）」の関係を図解する</h3>
           <div class="timeline-body">
-            <p><strong>Claude Code（個人契約）組</strong></p>
-            <ol>
-              <li>未インストールの場合はターミナルで次のコマンドを実行する（公式: <a href="https://code.claude.com/docs/en/quickstart" target="_blank" rel="noopener">Quickstart</a>）: <code>curl -fsSL https://claude.ai/install.sh | bash</code></li>
-              <li>ターミナルで<code>claude</code>と入力して起動する</li>
-              <li>初回のログインプロンプトで、自分の<strong>Claude契約（Pro等）</strong>のアカウントでブラウザ認証する</li>
-              <li>動作確認として、簡単な質問を投げてみる（例: <code>あなたが何をできるか教えてください</code>）</li>
-            </ol>
-            <p><strong>Claude Code（Amazon Bedrock経由）組</strong></p>
-            <ol>
-              <li>未インストールの場合は上記と同じコマンドでインストールする</li>
-              <li>ターミナルで<code>claude</code>と入力して起動する</li>
-              <li>初回のログインプロンプトで<strong>「3rd-party platform」→「Amazon Bedrock」</strong>を選ぶ。既にサインイン済みでいきなりチャット画面が出た場合は、<code>/setup-bedrock</code>と入力してウィザードを開く</li>
-              <li>ウィザードでは<strong>AWSの認証方法</strong>を選ぶ。第3回で登録したばかりでAWS CLIの設定がまだの人は、AWSマネジメントコンソールで<strong>Amazon Bedrockコンソール</strong>を開き、左ナビゲーションの<strong>「API keys」</strong>→<strong>「Generate short-term API key」</strong>（または long-term）でBedrock APIキーを発行しておくのが一番簡単（公式: <a href="https://aws.amazon.com/blogs/machine-learning/accelerate-ai-development-with-amazon-bedrock-api-keys/" target="_blank" rel="noopener">Accelerate AI development with Amazon Bedrock API keys</a>）。ウィザードの認証方法の選択肢では<strong>「Amazon Bedrock API key」</strong>を選び、発行したキーを貼り付ける</li>
-              <li>続けて<strong>リージョン</strong>→<strong>利用するモデル</strong>の順に設定する</li>
-              <li>モデルを固定（pin）する画面では、既定で優先される上位モデル（Opus）ではなく<strong>Sonnet</strong>を選ぶ——Opusは1トークンあたりの料金がSonnetより高く、第3回で設定した予算の範囲内で利用料金を抑えるため（公式: <a href="https://code.claude.com/docs/en/amazon-bedrock" target="_blank" rel="noopener">Claude Code on Amazon Bedrock</a>の「Pin model versions」節に「Opus models have a higher per-token price than Sonnet models」と明記）</li>
-              <li>設定は自動的に保存される。動作確認として、簡単な質問を投げてみる</li>
-            </ol>
-            <p><strong>Codex CLI組</strong></p>
-            <ol>
-              <li>未インストールの場合はターミナルで次のコマンドを実行する（公式: <a href="https://learn.chatgpt.com/docs/codex/cli" target="_blank" rel="noopener">Codex CLI</a>）: <code>curl -fsSL https://chatgpt.com/codex/install.sh | sh</code></li>
-              <li>ターミナルで<code>codex</code>と入力して起動する</li>
-              <li>初回起動時に表示されるサインイン方法の選択で<strong>「Sign in with ChatGPT」</strong>を選び、第3回に確認した自分のアカウントでサインインする</li>
-              <li>動作確認として、簡単な質問を投げてみる</li>
-            </ol>
-            <p><strong>Antigravity CLI組</strong></p>
-            <ol>
-              <li>前期から使っている環境（Codespaces等）を開く</li>
-              <li>認証が切れている場合は、第1回の参考リンクで示した公式ドキュメントの手順（<a href="https://antigravity.google/docs/cli/install" target="_blank" rel="noopener">Antigravity CLI — Installation &amp; auth</a>）で再認証する</li>
-              <li><code>agy</code>と入力して起動し、動作確認として簡単な質問を投げてみる</li>
-            </ol>
-            <div class="lesson-tip">
-              <strong>早く終わった人へ:</strong> 他の経路を選んだ人の様子を見に行って、進み方の違いを比べてみるのもおすすめです。
-            </div>
+            <p><strong>前回の体験を図に起こす</strong></p>
+            <ul>
+              <li>「サーバー役だったPC」と「パスコードで入った各プレイヤーのブラウザ」の関係を、Googleドキュメント等で簡単な図にしてみる</li>
+              <li>誰がサーバー役だったか、そのとき何をクリック・入力したかを思い出しながら描く</li>
+            </ul>
+            <p><strong>サーバーの役割を理解する</strong></p>
+            <ul>
+              <li>サーバー役のPCが、全員の操作（キャラクターの移動・攻撃等）をいったん受け取り、それを全員に配り直す——「ハブ」のような役割を果たしていたと考えられる</li>
+              <li>自分の操作が他の人の画面に反映されるまでの流れ: 「自分の操作 → サーバー → 他の全員」という経路をたどっていたと考えられる</li>
+            </ul>
+            <p><strong>「部屋（ルーム）」の意味を考える</strong></p>
+            <ul>
+              <li>同じサーバーの中に複数の対戦グループが同時に存在できるよう、パスコードで「今どの対戦グループに参加しているか」を区別する仕組みが「部屋（ルーム）」だったと考えられる</li>
+            </ul>
+            <p><strong>考えてみる: サーバー役がいなくなったら？</strong></p>
+            <ul>
+              <li>もしサーバー役の人が途中でノートPCを閉じてしまったら、対戦はどうなっていたと思うか話し合う</li>
+              <li>サーバーが1台に集中している構造では、その1台が止まると全員が影響を受ける——という弱点に気づく</li>
+            </ul>
           </div>
         </div>
 
@@ -160,21 +145,26 @@
             <span class="timeline-time">2限 前半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>接続を完了し、最初の指示を試す</h3>
+          <h3>なぜ「学校WiFi内でしか」動かなかったのか</h3>
           <div class="timeline-body">
-            <p><strong>（Bedrock組）予算アラートを再確認</strong></p>
+            <p><strong>問いかける</strong></p>
             <ul>
-              <li>接続が完了したら、第3回で設定したAWSの予算アラート（Budgets）が有効になっているか、AWSマネジメントコンソールで確認しておく</li>
+              <li>「もし週末に、家から同じ部屋のパスコードを入力してアクセスしようとしたら、うまくいったと思いますか？」</li>
             </ul>
-            <p><strong>全員共通: 最初の指示を出してみる</strong></p>
+            <p><strong>ローカルネットワークとグローバルネットワークの違い</strong></p>
             <ul>
-              <li>自分が接続したAIエージェントに、<code>このプロジェクトのファイル一覧を見せてください</code>のような簡単な指示を出す</li>
-              <li>指示を受けてエージェントが動く様子を観察する。分からないことはそのままエージェントに聞いてよい</li>
+              <li>家庭のWiFiと学校のWiFiは、それぞれ別の「ローカルネットワーク」（同じルーターの内側の範囲）であることを整理する</li>
+              <li>インターネット全体を指す「グローバルネットワーク」と、自分の家や学校の中だけの「ローカルネットワーク」の違いを図で確認する</li>
             </ul>
-            <p><strong>詰まったら</strong></p>
+            <p><strong>NAT（ネットワークアドレス変換）を知る</strong></p>
             <ul>
-              <li>手を挙げる。教員が机間巡視で優先的に回る。同じ経路を選んだ人同士で教え合ってもよい</li>
+              <li><strong>NAT</strong>（Network Address Translation、ネットワークアドレス変換）は、ルーターの内側（学校や家の中だけで使うプライベートなアドレス）と外側（インターネット上のグローバルなアドレス）を変換する仕組み（解説: <a href="https://www.fortinet.com/resources/cyberglossary/network-address-translation" target="_blank" rel="noopener">What is NAT (Network Address Translation)?</a>、Fortinet）</li>
+              <li>この仕組みの結果として、ルーターの内側にあるPCは、外部（インターネット）から直接アクセスできない——「This can be useful for preventing attacks that target specific IP addresses or for preventing devices on the internal network from being accessed directly from the internet」（同解説より）</li>
+              <li>だからこそ、サーバー役のPCに学校の外からはたどり着けなかった、と考えられる</li>
             </ul>
+            <div class="lesson-tip">
+              <strong>余裕があれば:</strong> AIエージェントに<code>なぜこのゲームは家からは遊べないのですか？</code>と聞いてみて、今日整理した内容と答えが近いか比べてみましょう。
+            </div>
           </div>
         </div>
 
@@ -183,20 +173,21 @@
             <span class="timeline-time">2限 後半</span>
             <span class="timeline-duration">約30分</span>
           </div>
-          <h3>gcloud CLI・gh CLIを呼び出すパターンを体験する</h3>
+          <h3>世界中の誰とでも対戦できるようにするには？</h3>
           <div class="timeline-body">
-            <p><strong>第3回の教員デモを思い出す</strong></p>
+            <p><strong>発想を転換する</strong></p>
             <ul>
-              <li>Google Cloudの操作は<strong>gcloud CLI</strong>、GitHubの操作は<strong>gh CLI</strong>を、使用中のAIエージェントから呼び出す——これが本科目の標準パターンになることを第3回のデモで見た</li>
+              <li>「サーバー役を、誰かの個人PCではなく、みんなが外から確実にアクセスできる場所に置けばいい」という発想に気づく</li>
             </ul>
-            <p><strong>実際に試してみる</strong></p>
+            <p><strong>クラウドにサーバーを置く、という考え方</strong></p>
             <ul>
-              <li>自分が接続したAIエージェントに<code>gcloud --versionを実行してください</code>、または<code>gh --versionを実行してください</code>のように頼んでみる</li>
-              <li>③で確認した「確認プロンプトを減らす設定」があっても、<strong>コマンド実行は別途確認を求められる</strong>ことが多い——その場で許可・拒否を選べることを体感する</li>
+              <li>クラウド（<strong>Cloud Run</strong>等）にサーバーを置くと、インターネット上のどこからでもアクセスできる公開アドレスが手に入る——これが第7回で学ぶCloud Runにつながることを予告する</li>
+              <li>Cloud RunはWebSocket通信にも対応している（公式: <a href="https://docs.cloud.google.com/run/docs/triggering/websockets" target="_blank" rel="noopener">Using WebSockets</a>）。ただし接続時間には既定5分・最大60分の上限があり再接続が必要になること、複数のサーバーが同時に動く構成ではプレイヤー情報を共有する仕組み（<strong>Firestore</strong>等、第9回で学ぶ）が必要になることにも触れておく</li>
             </ul>
-            <div class="lesson-tip">
-              <strong>今日のポイント:</strong> 以降の授業では、Google Cloudの操作はgcloud CLI、GitHubの操作はgh CLIを、使用中のAIエージェントから呼び出す形が標準パターンになります。今日はまず「呼び出せること」を確認できれば十分です。
-            </div>
+            <p><strong>今日はここまで</strong></p>
+            <ul>
+              <li>今日は「世界中と対戦できるようにするには何が必要か」を<strong>概念として理解する</strong>ところまで。実際にクラウドにデプロイする体験は、第7回（Cloud Run）・第9回（Firestore）で扱う</li>
+            </ul>
           </div>
         </div>
 
@@ -209,7 +200,7 @@
           <div class="timeline-body">
             <ul>
               <li>次回（第5回）：<strong>セキュリティとデータガバナンスを学ぶ</strong>——クラウドAIサービスにおけるデータガバナンスを公式資料で確認する</li>
-              <li>「自分のAIエージェントと接続できたか・つまずいた点」を一言メモして退出</li>
+              <li>「今日分かったこと・まだ疑問に思うこと」を一言メモして退出</li>
             </ul>
           </div>
         </div>
@@ -223,15 +214,15 @@
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>自分のAIエージェントで最低1回、指示のやり取りができる状態にしておく</strong>
-            <p>授業内で完了しなかった場合は、家で続きを行い、次回授業の冒頭で完了させてください。</p>
+            <strong>今日出てきた疑問点を1つ書き出しておく</strong>
+            <p>「サーバーってどこにあるの？」「NATって結局何？」等、分からなかったことを1つメモしておく。次回以降で解消のヒントが出てくることがあります。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
-            <strong>（AWS登録した人のみ）予算アラートが有効になっていることを再確認しておく</strong>
-            <p>次回以降、実際にBedrockを呼び出す機会が増えていきます。</p>
+            <strong>プロジェクトが残っている人は、AIエージェントにもっと詳しく聞いてみる</strong>
+            <p><code>使われている技術をもっと詳しく教えてください</code>のように深掘りして質問し、分かったことをメモしておくと今後の理解が深まります。</p>
           </div>
         </div>
       </div>
@@ -240,17 +231,9 @@
     <div class="syllabus-section">
       <h2>参考リンク</h2>
       <ul>
-        <li><a href="https://agents.md" target="_blank" rel="noopener">agents.md（公式）</a> — AGENTS.mdの仕様とベンダー中立性について</li>
-        <li><a href="https://code.claude.com/docs/en/memory" target="_blank" rel="noopener">How Claude remembers your project（公式）</a> — Claude CodeがAGENTS.mdを取り込む仕組み</li>
-        <li><a href="https://code.claude.com/docs/en/quickstart" target="_blank" rel="noopener">Quickstart（公式）</a> — Claude Codeのインストール・ログイン手順</li>
-        <li><a href="https://code.claude.com/docs/en/amazon-bedrock" target="_blank" rel="noopener">Claude Code on Amazon Bedrock（公式）</a> — 今日使った接続ウィザード・モデル固定の詳細</li>
-        <li><a href="https://aws.amazon.com/blogs/machine-learning/accelerate-ai-development-with-amazon-bedrock-api-keys/" target="_blank" rel="noopener">Accelerate AI development with Amazon Bedrock API keys（公式）</a> — Bedrock APIキーの発行手順</li>
-        <li><a href="https://learn.chatgpt.com/docs/codex/cli" target="_blank" rel="noopener">Codex CLI（公式）</a> — Codex CLIのインストール・ログイン手順</li>
-        <li><a href="https://learn.chatgpt.com/codex/agent-approvals-security" target="_blank" rel="noopener">Agent approvals &amp; security（公式）</a> — Codex CLIの既定の承認ポリシー（gitで管理されたフォルダの場合）</li>
-        <li><a href="https://learn.chatgpt.com/docs/config-file/config-reference" target="_blank" rel="noopener">Configuration Reference（公式）</a> — Codex CLIのapproval_policy・sandbox_mode設定項目の詳細</li>
-        <li><a href="https://antigravity.google/docs/skills/" target="_blank" rel="noopener">Agent Skills（公式）</a> — Antigravity CLIのSKILL.md形式について</li>
-        <li><a href="https://antigravity.google/docs/cli/modes/" target="_blank" rel="noopener">Choose an execution mode（公式）</a> — Antigravity CLIのaccept-editsモードについて</li>
-        <li><a href="https://antigravity.google/docs/cli/install" target="_blank" rel="noopener">Antigravity CLI — Installation &amp; auth（公式）</a> — 再認証の手順（第1回と同じ）</li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSocket" target="_blank" rel="noopener">WebSocket - Web APIs（公式）</a> — 今日紹介したリアルタイム双方向通信の技術</li>
+        <li><a href="https://www.fortinet.com/resources/cyberglossary/network-address-translation" target="_blank" rel="noopener">What is NAT (Network Address Translation)?（解説）</a> — ローカルネットワークの外からアクセスできない理由</li>
+        <li><a href="https://docs.cloud.google.com/run/docs/triggering/websockets" target="_blank" rel="noopener">Using WebSockets（公式）</a> — Cloud RunでのWebSocket対応（第7回の予告）</li>
       </ul>
     </div>
 
