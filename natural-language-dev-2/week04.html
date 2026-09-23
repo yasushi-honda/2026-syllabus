@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第4回 AIエージェントを接続しよう | 自然言語開発 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=5">
+  <!-- 公式情報確認: 2026-09-23 (agents.md / code.claude.com/docs/en/amazon-bedrock / learn.chatgpt.com/docs/config-file/config-reference / antigravity.google/docs/skills/ / antigravity.google/docs/cli/modes/ / antigravity.google/docs/cli/install) -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev-2.html">自然言語開発 II</a>
+        <span>/</span>
+        <span>第4回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">AIエージェントを<wbr>接続しよう</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 4</span>
+            <span class="page-badge">木曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">3つのAIエージェント（Claude Code／Codex CLI／Antigravity CLI）に共通する仕組みを先に押さえてから、前回決めた経路でそれぞれ接続する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">ハーネス（AGENTS.md）/ スキル（SKILL.md）/ 確認プロンプトを減らす設定 / Amazon Bedrock / gcloud CLI・gh CLI</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">前回決めた「今日から使うAIエージェント」。AWSに登録した人は、Bedrockのモデルアクセスと予算アラートの設定を完了しておく。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>3エージェントに共通する3つの仕組み——<strong>ハーネス・スキル・確認プロンプトを減らす設定</strong>——を理解する</li>
+        <li>前回決めた経路で、自分の<strong>AIエージェントを接続</strong>する</li>
+        <li>接続したAIエージェントに実際に指示を出し、<strong>動作を確認</strong>する</li>
+        <li><strong>gcloud CLI・gh CLI</strong>をAIエージェント経由で呼び出す標準パターンを体験する</li>
+      </ul>
+      <div class="lesson-tip">
+        <strong>今日は人によって進み方が分かれます:</strong> Claude Code（Bedrock経由）組・Codex CLI組・Antigravity CLI組で手順が異なります。自分が選んだ経路のセクションだけを見て進めれば大丈夫です。詰まったら遠慮なく手を挙げてください。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>接続の前に、3エージェント共通の仕組みを押さえる</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り</strong></p>
+            <ul>
+              <li>自分の契約状況に応じて、<strong>Claude Code／Codex CLI／Antigravity CLI</strong>（Claude Codeは個人契約またはAmazon Bedrock経由）のいずれかを選んだことを1分で振り返る</li>
+            </ul>
+            <p><strong>①ハーネス（指示書ファイル）</strong></p>
+            <ul>
+              <li>プロジェクトの決まりごとを書いておくファイルを「ハーネス」と呼ぶ。<code>AGENTS.md</code>は<strong>ベンダー中立のオープン標準</strong>で、特定の企業ではなく複数の開発者が共同で策定した（公式: <a href="https://agents.md" target="_blank" rel="noopener">agents.md</a>「Rather than introducing another proprietary file, we chose a name and format that could work for anyone」）</li>
+              <li><strong>Codex CLI・Antigravity CLI</strong>は<code>AGENTS.md</code>を直接読み込む。<strong>Claude Code</strong>も取り込める仕組みを持つ（公式: Claude Codeメモリードキュメント「Claude can also read a repository's AGENTS.md files, on their own or alongside CLAUDE.md」）——Claude Code独自の<code>CLAUDE.md</code>と役割は同じだと考えてよい</li>
+            </ul>
+            <p><strong>②スキル</strong></p>
+            <ul>
+              <li>再利用可能な手順をMarkdownでまとめ、スラッシュコマンドとして呼び出せるようにする仕組み。3エージェントとも<code>SKILL.md</code>という共通の形式を使う</li>
+              <li><strong>Codex CLI</strong>では、以前あった<code>custom prompts</code>という仕組みが非推奨になり、<code>SKILL.md</code>形式のスキルに置き換わった</li>
+              <li><strong>Antigravity CLI</strong>では、プロジェクト直下の<code>.agents/skills/</code>配下にYAML front matter付きの<code>SKILL.md</code>を置く（公式: <a href="https://antigravity.google/docs/skills/" target="_blank" rel="noopener">Agent Skills</a>「Skills are organized as directory bundles containing a required <code>SKILL.md</code> file」）</li>
+            </ul>
+            <p><strong>③確認プロンプトを減らす設定</strong></p>
+            <ul>
+              <li>どちらのエージェントも「<strong>ファイル編集は自動、コマンド実行やワークスペース外・ネットワークアクセスは確認</strong>」という考え方の設定を持つ</li>
+              <li><strong>Codex CLI</strong>は<code>config.toml</code>の<code>approval_policy = "on-request"</code>（既定値）+ <code>sandbox_mode = "workspace-write"</code>の組み合わせ（公式: <a href="https://learn.chatgpt.com/docs/config-file/config-reference" target="_blank" rel="noopener">Configuration Reference</a>）</li>
+              <li><strong>Antigravity CLI</strong>は<code>accept-edits</code>モード——<code>Shift+Tab</code>で切り替えられる。ただし<strong>シェルコマンドの実行はどのモードでも別途確認が必要</strong>（公式: <a href="https://antigravity.google/docs/cli/modes/" target="_blank" rel="noopener">Choose an execution mode</a>「run_command still goes through your tool permission rules in every mode」）</li>
+            </ul>
+            <p>これを踏まえて、それぞれの接続手順に進む。</p>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>前回決めた経路で接続する</h3>
+          <div class="timeline-body">
+            <p><strong>Claude Code（Amazon Bedrock経由）組</strong></p>
+            <ol>
+              <li>ターミナルで<code>claude</code>と入力して起動する</li>
+              <li>初回のログインプロンプトで<strong>「3rd-party platform」→「Amazon Bedrock」</strong>を選ぶ。既にサインイン済みでいきなりチャット画面が出た場合は、<code>/setup-bedrock</code>と入力してウィザードを開く</li>
+              <li>ウィザードの案内に沿って、<strong>AWSの認証方法</strong>（環境に応じてAWSプロファイル・アクセスキー等から選ぶ）→<strong>リージョン</strong>→<strong>利用するモデル</strong>の順に設定する</li>
+              <li>モデルを固定（pin）する画面では、既定で優先される上位モデル（Opus）ではなく<strong>Sonnet</strong>を選ぶ——Opusは1トークンあたりの料金がSonnetより高く、第3回で設定した予算アラートを節約するため（公式: <a href="https://code.claude.com/docs/en/amazon-bedrock" target="_blank" rel="noopener">Claude Code on Amazon Bedrock</a>「Opus models have a higher per-token price than Sonnet models」）</li>
+              <li>設定は自動的に保存される。動作確認として、簡単な質問を投げてみる（例: <code>あなたが何をできるか教えてください</code>）</li>
+            </ol>
+            <p><strong>Codex CLI組</strong></p>
+            <ol>
+              <li>ターミナルで<code>codex</code>と入力して起動する</li>
+              <li>ChatGPTアカウントでログインする画面が表示されるので、第3回に確認した自分のアカウントでサインインする</li>
+              <li>動作確認として、簡単な質問を投げてみる</li>
+            </ol>
+            <p><strong>Antigravity CLI組</strong></p>
+            <ol>
+              <li>前期から使っている環境（Codespaces等）を開く</li>
+              <li>認証が切れている場合は、第1回の参考リンクで示した公式ドキュメントの手順（<a href="https://antigravity.google/docs/cli/install" target="_blank" rel="noopener">Antigravity CLI — Installation &amp; auth</a>）で再認証する</li>
+              <li><code>agy</code>と入力して起動し、動作確認として簡単な質問を投げてみる</li>
+            </ol>
+            <div class="lesson-tip">
+              <strong>早く終わった人へ:</strong> 他の経路を選んだ人の様子を見に行って、進み方の違いを比べてみるのもおすすめです。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>接続を完了し、最初の指示を試す</h3>
+          <div class="timeline-body">
+            <p><strong>（Bedrock組）予算アラートを再確認</strong></p>
+            <ul>
+              <li>接続が完了したら、第3回で設定したAWSの予算アラート（Budgets）が有効になっているか、AWSマネジメントコンソールで確認しておく</li>
+            </ul>
+            <p><strong>全員共通: 最初の指示を出してみる</strong></p>
+            <ul>
+              <li>自分が接続したAIエージェントに、<code>このプロジェクトのファイル一覧を見せてください</code>のような簡単な指示を出す</li>
+              <li>指示を受けてエージェントが動く様子を観察する。分からないことはそのままエージェントに聞いてよい</li>
+            </ul>
+            <p><strong>詰まったら</strong></p>
+            <ul>
+              <li>手を挙げる。教員が机間巡視で優先的に回る。同じ経路を選んだ人同士で教え合ってもよい</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>gcloud CLI・gh CLIを呼び出すパターンを体験する</h3>
+          <div class="timeline-body">
+            <p><strong>第3回の教員デモを思い出す</strong></p>
+            <ul>
+              <li>Google Cloudの操作は<strong>gcloud CLI</strong>、GitHubの操作は<strong>gh CLI</strong>を、使用中のAIエージェントから呼び出す——これが本科目の標準パターンになることを第3回のデモで見た</li>
+            </ul>
+            <p><strong>実際に試してみる</strong></p>
+            <ul>
+              <li>自分が接続したAIエージェントに<code>gcloud --versionを実行してください</code>、または<code>gh --versionを実行してください</code>のように頼んでみる</li>
+              <li>①で確認した「確認プロンプトを減らす設定」があっても、<strong>コマンド実行は別途確認を求められる</strong>ことが多い——その場で許可・拒否を選べることを体感する</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>今日のポイント:</strong> 以降の授業では、Google Cloudの操作はgcloud CLI、GitHubの操作はgh CLIを、使用中のAIエージェントから呼び出す形が標準パターンになります。今日はまず「呼び出せること」を確認できれば十分です。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告＆今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>次回（第5回）：<strong>セキュリティとデータガバナンスを学ぶ</strong>——クラウドAIサービスにおけるデータガバナンスを公式資料で確認する</li>
+              <li>「自分のAIエージェントと接続できたか・つまずいた点」を一言メモして退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>自分のAIエージェントで最低1回、指示のやり取りができる状態にしておく</strong>
+            <p>授業内で完了しなかった場合は、家で続きを行い、次回授業の冒頭で完了させてください。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>（AWS登録した人のみ）予算アラートが有効になっていることを再確認しておく</strong>
+            <p>次回以降、実際にBedrockを呼び出す機会が増えていきます。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://agents.md" target="_blank" rel="noopener">agents.md（公式）</a> — AGENTS.mdの仕様とベンダー中立性について</li>
+        <li><a href="https://code.claude.com/docs/en/amazon-bedrock" target="_blank" rel="noopener">Claude Code on Amazon Bedrock（公式）</a> — 今日使った接続ウィザード・モデル固定の詳細</li>
+        <li><a href="https://learn.chatgpt.com/docs/config-file/config-reference" target="_blank" rel="noopener">Configuration Reference（公式）</a> — Codex CLIのapproval_policy・sandbox_mode設定</li>
+        <li><a href="https://antigravity.google/docs/skills/" target="_blank" rel="noopener">Agent Skills（公式）</a> — Antigravity CLIのSKILL.md形式について</li>
+        <li><a href="https://antigravity.google/docs/cli/modes/" target="_blank" rel="noopener">Choose an execution mode（公式）</a> — Antigravity CLIのaccept-editsモードについて</li>
+        <li><a href="https://antigravity.google/docs/cli/install" target="_blank" rel="noopener">Antigravity CLI — Installation &amp; auth（公式）</a> — 再認証の手順（第1回と同じ）</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week03.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第3回 AIエージェントを選ぼう（AWS登録は対象者のみ）</span>
+      </a>
+      <a href="../natural-language-dev-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">自然言語開発 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第5回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
