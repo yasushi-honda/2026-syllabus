@@ -10,7 +10,8 @@
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=5">
   <!-- 公式情報確認: 2026-09-24 (developer.mozilla.org/en-US/docs/Web/API/WebSocket / docs.cloud.google.com/run/docs/triggering/websockets / fortinet.com/resources/cyberglossary/network-address-translation) -->
-  <!-- 実授業ベースの全面書き換え: 前回（第3回相当の実授業）で、クラス内1人の学生がagy／Codex CLIへの「対戦ゲーム機能を追加して」という指示だけで6人同時対戦のローカルネットワーク対戦ゲームを実装し、他の学生はパスコードで参加した実体験を踏まえ、当初予定の「AIエージェントを接続しよう」から差し替え。実装コードは残っていないため、断定はせず「一般的にAIエージェントがこの種の機能を実装する際によく使う技術」として解説する構成。ユーザー追加指示（2026-09-24）: 対戦ゲーム化したのは1人だけという実態の反映、図解を主体とした説明への強化 -->
+  <!-- 実授業ベースの全面書き換え: 前回（第3回相当の実授業）で、クラス内1人の学生がagy／Codex CLIへの「対戦ゲーム機能を追加して」という指示だけで、GitHub Codespaces上に6人同時対戦の対戦ゲームを実装し、学校WiFi経由で他の学生がパスコードで参加した実体験を踏まえ、当初予定の「AIエージェントを接続しよう」から差し替え。実装コードは残っていないため、断定はせず「一般的にAIエージェントがこの種の機能を実装する際によく使う技術」として解説する構成。ユーザー追加指示（2026-09-24）: 対戦ゲーム化したのは1人だけという実態の反映、図解を主体とした説明への強化 -->
+  <!-- 追加確認・構成変更: 2026-09-24（ユーザーが別科目の検証中にGitHub Codespacesのポート転送「Public」設定がローカルネットワークに限らずインターネット上の誰からでも認証なしにアクセス可能であることを発見。docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace で「After you make a port public, anyone who knows the URL and port number can view the running application without needing to authenticate.」、docs.github.com/en/codespaces/reference/security-in-github-codespaces で「Publicly forwarded ports: Are accessible on the internet, and anyone on the internet can access them. No authentication is needed to access public forwarded ports.」と確認済み。さらにユーザーから、実際の授業のゲームもGitHub CodespacesのPublicポート転送で動いていた事実が示され、「学校WiFi内でしか動かなかった」という当初のNAT中心の説明（2限前半）はそもそも起きていなかった誤った前提だったと判明——同セクションを全面差し替え、「実は、もう世界中に公開されていた」という事実確認＋NATは軽い補足に格下げする構成に再設計。この事実と、それに伴う脆弱性、セオリーとしての多層防御アーキテクチャをOWASP WebSocket Security Cheat Sheet（cheatsheetseries.owasp.org）とCVE-2023-0957（Gitpod、CSWSH、nvd.nist.gov / labs.snyk.io）を一次情報として追加。あわせてユーザー提供のスクリーンショット（Codespacesパブリック転送URLへの初回アクセス時にGitHubが表示する警告画面「You are about to access a development port served by someone's codespace」）を実機確認の一次証拠として本文に反映） -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -42,11 +43,11 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">前回、1人の学生がAIエージェントへの指示だけで実装した「6人同時対戦のリアルタイム対戦ゲーム」を教材に、その裏側の構造をクラス全体で図解しながら読み解き、世界中の誰とでも対戦できるようにするために必要な発想を理解する</div>
+          <div class="lesson-overview-value">前回、1人の学生がAIエージェントへの指示だけで実装した「6人同時対戦のリアルタイム対戦ゲーム」を教材に、その裏側の構造をクラス全体で図解しながら読み解き、実はすでに世界中からアクセスできる状態だったという事実と、そこに潜む脆弱性・セオリーとしての多層防御の考え方を理解する</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">WebSocket / サーバーとルーム（部屋） / ローカルネットワーク / NAT（ネットワークアドレス変換） / グローバルネットワーク</div>
+          <div class="lesson-overview-value">WebSocket / サーバーとルーム（部屋） / ポート転送の公開設定 / NAT（ネットワークアドレス変換） / 脆弱性 / 多層防御（Defense in Depth）</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
@@ -59,9 +60,9 @@
       <h2>この回のゴール</h2>
       <ul>
         <li>1人の学生が作った「6人同時対戦」が、裏側でどんな技術を使っていた可能性が高いかを<strong>図解</strong>で読み解く</li>
-        <li><strong>サーバー</strong>役のPCと、パスコードで区別される<strong>ルーム（部屋）</strong>の関係を理解する</li>
-        <li>なぜ「学校WiFi内でしか」動かなかったのかを、<strong>ローカルネットワーク</strong>と<strong>NAT</strong>の仕組みから理解する</li>
-        <li>世界中の誰とでも遊べるようにするには何が必要かを、図解で理解する</li>
+        <li><strong>サーバー</strong>役と、パスコードで区別される<strong>ルーム（部屋）</strong>の関係を理解する</li>
+        <li>実は「学校WiFi内だけ」ではなく、すでに世界中からアクセスできる状態だったという事実を、公式ドキュメントで確認する</li>
+        <li>ポート転送を「公開」にすると何が起きるかを理解し、そこに潜む<strong>脆弱性</strong>と、セオリーとしての<strong>多層防御</strong>の考え方を知る</li>
       </ul>
       <div class="lesson-tip">
         <strong>今日の位置づけ:</strong> 対戦ゲームを実装したのはクラスで1人だけです。今日はその1人の体験を教材に、「AIエージェントがこの種の機能を実装するときに、一般的にどんな技術を使うか」を、実装した本人の説明や図解を通じてクラス全体で理解することが目的です。断定できない部分は「〜という技術が使われていた可能性が高い」という形で扱います。
@@ -107,7 +108,7 @@
         <div class="timeline-block">
           <div class="timeline-header">
             <span class="timeline-time">1限 後半</span>
-            <span class="timeline-duration">約50分</span>
+            <span class="timeline-duration">約45分</span>
           </div>
           <h3>「サーバー」と「部屋（ルーム）」の関係を図解する</h3>
           <div class="timeline-body">
@@ -115,7 +116,7 @@
             <div class="diagram-hub">
               <div class="diagram-hub-server">
                 <div class="diagram-hub-server-label">Host</div>
-                <div class="diagram-hub-server-name">サーバー役のPC<br>（部屋を作った本人）</div>
+                <div class="diagram-hub-server-name">サーバー役<br>（部屋を作った本人のCodespace）</div>
               </div>
               <div class="diagram-hub-connector"></div>
               <div class="diagram-hub-clients">
@@ -126,11 +127,11 @@
                 <div class="diagram-hub-client">プレイヤー5</div>
                 <div class="diagram-hub-client">プレイヤー6</div>
               </div>
-              <p class="diagram-hub-caption">上の「サーバー役のPC」と下の「プレイヤー1」は同じ人（実装した本人）の同じPC——1台のPCがサーバー役とプレイヤーの1人を兼ねていたと考えられる。全員が同じ「学校WiFi」の中にいて、パスコードで同じ部屋（サーバー役のPC）につながっていた</p>
+              <p class="diagram-hub-caption">サーバー役は、実装した本人が動かしていたGitHub Codespaces上のプログラム——1つのサーバー役がプレイヤーの1人（作った本人自身）も兼ねていたと考えられる。全員が同じパスコードを入力して、同じ部屋（サーバー役）につながっていた</p>
             </div>
             <p><strong>サーバーの役割を理解する</strong></p>
             <ul>
-              <li>この図を見ながら、サーバー役のPCが全員の操作（キャラクターの移動・攻撃等）をいったん受け取り、それを全員に配り直す——「ハブ」のような役割を果たしていたと考えられることを確認する</li>
+              <li>この図を見ながら、サーバー役が全員の操作（キャラクターの移動・攻撃等）をいったん受け取り、それを全員に配り直す——「ハブ」のような役割を果たしていたと考えられることを確認する</li>
               <li>自分の操作が他の人の画面に反映されるまでの流れ: 「自分の操作 → サーバー → 他の全員」という経路をたどっていたと考えられる</li>
             </ul>
             <p><strong>「部屋（ルーム）」の意味を考える</strong></p>
@@ -139,8 +140,7 @@
             </ul>
             <p><strong>考えてみる: サーバー役がいなくなったら？</strong></p>
             <ul>
-              <li>図の中央（サーバー役のPC）が消えたら、まわりの6つの箱はどうなるかを図を指さしながら話し合う</li>
-              <li>サーバーが1台に集中している構造では、その1台が止まると全員が影響を受ける——という弱点に気づく</li>
+              <li>図の中央（サーバー役）が消えたら、まわりの6つの箱はどうなるかを図を指さしながら話し合う——サーバーが1つに集中している構造では、それが止まると全員が影響を受けるという弱点に気づく</li>
             </ul>
           </div>
         </div>
@@ -155,65 +155,108 @@
         <div class="timeline-block">
           <div class="timeline-header">
             <span class="timeline-time">2限 前半</span>
-            <span class="timeline-duration">約50分</span>
+            <span class="timeline-duration">約45分</span>
           </div>
-          <h3>なぜ「学校WiFi内でしか」動かなかったのか</h3>
+          <h3>実は、もう世界中に公開されていた</h3>
           <div class="timeline-body">
             <p><strong>問いかける</strong></p>
             <ul>
-              <li>「もし週末に、家から同じ部屋のパスコードを入力してアクセスしようとしたら、うまくいったと思いますか？」</li>
+              <li>「もし、学校の外にいる誰かが今日使ったURLとパスコードを知っていたら、参加できたと思いますか？」</li>
             </ul>
-            <p><strong>ローカルネットワークとグローバルネットワークの違いを図で見る</strong></p>
+            <p><strong>事実を確認する</strong></p>
             <ul>
-              <li>家庭のWiFiと学校のWiFiは、それぞれ別の「ローカルネットワーク」（同じルーターの内側の範囲）であることを整理する</li>
+              <li>あのゲームのサーバー役は、実装した本人の<strong>GitHub Codespaces</strong>上で動いていた。Codespacesでは、ポート転送を「<strong>パブリック</strong>」に設定すると、それだけで学校WiFiの中かどうかに関係なくアクセスできる状態になる</li>
+              <li>公式ドキュメントで確認: 「<strong>After you make a port public, anyone who knows the URL and port number can view the running application without needing to authenticate.</strong>」（公式: <a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace" target="_blank" rel="noopener">Forwarding ports in your codespace</a>）。別ページにも同様の記載: 「<strong>Publicly forwarded ports: Are accessible on the internet, and anyone on the internet can access them. No authentication is needed to access public forwarded ports.</strong>」（公式: <a href="https://docs.github.com/en/codespaces/reference/security-in-github-codespaces" target="_blank" rel="noopener">Security in GitHub Codespaces</a>）</li>
+              <li>つまり——<strong>「学校WiFi内でしか動かなかった」というのは、実は起きていなかった</strong>。技術的には、URLとポート番号さえ知っていればGitHubアカウントなしで、家からでも海外からでも、その瞬間からアクセスできる状態だった</li>
             </ul>
-            <div class="diagram-compare">
-              <div class="diagram-compare-side diagram-compare-side--a">
-                <div class="diagram-compare-label">Local Network</div>
-                <div class="diagram-compare-title">ローカルネットワーク（前回）</div>
-                <div class="diagram-compare-flow">学校WiFi内の6人 → サーバー役のPC</div>
-                <ul class="diagram-compare-list">
-                  <li>同じルーター（学校WiFi）の内側だけで通信できる</li>
-                  <li>NATにより、外部（インターネット）からサーバー役PCへ直接アクセスできない</li>
-                  <li>だから家や外出先からは同じ部屋に入れなかったと考えられる</li>
-                </ul>
+            <div class="diagram-hub">
+              <div class="diagram-hub-server">
+                <div class="diagram-hub-server-label">Host</div>
+                <div class="diagram-hub-server-name">サーバー役<br>（Codespace, パブリック設定）</div>
               </div>
-              <div class="diagram-vs">VS</div>
-              <div class="diagram-compare-side diagram-compare-side--b">
-                <div class="diagram-compare-label">Global Network</div>
-                <div class="diagram-compare-title">グローバルネットワーク（目標）</div>
-                <div class="diagram-compare-flow">世界中の誰でも → 公開されたサーバー</div>
-                <ul class="diagram-compare-list">
-                  <li>インターネット上のどこからでもアクセスできる公開アドレスが必要</li>
-                  <li>個人のPCではなく、誰でも辿り着ける場所にサーバーを置く必要がある</li>
-                  <li>これなら家からも、海外からもアクセスできる</li>
-                </ul>
+              <div class="diagram-hub-connector"></div>
+              <div class="diagram-hub-clients">
+                <div class="diagram-hub-client">学校からの<br>プレイヤー（参加した）</div>
+                <div class="diagram-hub-client">家からの<br>誰か（技術的には可能だった）</div>
+                <div class="diagram-hub-client">海外からの<br>誰か（技術的には可能だった）</div>
               </div>
+              <p class="diagram-hub-caption">パブリックに設定した瞬間、技術的には学校の外・海外からでもアクセスできる状態になっていた。実際に参加したのは学校WiFi内の6人だけだったが、それは「ネットワークで区切られていたから」ではなく、「URLを知っていたのがその6人だけだったから」だったと考えられる</p>
             </div>
-            <p><strong>NAT（ネットワークアドレス変換）を知る</strong></p>
+            <p><strong>なぜ、これが特別なことなのか</strong></p>
             <ul>
-              <li><strong>NAT</strong>（Network Address Translation、ネットワークアドレス変換）は、ルーターの内側（学校や家の中だけで使うプライベートなアドレス）と外側（インターネット上のグローバルなアドレス）を変換する仕組み（解説: <a href="https://www.fortinet.com/resources/cyberglossary/network-address-translation" target="_blank" rel="noopener">What is NAT (Network Address Translation)?</a>、Fortinet）</li>
-              <li>この仕組みの結果として、ルーターの内側にあるPCは、外部（インターネット）から直接アクセスできない——「This can be useful for preventing attacks that target specific IP addresses or for preventing devices on the internal network from being accessed directly from the internet」（同解説より）</li>
-              <li>だからこそ、サーバー役のPCに学校の外からはたどり着けなかった、と考えられる</li>
+              <li>ふつうの家庭用・学校用のルーターの内側にあるパソコンは、<strong>NAT</strong>（Network Address Translation、ネットワークアドレス変換）という仕組みによって外部から直接アクセスできない（解説: <a href="https://www.fortinet.com/resources/cyberglossary/network-address-translation" target="_blank" rel="noopener">What is NAT (Network Address Translation)?</a>、Fortinet）——普段インターネットの「外側」から「内側」の1台のパソコンにいきなりアクセスされないのは、この仕組みのおかげ</li>
+              <li>GitHub Codespacesのポート転送は、この壁の外側まで届く橋（プロキシ）をあらかじめ用意している。だからこそ「パブリック」に切り替えるだけで、NATの壁を意識することなく、一気に世界中からアクセスできる状態になる</li>
             </ul>
             <div class="lesson-tip">
-              <strong>余裕があれば:</strong> AIエージェントに<code>なぜこのゲームは家からは遊べないのですか？</code>と聞いてみて、今日整理した内容と答えが近いか比べてみましょう。
+              <strong>実際に確認してみる（2026-09-24実機確認）:</strong> Codespacesのパブリック転送URLに初めてブラウザでアクセスすると、GitHubが警告画面を挟む——「You are about to access a development port served by someone's codespace」という見出しのもと、「自分が信頼できる相手から送られたリンクのときだけ進んでください」「入力したクレジットカード番号やパスワード等の個人情報は、このサイトの開発者から見える可能性があります」という2つの注意書きと、「この警告はCodespaceのセッションごとに1回だけ表示されます」という説明、そして<code>Continue</code>ボタンが表示される。つまりGitHub自身もこのリスクを認識しているが、<strong>警告は「防御」ではなく「注意喚起」に過ぎず、ボタン1つで誰でも先に進めてしまう</strong>。しかも「セッションごとに1回だけ」なので、2回目以降は警告なしで直接アクセスできてしまう点にも注意。また、この警告が「個人情報は開発者から見える可能性がある」と述べている通り、危険は<strong>公開した側（自分たち）だけでなく、リンクを開く側（訪問者）にも及ぶ</strong>——知らない人から届いたCodespacesのリンクを不用意に開き、そこでパスワード等を入力するのも危険だということも合わせて理解しておく
             </div>
+            <p><strong>だから、これは危険とも隣り合わせ</strong></p>
+            <ul>
+              <li>「学校WiFiの中にいる人しか入れない」という、これまで無意識に頼っていたはずの制限は、そもそも存在していなかった。今回はたまたま誰にも気づかれなかっただけで、<strong>知らないうちに世界中に公開していた</strong>ということになる——これがどれくらい危険なことなのかを、2限後半で詳しく見ていく</li>
+            </ul>
           </div>
         </div>
 
         <div class="timeline-block">
           <div class="timeline-header">
             <span class="timeline-time">2限 後半</span>
-            <span class="timeline-duration">約30分</span>
+            <span class="timeline-duration">約40分</span>
           </div>
-          <h3>世界中の誰とでも対戦できるようにするには？</h3>
+          <h3>だから、多層防御というセオリーがある</h3>
           <div class="timeline-body">
-            <p><strong>発想を転換する</strong></p>
+            <p><strong>どれくらい危険なことだったのか</strong></p>
             <ul>
-              <li>「サーバー役を、誰かの個人PCではなく、みんなが外から確実にアクセスできる場所に置けばいい」という発想に気づく</li>
+              <li>2限前半で確認した通り、あのゲームは「学校WiFiの中にいる人しか入れない」という制限には、実は最初から守られていなかった。残っていたのは<strong>パスコード（合言葉）だけ</strong>という状態</li>
+              <li><strong>WebSocketには、そもそも標準の認証の仕組みがない</strong>（OWASP: 「WebSockets don't have built-in authentication」）——「動いた」ことと「安全」であることは、まったく別の話だと理解する</li>
+              <li>パスコードは、画面共有・チャットの誤送信・肩越しに見られる等で漏れる可能性があり、サーバー側できちんと照合していなければ簡単に破られてしまう</li>
+              <li><strong>具体例</strong>: クラウド開発環境サービス「Gitpod」（Codespacesと同種のツール）で2023年、接続元（Origin）を確認していなかったために悪意のあるWebページを開かせるだけでWebSocket接続を乗っ取られ開発環境を乗っ取られる脆弱性（CVSS 9.6の重大な深刻度）が実際に見つかった（<a href="https://nvd.nist.gov/vuln/detail/CVE-2023-0957" target="_blank" rel="noopener">CVE-2023-0957</a> / <a href="https://labs.snyk.io/resources/gitpod-remote-code-execution-vulnerability-websockets/" target="_blank" rel="noopener">Gitpod remote code execution 0-day vulnerability via WebSockets</a>、Snyk Labs）。GitHub Codespaces自体にこの欠陥があるという話ではなく、<strong>同じ種類のツールで、認証・認可を怠るとどれくらい深刻な被害につながりうるかの実例</strong>として紹介する</li>
+              <li>常時つながったままのWebSocket接続は、大量接続や大量メッセージによるサービス妨害（DoS）のリスクも高い（OWASP: 「Persistent WebSocket connections increase DoS risk」）</li>
             </ul>
-            <p><strong>クラウドにサーバーを置く、という考え方を図で見る</strong></p>
+
+            <p><strong>セオリー: 多層防御（Defense in Depth）という考え方</strong></p>
+            <ul>
+              <li>本番で公開するリアルタイムアプリでは、「URLと合言葉」の1枚だけに頼らず、いくつもの層を重ねて守るのがセオリー（一次情報: <a href="https://cheatsheetseries.owasp.org/cheatsheets/WebSocket_Security_Cheat_Sheet.html" target="_blank" rel="noopener">WebSocket Security - OWASP Cheat Sheet Series</a>）</li>
+            </ul>
+            <div class="diagram-flow">
+              <div class="diagram-flow-step">
+                <div class="diagram-flow-step-label">Layer 1</div>
+                <div class="diagram-flow-step-name">接続元の確認<br>（Origin検証）</div>
+              </div>
+              <span class="diagram-flow-arrow" aria-hidden="true">→</span>
+              <div class="diagram-flow-step">
+                <div class="diagram-flow-step-label">Layer 2</div>
+                <div class="diagram-flow-step-name">本人確認<br>（認証・トークン）</div>
+              </div>
+              <span class="diagram-flow-arrow" aria-hidden="true">→</span>
+              <div class="diagram-flow-step">
+                <div class="diagram-flow-step-label">Layer 3</div>
+                <div class="diagram-flow-step-name">権限の確認<br>（認可・部屋ごと）</div>
+              </div>
+              <span class="diagram-flow-arrow" aria-hidden="true">→</span>
+              <div class="diagram-flow-step">
+                <div class="diagram-flow-step-label">Layer 4</div>
+                <div class="diagram-flow-step-name">頻度の制限<br>（レート制限）</div>
+              </div>
+              <span class="diagram-flow-arrow" aria-hidden="true">→</span>
+              <div class="diagram-flow-step">
+                <div class="diagram-flow-step-label">Layer 5</div>
+                <div class="diagram-flow-step-name">アプリ本体<br>（入力値チェック）</div>
+              </div>
+            </div>
+            <ul>
+              <li><strong>接続元の確認（Origin検証）</strong>: 接続してきた相手が想定しているWebページかどうかを毎回確認する。「許可リスト（allowlist）方式で、ワイルドカードや部分一致は避ける」のが原則（OWASP: 「Validate the Origin header on every handshake. Always use an explicit allowlist」）</li>
+              <li><strong>本人確認（認証）</strong>: クッキーだけに頼らず、トークン（合言葉より偽造・使い回しがしにくい鍵）で確認する方法が推奨されている（OWASP: 「use token-based authentication instead of relying solely on cookies」）</li>
+              <li><strong>権限の確認（認可）</strong>: 「入れるかどうか」を最初の1回だけでなく、操作のたびに確認する（OWASP: 「Check authorization for each action」）——「このパスコードで入った人が、この部屋のこの操作をしてよいか」を毎回問い直すイメージ</li>
+              <li><strong>頻度の制限（レート制限）</strong>: 1人あたりの接続数やメッセージの送信頻度に上限を設け、大量アクセスによる妨害を防ぐ（OWASP: メッセージサイズの上限と「rate limiting—100 messages per minute is a common starting point」）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>今日作ったパスコード方式を否定する話ではありません:</strong> 教室内の短時間デモとしては現実的な妥協点です。ただし「公開する場面」「扱う情報の重要度」によって、どこまで防御を重ねるかを判断するのが設計者の仕事——というのが今日の一番のポイントです。
+            </div>
+
+            <p><strong>では、本番で正しく公開するには</strong></p>
+            <ul>
+              <li>Codespacesのポート転送は、あくまで開発中の一時的な動作確認のための機能。本番として正式に公開するなら、意図したセキュリティ設計を組み込める<strong>クラウドサービス（Cloud Run</strong>等）にサーバーを置くのが筋——これが第7回で学ぶCloud Runにつながることを予告する</li>
+            </ul>
             <div class="diagram-hub">
               <div class="diagram-hub-server diagram-hub-server--cloud">
                 <div class="diagram-hub-server-label">Cloud Server</div>
@@ -226,15 +269,15 @@
                 <div class="diagram-hub-client">友達の家からの<br>プレイヤー</div>
                 <div class="diagram-hub-client">海外からの<br>プレイヤー</div>
               </div>
-              <p class="diagram-hub-caption">誰でもアクセスできる公開アドレスを持つクラウド上のサーバーなら、ネットワークが違っても同じ部屋に入れる</p>
+              <p class="diagram-hub-caption">Codespacesのように「たまたま公開されていた」のではなく、公開する前提で多層防御を組み込んで設計したサーバーを置く——これが本番運用のセオリー</p>
             </div>
             <ul>
-              <li>クラウド（<strong>Cloud Run</strong>等）にサーバーを置くと、インターネット上のどこからでもアクセスできる公開アドレスが手に入る——これが第7回で学ぶCloud Runにつながることを予告する</li>
               <li>Cloud RunはWebSocket通信にも対応している（公式: <a href="https://docs.cloud.google.com/run/docs/triggering/websockets" target="_blank" rel="noopener">Using WebSockets</a>）。ただし接続時間には既定5分・最大60分の上限があり再接続が必要になること、複数のサーバーが同時に動く構成ではプレイヤー情報を共有する仕組み（<strong>Firestore</strong>等、第9回で学ぶ）が必要になることにも触れておく</li>
             </ul>
+
             <p><strong>今日はここまで</strong></p>
             <ul>
-              <li>今日は「世界中と対戦できるようにするには何が必要か」を<strong>概念として理解する</strong>ところまで。実際にクラウドにデプロイする体験は、第7回（Cloud Run）・第9回（Firestore）で扱う</li>
+              <li>今日は「実はもう世界中に公開されていたという事実」「そこに潜む危険と、セオリーとしての多層防御」を<strong>概念として理解する</strong>ところまで。実際にクラウドにデプロイする体験は、第7回（Cloud Run）・第9回（Firestore）で扱う</li>
             </ul>
           </div>
         </div>
@@ -247,7 +290,7 @@
           <h3>次回予告＆今日の振り返り</h3>
           <div class="timeline-body">
             <ul>
-              <li>次回（第5回）：<strong>セキュリティとデータガバナンスを学ぶ</strong>——クラウドAIサービスにおけるデータガバナンスを公式資料で確認する</li>
+              <li>次回（第5回）：<strong>セキュリティとデータガバナンスを学ぶ</strong>——今日学んだのは「ネットワーク・アクセス」の視点のセキュリティ。次回はクラウドAIサービスにおける「データの扱い」の視点のデータガバナンスを公式資料で確認する</li>
               <li>「今日分かったこと・まだ疑問に思うこと」を一言メモして退出</li>
             </ul>
           </div>
@@ -280,6 +323,13 @@
             <p>今日の図解を思い出しながら、自分のAIエージェントに<code>簡単なチャット機能を作ってください</code>のようなリアルタイム性のある機能を頼んでみると、今日の仕組みが自分ごととして理解しやすくなります。</p>
           </div>
         </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>今日作ったアプリに、AIエージェントとセキュリティを相談してみる</strong>
+            <p>もしCodespacesのポート転送を「パブリック」にして何かを公開したことがあれば、AIエージェントに<code>このアプリを世界中に公開する場合、今のままだとどんな危険がありますか？どう直せば安全になりますか？</code>と聞いてみましょう。今日学んだ「多層防御」のどの層が今のアプリに足りていないかが見えてくるはずです。</p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -289,6 +339,10 @@
         <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebSocket" target="_blank" rel="noopener">WebSocket - Web APIs（公式）</a> — 今日紹介したリアルタイム双方向通信の技術</li>
         <li><a href="https://www.fortinet.com/resources/cyberglossary/network-address-translation" target="_blank" rel="noopener">What is NAT (Network Address Translation)?（解説）</a> — ローカルネットワークの外からアクセスできない理由</li>
         <li><a href="https://docs.cloud.google.com/run/docs/triggering/websockets" target="_blank" rel="noopener">Using WebSockets（公式）</a> — Cloud RunでのWebSocket対応（第7回の予告）</li>
+        <li><a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace" target="_blank" rel="noopener">Forwarding ports in your codespace（公式）</a> — 「パブリック」設定が認証なしの世界公開になることの根拠</li>
+        <li><a href="https://docs.github.com/en/codespaces/reference/security-in-github-codespaces" target="_blank" rel="noopener">Security in GitHub Codespaces（公式）</a> — 「Publicly forwarded ports」がインターネット上の誰からでも認証なしにアクセス可能であることの根拠</li>
+        <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/WebSocket_Security_Cheat_Sheet.html" target="_blank" rel="noopener">WebSocket Security - OWASP Cheat Sheet Series</a> — 多層防御（Origin検証・認証・認可・レート制限）のセオリー</li>
+        <li><a href="https://nvd.nist.gov/vuln/detail/CVE-2023-0957" target="_blank" rel="noopener">CVE-2023-0957（NVD）</a> — クラウド開発環境（Gitpod）で実際にあったWebSocket乗っ取りの脆弱性事例</li>
       </ul>
     </div>
 
