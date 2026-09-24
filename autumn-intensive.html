@@ -13,6 +13,7 @@
   <!-- 公式情報追加確認: 2026-09-24 (developer.mozilla.org/en-US/docs/Web/API/WebSocket / docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace — 複数ポートの同時転送・個別可視性設定に対応していることを確認。同一ポートでのHTTP+WebSocket接続不安定は公式docsに明記なし、コミュニティ報告ベースのため断定を避けた表現に留めた。ユーザー指示によりチーム編成（進級制作チーム・学科横断）とトラック制（カメラ×AI／同時対戦ゲーム／自由テーマ）を全面改訂） -->
   <!-- PR #226 レビュー反映: 2026-09-24（トラックBの「サーバー役PC」表記をCodespaces上で動かす旨に修正、自然言語開発Ⅱ実例との対比を「同様の構造と考えられる」に弱化——引用元自身が未検証の推測と留保しているため。同一ポート不安定の主張から根拠不明な具体条件（Web版限定・起動直後）を除去。WebSocket接続先はwss://の転送URLを使う旨を追記） -->
   <!-- 公式情報追加確認・構成変更: 2026-09-24（docs.github.com/en/codespaces/reference/security-in-github-codespaces で「Publicly forwarded ports: Are accessible on the internet, and anyone on the internet can access them. No authentication is needed to access public forwarded ports.」と確認済み——自然言語開発Ⅱ week04の再構成（PR #228）と同じ一次情報。ユーザー指示により「Codespacesのパブリック設定だけで追加のクラウド契約なしに世界中と対戦できる」という事実をトラックB最大の鍵として授業概要冒頭に格上げし、Day3にセキュリティ配慮（パスコード以外の工夫を1つ入れる）、Day4に他チームとの実際の相互接続体験を追加） -->
+  <!-- 構成変更: 2026-09-24（ユーザー指示により、上記のCodespacesパブリック公開の事実をトラックB限定ではなく「全トラック共通の鍵となる事実」に一般化。トラックAのカメラアプリ・トラックCの自由テーマ成果物も同じ仕組みで公開する限り同じ性質を持つことを授業概要・到達目標・履修上の注意点・トラックC脚注に明示） -->
 
 </head>
 <body>
@@ -58,7 +59,7 @@
       <ul>
         <li>通常の時間割枠に入らない、後期のスピンオフ企画です。<strong>学科横断で参加する進級制作チーム</strong>（学科・学年をまたいだ編成のまま）で、5日間かけて<strong>AIエージェントと協働してアプリを開発</strong>します。新しくチームを組み直すことはせず、進級制作でこれまで積み重ねてきたチームワークをそのまま活かします。</li>
         <li>作るものは3つの選択肢から選びます。<strong>トラックA「カメラ×AI」</strong>は自分たちのスマートフォンのカメラを使うWebアプリ、<strong>トラックB「同時対戦ゲーム」</strong>は複数人でリアルタイムに対戦できるゲーム、<strong>トラックC「自由テーマ」</strong>はAI×端末であれば形式自由の自チーム独自プロダクトです。トラックA・Bには段階的な日次課題（デフォルトパス）を用意しており、トラックCのチームもA・Bの課題を参考にしながら自分たちで段階目標を設定します。</li>
-        <li>（<strong>トラックBの鍵となる事実</strong>）GitHub Codespacesの<strong>ポート転送を「パブリック」に設定するだけで</strong>、追加のクラウド契約や複雑な設定なしに、<strong>学校の外・海外からでも対戦に参加できる状態になります</strong>（公式: 「Publicly forwarded ports: Are accessible on the internet, and anyone on the internet can access them. No authentication is needed to access public forwarded ports.」——Security in GitHub Codespaces）。他の授業（自然言語開発Ⅱ等）でも使っているCodespacesの標準機能そのものであり、特別な裏技なしに「世界中と対戦できるゲーム」を5日間で実現できる、トラックB最大の武器です。一方で「パブリック」は<strong>認証なしで誰でもアクセスできる</strong>ことも同時に意味するため、この機能を使うDay3では<strong>セキュリティの基本</strong>もあわせて学びます。</li>
+        <li>（<strong>全トラック共通の鍵となる事実</strong>）GitHub Codespacesの<strong>ポート転送を「パブリック」に設定するだけで</strong>、追加のクラウド契約や複雑な設定なしに、<strong>学校の外・海外からでもアクセスできる状態になります</strong>（公式: 「Publicly forwarded ports: Are accessible on the internet, and anyone on the internet can access them. No authentication is needed to access public forwarded ports.」——Security in GitHub Codespaces）。他の授業（自然言語開発Ⅱ等）でも使っているCodespacesの標準機能そのものです。<strong>トラックB</strong>にとっては、特別な裏技なしに「世界中と対戦できるゲーム」を5日間で実現できる最大の武器になります。<strong>トラックA</strong>のカメラアプリも<strong>トラックC</strong>の自由テーマの成果物も、同じ仕組みで公開する限り同じことが当てはまります——チームの端末だけでなく、URLを知っていれば世界中の誰でもアクセスできる状態です。一方で「パブリック」は<strong>認証なしで誰でもアクセスできる</strong>ことも同時に意味するため、公開する場面（トラックAはDay1のカメラ表示から、トラックBはDay3のリアルタイム同期から）では<strong>セキュリティの基本</strong>もあわせて学びます。</li>
         <li>チームで1つの<strong>GitHub Codespaces</strong>を起動し、<strong>Antigravity CLI（agy）</strong>を使ってAIエージェントに指示を出しながら開発します。他の科目（AIコミュニケーション基礎Ⅱ等）と同じ環境なので、操作に迷いにくいのが利点です。Codespacesの<strong>ポート転送</strong>機能で公開したHTTPSのURLを、QRコードでチームメンバーのスマートフォンやPCに配って開きます。</li>
         <li>各日とも、<strong>1限（90分）はトラックごとに用意した段階的なステージ課題に取り組む共通の時間枠</strong>（その日までに最低限できるようにする内容）、<strong>2限＋まとめ（90分）はチームごとのブラッシュアップ・自由探究</strong>に充てます。丸投げにせず、日ごとに一歩ずつ前進できる構成です。</li>
         <li>（<strong>トラックA</strong>）カメラ映像をブラウザで扱うには<strong>secure context（HTTPS）</strong>が必須です。「なぜHTTPSが要るのか」という制約に触れることが、Day1の重要な学びになります。アプリに載せるAIは2種類から選べます。<strong>レシピA「その場で見るAI」</strong>は、MediaPipe Tasksを使い手や顔の動きをブラウザ内だけでリアルタイムに検出します（通信ほぼゼロ）。<strong>レシピB「考えるAI」</strong>は、撮った写真をCodespaces上の簡易サーバ経由で<strong>Google AI Studio</strong>（<code>aistudio.google.com</code>）で発行する無料のGemini APIキーを使ってGemini APIに送り、判定や説明を返します。<strong>APIキーは絶対にブラウザ側に置かない</strong>という、実務で最も重要な設計原則をここで体験します。あわせて、<strong>公開したURLを知っていれば誰でもサーバを呼び出せてしまいます</strong>。ブラウザに持たせる合言葉は通信を見れば誰でも取り出せるため<strong>本物のアクセス制限にはならない</strong>ことを確認し、代わりに<strong>サーバ側で呼び出し回数の上限（レート制限）を設ける</strong>など、被害を現実的に抑える工夫を一緒に作ります。<strong>無料のAPIキーで送信したデータはGoogleのサービス改善に使われ、人間のレビュアーが内容を確認する場合がある</strong>ため、他人の顔が写った画像を送る際のセキュリティ・プライバシー上の注意点として必ず共有します（公式: Gemini API Additional Terms of Service）。時間に余裕があるチーム向けの<strong>発展的な選択肢（レシピC「お喋りAI」）</strong>として、Gemini Live APIを使ったリアルタイム音声対話アプリにも挑戦できます。ただしAPIキーをサーバ側で守りながら一時的なトークン（ephemeral token）を発行する、レシピBよりも難易度の高い構成が公式に推奨されているため、<strong>必須課題ではなく余力があるチームのみ</strong>の位置づけとします。</li>
@@ -80,7 +81,7 @@
         <li>（トラックA）AIモデルのAPIキーを、ブラウザ側のコードに書いてはいけない理由を理解している。</li>
         <li>（トラックA）無料のAPIキーで送信したデータが、サービス提供元の改善に使われる場合があることを理解している。</li>
         <li>（トラックB）複数人でリアルタイムに情報をやり取りする際、1台のサーバー役が全員の操作を受け取り配り直す「サーバー」と「部屋（ルーム）」の基本的な考え方を理解している。</li>
-        <li>（トラックB）GitHub Codespacesのポート転送を「パブリック」に設定するだけで世界中からアクセス可能になる仕組みと、それが「認証なしで誰でもアクセスできる」ことも意味するという、セキュリティ上の注意点を理解している。</li>
+        <li>GitHub Codespacesのポート転送を「パブリック」に設定するだけで世界中からアクセス可能になる仕組みと、それが「認証なしで誰でもアクセスできる」ことも意味するという、セキュリティ上の注意点を理解している（全トラック共通）。</li>
         <li>チーム開発における役割分担（ドライバー／ナビゲーター）の意味を理解している。</li>
       </ol>
 
@@ -128,7 +129,7 @@
           </tbody>
         </table>
       </div>
-      <p>※内容は、学生の理解度や進度、当日の通信環境に応じて柔軟に変更する可能性があります。<br>※各日の冒頭で、前日からの気づき・トラブルを共有します。<br>※トラックCチームは、トラックA・Bの日次ステージ課題を参考にしながら、自分たちで各日の段階目標を設定してください。</p>
+      <p>※内容は、学生の理解度や進度、当日の通信環境に応じて柔軟に変更する可能性があります。<br>※各日の冒頭で、前日からの気づき・トラブルを共有します。<br>※トラックCチームは、トラックA・Bの日次ステージ課題を参考にしながら、自分たちで各日の段階目標を設定してください。自チームの成果物をCodespacesのポート転送（Public設定）で公開する場合は、授業概要で触れた「全トラック共通の鍵となる事実」（世界中からアクセス可能＝認証なしで誰でもアクセス可能）がそのまま当てはまります。</p>
     </div>
 
     <div class="syllabus-section">
@@ -173,7 +174,7 @@
       <h2>その他（履修上の注意点）</h2>
       <ul>
         <li>（<strong>トラックA</strong>）カメラを使うアプリを作るため、<strong>他人を撮影する場面が発生します</strong>。撮影前に必ず声をかけ、同意を得てください。撮った映像・画像を許可なく外部に公開・共有しないでください。<strong>レシピB「考えるAI」で撮影した画像をAPIに送る場合</strong>、その画像は外部（Google）のサーバに送信されることになるため、同意を得る際はその点も伝えてください。</li>
-        <li>アプリの公開にはGitHub Codespacesの<strong>ポート転送（Public設定）</strong>を使います。「ポート」タブでポートを右クリック→「ポートの可視性」→「パブリック」を選択（公式: Forwarding ports in your codespace）。Publicにしたポートは<strong>URLを知っている人なら誰でも認証なしでアクセスできます</strong>。個人情報や機微な内容を映さない・入力しない運用を徹底してください。</li>
+        <li>アプリの公開にはGitHub Codespacesの<strong>ポート転送（Public設定）</strong>を使います。「ポート」タブでポートを右クリック→「ポートの可視性」→「パブリック」を選択（公式: Forwarding ports in your codespace）。Publicにしたポートは<strong>URLを知っている人なら誰でも認証なしでアクセスできます</strong>——これが授業概要で触れた「全トラック共通の鍵となる事実」の裏返しです。個人情報や機微な内容を映さない・入力しない運用を徹底してください。</li>
         <li>（<strong>トラックB</strong>）複数ポートを転送する場合、それぞれのポートで個別に可視性（Public/Private）を設定する必要があります。<strong>静的ファイル配信用ポートとWebSocketサーバー用ポートの両方をPublicに設定</strong>しないと、チームメンバーの端末から接続できません（公式: Forwarding ports in your codespace）。同一ポートにHTTP配信とWebSocketを両方載せる構成は、環境によっては接続が不安定になるという報告があるため、可能な限りポートを分けることを推奨します。ポートを分けるとそれぞれ別のURL（ホスト名）になるため、<strong>WebSocketの接続先はWebSocket用ポートの転送URL（<code>wss://〜.app.github.dev</code>のような形式）をAIエージェントに指定させてください</strong>。ページ自体がHTTPSで配信されるため、<code>ws://</code>や<code>localhost</code>を指定すると他の端末から接続できません。また、Publicにしたポート・部屋のパスコードを知っていれば誰でも対戦に参加できてしまう点は、トラックAの「合言葉は本物のアクセス制限にならない」注意と同様の性質です。APIの課金や個人情報の外部送信は伴わないため対策の必要性はトラックAより低いですが、想定外の参加者が入ってきた場合の対処（部屋の作り直し等）はチームで決めておいてください。</li>
         <li>（<strong>トラックA</strong>）<strong>AIレシピB「考えるAI」</strong>を使うチームは、<strong>Google AI Studio</strong>（<code>aistudio.google.com</code>）でGemini APIの無料APIキーを発行します。APIキーは<strong>サーバ側のコードにのみ置き、ブラウザ側のコード（HTML・JavaScript）には絶対に書かない</strong>でください。ブラウザに書いたキーは誰でも見られる状態になります。<strong>それだけでは不十分で</strong>、公開URLを知っている人なら誰でもサーバを呼び出せてしまいます。ブラウザに持たせる合言葉（トークン）は、通信を見れば誰でも取り出せてしまうため<strong>本物のアクセス制限にはなりません</strong>。<strong>サーバ側で呼び出し回数の上限（レート制限）を設ける</strong>など、現実的に被害を抑える工夫を一緒に作ってください。対策がないと、他の人にAPIの利用上限を消費されたり、想定外の課金が発生する可能性があります。あわせて、<strong>無料のAPIキー（Unpaid Services）で送信したデータはGoogleのサービス改善に使われ、人間のレビュアーが内容を確認する場合がある</strong>ことを公式利用規約（Gemini API Additional Terms of Service）で確認しています。撮影した人物の同意を得る際は、この点もあわせて説明してください。</li>
         <li>余力があるチームが<strong>レシピC「お喋りAI」（Gemini Live API）</strong>に挑戦する場合も、APIキーの扱いはレシピBと同じ原則です。公式はブラウザに直接APIキーを埋め込まず、<strong>サーバ側で発行する一時的なトークン（ephemeral token）</strong>を使う構成を推奨しています。実装難易度が高いため、必須課題としては求めません。</li>
