@@ -273,18 +273,18 @@ document.getElementById("load-btn").addEventListener("click", () =&gt; {
 }</code></pre>
               </li>
               <li><code>const favorites = [ ... ];</code>の行を<strong>まるごと削除</strong>し、代わりに以下の1行に置き換える：
-              <pre><code>let favorites = loadFavorites();</code></pre>
+              <pre><code>const favorites = loadFavorites();</code></pre>
               </li>
-              <li><code>const</code>から<strong><code>let</code></strong>に変わっている点に注意——<code>favorites</code>を後から別の配列（読み込んだデータ）に入れ替えるため、再代入できる<code>let</code>にする必要がある</li>
+              <li>右辺が配列そのものから<code>loadFavorites()</code>の戻り値に変わっただけで、<strong><code>const</code>のまま</strong>でよい——このあと行う<code>push</code>や<code>splice</code>は配列の<strong>中身</strong>を変えるだけで、<code>favorites</code>という変数に<strong>別の配列を入れ直す（再代入する）</strong>わけではないため</li>
               <li><code>saved === null</code>——「まだ一度も保存されていない（<code>localStorage</code>が空）」場合の判定。<strong>初めてlist.htmlを開いた人にも、最初の4件が表示される</strong>ようにするための工夫</li>
             </ul>
             <p><strong>動作確認（15分）</strong></p>
             <ul>
-              <li>Simple Browserを更新し、まだ4件のままであることを確認する（<code>loadFavorites</code>がデフォルトの4件を返している）</li>
-              <li>フォームから項目を追加し、一覧が増えることを確認する</li>
-              <li><strong>Simple Browserを更新（リロード）</strong>する——今度は追加した項目が<strong>消えずに残っている</strong>ことを確認する（感動ポイント）</li>
+              <li>Simple Browserを更新し、<strong>1限後半で追加した項目を含めて5件</strong>がそのまま表示されることを確認する（<code>loadFavorites</code>が、1限後半で<code>saveFavorites()</code>によって保存されていた5件をlocalStorageから読み込んで返している）</li>
+              <li>フォームからさらに項目を追加し、一覧が増えることを確認する</li>
+              <li><strong>Simple Browserを更新（リロード）</strong>する——今度も追加した項目が<strong>消えずに残っている</strong>ことを確認する</li>
               <li>F12→Application（またはStorage）タブ→Local Storageを開き、<code>favorites</code>というキーにJSON形式の文字列が保存されていることを目で見て確認する</li>
-              <li>うまく動かないときはConsoleタブでエラーを確認。よくあるミス：<code>const favorites</code>の削除忘れ（<code>let favorites</code>と二重定義になりエラーになる）、<code>saveFavorites()</code>の呼び出し忘れ</li>
+              <li>うまく動かないときはConsoleタブでエラーを確認。よくあるミス：<code>const favorites = [ ... ];</code>の削除忘れ（<code>const favorites</code>が二重定義になりエラーになる）、<code>saveFavorites()</code>の呼び出し忘れ</li>
             </ul>
             <p><strong>演習：余裕があれば（15分）</strong></p>
             <ul>
