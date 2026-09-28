@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第4回 🎯ミニ完成① 保存できる作品を公開 | プログラム基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=5">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--blue">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../program-basics-2.html">プログラム基礎 II</a>
+        <span>/</span>
+        <span>第4回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">🎯ミニ完成①<wbr> 保存できる作品を公開</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 4</span>
+            <span class="page-badge">火曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value"><code>localStorage</code>を使い、第3回で完成した<code>list.html</code>に「リロードしても消えないデータ」を持たせる。仕上げにGitHub Pagesへ公開し、<strong>「保存の仕組み」</strong>を体得する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value"><code>localStorage</code> / <code>JSON.stringify</code> / <code>JSON.parse</code> / データの保存と読み込み / GitHub Pages公開</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第3回で完成した<code>list.html</code>（フォームから項目を追加できる状態）にアクセスできる状態。<strong>見当たらない・完成していない人</strong>は、下記「1限前半」の完成版テンプレートをコピーして使ってよい</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li><code>localStorage</code>は<strong>文字列しか保存できない</strong>ことを理解し、<strong><code>JSON.stringify</code></strong>で配列やオブジェクトを文字列に変換できる</li>
+        <li><strong><code>JSON.parse</code></strong>で保存した文字列を元の配列やオブジェクトに戻せる</li>
+        <li><code>list.html</code>に保存処理・読み込み処理を追加し、<strong>リロードしても追加したデータが消えない</strong>状態にできる</li>
+        <li>変更をcommit・pushし、<strong>公開URLに最新の動作を反映</strong>できる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>「リロードすると消える」問題を体感し、保存の必要性に気づく</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り（10分）</strong></p>
+            <ul>
+              <li>第3回で<code>list.html</code>にフォームを追加し、入力した項目を<code>favorites</code>配列に<code>push</code>できるようになったことを思い出す</li>
+              <li><code>python3 -m http.server 8000</code>を起動し、第1回（前期）と同じ手順で「ポート」タブ→「エディターでプレビュー」→ Simple Browserを開く。アドレスバーの末尾を<code>/list.html</code>に書き換えて表示する</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong><code>list.html</code>が見当たらない・第3回の書き換えが終わっていない人へ:</strong> 下のテンプレートをコピーして<code>list.html</code>の中身をまるごと置き換えてください。第3回終了時点の完成形（フォームから追加でき、空欄チェックも付いた状態）です。
+            </div>
+            <button class="copy-md-btn" data-md-source="list-html-week3-complete-template">
+              <span class="btn-icon"></span> list.htmlの雛形（第3回完成版）をコピー
+            </button>
+<pre id="list-html-week3-complete-template" class="md-preview">&lt;!DOCTYPE html&gt;
+&lt;html lang="ja"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;お気に入りリスト&lt;/title&gt;
+  &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;私のお気に入り&lt;/h1&gt;
+  &lt;div&gt;
+    &lt;input type="text" id="input-category" placeholder="カテゴリ（例：好きな食べ物）"&gt;
+    &lt;input type="text" id="input-value" placeholder="内容（例：カレー）"&gt;
+    &lt;input type="text" id="input-reason" placeholder="理由（例：辛いから）"&gt;
+    &lt;button id="add-btn"&gt;追加する&lt;/button&gt;
+  &lt;/div&gt;
+  &lt;ul id="favorite-list"&gt;&lt;/ul&gt;
+  &lt;p&gt;&lt;a href="index.html"&gt;トップに戻る&lt;/a&gt;&lt;/p&gt;
+
+  &lt;script&gt;
+    const favorites = [
+      { category: "好きな食べ物", value: "カレー", reason: "辛いものが好きだから" },
+      { category: "好きな色",     value: "青",     reason: "空の色だから" },
+      { category: "好きな音楽",   value: "J-POP",  reason: "歌詞が心に残るから" },
+      { category: "好きな場所",   value: "図書館", reason: "静かで集中できるから" }
+    ];
+
+    const ul = document.getElementById("favorite-list");
+
+    function render() {
+      ul.innerHTML = "";
+      for (let i = 0; i &lt; favorites.length; i++) {
+        const li = document.createElement("li");
+        li.textContent = `${favorites[i].category}：${favorites[i].value}（${favorites[i].reason}）`;
+        ul.appendChild(li);
+      }
+    }
+
+    render();
+
+    document.getElementById("add-btn").addEventListener("click", () =&gt; {
+      const category = document.getElementById("input-category").value;
+      const value = document.getElementById("input-value").value;
+      const reason = document.getElementById("input-reason").value;
+
+      if (category === "" || value === "") {
+        alert("カテゴリと内容は入力してください");
+        return;
+      }
+
+      favorites.push({ category, value, reason });
+      render();
+
+      document.getElementById("input-category").value = "";
+      document.getElementById("input-value").value = "";
+      document.getElementById("input-reason").value = "";
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+            <p><strong>「消える」ことを実際に確認する（15分）</strong></p>
+            <ul>
+              <li>フォームから新しい項目を1つ追加し、一覧に増えることを確認する</li>
+              <li>Simple Browserを<strong>更新（リロード）</strong>する——せっかく追加した項目が消えて、最初の4件に戻ってしまうことを確認する</li>
+              <li>「なぜ消えるのか」を考える：<code>favorites</code>配列はJavaScriptが動いている間だけメモリ上に存在し、ページを再読み込みすると最初からやり直しになるため</li>
+            </ul>
+            <p><strong>今日の目標を共有する（15分）</strong></p>
+            <ul>
+              <li>第1回で少しだけ触れた<strong><code>localStorage</code></strong>（ボタンを押した回数を記録するデモ）を思い出す</li>
+              <li>今日は<code>localStorage</code>を使い、<code>list.html</code>を「リロードしても消えないデータを持つ作品」に仕上げ、<strong>GitHub Pagesに公開</strong>するところまでを目標にする</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3><code>JSON.stringify</code>と<code>JSON.parse</code>を手で書いて理解する</h3>
+          <div class="timeline-body">
+            <p><strong>配列をそのまま保存しようとすると失敗することを確認する（10分）</strong></p>
+            <ul>
+              <li>
+                <p>Codespacesで新規ファイル<code>storage-demo.html</code>を作り、下のコードを貼り付けて保存する</p>
+                <button class="copy-md-btn" data-md-source="storage-demo-template">
+                  <span class="btn-icon"></span> storage-demo.htmlの雛形をコピー
+                </button>
+<pre id="storage-demo-template" class="md-preview">&lt;!DOCTYPE html&gt;
+&lt;html lang="ja"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;localStorageとJSONのデモ&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;button id="save-btn"&gt;配列を保存する&lt;/button&gt;
+  &lt;button id="load-btn"&gt;保存した配列を読み込む&lt;/button&gt;
+  &lt;p id="result"&gt;&lt;/p&gt;
+
+  &lt;script&gt;
+    const colors = ["赤", "青", "緑"];
+
+    document.getElementById("save-btn").addEventListener("click", () =&gt; {
+      localStorage.setItem("colors", colors);
+      document.getElementById("result").textContent = "保存しました（そのまま保存）";
+    });
+
+    document.getElementById("load-btn").addEventListener("click", () =&gt; {
+      const loaded = localStorage.getItem("colors");
+      console.log(loaded);
+      document.getElementById("result").textContent = loaded;
+    });
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+              </li>
+              <li>Simple Browserのアドレスバーの末尾だけを<code>/storage-demo.html</code>に書き換えてEnter。「配列を保存する」→「保存した配列を読み込む」の順に押し、F12→Consoleタブを見る</li>
+              <li><code>["赤","青","緑"]</code>ではなく<strong><code>赤,青,緑</code></strong>という文字列になってしまうことを確認する——<code>localStorage.setItem</code>は渡された値を<strong>自動的に文字列へ変換して保存する</strong>ため、配列としての形（<code>[ ]</code>や引用符）は失われてしまう</li>
+            </ul>
+            <p><strong><code>JSON.stringify</code> / <code>JSON.parse</code>で正しく変換する（20分）</strong></p>
+            <ul>
+              <li><code>save-btn</code>と<code>load-btn</code>のイベント処理を、以下のコードに書き換える：
+              <pre><code>document.getElementById("save-btn").addEventListener("click", () =&gt; {
+  localStorage.setItem("colors", JSON.stringify(colors));
+  document.getElementById("result").textContent = "保存しました（JSON.stringifyで変換）";
+});
+
+document.getElementById("load-btn").addEventListener("click", () =&gt; {
+  const saved = localStorage.getItem("colors");
+  const loadedColors = JSON.parse(saved);
+  console.log(loadedColors);
+  document.getElementById("result").textContent = loadedColors.join("、");
+});</code></pre>
+              </li>
+              <li><strong><code>JSON.stringify(colors)</code></strong>——配列やオブジェクトを、保存できる形の文字列（JSON形式）に変換する</li>
+              <li><strong><code>JSON.parse(saved)</code></strong>——JSON形式の文字列を、元の配列やオブジェクトに戻す。<code>stringify</code>と<code>parse</code>は<strong>逆の変換</strong>をする対の関数であることを強調する</li>
+              <li>保存→読み込みを試し、今度は<code>loadedColors</code>が本物の配列として扱える（<code>.join("、")</code>が使える）ことを確認する</li>
+            </ul>
+            <p><strong>list.htmlに保存処理を追加する（20分）</strong></p>
+            <ul>
+              <li><code>list.html</code>に戻り、<code>const favorites = [...]</code>の下、<code>const ul = ...</code>の上に、保存用の関数を追加する：
+              <pre><code>function saveFavorites() {
+  localStorage.setItem("favorites", JSON.stringify(favorites));
+}</code></pre>
+              </li>
+              <li><code>add-btn</code>の<code>addEventListener</code>の中、<code>favorites.push(...)</code>の直後に<code>saveFavorites();</code>を追加する：
+              <pre><code>  favorites.push({ category, value, reason });
+  saveFavorites();
+  render();</code></pre>
+              </li>
+              <li>フォームから項目を追加してみる。まだ<strong>読み込み処理がない</strong>ためリロードすると画面上は消えるが、これは「保存」だけを先に作った段階であることを伝える（次のパートで「読み込み」を作ると消えなくなる）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>読み込み処理を作り、「消えない」を実現する</h3>
+          <div class="timeline-body">
+            <p><strong>ページを開いた瞬間に読み込む関数を作る（20分）</strong></p>
+            <ul>
+              <li><code>saveFavorites</code>関数の下に、読み込み用の関数を追加する：
+              <pre><code>function loadFavorites() {
+  const saved = localStorage.getItem("favorites");
+  if (saved === null) {
+    return [
+      { category: "好きな食べ物", value: "カレー", reason: "辛いものが好きだから" },
+      { category: "好きな色",     value: "青",     reason: "空の色だから" },
+      { category: "好きな音楽",   value: "J-POP",  reason: "歌詞が心に残るから" },
+      { category: "好きな場所",   value: "図書館", reason: "静かで集中できるから" }
+    ];
+  }
+  return JSON.parse(saved);
+}</code></pre>
+              </li>
+              <li><code>const favorites = [ ... ];</code>の行を<strong>まるごと削除</strong>し、代わりに以下の1行に置き換える：
+              <pre><code>let favorites = loadFavorites();</code></pre>
+              </li>
+              <li><code>const</code>から<strong><code>let</code></strong>に変わっている点に注意——<code>favorites</code>を後から別の配列（読み込んだデータ）に入れ替えるため、再代入できる<code>let</code>にする必要がある</li>
+              <li><code>saved === null</code>——「まだ一度も保存されていない（<code>localStorage</code>が空）」場合の判定。<strong>初めてlist.htmlを開いた人にも、最初の4件が表示される</strong>ようにするための工夫</li>
+            </ul>
+            <p><strong>動作確認（15分）</strong></p>
+            <ul>
+              <li>Simple Browserを更新し、まだ4件のままであることを確認する（<code>loadFavorites</code>がデフォルトの4件を返している）</li>
+              <li>フォームから項目を追加し、一覧が増えることを確認する</li>
+              <li><strong>Simple Browserを更新（リロード）</strong>する——今度は追加した項目が<strong>消えずに残っている</strong>ことを確認する（感動ポイント）</li>
+              <li>F12→Application（またはStorage）タブ→Local Storageを開き、<code>favorites</code>というキーにJSON形式の文字列が保存されていることを目で見て確認する</li>
+              <li>うまく動かないときはConsoleタブでエラーを確認。よくあるミス：<code>const favorites</code>の削除忘れ（<code>let favorites</code>と二重定義になりエラーになる）、<code>saveFavorites()</code>の呼び出し忘れ</li>
+            </ul>
+            <p><strong>演習：余裕があれば（15分）</strong></p>
+            <ul>
+              <li>ブラウザのF12→Application→Local Storageで<code>favorites</code>の行を右クリックして削除し、リロードするとどうなるか試す（デフォルトの4件に戻ることを確認）</li>
+              <li>挑戦したい人は「削除」ボタンを追加し、<code>favorites.splice(i, 1)</code>で配列から取り除いたあと<code>saveFavorites()</code>と<code>render()</code>を呼ぶ処理を書いてみる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>GitHub Pagesに公開し、保存できる作品を仕上げる</h3>
+          <div class="timeline-body">
+            <p><strong>commit・pushする（15分）</strong></p>
+            <ul>
+              <li>前期第4回と同じ手順で、変更を<code>commit</code>・<code>push</code>する（コミットメッセージ例：<code>localStorageで保存できるようにした</code>）</li>
+              <li>push後、リポジトリの<strong>Settings → Pages</strong>で公開URLが変わっていないことを確認する（前期に公開済みのURLがそのまま使える）</li>
+            </ul>
+            <p><strong>公開URLで最終確認（10分）</strong></p>
+            <ul>
+              <li>公開URLの<code>list.html</code>にブラウザ（別タブ）でアクセスし、フォームから項目を追加→リロードしても消えないことを確認する</li>
+              <li>可能な人はスマホでも同じURLを開き、同じ動作になることを確認する</li>
+            </ul>
+            <p><strong>振り返り（5分）</strong></p>
+            <ul>
+              <li>「保存する」「読み込む」の2つの処理がセットで初めて“消えないデータ”になることを、自分の言葉で説明できるか確認する</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ program-basics-2.html Week 5 「後期テーマ選択＆企画」と同期 -->
+              <li>次回（第5回）: <strong>後期テーマ選択＆企画</strong>——<strong>ゲーム制作</strong>か<strong>ECサイト制作</strong>、自分が作る作品のジャンルを選択し、企画シート（画面構成・必要な機能の洗い出し）を作る</li>
+              <li>今日のキーワード「<strong><code>localStorage</code></strong>」「<strong><code>JSON.stringify</code></strong>」「<strong><code>JSON.parse</code></strong>」を口に出して言えるか確認して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>list.html</code>をlocalStorageで保存できる状態にし、公開URLで動作確認する</strong>
+            <p>授業内で完成しなかった人は家で仕上げ、フォームから追加した項目がリロードしても消えない状態にしてpush・公開URLで確認する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>削除機能を追加してみる</strong>
+            <p>各項目に「削除」ボタンを置き、<code>favorites.splice()</code>で配列から取り除いたあと保存し直す処理に挑戦する。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/Window/localStorage" target="_blank" rel="noopener">MDN — Window.localStorage</a> — 今日実装した<code>localStorage</code>の公式リファレンス</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" target="_blank" rel="noopener">MDN — JSON.stringify()</a> — 配列・オブジェクトを文字列に変換する公式リファレンス</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse" target="_blank" rel="noopener">MDN — JSON.parse()</a> — 文字列を元のデータに戻す公式リファレンス</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week03.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第3回 データを扱う基礎②：フォーム入力を受け取る</span>
+      </a>
+      <a href="../program-basics-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">プログラム基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第5回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
