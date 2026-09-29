@@ -2532,6 +2532,503 @@ a.lesson-nav-item:hover {
 }
 
 /* ========================================
+   Visual aids (vz-*) — 図解・ボタン部品。第2回以降の週ページでも再利用する。
+   モバイルファースト。分野の色: ストラテジ=blue / マネジメント=green / テクノロジ=orange
+   ======================================== */
+
+main .vz-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  margin: var(--sp-5) 0 var(--sp-6);
+  padding: 0;
+  list-style: none;
+}
+
+.syllabus-section a.vz-chip,
+a.vz-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 var(--sp-4);
+  border: 1px solid var(--c-amber-border);
+  border-radius: 999px;
+  background: var(--c-amber-soft);
+  color: var(--c-amber);
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+a.vz-chip:hover { background: #f5e6b8; }
+
+.syllabus-section a.vz-chip--cta,
+a.vz-chip--cta {
+  background: var(--c-amber);
+  border-color: var(--c-amber);
+  color: #fff;
+}
+
+a.vz-chip--cta:hover { background: #6f4c00; }
+
+a.vz-chip:focus-visible,
+a.vz-btn:focus-visible,
+a.vz-link:focus-visible,
+a.vz-seg:focus-visible {
+  outline: 3px solid var(--c-amber);
+  outline-offset: 2px;
+}
+
+/* 見出しへのジャンプ位置 */
+[id^="sec-"], [id^="blk-"] { scroll-margin-top: var(--sp-6); }
+
+/* 180分タイムバー */
+main .vz-timebar { margin: var(--sp-4) 0 var(--sp-6); }
+
+main .vz-timebar-track {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.syllabus-section a.vz-seg {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  height: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid var(--c-amber-border);
+  border-radius: var(--r-md);
+  background: var(--c-amber-soft);
+  color: var(--c-text);
+  text-decoration: none;
+}
+
+a.vz-seg:hover { background: #f5e6b8; }
+
+main .vz-seg-time {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--c-amber);
+}
+
+main .vz-seg-name { font-size: 0.78rem; line-height: 1.45; }
+
+.syllabus-section a.vz-seg--break {
+  border-style: dashed;
+  background: repeating-linear-gradient(45deg, var(--c-bg-alt), var(--c-bg-alt) 6px, #e9e4d2 6px, #e9e4d2 12px);
+  color: var(--c-text-muted);
+  pointer-events: none;
+}
+
+main .vz-timebar-track > li { width: max(calc(var(--w) / 50 * 100%), 10rem); margin: 0; }
+
+main .vz-timebar-note {
+  margin: var(--sp-2) 0 0;
+  font-size: 0.78rem;
+  color: var(--c-text-muted);
+}
+
+@media (min-width: 720px) {
+  main .vz-timebar-track { flex-direction: row; gap: 3px; align-items: stretch; }
+  main .vz-timebar-track > li { flex: var(--w) 1 0; width: auto; min-width: 0; }
+  .syllabus-section a.vz-seg { padding: 0.6rem 0.5rem; }
+  main .vz-seg-name { font-size: 0.72rem; }
+}
+
+/* 数字タイル */
+main .vz-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr));
+  gap: var(--sp-3);
+  margin: var(--sp-3) 0 var(--sp-4);
+  padding: 0;
+  list-style: none;
+}
+
+main .vz-stat {
+  margin: 0;
+  padding: var(--sp-4);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  background: var(--c-surface);
+  box-shadow: var(--shadow-card);
+}
+
+main .vz-stat-num {
+  font-family: var(--font-serif);
+  font-size: clamp(1.6rem, 3.2vw + 0.6rem, 2.2rem);
+  font-weight: 900;
+  line-height: 1.1;
+  color: var(--c-amber);
+}
+
+main .vz-stat-num small {
+  margin-left: 0.15em;
+  font-size: 0.5em;
+  font-weight: 700;
+  color: var(--c-text);
+}
+
+main .vz-stat-label {
+  margin-top: 0.25rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--c-text-muted);
+}
+
+/* 図（共通の枠） */
+main .vz-fig {
+  margin: var(--sp-4) 0;
+  padding: var(--sp-4);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  background: var(--c-surface);
+  box-shadow: var(--shadow-card);
+}
+
+main .vz-fig-title {
+  margin: 0 0 var(--sp-3);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--c-amber);
+}
+
+main .vz-fig figcaption {
+  margin-top: var(--sp-3);
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: var(--c-text-muted);
+}
+
+/* 合格基準の図 */
+main .vz-rules {
+  display: grid;
+  gap: var(--sp-2);
+  margin: 0 0 var(--sp-4);
+  padding: 0;
+  list-style: none;
+}
+
+main .vz-rule {
+  padding: var(--sp-3) var(--sp-4);
+  border: 1px solid var(--c-amber-border);
+  border-radius: var(--r-md);
+  background: var(--c-amber-soft);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+main .vz-rule b { color: var(--c-amber); }
+
+main .vz-rule-and {
+  text-align: center;
+  font-weight: 700;
+  color: var(--c-text-muted);
+}
+
+@media (min-width: 720px) {
+  main .vz-rules { grid-template-columns: 1fr auto 1fr; align-items: center; }
+}
+
+main .vz-gauges { display: grid; gap: var(--sp-3); margin: 0; padding: 0; list-style: none; }
+
+main .vz-gauge {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 4px var(--sp-3);
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+main .vz-gauge-track {
+  position: relative;
+  grid-column: 1 / -1;
+  height: 14px;
+  border-radius: 999px;
+  background: var(--c-bg-alt);
+  border: 1px solid var(--c-border);
+  overflow: visible;
+}
+
+main .vz-gauge-fill {
+  display: block;
+  width: calc(var(--v) * 1%);
+  height: 100%;
+  border-radius: 999px;
+  background: var(--c-green);
+}
+
+main .vz-gauge--ng .vz-gauge-fill {
+  background: repeating-linear-gradient(45deg, var(--c-red), var(--c-red) 5px, #d9605b 5px, #d9605b 10px);
+}
+
+main .vz-gauge-mark {
+  position: absolute;
+  top: -5px;
+  bottom: -5px;
+  left: calc(var(--t) * 1%);
+  width: 0;
+  border-left: 2px dashed var(--c-rule);
+}
+
+main .vz-gauge-mark::after {
+  content: attr(data-label);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  transform: translateX(-50%);
+  margin-top: 2px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--c-text);
+  white-space: nowrap;
+}
+
+main .vz-gauge { padding-bottom: 1rem; }
+
+main .vz-gauge-result { font-weight: 700; white-space: nowrap; }
+main .vz-gauge--ok .vz-gauge-result { color: var(--c-green); }
+main .vz-gauge--ng .vz-gauge-result { color: var(--c-red); }
+
+main .vz-verdict {
+  margin: var(--sp-4) 0 0;
+  padding: var(--sp-3) var(--sp-4);
+  border-left: 4px solid var(--c-red);
+  border-radius: var(--r-sm);
+  background: var(--c-red-soft);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+/* 3分野の地図 */
+main .vz-stack {
+  display: flex;
+  height: 2.75rem;
+  margin: 0 0 var(--sp-4);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  border: 1px solid var(--c-border-strong);
+}
+
+main .vz-stack > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: var(--n) 1 0;
+  min-width: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+main .vz-fields { display: grid; gap: var(--sp-3); }
+
+@media (min-width: 720px) {
+  main .vz-fields { grid-template-columns: repeat(3, 1fr); }
+}
+
+main .vz-field {
+  padding: var(--sp-4);
+  border: 1px solid var(--f-border);
+  border-top: 5px solid var(--f);
+  border-radius: var(--r-md);
+  background: var(--f-soft);
+}
+
+main .vz-field h4 { margin: 0 0 2px; font-size: 1.05rem; color: var(--f); }
+main .vz-field-count { margin: 0 0 var(--sp-2); font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; }
+main .vz-field p { margin: 0 0 var(--sp-3); font-size: 0.86rem; line-height: 1.7; }
+
+main .vz-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+
+main .vz-tags li {
+  margin: 0;
+  padding: 2px 10px;
+  border: 1px solid var(--f-border);
+  border-radius: 999px;
+  background: #fff;
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+main .vz-f-st { --f: var(--c-blue); --f-soft: var(--c-blue-soft); --f-border: var(--c-blue-border); }
+main .vz-f-mg { --f: var(--c-green); --f-soft: var(--c-green-soft); --f-border: var(--c-green-border); }
+main .vz-f-tc { --f: var(--c-orange); --f-soft: var(--c-orange-soft); --f-border: var(--c-orange-border); }
+
+main .vz-stack .vz-f-st { background: var(--c-blue); }
+main .vz-stack .vz-f-mg { background: var(--c-green); }
+main .vz-stack .vz-f-tc { background: var(--c-orange); }
+
+/* 出題率の棒グラフ */
+main .vz-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+  margin: 0 0 var(--sp-3);
+  padding: 0;
+  list-style: none;
+  font-size: 0.78rem;
+}
+
+main .vz-legend li { display: flex; align-items: center; gap: 6px; margin: 0; }
+main .vz-legend i { width: 14px; height: 14px; border-radius: 3px; background: var(--f); }
+
+main .vz-bars { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+
+main .vz-bar {
+  display: grid;
+  grid-template-columns: minmax(6.5rem, 40%) 1fr 2.6rem;
+  gap: var(--sp-2);
+  align-items: center;
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+main .vz-bar-name { line-height: 1.3; }
+main .vz-bar-track { height: 16px; border-radius: 4px; background: var(--c-bg-alt); overflow: hidden; }
+main .vz-bar-track i { display: block; width: calc(var(--v) / 19 * 100%); height: 100%; background: var(--f); }
+main .vz-bar b { font-family: var(--font-mono); text-align: right; }
+main .vz-bar--top .vz-bar-name { font-weight: 700; }
+main .vz-bar--top b { color: var(--c-amber); }
+
+@media (min-width: 720px) {
+  main .vz-bar { grid-template-columns: 17rem 1fr 3rem; font-size: 0.85rem; }
+}
+
+/* 手順の流れ図 */
+main .vz-steps {
+  display: grid;
+  gap: 1.5rem;
+  margin: var(--sp-4) 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: vz-step;
+}
+
+main .vz-step {
+  position: relative;
+  margin: 0;
+  padding: var(--sp-4) var(--sp-4) var(--sp-4) 3.6rem;
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  background: var(--c-surface);
+  box-shadow: var(--shadow-card);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+main .vz-step::before {
+  counter-increment: vz-step;
+  content: counter(vz-step);
+  position: absolute;
+  left: var(--sp-4);
+  top: var(--sp-4);
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--c-amber);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-weight: 700;
+}
+
+main .vz-step:not(:last-child)::after {
+  content: "↓" / "";
+  position: absolute;
+  left: 1.6rem;
+  bottom: -1.45rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--c-amber);
+}
+
+main .vz-step b { display: block; margin-bottom: 2px; color: var(--c-text); }
+
+@media (min-width: 900px) {
+  main .vz-steps--row { grid-template-columns: repeat(var(--cols, 3), 1fr); gap: 1.75rem; }
+main .vz-steps--row .vz-step:not(:last-child)::after {
+    content: "→" / "";
+    left: auto;
+    right: -1.5rem;
+    bottom: auto;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+/* ボタン・リンクカード */
+.syllabus-section a.vz-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  min-height: 48px;
+  padding: 0.75rem 1.4rem;
+  border: 2px solid var(--c-amber);
+  border-radius: var(--r-md);
+  background: var(--c-amber);
+  box-shadow: var(--shadow-card);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+a.vz-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-hover); background: #6f4c00; }
+a.vz-btn--ext::after { content: "↗" / ""; }
+main .vz-cta { margin: var(--sp-4) 0; }
+main .vz-cta-note { margin: var(--sp-2) 0 0; font-size: 0.8rem; color: var(--c-text-muted); }
+
+main .vz-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: var(--sp-3);
+  margin: var(--sp-4) 0;
+  padding: 0;
+  list-style: none;
+}
+
+main .vz-links li { margin: 0; }
+
+.syllabus-section a.vz-link {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  height: 100%;
+  min-height: 44px;
+  padding: var(--sp-4);
+  border: 1px solid var(--c-border);
+  border-left: 4px solid var(--c-amber);
+  border-radius: var(--r-md);
+  background: var(--c-surface);
+  box-shadow: var(--shadow-card);
+  color: var(--c-text);
+  text-decoration: none;
+}
+
+a.vz-link:hover { box-shadow: var(--shadow-hover); background: var(--c-surface-hover); }
+a.vz-link b { color: var(--c-amber); line-height: 1.5; }
+a.vz-link b::after { content: " ↗" / ""; }
+a.vz-link span { font-size: 0.82rem; line-height: 1.6; color: var(--c-text-muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  a.vz-btn { transition: none; }
+  a.vz-btn:hover { transform: none; }
+}
+
+main .vz-stat-num--txt { font-size: 1.35rem; white-space: nowrap; line-height: 1.6; }
+main .vz-rules > li, main .vz-gauges > li, main .vz-jump > li { margin: 0; }
+main .vz-gauge, main .vz-bar, main .vz-legend li { line-height: 1.5; }
+
+/* ========================================
    Print — actual paper syllabus
    ======================================== */
 
