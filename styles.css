@@ -3029,6 +3029,175 @@ main .vz-rules > li, main .vz-gauges > li, main .vz-jump > li { margin: 0; }
 main .vz-gauge, main .vz-bar, main .vz-legend li { line-height: 1.5; }
 
 /* ========================================
+   科目トップページ用の図解部品（vz-*の続き）
+   ======================================== */
+main .vz-points {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--sp-3);
+  margin: var(--sp-3) 0 var(--sp-4);
+  padding: 0;
+  list-style: none;
+}
+main .vz-point {
+  margin: 0;
+  padding: var(--sp-4);
+  border: 1px solid var(--c-border);
+  border-left: 5px solid var(--c-amber);
+  border-radius: var(--r-md);
+  background: var(--c-surface);
+  box-shadow: var(--shadow-card);
+}
+main .vz-point b { display: block; margin-bottom: 4px; font-family: var(--font-serif); font-size: 1.02rem; color: var(--c-amber); }
+main .vz-point p { margin: 0; font-size: 0.88rem; line-height: 1.75; }
+
+main .vz-goals { display: grid; grid-template-columns: 1fr; gap: var(--sp-3); margin-top: var(--sp-3); }
+main .vz-goal {
+  padding: var(--sp-4);
+  border: 1px solid var(--c-border);
+  border-top: 4px solid var(--c-amber);
+  border-radius: var(--r-md);
+  background: var(--c-surface);
+}
+main .vz-goal h3 { margin: 0 0 var(--sp-2); padding: 0; font-size: 1rem; color: var(--c-amber); }
+main .vz-goal h3::before, main .vz-goal h3::after { content: none; }
+main .vz-goal ol { margin: 0; padding-left: 1.3rem; }
+main .vz-goal li { margin: 0 0 4px; font-size: 0.88rem; line-height: 1.7; }
+
+main .vz-map { margin: 0; padding: 0; list-style: none; }
+main .vz-map li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  margin: 0;
+  padding: 8px 0;
+  border-top: 1px dashed var(--f-border);
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+main .vz-map li:first-child { border-top: 0; }
+main .vz-wk-list { display: inline-flex; flex-wrap: wrap; gap: 4px; }
+main .vz-wk {
+  min-width: 1.7rem;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--f);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+main .vz-timebar--static a.vz-seg { pointer-events: none; cursor: default; }
+main .vz-timebar--static a.vz-seg { padding-left: 0.35rem; padding-right: 0.35rem; }
+main details.vz-more > summary::before { content: "+"; margin-right: 0.5rem; font-size: 1.2rem; }
+main details.vz-more[open] > summary::before { content: "\2212"; }
+
+main details.vz-more { margin: var(--sp-3) 0 var(--sp-5); }
+main details.vz-more > summary,
+main details.vz-week > summary { cursor: pointer; }
+main details.vz-more > summary {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  font-weight: 700;
+  color: var(--c-amber);
+}
+
+main .vz-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--sp-3); margin: var(--sp-3) 0; }
+main .vz-toolbar .vz-legend { margin: 0; }
+main button.vz-toggle {
+  min-height: 44px;
+  padding: 0 var(--sp-4);
+  border: 1px solid var(--c-amber-border);
+  border-radius: 999px;
+  background: var(--c-amber-soft);
+  color: var(--c-amber);
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+main .vz-phase {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  margin: var(--sp-5) 0 var(--sp-2);
+  padding: 0 0 4px;
+  border-bottom: 2px solid var(--c-amber-border);
+  font-size: 0.98rem;
+  color: var(--c-amber);
+}
+main .vz-phase small { font-family: var(--font-mono); font-size: 0.75rem; font-weight: 700; color: var(--c-text-muted); }
+
+main details.vz-week {
+  margin: 0 0 var(--sp-2);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  background: var(--c-surface);
+}
+main details.vz-week[open] { border-color: var(--c-amber-border); box-shadow: var(--shadow-card); }
+main .vz-week > summary {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  min-height: 44px;
+  padding: var(--sp-3) var(--sp-4);
+  list-style: none;
+}
+main .vz-week > summary::-webkit-details-marker { display: none; }
+main .vz-week > summary::after { content: "+"; flex: none; margin-left: auto; font-size: 1.3rem; font-weight: 700; line-height: 1.6; color: var(--c-amber); }
+main .vz-week[open] > summary::after { content: "\2212"; }
+main .vz-week > summary:focus-visible { outline: 3px solid var(--c-amber); outline-offset: 2px; border-radius: var(--r-md); }
+main .vz-week-num {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  background: var(--c-amber);
+  color: #fff;
+  font-family: var(--font-serif);
+  font-weight: 900;
+}
+main .vz-week-main { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+main .vz-week-theme { font-size: 0.98rem; font-weight: 700; line-height: 1.5; }
+main .vz-week-hook { font-size: 0.82rem; line-height: 1.55; color: var(--c-text-muted); }
+main .vz-tagrow { display: flex; flex-wrap: wrap; gap: 5px; }
+main .vz-tag-f,
+main .vz-tag-x {
+  padding: 1px 9px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1.6;
+}
+main .vz-tag-f { border: 1px solid var(--f); background: var(--f-soft); color: var(--c-text); }
+main .vz-f-mg .vz-wk { background: #0b6b49; }
+main .vz-tag-x { border: 1px solid var(--c-border-strong); background: var(--c-bg-alt); color: var(--c-text-muted); font-weight: 600; }
+main .vz-week-body { padding: 0 var(--sp-4) var(--sp-4); font-size: 0.9rem; line-height: 1.85; }
+
+main .vz-notes { margin: var(--sp-3) 0 0; padding-left: 1.2rem; font-size: 0.85rem; color: var(--c-text-muted); }
+main .vz-notes li { margin: 0 0 4px; }
+
+main .vz-stack--eval { height: 2.5rem; margin-bottom: var(--sp-4); }
+main .vz-stack--eval .vz-e1 { background: var(--c-amber); }
+main .vz-stack--eval .vz-e2 { background: var(--c-brown); }
+main .vz-stack--eval .vz-e3 { background: #4d5b6a; }
+
+@media (min-width: 720px) {
+  main .vz-points, main .vz-goals { grid-template-columns: repeat(2, 1fr); }
+  main .vz-week-body { padding-left: calc(var(--sp-4) + 2.2rem + var(--sp-3)); }
+}
+
+/* ========================================
    Print — actual paper syllabus
    ======================================== */
 

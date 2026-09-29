@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="stylesheet" href="styles.css?v=5">
+  <link rel="stylesheet" href="styles.css?v=10">
   <!-- 公式情報確認: 2026-09-15 (https://www.ipa.go.jp/shiken/syllabus/gaiyou.html / https://www.ipa.go.jp/shiken/2026/cbt-202605-jisshi.html / https://www.ipa.go.jp/shiken/minaoshi/index.html / https://www3.jitec.ipa.go.jp/JitesCbt/html/examination/exam_summary.html / https://www3.jitec.ipa.go.jp/JitesCbt/html/examination/order.html / https://www3.jitec.ipa.go.jp/JitesCbt/html/about/range.html / https://itpec.org/pastexamqa/ip.html) -->
   <!-- 公式情報確認: 2026-09-16 分野横断ストーリー型への改訂時に追加確認 (https://www3.jitec.ipa.go.jp/JitesCbt/html/examination/apply.html / https://www3.jitec.ipa.go.jp/JitesCbt/html/guidance/trial_examapp.html / 教科書ページ番号は学研「ITパスポートをひとつひとつわかりやすく。」目次と突合) -->
 </head>
@@ -50,115 +50,218 @@
 
     <div class="syllabus-section">
       <h2>授業概要</h2>
-      <ul>
-        <li>このページはブラウザの翻訳機能（右クリックメニュー、またはアドレスバーの翻訳アイコン）で母語に翻訳できます。表示されない場合はブラウザの言語設定に自分の母語を追加してください。ただし試験に出る専門用語（例: <span translate="no">セキュリティ</span>、<span translate="no">データベース</span>）には翻訳しない印を付けているため日本語のまま表示されます。<strong>本番のITパスポート試験は日本語で行われる</strong>ため、専門用語は日本語のまま覚えてください。</li>
-        <li>ITパスポート試験の合格に必要な知識を、<strong>出題頻度順</strong>に効率よく学ぶ（教科書の章順ではない）。</li>
-        <li>出題数最大の<strong><span translate="no">セキュリティ</span></strong>を中心に、ネットワーク・ハードウェア・データベースなど<strong><span translate="no">テクノロジ系</span></strong>の全範囲を扱う。</li>
-        <li>毎回1つの<strong>テーマ</strong>を立て、<strong><span translate="no">テクノロジ系</span></strong>を軸に<strong><span translate="no">ストラテジ系・マネジメント系</span></strong>を1つのストーリーで結ぶ（例: 「情報漏洩事件」から技術・法律・組織統治の3分野を横断する）。教科書のどのページを読み返せばよいかを毎回明示し、3分野共通の合格基準（総合600点かつ各分野300点）を無理なくクリアできるように設計する。</li>
-        <li>第10回・第17回の中間・期末テストは、<strong>IPA公開過去問を使った本番形式のテスト（Googleフォーム）</strong>で、本番の問題文の形式と時間配分に慣れる予行演習を兼ねる。ITパスポート試験はほぼ毎日実施されており受験タイミングは学生ごとに異なるため、実際の受験申込・予約は授業のスケジュールと切り離し、各自のタイミングで進める。</li>
-        <li>学研「ITパスポートをひとつひとつわかりやすく。」を参考書として使用しつつ、<strong>独自の学習順序</strong>で進める。</li>
-        <li>全員が外国人留学生であることを踏まえ、<strong>専門用語は日本語のまま</strong>覚えつつ、Chrome翻訳等を活用して内容理解を助ける。</li>
+      <ul class="vz-points">
+        <li class="vz-point"><b>出題頻度順に学ぶ</b><p>教科書の章順ではなく、出題数の多い分野から進める。出題数最大の<strong><span translate="no">セキュリティ</span></strong>を中心に、ネットワーク・ハードウェア・データベースなど<strong><span translate="no">テクノロジ系</span></strong>の全範囲を扱う。参考書は学研「ITパスポートをひとつひとつわかりやすく。」を使い、<strong>独自の学習順序</strong>で進める。</p></li>
+        <li class="vz-point"><b>毎回1つのテーマで3分野を結ぶ</b><p><strong><span translate="no">テクノロジ系</span></strong>を軸に<strong><span translate="no">ストラテジ系・マネジメント系</span></strong>を1つのストーリーで結ぶ（例: 「情報漏洩事件」から技術・法律・組織統治の3分野を横断する）。教科書の読み返すページを毎回明示し、3分野共通の合格基準（総合600点かつ各分野300点）を無理なくクリアできるように設計する。</p></li>
+        <li class="vz-point"><b>用語は日本語のまま覚える</b><p>本番のITパスポート試験は<strong>日本語で行われる</strong>。全員が外国人留学生であることを踏まえ、Chrome翻訳等で内容理解を助けつつ、<strong>専門用語は日本語のまま</strong>覚える。</p></li>
+        <li class="vz-point"><b>テストはGoogleフォームで予行演習</b><p>第10回・第17回の中間・期末テストは、<strong>IPA公開過去問を使った本番形式のテスト（Googleフォーム）</strong>で、本番の問題文の形式と時間配分に慣れる予行演習を兼ねる。実際の受験申込・予約は授業と切り離し、各自のタイミングで進める。</p></li>
       </ul>
+      <p class="lesson-note">このページはブラウザの翻訳機能（右クリックメニュー、またはアドレスバーの翻訳アイコン）で母語に翻訳できます。表示されない場合はブラウザの言語設定に自分の母語を追加してください。ただし試験に出る専門用語（例: <span translate="no">セキュリティ</span>、<span translate="no">データベース</span>）には翻訳しない印を付けているため日本語のまま表示されます。</p>
     </div>
 
     <div class="syllabus-section">
       <h2>到達目標</h2>
-
-      <h3>知識・理解</h3>
-      <ol>
-        <li>ITパスポート試験の出題範囲（ストラテジ系・マネジメント系・テクノロジ系）の全体像を説明できる。</li>
-        <li><span translate="no">コンピュータ</span>、<span translate="no">ネットワーク</span>、<span translate="no">データベース</span>、<span translate="no">セキュリティ</span>に関する基礎的な技術用語を、日本語で理解し説明できる。</li>
-        <li><span translate="no">情報セキュリティの3要素</span>（<span translate="no">機密性・完全性・可用性</span>）や暗号化・認証の仕組みを理解する。</li>
-        <li><strong><span translate="no">テクノロジ系</span></strong>の技術を、<strong><span translate="no">ストラテジ系・マネジメント系</span></strong>の文脈と結びつけて説明できる。</li>
-      </ol>
-
-      <h3>思考・判断</h3>
-      <ol>
-        <li>過去問演習を通じて自分の弱点分野を特定し、優先順位をつけて学習できる。</li>
-        <li>限られた試験時間（120分100問）の中で、解ける問題から解く時間戦略を判断できる。</li>
-      </ol>
-
-      <h3>スキル・表現</h3>
-      <ol>
-        <li>IT分野の基礎的な概念を、日本語で他者（ピア）に説明できる。</li>
-        <li>Googleフォーム小テストなど複数の方法を使い分けながら、自分の理解度を継続的に確認できる。</li>
-        <li>学んだIT概念を、日本語のプレゼンテーションとして構成し、クラスに向けて発表できる。</li>
-      </ol>
-
-      <h3>関心・意欲・態度</h3>
-      <ol>
-        <li>ITパスポート試験の合格を目標に、計画的に学習に取り組む。</li>
-        <li>合格後も基本情報技術者試験など次の資格に関心を持ち、学び続ける姿勢を持つ。</li>
-      </ol>
+      <div class="vz-goals">
+        <section class="vz-goal">
+          <h3>知識・理解</h3>
+          <ol>
+            <li>ITパスポート試験の出題範囲（ストラテジ系・マネジメント系・テクノロジ系）の全体像を説明できる。</li>
+            <li><span translate="no">コンピュータ</span>、<span translate="no">ネットワーク</span>、<span translate="no">データベース</span>、<span translate="no">セキュリティ</span>に関する基礎的な技術用語を、日本語で理解し説明できる。</li>
+            <li><span translate="no">情報セキュリティの3要素</span>（<span translate="no">機密性・完全性・可用性</span>）や暗号化・認証の仕組みを理解する。</li>
+            <li><strong><span translate="no">テクノロジ系</span></strong>の技術を、<strong><span translate="no">ストラテジ系・マネジメント系</span></strong>の文脈と結びつけて説明できる。</li>
+          </ol>
+        </section>
+        <section class="vz-goal">
+          <h3>思考・判断</h3>
+          <ol>
+            <li>過去問演習を通じて自分の弱点分野を特定し、優先順位をつけて学習できる。</li>
+            <li>限られた試験時間（120分100問）の中で、解ける問題から解く時間戦略を判断できる。</li>
+          </ol>
+        </section>
+        <section class="vz-goal">
+          <h3>スキル・表現</h3>
+          <ol>
+            <li>IT分野の基礎的な概念を、日本語で他者（ピア）に説明できる。</li>
+            <li>Googleフォーム小テストなど複数の方法を使い分けながら、自分の理解度を継続的に確認できる。</li>
+            <li>学んだIT概念を、日本語のプレゼンテーションとして構成し、クラスに向けて発表できる。</li>
+          </ol>
+        </section>
+        <section class="vz-goal">
+          <h3>関心・意欲・態度</h3>
+          <ol>
+            <li>ITパスポート試験の合格を目標に、計画的に学習に取り組む。</li>
+            <li>合格後も基本情報技術者試験など次の資格に関心を持ち、学び続ける姿勢を持つ。</li>
+          </ol>
+        </section>
+      </div>
     </div>
 
     <div class="syllabus-section">
       <h2>授業計画（全19回）</h2>
 
       <h3>3分野の地図——いま学んでいるのはどこか</h3>
-      <p>教科書の各章の扉ページには、3分野（<span translate="no">ストラテジ系・マネジメント系・テクノロジ系</span>）と各分野の大分類を並べた同じ形のマス目が載っています。本シラバスでもこの枠組みを使い、どの回がどの大分類に対応するかを示します（大分類名は<span translate="no">IPA</span>公式シラバス Ver.6.5時点のもの。2027年度から名称が変わる可能性があります）。</p>
-      <div class="table-wrap">
-        <table class="schedule-table">
-          <thead><tr><th>分野</th><th>大分類</th><th>主に扱う回</th></tr></thead>
-          <tbody>
-            <tr><td><span translate="no">ストラテジ系</span></td><td><span translate="no">企業と法務</span></td><td>第2・5・7・9・14回</td></tr>
-            <tr><td><span translate="no">ストラテジ系</span></td><td><span translate="no">経営戦略</span></td><td>第4・6・11・14回</td></tr>
-            <tr><td><span translate="no">ストラテジ系</span></td><td><span translate="no">システム戦略</span></td><td>第8・14回</td></tr>
-            <tr><td><span translate="no">マネジメント系</span></td><td><span translate="no">開発技術</span></td><td>第12・15回</td></tr>
-            <tr><td><span translate="no">マネジメント系</span></td><td><span translate="no">プロジェクトマネジメント</span></td><td>第15回</td></tr>
-            <tr><td><span translate="no">マネジメント系</span></td><td><span translate="no">サービスマネジメント</span></td><td>第3回</td></tr>
-            <tr><td><span translate="no">テクノロジ系</span></td><td><span translate="no">基礎理論</span></td><td>第11・12回</td></tr>
-            <tr><td><span translate="no">テクノロジ系</span></td><td><span translate="no">コンピュータシステム</span></td><td>第7・8・9回</td></tr>
-            <tr><td><span translate="no">テクノロジ系</span></td><td><span translate="no">技術要素</span></td><td>第2〜6・9回</td></tr>
-          </tbody>
-        </table>
+      <p>教科書の各章の扉ページと同じ形の枠組みで、どの回がどの大分類に対応するかを示します（数字は回。大分類名は<span translate="no">IPA</span>公式シラバス Ver.6.5時点のもの。2027年度から名称が変わる可能性があります）。</p>
+      <div class="vz-fields">
+        <section class="vz-field vz-f-st">
+          <h4 translate="no">ストラテジ系</h4>
+          <ul class="vz-map">
+            <li><span translate="no">企業と法務</span><span class="vz-wk-list"><span class="vz-wk">2</span><span class="vz-wk">5</span><span class="vz-wk">7</span><span class="vz-wk">9</span><span class="vz-wk">14</span></span></li>
+            <li><span translate="no">経営戦略</span><span class="vz-wk-list"><span class="vz-wk">4</span><span class="vz-wk">6</span><span class="vz-wk">11</span><span class="vz-wk">14</span></span></li>
+            <li><span translate="no">システム戦略</span><span class="vz-wk-list"><span class="vz-wk">8</span><span class="vz-wk">14</span></span></li>
+          </ul>
+        </section>
+        <section class="vz-field vz-f-mg">
+          <h4 translate="no">マネジメント系</h4>
+          <ul class="vz-map">
+            <li><span translate="no">開発技術</span><span class="vz-wk-list"><span class="vz-wk">12</span><span class="vz-wk">15</span></span></li>
+            <li><span translate="no">プロジェクトマネジメント</span><span class="vz-wk-list"><span class="vz-wk">15</span></span></li>
+            <li><span translate="no">サービスマネジメント</span><span class="vz-wk-list"><span class="vz-wk">3</span></span></li>
+          </ul>
+        </section>
+        <section class="vz-field vz-f-tc">
+          <h4 translate="no">テクノロジ系</h4>
+          <ul class="vz-map">
+            <li><span translate="no">基礎理論</span><span class="vz-wk-list"><span class="vz-wk">11</span><span class="vz-wk">12</span></span></li>
+            <li><span translate="no">コンピュータシステム</span><span class="vz-wk-list"><span class="vz-wk">7</span><span class="vz-wk">8</span><span class="vz-wk">9</span></span></li>
+            <li><span translate="no">技術要素</span><span class="vz-wk-list"><span class="vz-wk">2</span><span class="vz-wk">3</span><span class="vz-wk">4</span><span class="vz-wk">5</span><span class="vz-wk">6</span><span class="vz-wk">9</span></span></li>
+          </ul>
+        </section>
       </div>
 
       <h3>毎回の授業の流れ</h3>
       <p class="lesson-note">2コマ連続（90分＋90分＝計180分）。休憩10分は授業時間に含めません。</p>
-      <div class="table-wrap">
-        <table class="schedule-table">
-          <thead><tr><th>時間帯</th><th>時間</th><th>内容</th></tr></thead>
-          <tbody>
-            <tr><td>1限 前半</td><td>約40分</td><td>前回の復習ミニテスト（10分）＋今回のテーマのストーリー導入（30分）</td></tr>
-            <tr><td>1限 後半</td><td>約50分</td><td><span translate="no">テクノロジ系</span>のコア（教科書の該当ページを開いて進める）</td></tr>
-            <tr><td>休憩</td><td>10分</td><td>—</td></tr>
-            <tr><td>2限 前半</td><td>約50分</td><td><span translate="no">ストラテジ系・マネジメント系</span>との紐づけ＋ペアでの相互説明</td></tr>
-            <tr><td>2限 後半</td><td>約30分</td><td>過去問演習（教科書の章末確認問題）＋手を動かすワーク</td></tr>
-            <tr><td>まとめ</td><td>約10分</td><td>理解度チェックの小テスト＋次回テーマの予習指示</td></tr>
-          </tbody>
-        </table>
+      <div class="vz-timebar vz-timebar--static">
+        <ol class="vz-timebar-track">
+          <li style="--w:40"><a class="vz-seg"><span class="vz-seg-time">40分</span><span class="vz-seg-name">復習ミニテスト<br>＋テーマ導入</span></a></li>
+          <li style="--w:50"><a class="vz-seg"><span class="vz-seg-time">50分</span><span class="vz-seg-name"><span translate="no">テクノロジ系</span><br>のコア</span></a></li>
+          <li style="--w:10"><a class="vz-seg vz-seg--break"><span class="vz-seg-time">休憩</span><span class="vz-seg-name">10分</span></a></li>
+          <li style="--w:50"><a class="vz-seg"><span class="vz-seg-time">50分</span><span class="vz-seg-name">他分野との紐づけ<br>＋ペア説明</span></a></li>
+          <li style="--w:30"><a class="vz-seg"><span class="vz-seg-time">30分</span><span class="vz-seg-name">過去問演習<br>＋ワーク</span></a></li>
+          <li style="--w:10"><a class="vz-seg"><span class="vz-seg-time">10分</span><span class="vz-seg-name">まとめ</span></a></li>
+        </ol>
       </div>
+      <details class="vz-more">
+        <summary>各時間帯の詳しい内容を見る</summary>
+        <div class="table-wrap">
+          <table class="schedule-table">
+            <thead><tr><th>時間帯</th><th>時間</th><th>内容</th></tr></thead>
+            <tbody>
+              <tr><td>1限 前半</td><td>約40分</td><td>前回の復習ミニテスト（10分）＋今回のテーマのストーリー導入（30分）</td></tr>
+              <tr><td>1限 後半</td><td>約50分</td><td><span translate="no">テクノロジ系</span>のコア（教科書の該当ページを開いて進める）</td></tr>
+              <tr><td>休憩</td><td>10分</td><td>—</td></tr>
+              <tr><td>2限 前半</td><td>約50分</td><td><span translate="no">ストラテジ系・マネジメント系</span>との紐づけ＋ペアでの相互説明</td></tr>
+              <tr><td>2限 後半</td><td>約30分</td><td>過去問演習（教科書の章末確認問題）＋手を動かすワーク</td></tr>
+              <tr><td>まとめ</td><td>約10分</td><td>理解度チェックの小テスト＋次回テーマの予習指示</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
 
       <h3>各回のテーマ</h3>
-      <p class="lesson-note">ページ番号は学研「ITパスポートをひとつひとつわかりやすく。」の紙面下部に印刷された番号です。</p>
-      <div class="table-wrap">
-        <table class="schedule-table">
-          <thead><tr><th>週</th><th>テーマ</th><th>主な内容・活動</th></tr></thead>
-          <tbody>
-            <tr><td class="week-num">1</td><td class="week-theme"><a href="it-passport-technology/week01.html" class="week-link">3分野の地図を手に入れる</a></td><td>試験の全体像（<strong>3分野・100問・120分・総合600点かつ各分野300点の足切り</strong>）と出題傾向を確認（教科書 攻略法 p.006-009）。<strong>本番の問題文の読み方</strong>（「適切なものはどれか」「誤っているものはどれか」などの問い方）を過去問で練習する。この後ずっと使う3分野の地図（上表）の見方を確認。IPA公開過去問から抜粋したGoogleフォームで<strong>診断テスト</strong>を実施し、各自の弱点分野を把握する。<strong>Chrome翻訳の使い方</strong>と「用語は日本語のまま覚える」原則を確認</td></tr>
-            <tr><td class="week-num">2</td><td class="week-theme">情報が漏れる日：脅威はどこから来るのか</td><td>「もし自社の顧客情報が流出したら」を入り口に、<span translate="no">マルウェア</span>・<strong><span translate="no">ソーシャルエンジニアリング</span></strong>・<span translate="no">標的型攻撃</span>など身近な脅威を知る（テクノロジ系 <span translate="no">セキュリティ</span> p.352-359）。流出したら何の法律が問われるかを<strong><span translate="no">知的財産権・産業財産権</span></strong>（p.046-050）と<strong><span translate="no">個人情報保護法</span>など情報を守る法律</strong>（p.051-054）から読み解く</td></tr>
-            <tr><td class="week-num">3</td><td class="week-theme">誰が守るのか：組織のルールと技術的な備え</td><td>技術だけでは守れない、という視点から<strong><span translate="no">情報セキュリティの3要素</span></strong>（<span translate="no">機密性・完全性・可用性</span>）、リスクマネジメント、<strong><span translate="no">ISMS</span></strong>と<strong><span translate="no">セキュリティ</span>対策の手法</strong>を学ぶ（テクノロジ系 <span translate="no">セキュリティ</span> p.360-370）。誰がルールを守らせるのかを<strong><span translate="no">システム監査・内部統制</span></strong>から、止まった時どうするかを<strong><span translate="no">SLA</span></strong>・<strong><span translate="no">BCP</span></strong>から確認する（p.176-189）</td></tr>
-            <tr><td class="week-num">4</td><td class="week-theme">秘密を守る・本人を確かめる</td><td>ネットショッピングの支払いを例に、<strong><span translate="no">共通鍵・公開鍵暗号</span></strong>・<strong><span translate="no">デジタル署名</span></strong>（テクノロジ系 p.371-377）と<span translate="no">多要素認証・生体認証</span>（p.378-380）を学ぶ。<strong><span translate="no">e-ビジネス</span></strong>（p.102-105）で「なぜ信頼が必要か」を確認し、章末確認問題（p.381）で小テスト</td></tr>
-            <tr><td class="week-num">5</td><td class="week-theme">つながる仕組み：LANから世界へ</td><td><span translate="no">LAN</span>／<span translate="no">WAN</span>、<strong>ネットワークの構成</strong>と構成に必要なもの（テクノロジ系 p.320-328）。企業って何だろう（p.018-021）の<strong><span translate="no">ステークホルダー</span></strong>の関係図を、ネットワーク接続に重ねて読む</td></tr>
-            <tr><td class="week-num">6</td><td class="week-theme">インターネットが動く原理とその先</td><td><strong><span translate="no">プロトコル</span></strong>（<span translate="no">TCP/IP</span>）・<strong>インターネットの仕組み</strong>（<span translate="no">IPアドレス・DNS</span>）・通信サービスの種類（テクノロジ系 p.329-345）。この基盤の上で動く<strong><span translate="no">AI</span>の活用</strong>（p.094-097）と<strong><span translate="no">IoTシステム・組込みシステム</span></strong>（p.106-110）を確認し、章末確認問題（p.346）で小テスト</td></tr>
-            <tr><td class="week-num">7</td><td class="week-theme">コンピュータの中身を開ける</td><td>コンピュータの構成・<strong>CPUの仕組みと指標</strong>・記録媒体の種類と特徴（テクノロジ系 p.244-255）。PCの値段と性能の関係から、<strong>企業のお金の管理</strong>（p.033-040）へ——IT機器も企業の資産だと知る</td></tr>
-            <tr><td class="week-num">8</td><td class="week-theme">止まらないシステムを作る</td><td>入出力装置とインタフェース・処理形態とシステム構成（クライアントサーバ・クラウド）・<strong>システムの性能と信頼性</strong>（<span translate="no">稼働率・RASIS</span>、テクノロジ系 p.256-269）。安定したサービスがどうビジネスになるかを<strong><span translate="no">ソリューションビジネス</span></strong>（p.125-128）で確認し、章末確認問題（p.270）で小テスト</td></tr>
-            <tr><td class="week-num">9</td><td class="week-theme">ソフトウェアとデータベース：使いやすさとデータ活用</td><td><strong><span translate="no">OS</span></strong>の役割・ファイル管理・表計算・<strong><span translate="no">OSS</span></strong>・<strong><span translate="no">情報デザイン</span></strong>（<span translate="no">ユニバーサルデザイン</span>）と、<strong><span translate="no">データベース</span></strong>の設計・<strong><span translate="no">DBMS</span></strong>の機能（テクノロジ系 p.276-313）。「誰にとっても使いやすい」を<strong>製品やサービスの規格</strong>（p.060-063）、顧客データの活用を<strong>企業のデータ利活用</strong>（p.028-032）とつなげる。教科書に章がない<strong><span translate="no">情報メディア</span></strong>（画像・音声・動画の符号化と圧縮）を補足資料で扱い、章末確認問題（p.294・p.314）で小テスト</td></tr>
-            <tr><td class="week-num">10</td><td class="week-theme">中間テスト＋本番の予行演習①</td><td><strong>IPA公開過去問を使った本番形式のテスト（Googleフォーム）</strong>で中間テストを実施。制限時間は本試験に準じて120分を目安とする。試験当日の対策（教科書 攻略法 p.011、本番の試験画面にある「後で見直す」チェック機能の使い方など）を確認しながら、本番の問題文の形式と時間配分に慣れる</td></tr>
-            <tr><td class="week-num">11</td><td class="week-theme">コンピュータの数とデータの読み方</td><td><strong><span translate="no">2進数・16進数</span></strong>、<span translate="no">論理演算</span>、<strong>データの傾向を読む統計</strong>（平均・中央値、テクノロジ系 p.196-210）。<strong>経営戦略の分析手法</strong>（<span translate="no">SWOT分析</span>など p.068-070）と「データを読む」でつなげ、章末確認問題（p.211）で小テスト</td></tr>
-            <tr><td class="week-num">12</td><td class="week-theme">手順を作る：アルゴリズムと開発</td><td><strong><span translate="no">データ構造</span></strong>（配列・スタック・キュー）・<strong><span translate="no">フローチャート</span></strong>・<strong><span translate="no">擬似言語</span></strong>の読み方（テクノロジ系 p.216-236）。身近な手順をフローチャートにする体験から<strong>システム開発って何だろう</strong>（p.134-137）へ接続。ここで<span translate="no">テクノロジ系</span>の全範囲が完走。章末確認問題（p.237）で小テスト</td></tr>
-            <tr><td class="week-num">13</td><td class="week-theme">弱点補強と時間戦略</td><td>中間テストの誤答分析。<strong>1問1.2分で解く時間戦略</strong>（選択肢の先読み、捨て問の判断、CBTの「後で見直す」チェック機能の活用）。個別の弱点分野を集中演習</td></tr>
-            <tr><td class="week-num">14</td><td class="week-theme">ストラテジ系 総復習</td><td>これまで扱わなかった<strong><span translate="no">ストラテジ系</span></strong>の範囲——企業の人材教育（p.022-024）、労働に関する契約や法律（p.055-059）、経営戦略の種類・マーケティング・具体的な目標の検討・経営管理システム（p.071-083）、技術開発戦略の立案計画・業務効率化システム（p.088-093）、製造工程システム（p.098-101、<span translate="no">AI</span>の活用は第6回で既習）、システム戦略の情報システム戦略手法・業務プロセス分析改善（p.118-124）——をまとめて復習する。分野別の過去問演習とペアでの相互説明で定着させる</td></tr>
-            <tr><td class="week-num">15</td><td class="week-theme">マネジメント系 総復習</td><td>これまで扱わなかった<strong><span translate="no">マネジメント系</span></strong>の範囲——企画・要件定義、開発プロセス（設計・テスト・受入れ）、主な開発モデル、<span translate="no">アジャイル</span>（p.138-158）、プロジェクトって何だろう・作業範囲管理・スケジュール管理（<span translate="no">WBS</span>、p.164-175）——をまとめて復習する</td></tr>
-            <tr><td class="week-num">16</td><td class="week-theme">3分野の総合演習</td><td><strong>3分野を混ぜた総合演習</strong>を行い、<strong>各分野300点の足切り</strong>を意識して分野別の到達度を確認する。<strong>最終発表のテーマ（担当する用語）を決定</strong>し、2限後半で<strong>発表のアウトライン作成</strong>とペアでの予行に取り組む</td></tr>
-            <tr><td class="week-num">17</td><td class="week-theme">期末テスト＋本番の予行演習②</td><td><strong>IPA公開過去問を使った本番形式のテスト（Googleフォーム）</strong>で、中間テストとは別の公開年度の問題を使って期末テストを実施。中間テストからの<strong>伸び幅</strong>を確認し、誤答分析にもとづいて弱点分野を集中演習する</td></tr>
-            <tr><td class="week-num">18</td><td class="week-theme">日本語での発表①</td><td>クラスを2グループに分け、前半グループが発表する。1人3〜5分で、担当する用語を<strong>①日本語の用語名 ②やさしい日本語の説明 ③身近な例 ④試験での問われ方</strong>の順に説明する（相互学習の総仕上げ）。聞く側はGoogleフォームで<strong>相互フィードバック</strong>（わかりやすかった点／もっと知りたい点）を送り、次回の発表者はそれを踏まえて仕上げる。資料はスライドでも口頭のみでもよい</td></tr>
-            <tr><td class="week-num">19</td><td class="week-theme">日本語での発表②・総まとめ・振り返り</td><td>後半グループが発表し、全員の担当用語が出そろう。発表で扱った用語を<strong>クラス共通の用語集</strong>としてまとめ、3分野の全体像を完成させる。合格後に挑戦できる<strong><span translate="no">基本情報技術者試験・情報セキュリティマネジメント試験</span></strong>を簡単に紹介する。後期全体の振り返りとアンケートを実施する。<strong>提出物の最終締切</strong>にあたるため、未提出の課題はこの回までに提出する</td></tr>
-          </tbody>
-        </table>
+      <p class="lesson-note">ページ番号は学研「ITパスポートをひとつひとつわかりやすく。」の紙面下部に印刷された番号です。各回をタップすると、主な内容・活動が開きます。</p>
+      <div class="vz-toolbar">
+        <ul class="vz-legend">
+          <li class="vz-f-st"><i></i><span translate="no">ストラテジ系</span></li>
+          <li class="vz-f-mg"><i></i><span translate="no">マネジメント系</span></li>
+          <li class="vz-f-tc"><i></i><span translate="no">テクノロジ系</span></li>
+        </ul>
+        <button type="button" class="vz-toggle" data-toggle-all aria-pressed="false">すべて開く</button>
       </div>
-      <p>※授業計画は進捗により前後する場合があります。<br>※毎回の授業冒頭で前回の復習ミニテストと用語カードの確認を行います。<br>※第12回でテクノロジ系の全範囲が完走します（2026年12月28日以降の試験実施一時停止より前）。第14回・第15回でストラテジ系・マネジメント系の未着手分野を総復習し、第16回の総合演習で3分野の全体像を完成させます。<br>※休講が発生した場合は第14回・第15回の総復習を統合して調整し、発表の回は確保します。</p>
+      <div class="vz-weeks">
+        <h4 class="vz-phase"><span>導入</span><small>第1回</small></h4>
+        <details class="vz-week" id="week-1">
+          <summary><span class="vz-week-num" aria-hidden="true">1</span><span class="vz-week-main"><span class="vz-week-theme"><a href="it-passport-technology/week01.html" class="week-link">3分野の地図を手に入れる</a></span><span class="vz-week-hook">試験の全体像・合格基準・診断テスト</span><span class="vz-tagrow"><span class="vz-tag-x">全体像・診断テスト</span><span class="vz-tag-x">教科書 p.006-009</span></span></span></summary>
+          <div class="vz-week-body">試験の全体像（<strong>3分野・100問・120分・総合600点かつ各分野300点の足切り</strong>）と出題傾向を確認（教科書 攻略法 p.006-009）。<strong>本番の問題文の読み方</strong>（「適切なものはどれか」「誤っているものはどれか」などの問い方）を過去問で練習する。この後ずっと使う3分野の地図（上の図）の見方を確認。IPA公開過去問から抜粋したGoogleフォームで<strong>診断テスト</strong>を実施し、各自の弱点分野を把握する。<strong>Chrome翻訳の使い方</strong>と「用語は日本語のまま覚える」原則を確認</div>
+        </details>
+        <h4 class="vz-phase"><span><span translate="no">セキュリティ</span></span><small>第2〜4回</small></h4>
+        <details class="vz-week" id="week-2">
+          <summary><span class="vz-week-num" aria-hidden="true">2</span><span class="vz-week-main"><span class="vz-week-theme">情報が漏れる日：脅威はどこから来るのか</span><span class="vz-week-hook"><span translate="no">マルウェア</span>・<span translate="no">標的型攻撃</span>と、情報を守る法律</span><span class="vz-tagrow"><span class="vz-tag-f vz-f-st" translate="no">企業と法務</span><span class="vz-tag-f vz-f-tc" translate="no">技術要素</span><span class="vz-tag-x">教科書 p.352-359</span></span></span></summary>
+          <div class="vz-week-body">「もし自社の顧客情報が流出したら」を入り口に、<span translate="no">マルウェア</span>・<strong><span translate="no">ソーシャルエンジニアリング</span></strong>・<span translate="no">標的型攻撃</span>など身近な脅威を知る（テクノロジ系 <span translate="no">セキュリティ</span> p.352-359）。流出したら何の法律が問われるかを<strong><span translate="no">知的財産権・産業財産権</span></strong>（p.046-050）と<strong><span translate="no">個人情報保護法</span>など情報を守る法律</strong>（p.051-054）から読み解く</div>
+        </details>
+        <details class="vz-week" id="week-3">
+          <summary><span class="vz-week-num" aria-hidden="true">3</span><span class="vz-week-main"><span class="vz-week-theme">誰が守るのか：組織のルールと技術的な備え</span><span class="vz-week-hook"><span translate="no">情報セキュリティの3要素</span>・組織のルール・<span translate="no">BCP</span></span><span class="vz-tagrow"><span class="vz-tag-f vz-f-mg" translate="no">サービスマネジメント</span><span class="vz-tag-f vz-f-tc" translate="no">技術要素</span><span class="vz-tag-x">教科書 p.360-370</span></span></span></summary>
+          <div class="vz-week-body">技術だけでは守れない、という視点から<strong><span translate="no">情報セキュリティの3要素</span></strong>（<span translate="no">機密性・完全性・可用性</span>）、リスクマネジメント、<strong><span translate="no">ISMS</span></strong>と<strong><span translate="no">セキュリティ</span>対策の手法</strong>を学ぶ（テクノロジ系 <span translate="no">セキュリティ</span> p.360-370）。誰がルールを守らせるのかを<strong><span translate="no">システム監査・内部統制</span></strong>から、止まった時どうするかを<strong><span translate="no">SLA</span></strong>・<strong><span translate="no">BCP</span></strong>から確認する（p.176-189）</div>
+        </details>
+        <details class="vz-week" id="week-4">
+          <summary><span class="vz-week-num" aria-hidden="true">4</span><span class="vz-week-main"><span class="vz-week-theme">秘密を守る・本人を確かめる</span><span class="vz-week-hook"><span translate="no">暗号化</span>・<span translate="no">デジタル署名</span>・<span translate="no">認証</span></span><span class="vz-tagrow"><span class="vz-tag-f vz-f-st" translate="no">経営戦略</span><span class="vz-tag-f vz-f-tc" translate="no">技術要素</span><span class="vz-tag-x">教科書 p.371-380</span></span></span></summary>
+          <div class="vz-week-body">ネットショッピングの支払いを例に、<strong><span translate="no">共通鍵・公開鍵暗号</span></strong>・<strong><span translate="no">デジタル署名</span></strong>（テクノロジ系 p.371-377）と<span translate="no">多要素認証・生体認証</span>（p.378-380）を学ぶ。<strong><span translate="no">e-ビジネス</span></strong>（p.102-105）で「なぜ信頼が必要か」を確認し、章末確認問題（p.381）で小テスト</div>
+        </details>
+        <h4 class="vz-phase"><span translate="no">ネットワーク</span><small>第5〜6回</small></h4>
+        <details class="vz-week" id="week-5">
+          <summary><span class="vz-week-num" aria-hidden="true">5</span><span class="vz-week-main"><span class="vz-week-theme">つながる仕組み：LANから世界へ</span><span class="vz-week-hook"><span translate="no">LAN</span>／<span translate="no">WAN</span>とネットワークの構成</span><span class="vz-tagrow"><span class="vz-tag-f vz-f-st" translate="no">企業と法務</span><span class="vz-tag-f vz-f-tc" translate="no">技術要素</span><span class="vz-tag-x">教科書 p.320-328</span></span></span></summary>
+          <div class="vz-week-body"><span translate="no">LAN</span>／<span translate="no">WAN</span>、<strong>ネットワークの構成</strong>と構成に必要なもの（テクノロジ系 p.320-328）。企業って何だろう（p.018-021）の<strong><span translate="no">ステークホルダー</span></strong>の関係図を、ネットワーク接続に重ねて読む</div>
+        </details>
+        <details class="vz-week" id="week-6">
+          <summary><span class="vz-week-num" aria-hidden="true">6</span><span class="vz-week-main"><span class="vz-week-theme">インターネットが動く原理とその先</span><span class="vz-week-hook"><span translate="no">TCP/IP</span>・<span translate="no">IPアドレス</span>・<span translate="no">DNS</span>、<span translate="no">AI</span>・<span translate="no">IoT</span></span><span class="vz-tagrow"><span class="vz-tag-f vz-f-st" translate="no">経営戦略</span><span class="vz-tag-f vz-f-tc" translate="no">技術要素</span><span class="vz-tag-x">教科書 p.329-345</span></span></span></summary>
+          <div class="vz-week-body"><strong><span translate="no">プロトコル</span></strong>（<span translate="no">TCP/IP</span>）・<strong>インターネットの仕組み</strong>（<span translate="no">IPアドレス・DNS</span>）・通信サービスの種類（テクノロジ系 p.329-345）。この基盤の上で動く<strong><span translate="no">AI</span>の活用</strong>（p.094-097）と<strong><span translate="no">IoTシステム・組込みシステム</span></strong>（p.106-110）を確認し、章末確認問題（p.346）で小テスト</div>
+        </details>
+        <h4 class="vz-phase"><span translate="no">コンピュータ・ソフトウェア・データベース</span><small>第7〜9回</small></h4>
+        <details class="vz-week" id="week-7">
+          <summary><span class="vz-week-num" aria-hidden="true">7</span><span class="vz-week-main"><span class="vz-week-theme">コンピュータの中身を開ける</span><span class="vz-week-hook"><span translate="no">CPU</span>・<span translate="no">記録媒体</span>と、企業のお金の管理</span><span class="vz-tagrow"><span class="vz-tag-f vz-f-st" translate="no">企業と法務</span><span class="vz-tag-f vz-f-tc" translate="no">コンピュータシステム</span><span class="vz-tag-x">教科書 p.244-255</span></span></span></summary>
+          <div class="vz-week-body">コンピュータの構成・<strong>CPUの仕組みと指標</strong>・記録媒体の種類と特徴（テクノロジ系 p.244-255）。PCの値段と性能の関係から、<strong>企業のお金の管理</strong>（p.033-040）へ——IT機器も企業の資産だと知る</div>
+        </details>
+        <details class="vz-week" id="week-8">
+          <summary><span class="vz-week-num" aria-hidden="true">8</span><span class="vz-week-main"><span class="vz-week-theme">止まらないシステムを作る</span><span class="vz-week-hook"><span translate="no">稼働率</span>・<span translate="no">RASIS</span>と、システム構成</span><span class="vz-tagrow"><span class="vz-tag-f vz-f-st" translate="no">システム戦略</span><span class="vz-tag-f vz-f-tc" translate="no">コンピュータシステム</span><span class="vz-tag-x">教科書 p.256-269</span></span></span></summary>
+          <div class="vz-week-body">入出力装置とインタフェース・処理形態とシステム構成（クライアントサーバ・クラウド）・<strong>システムの性能と信頼性</strong>（<span translate="no">稼働率・RASIS</span>、テクノロジ系 p.256-269）。安定したサービスがどうビジネスになるかを<strong><span translate="no">ソリューションビジネス</span></strong>（p.125-128）で確認し、章末確認問題（p.270）で小テスト</div>
+        </details>
+        <details class="vz-week" id="week-9">
+          <summary><span class="vz-week-num" aria-hidden="true">9</span><span class="vz-week-main"><span class="vz-week-theme">ソフトウェアとデータベース：使いやすさとデータ活用</span><span class="vz-week-hook"><span translate="no">OS</span>・<span translate="no">データベース</span>・<span translate="no">情報デザイン</span></span><span class="vz-tagrow"><span class="vz-tag-f vz-f-st" translate="no">企業と法務</span><span class="vz-tag-f vz-f-tc" translate="no">コンピュータシステム</span><span class="vz-tag-f vz-f-tc" translate="no">技術要素</span><span class="vz-tag-x">教科書 p.276-313</span></span></span></summary>
+          <div class="vz-week-body"><strong><span translate="no">OS</span></strong>の役割・ファイル管理・表計算・<strong><span translate="no">OSS</span></strong>・<strong><span translate="no">情報デザイン</span></strong>（<span translate="no">ユニバーサルデザイン</span>）と、<strong><span translate="no">データベース</span></strong>の設計・<strong><span translate="no">DBMS</span></strong>の機能（テクノロジ系 p.276-313）。「誰にとっても使いやすい」を<strong>製品やサービスの規格</strong>（p.060-063）、顧客データの活用を<strong>企業のデータ利活用</strong>（p.028-032）とつなげる。教科書に章がない<strong><span translate="no">情報メディア</span></strong>（画像・音声・動画の符号化と圧縮）を補足資料で扱い、章末確認問題（p.294・p.314）で小テスト</div>
+        </details>
+        <h4 class="vz-phase"><span>中間テスト</span><small>第10回</small></h4>
+        <details class="vz-week" id="week-10">
+          <summary><span class="vz-week-num" aria-hidden="true">10</span><span class="vz-week-main"><span class="vz-week-theme">中間テスト＋本番の予行演習①</span><span class="vz-week-hook">IPA公開過去問で中間テスト（120分を目安）</span><span class="vz-tagrow"><span class="vz-tag-x">中間テスト</span></span></span></summary>
+          <div class="vz-week-body"><strong>IPA公開過去問を使った本番形式のテスト（Googleフォーム）</strong>で中間テストを実施。制限時間は本試験に準じて120分を目安とする。試験当日の対策（教科書 攻略法 p.011、本番の試験画面にある「後で見直す」チェック機能の使い方など）を確認しながら、本番の問題文の形式と時間配分に慣れる</div>
+        </details>
+        <h4 class="vz-phase"><span translate="no">基礎理論とアルゴリズム</span><small>第11〜12回</small></h4>
+        <details class="vz-week" id="week-11">
+          <summary><span class="vz-week-num" aria-hidden="true">11</span><span class="vz-week-main"><span class="vz-week-theme">コンピュータの数とデータの読み方</span><span class="vz-week-hook"><span translate="no">2進数</span>・<span translate="no">論理演算</span>・統計と、分析手法</span><span class="vz-tagrow"><span class="vz-tag-f vz-f-st" translate="no">経営戦略</span><span class="vz-tag-f vz-f-tc" translate="no">基礎理論</span><span class="vz-tag-x">教科書 p.196-210</span></span></span></summary>
+          <div class="vz-week-body"><strong><span translate="no">2進数・16進数</span></strong>、<span translate="no">論理演算</span>、<strong>データの傾向を読む統計</strong>（平均・中央値、テクノロジ系 p.196-210）。<strong>経営戦略の分析手法</strong>（<span translate="no">SWOT分析</span>など p.068-070）と「データを読む」でつなげ、章末確認問題（p.211）で小テスト</div>
+        </details>
+        <details class="vz-week" id="week-12">
+          <summary><span class="vz-week-num" aria-hidden="true">12</span><span class="vz-week-main"><span class="vz-week-theme">手順を作る：アルゴリズムと開発</span><span class="vz-week-hook"><span translate="no">データ構造</span>・<span translate="no">フローチャート</span>・<span translate="no">擬似言語</span>（<span translate="no">テクノロジ系</span>の全範囲が完走）</span><span class="vz-tagrow"><span class="vz-tag-f vz-f-mg" translate="no">開発技術</span><span class="vz-tag-f vz-f-tc" translate="no">基礎理論</span><span class="vz-tag-x">教科書 p.216-236</span></span></span></summary>
+          <div class="vz-week-body"><strong><span translate="no">データ構造</span></strong>（配列・スタック・キュー）・<strong><span translate="no">フローチャート</span></strong>・<strong><span translate="no">擬似言語</span></strong>の読み方（テクノロジ系 p.216-236）。身近な手順をフローチャートにする体験から<strong>システム開発って何だろう</strong>（p.134-137）へ接続。ここで<span translate="no">テクノロジ系</span>の全範囲が完走。章末確認問題（p.237）で小テスト</div>
+        </details>
+        <h4 class="vz-phase"><span>弱点補強</span><small>第13回</small></h4>
+        <details class="vz-week" id="week-13">
+          <summary><span class="vz-week-num" aria-hidden="true">13</span><span class="vz-week-main"><span class="vz-week-theme">弱点補強と時間戦略</span><span class="vz-week-hook">誤答分析と時間戦略</span><span class="vz-tagrow"><span class="vz-tag-x">弱点補強</span></span></span></summary>
+          <div class="vz-week-body">中間テストの誤答分析。<strong>1問1.2分で解く時間戦略</strong>（選択肢の先読み、捨て問の判断、CBTの「後で見直す」チェック機能の活用）。個別の弱点分野を集中演習</div>
+        </details>
+        <h4 class="vz-phase"><span translate="no">ストラテジ系・マネジメント系の総復習と総合演習</span><small>第14〜16回</small></h4>
+        <details class="vz-week" id="week-14">
+          <summary><span class="vz-week-num" aria-hidden="true">14</span><span class="vz-week-main"><span class="vz-week-theme">ストラテジ系 総復習</span><span class="vz-week-hook"><span translate="no">ストラテジ系</span>の未着手範囲をまとめて復習</span><span class="vz-tagrow"><span class="vz-tag-f vz-f-st" translate="no">企業と法務</span><span class="vz-tag-f vz-f-st" translate="no">経営戦略</span><span class="vz-tag-f vz-f-st" translate="no">システム戦略</span></span></span></summary>
+          <div class="vz-week-body">これまで扱わなかった<strong><span translate="no">ストラテジ系</span></strong>の範囲——企業の人材教育（p.022-024）、労働に関する契約や法律（p.055-059）、経営戦略の種類・マーケティング・具体的な目標の検討・経営管理システム（p.071-083）、技術開発戦略の立案計画・業務効率化システム（p.088-093）、製造工程システム（p.098-101、<span translate="no">AI</span>の活用は第6回で既習）、システム戦略の情報システム戦略手法・業務プロセス分析改善（p.118-124）——をまとめて復習する。分野別の過去問演習とペアでの相互説明で定着させる</div>
+        </details>
+        <details class="vz-week" id="week-15">
+          <summary><span class="vz-week-num" aria-hidden="true">15</span><span class="vz-week-main"><span class="vz-week-theme">マネジメント系 総復習</span><span class="vz-week-hook"><span translate="no">マネジメント系</span>の未着手範囲をまとめて復習</span><span class="vz-tagrow"><span class="vz-tag-f vz-f-mg" translate="no">開発技術</span><span class="vz-tag-f vz-f-mg" translate="no">プロジェクトマネジメント</span><span class="vz-tag-x">教科書 p.138-158・164-175</span></span></span></summary>
+          <div class="vz-week-body">これまで扱わなかった<strong><span translate="no">マネジメント系</span></strong>の範囲——企画・要件定義、開発プロセス（設計・テスト・受入れ）、主な開発モデル、<span translate="no">アジャイル</span>（p.138-158）、プロジェクトって何だろう・作業範囲管理・スケジュール管理（<span translate="no">WBS</span>、p.164-175）——をまとめて復習する</div>
+        </details>
+        <details class="vz-week" id="week-16">
+          <summary><span class="vz-week-num" aria-hidden="true">16</span><span class="vz-week-main"><span class="vz-week-theme">3分野の総合演習</span><span class="vz-week-hook">3分野の総合演習と発表アウトライン</span><span class="vz-tagrow"><span class="vz-tag-x">総合演習</span></span></span></summary>
+          <div class="vz-week-body"><strong>3分野を混ぜた総合演習</strong>を行い、<strong>各分野300点の足切り</strong>を意識して分野別の到達度を確認する。<strong>最終発表のテーマ（担当する用語）を決定</strong>し、2限後半で<strong>発表のアウトライン作成</strong>とペアでの予行に取り組む</div>
+        </details>
+        <h4 class="vz-phase"><span>期末テスト</span><small>第17回</small></h4>
+        <details class="vz-week" id="week-17">
+          <summary><span class="vz-week-num" aria-hidden="true">17</span><span class="vz-week-main"><span class="vz-week-theme">期末テスト＋本番の予行演習②</span><span class="vz-week-hook">期末テストと伸び幅の確認</span><span class="vz-tagrow"><span class="vz-tag-x">期末テスト</span></span></span></summary>
+          <div class="vz-week-body"><strong>IPA公開過去問を使った本番形式のテスト（Googleフォーム）</strong>で、中間テストとは別の公開年度の問題を使って期末テストを実施。中間テストからの<strong>伸び幅</strong>を確認し、誤答分析にもとづいて弱点分野を集中演習する</div>
+        </details>
+        <h4 class="vz-phase"><span>日本語での発表</span><small>第18〜19回</small></h4>
+        <details class="vz-week" id="week-18">
+          <summary><span class="vz-week-num" aria-hidden="true">18</span><span class="vz-week-main"><span class="vz-week-theme">日本語での発表①</span><span class="vz-week-hook">日本語での発表（前半グループ）</span><span class="vz-tagrow"><span class="vz-tag-x">発表①</span></span></span></summary>
+          <div class="vz-week-body">クラスを2グループに分け、前半グループが発表する。1人3〜5分で、担当する用語を<strong>①日本語の用語名 ②やさしい日本語の説明 ③身近な例 ④試験での問われ方</strong>の順に説明する（相互学習の総仕上げ）。聞く側はGoogleフォームで<strong>相互フィードバック</strong>（わかりやすかった点／もっと知りたい点）を送り、次回の発表者はそれを踏まえて仕上げる。資料はスライドでも口頭のみでもよい</div>
+        </details>
+        <details class="vz-week" id="week-19">
+          <summary><span class="vz-week-num" aria-hidden="true">19</span><span class="vz-week-main"><span class="vz-week-theme">日本語での発表②・総まとめ・振り返り</span><span class="vz-week-hook">発表（後半グループ）・総まとめ・振り返り</span><span class="vz-tagrow"><span class="vz-tag-x">発表②</span></span></span></summary>
+          <div class="vz-week-body">後半グループが発表し、全員の担当用語が出そろう。発表で扱った用語を<strong>クラス共通の用語集</strong>としてまとめ、3分野の全体像を完成させる。合格後に挑戦できる<strong><span translate="no">基本情報技術者試験・情報セキュリティマネジメント試験</span></strong>を簡単に紹介する。後期全体の振り返りとアンケートを実施する。<strong>提出物の最終締切</strong>にあたるため、未提出の課題はこの回までに提出する</div>
+        </details>
+      </div>
+
+      <ul class="vz-notes">
+        <li>授業計画は進捗により前後する場合があります。</li>
+        <li>毎回の授業冒頭で前回の復習ミニテストと用語カードの確認を行います。</li>
+        <li>第12回でテクノロジ系の全範囲が完走します（2026年12月28日以降の試験実施一時停止より前）。第14回・第15回でストラテジ系・マネジメント系の未着手分野を総復習し、第16回の総合演習で3分野の全体像を完成させます。</li>
+        <li>休講が発生した場合は第14回・第15回の総復習を統合して調整し、発表の回は確保します。</li>
+      </ul>
     </div>
 
     <div class="syllabus-section">
@@ -183,6 +286,11 @@
     <div class="syllabus-section">
       <h2>評価方法・基準</h2>
       <p>ITパスポート試験はほぼ毎日実施されており、受験のタイミングは学生ごとに異なります。「合格」を評価の主軸にすると、受験が遅い学生・会場の都合がつかない学生が成績で不利になります。日々の到達度・提出物・参加度を主軸に、合格は加点として扱います。学校のシラバス様式に合わせ、以下の3項目に統合して評価します（かっこ内は内訳の目安）。</p>
+      <div class="vz-stack vz-stack--eval" role="img" aria-label="評価の割合：授業内ミニテスト・提出物55%、中間・期末テストのスコア20%、授業参加度・試験合格による加点25%">
+        <span class="vz-e1" style="--n:55">55%</span>
+        <span class="vz-e2" style="--n:20">20%</span>
+        <span class="vz-e3" style="--n:25">25%</span>
+      </div>
       <!-- 同期マーカー: 中間テスト（第10回）・期末テスト（第17回）の回番号は授業計画表と連動。表の回構成を変更したらここも更新する -->
       <div class="eval-item"><span class="eval-pct" style="color:var(--c-amber)">55%</span><span class="eval-label"><strong>授業内ミニテスト・提出物</strong> — 毎回まとめの10分で実施するGoogleフォーム小テスト（素点ではなく診断テストからの伸び率を評価、30%相当）と、用語カード（毎回の宿題）・中間/期末テストの誤答分析ワーク・発表のアウトライン／原稿などの提出物（25%相当）をあわせて評価する。サイト内クイズは記録の残らない自己採点用の自習ツールで、成績には含めない。</span></div>
       <div class="eval-item"><span class="eval-pct" style="color:var(--c-amber)">20%</span><span class="eval-label"><strong>中間テスト・期末テストのスコア</strong> — 第10回・第17回に実施する本試験形式のテスト。到達点そのものではなく、中間から期末への伸び幅を評価する。</span></div>
@@ -191,9 +299,14 @@
 
     <div class="syllabus-section">
       <h2>その他（履修上の注意点）</h2>
+      <ul class="vz-stats">
+        <li class="vz-stat"><div class="vz-stat-num vz-stat-num--txt">ほぼ毎日</div><div class="vz-stat-label">試験（CBT）を実施している。受験できる日は会場によって異なる</div></li>
+        <li class="vz-stat"><div class="vz-stat-num vz-stat-num--txt">12/28〜</div><div class="vz-stat-label"><strong>2026年12月28日以降、システム更改のため実施が一時停止</strong>。再開時期は2026年9月時点で未定（IPAは「2027年1月以降の試験実施については2026年秋頃にウェブページでお知らせ」と告知）</div></li>
+        <li class="vz-stat"><div class="vz-stat-num">7,500<small>円</small></div><div class="vz-stat-label">受験料（消費税込み）。<strong>学生自己負担</strong></div></li>
+      </ul>
       <ul>
-        <li>ITパスポート試験（CBT）は<strong>ほぼ毎日実施</strong>されており、受験のタイミングは各自で選べます。ただし<strong>2026年12月28日以降、システム更改のため実施が一時停止</strong>されます（<strong>再開時期は2026年9月時点で未定です</strong>。IPAは「2027年1月以降の試験実施については2026年秋頃にウェブページでお知らせ」と告知）。年内の受験を希望する場合は、会場によって受付終了時期が異なるため、早めに希望会場の空き状況を確認してください。</li>
-        <li>受験料7,500円（消費税込み）は<strong>学生自己負担</strong>です。受験申込・会場予約の方法はIPA公式サイト（上記「使用テキスト・参考文献」の受験申込手順ページ参照）から各自で確認し、進めてください。</li>
+        <li>ITパスポート試験（CBT）の受験のタイミングは各自で選べます。年内の受験を希望する場合は、会場によって受付終了時期が異なるため、早めに希望会場の空き状況を確認してください。</li>
+        <li>受験申込・会場予約の方法はIPA公式サイト（上記「使用テキスト・参考文献」の受験申込手順ページ参照）から各自で確認し、進めてください。</li>
         <li>受験する場合、本人確認書類は在留カード・学生証（顔写真付き）等が使用できます。申込時の氏名表記を本人確認書類と一致させてください。</li>
         <li>第10回・第17回の<strong>中間・期末テスト</strong>は、本番の問題文の形式と時間配分に慣れる予行演習を兼ねています。実際の受験結果は成績に直接使いません（合格した場合の加点を除く）。IPA公開過去問を使い、<strong>Googleフォーム</strong>（学校のGoogleアカウントで回答）で実施します。問題は出典を明記して使用します。</li>
         <li><strong>2027年度からITパスポート試験の制度が変わる予定</strong>です。本科目は現行制度（Ver.6.5）での合格を目指します。</li>
@@ -213,6 +326,37 @@
   </footer>
 
   <script src="app.js"></script>
+  <script>
+    // すべて開く／閉じる、印刷時は全て開く
+    (function () {
+      var weeks = document.querySelectorAll('details.vz-week');
+      var btn = document.querySelector('[data-toggle-all]');
+      function sync() {
+        var all = Array.prototype.every.call(weeks, function (d) { return d.open; });
+        btn.setAttribute('aria-pressed', String(all));
+        btn.textContent = all ? 'すべて閉じる' : 'すべて開く';
+      }
+      if (btn) {
+        btn.addEventListener('click', function () {
+          var open = btn.getAttribute('aria-pressed') !== 'true';
+          weeks.forEach(function (d) { d.open = open; });
+          sync();
+        });
+        weeks.forEach(function (d) { d.addEventListener('toggle', sync); });
+      }
+      var saved = null;
+      window.addEventListener('beforeprint', function () {
+        var all = document.querySelectorAll('details');
+        saved = Array.prototype.map.call(all, function (d) { return d.open; });
+        all.forEach(function (d) { d.open = true; });
+      });
+      window.addEventListener('afterprint', function () {
+        if (!saved) return;
+        document.querySelectorAll('details').forEach(function (d, i) { d.open = saved[i]; });
+        saved = null;
+      });
+    })();
+  </script>
   <script>
     // Load markdown source for copy
     fetch('content/it-passport-technology.md')
