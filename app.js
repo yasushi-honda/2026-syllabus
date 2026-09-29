@@ -52,4 +52,35 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.appendChild(document.createTextNode(' ' + originalLabel));
     }, 2000);
   }
+
+  // Self-check quiz: answers are judged in the page only. Nothing is stored or sent.
+  document.querySelectorAll('.quiz').forEach(quiz => {
+    const answer = quiz.dataset.answer;
+    const choices = quiz.querySelectorAll('.quiz-choice');
+    const feedback = quiz.querySelector('.quiz-feedback');
+    const result = quiz.querySelector('.quiz-result');
+    const retry = quiz.querySelector('.quiz-retry');
+
+    choices.forEach(choice => {
+      choice.addEventListener('click', () => {
+        const isCorrect = choice.dataset.choice === answer;
+        choices.forEach(c => {
+          c.disabled = true;
+          if (c.dataset.choice === answer) c.classList.add('is-correct');
+        });
+        if (!isCorrect) choice.classList.add('is-wrong');
+        result.textContent = isCorrect ? '正解です' : '不正解です（正解: ' + answer + '）';
+        feedback.hidden = false;
+      });
+    });
+
+    retry.addEventListener('click', () => {
+      choices.forEach(c => {
+        c.disabled = false;
+        c.classList.remove('is-correct', 'is-wrong');
+      });
+      feedback.hidden = true;
+      choices[0].focus();
+    });
+  });
 });

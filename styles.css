@@ -2353,6 +2353,185 @@ a.lesson-nav-item:hover {
 }
 
 /* ========================================
+   Exam question block (past-exam excerpts with source)
+   ======================================== */
+
+.exam-q {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border-strong);
+  border-left: 4px solid var(--c-amber);
+  border-radius: var(--r-sm);
+  padding: var(--sp-4) var(--sp-5);
+  margin: var(--sp-3) 0;
+  font-size: 0.92rem;
+  line-height: 1.8;
+}
+
+.exam-q-text {
+  margin: 0 0 var(--sp-3);
+  font-weight: 600;
+}
+
+.exam-q-choice {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: baseline;
+  margin: var(--sp-1) 0;
+}
+
+.exam-q-mark {
+  font-weight: 700;
+  color: var(--c-amber);
+  flex: none;
+}
+
+.exam-q-source {
+  margin: var(--sp-3) 0 0;
+  font-size: var(--fs-xs);
+  color: var(--c-text-muted);
+}
+
+.exam-q-answer {
+  margin-top: var(--sp-3);
+}
+
+.exam-q-answer summary {
+  cursor: pointer;
+  min-height: 44px;
+  display: list-item;
+  padding: var(--sp-2) 0;
+  font-weight: 600;
+  color: var(--c-amber);
+}
+
+.exam-q-answer summary:focus-visible {
+  outline: 3px solid var(--c-amber);
+  outline-offset: 2px;
+}
+
+/* ========================================
+   Self-check quiz (nothing is stored or sent)
+   ======================================== */
+
+.quiz-set {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+  margin: var(--sp-4) 0;
+}
+
+.quiz {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  padding: var(--sp-5);
+  box-shadow: var(--shadow-card);
+}
+
+.quiz-q {
+  margin: 0 0 var(--sp-3);
+  font-weight: 600;
+  line-height: 1.8;
+}
+
+.quiz-q-num {
+  display: inline-block;
+  margin-right: var(--sp-2);
+  padding: 2px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--c-amber-border);
+  background: var(--c-amber-soft);
+  color: var(--c-amber);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.quiz-choices {
+  display: grid;
+  gap: var(--sp-2);
+}
+
+.quiz-choice {
+  display: flex;
+  gap: var(--sp-3);
+  align-items: baseline;
+  width: 100%;
+  min-height: 44px;
+  padding: var(--sp-3) var(--sp-4);
+  text-align: left;
+  font: inherit;
+  color: var(--c-text);
+  background: var(--c-bg);
+  border: 1px solid var(--c-border-strong);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+}
+
+.quiz-choice:hover:not(:disabled) {
+  background: var(--c-amber-soft);
+  border-color: var(--c-amber);
+}
+
+.quiz-choice:focus-visible,
+.quiz-retry:focus-visible {
+  outline: 3px solid var(--c-amber);
+  outline-offset: 2px;
+}
+
+.quiz-choice:disabled {
+  cursor: default;
+}
+
+.quiz-choice-mark {
+  flex: none;
+  font-weight: 700;
+  color: var(--c-amber);
+}
+
+.quiz-choice.is-correct {
+  background: var(--c-green-soft);
+  border-color: var(--c-green);
+}
+
+.quiz-choice.is-wrong {
+  background: var(--c-red-soft);
+  border-color: var(--c-red);
+}
+
+.quiz-feedback {
+  margin-top: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  border-left: 4px solid var(--c-amber);
+  background: var(--c-amber-soft);
+  border-radius: var(--r-sm);
+  font-size: 0.88rem;
+  line-height: 1.8;
+}
+
+.quiz-feedback[hidden] {
+  display: none;
+}
+
+.quiz-result {
+  margin: 0 0 var(--sp-1);
+  font-weight: 700;
+}
+
+.quiz-retry {
+  margin-top: var(--sp-2);
+  min-height: 44px;
+  padding: var(--sp-2) var(--sp-4);
+  font: inherit;
+  font-size: 0.85rem;
+  color: var(--c-amber);
+  background: var(--c-surface);
+  border: 1px solid var(--c-amber-border);
+  border-radius: var(--r-sm);
+  cursor: pointer;
+}
+
+/* ========================================
    Print — actual paper syllabus
    ======================================== */
 
