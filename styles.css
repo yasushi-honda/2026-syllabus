@@ -2635,7 +2635,7 @@ main .vz-timebar-note {
 
 @media (min-width: 720px) {
   main .vz-timebar-track { flex-direction: row; gap: 3px; align-items: stretch; }
-  main .vz-timebar-track > li { flex: var(--w) 1 0; width: auto; min-width: 0; }
+  main .vz-timebar-track > li { flex: var(--w) 1 0; width: auto; min-width: 3.5rem; }
   .syllabus-section a.vz-seg { padding: 0.6rem 0.5rem; }
   main .vz-seg-name { font-size: 0.72rem; }
 }
@@ -2841,7 +2841,7 @@ main .vz-field {
 }
 
 main .vz-field h4 { margin: 0 0 2px; font-size: 1.05rem; color: var(--f); }
-main .vz-field-count { margin: 0 0 var(--sp-2); font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; }
+main .vz-field p.vz-field-count { margin: 0 0 var(--sp-2); font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; }
 main .vz-field p { margin: 0 0 var(--sp-3); font-size: 0.86rem; line-height: 1.7; }
 
 main .vz-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
@@ -2875,7 +2875,7 @@ main .vz-legend {
   font-size: 0.78rem;
 }
 
-main .vz-legend li { display: flex; align-items: center; gap: 6px; margin: 0; }
+main .vz-legend li { font-size: 0.78rem; display: flex; align-items: center; gap: 6px; margin: 0; }
 main .vz-legend i { width: 14px; height: 14px; border-radius: 3px; background: var(--f); }
 
 main .vz-bars { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
