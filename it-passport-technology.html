@@ -337,8 +337,16 @@
         btn.setAttribute('aria-pressed', String(open));
         btn.textContent = open ? 'すべて閉じる' : 'すべて開く';
       });
+      var saved = null;
       window.addEventListener('beforeprint', function () {
-        document.querySelectorAll('details').forEach(function (d) { d.open = true; });
+        var all = document.querySelectorAll('details');
+        saved = Array.prototype.map.call(all, function (d) { return d.open; });
+        all.forEach(function (d) { d.open = true; });
+      });
+      window.addEventListener('afterprint', function () {
+        if (!saved) return;
+        document.querySelectorAll('details').forEach(function (d, i) { d.open = saved[i]; });
+        saved = null;
       });
     })();
   </script>
