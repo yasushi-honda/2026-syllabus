@@ -3179,7 +3179,8 @@ main .vz-tag-x {
   font-weight: 700;
   line-height: 1.6;
 }
-main .vz-tag-f { border: 1px solid var(--f-border); background: var(--f-soft); color: var(--f); }
+main .vz-tag-f { border: 1px solid var(--f); background: var(--f-soft); color: var(--c-text); }
+main .vz-f-mg .vz-wk { background: #0b6b49; }
 main .vz-tag-x { border: 1px solid var(--c-border-strong); background: var(--c-bg-alt); color: var(--c-text-muted); font-weight: 600; }
 main .vz-week-body { padding: 0 var(--sp-4) var(--sp-4); font-size: 0.9rem; line-height: 1.85; }
 
