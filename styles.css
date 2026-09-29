@@ -2398,8 +2398,8 @@ a.lesson-nav-item:hover {
 .exam-q-answer summary {
   cursor: pointer;
   min-height: 44px;
-  display: flex;
-  align-items: center;
+  display: list-item;
+  padding: var(--sp-2) 0;
   font-weight: 600;
   color: var(--c-amber);
 }
