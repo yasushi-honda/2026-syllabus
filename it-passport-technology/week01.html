@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第1回 3分野の地図を手に入れる | ITパスポート テクノロジー系</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=6">
+  <!-- 公式情報確認: 2026-09-29 (https://www3.jitec.ipa.go.jp/JitesCbt/html/about/range.html 出題数・採点対象92問・分野別32/18/42問・合格基準 / 令和7年度ITパスポート試験 公開問題・解答例 https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2025r07_ip_qs.pdf / https://www.ipa.go.jp/shiken/mondai-kaiotu/index.html 過去問題の使用条件 / https://support.google.com/chrome/answer/173424?hl=ja Chrome翻訳の手順 / IPA英語版試験要綱 Ver 3.0 の分野名 Strategy・Management・Technology / https://itpec.org/pastexamqa/ip.html 教育目的の使用は許諾不要・出典表記必須 / 教科書 p.006-011 と突合) -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--amber">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../it-passport-technology.html">ITパスポート テクノロジー系</a>
+        <span>/</span>
+        <span>第1回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">3分野の地図を<wbr>手に入れる</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 1</span>
+            <span class="page-badge">水曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="message-box">このページはブラウザの翻訳機能で母語に翻訳できます（やり方は授業の中で確認します）。ただし、試験に出る専門用語（例: <span translate="no">ストラテジ系</span>、<span translate="no">セキュリティ</span>）は翻訳されないように設定しています。<strong>本番のITパスポート試験は日本語で行われる</strong>ので、専門用語は日本語のまま覚えてください。</div>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">試験の全体像と、問題文の読み方</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value"><span translate="no">3分野</span> / 合格基準（600点・各分野300点） / 問題文の読み方 / 診断テスト / Chrome翻訳</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">教科書（学研「ITパスポートをひとつひとつわかりやすく。」）、学校のGoogleアカウントでログインできるPC</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>ITパスポート試験の全体像（<strong>3分野・100問・120分・合格基準</strong>）を説明できる</li>
+        <li><span translate="no">ストラテジ系・マネジメント系・テクノロジ系</span>の3分野で、それぞれ何を学ぶかを言える</li>
+        <li>試験の問題文の<strong>問い方の型</strong>を見分け、「何を聞かれているか」を読み取れる</li>
+        <li><strong>診断テスト</strong>を受け、自分の弱点分野を知る</li>
+        <li>ブラウザ翻訳の使い方と、「専門用語は日本語のまま覚える」原則を理解する</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。休憩10分は授業時間に含めません。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>オリエンテーション：授業の進め方・評価方法・翻訳機能</h3>
+          <div class="timeline-body">
+            <p><strong>授業の進め方（約10分）</strong></p>
+            <ul>
+              <li>毎回の流れ：前回の復習ミニテスト → 今回のテーマの導入 → <span translate="no">テクノロジ系</span>の中心部分 → <span translate="no">ストラテジ系・マネジメント系</span>との結びつけ → 過去問演習 → まとめの小テスト</li>
+              <li>教科書のページ番号（<code>p.006</code> など）は、紙面の下に印刷されている番号。授業計画の表に書かれたページを開いて読み返す</li>
+              <li>毎回の宿題は<strong>用語カード</strong>（用語・ふりがな・自分の言葉での説明・English）。今日の用語カードの例はこのページの下にある</li>
+            </ul>
+            <p><strong>評価方法（約10分）</strong></p>
+            <ul>
+              <li>評価は3つ：授業内ミニテスト・提出物（55%）／中間・期末テスト（20%）／授業参加度・合格の加点（25%）</li>
+              <li>ITパスポート試験に<strong>合格した場合は加点</strong>。受験するかどうかは各自が決める。受験しなくても、他の項目で成績評価は成り立つ</li>
+              <li>ミニテストは、点数そのものではなく<strong>診断テストからの伸び</strong>を評価する</li>
+            </ul>
+            <p><strong>Chrome翻訳の使い方（約15分）</strong></p>
+            <ul>
+              <li>ページを翻訳する：アドレスバーの右にある<strong>翻訳アイコン</strong>を選んで言語を選ぶ。または、ページ上で右クリックして「〇〇語に翻訳」を選ぶ（公式ヘルプ：ページを翻訳する、Chrome の言語を変更する）</li>
+              <li>翻訳先の言語を変えたいときは、Chromeの設定の「言語」から選ぶ</li>
+              <li>実際にこのページを母語に翻訳し、<span translate="no">ストラテジ系・マネジメント系・テクノロジ系</span>などの専門用語が<strong>翻訳されず日本語のまま</strong>残ることを確認する</li>
+              <li>使い分け：<strong>内容の理解には翻訳を使う。試験に出る用語は日本語で覚える</strong></li>
+            </ul>
+            <p><strong>学校アカウントの確認（約5分）</strong></p>
+            <ul>
+              <li>診断テストは学校のGoogleアカウントで回答する。今のうちにログインできるか各自で確認し、ログインできない人は申し出る</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>試験の全体像 → 合格基準 → 3分野の地図（教科書 攻略法 p.006-009）</h3>
+          <div class="timeline-body">
+            <p><strong>試験の基本（約15分）</strong>（教科書 攻略法 p.006-007）</p>
+            <ul>
+              <li>試験時間は<strong>120分</strong>。パソコンの画面で答える<span translate="no">CBT</span>方式で、<span translate="no">四肢択一</span>（4つの選択肢から1つ選ぶ）で<strong>100問</strong></li>
+              <li>100問のうち、採点されるのは<strong>92問</strong>。残りの8問は今後の問題づくりのための評価用で、採点には入らない（IPA公式）。教科書には「わかる範囲で回答して次に進もう」とある</li>
+              <li>試験はほぼ毎日実施されていて、受験するタイミングは自分で選べる。受験料は7,500円（税込）で、自己負担</li>
+              <li><strong>2026年12月28日以降は、システム更改のため試験の実施が一時停止</strong>される。年内に受験したい人は、会場の空きを早めに確認する</li>
+            </ul>
+            <p><strong>合格基準（約15分）</strong></p>
+            <ul>
+              <li>合格の条件は、<span translate="no">総合評価点</span>が<strong>600点以上</strong>（1,000点満点）、<strong>かつ</strong>3分野それぞれの<span translate="no">分野別評価点</span>が<strong>300点以上</strong>（各1,000点満点）</li>
+              <li>例：総合評価点が700点でも、ある1分野が290点なら不合格。だから<strong>3分野すべて</strong>を勉強する必要がある</li>
+              <li>点数は1問ごとの単純な合計ではなく、<span translate="no">IRT</span>（項目応答理論）という方法で解答結果から計算される。配点は公表されていない</li>
+            </ul>
+            <p><strong>分野ごとの問題数（約5分）</strong></p>
+            <div class="table-wrap">
+              <table class="schedule-table">
+                <thead><tr><th>分野</th><th>令和7年度の問題冊子</th><th>冊子の問題数</th><th>採点対象の問題数</th></tr></thead>
+                <tbody>
+                  <tr><td><span translate="no">ストラテジ系</span></td><td>問1〜問35</td><td>35問</td><td>32問</td></tr>
+                  <tr><td><span translate="no">マネジメント系</span></td><td>問36〜問55</td><td>20問</td><td>18問</td></tr>
+                  <tr><td><span translate="no">テクノロジ系</span></td><td>問56〜問100</td><td>45問</td><td>42問</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="lesson-note">冊子の問題数は令和7年度公開問題の問題番号から数えたもの。採点対象の問題数はIPA公式の数字（合計92問）。計算上、差の合計は8問で、採点対象外の8問と一致する。</p>
+            <p><strong>3分野の地図（約15分）</strong>（教科書 攻略法 p.008-009）</p>
+            <div class="table-wrap">
+              <table class="schedule-table">
+                <thead><tr><th>分野</th><th>何を学ぶか</th><th>大分類</th></tr></thead>
+                <tbody>
+                  <tr><td><span translate="no">ストラテジ系</span></td><td>経営戦略やシステム戦略、法務など、企業を経営する上で必要な知識</td><td><span translate="no">企業と法務・経営戦略・システム戦略</span></td></tr>
+                  <tr><td><span translate="no">マネジメント系</span></td><td>システム開発の流れや開発の手法、プロジェクトマネジメントなど、システム開発を行う上で必要な知識</td><td><span translate="no">開発技術・プロジェクトマネジメント・サービスマネジメント</span></td></tr>
+                  <tr><td><span translate="no">テクノロジ系</span></td><td>コンピュータやネットワーク、データベース、セキュリティなど、技術に関する知識</td><td><span translate="no">基礎理論・コンピュータシステム・技術要素</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <ul>
+              <li>過去3年（令和3〜5年度）の平均で、出題率が最も高いのは<strong><span translate="no">セキュリティ</span>（19%）</strong>。次が<span translate="no">企業と法務</span>（15%）、<span translate="no">経営戦略</span>（13%）。全カテゴリの一覧は教科書 p.008-009 にある</li>
+              <li>この授業は教科書の章の順ではなく、<strong>出題率の高い順</strong>に進む。<span translate="no">セキュリティ</span>は第2〜4回で扱う</li>
+              <li>毎回の「3分野の地図」は、<a href="../it-passport-technology.html">授業計画一覧</a>の表で、今どの大分類を学んでいるかを確認する。<span translate="no">テクノロジ系</span>の全範囲は第12回で一周する</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>問題文の読み方ワーク：問い方の型 → 例題 → ペアで説明</h3>
+          <div class="timeline-body">
+            <p><strong>問い方の型を知る（約15分）</strong></p>
+            <p>試験の問題文には、決まった「問い方」がある。何を聞かれているかが分かれば、知らない用語があっても選択肢を絞れることがある。下の表の例は、すべて令和7年度の公開問題から取った。</p>
+            <div class="table-wrap">
+              <table class="schedule-table">
+                <thead><tr><th>問い方（日本語）</th><th>意味</th><th>例</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><span translate="no">…として，最も<ruby>適切<rt>てきせつ</rt></ruby>なものはどれか。</span></td>
+                    <td>いちばん合うものを1つ選ぶ。<br>Choose the most appropriate one.</td>
+                    <td>問4、問28</td>
+                  </tr>
+                  <tr>
+                    <td><span translate="no">…を表す<ruby>用語<rt>ようご</rt></ruby>はどれか。</span></td>
+                    <td>説明に合う言葉（用語）を選ぶ。<br>Choose the term that matches the description.</td>
+                    <td>問7、問10</td>
+                  </tr>
+                  <tr>
+                    <td><span translate="no">…だけを<ruby>全<rt>すべ</rt></ruby>て<ruby>挙<rt>あ</rt></ruby>げたものはどれか。</span></td>
+                    <td>a・b・c…を1つずつ判断し、正しいものの組合せを選ぶ。<br>Judge each item (a, b, c…), then choose the right combination.</td>
+                    <td>問1、問16</td>
+                  </tr>
+                  <tr>
+                    <td><span translate="no">a，bに入れる<ruby>字句<rt>じく</rt></ruby>の適切な<ruby>組合<rt>くみあわ</rt></ruby>せはどれか。</span></td>
+                    <td>空欄a・bに入る言葉の組合せを、表から選ぶ。<br>Choose the pair of words that fits the blanks a and b.</td>
+                    <td>問37、問39</td>
+                  </tr>
+                  <tr>
+                    <td><span translate="no">…は何個（何%）か。</span></td>
+                    <td>計算して数字を答える。時間がかかるので、他の問題を解いたあとに回してもよい（教科書 p.011）。<br>A calculation question. It takes time, so it is fine to do it last.</td>
+                    <td>問26、問34、問54</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="lesson-tip">
+              <strong>もし「適切でないものはどれか」のように否定の形で聞かれたら:</strong> 選ぶ向きが逆になる。問題文の最後の1行を先に読み、「合うもの」を探すのか「合わないもの」を探すのかを確認してから選択肢を読む。
+            </div>
+
+            <p><strong>例題を読む（約20分）</strong></p>
+            <p>読み方の手順は3つ。<strong>①問題文の最後の1行に線を引く</strong>（何を聞かれているか）→ <strong>②選択肢を全部読む</strong> → <strong>③分からない用語があっても、合わないものを消して絞る</strong>。答えを当てることより、この手順に慣れることが目的。専門用語の意味は、これから各回で学ぶ。</p>
+
+            <div class="exam-q">
+              <p class="exam-q-text">【例題①】問10　生成AIにおいて，もっともらしいが事実とは異なる内容が出力されることを表す用語として，最も適切なものはどれか。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span translate="no">エコーチェンバー</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span translate="no">シンギュラリティ</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span translate="no">ディープフェイク</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span translate="no">ハルシネーション</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問10（問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>ペアで話したあとに、答えと解説を見る</summary>
+                <p><strong>正解：エ</strong>（型：用語を選ぶ）。「もっともらしいが事実とは異なる内容が出力される」ことを<span translate="no">ハルシネーション</span>という。<span translate="no">エコーチェンバー</span>は、同じ意見ばかりが返ってくる環境のこと。<span translate="no">シンギュラリティ</span>は、AIが人間の知能を超える転換点のこと。<span translate="no">ディープフェイク</span>は、AIで作った偽の画像・動画・音声のこと。</p>
+              </details>
+            </div>
+
+            <div class="exam-q">
+              <p class="exam-q-text">【例題②】問16　他人の電子メールの利用者IDとパスワードの取扱いに関する記述のうち，不正アクセス禁止法で規制されている行為だけを全て挙げたものはどれか。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">a</span><span>正当な理由なく本人に無断で第三者に提供する。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">b</span><span>他人の電子メールの利用者IDとパスワードを無効にするマルウェアを作成する。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">c</span><span>本人に無断で使用して，メールサーバ上の電子メールを閲覧する。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>a，b，c</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>a，c</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>b，c</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>c</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問16（問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>ペアで話したあとに、答えと解説を見る</summary>
+                <p><strong>正解：イ（a，c）</strong>（型：全て挙げる）。a・b・cを1つずつ「不正アクセス禁止法で規制されているか」で判断してから、組合せの選択肢を選ぶ。aは他人のIDとパスワードを無断で第三者に提供する行為、cは他人のIDとパスワードを無断で使う行為で、どちらも規制されている。bは、この法律で規制される行為ではない。</p>
+              </details>
+            </div>
+
+            <div class="exam-q">
+              <p class="exam-q-text">【例題③】問37　ITサービスマネジメントに関して，次の記述中のa，bに入れる字句の適切な組合せはどれか。</p>
+              <p><span translate="no">a</span> はサービス提供者と顧客との間で合意されたサービス品質に関する合意書である。<span translate="no">a</span> の遵守状況を確認し，ITサービスの品質を維持・改善させるための活動が <span translate="no">b</span> である。</p>
+              <div class="table-wrap">
+                <table class="schedule-table">
+                  <thead><tr><th></th><th>a</th><th>b</th></tr></thead>
+                  <tbody>
+                    <tr><td>ア</td><td><span translate="no">NDA</span></td><td><span translate="no">SCM</span></td></tr>
+                    <tr><td>イ</td><td><span translate="no">NDA</span></td><td><span translate="no">SLM</span></td></tr>
+                    <tr><td>ウ</td><td><span translate="no">SLA</span></td><td><span translate="no">SCM</span></td></tr>
+                    <tr><td>エ</td><td><span translate="no">SLA</span></td><td><span translate="no">SLM</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問37（問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>ペアで話したあとに、答えと解説を見る</summary>
+                <p><strong>正解：エ（a＝<span translate="no">SLA</span>、b＝<span translate="no">SLM</span>）</strong>（型：空欄の組合せ）。まず、問題文のaの説明（サービス品質の合意書）から、aに入る言葉を決める。次に、aとbの説明を読み比べて、bを決める。<span translate="no">SLA</span>（サービスレベルアグリーメント）は「サービス品質の合意書」、<span translate="no">SLM</span>（サービスレベル管理）は「その遵守状況を確認して品質を維持・改善する活動」。<span translate="no">NDA</span>は秘密保持契約、<span translate="no">SCM</span>はサプライチェーン・マネジメントのこと。</p>
+              </details>
+            </div>
+
+            <p><strong>ペアで説明し合う（約15分）</strong></p>
+            <ul>
+              <li>例題ごとに、答えを見る前に、ペアで「自分はどれを選ぶか」と「その理由」を日本語で話す</li>
+              <li>解説を見て答えを確認したあと、「なぜ他の選択肢は違うのか」を1つ選んで相手に説明する</li>
+              <li>分からない言葉は、やさしい日本語で言い換えて質問し合う</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>診断テスト（Googleフォーム）</h3>
+          <div class="timeline-body">
+            <p><strong>目的と進め方（説明 約3分）</strong></p>
+            <ul>
+              <li>点数を競うためではなく、<strong>3分野のどこが弱いか</strong>を知るためのテスト。この結果は、これからの学習の優先順位を決める材料になり、ミニテストの「伸び」を測る出発点にもなる</li>
+              <li>IPAの公開過去問から抜粋した約20問。問題は3分野ごとに並んでいる。フォームのURLは、教室で案内する</li>
+              <li>分からない問題は考えすぎず、先へ進む。最後に時間があれば見直す（教科書 p.006・p.011）</li>
+            </ul>
+            <p><strong>回答（約25分）</strong></p>
+            <ul>
+              <li>学校のGoogleアカウントで回答する。知らない用語が出てきても、それが今の弱点を知る手がかりになる</li>
+            </ul>
+            <p><strong>提出の確認（約2分）</strong></p>
+            <ul>
+              <li>送信できたことを確認し、教員の指示にしたがって自分の結果を見る</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>結果の整理・次回予告</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>診断テストの結果を<strong>分野ごとに数え</strong>、ノートに書く（例：<span translate="no">ストラテジ系</span> ○問中□問正解）。いちばん正解が少なかった分野に印をつける（約5分）</li>
+              <li>このページの下の<strong>サイト内クイズ</strong>で、今日の内容を確認する</li>
+              <li>次回（第2回）：<strong>情報が漏れる日：脅威はどこから来るのか</strong>——<span translate="no">マルウェア</span>・<span translate="no">ソーシャルエンジニアリング</span>・<span translate="no">標的型攻撃</span>（<span translate="no">セキュリティ</span> p.352-359）と、<span translate="no">知的財産権・産業財産権</span>（p.046-050）、<span translate="no">個人情報保護法</span>など情報を守る法律（p.051-054）</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>用語カード（今日の用語）</h2>
+      <p class="lesson-note">用語は日本語のまま覚える。English は理解を助けるための参考で、分野名（Strategy・Management・Technology）はIPA公式の英語版試験要綱の表記。試験は日本語で行われる。</p>
+      <div class="table-wrap">
+        <table class="schedule-table">
+          <thead><tr><th>用語</th><th>ふりがな</th><th>やさしい日本語</th><th>English</th></tr></thead>
+          <tbody>
+            <tr><td><span translate="no">ストラテジ系</span></td><td>すとらてじけい</td><td>会社の経営や法律など、ビジネスの考え方</td><td>Strategy</td></tr>
+            <tr><td><span translate="no">マネジメント系</span></td><td>まねじめんとけい</td><td>システム開発やプロジェクトの進め方・管理</td><td>Management</td></tr>
+            <tr><td><span translate="no">テクノロジ系</span></td><td>てくのろじけい</td><td>コンピュータ・ネットワーク・セキュリティなどの技術</td><td>Technology</td></tr>
+            <tr><td><span translate="no">総合評価点</span></td><td>そうごうひょうかてん</td><td>試験全体の点数（1,000点満点）。600点以上が必要</td><td>total score（参考訳）</td></tr>
+            <tr><td><span translate="no">分野別評価点</span></td><td>ぶんやべつひょうかてん</td><td>3つの分野それぞれの点数（各1,000点満点）。どの分野も300点以上が必要</td><td>score for each field（参考訳）</td></tr>
+            <tr><td><span translate="no">CBT</span></td><td>しーびーてぃー</td><td>パソコンの画面で問題を解く試験の方式</td><td>Computer Based Testing</td></tr>
+            <tr><td><span translate="no">四肢択一</span></td><td>ししたくいつ</td><td>4つの選択肢から、正しいものを1つ選ぶ形式</td><td>multiple choice (four options)（参考訳）</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>理解度チェック（サイト内クイズ）</h2>
+      <p class="lesson-note">自分で確認するためのクイズ。回答はこのページの中で判定されるだけで、どこにも送信・保存されず、成績にも含まれない。何度でも試せる。</p>
+
+      <div class="quiz-set">
+
+        <div class="quiz" data-answer="ウ">
+          <p class="quiz-q"><span class="quiz-q-num">Q1</span>ITパスポート試験の試験時間として，適切なものはどれか。</p>
+          <div class="quiz-choices">
+            <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span>60分</span></button>
+            <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span>90分</span></button>
+            <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span>120分</span></button>
+            <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span>180分</span></button>
+          </div>
+          <div class="quiz-feedback" hidden aria-live="polite">
+            <p class="quiz-result"></p>
+            <p>試験時間は120分で、100問に答える（そのうち採点されるのは92問）。</p>
+            <button type="button" class="quiz-retry">もう一度</button>
+          </div>
+        </div>
+
+        <div class="quiz" data-answer="イ">
+          <p class="quiz-q"><span class="quiz-q-num">Q2</span>ITパスポート試験の合格基準として，最も適切なものはどれか。</p>
+          <div class="quiz-choices">
+            <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span><span translate="no">総合評価点</span>が600点以上であれば，合格である。</span></button>
+            <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span><span translate="no">総合評価点</span>が600点以上で，かつ3分野それぞれの<span translate="no">分野別評価点</span>が300点以上であれば，合格である。</span></button>
+            <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span>3分野のうち2分野で<span translate="no">分野別評価点</span>が300点以上であれば，合格である。</span></button>
+            <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span><span translate="no">総合評価点</span>が500点以上で，かつ3分野それぞれの<span translate="no">分野別評価点</span>が250点以上であれば，合格である。</span></button>
+          </div>
+          <div class="quiz-feedback" hidden aria-live="polite">
+            <p class="quiz-result"></p>
+            <p>合格には、総合評価点600点以上と、3分野すべてで300点以上の両方が必要。1分野でも300点に届かなければ不合格になる。</p>
+            <button type="button" class="quiz-retry">もう一度</button>
+          </div>
+        </div>
+
+        <div class="quiz" data-answer="ウ">
+          <p class="quiz-q"><span class="quiz-q-num">Q3</span><span translate="no">テクノロジ系</span>の説明として，最も適切なものはどれか。</p>
+          <div class="quiz-choices">
+            <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span>経営戦略やシステム戦略，法務など，企業を経営する上で必要な知識</span></button>
+            <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span>システム開発の流れや開発の手法，プロジェクトマネジメントなどの知識</span></button>
+            <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span>コンピュータやネットワーク，データベース，セキュリティなど，技術に関する知識</span></button>
+            <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span>商品を売るための広告や，販売の方法に関する知識だけ</span></button>
+          </div>
+          <div class="quiz-feedback" hidden aria-live="polite">
+            <p class="quiz-result"></p>
+            <p>アは<span translate="no">ストラテジ系</span>、イは<span translate="no">マネジメント系</span>の説明。<span translate="no">テクノロジ系</span>は、コンピュータ・ネットワーク・データベース・セキュリティなどの技術を学ぶ分野（教科書 p.008）。</p>
+            <button type="button" class="quiz-retry">もう一度</button>
+          </div>
+        </div>
+
+        <div class="quiz" data-answer="ア">
+          <p class="quiz-q"><span class="quiz-q-num">Q4</span>教科書 p.008-009 の出題傾向（過去3年の平均）で，出題率が最も高いカテゴリはどれか。</p>
+          <div class="quiz-choices">
+            <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span><span translate="no">セキュリティ</span></span></button>
+            <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span><span translate="no">ネットワーク</span></span></button>
+            <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span><span translate="no">データベース</span></span></button>
+            <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span><span translate="no">アルゴリズムとプログラミング</span></span></button>
+          </div>
+          <div class="quiz-feedback" hidden aria-live="polite">
+            <p class="quiz-result"></p>
+            <p><span translate="no">セキュリティ</span>が19%で最も高い。<span translate="no">ネットワーク</span>は7%、<span translate="no">データベース</span>は4%、<span translate="no">アルゴリズムとプログラミング</span>は3%。だから、この授業では<span translate="no">セキュリティ</span>を最初に学ぶ。</p>
+            <button type="button" class="quiz-retry">もう一度</button>
+          </div>
+        </div>
+
+        <div class="quiz" data-answer="イ">
+          <p class="quiz-q"><span class="quiz-q-num">Q5</span>この授業で，専門用語を日本語のまま覚える理由として，最も適切なものはどれか。</p>
+          <div class="quiz-choices">
+            <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span>ブラウザの翻訳機能が，日本語のページには使えないから。</span></button>
+            <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span>本番の試験は日本語で行われ，問題文や選択肢に専門用語が日本語で出るから。</span></button>
+            <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span>専門用語は，英語にも母語にも訳せないから。</span></button>
+            <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span>日本語の用語を覚えれば，試験を受けなくても合格できるから。</span></button>
+          </div>
+          <div class="quiz-feedback" hidden aria-live="polite">
+            <p class="quiz-result"></p>
+            <p>本番のITパスポート試験は日本語で行われる。翻訳は内容の理解に使い、試験に出る用語は日本語で覚える。</p>
+            <button type="button" class="quiz-retry">もう一度</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>第2回の用語カードを作る</strong>
+            <p>教科書 p.352-359 と p.046-054 を読み、<span translate="no">マルウェア</span>・<span translate="no">ソーシャルエンジニアリング</span>・<span translate="no">標的型攻撃</span>・<span translate="no">知的財産権</span>・<span translate="no">産業財産権</span>・<span translate="no">個人情報保護法</span>の用語カードを作る。ノートまたは自分の表に、「用語・ふりがな・自分の言葉での説明・English」の4列で書く（上の「今日の用語」が見本）。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>サイト内クイズを、全問正解になるまで繰り返す</strong>
+            <p>間違えた問題は、解説を読んでから「もう一度」を押して解き直す。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://www3.jitec.ipa.go.jp/JitesCbt/html/about/range.html" target="_blank" rel="noopener">【ITパスポート試験】試験内容・出題範囲</a> — 出題数・採点対象の問題数・合格基準の公式説明</li>
+        <li><a href="https://www.ipa.go.jp/shiken/mondai-kaiotu/index.html" target="_blank" rel="noopener">過去問題 | 試験情報 | IPA</a> — 公開問題と解答例（例題は<a href="https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2025r07_ip_qs.pdf" target="_blank" rel="noopener">令和7年度 公開問題</a>・<a href="https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2025r07_ip_ans.pdf" target="_blank" rel="noopener">解答例</a>から）。過去問題は、教育目的などで使う場合、出典を明記すれば許諾・使用料は不要（IPA公式）</li>
+        <li><a href="https://support.google.com/chrome/answer/173424?hl=ja" target="_blank" rel="noopener">ページを翻訳する、Chrome の言語を変更する</a> — Chrome公式ヘルプ</li>
+        <li><a href="https://www.ipa.go.jp/en/it-examinations/nph2g600000007uh-att/000009648.pdf" target="_blank" rel="noopener">Information Technology Engineers Examination Registered Information Security Specialist Examination Outline（Ver 3.0）</a> — IPA公式の英語版試験要綱（分野名の English 表記の出典）</li>
+        <li><a href="https://itpec.org/pastexamqa/ip.html" target="_blank" rel="noopener">IP Past Examination Questions and Answers | ITPEC.org</a> — 英語版の過去問（用語カードの English を確認したいときに使う）</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <div class="lesson-nav-item lesson-nav-item--disabled">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">---</span>
+      </div>
+      <a href="../it-passport-technology.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">ITパスポート テクノロジー系</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第2回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js?v=2"></script>
+</body>
+</html>
