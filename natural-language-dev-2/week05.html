@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>第5回 セキュリティとデータガバナンスを学ぶ | 自然言語開発 II</title>
+  <title>第5回 スコアを保存して守ろう：カード不要のNeonとセキュリティ | 自然言語開発 II</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=5">
-  <!-- 公式情報確認: 2026-09-30 (code.claude.com/docs/en/data-usage / privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training / docs.aws.amazon.com/bedrock/latest/userguide/data-protection.html / antigravity.google/terms)。OpenAI Codexの記述は help.openai.com の該当記事（Codexの個人ChatGPTプランでの学習設定・Include environments）を検索結果の抜粋で確認したもの。help.openai.com は curl・WebFetch とも403（bot対策）で本文を直接取得できていないため、授業中に各自が実ブラウザで公式ヘルプを開いて確認する構成にしている -->
+  <!-- 公式情報確認: 2026-09-30 (neon.com/pricing / neon.com/docs/reference/claimable-postgres / neon.com/docs/reference/neon-cli / neon.com/docs/connect/connect-from-any-app / neon.com/docs/manage/roles / neon.com/docs/manage/database-access / neon.com/docs/introduction/regions / code.claude.com/docs/en/data-usage / antigravity.google/terms / docs.aws.amazon.com/bedrock/latest/userguide/data-protection.html)。npmレジストリで、旧コマンド`npx neondb`は非推奨（`neon-new`へ改名）、現行のCLIは`neon`パッケージであることを確認。OpenAI Codexの記述は help.openai.com の検索結果抜粋のみが根拠（403で本文未取得）。実機確認（2026-09-30、教員のMacで実施）: `neon claim create --env-pull`はneon loginなしで成功し、.envにDATABASE_URL・DATABASE_URL_UNPOOLED・NEON_BRANCHの3つを書き出した（.gitignoreには.neonのみ追記され、.envは入らなかった）。`node --env-file=.env`＋pgで保存・取得ができ、再実行してもデータが残った。未claimプロジェクトでもCREATE ROLE・GRANT・読み取り専用ロールでのINSERT/DELETE拒否を確認。pgはSSLモードの警告を出すが動作する。未確認（授業前に教員がCodespaceで確認）: Codespace上での`npm i -g neon`の権限・外向き接続、ai-agent各種でのコード生成の再現性、claim後の接続文字列の取り直し手順 -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -25,7 +25,7 @@
       </nav>
       <div class="page-title-area">
         <div>
-          <h1 class="page-title">セキュリティと<wbr>データガバナンスを学ぶ</h1>
+          <h1 class="page-title">スコアを保存して守ろう：<wbr>カード不要のNeonとセキュリティ</h1>
           <div class="page-meta-badges">
             <span class="page-badge">Week 5</span>
             <span class="page-badge">木曜 3・4限</span>
@@ -41,15 +41,15 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">自分が使っているAIエージェントに「何が送られ、どう扱われるのか」を公式資料で確認し、進級制作で何を入力してよい・よくないかを自分たちで判断できるようになる</div>
+          <div class="lesson-overview-value">前回の対戦ゲームの「スコア」を、クレジットカード不要の無料クラウドDB（Neon）に残す。AIエージェントに頼んで作りながら、接続文字列という「秘密」の守り方と、何を保存・入力してよいかを体験で学ぶ</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">データガバナンス / 学習への利用 / 保存期間 / 個人契約と商用契約 / 入力してよいデータ</div>
+          <div class="lesson-overview-value">Neon（Postgres） / 接続文字列（パスワード相当） / 一時プロジェクトとclaim / 最小権限（読み取り専用ロール） / データガバナンス（データの置き場所・入力してよいデータ）</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
-          <div class="lesson-overview-value">自分が使うAIエージェント（Claude Code／Codex CLI／Antigravity CLI）の契約・ログイン状態がわかること。ノートPCで公式ページを開ける状態にしておく。</div>
+          <div class="lesson-overview-value">自分が使うAIエージェント（Claude Code／Codex CLI／Antigravity CLI）が使える状態のCodespace。ノートPCで公式ページを開けること。</div>
         </div>
       </div>
     </div>
@@ -57,15 +57,14 @@
     <div class="syllabus-section">
       <h2>この回のゴール</h2>
       <ul>
-        <li>AIエージェントを使うとき、<strong>プロンプトやコードがネットワーク経由で送られている</strong>ことを説明できる</li>
-        <li>「<strong>学習に使われるか</strong>」「<strong>どれくらい保存されるか</strong>」は、サービスや契約の種類で<strong>違う</strong>ことを、公式資料で確認できる</li>
-        <li>クラウドAIサービスの「<strong>個人情報を扱えるレベルの安全設計</strong>」が、どのような要素の組み合わせで成り立っているかを理解する</li>
-        <li>「学習に使われない」＝「何を入力してもよい」ではないことを理解する</li>
-        <li>自分が使っているエージェントの<strong>設定画面を実際に開いて</strong>、現在の状態を確認する</li>
-        <li>進級制作で<strong>何を入力してよい・よくないか</strong>を、自分の言葉でルール化する</li>
+        <li>ゲームのスコアを<strong>クラウドのDB</strong>に保存し、Codespaceを止めても残る仕組みを、AIエージェントに頼んで作る</li>
+        <li>DBの<strong>接続文字列は「パスワード相当」の秘密</strong>であり、渡す・コミットすると<strong>何が起きてしまうか</strong>を体験する</li>
+        <li>AIエージェントに<strong>何が送られ</strong>、<strong>学習に使われるか・どれくらい保存されるか</strong>は、サービスや契約で違うことを公式資料で確認する</li>
+        <li><strong>最小権限</strong>（必要な権限だけを与える）の考え方を、読み取り専用ロールで体験する</li>
+        <li>クラウドAIサービスの「個人情報を扱えるレベルの安全設計」が、<strong>複数の要素の組み合わせ</strong>で成り立つことを理解し、自分の入力ルールを決める</li>
       </ul>
       <div class="lesson-tip">
-        <strong>今日の進め方:</strong> 正解を暗記する回ではありません。サービスの規約や設定は変わることがあるため、<strong>公式資料を自分で読んで確認する習慣</strong>を身につけることが目的です。表現は公式の言い回しに合わせて確認しましょう。
+        <strong>今日の進め方:</strong> 読む時間より、<strong>作って壊して直す</strong>時間を長くします。壊してよいのは、今日作る<strong>自分の使い捨てのDB</strong>だけです。他人のサービスや、本物の個人情報には絶対に触れないでください。
       </div>
     </div>
 
@@ -80,21 +79,23 @@
             <span class="timeline-time">1限 前半</span>
             <span class="timeline-duration">約40分</span>
           </div>
-          <h3>AIエージェントを使うと、何が送られているのか</h3>
+          <h3>スコアを残したい——まず、データがどこへ行くのかを知る</h3>
           <div class="timeline-body">
-            <p><strong>前回の振り返りから入る</strong></p>
+            <p><strong>前回のつづき</strong></p>
             <ul>
-              <li>前回は、Codespacesのポート転送を「パブリック」にすると<strong>認証なしで世界中からアクセスできる</strong>ことを学んだ。今日は視点を変えて、<strong>自分が入力した情報の行き先</strong>を確認する</li>
+              <li>前回のゲームは、Codespaceを止めると<strong>スコアが消える</strong>。スコアを<strong>クラウドのDB</strong>に残したい——今日はそのための無料の道具を使う</li>
             </ul>
-            <p><strong>Claude Codeを例に、データの流れを読む</strong></p>
+            <p><strong>AIエージェントに何が送られるか（教員が要点だけ提示）</strong></p>
             <ul>
-              <li>公式ドキュメントには次のように書かれている（公式: <a href="https://code.claude.com/docs/en/data-usage" target="_blank" rel="noopener">Data usage</a>）:「Claude Code runs locally. To interact with the LLM, Claude Code sends data over the network. This data includes all user prompts and model outputs, encrypted in transit via TLS 1.2+.」</li>
-              <li>つまり、<strong>手元のPC（またはCodespace）で動いていても、指示文とモデルの出力はネットワーク越しにモデルの提供元へ送られる</strong>。Codex CLI・Antigravity CLIも、モデルを呼び出す仕組みである以上、入力が提供元のサービスに渡る点は同じ</li>
-              <li>手元にも記録が残る。Claude Codeは、セッションの記録を手元の<code>~/.claude/projects/</code>に<strong>平文</strong>で、既定で30日間保存する（同じ「Data usage」ページ）</li>
+              <li>Claude Codeの公式ドキュメントには次のように書かれている（<a href="https://code.claude.com/docs/en/data-usage" target="_blank" rel="noopener">Data usage</a>）:「Claude Code runs locally. To interact with the LLM, Claude Code sends data over the network. This data includes all user prompts and model outputs, encrypted in transit via TLS 1.2+.」——手元で動いていても、<strong>指示文とモデルの出力はネットワーク越しに提供元へ送られる</strong></li>
+              <li>エージェントにファイルを読ませると、<strong>その内容も指示文の一部として送られうる</strong>。後で作る<code>.env</code>（DBの秘密の接続文字列）を、エージェントに読ませるかどうかも「判断」の対象になる</li>
+              <li>学習への利用・保存期間は、契約の種類で違う。<strong>個人向けプラン</strong>では設定がオンなら学習に使われ、保存も長い（Claudeは設定オンで5年・オフで30日）。<strong>API・Amazon Bedrockなどの商用の経路</strong>では、既定では学習に使われない（公式: 「Anthropic does not train generative models using code or prompts sent to Claude Code under commercial terms, unless the customer has chosen to provide their data to us for model improvement」）。Antigravity CLIは、Gemini Enterprise（Google Cloud）などの組織向け契約や、Gemini Enterprise APIキー経由の場合は、この追加規約ではなく<strong>管理者が承諾した契約が適用される</strong>と書かれている（<a href="https://antigravity.google/terms" target="_blank" rel="noopener">Google Antigravity Additional Terms of Service</a>）。<strong>利用経路によって扱いが変わる</strong>ので、自分の契約を確認する。Codex CLIについては、OpenAIのヘルプセンターで各自が確認する（<a href="https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance" target="_blank" rel="noopener">How your data is used to improve model performance</a>。教員は本文を直接確認できていないため、必ず各自が公式ページで読む）</li>
+              <li>「学習に使われない」だけでは安全とは言えない。<strong>学習に使わない・保存期間を限る・アクセスできる人を限る・契約で扱いを定める</strong>といった、複数の要素の組み合わせ（<strong>データガバナンス</strong>）で「個人情報を扱えるレベルの安全設計」は成り立つ</li>
             </ul>
-            <p><strong>今日の問い</strong></p>
+            <p><strong>今日使うDB: Neon</strong></p>
             <ul>
-              <li>①送った内容は<strong>モデルの学習に使われる</strong>のか　②<strong>どれくらいの期間</strong>保存されるのか　③<strong>誰が</strong>それを見られるのか——これらは<strong>別々の論点</strong>であり、サービスや契約の種類によって答えが違う。この回では、①②③を公式資料で確認していく</li>
+              <li><strong>Neon</strong>は、Postgres（表形式のデータベース）のクラウドサービス。公式の料金ページには「Build and learn free with no time limits and no credit card required.」と書かれている（<a href="https://neon.com/pricing" target="_blank" rel="noopener">Pricing（Neon公式）</a>）——<strong>クレジットカードなしで使い始められる</strong></li>
+              <li>Freeプランは、1プロジェクトあたり0.5 GBまで。使っていない（非アクティブな）ときは自動で休止する（公式の料金表: 「After 5 minutes」）</li>
             </ul>
           </div>
         </div>
@@ -104,24 +105,31 @@
             <span class="timeline-time">1限 後半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>公式資料で、自分のエージェントの扱いを調べる</h3>
+          <h3>アカウントなしでDBを作り、AIエージェントにスコア保存を頼む</h3>
           <div class="timeline-body">
-            <p><strong>自分が使うエージェントの資料を読む</strong>（同じエージェントの人同士でグループになる）</p>
-            <p>各自、自分が使っているエージェントの行を担当し、①学習への利用　②保存期間　③その他の注意点を、公式ページから探して書き出す。以下は、教員が事前に公式ページで確認した内容（確認日: 2026-09-30）で、<strong>答え合わせ用</strong>として使う。</p>
+            <p><strong>Codespaceを再開して、作業フォルダを用意する</strong></p>
             <ul>
-              <li><strong>Claude Code（個人のFree／Pro／Maxプランで使う場合）</strong>: 公式は「We will train new models using data from Free, Pro, and Max accounts when this setting is on (including when you use Claude Code from these accounts).」と書く（<a href="https://code.claude.com/docs/en/data-usage" target="_blank" rel="noopener">Data usage</a>）。つまり<strong>設定がオンのときは学習に使われる</strong>。保存期間は、設定がオンなら<strong>5年</strong>、オフなら<strong>30日</strong>（確認日時点）。設定はいつでも変更できる</li>
-              <li><strong>Claude Code（API・Amazon Bedrockなど商用の経路で使う場合）</strong>: 公式は「Anthropic does not train generative models using code or prompts sent to Claude Code under commercial terms, unless the customer has chosen to provide their data to us for model improvement」と書く（同上）。<strong>既定では学習に使われない</strong>。学習とは別の論点として、Amazon Bedrockでは<strong>モデル提供元からのアクセス</strong>についてAWSの公式ドキュメントが「Because the model providers don't have access to those accounts, they don't have access to Amazon Bedrock logs or to customer prompts and completions.」と書く（<a href="https://docs.aws.amazon.com/bedrock/latest/userguide/data-protection.html" target="_blank" rel="noopener">Data protection（Amazon Bedrock）</a>）</li>
-              <li><strong>Antigravity CLI</strong>: 公式の追加利用規約は「We use Interactions to evaluate, develop, and improve Google and Alphabet research, products, services and machine learning technologies.」と書き、<strong>設定でデータの使われ方の選択を変えられる</strong>とする。一方、冒頭で、Gemini Enterprise（Google Cloud）・Gemini Enterprise for Business・Gemini Enterprise APIキー、または（Google Cloud Pre-GA Offering Termsに基づく）Google Workspaceの契約で使う場合は<strong>この規約は適用されない</strong>と書く（<a href="https://antigravity.google/terms" target="_blank" rel="noopener">Google Antigravity Additional Terms of Service</a>）。<strong>利用経路（個人のアカウントか、上記の組織契約・APIキーか）で適用される規約が変わる</strong></li>
-              <li><strong>Codex CLI</strong>: OpenAIのヘルプセンターによると、個人のChatGPTプランでCodexを使う場合は<strong>「Improve the model for everyone」の設定がCodexにも適用</strong>されるとされている。加えて、Codexには<strong>別の設定「Include environments」</strong>があり、ChatGPT側の設定とは別に管理する、とされている（<strong>教員は本文を直接確認できていないため、必ず各自が公式ヘルプで確認する</strong>）。<strong>ヘルプ記事は授業中に各自が公式ページで実際に読んで確認する</strong>（<a href="https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance" target="_blank" rel="noopener">How your data is used to improve model performance（OpenAI Help Center）</a>）</li>
+              <li>これまでと同じ手順でCodespaceを再開し、新しい作業フォルダ（例: <code>score-db</code>）を作る</li>
+              <li><strong>最初に</strong>、フォルダに<code>.gitignore</code>を作り、<code>.env</code>・<code>.env.local</code>・<code>node_modules</code>を書き込んでおく（DBの秘密の接続文字列を、誤ってGitHubに載せないための備え。書き方が分からなければエージェントに頼んでよい）</li>
+            </ul>
+            <p><strong>アカウントなしで、一時的なDBを作る</strong></p>
+            <ul>
+              <li>Neonの公式CLIを入れる: <code>npm i -g neon</code>（うまくいかないときは、エージェントに「Neon CLIを入れて」と頼んでよい。あとの<code>neon claim</code>が使えないと言われたら、<code>npm i -g neon@latest</code>で最新版にする。公式: <a href="https://neon.com/docs/reference/neon-cli" target="_blank" rel="noopener">Neon CLI</a>）</li>
+              <li>次のコマンドで、<strong>アカウントを作らずに</strong>一時的なプロジェクトを作り、接続文字列を書き出す: <code>neon claim create --env-pull</code>（公式の説明では、既にある<code>.env</code>に書き込み、なければ<code>.env.local</code>に書き出す。<strong>先に空の<code>.env</code>を作っておく</strong>と、以降の説明どおりに進められる）</li>
+              <li>公式の説明: 「Unclaimed projects expire in 72 hours (<code>project.expires_at</code>) and are capped at 100 MB storage and 1 GB transfer.」——<strong>72時間で期限切れ</strong>（あとで自分のアカウントに引き継ぐ手順は2限後半に扱う）（<a href="https://neon.com/docs/reference/claimable-postgres" target="_blank" rel="noopener">Claimable Neon</a>）</li>
+              <li><code>.env</code>には<code>DATABASE_URL</code>など3つの値が入る。<code>DATABASE_URL</code>が<strong>DBに入るための鍵（パスワード相当）</strong>。中身をチャットや画面に貼らない。コマンドの実行結果には、プロジェクトの期限（72時間後）も表示される</li>
+              <li>コマンドは<code>.gitignore</code>に<code>.neon</code>を追加することがあるが、<code>.env</code>を入れてくれるとは限らない。<strong><code>.gitignore</code>に<code>.env</code>が入っているか、必ず自分で確認する</strong></li>
+            </ul>
+            <p><strong>AIエージェントに、スコア保存のスクリプトを頼む</strong></p>
+            <ul>
+              <li>例: <code>scoresテーブル（id・名前・スコア・作成日時）を作り、スコアを1件追加して、上位10件を表示するNode.jsのスクリプトscores.jsを書いてください。DBへの接続は、.envのDATABASE_URLを使い、pgパッケージで行ってください。必要なパッケージのインストールと、.envの読み込み方法（dotenvか、Nodeの--env-file）も含めてください</code></li>
+              <li>エージェントが書いたコードを<strong>読んでから</strong>実行する。接続文字列が<strong>コードの中に直接書かれていない</strong>か（<code>.env</code>から読み込んでいるか）を確認する（Nodeからの接続の公式例: <a href="https://neon.com/docs/connect/connect-from-any-app" target="_blank" rel="noopener">Connect from any application</a>）</li>
+              <li>実行すると、pgの<strong>SSLに関する警告</strong>が出ることがあるが、動作には影響しない。意味が分からなければエージェントに聞いてよい（警告を消すことが目的ではない）</li>
+              <li>実行して、スコアが表示されれば成功。<strong>新しいターミナルでもう一度実行しても、スコアが残っている</strong>ことを確かめる（時間があれば、Codespaceを一度止めて再開しても残っていることも確かめる。スコアは手元ではなく<strong>クラウドのDB</strong>にあるため）</li>
             </ul>
             <div class="lesson-tip">
-              <strong>読み方のコツ:</strong> 「個人向けプラン」と「商用・組織向けの契約」のどちらの話なのかを、まず見出しで確認します。同じサービス名でも、契約の種類が違えば書かれている扱いが変わります。読み取れなかった箇所や、公式の英語の意味が曖昧な箇所は、AIエージェントに「この文章を日本語で説明して」と頼んでよい（ただし<strong>最終判断は原文の公式ページで</strong>確認する）。
+              <strong>詰まったら:</strong> 接続できない、エラーが出るときは、そのエラー全文をエージェントに貼って「原因と直し方を教えて」と頼んでよい。それでも進まなければ、講師に声をかけてください。教員のデモに切り替えるか、Neonの無料アカウント（カード不要）をブラウザで作ってプロジェクトを作成し、<code>neon connection-string</code>で接続文字列を取り出す方法に切り替えます。
             </div>
-            <p><strong>調べた結果を共有する</strong></p>
-            <ul>
-              <li>グループごとに、学習への利用・保存期間・注意点を1分ずつで発表する</li>
-              <li>教員の答え合わせと違った点があれば、どちらが新しい情報かを公式ページの日付・記載で確認する</li>
-            </ul>
           </div>
         </div>
 
@@ -137,30 +145,28 @@
             <span class="timeline-time">2限 前半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>「学習に使われない」なら、何を入力してもよいのか</h3>
+          <h3>鍵を渡すとどうなるか——壊して、守る</h3>
           <div class="timeline-body">
-            <p><strong>「学習されない」と「入力してよい」は別の話</strong></p>
+            <p><strong>ミッション1: 隣の人の記録を消してみる</strong>（約20分）</p>
             <ul>
-              <li>クラウドAIサービスの「個人情報を扱えるレベルの安全設計」は、<strong>学習に使わない・保存期間を限る・アクセスできる人を限る・契約で扱いを定める</strong>といった複数の要素の組み合わせで成り立っている。1つの要素だけで「安全」とは言えない</li>
-              <li>「学習に使われない」ことは、<strong>情報の扱いが安全になる要素の1つ</strong>に過ぎない。他にも、<strong>保存される期間</strong>、<strong>提供元の担当者が内容を見られるか</strong>、<strong>契約や規約で入力が認められているか</strong>など、独立した論点がある</li>
-              <li>例えば、進級制作で使う<strong>AWSのFree Planアカウント</strong>は、公式規約上<strong>評価目的での利用に限られ、機微なデータの処理には使わないこと</strong>とされている（本科目の履修上の注意点）。「学習に使われない設計」であっても、<strong>そのアカウントで扱ってよいデータの範囲</strong>は別に決まっている</li>
-              <li>手元の記録にも注意する。Claude Codeのセッション記録は手元に平文で残るため、共有PCや共有Codespaceでは<strong>入力した内容が他の人の目に触れる可能性</strong>もある</li>
+              <li><strong>ルール:</strong> 対象は<strong>自分たちが今日作った使い捨てのDBだけ</strong>。相手の<strong>同意を得て</strong>、授業内でのみ行う。他人のサービスや本物のデータには絶対に試さない</li>
+              <li>①隣の人に、自分の<code>DATABASE_URL</code>を渡す。渡し方は<strong>画面に表示して、相手が手で入力する</strong>（チャット・メール・Slackなどに<strong>貼らない</strong>。履歴に残るため）。これは<strong>授業の中だけの例外</strong>で、本番では絶対にしない</li>
+              <li>②渡された人は、エージェントに<code>環境変数DATABASE_URLで指定されたDBのscoresテーブルの中身を全部消す、clear-scores.jsを書いてください</code>と頼み、書かれたコードを読んでから、<code>read -s -p "接続文字列: " DATABASE_URL; export DATABASE_URL; node clear-scores.js; unset DATABASE_URL</code>のように、<strong>画面に表示されない入力欄に手で入力して実行</strong>（<code>DATABASE_URL="…" node …</code>と直接書くと、接続文字列が<strong>シェルの履歴に残ってしまう</strong>ため。<code>read -s</code>なら履歴に残らない）する（<strong>接続文字列そのものは、エージェントへの質問には貼らない</strong>。貼ると、その内容も提供元へ送られうるため。これは後のケース討議の題材でもある）</li>
+              <li>③持ち主は、自分のスクリプトを実行して、<strong>スコアが消えた</strong>ことを確かめる</li>
+              <li>気づいてほしいこと: <strong>接続文字列を持っている人は、DBの持ち主と同じことができてしまう</strong>。ログインもパスワード入力も、そこには出てこない</li>
             </ul>
-            <p><strong>ケースで考える（グループで話し合い）</strong></p>
-            <p>次の入力を、それぞれ<strong>「入れてよい」「条件つきで入れてよい」「入れない」</strong>の3つに分け、理由を1文で説明する。</p>
+            <p><strong>ミッション2: 権限を絞る（最小権限）</strong>（約20分）</p>
             <ul>
-              <li>自分が作ったゲームのソースコード（Publicのリポジトリ）</li>
-              <li>進級制作で使う、<strong>架空のテストデータ</strong>（名前・住所をランダムに作ったもの）</li>
-              <li>アルバイト先の顧客名簿の一部（実在する人の氏名・電話番号）</li>
-              <li>クラスメイトの<strong>実名と成績</strong>を含むデータ</li>
-              <li>AWSのアクセスキー、APIキー、パスワード</li>
-              <li>自分の<strong>実名・住所</strong>を含む個人情報</li>
-              <li>実習先の企業から預かった、社外に出してはいけない資料</li>
+              <li>エージェントに頼む（例）: <code>scoresテーブルを読むだけの、読み取り専用ロールreadonly_userを作ってください。そのロールの接続文字列で、SELECTはできて、INSERTとDELETEは失敗することを確かめてください</code></li>
+              <li>Neonの公式ドキュメントでは、Postgresでは<strong>データベース・スキーマ・テーブルの各レベルで権限を与える</strong>必要があると説明されている（「access must be granted at the database, schema, and object level」。<a href="https://neon.com/docs/manage/database-access" target="_blank" rel="noopener">Manage database access</a>）。エージェントが書いたSQLを読んで、<code>GRANT CONNECT</code>・<code>GRANT USAGE ON SCHEMA</code>・<code>GRANT SELECT</code>に対応する行があるか探す</li>
+              <li>読み取り専用ロールの接続文字列も<strong>もう1つの秘密</strong>。<code>.env</code>に別の名前（例: <code>READONLY_DATABASE_URL</code>）で書き、コードには直接書かない</li>
+              <li>ミッション1をもう一度、<strong>読み取り専用の接続文字列</strong>で試す——<strong>消せなくなった</strong>ことを確認する</li>
+              <li>うまくいかない場合は、エラー全文をエージェントに貼って原因を聞くか、講師のデモで確認する</li>
             </ul>
-            <p><strong>考え方の軸を出し合う</strong></p>
+            <p><strong>ミッション3: 漏れたらどうするか</strong>（約10分）</p>
             <ul>
-              <li>グループの判断を共有し、意見が分かれたケースについて<strong>なぜ分かれたか</strong>を全体で話し合う</li>
-              <li>「入れない」ものを、どうすれば<strong>入れる必要がない形</strong>にできるか（ダミーデータに置き換える、秘密の値は環境変数やシークレット管理に分ける、など）も考える</li>
+              <li><strong>パスワードを変える</strong>（ローテーション）ことで、漏れた接続文字列を無効にする。Neonの公式には、コンソールの「Reset password」またはSQLの<code>ALTER USER … WITH PASSWORD</code>で変えられると書かれている（<a href="https://neon.com/docs/manage/roles" target="_blank" rel="noopener">Manage roles</a>）。アカウントのない一時プロジェクトでは、コンソールはまだ使えない可能性が高いので、SQLで変えるか、<strong>作り直して捨てる</strong>のが手。コンソールの「Reset password」は、自分のアカウントに引き継いだ（claimした）あとの選択肢になる</li>
+              <li>もしPublicのリポジトリに接続文字列をpushしてしまったら、<strong>誰でも読める</strong>うえ、履歴・フォーク・他人のコピーに残りうるため、<strong>消しても遅い</strong>と考えて、すぐにパスワードを変える。だから<strong>最初の<code>.gitignore</code></strong>が大事になる</li>
             </ul>
           </div>
         </div>
@@ -170,20 +176,34 @@
             <span class="timeline-time">2限 後半</span>
             <span class="timeline-duration">約30分</span>
           </div>
-          <h3>自分のエージェントの設定を実際に確認する</h3>
+          <h3>何を保存・入力してよいか決めて、DBを自分のものにする</h3>
           <div class="timeline-body">
-            <p><strong>設定画面を開いて、現在の状態を見る</strong></p>
+            <p><strong>ケースで考える（グループで話し合い、約15分）</strong></p>
+            <p>ゲームのスコアDBに入れる・エージェントに見せる内容を、<strong>「入れてよい」「条件つきで入れてよい」「入れない」</strong>に分け、理由を1文で説明する。</p>
             <ul>
-              <li><strong>Claude（個人プランの人）</strong>: <a href="https://claude.ai/settings/data-privacy-controls" target="_blank" rel="noopener">claude.ai/settings/data-privacy-controls</a> で、モデル改善への利用の設定を確認する</li>
-              <li><strong>Antigravity CLI</strong>: 自分のログイン方法（個人のGoogleアカウントか、組織のアカウントか）と、設定でデータの使われ方の選択があるかを確認する</li>
-              <li><strong>Codex CLI（ChatGPT）</strong>: ChatGPTの「Data Controls」で「Improve the model for everyone」の状態を確認し、Codexの設定に「Include environments」があるかも確認する（見当たらない場合は講師へ）</li>
-              <li><strong>Amazon Bedrock経由のClaude Codeの人</strong>: 契約が「商用の経路」であること、そしてAWSアカウントが<strong>Free Planか有料か</strong>を確認する</li>
-              <li>見つからない・分からない場合は、無理に設定を変えず、<strong>今の状態だけを控えて</strong>講師に質問する</li>
+              <li>ニックネームとスコア</li>
+              <li>クラスメイトの<strong>実名</strong>とスコア</li>
+              <li>参加者のメールアドレス（ランキングの通知用）</li>
+              <li>DBの<strong>接続文字列</strong>（<code>.env</code>の中身）をエージェントへの質問に貼る</li>
+              <li>自分の<strong>実名・住所</strong>を含むテストデータ</li>
+              <li>アルバイト先や実習先から預かった、社外に出してはいけない資料</li>
             </ul>
-            <p><strong>進級制作の「入力ルール」を3行でまとめる</strong></p>
+            <p><strong>データの置き場所も判断材料になる</strong></p>
             <ul>
-              <li>「入れる／入れない」の基準を、自分の言葉で3行にまとめる（例:「実在する人の個人情報は入れない。テストにはダミーを使う。キーやパスワードは入れない」）</li>
-              <li>チームで進級制作に取り組んでいる場合は、チーム内で共有して1つのルールにそろえる</li>
+              <li>Neonの公式ドキュメントによると、Neonは複数のAWSリージョンで使えるが、<strong>日本（東京）のリージョンはない</strong>（一覧にあるアジア太平洋は、シンガポールとシドニー。<a href="https://neon.com/docs/introduction/regions" target="_blank" rel="noopener">Regions（Neon公式）</a>）。保存したデータは<strong>日本国外に置かれる</strong>ことがある（一時プロジェクトの置き場所は、公式に明記がなく、自分では選べない）——個人情報を扱うなら、置き場所や契約も確認が必要になる</li>
+              <li>第3回で扱ったAWSのFree Planは<strong>評価目的に限られ、機微なデータの処理には使わない</strong>とされている（本科目の履修上の注意点）。「安全な設計」でも、<strong>そのアカウントで扱ってよいデータの範囲</strong>は別に決まっている</li>
+            </ul>
+            <p><strong>DBを自分のものにする（任意、約10分）</strong></p>
+            <ul>
+              <li>72時間で消える一時プロジェクトを残したい人は、<code>neon claim accept</code>で自分のNeonアカウントに<strong>引き継ぐ（claim）</strong>。このコマンドは、既定ではブラウザを開こうとする。Codespaceでは開かないので、<code>neon claim accept --no-open</code>と実行して<strong>表示されたURLを手元のブラウザで開く</strong>（<a href="https://neon.com/docs/cli/claim" target="_blank" rel="noopener">claim（Neon公式）</a>）</li>
+              <li><strong>引き継ぐと、接続文字列（パスワード）が変わる</strong>ため、それまでの<code>.env</code>の値は使えなくなる。引き継いだあとは、Neonのコンソールで新しい接続文字列を取り直し、<code>.env</code>を書き換える</li>
+              <li>アカウント作成の途中で<strong>クレジットカードの入力を求められたら、進まずに講師に声をかける</strong>（Freeプランはカード不要と公式に書かれているが、画面の実際の表示を確認する）</li>
+              <li>引き継がないなら、72時間後に消えることを理解しておけばよい</li>
+            </ul>
+            <p><strong>自分の「入力ルール」を3行でまとめる</strong></p>
+            <ul>
+              <li>例:「実在する人の個人情報は入れない。テストにはダミーを使う。接続文字列やキーは、コードにもチャットにも書かない」</li>
+              <li>チームで進級制作に取り組んでいる場合は、チームのルールとしてそろえる</li>
             </ul>
           </div>
         </div>
@@ -196,8 +216,9 @@
           <h3>次回予告＆今日の振り返り</h3>
           <div class="timeline-body">
             <ul>
-              <li>次回（第6回）：<strong>Firebaseに触れてみよう</strong>——Firebaseの基本概念（Hosting等）に触れ、使用中のAIエージェントから<strong>Firebase CLI</strong>（<code>firebase deploy</code>等）を使って、進級制作に簡単な機能を組み込む</li>
-              <li>「今日確認した自分のエージェントの扱い」と「自分の入力ルール」を一言メモして退出</li>
+              <li>次回（第6回）：<strong>Firebaseに触れてみよう</strong>——Firebaseの基本概念（Hosting等）に触れ、使用中のAIエージェントから<strong>Firebase CLI</strong>（<code>firebase deploy</code>等）を使って、進級制作に簡単な機能を組み込む。今日は「データを置く側」、次回は「ページを公開する側」の話へ</li>
+              <li>第9回のFirestoreは、今日のNeon（表形式のPostgres）とは別の種類のDB（NoSQL）。違いは第9回で比べる</li>
+              <li>「今日、壊して分かったこと」と「自分の入力ルール」を一言メモして退出</li>
             </ul>
           </div>
         </div>
@@ -211,15 +232,15 @@
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>自分の「入力ルール」を進級制作のメモに残しておく</strong>
-            <p>今日まとめた3行のルールを、進級制作のリポジトリやメモに書いておく。実在する個人情報・パスワード・APIキーを、コードやAIエージェントへの指示に含めていないか、見直しておく。</p>
+            <strong>接続文字列（<code>.env</code>）が、GitHubにpushされていないことを確認する</strong>
+            <p>自分のリポジトリを開き、<code>.env</code>が見えないことを確かめる。もし見えてしまっていたら、すぐに講師に伝えて、パスワードを変える。あわせて、今日まとめた「入力ルール」を進級制作のメモに残しておく。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
-            <strong>使っていない他のエージェントの扱いも読んでみる</strong>
-            <p>自分が使っていないエージェントの公式資料も読み、違いを比べてみると、契約の種類による扱いの差が見えてきます。</p>
+            <strong>スコアの保存を、自分のゲームに組み込んでみる</strong>
+            <p>前回のゲームに、スコアを送る処理を足してみましょう。ブラウザに接続文字列を直接書くと誰にでも見えてしまうので、どこから送るのが安全かも、エージェントと相談してみてください。</p>
           </div>
         </div>
       </div>
@@ -228,10 +249,16 @@
     <div class="syllabus-section">
       <h2>参考リンク</h2>
       <ul>
-        <li><a href="https://code.claude.com/docs/en/data-usage" target="_blank" rel="noopener">Data usage（Claude Code公式）</a> — 学習への利用・保存期間・データの流れ・テレメトリの既定値</li>
-        <li><a href="https://privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training" target="_blank" rel="noopener">Is my data used for model training?（Anthropic Privacy Center）</a> — 個人向けプランでの学習設定</li>
-        <li><a href="https://docs.aws.amazon.com/bedrock/latest/userguide/data-protection.html" target="_blank" rel="noopener">Data protection（Amazon Bedrock公式）</a> — モデル提供元がBedrockのログやプロンプトにアクセスできない設計</li>
-        <li><a href="https://antigravity.google/terms" target="_blank" rel="noopener">Google Antigravity Additional Terms of Service（公式）</a> — Interactionsの利用と、契約の種類による規約の適用範囲</li>
+        <li><a href="https://neon.com/pricing" target="_blank" rel="noopener">Pricing（Neon公式）</a> — Freeプランの内容（カード不要・容量・休止）</li>
+        <li><a href="https://neon.com/docs/reference/claimable-postgres" target="_blank" rel="noopener">Claimable Neon（Neon公式）</a> — アカウントなしの一時プロジェクトと、引き継ぎ（claim）</li>
+        <li><a href="https://neon.com/docs/reference/neon-cli" target="_blank" rel="noopener">Neon CLI（Neon公式）</a> — <code>neon login</code>・<code>neon claim</code>・<code>neon connection-string</code>など</li>
+        <li><a href="https://neon.com/docs/cli/claim" target="_blank" rel="noopener">claim（Neon公式）</a> — 一時プロジェクトの作成と引き継ぎ（<code>--no-open</code>など）</li>
+        <li><a href="https://neon.com/docs/connect/connect-from-any-app" target="_blank" rel="noopener">Connect from any application（Neon公式）</a> — Node.jsからの接続の書き方</li>
+        <li><a href="https://neon.com/docs/manage/database-access" target="_blank" rel="noopener">Manage database access（Neon公式）</a> — 読み取り専用ロールの作り方</li>
+        <li><a href="https://neon.com/docs/manage/roles" target="_blank" rel="noopener">Manage roles（Neon公式）</a> — ロールの作成とパスワードのリセット</li>
+        <li><a href="https://neon.com/docs/introduction/regions" target="_blank" rel="noopener">Regions（Neon公式）</a> — 使えるリージョン（東京はない）</li>
+        <li><a href="https://code.claude.com/docs/en/data-usage" target="_blank" rel="noopener">Data usage（Claude Code公式）</a> — 学習への利用・保存期間・データの流れ</li>
+        <li><a href="https://antigravity.google/terms" target="_blank" rel="noopener">Google Antigravity Additional Terms of Service（公式）</a> — 利用経路による規約の適用範囲</li>
         <li><a href="https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance" target="_blank" rel="noopener">How your data is used to improve model performance（OpenAI Help Center）</a> — Codexを含む個人プランでの学習設定</li>
       </ul>
     </div>
