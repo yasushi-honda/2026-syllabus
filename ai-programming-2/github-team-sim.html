@@ -223,7 +223,7 @@
     { t: 'ミッション4: GitHubにpushする', b: '作業ブランチをGitHubに<strong>push</strong>して、チームに見える状態にします。' },
     { t: 'ミッション5: プルリクエスト（PR）を作る', b: 'pushしたブランチの変更を、mainに取り込んでほしいとお願いする<strong>PR</strong>を作ります（画面のボタンでも、コマンドでも可）。' },
     { t: 'ミッション6: レビューを受けてマージする', b: 'ミサキがレビューします。OKが出たら<strong>Merge pull request</strong>でmainに取り込みましょう。（本物のGitHubでは、このあと <strong>Confirm merge</strong> も押します）' },
-    { t: 'ミッション7: コンフリクトを解消する', b: '2本目の作業で、ミサキと<strong>同じ行</strong>を別々に変更してしまいます。mainの最新を取り込み、<strong>どちらを残すか自分で決めて</strong>解消し、コミット・pushします。' },
+    { t: 'ミッション7: コンフリクトを解消する', b: '2本目の作業で、ミサキと<strong>同じ行</strong>を別々に変更してしまいます。<strong>PRを作る</strong>とコンフリクトが表示されます。mainの最新を取り込み、<strong>どちらを残すか自分で決めて</strong>解消し、コミット・pushします。' },
     { t: 'ミッション8: 2本目のPRをマージする', b: 'コンフリクトが解消されたPRを、もう一度マージして完成させます。' }
   ];
 
@@ -297,6 +297,7 @@
     if ((m = line.match(/^git (?:switch -c|checkout -b) (\S+)$/))) {
       var name = m[1];
       if (!/^[A-Za-z0-9._\/-]+$/.test(name)) { say('fatal: ブランチ名に使えない文字があります（英数字と - _ / . を使います）', 'err'); return out; }
+      if (name === 'add-class' || name.indexOf('misaki/') === 0) { say('fatal: この名前は、あとのミッションで使うため、ここでは別の名前にしてください（例: add-title）', 'err'); return out; }
       if (S.local[name]) { say("fatal: a branch named '" + name + "' already exists", 'err'); return out; }
       if (S.merging) { say('error: マージの途中です。先に解消を終えましょう', 'err'); return out; }
       S.local[name] = S.local[S.cur];
@@ -353,11 +354,13 @@
       if (S.remote[b] === S.local[b]) { say('Everything up-to-date', 'ok'); return out; }
       if (S.merging) { say('error: マージの途中です。先にコミットしましょう。', 'err'); return out; }
       if (isModified() && !S.staged) { /* 未コミットの変更はpushされない */ say('注意: 未コミットの変更（index.html）は送られません。先にコミットしましょう。', 'err'); }
+      var existed = !!S.remote[b];
       S.remote[b] = S.local[b];
-      say("To github.com:game-club/team-game.git\n * [new branch]      " + b + " -> " + b + "\nGitHubに送りました。", 'ok');
+      say("To github.com:game-club/team-game.git\n " + (existed ? '   ' : '* [new branch]') + "      " + b + " -> " + b + "\nGitHubに送りました。", 'ok');
       var pr = findPr(b);
-      if (pr && pr.conflict) {
-        if (reachable(S.local[b])[S.remote.main]) { pr.conflict = false; say('PRのコンフリクトが解消されました（GitHub画面を見てみましょう）。', 'ok'); advance(7); }
+      if (S.branch2Started && b === 'add-class' && reachable(S.local[b])[S.remote.main]) {
+        if (pr && pr.status === 'open') { pr.conflict = false; say('PRのコンフリクトが解消されました（GitHub画面を見てみましょう）。', 'ok'); }
+        advance(7);
       }
       advance(4);
       return out;
@@ -365,6 +368,7 @@
 
     if (/^git pull\b/.test(line) || line === 'git merge origin/main') {
       if (S.cur === 'main') { say('今は main にいます。作業ブランチにいる時に実行します。', 'err'); return out; }
+      if (S.merging) { say('error: You have not concluded your merge.\nコンフリクトの解消（ファイルの修正→git add→git commit）を先に終えましょう。', 'err'); return out; }
       if (isModified() && !S.merging) { say('error: 未コミットの変更があります。先にコミットしてください。', 'err'); return out; }
       var mainTip = S.remote.main;
       if (reachable(S.local[S.cur])[mainTip]) { say('Already up to date.', 'ok'); return out; }
@@ -414,7 +418,9 @@
     var b = S.cur;
     if (b === 'main') return { err: 'mainからはPRを作りません。作業ブランチにいる時に実行します。' };
     if (!S.remote[b]) return { err: 'ブランチ ' + b + ' はまだGitHubにありません。先に push しましょう。' };
-    if (findPr(b)) return { err: 'このブランチのPRはすでにあります。' };
+    var ex = findPr(b);
+    if (ex && ex.status === 'open') return { err: 'このブランチのPRはすでにあります。' };
+    if (reachable(S.remote.main)[S.remote[b]]) return { err: 'mainとの違いがないため、PRを作れません（There isn\'t anything to compare）。先に変更をコミットして、pushしましょう。' };
     var conflict = (b === 'add-class') && !reachable(S.remote[b])[S.remote.main];
     var pr = { n: S.nextPr++, branch: b, status: 'open', reviewed: false, conflict: conflict };
     S.prs.push(pr);
@@ -462,12 +468,12 @@
     var mine = newCommit('見出しにclassを追加', [base.id], 'add-class', mk(H_MINE));
     S.local['add-class'] = mine.id; S.remote['add-class'] = mine.id; S.upstream['add-class'] = true;
     // ミサキ: 同じ行を変更してmainにマージ
-    var theirs = newCommit('Merge pull request #2 from misaki/add-emoji（見出しに🎮を追加）', [base.id], 'main', mk(H_THEIRS));
+    var mpr = S.nextPr++;
+    var theirs = newCommit('Merge pull request #' + mpr + ' from misaki/add-emoji（見出しに🎮を追加）', [base.id], 'main', mk(H_THEIRS));
     S.remote.main = theirs.id;
-    S.nextPr = 3;
-    S.prs.push({ n: 2, branch: 'misaki/add-emoji', status: 'merged', reviewed: true, conflict: false });
+    S.prs.push({ n: mpr, branch: 'misaki/add-emoji', status: 'merged', reviewed: true, conflict: false });
     S.cur = 'add-class'; S.file = mk(H_MINE); S.staged = false; S.branch2Started = true;
-    return '2本目の作業（' + 'add-class' + '）: あなたは見出しにclassを追加してpush済み。ところが同じ頃、ミサキが同じ見出しの行に🎮を付けるPRをmainにマージしていました。';
+    return '2本目の作業（' + 'add-class' + '）: あなたは見出しにclassを追加してpush済み。ところが同じ頃、ミサキが同じ見出しの行に🎮を付けるPR（#' + mpr + '）をmainにマージしていました。';
   }
 
   function resolve(kind) {
@@ -514,7 +520,7 @@
     $('mTitle').textContent = S.cleared ? '全ミッション完了！' : MISSIONS[mi].t;
     $('mBody').innerHTML = S.cleared ? 'おつかれさまでした。下の対応表で、コマンドとagyのお願いを見比べましょう。' : MISSIONS[mi].b;
     $('hintBox').style.display = S.hintOpen ? 'block' : 'none';
-    $('hintBox').innerHTML = esc(nextHint()).replace(/&lt;&lt;&lt;&lt;&lt;&lt;&lt;/g, '&lt;&lt;&lt;&lt;&lt;&lt;&lt;');
+    $('hintBox').innerHTML = esc(nextHint());
     $('clearBox').style.display = S.cleared ? 'block' : 'none';
     $('promptCmd').textContent = (S.cloned ? 'team-game (' + S.cur + ')' : '~') + ' $';
 
@@ -561,7 +567,7 @@
     var branches = Object.keys(S.remote);
     // Compare & pull request バナー
     branches.forEach(function (b) {
-      if (b !== 'main' && !findPr(b)) {
+      if (b !== 'main' && !findPr(b) && !reachable(S.remote.main)[S.remote[b]]) {
         h += '<div class="sim-banner"><strong>' + esc(b) + '</strong> had recent pushes　<button class="sim-btn sim-btn--green" type="button" data-cpr="1">Compare &amp; pull request</button></div>';
       }
     });
@@ -593,6 +599,7 @@
     $(id).scrollTop = $(id).scrollHeight;
     return el;
   }
+  function notice(text, ok) { logTo('logCmd', text, ok ? 'ok' : 'err'); logTo('logAgy', text, ok ? 'ok' : 'err'); }
   function execLine(cmd, logId) {
     var res = run(cmd);
     if (res === null) { $(logId).innerHTML = ''; return; }
@@ -691,25 +698,25 @@
     $('resetBtn').onclick = function () { init(); };
     $('editBtn').onclick = function () {
       var r = doEdit();
-      logTo('logCmd', r.err || r.ok, r.err ? 'err' : 'ok'); render();
+      notice(r.err || r.ok, !r.err); render();
     };
     $('resolveBox').onclick = function (e) {
       var k = e.target && e.target.getAttribute && e.target.getAttribute('data-res');
       if (!k) return;
-      var r = resolve(k); if (r) logTo('logCmd', r, 'ok'); render();
+      var r = resolve(k); if (r) notice(r, true); render();
     };
     $('gh').onclick = function (e) {
       var t = e.target;
       if (t.getAttribute('data-cpr')) {
         var r = createPr();
-        logTo('logCmd', r.err || r.ok, r.err ? 'err' : 'ok');
+        notice(r.err || r.ok, !r.err);
         render();
       } else if (t.getAttribute('data-merge')) {
         var r2 = mergePr(parseInt(t.getAttribute('data-merge'), 10));
-        logTo('logCmd', r2.err || r2.ok, r2.err ? 'err' : 'ok'); render();
+        notice(r2.err || r2.ok, !r2.err); render();
       } else if (t.id === 'startSecond') {
         var msg = startSecond();
-        if (msg) { logTo('logCmd', msg, 'ok'); logTo('logAgy', msg, 'agy'); }
+        if (msg) notice(msg, true);
         render();
       }
     };
