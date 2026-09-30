@@ -3280,6 +3280,10 @@ main .vz-node:not(:last-child)::after {
   }
 }
 
+/* カード内の箇条書き */
+main .vz-field ul:not(.vz-tags) { margin: 0; padding-left: 1.2rem; font-size: 0.86rem; line-height: 1.7; }
+main .vz-field ul:not(.vz-tags) li { margin: 0 0 4px; }
+
 /* 割合の棒グラフ（合計100%のうち最大25%を満幅とする） */
 main .vz-bars--pct .vz-bar-track i { width: calc(var(--v) / 25 * 100%); }
 
