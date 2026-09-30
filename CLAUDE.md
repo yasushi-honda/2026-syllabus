@@ -114,7 +114,9 @@ natural-language-dev-2/       # 自然言語開発Ⅱ の各回詳細ページ
   week02.html           #   第2回 Google Cloudアカウントを作ろう
   week03.html           #   第3回 AIエージェントを選ぼう（AWS登録は対象者のみ）
   week04.html           #   第4回 対戦ゲームの仕組みを読み解こう
-autumn-intensive.html   # 秋の集中講座（時間割枠外・後期スピンオフ企画・全5日間。授業内容確定済み、日別詳細ページ未作成）
+autumn-intensive.html   # 秋の集中講座（時間割枠外・後期スピンオフ企画・全5日間。授業内容確定済み、日別詳細ページ順次作成中）
+autumn-intensive/       # 秋の集中講座 の日別詳細ページ（週ページではなく Day N）
+  day01.html            #   Day1 進級制作チームで参加／環境をつくる
 styles.css              # 共通スタイル（Editorial Paper Edition ライトテーマ）
 app.js                  # Markdownコピー等
 favicon.svg             # ファビコン
