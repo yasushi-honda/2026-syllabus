@@ -59,6 +59,7 @@
       <ul>
         <li>AIエージェントを使うとき、<strong>プロンプトやコードがネットワーク経由で送られている</strong>ことを説明できる</li>
         <li>「<strong>学習に使われるか</strong>」「<strong>どれくらい保存されるか</strong>」は、サービスや契約の種類で<strong>違う</strong>ことを、公式資料で確認できる</li>
+        <li>クラウドAIサービスの「<strong>個人情報を扱えるレベルの安全設計</strong>」が、どのような要素の組み合わせで成り立っているかを理解する</li>
         <li>「学習に使われない」＝「何を入力してもよい」ではないことを理解する</li>
         <li>自分が使っているエージェントの<strong>設定画面を実際に開いて</strong>、現在の状態を確認する</li>
         <li>進級制作で<strong>何を入力してよい・よくないか</strong>を、自分の言葉でルール化する</li>
@@ -108,7 +109,7 @@
             <p><strong>自分が使うエージェントの資料を読む</strong>（同じエージェントの人同士でグループになる）</p>
             <p>各自、自分が使っているエージェントの行を担当し、①学習への利用　②保存期間　③その他の注意点を、公式ページから探して書き出す。以下は、教員が事前に公式ページで確認した内容（確認日: 2026-09-30）で、<strong>答え合わせ用</strong>として使う。</p>
             <ul>
-              <li><strong>Claude Code（個人のFree／Pro／Maxプランで使う場合）</strong>: 公式は「We will train new models using data from Free, Pro, and Max accounts when this setting is on (including when you use Claude Code from these accounts).」と書く（<a href="https://code.claude.com/docs/en/data-usage" target="_blank" rel="noopener">Data usage</a>）。つまり<strong>設定がオンのときは学習に使われる</strong>。保存期間は、設定がオンなら<strong>5年</strong>、オフなら<strong>30日</strong>。設定はいつでも変更できる</li>
+              <li><strong>Claude Code（個人のFree／Pro／Maxプランで使う場合）</strong>: 公式は「We will train new models using data from Free, Pro, and Max accounts when this setting is on (including when you use Claude Code from these accounts).」と書く（<a href="https://code.claude.com/docs/en/data-usage" target="_blank" rel="noopener">Data usage</a>）。つまり<strong>設定がオンのときは学習に使われる</strong>。保存期間は、設定がオンなら<strong>5年</strong>、オフなら<strong>30日</strong>（確認日時点）。設定はいつでも変更できる</li>
               <li><strong>Claude Code（API・Amazon Bedrockなど商用の経路で使う場合）</strong>: 公式は「Anthropic does not train generative models using code or prompts sent to Claude Code under commercial terms, unless the customer has chosen to provide their data to us for model improvement」と書く（同上）。<strong>既定では学習に使われない</strong>。なお、Amazon Bedrockについて、AWSの公式ドキュメントは「Because the model providers don't have access to those accounts, they don't have access to Amazon Bedrock logs or to customer prompts and completions.」と書く（<a href="https://docs.aws.amazon.com/bedrock/latest/userguide/data-protection.html" target="_blank" rel="noopener">Data protection（Amazon Bedrock）</a>）</li>
               <li><strong>Antigravity CLI</strong>: 公式の追加利用規約は「We use Interactions to evaluate, develop, and improve Google and Alphabet research, products, services and machine learning technologies.」と書き、<strong>設定でデータの使われ方の選択を変えられる</strong>とする。一方、冒頭でGemini Enterprise（Google Cloud）・Google Workspaceなどの契約で使う場合は<strong>この規約は適用されない</strong>と書く（<a href="https://antigravity.google/terms" target="_blank" rel="noopener">Google Antigravity Additional Terms of Service</a>）。<strong>どのアカウントでログインしているかで適用される規約が変わる</strong></li>
               <li><strong>Codex CLI</strong>: OpenAIのヘルプセンターによると、個人のChatGPTプランでCodexを使う場合は<strong>「Improve the model for everyone」の設定がCodexにも適用</strong>される。加えて、Codexには<strong>別の設定「Include environments」</strong>があり、ChatGPT側の設定を変えても連動しない、とされている。<strong>ヘルプ記事は授業中に各自が公式ページで実際に読んで確認する</strong>（<a href="https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance" target="_blank" rel="noopener">How your data is used to improve model performance（OpenAI Help Center）</a>）</li>
@@ -140,8 +141,9 @@
           <div class="timeline-body">
             <p><strong>「学習されない」と「入力してよい」は別の話</strong></p>
             <ul>
+              <li>クラウドAIサービスの「個人情報を扱えるレベルの安全設計」は、<strong>学習に使わない・保存期間を限る・アクセスできる人を限る・契約で扱いを定める</strong>といった複数の要素の組み合わせで成り立っている。1つの要素だけで「安全」とは言えない</li>
               <li>「学習に使われない」ことは、<strong>情報の扱いが安全になる要素の1つ</strong>に過ぎない。他にも、<strong>保存される期間</strong>、<strong>提供元の担当者が内容を見られるか</strong>、<strong>契約や規約で入力が認められているか</strong>など、独立した論点がある</li>
-              <li>例えば、進級制作で使う<strong>AWSのFree Planアカウント</strong>は、公式規約上<strong>評価目的での利用に限られ、機微なデータの処理には使わないこと</strong>とされている（第3回の注意事項）。「学習に使われない設計」であっても、<strong>そのアカウントで扱ってよいデータの範囲</strong>は別に決まっている</li>
+              <li>例えば、進級制作で使う<strong>AWSのFree Planアカウント</strong>は、公式規約上<strong>評価目的での利用に限られ、機微なデータの処理には使わないこと</strong>とされている（本科目の履修上の注意点）。「学習に使われない設計」であっても、<strong>そのアカウントで扱ってよいデータの範囲</strong>は別に決まっている</li>
               <li>手元の記録にも注意する。Claude Codeのセッション記録は手元に平文で残るため、共有PCや共有Codespaceでは<strong>入力した内容が他の人の目に触れる可能性</strong>もある</li>
             </ul>
             <p><strong>ケースで考える（グループで話し合い）</strong></p>
@@ -174,7 +176,7 @@
             <ul>
               <li><strong>Claude（個人プランの人）</strong>: <a href="https://claude.ai/settings/data-privacy-controls" target="_blank" rel="noopener">claude.ai/settings/data-privacy-controls</a> で、モデル改善への利用の設定を確認する</li>
               <li><strong>Antigravity CLI</strong>: 自分のログイン方法（個人のGoogleアカウントか、組織のアカウントか）と、設定でデータの使われ方の選択があるかを確認する</li>
-              <li><strong>Codex CLI（ChatGPT）</strong>: ChatGPTの「Data Controls」で「Improve the model for everyone」の状態を確認し、Codexの設定に「Include environments」があるかも確認する</li>
+              <li><strong>Codex CLI（ChatGPT）</strong>: ChatGPTの「Data Controls」で「Improve the model for everyone」の状態を確認し、Codexの設定に「Include environments」があるかも確認する（見当たらない場合は講師へ）</li>
               <li><strong>Amazon Bedrock経由のClaude Codeの人</strong>: 契約が「商用の経路」であること、そしてAWSアカウントが<strong>Free Planか有料か</strong>を確認する</li>
               <li>見つからない・分からない場合は、無理に設定を変えず、<strong>今の状態だけを控えて</strong>講師に質問する</li>
             </ul>
