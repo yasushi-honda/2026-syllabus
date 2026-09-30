@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>第5回 agyと一緒につくる② | AI活用プログラミング基礎 II</title>
+  <title>第5回 GitHubでチーム開発をシミュレーションしよう | AI活用プログラミング基礎 II</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=5">
-  <!-- 公式情報確認: 2026-09-30 (docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site / docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site。Codespace再開・agy・Simple Browserの手順は第4回（2026-09-23/24確認）と同じ) -->
+  <!-- 公式情報確認: 2026-09-30 (git-scm.com/docs/git-switch / docs.github.com の Creating a pull request・Merging a pull request・Merge conflicts・Resolving a merge conflict using the command line。Codespace再開・agy・Simple Browserの手順は第4回（2026-09-23/24確認）と同じ) -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -25,7 +25,7 @@
       </nav>
       <div class="page-title-area">
         <div>
-          <h1 class="page-title">agyと一緒に<wbr>つくる②</h1>
+          <h1 class="page-title">GitHubでチーム開発を<wbr>シミュレーションしよう</h1>
           <div class="page-meta-badges">
             <span class="page-badge">Week 5</span>
             <span class="page-badge">木曜 1・2限</span>
@@ -37,19 +37,25 @@
 
   <main class="container syllabus-content">
 
+    <div class="demo-cta demo-cta--orange">
+      <p class="demo-cta__heading">🎮 GitHubチーム開発シミュレーター（練習用）</p>
+      <p class="demo-cta__body">ゲーム感覚で、チーム開発の流れ（clone → ブランチ → コミット → push → PR → マージ → コンフリクト解消）を体験できます。<strong>コマンドで打つモード</strong>と<strong>agyに自然言語でお願いするモード</strong>の両方があります。本物のGitHubには接続せず、入力内容はどこにも送信・保存されません。</p>
+      <a href="github-team-sim.html" class="demo-cta__link">→ シミュレーターを開く</a>
+    </div>
+
     <div class="lesson-overview">
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">第4回の続き。agyと一緒にゲームを改善・仕上げして、GitHub Pagesでインターネットに公開する</div>
+          <div class="lesson-overview-value">GitHubでチームで開発する流れ（ブランチ・PR・マージ・コンフリクト）を、シミュレーターで体験し、自分のリポジトリでもPRを1回作ってマージする</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">改善・仕上げ / GitHub Pages / 公開URL / 更新の反映 / 振り返りメモ</div>
+          <div class="lesson-overview-value">ブランチ / コミット / push / プルリクエスト（PR） / マージ / コンフリクト / コマンドとagyの両方</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
-          <div class="lesson-overview-value">第4回までのリポジトリとゲーム（Publicのまま）。Codespaceは停止したままでOK——今日も「resume（再開）」で続きから始める。</div>
+          <div class="lesson-overview-value">第3〜4回の自分のリポジトリとゲーム。Codespaceは停止したままでOK——2限後半で「resume（再開）」して使う。</div>
         </div>
       </div>
     </div>
@@ -57,14 +63,14 @@
     <div class="syllabus-section">
       <h2>この回のゴール</h2>
       <ul>
-        <li>第4回の続きとして、ゲームを<strong>改善・仕上げ</strong>する（機能追加・見た目・不具合の修正）</li>
-        <li>agyに、公開に必要なファイル（<code>index.html</code>）が整っているかを確認・整えてもらう</li>
-        <li><strong>GitHub Pages</strong>を有効にして、自分のゲームを<strong>公開URL</strong>で誰でも開ける状態にする</li>
-        <li>公開後に修正して、<strong>プッシュ→数分待つ→公開URLに反映</strong>される流れを体験する</li>
-        <li>取り組みの過程で気づいたことを<strong>振り返りメモ</strong>に残す</li>
+        <li>チーム開発で<strong>ブランチ・プルリクエスト（PR）・マージ</strong>が必要な理由を、自分の言葉で説明できる</li>
+        <li>シミュレーターで、<strong>clone → ブランチ → コミット → push → PR → マージ</strong>の流れを一通り体験する</li>
+        <li><strong>コンフリクト</strong>（同じ行を2人が別々に変更したときの衝突）が起きる理由と、解消するときに<strong>どちらを残すか自分で決める</strong>ことを体験する</li>
+        <li>同じ操作を<strong>コマンド</strong>と<strong>agyへの自然言語のお願い</strong>の両方で行い、agyが裏で実行する<strong>コマンドを読んで、自分で打ったものと見比べる</strong></li>
+        <li>自分のリポジトリでも、agyに頼んで<strong>本物のPR</strong>を1回作り、自分でマージする</li>
       </ul>
       <div class="lesson-tip">
-        <strong>今日の優先順位:</strong> 完成度を上げきることよりも、「自分が作ったものが自分の公開URLで開ける」ところまで到達することを優先します。改善は公開後も続けられます。
+        <strong>今日の優先順位:</strong> コマンドを暗記することよりも、「今、何が起きているか」を読めることを優先します。シミュレーターは何度でもやり直せるので、失敗しても大丈夫です。
       </div>
     </div>
 
@@ -79,24 +85,57 @@
             <span class="timeline-time">1限 前半</span>
             <span class="timeline-duration">約40分</span>
           </div>
-          <h3>Codespaceを再開し、今日の改善ポイントを決める</h3>
+          <h3>なぜチーム開発にブランチとPRが必要なのかを知る</h3>
           <div class="timeline-body">
-            <p><strong>Codespaceを再開して、ゲームを動かす</strong></p>
+            <p><strong>第2回のおさらい</strong></p>
             <ul>
-              <li>第4回と同じ手順で進める——自分のリポジトリの「Code」→「Codespaces」タブから、停止中のCodespaceを<strong>クリックして再開</strong>する（「Create codespace on main」で新しく作り直さない）</li>
-              <li>ターミナルで <code>python3 -m http.server 8000</code> を実行し、「ポート」タブの8000番の<strong>「エディターでプレビュー」</strong>でSimple Browserにゲームを表示する</li>
-              <li>http.serverを動かしているターミナルはそのままにして、新しいターミナルを開き <code>agy</code> を起動する（ログインを求められたら第3回と同じ手順でやり直す）</li>
+              <li>第2回で聞いた「ブランチ」「プルリクエスト」という言葉を思い出す——今日は初めて<strong>実際に操作</strong>する</li>
             </ul>
-            <p><strong>今日の改善ポイントを決める</strong></p>
+            <p><strong>2人が同じファイルを直すと、何が起きるか</strong></p>
             <ul>
-              <li>ゲームを実際に遊んでみて、「もっとこうしたい」を<strong>1〜3個</strong>書き出す。次の3つの視点で探すと見つけやすい
-                <ul>
-                  <li><strong>見た目</strong>: 色・文字の大きさ・レイアウト・スマホの画面でも見やすいか</li>
-                  <li><strong>操作</strong>: 遊び方が初めての人にも伝わるか、リスタートやポーズがあるか</li>
-                  <li><strong>不具合</strong>: 思った通りに動かない箇所・エラーが出る箇所はないか</li>
-                </ul>
-              </li>
-              <li>書き出した中から、<strong>効果が大きそうなもの</strong>から順に並べる。公開までの時間を確保するため、今日全部やろうとしなくてよい</li>
+              <li>例: 2人が同じゲームのページの、同じ「見出し」の行を、同時に別々の内容に書き換えたらどうなるか——ブランチもPRも使わず、みんなが直接mainを編集し合うと、<strong>お互いの変更に気づかないまま進んでしまう</strong></li>
+              <li>そこで、<strong>ブランチ</strong>（自分専用の作業ライン）で作業し、<strong>PR</strong>（「この変更をmainに取り込んでください」というお願い）でチームに見せて、レビューを受けてから<strong>マージ</strong>（mainに取り込む）する、というルールで進める</li>
+            </ul>
+            <div class="diagram-flow">
+              <div class="diagram-flow-step">
+                <div class="diagram-flow-step-label">1</div>
+                <div class="diagram-flow-step-name">clone<br>（手元にコピー）</div>
+              </div>
+              <span class="diagram-flow-arrow" aria-hidden="true">→</span>
+              <div class="diagram-flow-step">
+                <div class="diagram-flow-step-label">2</div>
+                <div class="diagram-flow-step-name">ブランチを作る<br>（自分専用の作業ライン）</div>
+              </div>
+              <span class="diagram-flow-arrow" aria-hidden="true">→</span>
+              <div class="diagram-flow-step">
+                <div class="diagram-flow-step-label">3</div>
+                <div class="diagram-flow-step-name">変更して<br>コミット</div>
+              </div>
+              <span class="diagram-flow-arrow" aria-hidden="true">→</span>
+              <div class="diagram-flow-step">
+                <div class="diagram-flow-step-label">4</div>
+                <div class="diagram-flow-step-name">push<br>（GitHubに送る）</div>
+              </div>
+              <span class="diagram-flow-arrow" aria-hidden="true">→</span>
+              <div class="diagram-flow-step">
+                <div class="diagram-flow-step-label">5</div>
+                <div class="diagram-flow-step-name">PRを作る<br>（レビューを受ける）</div>
+              </div>
+              <span class="diagram-flow-arrow" aria-hidden="true">→</span>
+              <div class="diagram-flow-step">
+                <div class="diagram-flow-step-label">6</div>
+                <div class="diagram-flow-step-name">マージ<br>（mainに取り込む）</div>
+              </div>
+            </div>
+            <p><strong>コンフリクトとは</strong></p>
+            <ul>
+              <li>公式の説明: コンフリクトは、<strong>同じファイルの同じ行に、人によって違う変更が加えられたとき</strong>などに起きる（公式: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/about-merge-conflicts" target="_blank" rel="noopener">Merge conflicts</a>）</li>
+              <li>コンフリクトは<strong>失敗ではなく、どちらを残すか人間が決めるための合図</strong>。AIに任せきりにせず、自分で判断する場面になる</li>
+            </ul>
+            <p><strong>今日の進め方</strong></p>
+            <ul>
+              <li>シミュレーターには<strong>「コマンドで」</strong>と<strong>「agyにお願い」</strong>の2つのモードがある。同じミッションを両方で体験して比べる</li>
+              <li>シミュレーターは練習用で、本物のGitHubやagyには接続していない。入力した内容はどこにも送信・保存されない</li>
             </ul>
           </div>
         </div>
@@ -106,23 +145,23 @@
             <span class="timeline-time">1限 後半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>agyと対話しながら、ゲームを改善する</h3>
+          <h3>シミュレーターで、ミッション1〜6（コマンドモード）を進める</h3>
           <div class="timeline-body">
-            <p><strong>改善を1つずつ指示する</strong></p>
+            <p><strong>シミュレーターを開く</strong>（<a href="github-team-sim.html">チーム開発シミュレーター</a>）</p>
             <ul>
-              <li>優先順位の高いものから、agyに自然言語で伝える。第4回で学んだとおり、<strong>何を・どこに・どう動いてほしいか</strong>を具体的に書くと伝わりやすい</li>
-              <li>1回の指示に詰め込みすぎず、<strong>1つ直す→ブラウザで確認→次を伝える</strong>の順で進める（Simple Browserは更新ボタンで再読み込みする）</li>
-              <li>思った通りでなければ、違う点をそのままagyに伝え直す。エラーの意味が分からなければ <code>これはどういう意味ですか？</code> と聞いてよい</li>
+              <li>「⌨ コマンドで」のタブのまま、ミッションを順に進める。困ったら<strong>「ヒントを見る」</strong>で次の一手が確認できる。<code>help</code> と打つと、使えるコマンドの一覧が出る</li>
+              <li><strong>ミッション1:</strong> リポジトリをclone（<code>git clone</code>）</li>
+              <li><strong>ミッション2:</strong> 作業用のブランチを作る（<code>git switch -c add-title</code>）</li>
+              <li><strong>ミッション3:</strong> ファイルを編集してコミットする（<code>git add .</code> → <code>git commit -m "…"</code>）</li>
+              <li><strong>ミッション4:</strong> GitHubにpushする（初回は <code>git push -u origin ブランチ名</code>。<code>-u</code> を付けずに <code>git push</code> だけを試すと、既定の設定では失敗する。何が起きるか試してみる）</li>
+              <li><strong>ミッション5:</strong> PRを作る（疑似GitHub画面の「Compare &amp; pull request」ボタン、または <code>gh pr create</code>）</li>
+              <li><strong>ミッション6:</strong> ミサキのレビューを受けて、「Merge pull request」でマージする</li>
             </ul>
-            <p><strong>公開に向けた確認をagyに頼む</strong></p>
+            <p><strong>途中で気づいたことを共有する</strong></p>
             <ul>
-              <li>GitHub Pagesは、公開する範囲の一番上にある<strong>入口のファイル（<code>index.html</code>）</strong>を探して表示する（公式: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site" target="_blank" rel="noopener">Creating a GitHub Pages site</a>）</li>
-              <li>ゲームのファイル名が <code>tetris.html</code> のように <code>index.html</code> ではない場合は、agyに次のように頼む（例）: <code>このゲームを公開URLのトップページで開けるように、index.htmlという名前にしてください</code></li>
-              <li>あわせて、<strong>公開してはいけない情報</strong>がファイルに入っていないか確認する（次の注意を参照）</li>
+              <li>「ブランチの図」と「ファイルの中身」を見比べ、<strong>コマンドを実行するたびに何が変わったか</strong>を確認する</li>
+              <li>わざと間違えたコマンドを打って、どんなメッセージが返ってくるか試してもよい</li>
             </ul>
-            <div class="lesson-tip">
-              <strong>公開するということ:</strong> GitHub Pagesで公開したサイトは、インターネット上の誰でも見られます（公式: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site" target="_blank" rel="noopener">Configuring a publishing source for your GitHub Pages site</a>）。リポジトリのファイルも<strong>Public</strong>のため誰でも読めます。本名・住所・電話番号などの個人情報や、パスワード・APIキーなどの秘密の文字列は、コードにもメッセージにも<strong>書かない・書かせない</strong>ようにしましょう。
-            </div>
           </div>
         </div>
 
@@ -138,28 +177,24 @@
             <span class="timeline-time">2限 前半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>変更をプッシュして、GitHub Pagesで公開する</h3>
+          <h3>コンフリクトを解消し、次にagyに頼んで同じことをやり直す</h3>
           <div class="timeline-body">
-            <p><strong>今日の変更をコミット・プッシュする</strong></p>
+            <p><strong>ミッション7・8: コンフリクトに挑戦する（コマンドモード）</strong></p>
             <ul>
-              <li>第4回と同じく、agyに <code>ここまでの変更をコミットして、GitHubにプッシュしてください</code> と頼む</li>
-              <li>GitHub上で自分のリポジトリを開き、ファイルが更新されていることを確認する</li>
+              <li>「▶ 2本目の作業を始める」で、ミサキと<strong>同じ行</strong>を別々に変更してしまった状況を作る。PRを作ると、コンフリクトの表示が出る</li>
+              <li><code>git pull origin main</code> で最新のmainを取り込み（実際のgitでは、設定によって「どう取り込むか指定してください」と止まることがある。その場合は <code>git pull --no-rebase origin main</code> を使う）、<strong>ファイルに現れた印</strong>（<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> / <code>=======</code> / <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>）を読む。上が<strong>自分</strong>、下が<strong>ミサキ</strong>の変更</li>
+              <li>「自分の変更」「ミサキの変更」「両方」の<strong>どれを残すか、自分で決める</strong>（正解は1つではない。理由を隣の人と話してみる）</li>
+              <li><code>git add .</code> → <code>git commit -m "…"</code> → <code>git push</code> で解消し、PRをマージする（公式: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-using-the-command-line" target="_blank" rel="noopener">Resolving a merge conflict using the command line</a>）</li>
             </ul>
-            <p><strong>GitHub Pagesを有効にする</strong>（公式: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site" target="_blank" rel="noopener">Configuring a publishing source for your GitHub Pages site</a>）</p>
+            <p><strong>agyモードで、最初からやり直す</strong></p>
             <ul>
-              <li>GitHub上の自分のリポジトリで<strong>「Settings」</strong>を開く</li>
-              <li>左のメニューの<strong>「Pages」</strong>を選ぶ</li>
-              <li>「Build and deployment」の<strong>「Source」</strong>で<strong>「Deploy from a branch」</strong>を選ぶ</li>
-              <li>ブランチは<strong><code>main</code></strong>、フォルダは<strong><code>/ (root)</code></strong>を選んで<strong>「Save」</strong>を押す</li>
-            </ul>
-            <p><strong>公開されるのを待つ</strong></p>
-            <ul>
-              <li>公開までには<strong>最大10分ほどかかることがある</strong>（公式: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site" target="_blank" rel="noopener">Creating a GitHub Pages site</a>）。「Pages」の画面にサイトのURLが表示されたら公開完了</li>
-              <li>URLは <code>https://（自分のGitHubユーザー名）.github.io/（リポジトリ名）/</code> の形になる</li>
-              <li>待っている間は、Codespaceに戻って<strong>次の改善</strong>を進めてよい</li>
+              <li>「最初からやり直す」を押し、今度は<strong>「🤖 agyにお願い」</strong>のタブで同じミッションを進める</li>
+              <li>例: <code>このリポジトリをcloneして</code> → <code>ブランチを作って、タイトルを変更して、コミットして</code> → <code>pushして</code> → <code>PRを作って</code></li>
+              <li>シミュレーターのagyは<strong>実行するコマンドを見せて、確認してから</strong>実行する（本物のagyは、既定では実行前に承認を求められることが多いが、設定によっては自動で実行される。承認の出方はシミュレーターと異なる。公式: <a href="https://antigravity.google/docs/permissions/" target="_blank" rel="noopener">Permissions</a>）。<strong>agyが実行するコマンドを、さっき自分で打ったものと見比べる</strong>——多くの場合、gitやghのコマンドが使われる</li>
+              <li>コンフリクトの解消では、指示が曖昧だとagyから聞き返されることがある。<strong>どれを残すかという中身の判断は自分で伝える</strong>必要があることを確かめる</li>
             </ul>
             <div class="lesson-tip">
-              <strong>公開URLで404（ページが見つかりません）と出たら:</strong> 公開直後は反映に時間がかかることがあります。数分待って再読み込みしても変わらない場合は、①リポジトリの一番上に<code>index.html</code>があるか、②Pagesの設定でブランチが<code>main</code>・フォルダが<code>/ (root)</code>になっているか、を確認し、それでも直らなければ講師に声をかけてください。
+              <strong>比べてみよう:</strong> コマンドは<strong>自分が何を実行したか</strong>が確実に分かります。agyへのお願いは<strong>楽で速い</strong>ですが、裏で何が実行されたかを<strong>読めること</strong>が、AIに任せるときの安心につながります。どちらが向いている場面か、隣の人と話してみましょう。
             </div>
           </div>
         </div>
@@ -169,20 +204,25 @@
             <span class="timeline-time">2限 後半</span>
             <span class="timeline-duration">約30分</span>
           </div>
-          <h3>公開URLで確認し、修正が反映される流れを体験する</h3>
+          <h3>自分のリポジトリで、本物のPRを1回作ってマージする</h3>
           <div class="timeline-body">
-            <p><strong>公開URLで動作を確認する</strong></p>
+            <p><strong>Codespaceを再開して、agyを起動する</strong></p>
             <ul>
-              <li>公開されたURLを、ブラウザの新しいタブで開き、ゲームが動くことを確認する</li>
-              <li>可能なら、スマホやとなりの人のPCでも開いてもらい、<strong>自分以外の環境でも開けること</strong>を確認する</li>
+              <li>第4回と同じ手順で、自分のリポジトリのCodespaceを<strong>再開（resume）</strong>し、新しいターミナルで <code>agy</code> を起動する（ログインを求められたら第3回と同じ手順でやり直す）</li>
             </ul>
-            <p><strong>修正して、公開に反映されるまでを体験する</strong></p>
+            <p><strong>agyに頼んで、ブランチを作って変更する</strong></p>
             <ul>
-              <li>気になった点を1つだけagyに直してもらう→確認→コミット・プッシュ→数分待って<strong>公開URLを再読み込み</strong>する</li>
-              <li>「プッシュしただけでは公開URLにすぐ反映されず、少し待つ必要がある」ことを実際に確かめる</li>
+              <li>例: <code>add-messageという名前のブランチを作って、ゲームのどこかに一言メッセージを追加して、コミットしてpushしてください</code></li>
+              <li>agyが実行するコマンドを、さっきのシミュレーターと見比べる</li>
+            </ul>
+            <p><strong>GitHubの画面でPRを作って、マージする</strong></p>
+            <ul>
+              <li>GitHub上の自分のリポジトリを開く。pushした直後は<strong>「Compare &amp; pull request」</strong>のボタンが出る（しばらくすると消えるので、その場合は「Pull requests」タブから作れる）（公式: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request" target="_blank" rel="noopener">Creating a pull request</a>）</li>
+              <li>タイトルを確認して<strong>「Create pull request」</strong>を押し、続けて<strong>「Merge pull request」→「Confirm merge」</strong>の順に押してmainに取り込む（公式: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/merging-a-pull-request" target="_blank" rel="noopener">Merging a pull request</a>）</li>
+              <li>1人のリポジトリなので、コンフリクトは起きない。<strong>自分ひとりでもPRを使う</strong>と、変更の履歴が残ることを確認する</li>
             </ul>
             <div class="lesson-tip">
-              <strong>公開URLを控える:</strong> 自分の公開URLは、次回以降の発表や共有で使います。忘れないようにメモしておきましょう。
+              <strong>Codespaceのブランチについて:</strong> マージしたあとは、Codespace側のブランチがmainと食い違うことがあります。次回以降の作業に影響しそうなときは、講師に声をかけてください。
             </div>
           </div>
         </div>
@@ -195,8 +235,8 @@
           <h3>次回予告＆振り返りメモ</h3>
           <div class="timeline-body">
             <ul>
-              <li>次回（第6回）：<strong>Google AI Studio Build modeに触れてみよう①</strong>——第3〜5回でagyと育てたこのリポジトリを、ブラウザだけで使うGoogle AI Studio Build modeに「Import from GitHub」で読み込み直す。<strong>リポジトリ名を忘れずに控えておく</strong></li>
-              <li>今日の<strong>振り返りメモ</strong>を書いて退出する——①agyに指示を出す中で気づいたこと（うまく伝わった指示・伝わらなかった指示）、②公開してみて感じたこと、を一言ずつ</li>
+              <li>次回（第6回）：<strong>Google AI Studio Build modeに触れてみよう①</strong>——第3〜4回でagyと育てたこのリポジトリを、ブラウザだけで使うGoogle AI Studio Build modeに「Import from GitHub」で読み込み直す。<strong>リポジトリ名を忘れずに控えておく</strong></li>
+              <li><strong>振り返りメモ</strong>を書いて退出する——①「コマンド」と「agyへのお願い」、それぞれの良さ　②コンフリクトで自分が何を基準に「残す内容」を決めたか、を一言ずつ</li>
               <li>使い終わったCodespaceは、Codespacesの一覧から停止しておく</li>
             </ul>
           </div>
@@ -211,15 +251,15 @@
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>自分の公開URLとリポジトリ名を控えておく</strong>
-            <p>公開URLをブラウザで開いてゲームが動くことを確認し、リポジトリ名とあわせてメモしておく。公開が間に合わなかった場合は、次回授業の冒頭で完了させる。</p>
+            <strong>自分のリポジトリの名前を控えておく</strong>
+            <p>第6回でGoogle AI Studio Build modeにインポートするため、自分のリポジトリ名をメモしておく。今日のPRで変更した内容がmainに入っているかも、GitHub上で確認しておく。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
-            <strong>友達や家族に公開URLを見せてみる</strong>
-            <p>自分以外の人に遊んでもらい、分かりにくかった点を聞いておくと、第6回以降の改善のヒントになります。</p>
+            <strong>シミュレーターをもう一度、別のモードで試す</strong>
+            <p>今日コマンドで進めたなら、次はagyモードで。コンフリクトの解消で「自分の変更」「ミサキの変更」「両方」のどれを選ぶと、ファイルの中身がどう変わるかも見比べてみましょう。</p>
           </div>
         </div>
       </div>
@@ -228,9 +268,13 @@
     <div class="syllabus-section">
       <h2>参考リンク</h2>
       <ul>
-        <li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site" target="_blank" rel="noopener">Creating a GitHub Pages site（公式）</a> — 入口のファイル（<code>index.html</code>）・公開URLの形式・公開までの時間</li>
-        <li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site" target="_blank" rel="noopener">Configuring a publishing source for your GitHub Pages site（公式）</a> — 「Deploy from a branch」での公開設定の手順</li>
-        <li><a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/opening-an-existing-codespace" target="_blank" rel="noopener">Opening an existing codespace（公式）</a> — 停止したCodespaceを再開する手順（第4回と同じ）</li>
+        <li><a href="github-team-sim.html">GitHubチーム開発シミュレーター（練習用）</a> — 今日使うシミュレーター</li>
+        <li><a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request" target="_blank" rel="noopener">Creating a pull request（公式）</a> — PRの作り方</li>
+        <li><a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/merging-a-pull-request" target="_blank" rel="noopener">Merging a pull request（公式）</a> — PRのマージ</li>
+        <li><a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/about-merge-conflicts" target="_blank" rel="noopener">Merge conflicts（公式）</a> — コンフリクトが起きる理由</li>
+        <li><a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-using-the-command-line" target="_blank" rel="noopener">Resolving a merge conflict using the command line（公式）</a> — コマンドラインでの解消手順</li>
+        <li><a href="https://antigravity.google/docs/permissions/" target="_blank" rel="noopener">Permissions（Antigravity公式）</a> — agyがコマンドを実行する前の承認の仕組み</li>
+        <li><a href="https://git-scm.com/docs/git-switch" target="_blank" rel="noopener">git-switch（Git公式）</a> — <code>git switch -c</code>（ブランチの作成と移動）</li>
       </ul>
     </div>
 

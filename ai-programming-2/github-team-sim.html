@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHubチーム開発シミュレーター | AI活用プログラミング基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=5">
+  <!-- 公式情報確認: 2026-09-30 (git-scm.com/docs/git-switch / docs.github.com の Creating a pull request・Merging a pull request・Merge conflicts・Resolving a merge conflict using the command line)。コンフリクト時のPR画面の英文メッセージは公式docsに載っていないため引用せず、日本語の説明にしている -->
+  <style>
+    .sim-note { background: #fff8e6; border: 1px solid #e8c766; border-radius: 6px; padding: .7rem 1rem; margin: 0 0 1.2rem; font-size: .9rem; line-height: 1.7; }
+    .sim-grid { display: grid; grid-template-columns: minmax(0, 320px) minmax(0, 1fr); gap: 1.2rem; align-items: start; }
+    @media (max-width: 860px) { .sim-grid { grid-template-columns: minmax(0, 1fr); } }
+    .sim-card { background: #fff; border: 1px solid #d9d4c7; border-radius: 8px; padding: 1rem 1.1rem; margin-bottom: 1.1rem; }
+    .sim-card h2 { font-size: 1.02rem; margin: 0 0 .5rem; border: 0; padding: 0; }
+    .sim-progress { height: 10px; background: #ece7da; border-radius: 6px; overflow: hidden; margin: .4rem 0 .2rem; }
+    .sim-progress > div { height: 100%; width: 0; background: #c2530c; transition: width .3s; }
+    .sim-mission-title { font-weight: 700; font-size: 1.05rem; margin: .3rem 0; }
+    .sim-mission-body { font-size: .92rem; line-height: 1.75; }
+    .sim-btn { display: inline-block; padding: .45rem .9rem; border: 0; border-radius: 4px; background: #9a3f08; color: #fff; font-weight: 600; font-size: .9rem; cursor: pointer; font-family: inherit; }
+    .sim-btn:hover:not(:disabled) { background: #7a3006; }
+    .sim-btn:disabled { background: #b9b3a3; cursor: not-allowed; }
+    .sim-btn--sub { background: #4a4a5e; }
+    .sim-btn--green { background: #1a7f37; }
+    .sim-hint { margin-top: .6rem; padding: .6rem .8rem; background: #eef6ff; border-left: 4px solid #2f6db5; font-size: .88rem; line-height: 1.7; display: none; }
+    .sim-tabs { display: flex; gap: .4rem; margin-bottom: .6rem; }
+    .sim-tab { padding: .45rem .9rem; border: 1px solid #d9d4c7; border-radius: 6px 6px 0 0; background: #f4f0e6; cursor: pointer; font-weight: 600; font-size: .9rem; font-family: inherit; }
+    .sim-tab[aria-selected="true"] { background: #1e1e2e; color: #fff; border-color: #1e1e2e; }
+    .sim-term { background: #1e1e2e; color: #e6e6ef; border-radius: 0 6px 6px 6px; padding: .8rem; font-family: 'JetBrains Mono', monospace; font-size: .82rem; line-height: 1.6; }
+    .sim-log { height: 230px; overflow-y: auto; white-space: pre-wrap; word-break: break-word; }
+    .sim-log .cmd { color: #8be9fd; }
+    .sim-log .err { color: #ff8b8b; }
+    .sim-log .ok { color: #9be79b; }
+    .sim-log .agy { color: #f1c27d; }
+    .sim-log .you { color: #8be9fd; }
+    .sim-inputrow { display: flex; gap: .5rem; margin-top: .5rem; }
+    .sim-inputrow input { flex: 1; min-width: 0; padding: .5rem .6rem; border: 1px solid #555; border-radius: 4px; background: #11111b; color: #fff; font-family: inherit; font-size: .9rem; }
+    .sim-prompt { color: #9be79b; }
+    .sim-run { margin: .3rem 0; padding: .5rem .7rem; background: #2a2a3c; border-radius: 4px; }
+    .sim-views { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1.1rem; }
+    .sim-graph { width: 100%; overflow-x: auto; }
+    .sim-gh { border: 1px solid #d0d7de; border-radius: 6px; background: #fff; }
+    .sim-gh-head { background: #f6f8fa; padding: .5rem .8rem; border-bottom: 1px solid #d0d7de; font-size: .88rem; }
+    .sim-gh-body { padding: .7rem .8rem; font-size: .88rem; line-height: 1.7; }
+    .sim-banner { background: #fff8c5; border: 1px solid #d4a72c; border-radius: 6px; padding: .5rem .7rem; margin-bottom: .6rem; }
+    .sim-conflict { background: #ffebe9; border: 1px solid #ff8182; border-radius: 6px; padding: .5rem .7rem; margin: .4rem 0; }
+    .sim-pr { border: 1px solid #d0d7de; border-radius: 6px; padding: .6rem .8rem; margin-bottom: .6rem; }
+    .sim-badge { display: inline-block; padding: 0 .5rem; border-radius: 999px; font-size: .78rem; color: #fff; font-weight: 600; }
+    .sim-badge--open { background: #1a7f37; }
+    .sim-badge--merged { background: #8250df; }
+    .sim-files { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; }
+    @media (max-width: 560px) { .sim-files { grid-template-columns: minmax(0, 1fr); } }
+    .sim-file { background: #1e1e2e; color: #e6e6ef; border-radius: 6px; padding: .6rem .8rem; font-family: 'JetBrains Mono', monospace; font-size: .8rem; line-height: 1.6; white-space: pre-wrap; word-break: break-word; }
+    .sim-file-title { font-size: .82rem; font-weight: 700; margin-bottom: .3rem; }
+    .sim-file .mark { color: #ff8b8b; }
+    .sim-resolve { margin-top: .5rem; display: flex; gap: .4rem; flex-wrap: wrap; }
+    .sim-clear { background: #eaf7ee; border: 2px solid #1a7f37; border-radius: 8px; padding: 1rem 1.2rem; margin-bottom: 1.1rem; display: none; }
+    .sim-clear table { border-collapse: collapse; width: 100%; font-size: .85rem; }
+    .sim-clear th, .sim-clear td { border: 1px solid #b9d9c1; padding: .35rem .5rem; text-align: left; vertical-align: top; }
+    .sim-clear code { font-size: .8rem; word-break: break-all; }
+    .sim-mode-note { font-size: .82rem; color: #4a4a5e; margin: 0 0 .5rem; }
+  </style>
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--orange">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-programming-2.html">AI活用プログラミング基礎 II</a>
+        <span>/</span>
+        <a href="week05.html">第5回</a>
+        <span>/</span>
+        <span>チーム開発シミュレーター</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">GitHubチーム開発<wbr>シミュレーター</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 5</span>
+            <span class="page-badge">練習用</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="sim-note">
+      これは練習用の<strong>シミュレーション</strong>です。本物のGitHubやagyには接続していません。入力した内容は<strong>どこにも送信・保存されません</strong>（ページを再読み込みすると最初からやり直しになります）。<br>
+      チーム「ゲーム作り班」の一員になって、<strong>clone → ブランチ → コミット → push → PR → マージ</strong>、そして<strong>コンフリクト</strong>の解消までを、<strong>コマンド</strong>と<strong>agyへの自然言語のお願い</strong>の両方で体験します。<a href="week05.html">第5回の授業計画に戻る</a>
+    </div>
+
+    <div class="sim-clear" id="clearBox">
+      <h2>🎉 全ミッションクリア！</h2>
+      <p>チーム開発の一通りの流れを体験できました。同じ操作を「コマンド」と「agyへのお願い」で比べてみましょう。</p>
+      <table>
+        <thead><tr><th>やりたいこと</th><th>コマンド</th><th>agyへのお願いの例</th></tr></thead>
+        <tbody>
+          <tr><td>リポジトリを手元に取得</td><td><code>git clone URL</code></td><td>「このリポジトリをcloneして」</td></tr>
+          <tr><td>作業用のブランチを作る</td><td><code>git switch -c add-title</code></td><td>「add-titleというブランチを作って」</td></tr>
+          <tr><td>変更を記録する</td><td><code>git add .</code> → <code>git commit -m "..."</code></td><td>「変更をコミットして」</td></tr>
+          <tr><td>GitHubに送る</td><td><code>git push -u origin ブランチ名</code></td><td>「pushして」</td></tr>
+          <tr><td>PRを作る</td><td><code>gh pr create</code>（または画面のボタン）</td><td>「PRを作って」</td></tr>
+          <tr><td>mainの最新を取り込む</td><td><code>git pull origin main</code>（環境によっては <code>git pull --no-rebase origin main</code>）</td><td>「mainの最新を取り込んで」</td></tr>
+          <tr><td>コンフリクトを直す</td><td>ファイルを開いて印（<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>など）を消し、<code>git add</code> → <code>git commit</code> → <code>git push</code></td><td>「両方残して解消して」（どれを残すかは<strong>自分で決めて</strong>伝える）</td></tr>
+        </tbody>
+      </table>
+      <p style="margin:.6rem 0 0">気づいたこと: agyに頼んでも、多くの場合、裏ではgitやghの<strong>コマンド</strong>が実行されます。<strong>何が起きているかを読める</strong>ことが、AIに任せるときの安心につながります。</p>
+    </div>
+
+    <div class="sim-grid">
+      <aside>
+        <div class="sim-card">
+          <h2>ミッション</h2>
+          <div>進捗 <strong id="progText">0 / 8</strong></div>
+          <div class="sim-progress"><div id="progBar"></div></div>
+          <div class="sim-mission-title" id="mTitle"></div>
+          <div class="sim-mission-body" id="mBody"></div>
+          <div style="margin-top:.7rem; display:flex; gap:.5rem; flex-wrap:wrap;">
+            <button class="sim-btn sim-btn--sub" id="hintBtn" type="button">ヒントを見る</button>
+            <button class="sim-btn sim-btn--sub" id="resetBtn" type="button">最初からやり直す</button>
+          </div>
+          <div class="sim-hint" id="hintBox"></div>
+        </div>
+        <div class="sim-card">
+          <h2>チーム</h2>
+          <p style="margin:0; font-size:.88rem; line-height:1.7">🧑 <strong>あなた</strong>　👩 <strong>ミサキ</strong>（チームメイト。あなたのPRをレビューし、自分の作業もmainにマージします）</p>
+        </div>
+      </aside>
+
+      <section>
+        <div class="sim-tabs" role="tablist">
+          <button class="sim-tab" role="tab" id="tabCmd" aria-selected="true" type="button">⌨ コマンドで</button>
+          <button class="sim-tab" role="tab" id="tabAgy" aria-selected="false" type="button">🤖 agyにお願い</button>
+        </div>
+
+        <div class="sim-term" id="paneCmd">
+          <p class="sim-mode-note" style="color:#b8b8c8">コマンドを自分で打つモードです。<code>help</code> と打つと使えるコマンドの一覧が出ます。</p>
+          <div class="sim-log" id="logCmd" aria-live="polite"></div>
+          <form class="sim-inputrow" id="formCmd" autocomplete="off">
+            <span class="sim-prompt" id="promptCmd">$</span>
+            <input type="text" id="inCmd" aria-label="コマンド入力" placeholder="例: git status" spellcheck="false">
+            <button class="sim-btn" type="submit">実行</button>
+          </form>
+        </div>
+
+        <div class="sim-term" id="paneAgy" style="display:none">
+          <p class="sim-mode-note" style="color:#b8b8c8">agyに<strong>自然言語</strong>でお願いするモードです（本物のagyの動きを簡単にまねた練習用）。このシミュレーターのagyは<strong>実行するコマンドを見せて、確認してから</strong>実行します。本物のagyの承認の出方は設定によって異なります。</p>
+          <div class="sim-log" id="logAgy" aria-live="polite"></div>
+          <form class="sim-inputrow" id="formAgy" autocomplete="off">
+            <input type="text" id="inAgy" aria-label="agyへのお願い" placeholder="例: ブランチを作って、タイトルを変更して" spellcheck="false">
+            <button class="sim-btn" type="submit">送る</button>
+          </form>
+        </div>
+
+        <div class="sim-views" style="margin-top:1.1rem">
+          <div class="sim-card">
+            <h2>ブランチの図</h2>
+            <div class="sim-graph" id="graph"></div>
+          </div>
+          <div class="sim-card">
+            <h2>疑似GitHub画面（game-club / team-game）</h2>
+            <div class="sim-gh">
+              <div class="sim-gh-head"><strong>game-club / team-game</strong>　<span style="color:#57606a">Code ・ Pull requests</span></div>
+              <div class="sim-gh-body" id="gh"></div>
+            </div>
+          </div>
+          <div class="sim-card">
+            <h2>ファイルの中身（index.html）</h2>
+            <div class="sim-files">
+              <div><div class="sim-file-title">🖥 自分のPC（作業中のファイル）</div><div class="sim-file" id="fileLocal"></div>
+                <div class="sim-resolve" id="resolveBox" style="display:none">
+                  <button class="sim-btn" type="button" data-res="mine">自分の変更を残す</button>
+                  <button class="sim-btn" type="button" data-res="theirs">ミサキの変更を残す</button>
+                  <button class="sim-btn" type="button" data-res="both">両方を残す</button>
+                </div>
+                <div style="margin-top:.5rem"><button class="sim-btn sim-btn--sub" id="editBtn" type="button">✏ index.htmlの見出しを編集する</button></div>
+              </div>
+              <div><div class="sim-file-title">☁ GitHubのmain</div><div class="sim-file" id="fileRemote"></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <p style="margin-top:1rem"><a href="week05.html">第5回の授業計画に戻る</a></p>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+<script>
+(function () {
+  'use strict';
+  var URL_REPO = 'https://github.com/game-club/team-game.git';
+  var IDS = ['3f9a1c2', '7be04d1', 'c81d5ef', '19a7b60', 'e5c2d84', 'a06f3b9', '4d8e17a', 'b92c60f', '2c7d9e5', '85f1a3c', 'd04b6e8', '6a3c92f', 'f18e05d', '0b7d4a1'];
+  var TOTAL = 8;
+
+  function mk(h1) {
+    return '<body>\n' + h1 + '\n<p>みんなで作るゲームのページです</p>\n</body>';
+  }
+  var H0 = '<h1>ゲーム作り班</h1>';
+  var H1 = '<h1>ゲーム作り班（テトリス）</h1>';
+  var H_MINE = '<h1 class="title">ゲーム作り班（テトリス）</h1>';
+  var H_THEIRS = '<h1>ゲーム作り班（テトリス）🎮</h1>';
+  var H_BOTH = '<h1 class="title">ゲーム作り班（テトリス）🎮</h1>';
+
+  var MISSIONS = [
+    { t: 'ミッション1: リポジトリを手元に取得する（clone）', b: 'チームのリポジトリ <code>' + URL_REPO + '</code> を、自分のPCに<strong>clone</strong>（コピー）します。' },
+    { t: 'ミッション2: 作業用のブランチを作る', b: 'mainを直接いじらず、<strong>自分専用の作業ブランチ</strong>（例: <code>add-title</code>）を作って移動します。' },
+    { t: 'ミッション3: 変更して、コミットする', b: '画面の「見出しを編集する」ボタンでindex.htmlを変更し、変更を<strong>ステージ（add）</strong>して<strong>コミット</strong>します。' },
+    { t: 'ミッション4: GitHubにpushする', b: '作業ブランチをGitHubに<strong>push</strong>して、チームに見える状態にします。' },
+    { t: 'ミッション5: プルリクエスト（PR）を作る', b: 'pushしたブランチの変更を、mainに取り込んでほしいとお願いする<strong>PR</strong>を作ります（画面のボタンでも、コマンドでも可）。' },
+    { t: 'ミッション6: レビューを受けてマージする', b: 'ミサキがレビューします。OKが出たら<strong>Merge pull request</strong>でmainに取り込みましょう。（本物のGitHubでは、このあと <strong>Confirm merge</strong> も押します）' },
+    { t: 'ミッション7: コンフリクトを解消する', b: '2本目の作業で、ミサキと<strong>同じ行</strong>を別々に変更してしまいます。<strong>PRを作る</strong>とコンフリクトが表示されます。mainの最新を取り込み、<strong>どちらを残すか自分で決めて</strong>解消し、コミット・pushします。' },
+    { t: 'ミッション8: 2本目のPRをマージする', b: 'コンフリクトが解消されたPRを、もう一度マージして完成させます。' }
+  ];
+
+  var S;
+
+  function newState() {
+    var c0 = { id: IDS[0], msg: 'first commit', parents: [], lane: 'main', content: mk(H0) };
+    return {
+      step: 1, cloned: false, cur: 'main', file: mk(H0), staged: false, merging: null,
+      commits: [c0], nextId: 1,
+      local: { main: c0.id }, upstream: {},
+      remote: { main: c0.id }, prs: [], nextPr: 1,
+      branch2Started: false, hintOpen: false, cleared: false
+    };
+  }
+
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function commitById(id) { for (var i = 0; i < S.commits.length; i++) { if (S.commits[i].id === id) return S.commits[i]; } return null; }
+  function newCommit(msg, parents, lane, content) {
+    var c = { id: IDS[S.nextId % IDS.length], msg: msg, parents: parents, lane: lane, content: content };
+    S.nextId++;
+    S.commits.push(c);
+    return c;
+  }
+  function tipContent() { return commitById(S.local[S.cur]).content; }
+  function isModified() { return S.file !== tipContent(); }
+  function hasMarkers() { return S.file.indexOf('<<<<<<<') !== -1; }
+  function advance(n) { if (S.step === n) S.step = n + 1; }
+  function findPr(branch) { for (var i = 0; i < S.prs.length; i++) { if (S.prs[i].branch === branch) return S.prs[i]; } return null; }
+
+  function reachable(id, seen) {
+    seen = seen || {};
+    if (seen[id]) return seen;
+    seen[id] = true;
+    var c = commitById(id);
+    for (var i = 0; i < c.parents.length; i++) reachable(c.parents[i], seen);
+    return seen;
+  }
+
+  /* ---------- コマンド実行 ---------- */
+  // 戻り値: { out: [{t:'text', k:'ok|err|'}], }
+  function run(raw) {
+    var line = raw.replace(/\s+/g, ' ').trim();
+    var out = [];
+    function say(t, k) { out.push({ t: t, k: k || '' }); }
+    if (!line) return out;
+    var m;
+
+    if (line === 'help') {
+      say('使えるコマンド:\n  git clone <URL>\n  git switch -c <ブランチ名>   （git checkout -b も可）\n  git add .\n  git commit -m "メッセージ"\n  git push -u origin <ブランチ名>   （git push も可）\n  git pull origin main\n  git status / git log --oneline / git branch\n  gh pr create / gh pr merge\n  clear（表示を消す）');
+      return out;
+    }
+    if (line === 'clear') { return null; }
+
+    if (/^git clone\b/.test(line)) {
+      if (S.cloned) { say('fatal: すでにclone済みです（このシミュレーターでは1回だけ使います）', 'err'); return out; }
+      if (line.indexOf('team-game') === -1) {
+        say('fatal: リポジトリが見つかりません。今回のURLは ' + URL_REPO + ' です', 'err'); return out;
+      }
+      S.cloned = true; S.cur = 'main'; S.file = S.commits[0].content;
+      say("Cloning into 'team-game'...\nremote: Enumerating objects: 3, done.\nリポジトリを取得しました。（以降は team-game フォルダの中で作業している想定です）", 'ok');
+      advance(1);
+      return out;
+    }
+    if (/^(git|gh)\b/.test(line) && !S.cloned) {
+      say('fatal: not a git repository (or any of the parent directories): .git\nヒント: まず git clone でリポジトリを取得します。', 'err');
+      return out;
+    }
+
+    if ((m = line.match(/^git (?:switch -c|checkout -b) (\S+)$/))) {
+      var name = m[1];
+      if (!/^[A-Za-z0-9._\/-]+$/.test(name)) { say('fatal: ブランチ名に使えない文字があります（英数字と - _ / . を使います）', 'err'); return out; }
+      if (name === 'add-class' || name.indexOf('misaki/') === 0) { say('fatal: この名前は、あとのミッションで使うため、ここでは別の名前にしてください（例: add-title）', 'err'); return out; }
+      if (S.local[name]) { say("fatal: a branch named '" + name + "' already exists", 'err'); return out; }
+      if (S.merging) { say('error: マージの途中です。先に解消を終えましょう', 'err'); return out; }
+      S.local[name] = S.local[S.cur];
+      S.cur = name;
+      say("Switched to a new branch '" + name + "'", 'ok');
+      advance(2);
+      return out;
+    }
+    if (/^git (switch|checkout)\b/.test(line)) {
+      say('このシミュレーターでは、ブランチの移動（switch/checkout）は使いません。まずはミッションを進めましょう。', 'err');
+      return out;
+    }
+
+    if (/^git add\b/.test(line)) {
+      if (!/^git add (\.|-A|index\.html)$/.test(line)) { say('このシミュレーターでは git add . か git add index.html を使います。', 'err'); return out; }
+      if (!isModified() && !S.merging) { say('（変更がないので、追加するものがありません）', 'err'); return out; }
+      if (hasMarkers()) { say('（シミュレーター）index.html にまだ <<<<<<< などの印が残っています。先にファイルの内容を直しましょう。', 'err'); return out; }
+      S.staged = true;
+      say('index.html をコミット対象に追加しました（ステージ）。', 'ok');
+      return out;
+    }
+
+    if (/^git commit\b/.test(line)) {
+      var cm = line.match(/^git commit -m ("([^"]+)"|'([^']+)')$/);
+      var noEdit = line === 'git commit --no-edit';
+      if (!cm && !noEdit) {
+        say('メッセージを付けて実行します。例: git commit -m "見出しを変更"', 'err'); return out;
+      }
+      if (S.merging && !S.staged) { say('error: 未解消のファイルがあるためコミットできません。git add で解消済みにしてください。', 'err'); return out; }
+      if (!S.staged) {
+        say(isModified() ? '変更はまだコミット対象になっていません。先に git add . を実行します。' : 'nothing to commit, working tree clean', 'err'); return out;
+      }
+      var msg = cm ? (cm[2] || cm[3]) : "Merge branch 'main' of team-game into " + S.cur;
+      var parents = [S.local[S.cur]];
+      if (S.merging) parents.push(S.merging);
+      var c = newCommit(msg, parents, S.cur, S.file);
+      S.local[S.cur] = c.id; S.staged = false; S.merging = null;
+      say('[' + S.cur + ' ' + c.id + '] ' + msg, 'ok');
+      advance(3);
+      return out;
+    }
+
+    if (/^git push\b/.test(line)) {
+      var b = S.cur, explicit = null;
+      if ((m = line.match(/^git push (?:-u|--set-upstream) origin (\S+)$/))) { explicit = m[1]; }
+      else if ((m = line.match(/^git push origin (\S+)$/))) { explicit = m[1]; }
+      else if (line !== 'git push') { say('pushの書き方: git push -u origin ブランチ名', 'err'); return out; }
+      if (explicit && explicit !== S.cur) { say("error: src refspec '" + explicit + "' does not match any（今いるブランチは " + S.cur + " です）", 'err'); return out; }
+      if (b === 'main') { say('mainへ直接pushするのは、チーム開発では避けます。作業ブランチに移動してから行いましょう。', 'err'); return out; }
+      if (!explicit && !S.upstream[b]) {
+        say('fatal: The current branch ' + b + ' has no upstream branch.\nTo push the current branch and set the remote as upstream, use\n\n    git push --set-upstream origin ' + b + '\n\n（初回は -u を付けて git push -u origin ' + b + '）', 'err'); return out;
+      }
+      if (/ (-u|--set-upstream) /.test(line)) S.upstream[b] = true;
+      if (S.remote[b] === S.local[b]) { say('Everything up-to-date', 'ok'); return out; }
+      if (S.merging) { say('error: マージの途中です。先にコミットしましょう。', 'err'); return out; }
+      if (isModified() && !S.staged) { /* 未コミットの変更はpushされない */ say('注意: 未コミットの変更（index.html）は送られません。先にコミットしましょう。', 'err'); }
+      var existed = !!S.remote[b];
+      S.remote[b] = S.local[b];
+      say("To github.com:game-club/team-game.git\n " + (existed ? '   ' : '* [new branch]') + "      " + b + " -> " + b + "\nGitHubに送りました。", 'ok');
+      var pr = findPr(b);
+      if (S.branch2Started && b === 'add-class' && reachable(S.local[b])[S.remote.main]) {
+        if (pr && pr.status === 'open') { pr.conflict = false; say('PRのコンフリクトが解消されました（GitHub画面を見てみましょう）。', 'ok'); }
+        advance(7);
+      }
+      advance(4);
+      return out;
+    }
+
+    if (/^git pull\b/.test(line) || line === 'git merge origin/main') {
+      if (S.cur === 'main') { say('今は main にいます。作業ブランチにいる時に実行します。', 'err'); return out; }
+      if (S.merging) { say('error: You have not concluded your merge.\nコンフリクトの解消（ファイルの修正→git add→git commit）を先に終えましょう。', 'err'); return out; }
+      if (isModified() && !S.merging) { say('error: 未コミットの変更があります。先にコミットしてください。', 'err'); return out; }
+      var mainTip = S.remote.main;
+      if (reachable(S.local[S.cur])[mainTip]) { say('Already up to date.', 'ok'); return out; }
+      if (!S.branch2Started || S.cur !== 'add-class') {
+        // 通常のfast-forward相当
+        S.file = commitById(mainTip).content; S.local[S.cur] = mainTip; say('Fast-forward', 'ok'); return out;
+      }
+      S.merging = mainTip;
+      S.file = '<body>\n<<<<<<< HEAD\n' + H_MINE + '\n=======\n' + H_THEIRS + '\n>>>>>>> origin/main\n<p>みんなで作るゲームのページです</p>\n</body>';
+      say('From github.com:game-club/team-game\nAuto-merging index.html\nCONFLICT (content): Merge conflict in index.html\nAutomatic merge failed; fix conflicts and then commit the result.\n\n→ 右下の「自分のPC」のファイルを見てください。印（<<<<<<< / ======= / >>>>>>>）で、2人の変更が並んでいます。', 'err');
+      return out;
+    }
+
+    if (line === 'git status') {
+      if (S.merging) { say('On branch ' + S.cur + '\nYou have unmerged paths.\n  (fix conflicts and run "git commit")\n\nUnmerged paths:\n        both modified:   index.html', ''); return out; }
+      var st = 'On branch ' + S.cur + '\n';
+      if (S.staged) st += 'Changes to be committed:\n        modified:   index.html';
+      else if (isModified()) st += 'Changes not staged for commit:\n        modified:   index.html\n（git add . で対象にします）';
+      else st += 'nothing to commit, working tree clean';
+      say(st, ''); return out;
+    }
+    if (line === 'git branch') {
+      var names = Object.keys(S.local).map(function (n) { return (n === S.cur ? '* ' : '  ') + n; });
+      say(names.join('\n'), ''); return out;
+    }
+    if (/^git log( --oneline)?$/.test(line)) {
+      var seen = reachable(S.local[S.cur]);
+      var list = S.commits.filter(function (c) { return seen[c.id]; }).reverse();
+      say(list.map(function (c) { return c.id + ' ' + c.msg; }).join('\n'), ''); return out;
+    }
+
+    if (/^gh pr create\b/.test(line)) {
+      var r = createPr(); if (r.err) say(r.err, 'err'); else say(r.ok + '\n（本物のghでは、タイトルなどを追加で聞かれることがあります）', 'ok'); return out;
+    }
+    if (/^gh pr merge\b/.test(line)) {
+      var pm = null;
+      for (var i = 0; i < S.prs.length; i++) { if (S.prs[i].status === 'open' && (S.prs[i].branch === S.cur)) pm = S.prs[i]; }
+      if (!pm) { say('このブランチのオープンなPRがありません。', 'err'); return out; }
+      var r2 = mergePr(pm.n); if (r2.err) say(r2.err, 'err'); else say(r2.ok, 'ok'); return out;
+    }
+
+    say('このシミュレーターでは使えないコマンドです。help で使えるコマンドを確認できます。', 'err');
+    return out;
+  }
+
+  function createPr() {
+    var b = S.cur;
+    if (b === 'main') return { err: 'mainからはPRを作りません。作業ブランチにいる時に実行します。' };
+    if (!S.remote[b]) return { err: 'ブランチ ' + b + ' はまだGitHubにありません。先に push しましょう。' };
+    var ex = findPr(b);
+    if (ex && ex.status === 'open') return { err: 'このブランチのPRはすでにあります。' };
+    if (reachable(S.remote.main)[S.remote[b]]) return { err: 'mainとの違いがないため、PRを作れません（There isn\'t anything to compare）。先に変更をコミットして、pushしましょう。' };
+    var conflict = (b === 'add-class') && !reachable(S.remote[b])[S.remote.main];
+    var pr = { n: S.nextPr++, branch: b, status: 'open', reviewed: false, conflict: conflict };
+    S.prs.push(pr);
+    advance(5);
+    setTimeout(function () {
+      pr.reviewed = true;
+      pr.comment = conflict
+        ? 'ミサキ: 同じ行をわたしも変更していて、コンフリクトしているみたい。mainの最新を取り込んで、どちらを残すか決めて解消してね。'
+        : 'ミサキ: LGTM 👍（見たよ、OKです！マージしてね）';
+      render();
+    }, 700);
+    return { ok: 'PR #' + pr.n + ' を作成しました。ミサキがレビューします…' };
+  }
+
+  function mergePr(n) {
+    var pr = null;
+    for (var i = 0; i < S.prs.length; i++) { if (S.prs[i].n === n) pr = S.prs[i]; }
+    if (!pr || pr.status !== 'open') return { err: 'そのPRはマージできません。' };
+    if (!pr.reviewed) return { err: 'まだレビュー待ちです。少し待ちましょう。' };
+    if (pr.conflict) return { err: 'コンフリクトが残っているため、マージできません（解消するまで Merge pull request は押せません）。' };
+    var mc = newCommit('Merge pull request #' + pr.n + ' from ' + pr.branch, [S.remote.main, S.remote[pr.branch]], 'main', commitById(S.remote[pr.branch]).content);
+    S.remote.main = mc.id;
+    pr.status = 'merged';
+    if (S.step === 6) { S.step = 7; }
+    else if (S.step === 8) { S.step = 9; S.cleared = true; }
+    return { ok: 'PR #' + pr.n + ' をmainにマージしました。' };
+  }
+
+  function doEdit() {
+    if (!S.cloned) return { err: '先にcloneしましょう。' };
+    if (S.cur === 'main') return { err: 'mainは直接編集せず、作業ブランチを作ってから編集しましょう。' };
+    if (S.merging) return { err: 'コンフリクトの解消は、下の「残す変更」ボタンで行います。' };
+    var base = S.branch2Started && S.cur === 'add-class' ? null : H1;
+    if (!base) return { err: 'この作業はすでに済んでいます。' };
+    if (S.file === mk(H1)) return { err: 'すでに編集済みです。次は git add . です。' };
+    if (tipContent() === mk(H1)) return { err: 'このブランチはすでにこの内容です。' };
+    S.file = mk(H1);
+    return { ok: 'index.html の見出しを「ゲーム作り班（テトリス）」に変更しました。（まだコミットはされていません）' };
+  }
+
+  function startSecond() {
+    if (S.branch2Started || S.step !== 7) return;
+    var base = commitById(S.remote.main);
+    // 自分: add-class ブランチで見出しにclassを付けてpush済み
+    var mine = newCommit('見出しにclassを追加', [base.id], 'add-class', mk(H_MINE));
+    S.local['add-class'] = mine.id; S.remote['add-class'] = mine.id; S.upstream['add-class'] = true;
+    // ミサキ: 同じ行を変更してmainにマージ
+    var mpr = S.nextPr++;
+    var theirs = newCommit('Merge pull request #' + mpr + ' from misaki/add-emoji（見出しに🎮を追加）', [base.id], 'main', mk(H_THEIRS));
+    S.remote.main = theirs.id;
+    S.prs.push({ n: mpr, branch: 'misaki/add-emoji', status: 'merged', reviewed: true, conflict: false });
+    S.cur = 'add-class'; S.file = mk(H_MINE); S.staged = false; S.branch2Started = true;
+    return '2本目の作業（' + 'add-class' + '）: あなたは見出しにclassを追加してpush済み。ところが同じ頃、ミサキが同じ見出しの行に🎮を付けるPR（#' + mpr + '）をmainにマージしていました。';
+  }
+
+  function resolve(kind) {
+    if (!S.merging || !hasMarkers()) return;
+    var h = kind === 'mine' ? H_MINE : kind === 'theirs' ? H_THEIRS : H_BOTH;
+    S.file = mk(h);
+    S.staged = false;
+    return '内容を「' + (kind === 'mine' ? '自分の変更' : kind === 'theirs' ? 'ミサキの変更' : '両方') + '」に書き換えました。次は git add . です。';
+  }
+
+  /* ---------- 次の一手（ヒント） ---------- */
+  function nextHint() {
+    if (S.cleared) return 'すべて完了です。';
+    switch (S.step) {
+      case 1: return 'git clone ' + URL_REPO + ' を実行します。（agyなら「このリポジトリをcloneして」）';
+      case 2: return 'git switch -c add-title で作業ブランチを作ります。（agyなら「add-titleというブランチを作って」）';
+      case 3:
+        if (!S.staged && !isModified()) return '右下の「見出しを編集する」ボタンを押します。（agyなら「タイトルを変更して」）';
+        if (!S.staged) return 'git add . で変更をコミット対象にします。';
+        return 'git commit -m "見出しにテトリスを追加" でコミットします。';
+      case 4: return '初回は git push -u origin ' + S.cur + ' です。（-u を付けずに git push だけだと、GitHubがブランチを知らないので怒られます）';
+      case 5: return '疑似GitHub画面の黄色い「Compare & pull request」ボタン、または gh pr create でPRを作ります。';
+      case 6: return 'ミサキのレビュー（LGTM）を待って、疑似GitHub画面の「Merge pull request」ボタンを押します。';
+      case 7:
+        if (!S.branch2Started) return '「2本目の作業を始める」ボタンを押します。';
+        if (!findPr('add-class')) return 'PRを作ります（「Compare & pull request」ボタンか gh pr create）。コンフリクトが表示されます。';
+        if (!S.merging && !hasMarkers() && !commitHasMain()) return 'mainの最新を取り込みます: git pull origin main（agyなら「mainの最新を取り込んで」）';
+        if (hasMarkers()) return '「自分のPC」のファイルで、<<<<<<< と ======= の間が自分、======= と >>>>>>> の間がミサキの変更です。下の3つのボタンから、残す内容を自分で選びましょう。';
+        if (!S.staged && S.merging) return 'git add . で解消済みにします。';
+        if (S.merging) return 'git commit -m "コンフリクトを解消" でコミットします。';
+        return 'git push で送ります（すでに upstream が設定済みなので -u は不要です）。';
+      case 8: return '疑似GitHub画面の「Merge pull request」ボタンを押します。';
+    }
+    return '';
+  }
+  function commitHasMain() { return reachable(S.local[S.cur])[S.remote.main]; }
+
+  /* ---------- 画面描画 ---------- */
+  function render() {
+    var done = Math.min(S.step - 1, TOTAL);
+    $('progText').textContent = done + ' / ' + TOTAL;
+    $('progBar').style.width = (done / TOTAL * 100) + '%';
+    var mi = Math.min(S.step, TOTAL) - 1;
+    $('mTitle').textContent = S.cleared ? '全ミッション完了！' : MISSIONS[mi].t;
+    $('mBody').innerHTML = S.cleared ? 'おつかれさまでした。下の対応表で、コマンドとagyのお願いを見比べましょう。' : MISSIONS[mi].b;
+    $('hintBox').style.display = S.hintOpen ? 'block' : 'none';
+    $('hintBox').innerHTML = esc(nextHint());
+    $('clearBox').style.display = S.cleared ? 'block' : 'none';
+    $('promptCmd').textContent = (S.cloned ? 'team-game (' + S.cur + ')' : '~') + ' $';
+
+    // ファイル
+    $('fileLocal').innerHTML = S.cloned ? colorFile(S.file) : '（まだcloneしていません）';
+    $('fileRemote').innerHTML = colorFile(commitById(S.remote.main).content);
+    $('resolveBox').style.display = (S.merging && hasMarkers()) ? 'flex' : 'none';
+    var canEdit = S.cloned && S.cur !== 'main' && !S.merging && S.step === 3 && S.file !== mk(H1);
+    $('editBtn').disabled = !canEdit;
+
+    renderGraph();
+    renderGh();
+  }
+  function colorFile(t) {
+    return esc(t).split('\n').map(function (l) {
+      return /^(&lt;){7}|^={7}$|^(&gt;){7}/.test(l) ? '<span class="mark">' + l + '</span>' : l;
+    }).join('\n');
+  }
+
+  function renderGraph() {
+    var lanes = ['main'];
+    S.commits.forEach(function (c) { if (lanes.indexOf(c.lane) === -1) lanes.push(c.lane); });
+    var laneY = {}; lanes.forEach(function (l, i) { laneY[l] = 30 + i * 50; });
+    var pos = {}; S.commits.forEach(function (c, i) { pos[c.id] = { x: 40 + i * 76, y: laneY[c.lane] }; });
+    var w = 40 + S.commits.length * 76 + 20, h = 30 + lanes.length * 50 + 20;
+    var svg = '<svg width="' + w + '" height="' + h + '" role="img" aria-label="ブランチの図">';
+    S.commits.forEach(function (c) {
+      c.parents.forEach(function (p) {
+        svg += '<line x1="' + pos[p].x + '" y1="' + pos[p].y + '" x2="' + pos[c.id].x + '" y2="' + pos[c.id].y + '" stroke="#8a8578" stroke-width="2"/>';
+      });
+    });
+    lanes.forEach(function (l) { svg += '<text x="4" y="' + (laneY[l] - 12) + '" font-size="11" fill="#4a4a5e">' + esc(l.length > 14 ? l.slice(0, 13) + '…' : l) + '</text>'; });
+    S.commits.forEach(function (c) {
+      var isHead = S.local[S.cur] === c.id;
+      svg += '<circle cx="' + pos[c.id].x + '" cy="' + pos[c.id].y + '" r="9" fill="' + (c.lane === 'main' ? '#2f6db5' : '#c2530c') + '" stroke="' + (isHead ? '#000' : '#fff') + '" stroke-width="' + (isHead ? 3 : 2) + '"/>';
+      svg += '<text x="' + pos[c.id].x + '" y="' + (pos[c.id].y + 26) + '" font-size="10" text-anchor="middle" fill="#4a4a5e">' + c.id.slice(0, 5) + '</text>';
+    });
+    svg += '</svg>';
+    $('graph').innerHTML = svg + '<div style="font-size:.78rem;color:#4a4a5e">青=main／橙=作業ブランチ／太い黒枠=今自分がいるコミット</div>';
+  }
+
+  function renderGh() {
+    var h = '';
+    var branches = Object.keys(S.remote);
+    // Compare & pull request バナー
+    branches.forEach(function (b) {
+      if (b !== 'main' && !findPr(b) && !reachable(S.remote.main)[S.remote[b]]) {
+        h += '<div class="sim-banner"><strong>' + esc(b) + '</strong> had recent pushes　<button class="sim-btn sim-btn--green" type="button" data-cpr="1">Compare &amp; pull request</button></div>';
+      }
+    });
+    h += '<div><strong>ブランチ:</strong> ' + branches.map(esc).join(' ・ ') + '</div>';
+    h += '<div style="margin:.6rem 0 .3rem"><strong>Pull requests</strong></div>';
+    if (!S.prs.length) h += '<div style="color:#57606a">まだPRはありません。</div>';
+    S.prs.forEach(function (pr) {
+      h += '<div class="sim-pr"><div><span class="sim-badge sim-badge--' + pr.status + '">' + (pr.status === 'open' ? 'Open' : 'Merged') + '</span> <strong>#' + pr.n + '</strong> ' + esc(pr.branch) + '</div>';
+      if (pr.comment) h += '<div style="margin:.3rem 0">💬 ' + esc(pr.comment) + '</div>';
+      else if (pr.status === 'open') h += '<div style="margin:.3rem 0;color:#57606a">レビュー待ち…</div>';
+      if (pr.status === 'open') {
+        if (pr.conflict) h += '<div class="sim-conflict">⚠ コンフリクトがあります。解消するまで <strong>Merge pull request</strong> ボタンは押せません。（実際の画面の文言は変わることがあります）</div>';
+        h += '<button class="sim-btn sim-btn--green" type="button" data-merge="' + pr.n + '"' + ((pr.reviewed && !pr.conflict) ? '' : ' disabled') + '>Merge pull request</button>';
+      }
+      h += '</div>';
+    });
+    if (S.step === 7 && !S.branch2Started && !S.cleared) {
+      h += '<div style="margin-top:.6rem"><button class="sim-btn" type="button" id="startSecond">▶ 2本目の作業を始める</button></div>';
+    }
+    $('gh').innerHTML = h;
+  }
+
+  /* ---------- ログ出力 ---------- */
+  function logTo(id, text, cls) {
+    var el = document.createElement('div');
+    if (cls) el.className = cls;
+    el.textContent = text;
+    $(id).appendChild(el);
+    $(id).scrollTop = $(id).scrollHeight;
+    return el;
+  }
+  function notice(text, ok) { logTo('logCmd', text, ok ? 'ok' : 'err'); logTo('logAgy', text, ok ? 'ok' : 'err'); }
+  function execLine(cmd, logId) {
+    var res = run(cmd);
+    if (res === null) { $(logId).innerHTML = ''; return; }
+    res.forEach(function (o) { logTo(logId, o.t, o.k); });
+  }
+
+  /* ---------- agy ---------- */
+  var MSG = { branch: 'add-title' };
+  function agyPlan(text) {
+    var t = text.toLowerCase();
+    var plan = [], asks = null;
+    var has = function (re) { return re.test(t); };
+    if (has(/clone|クローン|ダウンロード|取得/)) plan.push({ show: 'git clone ' + URL_REPO, tok: 'clone' });
+    if (has(/ブランチ|branch/) && !has(/pull|取り込/)) plan.push({ show: 'git switch -c ' + MSG.branch, tok: 'branch' });
+    if (has(/編集|書き換|タイトル|見出し/) && !has(/解消|コンフリクト|競合/)) plan.push({ show: '（index.html の見出しを編集）', tok: 'edit' });
+    if (has(/コミット|commit|記録/)) { plan.push({ show: 'git add .', tok: 'add' }); plan.push({ show: 'git commit -m "…"', tok: 'commit' }); }
+    if (has(/push|プッシュ|アップロード/)) plan.push({ show: 'git push -u origin <今のブランチ>', tok: 'push' });
+    if (has(/\bpr\b|プルリク|pull ?request/)) plan.push({ show: 'gh pr create', tok: 'pr' });
+    if (has(/取り込|最新|pull|プル/) && !has(/プルリク|pull ?request/)) plan.push({ show: 'git pull origin main', tok: 'pull' });
+    if (has(/解消|コンフリクト|競合|直して/) && S.merging) {
+      var kind = has(/両方/) ? 'both' : has(/自分|私|わたし/) ? 'mine' : has(/ミサキ|相手|チームメイト/) ? 'theirs' : null;
+      if (kind) { plan.push({ show: '（index.html のコンフリクトを解消: ' + { both: '両方残す', mine: '自分の変更', theirs: 'ミサキの変更' }[kind] + '）', tok: 'resolve:' + kind }); plan.push({ show: 'git add .', tok: 'add' }); plan.push({ show: 'git commit -m "コンフリクトを解消"', tok: 'commit' }); }
+      else asks = 'コンフリクトの解消は、<strong>どちらの内容を残すか</strong>で結果が変わります。「自分の変更」「ミサキの変更」「両方」のどれを残しますか？（指示が曖昧なときは、このように聞き返されることがあります）';
+    }
+    else if (has(/解消|コンフリクト|競合/) && !S.merging) plan.push({ show: 'git pull origin main', tok: 'pull' });
+    if (has(/マージ|merge/) && !S.merging) plan.push({ show: 'gh pr merge', tok: 'merge' });
+    var order = { clone: 0, branch: 1, edit: 2, pull: 3, add: 5, commit: 6, push: 7, pr: 8, merge: 9 };
+    var seen = {};
+    plan = plan.filter(function (x) { if (seen[x.tok]) return false; seen[x.tok] = true; return true; });
+    plan.sort(function (a, b) { var oa = a.tok.indexOf('resolve:') === 0 ? 4 : order[a.tok], ob = b.tok.indexOf('resolve:') === 0 ? 4 : order[b.tok]; return oa - ob; });
+    return { plan: plan, asks: asks };
+  }
+  function runTok(tok) {
+    if (tok === 'clone') return run('git clone ' + URL_REPO);
+    if (tok === 'branch') return run('git switch -c ' + MSG.branch);
+    if (tok === 'edit') { var e = doEdit(); return [{ t: e.err || e.ok, k: e.err ? 'err' : 'ok' }]; }
+    if (tok === 'add') return run('git add .');
+    if (tok === 'commit') return run(S.merging ? 'git commit -m "コンフリクトを解消"' : 'git commit -m "見出しにテトリスを追加"');
+    if (tok === 'push') return run(S.upstream[S.cur] ? 'git push' : 'git push -u origin ' + S.cur);
+    if (tok === 'pr') return run('gh pr create');
+    if (tok === 'pull') return run('git pull origin main');
+    if (tok === 'merge') return run('gh pr merge');
+    if (tok.indexOf('resolve:') === 0) { var r = resolve(tok.slice(8)); return [{ t: r || 'いまは解消するものがありません。', k: r ? 'ok' : 'err' }]; }
+    return [];
+  }
+  function agySubmit(text) {
+    logTo('logAgy', 'あなた: ' + text, 'you');
+    var p = agyPlan(text);
+    if (p.asks) { var el = document.createElement('div'); el.className = 'agy'; el.innerHTML = 'agy: ' + p.asks; $('logAgy').appendChild(el); return; }
+    if (!p.plan.length) {
+      logTo('logAgy', 'agy: すみません、何をすればよいか読み取れませんでした。もう少し具体的にお願いします。\n例: 「ブランチを作って、タイトルを変更して、コミットして」「pushして」「PRを作って」', 'agy');
+      return;
+    }
+    var box = document.createElement('div');
+    box.className = 'sim-run';
+    var lines = 'agy: 次の操作を実行します。\n' + p.plan.map(function (s) { return '  ' + s.show; }).join('\n');
+    var pre = document.createElement('div'); pre.className = 'agy'; pre.style.whiteSpace = 'pre-wrap'; pre.textContent = lines;
+    var btn = document.createElement('button'); btn.type = 'button'; btn.className = 'sim-btn'; btn.textContent = '実行してよい（はい）';
+    var ng = document.createElement('button'); ng.type = 'button'; ng.className = 'sim-btn sim-btn--sub'; ng.textContent = 'やめる'; ng.style.marginLeft = '.4rem';
+    btn.onclick = function () {
+      btn.disabled = true; ng.disabled = true;
+      p.plan.forEach(function (s) {
+        var res = runTok(s.tok);
+        (res || []).forEach(function (o) { var d = document.createElement('div'); d.className = o.k; d.style.whiteSpace = 'pre-wrap'; d.textContent = '  → ' + o.t; box.appendChild(d); });
+      });
+      render(); $('logAgy').scrollTop = $('logAgy').scrollHeight;
+    };
+    ng.onclick = function () { btn.disabled = true; ng.disabled = true; logTo('logAgy', 'agy: 実行を取りやめました。', 'agy'); };
+    box.appendChild(pre); box.appendChild(btn); box.appendChild(ng);
+    $('logAgy').appendChild(box);
+    $('logAgy').scrollTop = $('logAgy').scrollHeight;
+  }
+
+  /* ---------- イベント ---------- */
+  function setTab(cmd) {
+    $('tabCmd').setAttribute('aria-selected', cmd ? 'true' : 'false');
+    $('tabAgy').setAttribute('aria-selected', cmd ? 'false' : 'true');
+    $('paneCmd').style.display = cmd ? 'block' : 'none';
+    $('paneAgy').style.display = cmd ? 'none' : 'block';
+  }
+  function bind() {
+    $('tabCmd').onclick = function () { setTab(true); };
+    $('tabAgy').onclick = function () { setTab(false); };
+    $('formCmd').onsubmit = function (e) {
+      e.preventDefault();
+      var v = $('inCmd').value; if (!v.trim()) return;
+      logTo('logCmd', $('promptCmd').textContent + ' ' + v, 'cmd');
+      execLine(v, 'logCmd'); $('inCmd').value = ''; render();
+    };
+    $('formAgy').onsubmit = function (e) {
+      e.preventDefault();
+      var v = $('inAgy').value; if (!v.trim()) return;
+      agySubmit(v); $('inAgy').value = ''; render();
+    };
+    $('hintBtn').onclick = function () { S.hintOpen = !S.hintOpen; render(); };
+    $('resetBtn').onclick = function () { init(); };
+    $('editBtn').onclick = function () {
+      var r = doEdit();
+      notice(r.err || r.ok, !r.err); render();
+    };
+    $('resolveBox').onclick = function (e) {
+      var k = e.target && e.target.getAttribute && e.target.getAttribute('data-res');
+      if (!k) return;
+      var r = resolve(k); if (r) notice(r, true); render();
+    };
+    $('gh').onclick = function (e) {
+      var t = e.target;
+      if (t.getAttribute('data-cpr')) {
+        var r = createPr();
+        notice(r.err || r.ok, !r.err);
+        render();
+      } else if (t.getAttribute('data-merge')) {
+        var r2 = mergePr(parseInt(t.getAttribute('data-merge'), 10));
+        notice(r2.err || r2.ok, !r2.err); render();
+      } else if (t.id === 'startSecond') {
+        var msg = startSecond();
+        if (msg) notice(msg, true);
+        render();
+      }
+    };
+  }
+
+  function init() {
+    S = newState();
+    $('logCmd').innerHTML = ''; $('logAgy').innerHTML = '';
+    logTo('logCmd', 'ミッション1から始めましょう。「ヒントを見る」で次の一手が確認できます。', 'ok');
+    logTo('logAgy', 'agy: こんにちは。やりたいことを日本語で伝えてください。実行前に、使うコマンドをお見せします。', 'agy');
+    render();
+  }
+
+  bind();
+  init();
+})();
+</script>
+</body>
+</html>

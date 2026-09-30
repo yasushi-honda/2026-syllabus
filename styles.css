@@ -405,6 +405,14 @@ img { max-width: 100%; display: block; }
 .demo-cta__link:hover {
   background: #084f37;
 }
+/* オレンジ科目（AI活用プログラミング基礎系）用 */
+.demo-cta--orange {
+  background: var(--c-orange-soft);
+  border-color: var(--c-orange-border);
+}
+.demo-cta--orange .demo-cta__heading { color: #7a3006; }
+.demo-cta--orange .demo-cta__link { background: #9a3f08; }
+.demo-cta--orange .demo-cta__link:hover { background: #7a3006; }
 
 /* ========================================
    Timetable Grid — weekly matrix

@@ -108,7 +108,8 @@ ai-programming-2/       # AI活用プログラミング基礎Ⅱ の各回詳細
   week02.html           #   第2回 GitHubを始めよう＋Codespacesを使ってみよう
   week03.html           #   第3回 GitHubの続き＋Codespacesを自分で起動＋agyを導入しよう
   week04.html           #   第4回 agyと一緒につくる①
-  week05.html           #   第5回 agyと一緒につくる②
+  week05.html           #   第5回 GitHubでチーム開発をシミュレーションしよう
+  github-team-sim.html  #     第5回 GitHubチーム開発シミュレーター（1 ファイル HTML、JS のみ・記録なし。コマンド／agy自然言語の2モード）
 natural-language-dev-2.html   # 自然言語開発Ⅱ（木3・4限／後期。授業内容確定済み、週ページ順次作成中）
 natural-language-dev-2/       # 自然言語開発Ⅱ の各回詳細ページ
   week01.html           #   第1回 前期振り返り＆後期オリエンテーション
