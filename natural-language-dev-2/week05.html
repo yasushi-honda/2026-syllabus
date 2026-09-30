@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=5">
-  <!-- 公式情報確認: 2026-09-30 (neon.com/pricing / neon.com/docs/reference/claimable-postgres / neon.com/docs/reference/neon-cli / neon.com/docs/connect/connect-from-any-app / neon.com/docs/manage/roles / neon.com/docs/manage/database-access / neon.com/docs/introduction/regions / code.claude.com/docs/en/data-usage / antigravity.google/terms / docs.aws.amazon.com/bedrock/latest/userguide/data-protection.html)。npmレジストリで、旧コマンド`npx neondb`は非推奨（`neon-new`へ改名）、現行のCLIは`neon`パッケージであることを確認。OpenAI Codexの記述は help.openai.com の検索結果抜粋のみが根拠（403で本文未取得）。未確認（授業前に教員が実機で確認）: `neon claim create --env-pull`の実際の出力・所要時間、一時プロジェクト（未claim）でのロール作成・GRANTの可否、Codespaceからの接続可否、`npm i -g neon`が権限エラーにならないか -->
+  <!-- 公式情報確認: 2026-09-30 (neon.com/pricing / neon.com/docs/reference/claimable-postgres / neon.com/docs/reference/neon-cli / neon.com/docs/connect/connect-from-any-app / neon.com/docs/manage/roles / neon.com/docs/manage/database-access / neon.com/docs/introduction/regions / code.claude.com/docs/en/data-usage / antigravity.google/terms / docs.aws.amazon.com/bedrock/latest/userguide/data-protection.html)。npmレジストリで、旧コマンド`npx neondb`は非推奨（`neon-new`へ改名）、現行のCLIは`neon`パッケージであることを確認。OpenAI Codexの記述は help.openai.com の検索結果抜粋のみが根拠（403で本文未取得）。実機確認（2026-09-30、教員のMacで実施）: `neon claim create --env-pull`はneon loginなしで成功し、.envにDATABASE_URL・DATABASE_URL_UNPOOLED・NEON_BRANCHの3つを書き出した（.gitignoreには.neonのみ追記され、.envは入らなかった）。`node --env-file=.env`＋pgで保存・取得ができ、再実行してもデータが残った。未claimプロジェクトでもCREATE ROLE・GRANT・読み取り専用ロールでのINSERT/DELETE拒否を確認。pgはSSLモードの警告を出すが動作する。未確認（授業前に教員がCodespaceで確認）: Codespace上での`npm i -g neon`の権限・外向き接続、ai-agent各種でのコード生成の再現性、claim後の接続文字列の取り直し手順 -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -89,13 +89,13 @@
             <ul>
               <li>Claude Codeの公式ドキュメントには次のように書かれている（<a href="https://code.claude.com/docs/en/data-usage" target="_blank" rel="noopener">Data usage</a>）:「Claude Code runs locally. To interact with the LLM, Claude Code sends data over the network. This data includes all user prompts and model outputs, encrypted in transit via TLS 1.2+.」——手元で動いていても、<strong>指示文とモデルの出力はネットワーク越しに提供元へ送られる</strong></li>
               <li>エージェントにファイルを読ませると、<strong>その内容も指示文の一部として送られうる</strong>。後で作る<code>.env</code>（DBの秘密の接続文字列）を、エージェントに読ませるかどうかも「判断」の対象になる</li>
-              <li>学習への利用・保存期間は、契約の種類で違う。<strong>個人向けプラン</strong>では設定がオンなら学習に使われ、保存も長い（Claudeは設定オンで5年・オフで30日）。<strong>API・Amazon Bedrockなどの商用の経路</strong>では、既定では学習に使われない（公式: 「Anthropic does not train generative models using code or prompts sent to Claude Code under commercial terms, unless the customer has chosen to provide their data to us for model improvement」）。Antigravity CLIは、<strong>利用経路（個人のアカウントか、組織の契約・APIキーか）で適用される規約が変わる</strong>（<a href="https://antigravity.google/terms" target="_blank" rel="noopener">Google Antigravity Additional Terms of Service</a>）。Codex CLIについては、OpenAIのヘルプセンターで各自が確認する（<a href="https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance" target="_blank" rel="noopener">How your data is used to improve model performance</a>。教員は本文を直接確認できていないため、必ず各自が公式ページで読む）</li>
+              <li>学習への利用・保存期間は、契約の種類で違う。<strong>個人向けプラン</strong>では設定がオンなら学習に使われ、保存も長い（Claudeは設定オンで5年・オフで30日）。<strong>API・Amazon Bedrockなどの商用の経路</strong>では、既定では学習に使われない（公式: 「Anthropic does not train generative models using code or prompts sent to Claude Code under commercial terms, unless the customer has chosen to provide their data to us for model improvement」）。Antigravity CLIは、Gemini Enterprise（Google Cloud）などの組織向け契約や、Gemini Enterprise APIキー経由の場合は、この追加規約ではなく<strong>管理者が承諾した契約が適用される</strong>と書かれている（<a href="https://antigravity.google/terms" target="_blank" rel="noopener">Google Antigravity Additional Terms of Service</a>）。<strong>利用経路によって扱いが変わる</strong>ので、自分の契約を確認する。Codex CLIについては、OpenAIのヘルプセンターで各自が確認する（<a href="https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance" target="_blank" rel="noopener">How your data is used to improve model performance</a>。教員は本文を直接確認できていないため、必ず各自が公式ページで読む）</li>
               <li>「学習に使われない」だけでは安全とは言えない。<strong>学習に使わない・保存期間を限る・アクセスできる人を限る・契約で扱いを定める</strong>といった、複数の要素の組み合わせ（<strong>データガバナンス</strong>）で「個人情報を扱えるレベルの安全設計」は成り立つ</li>
             </ul>
             <p><strong>今日使うDB: Neon</strong></p>
             <ul>
-              <li><strong>Neon</strong>は、Postgres（表形式のデータベース）のクラウドサービス。公式の料金ページには、Freeプランについて「The Free plan is permanent (not a trial); no credit card required」と書かれている（<a href="https://neon.com/pricing" target="_blank" rel="noopener">Pricing（Neon公式）</a>）——<strong>クレジットカードなしで使い始められる</strong></li>
-              <li>Freeプランは、1プロジェクトあたり0.5 GBまで。使っていないときは自動で休止する（公式: 「suspends after 5 min」）</li>
+              <li><strong>Neon</strong>は、Postgres（表形式のデータベース）のクラウドサービス。公式の料金ページには「Build and learn free with no time limits and no credit card required.」と書かれている（<a href="https://neon.com/pricing" target="_blank" rel="noopener">Pricing（Neon公式）</a>）——<strong>クレジットカードなしで使い始められる</strong></li>
+              <li>Freeプランは、1プロジェクトあたり0.5 GBまで。使っていない（非アクティブな）ときは自動で休止する（公式の料金表: 「After 5 minutes」）</li>
             </ul>
           </div>
         </div>
@@ -110,19 +110,21 @@
             <p><strong>Codespaceを再開して、作業フォルダを用意する</strong></p>
             <ul>
               <li>これまでと同じ手順でCodespaceを再開し、新しい作業フォルダ（例: <code>score-db</code>）を作る</li>
-              <li><strong>最初に</strong>、フォルダに<code>.gitignore</code>を作り、<code>.env</code>と<code>node_modules</code>を書き込んでおく（DBの秘密の接続文字列を、誤ってGitHubに載せないための備え。書き方が分からなければエージェントに頼んでよい）</li>
+              <li><strong>最初に</strong>、フォルダに<code>.gitignore</code>を作り、<code>.env</code>・<code>.env.local</code>・<code>node_modules</code>を書き込んでおく（DBの秘密の接続文字列を、誤ってGitHubに載せないための備え。書き方が分からなければエージェントに頼んでよい）</li>
             </ul>
             <p><strong>アカウントなしで、一時的なDBを作る</strong></p>
             <ul>
-              <li>Neonの公式CLIを入れる: <code>npm i -g neon</code>（うまくいかないときは、エージェントに「Neon CLIを入れて」と頼んでよい。公式: <a href="https://neon.com/docs/reference/neon-cli" target="_blank" rel="noopener">Neon CLI</a>）</li>
-              <li>次のコマンドで、<strong>アカウントを作らずに</strong>一時的なプロジェクトを作り、接続文字列を<code>.env</code>に書き出す: <code>neon claim create --env-pull</code></li>
+              <li>Neonの公式CLIを入れる: <code>npm i -g neon</code>（うまくいかないときは、エージェントに「Neon CLIを入れて」と頼んでよい。あとの<code>neon claim</code>が使えないと言われたら、<code>npm i -g neon@latest</code>で最新版にする。公式: <a href="https://neon.com/docs/reference/neon-cli" target="_blank" rel="noopener">Neon CLI</a>）</li>
+              <li>次のコマンドで、<strong>アカウントを作らずに</strong>一時的なプロジェクトを作り、接続文字列を書き出す: <code>neon claim create --env-pull</code>（公式の説明では、既にある<code>.env</code>に書き込み、なければ<code>.env.local</code>に書き出す。<strong>先に空の<code>.env</code>を作っておく</strong>と、以降の説明どおりに進められる）</li>
               <li>公式の説明: 「Unclaimed projects expire in 72 hours (<code>project.expires_at</code>) and are capped at 100 MB storage and 1 GB transfer.」——<strong>72時間で期限切れ</strong>（あとで自分のアカウントに引き継ぐ手順は2限後半に扱う）（<a href="https://neon.com/docs/reference/claimable-postgres" target="_blank" rel="noopener">Claimable Neon</a>）</li>
-              <li><code>.env</code>には<code>DATABASE_URL</code>が入る。これが<strong>DBに入るための鍵（パスワード相当）</strong>。中身をチャットや画面に貼らない</li>
+              <li><code>.env</code>には<code>DATABASE_URL</code>など3つの値が入る。<code>DATABASE_URL</code>が<strong>DBに入るための鍵（パスワード相当）</strong>。中身をチャットや画面に貼らない。コマンドの実行結果には、プロジェクトの期限（72時間後）も表示される</li>
+              <li>コマンドは<code>.gitignore</code>に<code>.neon</code>を追加することがあるが、<code>.env</code>を入れてくれるとは限らない。<strong><code>.gitignore</code>に<code>.env</code>が入っているか、必ず自分で確認する</strong></li>
             </ul>
             <p><strong>AIエージェントに、スコア保存のスクリプトを頼む</strong></p>
             <ul>
               <li>例: <code>scoresテーブル（id・名前・スコア・作成日時）を作り、スコアを1件追加して、上位10件を表示するNode.jsのスクリプトscores.jsを書いてください。DBへの接続は、.envのDATABASE_URLを使い、pgパッケージで行ってください。必要なパッケージのインストールと、.envの読み込み方法（dotenvか、Nodeの--env-file）も含めてください</code></li>
               <li>エージェントが書いたコードを<strong>読んでから</strong>実行する。接続文字列が<strong>コードの中に直接書かれていない</strong>か（<code>.env</code>から読み込んでいるか）を確認する（Nodeからの接続の公式例: <a href="https://neon.com/docs/connect/connect-from-any-app" target="_blank" rel="noopener">Connect from any application</a>）</li>
+              <li>実行すると、pgの<strong>SSLに関する警告</strong>が出ることがあるが、動作には影響しない。意味が分からなければエージェントに聞いてよい（警告を消すことが目的ではない）</li>
               <li>実行して、スコアが表示されれば成功。<strong>新しいターミナルでもう一度実行しても、スコアが残っている</strong>ことを確かめる（時間があれば、Codespaceを一度止めて再開しても残っていることも確かめる。スコアは手元ではなく<strong>クラウドのDB</strong>にあるため）</li>
             </ul>
             <div class="lesson-tip">
@@ -156,15 +158,15 @@
             <p><strong>ミッション2: 権限を絞る（最小権限）</strong>（約20分）</p>
             <ul>
               <li>エージェントに頼む（例）: <code>scoresテーブルを読むだけの、読み取り専用ロールreadonly_userを作ってください。そのロールの接続文字列で、SELECTはできて、INSERTとDELETEは失敗することを確かめてください</code></li>
-              <li>Neonの公式ドキュメントでは、読み取り専用ロールは<strong>データベース・スキーマ・テーブルの各レベルで権限を与える</strong>と説明されている（「access must be granted at the database, schema, and object level」。<a href="https://neon.com/docs/manage/database-access" target="_blank" rel="noopener">Manage database access</a>）。エージェントが書いたSQLを読んで、<code>GRANT CONNECT</code>・<code>GRANT USAGE ON SCHEMA</code>・<code>GRANT SELECT</code>に対応する行があるか探す</li>
+              <li>Neonの公式ドキュメントでは、Postgresでは<strong>データベース・スキーマ・テーブルの各レベルで権限を与える</strong>必要があると説明されている（「access must be granted at the database, schema, and object level」。<a href="https://neon.com/docs/manage/database-access" target="_blank" rel="noopener">Manage database access</a>）。エージェントが書いたSQLを読んで、<code>GRANT CONNECT</code>・<code>GRANT USAGE ON SCHEMA</code>・<code>GRANT SELECT</code>に対応する行があるか探す</li>
               <li>読み取り専用ロールの接続文字列も<strong>もう1つの秘密</strong>。<code>.env</code>に別の名前（例: <code>READONLY_DATABASE_URL</code>）で書き、コードには直接書かない</li>
               <li>ミッション1をもう一度、<strong>読み取り専用の接続文字列</strong>で試す——<strong>消せなくなった</strong>ことを確認する</li>
-              <li>一時的なプロジェクトの制限で作れない場合は、講師のデモで確認する</li>
+              <li>うまくいかない場合は、エラー全文をエージェントに貼って原因を聞くか、講師のデモで確認する</li>
             </ul>
             <p><strong>ミッション3: 漏れたらどうするか</strong>（約10分）</p>
             <ul>
               <li><strong>パスワードを変える</strong>（ローテーション）ことで、漏れた接続文字列を無効にする。Neonの公式には、コンソールの「Reset password」またはSQLの<code>ALTER USER … WITH PASSWORD</code>で変えられると書かれている（<a href="https://neon.com/docs/manage/roles" target="_blank" rel="noopener">Manage roles</a>）。アカウントのない一時プロジェクトでは、コンソールはまだ使えない可能性が高いので、SQLで変えるか、<strong>作り直して捨てる</strong>のが手。コンソールの「Reset password」は、自分のアカウントに引き継いだ（claimした）あとの選択肢になる</li>
-              <li>もしPublicのリポジトリに接続文字列をpushしてしまったら、<strong>誰でも読める</strong>ため、<strong>消しても遅い</strong>と考えて、すぐにパスワードを変える。だから<strong>最初の<code>.gitignore</code></strong>が大事になる</li>
+              <li>もしPublicのリポジトリに接続文字列をpushしてしまったら、<strong>誰でも読める</strong>うえ、履歴・フォーク・他人のコピーに残りうるため、<strong>消しても遅い</strong>と考えて、すぐにパスワードを変える。だから<strong>最初の<code>.gitignore</code></strong>が大事になる</li>
             </ul>
           </div>
         </div>
@@ -188,12 +190,13 @@
             </ul>
             <p><strong>データの置き場所も判断材料になる</strong></p>
             <ul>
-              <li>Neonの公式ドキュメントによると、Neonは複数のAWSリージョンで使えるが、<strong>日本（東京）のリージョンはない</strong>（一覧にあるアジア太平洋は、シンガポールとシドニー。<a href="https://neon.com/docs/introduction/regions" target="_blank" rel="noopener">Regions（Neon公式）</a>）。保存したデータは<strong>日本国外に置かれる</strong>ことがある——個人情報を扱うなら、置き場所や契約も確認が必要になる</li>
+              <li>Neonの公式ドキュメントによると、Neonは複数のAWSリージョンで使えるが、<strong>日本（東京）のリージョンはない</strong>（一覧にあるアジア太平洋は、シンガポールとシドニー。<a href="https://neon.com/docs/introduction/regions" target="_blank" rel="noopener">Regions（Neon公式）</a>）。保存したデータは<strong>日本国外に置かれる</strong>ことがある（一時プロジェクトの置き場所は、公式に明記がなく、自分では選べない）——個人情報を扱うなら、置き場所や契約も確認が必要になる</li>
               <li>第3回で扱ったAWSのFree Planは<strong>評価目的に限られ、機微なデータの処理には使わない</strong>とされている（本科目の履修上の注意点）。「安全な設計」でも、<strong>そのアカウントで扱ってよいデータの範囲</strong>は別に決まっている</li>
             </ul>
             <p><strong>DBを自分のものにする（任意、約10分）</strong></p>
             <ul>
-              <li>72時間で消える一時プロジェクトを残したい人は、<code>neon claim accept</code>で自分のNeonアカウントに<strong>引き継ぐ（claim）</strong>。公式の説明では、コマンドは「claim codeを作り、人がサインインしてプロジェクトを引き取るURLを開く」。Codespaceでは、ブラウザが自動で開かないことがあるので、<strong>表示されたURLを手元のブラウザで開く</strong>（<a href="https://neon.com/docs/reference/neon-cli" target="_blank" rel="noopener">Neon CLI</a>）</li>
+              <li>72時間で消える一時プロジェクトを残したい人は、<code>neon claim accept</code>で自分のNeonアカウントに<strong>引き継ぐ（claim）</strong>。このコマンドは、既定ではブラウザを開こうとする。Codespaceでは開かないので、<code>neon claim accept --no-open</code>と実行して<strong>表示されたURLを手元のブラウザで開く</strong>（<a href="https://neon.com/docs/cli/claim" target="_blank" rel="noopener">claim（Neon公式）</a>）</li>
+              <li><strong>引き継ぐと、接続文字列（パスワード）が変わる</strong>ため、それまでの<code>.env</code>の値は使えなくなる。引き継いだあとは、Neonのコンソールで新しい接続文字列を取り直し、<code>.env</code>を書き換える</li>
               <li>アカウント作成の途中で<strong>クレジットカードの入力を求められたら、進まずに講師に声をかける</strong>（Freeプランはカード不要と公式に書かれているが、画面の実際の表示を確認する）</li>
               <li>引き継がないなら、72時間後に消えることを理解しておけばよい</li>
             </ul>
@@ -249,6 +252,7 @@
         <li><a href="https://neon.com/pricing" target="_blank" rel="noopener">Pricing（Neon公式）</a> — Freeプランの内容（カード不要・容量・休止）</li>
         <li><a href="https://neon.com/docs/reference/claimable-postgres" target="_blank" rel="noopener">Claimable Neon（Neon公式）</a> — アカウントなしの一時プロジェクトと、引き継ぎ（claim）</li>
         <li><a href="https://neon.com/docs/reference/neon-cli" target="_blank" rel="noopener">Neon CLI（Neon公式）</a> — <code>neon login</code>・<code>neon claim</code>・<code>neon connection-string</code>など</li>
+        <li><a href="https://neon.com/docs/cli/claim" target="_blank" rel="noopener">claim（Neon公式）</a> — 一時プロジェクトの作成と引き継ぎ（<code>--no-open</code>など）</li>
         <li><a href="https://neon.com/docs/connect/connect-from-any-app" target="_blank" rel="noopener">Connect from any application（Neon公式）</a> — Node.jsからの接続の書き方</li>
         <li><a href="https://neon.com/docs/manage/database-access" target="_blank" rel="noopener">Manage database access（Neon公式）</a> — 読み取り専用ロールの作り方</li>
         <li><a href="https://neon.com/docs/manage/roles" target="_blank" rel="noopener">Manage roles（Neon公式）</a> — ロールの作成とパスワードのリセット</li>
