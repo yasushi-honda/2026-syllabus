@@ -3198,6 +3198,92 @@ main .vz-stack--eval .vz-e3 { background: #4d5b6a; }
 }
 
 /* ========================================
+   秋の集中講座用の図解部品（vz-*の続き）
+   vz-*は amber 基調のため、main.theme-slate 内では slate 基調に読み替える
+   ======================================== */
+main.theme-slate {
+  --c-amber: var(--c-slate);
+  --c-amber-soft: var(--c-slate-soft);
+  --c-amber-border: var(--c-slate-border);
+}
+main.theme-slate a.vz-chip:hover { background: #d9e2ea; }
+
+main .syllabus-section--nav { padding-top: var(--sp-3); padding-bottom: var(--sp-3); }
+main .syllabus-section--nav .vz-jump { margin: 0; }
+
+/* トラックの色（A=blue / B=green / C=purple）と学年カードの色（slate） */
+main .vz-f-ka { --f: var(--c-blue); --f-soft: var(--c-blue-soft); --f-border: var(--c-blue-border); }
+main .vz-f-kb { --f: var(--c-green); --f-soft: var(--c-green-soft); --f-border: var(--c-green-border); }
+main .vz-f-kc { --f: var(--c-purple); --f-soft: var(--c-purple-soft); --f-border: var(--c-purple-border); }
+main .vz-f-sl { --f: var(--c-slate); --f-soft: var(--c-slate-soft); --f-border: var(--c-slate-border); }
+
+@media (min-width: 720px) {
+  main .vz-fields--2 { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* カード内の日別リスト（Day1〜3 の段階課題） */
+main .vz-days { margin: 0 0 var(--sp-3); padding: 0; list-style: none; }
+main .vz-days li {
+  display: grid;
+  grid-template-columns: 3.2rem 1fr;
+  gap: 0 var(--sp-2);
+  margin: 0;
+  padding: 6px 0;
+  border-top: 1px dashed var(--f-border);
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+main .vz-days li:first-child { border-top: 0; }
+main .vz-days b { font-family: var(--font-mono); font-size: 0.78rem; color: var(--f); }
+
+/* しくみの流れ図（番号なし。スマホは縦、広い画面は横） */
+main .vz-flow {
+  display: grid;
+  gap: 1.5rem;
+  margin: var(--sp-3) 0;
+  padding: 0;
+  list-style: none;
+}
+main .vz-node {
+  position: relative;
+  margin: 0;
+  padding: var(--sp-3) var(--sp-4);
+  border: 1px solid var(--c-amber-border);
+  border-radius: var(--r-md);
+  background: var(--c-amber-soft);
+  font-size: 0.86rem;
+  line-height: 1.65;
+  text-align: center;
+}
+main .vz-node b { display: block; margin-bottom: 2px; font-size: 0.95rem; color: var(--c-text); }
+main .vz-node--key { border: 2px solid var(--c-amber); background: var(--c-surface); }
+main .vz-node:not(:last-child)::after {
+  content: "↓" / "";
+  position: absolute;
+  left: 50%;
+  bottom: -1.45rem;
+  transform: translateX(-50%);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--c-amber);
+}
+
+@media (min-width: 900px) {
+  main .vz-flow { grid-template-columns: repeat(var(--cols, 4), 1fr); gap: 1.75rem; }
+  main .vz-node:not(:last-child)::after {
+    content: "→" / "";
+    left: auto;
+    right: -1.5rem;
+    bottom: auto;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+/* 割合の棒グラフ（合計100%のうち最大25%を満幅とする） */
+main .vz-bars--pct .vz-bar-track i { width: calc(var(--v) / 25 * 100%); }
+
+/* ========================================
    Print — actual paper syllabus
    ======================================== */
 

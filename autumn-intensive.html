@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="stylesheet" href="styles.css?v=5">
+  <link rel="stylesheet" href="styles.css?v=11">
   <!-- 公式情報確認: 2026-09-15 (antigravity.google/docs/cli/install / ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker/web_js / docs.github.com/ja/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace / docs.github.com/en/codespaces/developing-in-a-codespace/opening-an-existing-codespace / docs.github.com/en/billing/.../about-billing-for-github-codespaces / developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia / github.com/google-antigravity/antigravity-cli/issues/10 / ai.google.dev/gemini-api/terms / ai.google.dev/gemini-api/docs/live-api / ai.google.dev/gemini-api/docs/pricing) -->
   <!-- 公式情報追加確認: 2026-09-24 (developer.mozilla.org/en-US/docs/Web/API/WebSocket / docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace — 複数ポートの同時転送・個別可視性設定に対応していることを確認。同一ポートでのHTTP+WebSocket接続不安定は公式docsに明記なし、コミュニティ報告ベースのため断定を避けた表現に留めた。ユーザー指示によりチーム編成（進級制作チーム・学科横断）とトラック制（カメラ×AI／同時対戦ゲーム／自由テーマ）を全面改訂） -->
   <!-- PR #226 レビュー反映: 2026-09-24（トラックBの「サーバー役PC」表記をCodespaces上で動かす旨に修正、自然言語開発Ⅱ実例との対比を「同様の構造と考えられる」に弱化——引用元自身が未検証の推測と留保しているため。同一ポート不安定の主張から根拠不明な具体条件（Web版限定・起動直後）を除去。WebSocket接続先はwss://の転送URLを使う旨を追記） -->
@@ -18,6 +18,7 @@
   <!-- PR #234 レビュー反映: 2026-09-25（pr-review-toolkit並列レビューでCritical 1件（Day1の撮影・個人情報ルール確認タイミングの欠落）・Important計8件（ドライバー/ナビゲーター交代制とアカウント固定の橋渡し文の欠落、合言葉/パスコードが本物のアクセス制限にならないという核心理由の欠落、パスコード概念の説明なし初出、ポート分割が推奨から必須指示へ強まっていた、チームビルディングの理由が既存チーム継続の前提と矛盾、評価基準（secure context・通信量）に対応する授業計画記述の欠落、Day4のエラー説明練習の欠落等）を検出、簡潔さを保ちながら安全上必須の説明のみ1文単位で復元） -->
   <!-- 構成統合: 2026-09-25（他教員（複数名）からの「AI駆動でのチーム開発体験」案を本ページに統合。ユーザー訂正により「進級制作チームは学年混成ではない」ことが判明したため、それを前提とした学年別の位置づけ・完成目標（1年/2年/3年以上）、ハード科は学科で1チーム、進級制作の課題をAIで解決するワークの許容、発表のピックアップ形式化、1〜5分規模方針を追加。担当教員欄は本田のみを維持しつつ複数教員連携の一文を追加） -->
   <!-- 表現修正: 2026-09-28（共有ドキュメント側の編集で「事前にどのタイミングが適切かは決め打ちできない」という指摘があり、本ページの「主にDay4に下級生チームのサポートに回り」からも日程の断定を除去。Day4欄自体の相互体験スケジュール記述は実際の授業計画に基づくため維持） -->
+  <!-- 図解追加: 2026-09-30（ユーザー指示: もっと図解を入れて分かりやすくする。新しい事実は追加せず、本ページ既存の記述を vz-* 図解部品に整理し直しただけ。本文テキストに変更がないため content/autumn-intensive.md は未更新。日別詳細ページは引き続き未作成） -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -46,7 +47,19 @@
     </div>
   </header>
 
-  <main class="container syllabus-content">
+  <main class="container syllabus-content theme-slate">
+
+    <nav class="syllabus-section syllabus-section--nav" aria-label="このページの目次">
+      <ul class="vz-jump">
+        <li><a class="vz-chip" href="#sec-overview">授業概要</a></li>
+        <li><a class="vz-chip" href="#sec-tracks">3つのトラック</a></li>
+        <li><a class="vz-chip" href="#sec-public">公開のしくみ</a></li>
+        <li><a class="vz-chip" href="#sec-goals">到達目標</a></li>
+        <li><a class="vz-chip" href="#sec-plan">授業計画</a></li>
+        <li><a class="vz-chip" href="#sec-eval">評価</a></li>
+        <li><a class="vz-chip" href="#sec-notes">履修上の注意点</a></li>
+      </ul>
+    </nav>
 
     <div class="syllabus-section">
       <h2>担当教員</h2>
@@ -58,8 +71,14 @@
       </div>
     </div>
 
-    <div class="syllabus-section">
+    <div class="syllabus-section" id="sec-overview">
       <h2>授業概要</h2>
+      <ul class="vz-stats">
+        <li class="vz-stat"><div class="vz-stat-num">5<small>日間</small></div><div class="vz-stat-label">時間割枠外の集中講座</div></li>
+        <li class="vz-stat"><div class="vz-stat-num">180<small>分／日</small></div><div class="vz-stat-label">1限90分＋2限・まとめ90分（休憩は枠外）</div></li>
+        <li class="vz-stat"><div class="vz-stat-num">3<small>トラック</small></div><div class="vz-stat-label">A カメラ×AI／B 同時対戦ゲーム／C 自由テーマ</div></li>
+        <li class="vz-stat"><div class="vz-stat-num">1〜5<small>分</small></div><div class="vz-stat-label">成果を見せられる規模（発表の目安）</div></li>
+      </ul>
       <ul>
         <li>通常の時間割枠に入らない、後期のスピンオフ企画「<strong>AI駆動でのチーム開発体験</strong>」です。<strong>学科横断で参加する既存の進級制作チーム</strong>のまま、AIエージェントと協働してアプリを開発します。新しくチームを組み直すことはせず、進級制作で積み重ねてきたチームワークをそのまま活かします（<strong>唯一の例外</strong>として、個人制作が中心のハード科は、今回に限り<strong>学科で1つのチーム</strong>を新たに編成し、協働する体験を積みます。学年をまたぐ場合は、チーム内の各学年の完成目標をそれぞれの目安にします）。</li>
         <li><strong>学年ごとの位置づけ</strong>: 1年次は自然言語での開発を体験し、まず完成させることを目指します。2年次はAIを活用した短納期でのチーム開発とトラブルシューティングを主導し、自然言語を使った課題解決を目指します。3年次以上は自チームの取り組みを進めながら、<strong>下級生チームのサポートに回り</strong>、教える側の視点で開発の注意点を学びます。</li>
@@ -70,9 +89,96 @@
         <li><strong>チームビルディング</strong>として、Day1に役割分担・進め方をすり合わせる時間を取ります。役割はドライバー／ナビゲーターの交代制ですが、<strong>ログインするGitHubアカウントは代表者のまま</strong>とし、キーボードを持つ人（ドライバー）だけを交代します。</li>
         <li>Day4はチーム同士で作品を触り合う相互体験、Day5は<strong>ピックアップ形式の成果発表会</strong>（選ばれたチームがデモ実演）を行います。発表は<strong>デフォルトパス通りでも、独自の工夫を加えても構いません</strong>。</li>
       </ul>
+
+      <figure class="vz-fig" id="sec-tracks" aria-labelledby="cap-tracks">
+        <p class="vz-fig-title" id="cap-tracks">作るものは3つのトラックから選ぶ（Day1〜3の段階課題）</p>
+        <div class="vz-fields">
+          <section class="vz-field vz-f-ka">
+            <h4>トラックA「カメラ×AI」</h4>
+            <p class="vz-field-count">スマートフォンのカメラを使うWebアプリ</p>
+            <ol class="vz-days">
+              <li><b>Day1</b><span>カメラ表示まで（secure context / HTTPS が必要な理由も確認）</span></li>
+              <li><b>Day2</b><span>映像の加工＋AIレシピA「その場で見るAI」</span></li>
+              <li><b>Day3</b><span>（余力があれば）AIレシピB「考えるAI」（Gemini API）</span></li>
+            </ol>
+            <ul class="vz-tags"><li>APIキーはサーバ側のみ</li><li>撮影は同意を得る</li></ul>
+          </section>
+          <section class="vz-field vz-f-kb">
+            <h4>トラックB「同時対戦ゲーム」</h4>
+            <p class="vz-field-count">複数人でリアルタイムに対戦できるゲーム</p>
+            <ol class="vz-days">
+              <li><b>Day1</b><span>最初の「動くもの」を1つ作る</span></li>
+              <li><b>Day2</b><span>入力を増やし、何を競うかを洗い出す</span></li>
+              <li><b>Day3</b><span>パスコード付きの「部屋（ルーム）」でリアルタイム同期。ポートをパブリックにして確認</span></li>
+            </ol>
+            <ul class="vz-tags"><li>WebSocket</li><li>ゲームは小さく保つ</li></ul>
+          </section>
+          <section class="vz-field vz-f-kc">
+            <h4>トラックC「自由テーマ」</h4>
+            <p class="vz-field-count">AI×端末であれば形式自由の自チーム独自プロダクト</p>
+            <ol class="vz-days">
+              <li><b>Day1</b><span>最初の「動くもの」を1つ作る</span></li>
+              <li><b>Day2</b><span>自チームで設定した次の段階目標に取り組む</span></li>
+              <li><b>Day3</b><span>さらに次の段階目標に取り組む</span></li>
+            </ol>
+            <ul class="vz-tags"><li>A・Bの日次課題を参考に</li><li>段階目標は自分たちで設定</li></ul>
+          </section>
+        </div>
+        <figcaption>Day4は全トラック共通でチーム同士の相互体験、Day5は成果発表会です。</figcaption>
+      </figure>
+
+      <figure class="vz-fig" aria-labelledby="cap-grades">
+        <p class="vz-fig-title" id="cap-grades">学年ごとの位置づけ</p>
+        <div class="vz-fields">
+          <section class="vz-field vz-f-sl">
+            <h4>1年次</h4>
+            <p class="vz-field-count">まず完成させる</p>
+            <p>自然言語での開発を体験し、作品を完成させることを目指します。</p>
+          </section>
+          <section class="vz-field vz-f-sl">
+            <h4>2年次</h4>
+            <p class="vz-field-count">チーム開発を主導する</p>
+            <p>AIを活用した短納期のチーム開発とトラブルシューティングを主導し、自然言語を使った課題解決を目指します。</p>
+          </section>
+          <section class="vz-field vz-f-sl">
+            <h4>3年次以上</h4>
+            <p class="vz-field-count">下級生チームを支える</p>
+            <p>自チームの取り組みを進めながら下級生チームのサポートに回り、教える側の視点で開発の注意点を学びます。</p>
+          </section>
+        </div>
+        <figcaption>学年をまたぐチームは、チーム内の各学年の完成目標をそれぞれの目安にします。個人制作が中心のハード科は、今回に限り学科で1つのチームを新たに編成します。</figcaption>
+      </figure>
+
+      <figure class="vz-fig" id="sec-public" aria-labelledby="cap-public">
+        <p class="vz-fig-title" id="cap-public">全トラック共通：ポート転送を「パブリック」にすると、世界中から開ける</p>
+        <ul class="vz-flow">
+          <li class="vz-node"><b>チームのCodespaces</b>代表者1名のアカウントで起動し、agyで開発する</li>
+          <li class="vz-node vz-node--key"><b>ポート転送を「パブリック」に設定</b>追加のクラウド契約は不要</li>
+          <li class="vz-node"><b>公開URLができる</b>URLを知っていれば開ける</li>
+          <li class="vz-node"><b>世界中から開ける</b>スマホ・他チームのPC・どこからでも</li>
+        </ul>
+        <p class="vz-verdict">ただし「パブリック」は、認証なしで誰でもアクセスできるということ。個人情報や機微な内容を映さない・入力しない運用を徹底する。合言葉やパスコードは、本物のアクセス制限にはならない</p>
+        <figcaption>出典: GitHub — Security in GitHub Codespaces（docs.github.com）。詳細は授業計画・履修上の注意点を参照。</figcaption>
+      </figure>
+
+      <figure class="vz-fig" aria-labelledby="cap-team">
+        <p class="vz-fig-title" id="cap-team">チームの役割：変わらないものと、交代するもの</p>
+        <div class="vz-fields vz-fields--2">
+          <section class="vz-field vz-f-sl">
+            <h4>変わらない：ログインするGitHubアカウント</h4>
+            <p class="vz-field-count">代表者1名のまま固定</p>
+            <p>Codespacesは作成者本人しか再開できないため、5日間同じアカウントで起動・再開します。</p>
+          </section>
+          <section class="vz-field vz-f-sl">
+            <h4>交代する：キーボードを持つ人（ドライバー）</h4>
+            <p class="vz-field-count">ドライバー／ナビゲーターの交代制</p>
+            <p>Day1に、チームビルディングとして役割分担・進め方をすり合わせます。</p>
+          </section>
+        </div>
+      </figure>
     </div>
 
-    <div class="syllabus-section">
+    <div class="syllabus-section" id="sec-goals">
       <h2>到達目標</h2>
 
       <h3>知識・理解</h3>
@@ -112,9 +218,31 @@
       </ol>
     </div>
 
-    <div class="syllabus-section">
+    <div class="syllabus-section" id="sec-plan">
       <h2>授業計画（全5日）</h2>
       <p>各日の時間配分は固定です：1限前半40分／1限後半50分／（休憩10分・枠外）／2限前半50分／2限後半30分／まとめ10分（授業合計180分）。<strong>1限（90分）はトラックごとの段階的なステージ課題に取り組む共通の時間枠、2限＋まとめ（90分）はチームごとのブラッシュアップ・自由探究</strong>にあてる構成です。チームの状況によっては、この時間を進級制作の課題をAIで解決するワークに充ててもかまいません。技術的な詳細・図解は、日別の詳細ページ（作成予定）で扱います。</p>
+
+      <div class="vz-timebar vz-timebar--static">
+        <p class="vz-fig-title">各日の180分の使い方</p>
+        <ol class="vz-timebar-track">
+          <li style="--w:45"><a class="vz-seg"><span class="vz-seg-time">1限 90分</span><span class="vz-seg-name">トラックごとの段階的なステージ課題<br>（前半40分＋後半50分）</span></a></li>
+          <li style="--w:5"><a class="vz-seg vz-seg--break"><span class="vz-seg-time">休憩</span><span class="vz-seg-name">10分</span></a></li>
+          <li style="--w:45"><a class="vz-seg"><span class="vz-seg-time">2限＋まとめ 90分</span><span class="vz-seg-name">チームのブラッシュアップ<br>（50分＋30分＋まとめ10分）</span></a></li>
+        </ol>
+        <p class="vz-timebar-note">授業時間の合計は 90 + 90 = 180分（休憩は含まない）</p>
+      </div>
+
+      <figure class="vz-fig" aria-labelledby="cap-days">
+        <p class="vz-fig-title" id="cap-days">5日間の流れ（詳しい内容は下の表）</p>
+        <ol class="vz-steps">
+          <li class="vz-step"><b>進級制作チームで参加／環境をつくる</b>Codespacesを起動し、チームビルディングを行う。トラックを選び、最初の「動くもの」を作る。1日目の終わりに、当日の目標を発表して確定する。</li>
+          <li class="vz-step"><b>入力を増やす／表現を広げる</b>トラックごとの段階課題（A: 映像の加工＋レシピA／B: 入力を増やす／C: 次の段階目標）。2年次はトラブルシューティングを主導する。</li>
+          <li class="vz-step"><b>AIを載せる／みんなで同時に使えるようにする</b>A: レシピBとAPIキーの設計原則／B: ルームでリアルタイム同期／C: 次の段階目標。2限で最初の動作確認をする。</li>
+          <li class="vz-step"><b>相互体験／つくりこむ</b>チーム同士で作品を触り合い、フィードバックを受け取る。3年次以上は下級生チームのサポートにも回る。エラーの伝え方も練習する。</li>
+          <li class="vz-step"><b>🎤 成果発表会／仕上げて見せる</b>最終確認のあと、ピックアップ形式で1〜5分のデモ実演。全チームの作品を他チームの端末で実際に動かしてもらい、最後に振り返る。</li>
+        </ol>
+      </figure>
+
       <div class="table-wrap">
         <table class="schedule-table">
           <thead>
@@ -163,9 +291,20 @@
       </ul>
     </div>
 
-    <div class="syllabus-section">
+    <div class="syllabus-section" id="sec-eval">
       <h2>評価方法・基準</h2>
       <p>完成度そのものより、チームでAIエージェントと協働しながら手を動かし、最後まで作り切ったかを重視します。</p>
+
+      <figure class="vz-fig" aria-labelledby="cap-eval">
+        <p class="vz-fig-title" id="cap-eval">評価の配分（合計100%）</p>
+        <ul class="vz-bars vz-bars--pct" style="--f:var(--c-slate)">
+          <li class="vz-bar"><span class="vz-bar-name">チーム開発・実装の実践</span><span class="vz-bar-track"><i style="--v:25"></i></span><b>25%</b></li>
+          <li class="vz-bar"><span class="vz-bar-name">AIエージェントとの協働プロセス</span><span class="vz-bar-track"><i style="--v:25"></i></span><b>25%</b></li>
+          <li class="vz-bar"><span class="vz-bar-name">学年ごとの目標への到達</span><span class="vz-bar-track"><i style="--v:20"></i></span><b>20%</b></li>
+          <li class="vz-bar"><span class="vz-bar-name">トラックのコア機能と安全面への配慮</span><span class="vz-bar-track"><i style="--v:15"></i></span><b>15%</b></li>
+          <li class="vz-bar"><span class="vz-bar-name">相互体験・発表・振り返りの実践</span><span class="vz-bar-track"><i style="--v:15"></i></span><b>15%</b></li>
+        </ul>
+      </figure>
 
       <div class="eval-item"><span class="eval-pct" style="color:var(--c-slate)">25%</span><span class="eval-label"><strong>チーム開発・実装の実践</strong> — 役割を交代しながら、実際に手を動かした度合い。</span></div>
       <div class="eval-item"><span class="eval-pct" style="color:var(--c-slate)">25%</span><span class="eval-label"><strong>AIエージェントとの協働プロセス</strong> — 指示の出し方、うまくいかないときの立て直し方。</span></div>
@@ -174,7 +313,7 @@
       <div class="eval-item"><span class="eval-pct" style="color:var(--c-slate)">15%</span><span class="eval-label"><strong>相互体験・発表・振り返りの実践</strong> — Day4の相互体験、Day5の振り返りへの取り組み。<strong>ピックアップ発表に選ばれたかどうかで評価に差はつけません</strong>。</span></div>
     </div>
 
-    <div class="syllabus-section">
+    <div class="syllabus-section" id="sec-notes">
       <h2>その他（履修上の注意点）</h2>
       <ul>
         <li>（<strong>トラックA</strong>）カメラを使うため、<strong>他人を撮影する場面が発生します</strong>（肖像権・個人情報への配慮が必要です）。撮影前に必ず声をかけ、同意を得てください。撮った映像・画像を無断で公開・共有しないでください。レシピB使用時は、画像がGoogleに送信され、無料APIキーでは人間のレビュアーが確認する場合もある旨も伝えてください。</li>
