@@ -140,6 +140,14 @@
               <li>インストールが終わったら<code>agy --version</code>と入力してEnter——バージョン番号が表示されればインストール成功（この時点ではまだ認証しない。認証は休憩後の2限前半で行う）</li>
             </ul>
             <div class="lesson-tip">
+              <strong>自分のPCにもagyを入れたい人へ（Windowsを使う場合）:</strong> 上のコマンドは<strong>Mac・Linux（Codespacesもこれ）用</strong>です。Windowsの自分のPCにagyを入れるときは、公式に<strong>Windows用のコマンド</strong>が別にあります。agyは公式にmacOS・Linux・Windowsで動くと書かれています（公式: <a href="https://antigravity.google/docs/cli/install" target="_blank" rel="noopener">Antigravity CLI — Installation &amp; auth</a>）。
+              <ul>
+                <li><strong>Windows（PowerShell）:</strong> <code>irm https://antigravity.google/cli/install.ps1 | iex</code></li>
+                <li><strong>Windows（コマンドプロンプト）:</strong> <code>curl -fsSL https://antigravity.google/cli/install.cmd -o install.cmd &amp;&amp; install.cmd &amp;&amp; del install.cmd</code></li>
+              </ul>
+              Windowsで上のMac・Linux用のコマンドを貼り付けても、そのままでは動かないことがあります。実行がブロックされるなど、うまくいかないときは、エラーをそのまま教員に見せてください。なお、今日の授業はCodespaces上で進めるので、Windowsの人もまず上のコマンドで大丈夫です。
+            </div>
+            <div class="lesson-tip">
               <strong>インストールがうまくいかない時:</strong> コマンドを貼り付けてもエラーが出る場合は、コピーした内容が1行そのままになっているか確認してください（改行や余分なスペースが入るとエラーになります）。それでも動かない場合は手を挙げて教員に相談してください。
             </div>
             <div class="lesson-tip">
