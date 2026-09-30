@@ -151,7 +151,7 @@
             <ul>
               <li><strong>ルール:</strong> 対象は<strong>自分たちが今日作った使い捨てのDBだけ</strong>。相手の<strong>同意を得て</strong>、授業内でのみ行う。他人のサービスや本物のデータには絶対に試さない</li>
               <li>①隣の人に、自分の<code>DATABASE_URL</code>を渡す。渡し方は<strong>画面に表示して、相手が手で入力する</strong>（チャット・メール・Slackなどに<strong>貼らない</strong>。履歴に残るため）。これは<strong>授業の中だけの例外</strong>で、本番では絶対にしない</li>
-              <li>②渡された人は、エージェントに<code>環境変数DATABASE_URLで指定されたDBのscoresテーブルの中身を全部消す、clear-scores.jsを書いてください</code>と頼み、書かれたコードを読んでから、<code>DATABASE_URL="受け取った文字列" node clear-scores.js</code>のように<strong>自分のターミナルに直接入力して実行</strong>する（<strong>接続文字列そのものは、エージェントへの質問には貼らない</strong>。貼ると、その内容も提供元へ送られうるため。これは後のケース討議の題材でもある）</li>
+              <li>②渡された人は、エージェントに<code>環境変数DATABASE_URLで指定されたDBのscoresテーブルの中身を全部消す、clear-scores.jsを書いてください</code>と頼み、書かれたコードを読んでから、<code>read -s -p "接続文字列: " DATABASE_URL; export DATABASE_URL; node clear-scores.js; unset DATABASE_URL</code>のように、<strong>画面に表示されない入力欄に手で入力して実行</strong>（<code>DATABASE_URL="…" node …</code>と直接書くと、接続文字列が<strong>シェルの履歴に残ってしまう</strong>ため。<code>read -s</code>なら履歴に残らない）する（<strong>接続文字列そのものは、エージェントへの質問には貼らない</strong>。貼ると、その内容も提供元へ送られうるため。これは後のケース討議の題材でもある）</li>
               <li>③持ち主は、自分のスクリプトを実行して、<strong>スコアが消えた</strong>ことを確かめる</li>
               <li>気づいてほしいこと: <strong>接続文字列を持っている人は、DBの持ち主と同じことができてしまう</strong>。ログインもパスワード入力も、そこには出てこない</li>
             </ul>
