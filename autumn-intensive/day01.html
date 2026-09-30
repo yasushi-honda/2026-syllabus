@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day1 進級制作チームで参加／環境をつくる | 秋の集中講座</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=12">
+  <!-- 公式情報確認: 2026-09-30 (docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository — Code > Codespaces タブ > +（New with options も可）、作成時に「誰が支払うか」のメッセージが出る / docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace — ポートを右クリック > Port Visibility > Public、既定は private、公開後は「anyone who knows the URL and port number can view the running application without needing to authenticate」 / docs.github.com/en/codespaces/developing-in-a-codespace/stopping-and-starting-a-codespace — github.com/codespaces の「…」> Stop codespace / docs.github.com/en/codespaces/about-codespaces/understanding-the-codespace-lifecycle — 既定で30分無操作で停止、保存済みの変更は再開後も残る / docs.github.com/en/account-and-profile/.../inviting-collaborators-to-a-personal-repository — Settings > Collaborators > Add people、招待メールを承認すると collaborator になる / docs.github.com/en/billing/concepts/product-billing/github-codespaces — 無料枠（Free は月120時間）、枠を使い切り支払い方法が未登録だと使用がブロックされる、使用状況は github.com/settings/billing で確認 / antigravity.google/docs/cli/install — インストールコマンドと、リモート環境での手動認証（URLを開き、表示されたコードを貼り付ける） / developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia — secure context（HTTPS または localhost）が必要、HTTPでは NotAllowedError）。Gemini CLI は 2026-06-18 に終了し Antigravity CLI（agy）へ移行済みであることも確認 -->
+  <!-- 設計メモ: 2026-09-30（ユーザー決定: 1限=環境づくり／2限=動くもの、全員が一度Codespacesを開いて閉じる。親ページの Day1 記述を先に更新済み。チームのリポジトリは Private を既定とした——APIキー等を誤って公開しないため。共同作業者には Collaborator として招待する） -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--slate">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../autumn-intensive.html">秋の集中講座</a>
+        <span>/</span>
+        <span>Day1</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">進級制作チームで参加／<wbr>環境をつくる</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Day 1</span>
+            <span class="page-badge">全5日間の1日目 / 180分</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-slate">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">チームの役割を決め、GitHubとCodespacesの基本を知り、agyとポート転送を確認して、最初の「動くもの」を作る</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">代表者 / ドライバー・ナビゲーター / 交代要員 / GitHub / リポジトリ / Codespaces / 無料枠 / Antigravity CLI（agy）/ ポート転送（Public）</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">GitHubアカウント（登録とメールの確認まで済ませておく）。<strong>まだの人</strong>は、今日の1限後半で個別にフォローするのでそのまま来てください。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>チームの<strong>役割</strong>（代表者・ドライバー／ナビゲーター・交代要員）を決める</li>
+        <li><strong>GitHubとCodespaces</strong>の基本を知り、<strong>全員が一度</strong>Codespacesを開いて閉じる</li>
+        <li>代表者のアカウントでチームのCodespacesを使い、<strong>agy</strong>を導入して<strong>ポート転送（Public）</strong>で公開できることを確認する</li>
+        <li><strong>Codespacesの無料枠</strong>を確認し、止まったときの備えを決める</li>
+        <li>トラックを選び、最初の<strong>「動くもの」</strong>を1つ作る</li>
+        <li>1日目の終わりに、チームの目標を発表して確定する</li>
+      </ul>
+      <div class="lesson-tip">
+        <strong>今日の優先順位:</strong> 今日の主役は「環境づくり」です。2年次とハード科の人は、GitHubもCodespacesも初めてで当たり前です。分からないことはその場で手を挙げ、経験のある人（1年次・3年次）は手助けをお願いします。「最初の動くもの」は、動けば十分です。
+      </div>
+
+      <div class="vz-timebar">
+        <p class="vz-fig-title">180分の流れ（ブロックを押すと、その内容へ移動）</p>
+        <ol class="vz-timebar-track">
+          <li style="--w:40"><a class="vz-seg" href="#blk-1"><span class="vz-seg-time">40分</span><span class="vz-seg-name">チームの役割を決める<br>講座の全体像</span></a></li>
+          <li style="--w:50"><a class="vz-seg" href="#blk-2"><span class="vz-seg-time">50分</span><span class="vz-seg-name">GitHubと<br>Codespaces入門</span></a></li>
+          <li style="--w:10"><a class="vz-seg vz-seg--break"><span class="vz-seg-time">休憩</span><span class="vz-seg-name">10分</span></a></li>
+          <li style="--w:50"><a class="vz-seg" href="#blk-3"><span class="vz-seg-time">50分</span><span class="vz-seg-name">agy導入<br>Public公開の確認</span></a></li>
+          <li style="--w:30"><a class="vz-seg" href="#blk-4"><span class="vz-seg-time">30分</span><span class="vz-seg-name">トラック選択<br>最初の動くもの</span></a></li>
+          <li style="--w:10"><a class="vz-seg" href="#blk-5"><span class="vz-seg-time">10分</span><span class="vz-seg-name">まとめ</span></a></li>
+        </ol>
+        <p class="vz-timebar-note">授業時間の合計は 40 + 50 + 50 + 30 + 10 = 180分（休憩を除く）</p>
+      </div>
+
+      <figure class="vz-fig" aria-labelledby="cap-env">
+        <p class="vz-fig-title" id="cap-env">今日つくる環境の全体像</p>
+        <ul class="vz-flow">
+          <li class="vz-node"><b>GitHubのリポジトリ</b>チームの作品を置く場所。代表者が作る</li>
+          <li class="vz-node"><b>Codespaces</b>リポジトリを元にした、ブラウザで開ける開発環境</li>
+          <li class="vz-node"><b>agy</b>Codespaces上で動くAIエージェント。指示を出して作ってもらう</li>
+          <li class="vz-node vz-node--key"><b>ポート転送（Public）</b>作ったものを、公開URLでスマホや他の端末から開く</li>
+        </ul>
+        <figcaption>今日は、この4つがつながって動くことを確認するのが目標です。</figcaption>
+      </figure>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block" id="blk-1">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>チームで参加する：役割を決め、講座の全体像をつかむ</h3>
+          <div class="timeline-body">
+            <p><strong>講座の狙いと5日間の流れ</strong></p>
+            <ul>
+              <li>AIエージェントと一緒にゼロからアプリを作る特別編。うまく動かなくても、AIエージェントに状況を説明して一緒に直す経験が一番の狙い</li>
+              <li>進級制作のチームのまま参加する（ハード科は、今回に限り学科で1チーム）</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-days">
+              <p class="vz-fig-title" id="cap-days">5日間の流れ</p>
+              <ol class="vz-flow" style="--cols:5">
+                <li class="vz-node vz-node--key"><b>Day1（今日）</b>環境をつくる</li>
+                <li class="vz-node"><b>Day2</b>入力を増やす／表現を広げる</li>
+                <li class="vz-node"><b>Day3</b>AIを載せる／みんなで同時に使えるようにする</li>
+                <li class="vz-node"><b>Day4</b>相互体験／つくりこむ</li>
+                <li class="vz-node"><b>Day5</b>成果発表会</li>
+              </ol>
+            </figure>
+
+            <p><strong>3つのトラックを知る</strong></p>
+            <ul>
+              <li><strong>A「カメラ×AI」</strong>（スマートフォンのカメラを使うWebアプリ）／<strong>B「同時対戦ゲーム」</strong>（複数人でリアルタイムに対戦）／<strong>C「自由テーマ」</strong>（AI×端末であれば形式自由）</li>
+              <li>選ぶのは、今日の2限後半。詳しい内容と学年ごとの位置づけは、<a href="../autumn-intensive.html#sec-tracks">授業概要の図解</a>で確認する</li>
+            </ul>
+
+            <p><strong>チームの役割を決める（チームビルディング）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-roles">
+              <p class="vz-fig-title" id="cap-roles">チームで決めること（3つ）</p>
+              <div class="vz-fields">
+                <section class="vz-field vz-f-sl">
+                  <h4>① 代表者</h4>
+                  <p class="vz-field-count">GitHubアカウントは5日間このまま</p>
+                  <p>チームのリポジトリとCodespacesを作る人。Codespacesは作成者本人しか再開できないため、5日間同じアカウントで起動・再開します。</p>
+                </section>
+                <section class="vz-field vz-f-sl">
+                  <h4>② ドライバー／ナビゲーター</h4>
+                  <p class="vz-field-count">交代制</p>
+                  <p>ドライバーはキーボードを持ち、agyへの指示を入力する人。ナビゲーターは画面を見ながら、指示の内容や結果を確認・提案する人。交代するのは、キーボードを持つ人だけです。</p>
+                </section>
+                <section class="vz-field vz-f-sl">
+                  <h4>③ 交代要員</h4>
+                  <p class="vz-field-count">代表者の予備</p>
+                  <p>Codespacesの無料枠が尽きたときに、別のアカウントで続ける人。代表者以外から、1名以上決めます。</p>
+                </section>
+              </div>
+            </figure>
+            <div class="lesson-tip">
+              <strong>チームの進め方:</strong> 1年次・3年次はGitHubとCodespacesの経験があります。経験のある人は、初めて使う2年次・ハード科の人を助ける側に回ってください。学年をまたぐチームは、チーム内の各学年の完成目標をそれぞれの目安にします。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block" id="blk-2">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>GitHubとCodespacesの基本を知り、全員で一度開いて閉じる</h3>
+          <div class="timeline-body">
+            <p><strong>まず言葉を整理する</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-terms">
+              <p class="vz-fig-title" id="cap-terms">GitHub・リポジトリ・Codespacesの関係</p>
+              <ul class="vz-flow" style="--cols:3">
+                <li class="vz-node"><b>GitHub</b>コードを置いて共有するオンラインの場所</li>
+                <li class="vz-node"><b>リポジトリ</b>チームの作品のフォルダ。変更の履歴も一緒に残る</li>
+                <li class="vz-node vz-node--key"><b>Codespaces</b>リポジトリを元に、ブラウザで開けるクラウド上の開発環境（VS Codeの画面）</li>
+              </ul>
+              <figcaption><strong>コミット</strong>は変更を記録すること、<strong>プッシュ</strong>は記録した変更をGitHubへ送ること。プッシュしない変更は、Codespacesの中にしか残りません。</figcaption>
+            </figure>
+
+            <p><strong>手順（教員の画面を見ながら、チーム全員で同じ手順を一斉に進める）</strong></p>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>全員: GitHubにログインする</b>登録がまだの人は <a href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a> から新規登録する。登録後、メールの確認（verify）を済ませる。教員が個別にフォローする。</li>
+              <li class="vz-step"><b>代表者: チームのリポジトリを作る</b>GitHub右上の「+」→「New repository」を選び、Repository name にチームの名前（例: <code>team-app</code>）を入力する。<strong>Private</strong>を選び（本授業ではPrivateにする。APIキー等を誤って公開しないため）、<strong>「Add a README file」にチェック</strong>を入れて「Create repository」をクリックする（最初のコミットがないと、Codespacesを作る元のブランチがない）。（公式: <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository" target="_blank" rel="noopener">Creating a new repository</a>）</li>
+              <li class="vz-step"><b>代表者: チームのメンバーを招待する</b>リポジトリの「Settings」→「Collaborators」→「Add people」で、メンバーのGitHubアカウントを追加する。招待を受けた人は、届いたメールから承認する。承認が済むと、リポジトリが見えるようになる（公式: <a href="https://docs.github.com/en/account-and-profile/how-tos/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository" target="_blank" rel="noopener">Inviting collaborators to a personal repository</a>）。</li>
+              <li class="vz-step"><b>全員: 自分のアカウントでCodespacesを開く</b>招待の承認が済み、チームのリポジトリが見えることを確認してから進む。リポジトリを開き、「Code」ボタン→「Codespaces」タブ→「＋」で作る。ブラウザ上にVS Codeの画面が立ち上がれば成功。左にファイル一覧、真ん中にエディタ、下にターミナルがある。作成時のダイアログ下部に「誰が支払うか」のメッセージが出るので確認する。使った時間は、<strong>自分のアカウントの無料枠</strong>から引かれる（公式: <a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository" target="_blank" rel="noopener">Creating a codespace for a repository</a>）。</li>
+              <li class="vz-step"><b>全員: 確認できたらすぐ停止する</b><a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> を開き、一覧のCodespaceの「…」→「Stop codespace」を選ぶ（公式: <a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/stopping-and-starting-a-codespace" target="_blank" rel="noopener">Stopping and starting a codespace</a>）。削除はしない。保存した変更は、次に起動したときも残る。代表者がここで作ったCodespacesが、2限でチームが使うものになる。</li>
+            </ol>
+            <div class="lesson-tip">
+              <strong>なぜ全員が開いて閉じるのか:</strong> 起動している間は、その人の無料枠の時間が減ります（停止中は、保存領域の分だけ）。開いたらすぐ停止する習慣をつけるためです。もう1つの理由は、代表者のCodespacesの無料枠が尽きたとき、交代要員が自分のアカウントで続けられるようにするためです。
+            </div>
+
+            <p><strong>無料枠を確認し、交代要員を決める</strong></p>
+            <ul>
+              <li>各自 <a href="https://github.com/settings/billing" target="_blank" rel="noopener">github.com/settings/billing</a> の「Codespaces」欄で、今月の使用状況を確認する（公式: GitHub Codespaces billing）。他の授業でも使っている人は、特に注意する</li>
+              <li>GitHub Freeの無料枠は月120コア時間（2-coreマシンなら約60時間）。使い切って支払い方法が未登録だと、Codespacesを新たに起動・再開できなくなる</li>
+              <li>枠に余裕のあるメンバーを、<strong>交代要員</strong>として決めておく。止まったときの回避策は、<a href="../autumn-intensive.html#sec-quota">授業概要の「無料枠の注意」</a>を参照する</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block" id="blk-3">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>agyを導入し、ポート転送でPublicに公開してみる</h3>
+          <div class="timeline-body">
+            <p><strong>ここからは代表者のCodespacesを使う</strong></p>
+            <p>代表者は、1限後半に作って停止したCodespacesを、<a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> の一覧からCodespacesの名前をクリックして再開する（停止して再開する練習にもなる）。他のメンバーの練習用Codespacesは、停止したままにしておく。代表者のPC（画面）を使い、キーボードを持つ人（ドライバー）を交代しながら、全員が一度はキーボードを持つ。</p>
+
+            <p><strong>Antigravity CLI（agy）を導入して認証する</strong></p>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>インストールする</b>Codespacesのターミナル（Linux）に次のコマンドを貼り付けてEnter。自分のPCのPowerShellなどには貼らない（公式: <a href="https://antigravity.google/docs/cli/install" target="_blank" rel="noopener">Installation &amp; Auth - Antigravity CLI</a>）。
+                <button class="copy-md-btn" data-md-source="agy-install-command">
+                  <span class="btn-icon"></span> コマンドをコピー
+                </button>
+<pre id="agy-install-command" class="md-preview">curl -fsSL https://antigravity.google/cli/install.sh | bash</pre>
+                終わったら <code>agy --version</code> と入力してEnter。バージョン番号が表示されれば成功。</li>
+              <li class="vz-step"><b>認証する</b>ターミナルで <code>agy</code> と入力してEnter。表示された認可URLを、<strong>Ctrlキー（Macの場合はCmdキー）を押しながらクリック</strong>して新しいタブで開き、Googleアカウントでサインインする。表示された英数字のコードをコピーし、ターミナルに戻って貼り付けてEnter。</li>
+              <li class="vz-step"><b>認証できたか確認する</b>話しかけてみて（例: <code>あなたが何をできるか、自己紹介してください</code>）、返事が返ってくれば成功。agyの画面上部（ヘッダー）に、サインインしたアカウントのメールアドレスが表示される。</li>
+            </ol>
+            <div class="lesson-tip">
+              <strong>つまずいたとき:</strong> 認可URLが出ない → もう一度 <code>agy</code> と入力する。コードを貼ってもエラー → 前後に余分な空白や改行が入っていないか確認してコピーし直す。時間がかかりすぎる → <code>Ctrl+C</code> で中断して、<code>agy</code> から最初からやり直す。それでも動かなければ手を挙げる。agyの無償枠には利用制限があります。上限に達したら、チーム内で待つ・使う頻度を調整してください。
+            </div>
+
+            <p><strong>ポート転送を「Public」にして、公開URLで開く</strong></p>
+            <p>まず、公開確認用の小さなページを作る。agyに頼んでもよいし、教員がサンプルを示してもよい。</p>
+            <button class="copy-md-btn" data-md-source="agy-hello-prompt">
+              <span class="btn-icon"></span> 指示文をコピー
+            </button>
+<pre id="agy-hello-prompt" class="md-preview">index.html を作って、「こんにちは、チームのみんな」と大きく表示する1枚のページにしてください。</pre>
+            <figure class="vz-fig" aria-labelledby="cap-port">
+              <p class="vz-fig-title" id="cap-port">公開URLで開くまでの流れ</p>
+              <ol class="vz-flow">
+                <li class="vz-node"><b>サーバーを起動する</b>ターミナルを1つ追加し、<code>python3 -m http.server 8000</code> と入力してEnter</li>
+                <li class="vz-node"><b>「ポート」タブを開く</b>下のパネルの「ポート」タブに、8000が表示される</li>
+                <li class="vz-node vz-node--key"><b>Publicに変更する</b>8000を右クリック→「Port Visibility」→「Public」</li>
+                <li class="vz-node"><b>URLをコピーして開く</b>ポートの右のコピーアイコンでURLをコピーし、スマホで開く</li>
+              </ol>
+              <p class="vz-verdict">ポートは、初期設定では自分だけが見られる。「Public」にすると、URLを知っている人なら誰でも、認証なしでアクセスできる（公式: Forwarding ports in your codespace）。</p>
+              <figcaption>公開URLは <code>https://</code> で始まります。トラックAのカメラは、この <code>https://</code> の環境が必要です。初めて開くとき、GitHubの注意画面が表示された場合は、内容を読んで進みます。確認が終わったら、ポートの公開をやめる（Publicにしない状態に戻す）か、<code>Ctrl+C</code> でサーバーを止めます。</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="timeline-block" id="blk-4">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>トラックを選び、最初の「動くもの」を作る</h3>
+          <div class="timeline-body">
+            <p><strong>チームで相談して、トラックを選ぶ</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-first">
+              <p class="vz-fig-title" id="cap-first">トラック別：今日のゴールとagyへの指示の例</p>
+              <div class="vz-fields">
+                <section class="vz-field vz-f-ka">
+                  <h4>トラックA「カメラ×AI」</h4>
+                  <p class="vz-field-count">ゴール: スマホでカメラ映像が画面に出る</p>
+                  <p>指示の例: <code>スマートフォンのカメラ映像を、画面いっぱいに表示する1枚のHTMLページを作ってください。</code></p>
+                  <ul class="vz-tags"><li>公開URLをスマホで開く</li><li>https が必要</li></ul>
+                </section>
+                <section class="vz-field vz-f-kb">
+                  <h4>トラックB「同時対戦ゲーム」</h4>
+                  <p class="vz-field-count">ゴール: 小さなゲームが1つ動く</p>
+                  <p>指示の例: <code>矢印キーで動かせる四角いキャラクターが1つだけいる、ブラウザで動く小さなゲームを作ってください。</code></p>
+                  <ul class="vz-tags"><li>まずは1人で動けばよい</li><li>同時に使うのはDay3</li></ul>
+                </section>
+                <section class="vz-field vz-f-kc">
+                  <h4>トラックC「自由テーマ」</h4>
+                  <p class="vz-field-count">ゴール: 自チームのテーマで最初の1画面</p>
+                  <p>指示の例: <code>（作りたいもの）を作りたいです。まず、いちばん小さな1画面だけ作ってください。</code></p>
+                  <ul class="vz-tags"><li>段階目標は自分たちで設定</li><li>A・Bの課題を参考に</li></ul>
+                </section>
+              </div>
+              <figcaption>チームの状況によっては、進級制作の課題をAIで解決するワークに取り組んでもかまいません。ただし成果発表では、進級制作そのものは発表できません。</figcaption>
+            </figure>
+
+            <p><strong>作って、確認して、記録する</strong></p>
+            <ul>
+              <li>ドライバーがagyに指示を入力し、ナビゲーターが結果を確認する。うまくいかないときは、何を押したら何が表示されたかをagyにそのまま伝える</li>
+              <li>ポートの設定は前のブロックと同じ。<code>python3 -m http.server 8000</code> で動かして確認する</li>
+              <li>できたら、変更をGitHubに記録する。<strong>プッシュしないと、Codespacesの中にしか残りません</strong>。交代要員が引き継ぐためにも必要</li>
+            </ul>
+            <button class="copy-md-btn" data-md-source="agy-push-prompt">
+              <span class="btn-icon"></span> 指示文をコピー
+            </button>
+<pre id="agy-push-prompt" class="md-preview">ここまでの変更をコミットして、GitHubにプッシュしてください。</pre>
+            <div class="lesson-tip">
+              <strong>トラックAの人へ（撮影・個人情報のルール）:</strong> カメラを使うと、他人を撮影する場面が出ます。撮影前に必ず声をかけて同意を得てください。撮った映像・画像を無断で公開・共有しないでください。カメラは、ブラウザが許可を求める画面で「許可」を選ぶと使えます（公式: MDN getUserMedia）。<code>http://</code> のページでは、カメラが使えません。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block" id="blk-5">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>チームの目標を発表して確定する／片付ける</h3>
+          <div class="timeline-body">
+            <p><strong>チームの目標を発表する</strong></p>
+            <ul>
+              <li>各チーム1分程度で、選んだトラックと今日できたことを伝える</li>
+              <li>学年ごとの完成目標（1年次: まず完成させる／2年次: チーム開発を主導する／3年次以上: 下級生チームを支える）に沿って、5日間の目標を決めて発表する</li>
+            </ul>
+            <p><strong>片付けチェック（全員で確認）</strong></p>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>変更をプッシュした</b>GitHubで、今日のファイルが見えることを確認する。</li>
+              <li class="vz-step"><b>ポートの公開をやめた（またはサーバーを止めた）</b>Publicのままにしない。</li>
+              <li class="vz-step"><b>Codespacesを停止した</b>代表者のCodespacesも、全員の練習用のCodespacesも、github.com/codespaces で停止済みか確認する。</li>
+            </ol>
+            <p><strong>次回予告</strong></p>
+            <ul>
+              <li>Day2：<strong>入力を増やす／表現を広げる</strong>——トラックごとの段階課題に取り組む</li>
+              <li>今日うまくいったこと・つまずいたことを、簡単にメモしておく</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>今日の変更がGitHubにプッシュされていて、Codespacesが停止していることを確認する</strong>
+            <p>代表者は、チームのリポジトリをGitHub上で開き、今日作ったファイルが反映されているか確認する。Codespacesは停止したままでよい（次回は「Create」ではなく、同じCodespacesを再開する）。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>今日うまくいったこと・つまずいたことをメモする</strong>
+            <p>次回の冒頭で、前日の気づき・トラブルを共有します。簡単なメモで十分です。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository" target="_blank" rel="noopener">Creating a new repository（公式）</a> — リポジトリの新規作成手順</li>
+        <li><a href="https://docs.github.com/en/account-and-profile/how-tos/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository" target="_blank" rel="noopener">Inviting collaborators to a personal repository（公式）</a> — メンバーの招待手順</li>
+        <li><a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository" target="_blank" rel="noopener">Creating a codespace for a repository（公式）</a> — Codespacesの作成手順</li>
+        <li><a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/stopping-and-starting-a-codespace" target="_blank" rel="noopener">Stopping and starting a codespace（公式）</a> — 停止と再開の手順</li>
+        <li><a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace" target="_blank" rel="noopener">Forwarding ports in your codespace（公式）</a> — ポート転送とPublic設定</li>
+        <li><a href="https://docs.github.com/en/billing/concepts/product-billing/github-codespaces" target="_blank" rel="noopener">GitHub Codespaces billing（公式）</a> — 無料枠と、使い切った場合の挙動</li>
+        <li><a href="https://antigravity.google/docs/cli/install" target="_blank" rel="noopener">Installation &amp; Auth - Antigravity CLI（公式）</a> — agyのインストールと認証</li>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia" target="_blank" rel="noopener">MediaDevices: getUserMedia() method（MDN）</a> — カメラ利用と、secure contextの要件</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <div class="lesson-nav-item lesson-nav-item--disabled">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">---</span>
+      </div>
+      <a href="../autumn-intensive.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">秋の集中講座</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">Day2（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>

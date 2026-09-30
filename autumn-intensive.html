@@ -88,7 +88,7 @@
         <li>作るものは3つの選択肢から選びます。<strong>トラックA「カメラ×AI」</strong>（スマートフォンのカメラを使うWebアプリ）、<strong>トラックB「同時対戦ゲーム」</strong>（複数人でリアルタイムに対戦できるゲーム）、<strong>トラックC「自由テーマ」</strong>（AI×端末であれば形式自由の自チーム独自プロダクト）です。トラックA・Bには段階的な日次課題を用意し、トラックCは自チームで段階目標を設定します。チームの状況によっては、<strong>進級制作の課題をAIで解決するワーク</strong>に取り組んでもかまいません。ただし成果発表では進級制作そのものは発表できないため、発表の対象は今回選んだトラックの成果物にします。</li>
         <li><strong>規模の方針</strong>: 1〜5分で成果を見せられる規模を基本とし、複雑なシステムは避けます。新しい機能を増やすことよりも、使える状態に仕上げることを優先します。</li>
         <li>（<strong>全トラック共通の鍵となる事実</strong>）GitHub Codespacesの<strong>ポート転送を「パブリック」に設定するだけで</strong>、追加のクラウド契約なしに<strong>世界中からアクセスできる状態になります</strong>（公式: Security in GitHub Codespaces）。トラックBの同時対戦も、この標準機能だけで実現できます。一方で「パブリック」は<strong>認証なしで誰でもアクセスできる</strong>ことも意味するため、公開する場面ではセキュリティの基本もあわせて学びます（詳細は授業計画・履修上の注意点を参照）。</li>
-        <li>チームで1つの<strong>GitHub Codespaces</strong>を起動し、<strong>Antigravity CLI（agy）</strong>でAIエージェントに指示を出しながら開発します。各日、<strong>1限はトラックごとの段階的なステージ課題、2限＋まとめはチームのブラッシュアップ</strong>に充てます。</li>
+        <li>チームで1つの<strong>GitHub Codespaces</strong>を起動し、<strong>Antigravity CLI（agy）</strong>でAIエージェントに指示を出しながら開発します。各日、<strong>1限はトラックごとの段階的なステージ課題、2限＋まとめはチームのブラッシュアップ</strong>に充てます（Day1のみ、環境づくりを含む構成です）。</li>
         <li><strong>GitHubとCodespacesの扱い方</strong>は、Day1に伝えます。1年次・3年次は経験がありますが、<strong>2年次とハード科は初めて使う</strong>ため、基本から丁寧に進めます。</li>
         <li><strong>Codespacesの無料枠</strong>には月間の上限があり、使い切ると開発が止まります。備えと、止まったときの回避策（別のメンバーのアカウントで続ける、チーム内で調整する）は、履修上の注意点にまとめています。</li>
         <li><strong>チームビルディング</strong>として、Day1に役割分担・進め方をすり合わせる時間を取ります。役割はドライバー／ナビゲーターの交代制ですが、<strong>ログインするGitHubアカウントは代表者のまま</strong>（Codespacesは作成者本人しか再開できないため）とし、キーボードを持つ人（ドライバー）だけを交代します。</li>
@@ -226,7 +226,7 @@
 
     <div class="syllabus-section" id="sec-plan">
       <h2>授業計画（全5日）</h2>
-      <p>各日の時間配分は固定です：1限前半40分／1限後半50分／（休憩10分・枠外）／2限前半50分／2限後半30分／まとめ10分（授業合計180分）。<strong>1限（90分）はトラックごとの段階的なステージ課題に取り組む共通の時間枠、2限＋まとめ（90分）はチームごとのブラッシュアップ・自由探究</strong>にあてる構成です。チームの状況によっては、この時間を進級制作の課題をAIで解決するワークに充ててもかまいません。技術的な詳細・図解は、日別の詳細ページ（作成予定）で扱います。</p>
+      <p>各日の時間配分は固定です：1限前半40分／1限後半50分／（休憩10分・枠外）／2限前半50分／2限後半30分／まとめ10分（授業合計180分）。<strong>1限（90分）はトラックごとの段階的なステージ課題に取り組む共通の時間枠、2限＋まとめ（90分）はチームごとのブラッシュアップ・自由探究</strong>にあてる構成です。チームの状況によっては、この時間を進級制作の課題をAIで解決するワークに充ててもかまいません。ただしDay1だけは、1限を環境づくり（チームの役割決め、GitHubとCodespacesの入門）、2限前半をagyの導入とポート転送の確認、2限後半をトラック選択と最初の「動くもの」にあてます。技術的な詳細・図解は、日別の詳細ページ（Day1は作成済み、以降は作成予定）で扱います。</p>
 
       <div class="vz-timebar vz-timebar--static">
         <p class="vz-fig-title">各日の180分の使い方</p>
@@ -235,7 +235,7 @@
           <li style="--w:5"><a class="vz-seg vz-seg--break"><span class="vz-seg-time">休憩</span><span class="vz-seg-name">10分</span></a></li>
           <li style="--w:45"><a class="vz-seg"><span class="vz-seg-time">2限＋まとめ 90分</span><span class="vz-seg-name">チームのブラッシュアップ<br>（50分＋30分＋まとめ10分）</span></a></li>
         </ol>
-        <p class="vz-timebar-note">授業時間の合計は 90 + 90 = 180分（休憩は含まない）</p>
+        <p class="vz-timebar-note">授業時間の合計は 90 + 90 = 180分（休憩は含まない）。Day1のみ内訳が異なります（上の説明を参照）。</p>
       </div>
 
       <figure class="vz-fig" aria-labelledby="cap-days">
@@ -259,7 +259,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td class="week-num">1</td><td class="week-theme">進級制作チームで参加／環境をつくる</td><td>講座の狙いと3つのトラック（<strong>A: カメラ×AI／B: 同時対戦ゲーム／C: 自由テーマ</strong>）を共有する。<strong>GitHubとCodespacesの扱い方</strong>を学び（1年次・3年次は経験済み、<strong>2年次・ハード科は初めて使うため基本から丁寧に</strong>）、代表者1名のアカウントでCodespacesを起動し、Antigravity CLI（agy）とポート転送のPublic設定を確認する。無料枠の確認と、止まったときの備え（交代要員）も決める。チームビルディングを行い、トラックを選んで最初の「動くもの」を作る（<strong>トラックA</strong>は撮影・個人情報のルールもここで確認）。1日目の終わりに、当日の目標を発表して確定する。</td></tr>
+            <tr><td class="week-num">1</td><td class="week-theme"><a href="autumn-intensive/day01.html" class="week-link">進級制作チームで参加／環境をつくる</a></td><td>講座の狙いと3つのトラックを共有し、チームの役割（代表者・ドライバー／ナビゲーター・交代要員）を決める。<strong>GitHubとCodespacesの扱い方</strong>を学び（1年次・3年次は経験済み、<strong>2年次・ハード科は初めて使うため基本から丁寧に</strong>）、全員が一度Codespacesを開いて閉じる。代表者のアカウントでチームのCodespacesを起動し、Antigravity CLI（agy）とポート転送のPublic設定を確認する。無料枠の確認も行う。<strong>2限後半</strong>にトラックを選んで最初の「動くもの」を作る（<strong>トラックA</strong>は撮影・個人情報のルールもここで確認）。1日目の終わりに、当日の目標を発表して確定する。</td></tr>
             <tr><td class="week-num">2</td><td class="week-theme">入力を増やす／表現を広げる</td><td>トラックごとの段階課題（<strong>A</strong>: 映像の加工＋AIレシピA／<strong>B</strong>: 入力を増やし、何を競うかを洗い出す／<strong>C</strong>: 次の段階目標）。2限はブラッシュアップ。<strong>2年次</strong>はトラブルシューティングを主導する。</td></tr>
             <tr><td class="week-num">3</td><td class="week-theme">AIを載せる／みんなで同時に使えるようにする</td><td>トラックごとの段階課題（<strong>A</strong>: （余力があれば）AIレシピBと、APIキー・呼び出し回数・通信量の設計原則／<strong>B</strong>: ルームでリアルタイム同期し、パブリック公開の確認とパスコード以外の対策を1つ入れる／<strong>C</strong>: 次の段階目標）。2限で最初の動作確認を行う。</td></tr>
             <tr><td class="week-num">4</td><td class="week-theme">相互体験／つくりこむ</td><td><strong>チーム同士で作品を触り合う相互体験</strong>を行い、フィードバックを反映して実装を進める。<strong>3年次以上</strong>は下級生チームのサポートにも回る。うまく動かない状況をAIエージェントに説明する練習（エラーの伝え方）にも取り組む。</td></tr>
