@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=5">
-  <!-- 公式情報確認: 2026-10-01 (git-scm.com/docs/git-switch / docs.github.com の Creating a pull request・Merging a pull request・Merge conflicts・Resolving a merge conflict using the command line)。コンフリクト時のPR画面の英文メッセージは公式docsに載っていないため引用せず、日本語の説明にしている -->
+  <!-- 公式情報確認: 2026-09-30 (git-scm.com/docs/git-switch / docs.github.com の Creating a pull request・Merging a pull request・Merge conflicts・Resolving a merge conflict using the command line)。コンフリクト時のPR画面の英文メッセージは公式docsに載っていないため引用せず、日本語の説明にしている -->
   <style>
     .sim-note { background: #fff8e6; border: 1px solid #e8c766; border-radius: 6px; padding: .7rem 1rem; margin: 0 0 1.2rem; font-size: .9rem; line-height: 1.7; }
     .sim-grid { display: grid; grid-template-columns: minmax(0, 320px) minmax(0, 1fr); gap: 1.2rem; align-items: start; }
@@ -108,11 +108,11 @@
           <tr><td>変更を記録する</td><td><code>git add .</code> → <code>git commit -m "..."</code></td><td>「変更をコミットして」</td></tr>
           <tr><td>GitHubに送る</td><td><code>git push -u origin ブランチ名</code></td><td>「pushして」</td></tr>
           <tr><td>PRを作る</td><td><code>gh pr create</code>（または画面のボタン）</td><td>「PRを作って」</td></tr>
-          <tr><td>mainの最新を取り込む</td><td><code>git pull origin main</code></td><td>「mainの最新を取り込んで」</td></tr>
+          <tr><td>mainの最新を取り込む</td><td><code>git pull origin main</code>（環境によっては <code>git pull --no-rebase origin main</code>）</td><td>「mainの最新を取り込んで」</td></tr>
           <tr><td>コンフリクトを直す</td><td>ファイルを開いて印（<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code>など）を消し、<code>git add</code> → <code>git commit</code> → <code>git push</code></td><td>「両方残して解消して」（どれを残すかは<strong>自分で決めて</strong>伝える）</td></tr>
         </tbody>
       </table>
-      <p style="margin:.6rem 0 0">気づいたこと: agyに頼んでも、裏では<strong>同じコマンド</strong>が実行されています。<strong>何が起きているかを読める</strong>ことが、AIに任せるときの安心につながります。</p>
+      <p style="margin:.6rem 0 0">気づいたこと: agyに頼んでも、多くの場合、裏ではgitやghの<strong>コマンド</strong>が実行されます。<strong>何が起きているかを読める</strong>ことが、AIに任せるときの安心につながります。</p>
     </div>
 
     <div class="sim-grid">
@@ -152,7 +152,7 @@
         </div>
 
         <div class="sim-term" id="paneAgy" style="display:none">
-          <p class="sim-mode-note" style="color:#b8b8c8">agyに<strong>自然言語</strong>でお願いするモードです（本物のagyの動きを簡単にまねた練習用）。agyは<strong>実行するコマンドを見せて、確認してから</strong>実行します。</p>
+          <p class="sim-mode-note" style="color:#b8b8c8">agyに<strong>自然言語</strong>でお願いするモードです（本物のagyの動きを簡単にまねた練習用）。このシミュレーターのagyは<strong>実行するコマンドを見せて、確認してから</strong>実行します。本物のagyの承認の出方は設定によって異なります。</p>
           <div class="sim-log" id="logAgy" aria-live="polite"></div>
           <form class="sim-inputrow" id="formAgy" autocomplete="off">
             <input type="text" id="inAgy" aria-label="agyへのお願い" placeholder="例: ブランチを作って、タイトルを変更して" spellcheck="false">
@@ -222,7 +222,7 @@
     { t: 'ミッション3: 変更して、コミットする', b: '画面の「見出しを編集する」ボタンでindex.htmlを変更し、変更を<strong>ステージ（add）</strong>して<strong>コミット</strong>します。' },
     { t: 'ミッション4: GitHubにpushする', b: '作業ブランチをGitHubに<strong>push</strong>して、チームに見える状態にします。' },
     { t: 'ミッション5: プルリクエスト（PR）を作る', b: 'pushしたブランチの変更を、mainに取り込んでほしいとお願いする<strong>PR</strong>を作ります（画面のボタンでも、コマンドでも可）。' },
-    { t: 'ミッション6: レビューを受けてマージする', b: 'ミサキがレビューします。OKが出たら<strong>Merge pull request</strong>でmainに取り込みましょう。' },
+    { t: 'ミッション6: レビューを受けてマージする', b: 'ミサキがレビューします。OKが出たら<strong>Merge pull request</strong>でmainに取り込みましょう。（本物のGitHubでは、このあと <strong>Confirm merge</strong> も押します）' },
     { t: 'ミッション7: コンフリクトを解消する', b: '2本目の作業で、ミサキと<strong>同じ行</strong>を別々に変更してしまいます。mainの最新を取り込み、<strong>どちらを残すか自分で決めて</strong>解消し、コミット・pushします。' },
     { t: 'ミッション8: 2本目のPRをマージする', b: 'コンフリクトが解消されたPRを、もう一度マージして完成させます。' }
   ];
@@ -397,7 +397,7 @@
     }
 
     if (/^gh pr create\b/.test(line)) {
-      var r = createPr(); if (r.err) say(r.err, 'err'); else say(r.ok, 'ok'); return out;
+      var r = createPr(); if (r.err) say(r.err, 'err'); else say(r.ok + '\n（本物のghでは、タイトルなどを追加で聞かれることがあります）', 'ok'); return out;
     }
     if (/^gh pr merge\b/.test(line)) {
       var pm = null;
@@ -615,7 +615,7 @@
     if (has(/解消|コンフリクト|競合|直して/) && S.merging) {
       var kind = has(/両方/) ? 'both' : has(/自分|私|わたし/) ? 'mine' : has(/ミサキ|相手|チームメイト/) ? 'theirs' : null;
       if (kind) { plan.push({ show: '（index.html のコンフリクトを解消: ' + { both: '両方残す', mine: '自分の変更', theirs: 'ミサキの変更' }[kind] + '）', tok: 'resolve:' + kind }); plan.push({ show: 'git add .', tok: 'add' }); plan.push({ show: 'git commit -m "コンフリクトを解消"', tok: 'commit' }); }
-      else asks = 'コンフリクトの解消は、<strong>どちらの内容を残すか</strong>で結果が変わります。「自分の変更」「ミサキの変更」「両方」のどれを残しますか？（agyは勝手に決めず、あなたに聞きます）';
+      else asks = 'コンフリクトの解消は、<strong>どちらの内容を残すか</strong>で結果が変わります。「自分の変更」「ミサキの変更」「両方」のどれを残しますか？（指示が曖昧なときは、このように聞き返されることがあります）';
     }
     else if (has(/解消|コンフリクト|競合/) && !S.merging) plan.push({ show: 'git pull origin main', tok: 'pull' });
     if (has(/マージ|merge/) && !S.merging) plan.push({ show: 'gh pr merge', tok: 'merge' });

@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=5">
-  <!-- 公式情報確認: 2026-10-01 (git-scm.com/docs/git-switch / docs.github.com の Creating a pull request・Merging a pull request・Merge conflicts・Resolving a merge conflict using the command line。Codespace再開・agy・Simple Browserの手順は第4回（2026-09-23/24確認）と同じ) -->
+  <!-- 公式情報確認: 2026-09-30 (git-scm.com/docs/git-switch / docs.github.com の Creating a pull request・Merging a pull request・Merge conflicts・Resolving a merge conflict using the command line。Codespace再開・agy・Simple Browserの手順は第4回（2026-09-23/24確認）と同じ) -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -66,7 +66,7 @@
         <li>チーム開発で<strong>ブランチ・プルリクエスト（PR）・マージ</strong>が必要な理由を、自分の言葉で説明できる</li>
         <li>シミュレーターで、<strong>clone → ブランチ → コミット → push → PR → マージ</strong>の流れを一通り体験する</li>
         <li><strong>コンフリクト</strong>（同じ行を2人が別々に変更したときの衝突）が起きる理由と、解消するときに<strong>どちらを残すか自分で決める</strong>ことを体験する</li>
-        <li>同じ操作を<strong>コマンド</strong>と<strong>agyへの自然言語のお願い</strong>の両方で行い、agyが裏で<strong>同じコマンド</strong>を実行していることに気づく</li>
+        <li>同じ操作を<strong>コマンド</strong>と<strong>agyへの自然言語のお願い</strong>の両方で行い、agyが裏で実行する<strong>コマンドを読んで、自分で打ったものと見比べる</strong></li>
         <li>自分のリポジトリでも、agyに頼んで<strong>本物のPR</strong>を1回作り、自分でマージする</li>
       </ul>
       <div class="lesson-tip">
@@ -93,7 +93,7 @@
             </ul>
             <p><strong>2人が同じファイルを直すと、何が起きるか</strong></p>
             <ul>
-              <li>例: 2人が同じゲームのページの、同じ「見出し」の行を、同時に別々の内容に書き換えたらどうなるか——このまま上書きし合うと、<strong>どちらかの変更が消える</strong></li>
+              <li>例: 2人が同じゲームのページの、同じ「見出し」の行を、同時に別々の内容に書き換えたらどうなるか——ブランチもPRも使わず、みんなが直接mainを編集し合うと、<strong>お互いの変更に気づかないまま進んでしまう</strong></li>
               <li>そこで、<strong>ブランチ</strong>（自分専用の作業ライン）で作業し、<strong>PR</strong>（「この変更をmainに取り込んでください」というお願い）でチームに見せて、レビューを受けてから<strong>マージ</strong>（mainに取り込む）する、というルールで進める</li>
             </ul>
             <div class="diagram-flow">
@@ -153,7 +153,7 @@
               <li><strong>ミッション1:</strong> リポジトリをclone（<code>git clone</code>）</li>
               <li><strong>ミッション2:</strong> 作業用のブランチを作る（<code>git switch -c add-title</code>）</li>
               <li><strong>ミッション3:</strong> ファイルを編集してコミットする（<code>git add .</code> → <code>git commit -m "…"</code>）</li>
-              <li><strong>ミッション4:</strong> GitHubにpushする（初回は <code>git push -u origin ブランチ名</code>。<code>-u</code> を付けずに <code>git push</code> だけを試すと何が起きるかも試してみる）</li>
+              <li><strong>ミッション4:</strong> GitHubにpushする（初回は <code>git push -u origin ブランチ名</code>。<code>-u</code> を付けずに <code>git push</code> だけを試すと、既定の設定では失敗する。何が起きるか試してみる）</li>
               <li><strong>ミッション5:</strong> PRを作る（疑似GitHub画面の「Compare &amp; pull request」ボタン、または <code>gh pr create</code>）</li>
               <li><strong>ミッション6:</strong> ミサキのレビューを受けて、「Merge pull request」でマージする</li>
             </ul>
@@ -182,16 +182,16 @@
             <p><strong>ミッション7・8: コンフリクトに挑戦する（コマンドモード）</strong></p>
             <ul>
               <li>「▶ 2本目の作業を始める」で、ミサキと<strong>同じ行</strong>を別々に変更してしまった状況を作る。PRを作ると、コンフリクトの表示が出る</li>
-              <li><code>git pull origin main</code> で最新のmainを取り込み、<strong>ファイルに現れた印</strong>（<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> / <code>=======</code> / <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>）を読む。上が<strong>自分</strong>、下が<strong>ミサキ</strong>の変更</li>
+              <li><code>git pull origin main</code> で最新のmainを取り込み（実際のgitでは、設定によって「どう取り込むか指定してください」と止まることがある。その場合は <code>git pull --no-rebase origin main</code> を使う）、<strong>ファイルに現れた印</strong>（<code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> / <code>=======</code> / <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code>）を読む。上が<strong>自分</strong>、下が<strong>ミサキ</strong>の変更</li>
               <li>「自分の変更」「ミサキの変更」「両方」の<strong>どれを残すか、自分で決める</strong>（正解は1つではない。理由を隣の人と話してみる）</li>
-              <li><code>git add .</code> → <code>git commit</code> → <code>git push</code> で解消し、PRをマージする（公式: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-using-the-command-line" target="_blank" rel="noopener">Resolving a merge conflict using the command line</a>）</li>
+              <li><code>git add .</code> → <code>git commit -m "…"</code> → <code>git push</code> で解消し、PRをマージする（公式: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-using-the-command-line" target="_blank" rel="noopener">Resolving a merge conflict using the command line</a>）</li>
             </ul>
             <p><strong>agyモードで、最初からやり直す</strong></p>
             <ul>
               <li>「最初からやり直す」を押し、今度は<strong>「🤖 agyにお願い」</strong>のタブで同じミッションを進める</li>
               <li>例: <code>このリポジトリをcloneして</code> → <code>ブランチを作って、タイトルを変更して、コミットして</code> → <code>pushして</code> → <code>PRを作って</code></li>
-              <li>agyは<strong>実行するコマンドを見せて、確認してから</strong>実行する。<strong>agyが裏で実行しているコマンドが、さっき自分で打ったものと同じ</strong>ことを見比べる</li>
-              <li>コンフリクトの解消では、agyは<strong>どれを残すかを聞いてくる</strong>。中身の判断は自分で伝える必要があることを確かめる</li>
+              <li>シミュレーターのagyは<strong>実行するコマンドを見せて、確認してから</strong>実行する（本物のagyは、既定では実行前に承認を求められることが多いが、設定によっては自動で実行される。承認の出方はシミュレーターと異なる。公式: <a href="https://antigravity.google/docs/permissions/" target="_blank" rel="noopener">Permissions</a>）。<strong>agyが実行するコマンドを、さっき自分で打ったものと見比べる</strong>——多くの場合、gitやghのコマンドが使われる</li>
+              <li>コンフリクトの解消では、指示が曖昧だとagyから聞き返されることがある。<strong>どれを残すかという中身の判断は自分で伝える</strong>必要があることを確かめる</li>
             </ul>
             <div class="lesson-tip">
               <strong>比べてみよう:</strong> コマンドは<strong>自分が何を実行したか</strong>が確実に分かります。agyへのお願いは<strong>楽で速い</strong>ですが、裏で何が実行されたかを<strong>読めること</strong>が、AIに任せるときの安心につながります。どちらが向いている場面か、隣の人と話してみましょう。
@@ -217,8 +217,8 @@
             </ul>
             <p><strong>GitHubの画面でPRを作って、マージする</strong></p>
             <ul>
-              <li>GitHub上の自分のリポジトリを開く。pushした直後は<strong>「Compare &amp; pull request」</strong>のボタンが出る（公式: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request" target="_blank" rel="noopener">Creating a pull request</a>）</li>
-              <li>タイトルを確認して<strong>「Create pull request」</strong>を押し、続けて<strong>「Merge pull request」</strong>でmainに取り込む（公式: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/merging-a-pull-request" target="_blank" rel="noopener">Merging a pull request</a>）</li>
+              <li>GitHub上の自分のリポジトリを開く。pushした直後は<strong>「Compare &amp; pull request」</strong>のボタンが出る（しばらくすると消えるので、その場合は「Pull requests」タブから作れる）（公式: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request" target="_blank" rel="noopener">Creating a pull request</a>）</li>
+              <li>タイトルを確認して<strong>「Create pull request」</strong>を押し、続けて<strong>「Merge pull request」→「Confirm merge」</strong>の順に押してmainに取り込む（公式: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/merging-a-pull-request" target="_blank" rel="noopener">Merging a pull request</a>）</li>
               <li>1人のリポジトリなので、コンフリクトは起きない。<strong>自分ひとりでもPRを使う</strong>と、変更の履歴が残ることを確認する</li>
             </ul>
             <div class="lesson-tip">
@@ -273,6 +273,7 @@
         <li><a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/incorporating-changes-from-a-pull-request/merging-a-pull-request" target="_blank" rel="noopener">Merging a pull request（公式）</a> — PRのマージ</li>
         <li><a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/about-merge-conflicts" target="_blank" rel="noopener">Merge conflicts（公式）</a> — コンフリクトが起きる理由</li>
         <li><a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/resolving-a-merge-conflict-using-the-command-line" target="_blank" rel="noopener">Resolving a merge conflict using the command line（公式）</a> — コマンドラインでの解消手順</li>
+        <li><a href="https://antigravity.google/docs/permissions/" target="_blank" rel="noopener">Permissions（Antigravity公式）</a> — agyがコマンドを実行する前の承認の仕組み</li>
         <li><a href="https://git-scm.com/docs/git-switch" target="_blank" rel="noopener">git-switch（Git公式）</a> — <code>git switch -c</code>（ブランチの作成と移動）</li>
       </ul>
     </div>
