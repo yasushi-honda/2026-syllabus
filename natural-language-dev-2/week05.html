@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第5回 セキュリティとデータガバナンスを学ぶ | 自然言語開発 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=5">
+  <!-- 公式情報確認: 2026-09-30 (code.claude.com/docs/en/data-usage / privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training / docs.aws.amazon.com/bedrock/latest/userguide/data-protection.html / antigravity.google/terms)。OpenAI Codexの記述は help.openai.com の該当記事（Codexの個人ChatGPTプランでの学習設定・Include environments）を検索結果の抜粋で確認したもの。help.openai.com は curl・WebFetch とも403（bot対策）で本文を直接取得できていないため、授業中に各自が実ブラウザで公式ヘルプを開いて確認する構成にしている -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev-2.html">自然言語開発 II</a>
+        <span>/</span>
+        <span>第5回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">セキュリティと<wbr>データガバナンスを学ぶ</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 5</span>
+            <span class="page-badge">木曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">自分が使っているAIエージェントに「何が送られ、どう扱われるのか」を公式資料で確認し、進級制作で何を入力してよい・よくないかを自分たちで判断できるようになる</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">データガバナンス / 学習への利用 / 保存期間 / 個人契約と商用契約 / 入力してよいデータ</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">自分が使うAIエージェント（Claude Code／Codex CLI／Antigravity CLI）の契約・ログイン状態がわかること。ノートPCで公式ページを開ける状態にしておく。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>AIエージェントを使うとき、<strong>プロンプトやコードがネットワーク経由で送られている</strong>ことを説明できる</li>
+        <li>「<strong>学習に使われるか</strong>」「<strong>どれくらい保存されるか</strong>」は、サービスや契約の種類で<strong>違う</strong>ことを、公式資料で確認できる</li>
+        <li>クラウドAIサービスの「<strong>個人情報を扱えるレベルの安全設計</strong>」が、どのような要素の組み合わせで成り立っているかを理解する</li>
+        <li>「学習に使われない」＝「何を入力してもよい」ではないことを理解する</li>
+        <li>自分が使っているエージェントの<strong>設定画面を実際に開いて</strong>、現在の状態を確認する</li>
+        <li>進級制作で<strong>何を入力してよい・よくないか</strong>を、自分の言葉でルール化する</li>
+      </ul>
+      <div class="lesson-tip">
+        <strong>今日の進め方:</strong> 正解を暗記する回ではありません。サービスの規約や設定は変わることがあるため、<strong>公式資料を自分で読んで確認する習慣</strong>を身につけることが目的です。表現は公式の言い回しに合わせて確認しましょう。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>AIエージェントを使うと、何が送られているのか</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返りから入る</strong></p>
+            <ul>
+              <li>前回は、Codespacesのポート転送を「パブリック」にすると<strong>認証なしで世界中からアクセスできる</strong>ことを学んだ。今日は視点を変えて、<strong>自分が入力した情報の行き先</strong>を確認する</li>
+            </ul>
+            <p><strong>Claude Codeを例に、データの流れを読む</strong></p>
+            <ul>
+              <li>公式ドキュメントには次のように書かれている（公式: <a href="https://code.claude.com/docs/en/data-usage" target="_blank" rel="noopener">Data usage</a>）:「Claude Code runs locally. To interact with the LLM, Claude Code sends data over the network. This data includes all user prompts and model outputs, encrypted in transit via TLS 1.2+.」</li>
+              <li>つまり、<strong>手元のPC（またはCodespace）で動いていても、指示文とモデルの出力はネットワーク越しにモデルの提供元へ送られる</strong>。Codex CLI・Antigravity CLIも、モデルを呼び出す仕組みである以上、入力が提供元のサービスに渡る点は同じ</li>
+              <li>手元にも記録が残る。Claude Codeは、セッションの記録を手元の<code>~/.claude/projects/</code>に<strong>平文</strong>で、既定で30日間保存する（同じ「Data usage」ページ）</li>
+            </ul>
+            <p><strong>今日の問い</strong></p>
+            <ul>
+              <li>①送った内容は<strong>モデルの学習に使われる</strong>のか　②<strong>どれくらいの期間</strong>保存されるのか　③<strong>誰が</strong>それを見られるのか——これらは<strong>別々の論点</strong>であり、サービスや契約の種類によって答えが違う。この回では、①②③を公式資料で確認していく</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>公式資料で、自分のエージェントの扱いを調べる</h3>
+          <div class="timeline-body">
+            <p><strong>自分が使うエージェントの資料を読む</strong>（同じエージェントの人同士でグループになる）</p>
+            <p>各自、自分が使っているエージェントの行を担当し、①学習への利用　②保存期間　③その他の注意点を、公式ページから探して書き出す。以下は、教員が事前に公式ページで確認した内容（確認日: 2026-09-30）で、<strong>答え合わせ用</strong>として使う。</p>
+            <ul>
+              <li><strong>Claude Code（個人のFree／Pro／Maxプランで使う場合）</strong>: 公式は「We will train new models using data from Free, Pro, and Max accounts when this setting is on (including when you use Claude Code from these accounts).」と書く（<a href="https://code.claude.com/docs/en/data-usage" target="_blank" rel="noopener">Data usage</a>）。つまり<strong>設定がオンのときは学習に使われる</strong>。保存期間は、設定がオンなら<strong>5年</strong>、オフなら<strong>30日</strong>（確認日時点）。設定はいつでも変更できる</li>
+              <li><strong>Claude Code（API・Amazon Bedrockなど商用の経路で使う場合）</strong>: 公式は「Anthropic does not train generative models using code or prompts sent to Claude Code under commercial terms, unless the customer has chosen to provide their data to us for model improvement」と書く（同上）。<strong>既定では学習に使われない</strong>。学習とは別の論点として、Amazon Bedrockでは<strong>モデル提供元からのアクセス</strong>についてAWSの公式ドキュメントが「Because the model providers don't have access to those accounts, they don't have access to Amazon Bedrock logs or to customer prompts and completions.」と書く（<a href="https://docs.aws.amazon.com/bedrock/latest/userguide/data-protection.html" target="_blank" rel="noopener">Data protection（Amazon Bedrock）</a>）</li>
+              <li><strong>Antigravity CLI</strong>: 公式の追加利用規約は「We use Interactions to evaluate, develop, and improve Google and Alphabet research, products, services and machine learning technologies.」と書き、<strong>設定でデータの使われ方の選択を変えられる</strong>とする。一方、冒頭で、Gemini Enterprise（Google Cloud）・Gemini Enterprise for Business・Gemini Enterprise APIキー、または（Google Cloud Pre-GA Offering Termsに基づく）Google Workspaceの契約で使う場合は<strong>この規約は適用されない</strong>と書く（<a href="https://antigravity.google/terms" target="_blank" rel="noopener">Google Antigravity Additional Terms of Service</a>）。<strong>利用経路（個人のアカウントか、上記の組織契約・APIキーか）で適用される規約が変わる</strong></li>
+              <li><strong>Codex CLI</strong>: OpenAIのヘルプセンターによると、個人のChatGPTプランでCodexを使う場合は<strong>「Improve the model for everyone」の設定がCodexにも適用</strong>されるとされている。加えて、Codexには<strong>別の設定「Include environments」</strong>があり、ChatGPT側の設定とは別に管理する、とされている（<strong>教員は本文を直接確認できていないため、必ず各自が公式ヘルプで確認する</strong>）。<strong>ヘルプ記事は授業中に各自が公式ページで実際に読んで確認する</strong>（<a href="https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance" target="_blank" rel="noopener">How your data is used to improve model performance（OpenAI Help Center）</a>）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>読み方のコツ:</strong> 「個人向けプラン」と「商用・組織向けの契約」のどちらの話なのかを、まず見出しで確認します。同じサービス名でも、契約の種類が違えば書かれている扱いが変わります。読み取れなかった箇所や、公式の英語の意味が曖昧な箇所は、AIエージェントに「この文章を日本語で説明して」と頼んでよい（ただし<strong>最終判断は原文の公式ページで</strong>確認する）。
+            </div>
+            <p><strong>調べた結果を共有する</strong></p>
+            <ul>
+              <li>グループごとに、学習への利用・保存期間・注意点を1分ずつで発表する</li>
+              <li>教員の答え合わせと違った点があれば、どちらが新しい情報かを公式ページの日付・記載で確認する</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>「学習に使われない」なら、何を入力してもよいのか</h3>
+          <div class="timeline-body">
+            <p><strong>「学習されない」と「入力してよい」は別の話</strong></p>
+            <ul>
+              <li>クラウドAIサービスの「個人情報を扱えるレベルの安全設計」は、<strong>学習に使わない・保存期間を限る・アクセスできる人を限る・契約で扱いを定める</strong>といった複数の要素の組み合わせで成り立っている。1つの要素だけで「安全」とは言えない</li>
+              <li>「学習に使われない」ことは、<strong>情報の扱いが安全になる要素の1つ</strong>に過ぎない。他にも、<strong>保存される期間</strong>、<strong>提供元の担当者が内容を見られるか</strong>、<strong>契約や規約で入力が認められているか</strong>など、独立した論点がある</li>
+              <li>例えば、進級制作で使う<strong>AWSのFree Planアカウント</strong>は、公式規約上<strong>評価目的での利用に限られ、機微なデータの処理には使わないこと</strong>とされている（本科目の履修上の注意点）。「学習に使われない設計」であっても、<strong>そのアカウントで扱ってよいデータの範囲</strong>は別に決まっている</li>
+              <li>手元の記録にも注意する。Claude Codeのセッション記録は手元に平文で残るため、共有PCや共有Codespaceでは<strong>入力した内容が他の人の目に触れる可能性</strong>もある</li>
+            </ul>
+            <p><strong>ケースで考える（グループで話し合い）</strong></p>
+            <p>次の入力を、それぞれ<strong>「入れてよい」「条件つきで入れてよい」「入れない」</strong>の3つに分け、理由を1文で説明する。</p>
+            <ul>
+              <li>自分が作ったゲームのソースコード（Publicのリポジトリ）</li>
+              <li>進級制作で使う、<strong>架空のテストデータ</strong>（名前・住所をランダムに作ったもの）</li>
+              <li>アルバイト先の顧客名簿の一部（実在する人の氏名・電話番号）</li>
+              <li>クラスメイトの<strong>実名と成績</strong>を含むデータ</li>
+              <li>AWSのアクセスキー、APIキー、パスワード</li>
+              <li>自分の<strong>実名・住所</strong>を含む個人情報</li>
+              <li>実習先の企業から預かった、社外に出してはいけない資料</li>
+            </ul>
+            <p><strong>考え方の軸を出し合う</strong></p>
+            <ul>
+              <li>グループの判断を共有し、意見が分かれたケースについて<strong>なぜ分かれたか</strong>を全体で話し合う</li>
+              <li>「入れない」ものを、どうすれば<strong>入れる必要がない形</strong>にできるか（ダミーデータに置き換える、秘密の値は環境変数やシークレット管理に分ける、など）も考える</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>自分のエージェントの設定を実際に確認する</h3>
+          <div class="timeline-body">
+            <p><strong>設定画面を開いて、現在の状態を見る</strong></p>
+            <ul>
+              <li><strong>Claude（個人プランの人）</strong>: <a href="https://claude.ai/settings/data-privacy-controls" target="_blank" rel="noopener">claude.ai/settings/data-privacy-controls</a> で、モデル改善への利用の設定を確認する</li>
+              <li><strong>Antigravity CLI</strong>: 自分のログイン方法（個人のGoogleアカウントか、組織のアカウントか）と、設定でデータの使われ方の選択があるかを確認する</li>
+              <li><strong>Codex CLI（ChatGPT）</strong>: ChatGPTの「Data Controls」で「Improve the model for everyone」の状態を確認し、Codexの設定に「Include environments」があるかも確認する（見当たらない場合は講師へ）</li>
+              <li><strong>Amazon Bedrock経由のClaude Codeの人</strong>: 契約が「商用の経路」であること、そしてAWSアカウントが<strong>Free Planか有料か</strong>を確認する</li>
+              <li>見つからない・分からない場合は、無理に設定を変えず、<strong>今の状態だけを控えて</strong>講師に質問する</li>
+            </ul>
+            <p><strong>進級制作の「入力ルール」を3行でまとめる</strong></p>
+            <ul>
+              <li>「入れる／入れない」の基準を、自分の言葉で3行にまとめる（例:「実在する人の個人情報は入れない。テストにはダミーを使う。キーやパスワードは入れない」）</li>
+              <li>チームで進級制作に取り組んでいる場合は、チーム内で共有して1つのルールにそろえる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告＆今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>次回（第6回）：<strong>Firebaseに触れてみよう</strong>——Firebaseの基本概念（Hosting等）に触れ、使用中のAIエージェントから<strong>Firebase CLI</strong>（<code>firebase deploy</code>等）を使って、進級制作に簡単な機能を組み込む</li>
+              <li>「今日確認した自分のエージェントの扱い」と「自分の入力ルール」を一言メモして退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>自分の「入力ルール」を進級制作のメモに残しておく</strong>
+            <p>今日まとめた3行のルールを、進級制作のリポジトリやメモに書いておく。実在する個人情報・パスワード・APIキーを、コードやAIエージェントへの指示に含めていないか、見直しておく。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>使っていない他のエージェントの扱いも読んでみる</strong>
+            <p>自分が使っていないエージェントの公式資料も読み、違いを比べてみると、契約の種類による扱いの差が見えてきます。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://code.claude.com/docs/en/data-usage" target="_blank" rel="noopener">Data usage（Claude Code公式）</a> — 学習への利用・保存期間・データの流れ・テレメトリの既定値</li>
+        <li><a href="https://privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training" target="_blank" rel="noopener">Is my data used for model training?（Anthropic Privacy Center）</a> — 個人向けプランでの学習設定</li>
+        <li><a href="https://docs.aws.amazon.com/bedrock/latest/userguide/data-protection.html" target="_blank" rel="noopener">Data protection（Amazon Bedrock公式）</a> — モデル提供元がBedrockのログやプロンプトにアクセスできない設計</li>
+        <li><a href="https://antigravity.google/terms" target="_blank" rel="noopener">Google Antigravity Additional Terms of Service（公式）</a> — Interactionsの利用と、契約の種類による規約の適用範囲</li>
+        <li><a href="https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance" target="_blank" rel="noopener">How your data is used to improve model performance（OpenAI Help Center）</a> — Codexを含む個人プランでの学習設定</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week04.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第4回 対戦ゲームの仕組みを読み解こう</span>
+      </a>
+      <a href="../natural-language-dev-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">自然言語開発 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第6回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>

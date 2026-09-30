@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第5回 agyと一緒につくる② | AI活用プログラミング基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=5">
+  <!-- 公式情報確認: 2026-09-30 (docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site / docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site。Codespace再開・agy・Simple Browserの手順は第4回（2026-09-23/24確認）と同じ) -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--orange">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-programming-2.html">AI活用プログラミング基礎 II</a>
+        <span>/</span>
+        <span>第5回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">agyと一緒に<wbr>つくる②</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 5</span>
+            <span class="page-badge">木曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">第4回の続き。agyと一緒にゲームを改善・仕上げして、GitHub Pagesでインターネットに公開する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">改善・仕上げ / GitHub Pages / 公開URL / 更新の反映 / 振り返りメモ</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第4回までのリポジトリとゲーム（Publicのまま）。Codespaceは停止したままでOK——今日も「resume（再開）」で続きから始める。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>第4回の続きとして、ゲームを<strong>改善・仕上げ</strong>する（機能追加・見た目・不具合の修正）</li>
+        <li>agyに、公開に必要なファイル（<code>index.html</code>）が整っているかを確認・整えてもらう</li>
+        <li><strong>GitHub Pages</strong>を有効にして、自分のゲームを<strong>公開URL</strong>で誰でも開ける状態にする</li>
+        <li>公開後に修正して、<strong>プッシュ→数分待つ→公開URLに反映</strong>される流れを体験する</li>
+        <li>取り組みの過程で気づいたことを<strong>振り返りメモ</strong>に残す</li>
+      </ul>
+      <div class="lesson-tip">
+        <strong>今日の優先順位:</strong> 完成度を上げきることよりも、「自分が作ったものが自分の公開URLで開ける」ところまで到達することを優先します。改善は公開後も続けられます。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>Codespaceを再開し、今日の改善ポイントを決める</h3>
+          <div class="timeline-body">
+            <p><strong>Codespaceを再開して、ゲームを動かす</strong></p>
+            <ul>
+              <li>第4回と同じ手順で進める——自分のリポジトリの「Code」→「Codespaces」タブから、停止中のCodespaceを<strong>クリックして再開</strong>する（「Create codespace on main」で新しく作り直さない）</li>
+              <li>ターミナルで <code>python3 -m http.server 8000</code> を実行し、「ポート」タブの8000番の<strong>「エディターでプレビュー」</strong>でSimple Browserにゲームを表示する</li>
+              <li>http.serverを動かしているターミナルはそのままにして、新しいターミナルを開き <code>agy</code> を起動する（ログインを求められたら第3回と同じ手順でやり直す）</li>
+            </ul>
+            <p><strong>今日の改善ポイントを決める</strong></p>
+            <ul>
+              <li>ゲームを実際に遊んでみて、「もっとこうしたい」を<strong>1〜3個</strong>書き出す。次の3つの視点で探すと見つけやすい
+                <ul>
+                  <li><strong>見た目</strong>: 色・文字の大きさ・レイアウト・スマホの画面でも見やすいか</li>
+                  <li><strong>操作</strong>: 遊び方が初めての人にも伝わるか、リスタートやポーズがあるか</li>
+                  <li><strong>不具合</strong>: 思った通りに動かない箇所・エラーが出る箇所はないか</li>
+                </ul>
+              </li>
+              <li>書き出した中から、<strong>効果が大きそうなもの</strong>から順に並べる。公開までの時間を確保するため、今日全部やろうとしなくてよい</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>agyと対話しながら、ゲームを改善する</h3>
+          <div class="timeline-body">
+            <p><strong>改善を1つずつ指示する</strong></p>
+            <ul>
+              <li>優先順位の高いものから、agyに自然言語で伝える。第4回で学んだとおり、<strong>何を・どこに・どう動いてほしいか</strong>を具体的に書くと伝わりやすい</li>
+              <li>1回の指示に詰め込みすぎず、<strong>1つ直す→ブラウザで確認→次を伝える</strong>の順で進める（Simple Browserは更新ボタンで再読み込みする）</li>
+              <li>思った通りでなければ、違う点をそのままagyに伝え直す。エラーの意味が分からなければ <code>これはどういう意味ですか？</code> と聞いてよい</li>
+            </ul>
+            <p><strong>公開に向けた確認をagyに頼む</strong></p>
+            <ul>
+              <li>GitHub Pagesは、公開する範囲の一番上にある<strong>入口のファイル（<code>index.html</code>）</strong>を探して表示する（公式: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site" target="_blank" rel="noopener">Creating a GitHub Pages site</a>）</li>
+              <li>ゲームのファイル名が <code>tetris.html</code> のように <code>index.html</code> ではない場合は、agyに次のように頼む（例）: <code>このゲームを公開URLのトップページで開けるように、index.htmlという名前にしてください</code></li>
+              <li>あわせて、<strong>公開してはいけない情報</strong>がファイルに入っていないか確認する（次の注意を参照）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>公開するということ:</strong> GitHub Pagesで公開したサイトは、インターネット上の誰でも見られます（公式: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site" target="_blank" rel="noopener">Configuring a publishing source for your GitHub Pages site</a>）。リポジトリのファイルも<strong>Public</strong>のため誰でも読めます。本名・住所・電話番号などの個人情報や、パスワード・APIキーなどの秘密の文字列は、コードにもメッセージにも<strong>書かない・書かせない</strong>ようにしましょう。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>変更をプッシュして、GitHub Pagesで公開する</h3>
+          <div class="timeline-body">
+            <p><strong>今日の変更をコミット・プッシュする</strong></p>
+            <ul>
+              <li>第4回と同じく、agyに <code>ここまでの変更をコミットして、GitHubにプッシュしてください</code> と頼む</li>
+              <li>GitHub上で自分のリポジトリを開き、ファイルが更新されていることを確認する</li>
+            </ul>
+            <p><strong>GitHub Pagesを有効にする</strong>（公式: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site" target="_blank" rel="noopener">Configuring a publishing source for your GitHub Pages site</a>）</p>
+            <ul>
+              <li>GitHub上の自分のリポジトリで<strong>「Settings」</strong>を開く</li>
+              <li>左のメニューの<strong>「Pages」</strong>を選ぶ</li>
+              <li>「Build and deployment」の<strong>「Source」</strong>で<strong>「Deploy from a branch」</strong>を選ぶ</li>
+              <li>ブランチは<strong><code>main</code></strong>、フォルダは<strong><code>/ (root)</code></strong>を選んで<strong>「Save」</strong>を押す</li>
+            </ul>
+            <p><strong>公開されるのを待つ</strong></p>
+            <ul>
+              <li>公開までには<strong>最大10分ほどかかることがある</strong>（公式: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site" target="_blank" rel="noopener">Creating a GitHub Pages site</a>）。「Pages」の画面にサイトのURLが表示されたら公開完了</li>
+              <li>URLは <code>https://（自分のGitHubユーザー名）.github.io/（リポジトリ名）/</code> の形になる</li>
+              <li>待っている間は、Codespaceに戻って<strong>次の改善</strong>を進めてよい</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>公開URLで404（ページが見つかりません）と出たら:</strong> 公開直後は反映に時間がかかることがあります。数分待って再読み込みしても変わらない場合は、①リポジトリの一番上に<code>index.html</code>があるか、②Pagesの設定でブランチが<code>main</code>・フォルダが<code>/ (root)</code>になっているか、を確認し、それでも直らなければ講師に声をかけてください。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>公開URLで確認し、修正が反映される流れを体験する</h3>
+          <div class="timeline-body">
+            <p><strong>公開URLで動作を確認する</strong></p>
+            <ul>
+              <li>公開されたURLを、ブラウザの新しいタブで開き、ゲームが動くことを確認する</li>
+              <li>可能なら、スマホやとなりの人のPCでも開いてもらい、<strong>自分以外の環境でも開けること</strong>を確認する</li>
+            </ul>
+            <p><strong>修正して、公開に反映されるまでを体験する</strong></p>
+            <ul>
+              <li>気になった点を1つだけagyに直してもらう→確認→コミット・プッシュ→数分待って<strong>公開URLを再読み込み</strong>する</li>
+              <li>「プッシュしただけでは公開URLにすぐ反映されず、少し待つ必要がある」ことを実際に確かめる</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>公開URLを控える:</strong> 自分の公開URLは、次回以降の発表や共有で使います。忘れないようにメモしておきましょう。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告＆振り返りメモ</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>次回（第6回）：<strong>Google AI Studio Build modeに触れてみよう①</strong>——第3〜5回でagyと育てたこのリポジトリを、ブラウザだけで使うGoogle AI Studio Build modeに「Import from GitHub」で読み込み直す。<strong>リポジトリ名を忘れずに控えておく</strong></li>
+              <li>今日の<strong>振り返りメモ</strong>を書いて退出する——①agyに指示を出す中で気づいたこと（うまく伝わった指示・伝わらなかった指示）、②公開してみて感じたこと、を一言ずつ</li>
+              <li>使い終わったCodespaceは、Codespacesの一覧から停止しておく</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>自分の公開URLとリポジトリ名を控えておく</strong>
+            <p>公開URLをブラウザで開いてゲームが動くことを確認し、リポジトリ名とあわせてメモしておく。公開が間に合わなかった場合は、次回授業の冒頭で完了させる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>友達や家族に公開URLを見せてみる</strong>
+            <p>自分以外の人に遊んでもらい、分かりにくかった点を聞いておくと、第6回以降の改善のヒントになります。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site" target="_blank" rel="noopener">Creating a GitHub Pages site（公式）</a> — 入口のファイル（<code>index.html</code>）・公開URLの形式・公開までの時間</li>
+        <li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site" target="_blank" rel="noopener">Configuring a publishing source for your GitHub Pages site（公式）</a> — 「Deploy from a branch」での公開設定の手順</li>
+        <li><a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/opening-an-existing-codespace" target="_blank" rel="noopener">Opening an existing codespace（公式）</a> — 停止したCodespaceを再開する手順（第4回と同じ）</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week04.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第4回 agyと一緒につくる①</span>
+      </a>
+      <a href="../ai-programming-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AI活用プログラミング基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第6回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
