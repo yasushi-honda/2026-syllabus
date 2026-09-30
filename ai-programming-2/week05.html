@@ -210,6 +210,15 @@
             <ul>
               <li>第4回と同じ手順で、自分のリポジトリのCodespaceを<strong>再開（resume）</strong>し、新しいターミナルで <code>agy</code> を起動する（ログインを求められたら第3回と同じ手順でやり直す）</li>
             </ul>
+            <div class="lesson-tip">
+              <strong>自分のWindows PCで開発するとき:</strong> 今日のagyはCodespaces上で使います。Codespacesの中は、手元のPCがWindowsでもLinuxなので、第3回のコマンドのままで動きます。ただ、自分のWindows PCにagyを入れて使う場合は、<strong>インストールのコマンドが違います</strong>。
+              <ul>
+                <li><strong>Windows（PowerShell）:</strong> <code>irm https://antigravity.google/cli/install.ps1 | iex</code></li>
+                <li><strong>Windows（コマンドプロンプト）:</strong> <code>curl -fsSL https://antigravity.google/cli/install.cmd -o install.cmd &amp;&amp; install.cmd &amp;&amp; del install.cmd</code></li>
+                <li>Mac・Linuxは、第3回の <code>curl -fsSL https://antigravity.google/cli/install.sh | bash</code></li>
+              </ul>
+              コマンドが違う理由は<a href="week03.html">第3回</a>の補足に書いてあります。公式は<a href="https://antigravity.google/docs/cli/install" target="_blank" rel="noopener">Antigravity CLI — Installation &amp; auth</a>を見てください。
+            </div>
             <p><strong>agyに頼んで、ブランチを作って変更する</strong></p>
             <ul>
               <li>例: <code>add-messageという名前のブランチを作って、ゲームのどこかに一言メッセージを追加して、コミットしてpushしてください</code></li>
