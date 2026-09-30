@@ -145,6 +145,14 @@
                 <li><strong>Windows（PowerShell）:</strong> <code>irm https://antigravity.google/cli/install.ps1 | iex</code></li>
                 <li><strong>Windows（コマンドプロンプト）:</strong> <code>curl -fsSL https://antigravity.google/cli/install.cmd -o install.cmd &amp;&amp; install.cmd &amp;&amp; del install.cmd</code></li>
               </ul>
+
+              <strong>なぜCodespacesとWindowsで、コマンドが違うの？</strong>
+              <ul>
+                <li><strong>Codespacesの中は、手元のPCに関係なくLinuxだから。</strong>公式にも「Regardless of your local operating system, your codespace will run in a Linux environment.」と書かれています（公式: <a href="https://docs.github.com/en/codespaces/about-codespaces/what-are-codespaces" target="_blank" rel="noopener">What are GitHub Codespaces?</a>）。手元のPCがWindowsでも、Codespacesのターミナルに貼るのはMac・Linux用のコマンドになります</li>
+                <li><strong>OSによって、コマンドを受け取るプログラム（シェル）が違うから。</strong>Mac・Linuxは<code>bash</code>など、Windowsは<code>PowerShell</code>や<code>コマンドプロンプト</code>が使われ、書き方（文法）が違います</li>
+                <li><strong>インストールの仕組みは同じで、中で動くスクリプトの種類が違うから。</strong>公式のインストールは、「ネット上のインストール用スクリプトをダウンロードして、そのまま実行する」形です。そのスクリプトが、Mac・Linux用は<code>install.sh</code>、Windows用は<code>install.ps1</code>（PowerShell）と<code>install.cmd</code>（コマンドプロンプト）と、OSごとに別々に用意されています。<code>curl … | bash</code>は「ダウンロードしたものをbashに渡して実行する」、<code>irm … | iex</code>はPowerShellでの同じ意味の書き方（<code>irm</code>が取得、<code>iex</code>が実行）です</li>
+                <li><strong>注意:</strong> どちらも「ネットから取ってきたスクリプトを、そのまま実行する」やり方です。<strong>公式のURLだけ</strong>に使い、出どころの分からないURLには使わないでください</li>
+              </ul>
               Windowsで上のMac・Linux用のコマンドを貼り付けても、そのままでは動かないことがあります。実行がブロックされるなど、うまくいかないときは、エラーをそのまま教員に見せてください。なお、今日の授業はCodespaces上で進めるので、Windowsの人もまず上のコマンドで大丈夫です。
             </div>
             <div class="lesson-tip">
