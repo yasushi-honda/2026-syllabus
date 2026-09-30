@@ -98,11 +98,88 @@
               <li>GitHubのリポジトリは「持ち主の名前/リポジトリ名」の形で表される。今日のシミュレーターのチーム「<code>game-club/team-game</code>」は、<strong>組織のリポジトリに見立てた</strong>ものと考えればよい</li>
               <li>今日の本物のPRの練習は、<strong>自分ひとりの個人リポジトリ</strong>で行う。組織の作成や、相手の招待はしない</li>
             </ul>
+            <div class="diagram-compare">
+              <div class="diagram-compare-side diagram-compare-side--a">
+                <div class="diagram-compare-label">やり方 ①</div>
+                <div class="diagram-compare-title">組織（Organization）のリポジトリ</div>
+                <div class="diagram-compare-flow">みんなが個人アカウントのまま、同じ組織に参加</div>
+                <ul class="diagram-compare-list">
+                  <li>リポジトリの持ち主は「組織」</li>
+                  <li>例: <code>game-club/team-game</code></li>
+                  <li>実際のチーム開発でよく使われる</li>
+                </ul>
+              </div>
+              <div class="diagram-vs">か</div>
+              <div class="diagram-compare-side diagram-compare-side--b">
+                <div class="diagram-compare-label">やり方 ②</div>
+                <div class="diagram-compare-title">個人のリポジトリ＋招待</div>
+                <div class="diagram-compare-flow">持ち主が、相手を招待して共同作業</div>
+                <ul class="diagram-compare-list">
+                  <li>リポジトリの持ち主は「個人」</li>
+                  <li>例: <code>自分の名前/team-game</code></li>
+                  <li>組織を作らずに始められる</li>
+                </ul>
+              </div>
+            </div>
+            <p><strong>clone・push・pullは、どこからどこへ？</strong></p>
+            <div style="overflow-x:auto" role="img" aria-label="自分のPC（Codespace）、GitHub、チームメイトのPCの3か所と、clone・push・pullの向きを示した図">
+              <svg viewBox="0 0 640 190" width="100%" style="min-width:560px;max-width:760px;display:block;margin:0 auto" font-family="inherit" font-size="14">
+                <title>自分のPC、GitHub、チームメイトのPCの関係</title>
+                <rect x="10" y="50" width="170" height="90" rx="10" style="fill:var(--c-blue-soft);stroke:var(--c-blue)" stroke-width="2"/>
+                <text x="95" y="86" text-anchor="middle" font-weight="700" style="fill:var(--c-text)">自分のPC</text>
+                <text x="95" y="108" text-anchor="middle" style="fill:var(--c-text)">（Codespace）</text>
+                <text x="95" y="127" text-anchor="middle" font-size="12" style="fill:var(--c-text)">作業はここで行う</text>
+                <rect x="235" y="30" width="170" height="130" rx="10" style="fill:#eaf7ee;stroke:var(--c-green)" stroke-width="2"/>
+                <text x="320" y="78" text-anchor="middle" font-weight="700" style="fill:var(--c-text)">GitHub</text>
+                <text x="320" y="100" text-anchor="middle" style="fill:var(--c-text)">みんなの共有場所</text>
+                <text x="320" y="122" text-anchor="middle" font-size="12" style="fill:var(--c-text)">main ＋ 各ブランチ ＋ PR</text>
+                <rect x="460" y="50" width="170" height="90" rx="10" style="fill:var(--c-blue-soft);stroke:var(--c-blue)" stroke-width="2"/>
+                <text x="545" y="86" text-anchor="middle" font-weight="700" style="fill:var(--c-text)">ミサキのPC</text>
+                <text x="545" y="108" text-anchor="middle" style="fill:var(--c-text)">（チームメイト）</text>
+                <line x1="180" y1="78" x2="235" y2="78" style="stroke:var(--c-orange)" stroke-width="3"/>
+                <polygon points="235,78 225,72 225,84" style="fill:var(--c-orange)"/>
+                <text x="207" y="68" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--c-orange)">push</text>
+                <line x1="235" y1="112" x2="180" y2="112" style="stroke:var(--c-blue)" stroke-width="3"/>
+                <polygon points="180,112 190,106 190,118" style="fill:var(--c-blue)"/>
+                <text x="207" y="134" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--c-blue)">clone</text>
+                <text x="207" y="150" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--c-blue)">pull</text>
+                <line x1="460" y1="78" x2="405" y2="78" style="stroke:var(--c-orange)" stroke-width="3"/>
+                <polygon points="405,78 415,72 415,84" style="fill:var(--c-orange)"/>
+                <text x="432" y="68" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--c-orange)">push</text>
+                <line x1="405" y1="112" x2="460" y2="112" style="stroke:var(--c-blue)" stroke-width="3"/>
+                <polygon points="460,112 450,106 450,118" style="fill:var(--c-blue)"/>
+                <text x="432" y="134" text-anchor="middle" font-size="13" font-weight="700" style="fill:var(--c-blue)">pull</text>
+              </svg>
+            </div>
+            <p class="lesson-note">オレンジの矢印（push）は「GitHubに送る」、青の矢印（clone・pull）は「GitHubから手元に持ってくる」。自分のPCとミサキのPCは、<strong>直接ではなく、GitHubを通して</strong>やり取りする。</p>
             <p><strong>2人が同じファイルを直すと、何が起きるか</strong></p>
             <ul>
               <li>例: 2人が同じゲームのページの、同じ「見出し」の行を、同時に別々の内容に書き換えたらどうなるか——ブランチもPRも使わず、みんなが直接mainを編集し合うと、<strong>お互いの変更に気づかないまま進んでしまう</strong></li>
               <li>そこで、<strong>ブランチ</strong>（自分専用の作業ライン）で作業し、<strong>PR</strong>（「この変更をmainに取り込んでください」というお願い）でチームに見せて、レビューを受けてから<strong>マージ</strong>（mainに取り込む）する、というルールで進める</li>
             </ul>
+            <p><strong>ブランチとマージの図</strong></p>
+            <div style="overflow-x:auto" role="img" aria-label="mainの線から作業用のブランチが分かれ、コミットを重ねたあと、PRを経てmainにマージされる流れの図">
+              <svg viewBox="0 0 680 200" width="100%" style="min-width:580px;max-width:780px;display:block;margin:0 auto" font-family="inherit" font-size="13">
+                <title>ブランチを作ってコミットし、PRを経てmainにマージする流れ</title>
+                <text x="10" y="44" font-weight="700" style="fill:var(--c-blue)">main</text>
+                <text x="10" y="144" font-weight="700" style="fill:var(--c-orange)">add-title</text>
+                <line x1="80" y1="40" x2="600" y2="40" style="stroke:var(--c-blue)" stroke-width="3"/>
+                <circle cx="110" cy="40" r="9" style="fill:var(--c-blue)"/>
+                <circle cx="210" cy="40" r="9" style="fill:var(--c-blue)"/>
+                <circle cx="580" cy="40" r="11" style="fill:var(--c-blue);stroke:var(--c-text)" stroke-width="2"/>
+                <path d="M210 40 C 240 40, 240 140, 290 140" fill="none" style="stroke:var(--c-orange)" stroke-width="3"/>
+                <line x1="290" y1="140" x2="420" y2="140" style="stroke:var(--c-orange)" stroke-width="3"/>
+                <circle cx="290" cy="140" r="9" style="fill:var(--c-orange)"/>
+                <circle cx="420" cy="140" r="9" style="fill:var(--c-orange)"/>
+                <path d="M420 140 C 500 140, 500 40, 580 40" fill="none" style="stroke:var(--c-orange)" stroke-width="3" stroke-dasharray="6 5"/>
+                <text x="215" y="22" text-anchor="middle" style="fill:var(--c-text)">① ブランチを作る</text>
+                <text x="290" y="170" text-anchor="middle" style="fill:var(--c-text)">② コミット</text>
+                <text x="420" y="170" text-anchor="middle" style="fill:var(--c-text)">② コミット</text>
+                <text x="505" y="112" text-anchor="middle" style="fill:var(--c-text)">③ PR → レビュー</text>
+                <text x="580" y="22" text-anchor="middle" style="fill:var(--c-text)">④ マージ</text>
+              </svg>
+            </div>
+            <p class="lesson-note">mainの線は<strong>チームの完成版</strong>。ブランチは、そこから分かれた<strong>自分専用の作業ライン</strong>で、mainには影響しない。PRで確認してもらってから、mainに合流（マージ）する。</p>
             <div class="diagram-flow">
               <div class="diagram-flow-step">
                 <div class="diagram-flow-step-label">1</div>
@@ -139,6 +216,25 @@
               <li>公式の説明: コンフリクトは、<strong>同じファイルの同じ行に、人によって違う変更が加えられたとき</strong>などに起きる（公式: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/addressing-merge-conflicts/about-merge-conflicts" target="_blank" rel="noopener">Merge conflicts</a>）</li>
               <li>コンフリクトは<strong>失敗ではなく、どちらを残すか人間が決めるための合図</strong>。AIに任せきりにせず、自分で判断する場面になる</li>
             </ul>
+            <div class="diagram-compare">
+              <div class="diagram-compare-side diagram-compare-side--a">
+                <div class="diagram-compare-label">あなたの変更</div>
+                <div class="diagram-compare-title">見出しに「class」を追加</div>
+                <pre class="md-preview">&lt;h1 class="title"&gt;ゲーム作り班&lt;/h1&gt;</pre>
+              </div>
+              <div class="diagram-vs">と</div>
+              <div class="diagram-compare-side diagram-compare-side--b">
+                <div class="diagram-compare-label">ミサキの変更</div>
+                <div class="diagram-compare-title">同じ行に「🎮」を追加</div>
+                <pre class="md-preview">&lt;h1&gt;ゲーム作り班 🎮&lt;/h1&gt;</pre>
+              </div>
+            </div>
+            <p class="lesson-note">同じ行に、別々の変更 → Gitは<strong>どちらを残すか自動では決められない</strong> → ファイルに印を付けて、人間に聞いてくる。</p>
+            <pre class="md-preview" style="margin-bottom:1.2rem">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+&lt;h1 class="title"&gt;ゲーム作り班&lt;/h1&gt;      ← 上: あなたの変更
+=======
+&lt;h1&gt;ゲーム作り班 🎮&lt;/h1&gt;            ← 下: ミサキの変更
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; ブランチ名</pre>
             <p><strong>今日の進め方</strong></p>
             <ul>
               <li>シミュレーターには<strong>「コマンドで」</strong>と<strong>「agyにお願い」</strong>の2つのモードがある。同じミッションを両方で体験して比べる</li>
@@ -200,6 +296,27 @@
               <li>シミュレーターのagyは<strong>実行するコマンドを見せて、確認してから</strong>実行する（本物のagyは、既定では実行前に承認を求められることが多いが、設定によっては自動で実行される。承認の出方はシミュレーターと異なる。公式: <a href="https://antigravity.google/docs/permissions/" target="_blank" rel="noopener">Permissions</a>）。<strong>agyが実行するコマンドを、さっき自分で打ったものと見比べる</strong>——多くの場合、gitやghのコマンドが使われる</li>
               <li>コンフリクトの解消では、指示が曖昧だとagyから聞き返されることがある。<strong>どれを残すかという中身の判断は自分で伝える</strong>必要があることを確かめる</li>
             </ul>
+            <div class="diagram-compare">
+              <div class="diagram-compare-side diagram-compare-side--a">
+                <div class="diagram-compare-label">コマンドで</div>
+                <div class="diagram-compare-title">自分で打つ</div>
+                <div class="diagram-compare-flow">自分 → <code>git switch -c …</code> → 実行</div>
+                <ul class="diagram-compare-list">
+                  <li>何を実行したかが<strong>確実に分かる</strong></li>
+                  <li>書き方を覚える必要がある</li>
+                </ul>
+              </div>
+              <div class="diagram-vs">VS</div>
+              <div class="diagram-compare-side diagram-compare-side--b">
+                <div class="diagram-compare-label">agyに頼む</div>
+                <div class="diagram-compare-title">自然言語でお願いする</div>
+                <div class="diagram-compare-flow">自分 → 「ブランチを作って」 → agyがコマンドを選ぶ → 実行</div>
+                <ul class="diagram-compare-list">
+                  <li>楽で速い</li>
+                  <li>実行されたコマンドを<strong>読んで確認</strong>することが大事</li>
+                </ul>
+              </div>
+            </div>
             <div class="lesson-tip">
               <strong>比べてみよう:</strong> コマンドは<strong>自分が何を実行したか</strong>が確実に分かります。agyへのお願いは<strong>楽で速い</strong>ですが、裏で何が実行されたかを<strong>読めること</strong>が、AIに任せるときの安心につながります。どちらが向いている場面か、隣の人と話してみましょう。
             </div>
@@ -220,9 +337,9 @@
             <div class="lesson-tip">
               <strong>自分のWindows PCで開発するとき:</strong> 今日のagyはCodespaces上で使います。Codespacesの中は、手元のPCがWindowsでもLinuxなので、第3回のコマンドのままで動きます。ただ、自分のWindows PCにagyを入れて使う場合は、<strong>インストールのコマンドが違います</strong>。
               <ul>
-                <li><strong>Windows（PowerShell）:</strong> <code>irm https://antigravity.google/cli/install.ps1 | iex</code></li>
-                <li><strong>Windows（コマンドプロンプト）:</strong> <code>curl -fsSL https://antigravity.google/cli/install.cmd -o install.cmd &amp;&amp; install.cmd &amp;&amp; del install.cmd</code></li>
-                <li>Mac・Linuxは、第3回の <code>curl -fsSL https://antigravity.google/cli/install.sh | bash</code></li>
+                <li><strong>Windows（PowerShell）:</strong> <code style="word-break:break-all">irm https://antigravity.google/cli/install.ps1 | iex</code></li>
+                <li><strong>Windows（コマンドプロンプト）:</strong> <code style="word-break:break-all">curl -fsSL https://antigravity.google/cli/install.cmd -o install.cmd &amp;&amp; install.cmd &amp;&amp; del install.cmd</code></li>
+                <li>Mac・Linuxは、第3回の <code style="word-break:break-all">curl -fsSL https://antigravity.google/cli/install.sh | bash</code></li>
               </ul>
               コマンドが違う理由は<a href="week03.html">第3回</a>の補足に書いてあります。公式は<a href="https://antigravity.google/docs/cli/install" target="_blank" rel="noopener">Antigravity CLI — Installation &amp; auth</a>を見てください。
             </div>
