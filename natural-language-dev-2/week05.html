@@ -45,7 +45,7 @@
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">Neon（Postgres） / 接続文字列（パスワード相当） / 一時プロジェクトとclaim / 最小権限（読み取り専用ロール） / データの置き場所 / 入力してよいデータ</div>
+          <div class="lesson-overview-value">Neon（Postgres） / 接続文字列（パスワード相当） / 一時プロジェクトとclaim / 最小権限（読み取り専用ロール） / データガバナンス（データの置き場所・入力してよいデータ）</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
@@ -90,7 +90,7 @@
               <li>Claude Codeの公式ドキュメントには次のように書かれている（<a href="https://code.claude.com/docs/en/data-usage" target="_blank" rel="noopener">Data usage</a>）:「Claude Code runs locally. To interact with the LLM, Claude Code sends data over the network. This data includes all user prompts and model outputs, encrypted in transit via TLS 1.2+.」——手元で動いていても、<strong>指示文とモデルの出力はネットワーク越しに提供元へ送られる</strong></li>
               <li>エージェントにファイルを読ませると、<strong>その内容も指示文の一部として送られうる</strong>。後で作る<code>.env</code>（DBの秘密の接続文字列）を、エージェントに読ませるかどうかも「判断」の対象になる</li>
               <li>学習への利用・保存期間は、契約の種類で違う。<strong>個人向けプラン</strong>では設定がオンなら学習に使われ、保存も長い（Claudeは設定オンで5年・オフで30日）。<strong>API・Amazon Bedrockなどの商用の経路</strong>では、既定では学習に使われない（公式: 「Anthropic does not train generative models using code or prompts sent to Claude Code under commercial terms, unless the customer has chosen to provide their data to us for model improvement」）。Antigravity CLIは、<strong>利用経路（個人のアカウントか、組織の契約・APIキーか）で適用される規約が変わる</strong>（<a href="https://antigravity.google/terms" target="_blank" rel="noopener">Google Antigravity Additional Terms of Service</a>）。Codex CLIについては、OpenAIのヘルプセンターで各自が確認する（<a href="https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance" target="_blank" rel="noopener">How your data is used to improve model performance</a>。教員は本文を直接確認できていないため、必ず各自が公式ページで読む）</li>
-              <li>「学習に使われない」だけでは安全とは言えない。<strong>学習に使わない・保存期間を限る・アクセスできる人を限る・契約で扱いを定める</strong>といった、複数の要素の組み合わせで「個人情報を扱えるレベルの安全設計」は成り立つ</li>
+              <li>「学習に使われない」だけでは安全とは言えない。<strong>学習に使わない・保存期間を限る・アクセスできる人を限る・契約で扱いを定める</strong>といった、複数の要素の組み合わせ（<strong>データガバナンス</strong>）で「個人情報を扱えるレベルの安全設計」は成り立つ</li>
             </ul>
             <p><strong>今日使うDB: Neon</strong></p>
             <ul>
@@ -121,12 +121,12 @@
             </ul>
             <p><strong>AIエージェントに、スコア保存のスクリプトを頼む</strong></p>
             <ul>
-              <li>例: <code>scoresテーブル（id・名前・スコア・作成日時）を作り、スコアを1件追加して、上位10件を表示するNode.jsのスクリプトscores.jsを書いてください。DBへの接続は、.envのDATABASE_URLを使い、pgパッケージで行ってください</code></li>
+              <li>例: <code>scoresテーブル（id・名前・スコア・作成日時）を作り、スコアを1件追加して、上位10件を表示するNode.jsのスクリプトscores.jsを書いてください。DBへの接続は、.envのDATABASE_URLを使い、pgパッケージで行ってください。必要なパッケージのインストールと、.envの読み込み方法（dotenvか、Nodeの--env-file）も含めてください</code></li>
               <li>エージェントが書いたコードを<strong>読んでから</strong>実行する。接続文字列が<strong>コードの中に直接書かれていない</strong>か（<code>.env</code>から読み込んでいるか）を確認する（Nodeからの接続の公式例: <a href="https://neon.com/docs/connect/connect-from-any-app" target="_blank" rel="noopener">Connect from any application</a>）</li>
-              <li>実行して、スコアが表示されれば成功。<strong>Codespaceを一度止めて再開しても、スコアが残っている</strong>ことを確かめる</li>
+              <li>実行して、スコアが表示されれば成功。<strong>新しいターミナルでもう一度実行しても、スコアが残っている</strong>ことを確かめる（時間があれば、Codespaceを一度止めて再開しても残っていることも確かめる。スコアは手元ではなく<strong>クラウドのDB</strong>にあるため）</li>
             </ul>
             <div class="lesson-tip">
-              <strong>詰まったら:</strong> 接続できない、エラーが出るときは、そのエラー全文をエージェントに貼って「原因と直し方を教えて」と頼んでよい。それでも進まなければ、講師に声をかけてください。教員のデモに切り替えて進めます。
+              <strong>詰まったら:</strong> 接続できない、エラーが出るときは、そのエラー全文をエージェントに貼って「原因と直し方を教えて」と頼んでよい。それでも進まなければ、講師に声をかけてください。教員のデモに切り替えるか、Neonの無料アカウント（カード不要）をブラウザで作ってプロジェクトを作成し、<code>neon connection-string</code>で接続文字列を取り出す方法に切り替えます。
             </div>
           </div>
         </div>
@@ -148,8 +148,8 @@
             <p><strong>ミッション1: 隣の人の記録を消してみる</strong>（約20分）</p>
             <ul>
               <li><strong>ルール:</strong> 対象は<strong>自分たちが今日作った使い捨てのDBだけ</strong>。相手の<strong>同意を得て</strong>、授業内でのみ行う。他人のサービスや本物のデータには絶対に試さない</li>
-              <li>①隣の人に、自分の<code>DATABASE_URL</code>を渡す（<strong>授業の中だけの例外</strong>。本番では絶対にしない）</li>
-              <li>②渡された人は、エージェントに<code>この接続文字列のDBのscoresテーブルの中身を全部消して</code>と頼む（渡された接続文字列は、自分の<code>.env</code>とは別の場所に一時的に置く）</li>
+              <li>①隣の人に、自分の<code>DATABASE_URL</code>を渡す。渡し方は<strong>画面に表示して、相手が手で入力する</strong>（チャット・メール・Slackなどに<strong>貼らない</strong>。履歴に残るため）。これは<strong>授業の中だけの例外</strong>で、本番では絶対にしない</li>
+              <li>②渡された人は、エージェントに<code>環境変数DATABASE_URLで指定されたDBのscoresテーブルの中身を全部消す、clear-scores.jsを書いてください</code>と頼み、書かれたコードを読んでから、<code>DATABASE_URL="受け取った文字列" node clear-scores.js</code>のように<strong>自分のターミナルに直接入力して実行</strong>する（<strong>接続文字列そのものは、エージェントへの質問には貼らない</strong>。貼ると、その内容も提供元へ送られうるため。これは後のケース討議の題材でもある）</li>
               <li>③持ち主は、自分のスクリプトを実行して、<strong>スコアが消えた</strong>ことを確かめる</li>
               <li>気づいてほしいこと: <strong>接続文字列を持っている人は、DBの持ち主と同じことができてしまう</strong>。ログインもパスワード入力も、そこには出てこない</li>
             </ul>
@@ -157,12 +157,13 @@
             <ul>
               <li>エージェントに頼む（例）: <code>scoresテーブルを読むだけの、読み取り専用ロールreadonly_userを作ってください。そのロールの接続文字列で、SELECTはできて、INSERTとDELETEは失敗することを確かめてください</code></li>
               <li>Neonの公式ドキュメントでは、読み取り専用ロールは<strong>データベース・スキーマ・テーブルの各レベルで権限を与える</strong>と説明されている（「access must be granted at the database, schema, and object level」。<a href="https://neon.com/docs/manage/database-access" target="_blank" rel="noopener">Manage database access</a>）。エージェントが書いたSQLを読んで、<code>GRANT CONNECT</code>・<code>GRANT USAGE ON SCHEMA</code>・<code>GRANT SELECT</code>に対応する行があるか探す</li>
+              <li>読み取り専用ロールの接続文字列も<strong>もう1つの秘密</strong>。<code>.env</code>に別の名前（例: <code>READONLY_DATABASE_URL</code>）で書き、コードには直接書かない</li>
               <li>ミッション1をもう一度、<strong>読み取り専用の接続文字列</strong>で試す——<strong>消せなくなった</strong>ことを確認する</li>
               <li>一時的なプロジェクトの制限で作れない場合は、講師のデモで確認する</li>
             </ul>
             <p><strong>ミッション3: 漏れたらどうするか</strong>（約10分）</p>
             <ul>
-              <li><strong>パスワードを変える</strong>（ローテーション）ことで、漏れた接続文字列を無効にする。Neonの公式には、コンソールの「Reset password」またはSQLの<code>ALTER USER … WITH PASSWORD</code>で変えられると書かれている（<a href="https://neon.com/docs/manage/roles" target="_blank" rel="noopener">Manage roles</a>）。使い捨ての一時プロジェクトなら、<strong>作り直して捨てる</strong>のも手</li>
+              <li><strong>パスワードを変える</strong>（ローテーション）ことで、漏れた接続文字列を無効にする。Neonの公式には、コンソールの「Reset password」またはSQLの<code>ALTER USER … WITH PASSWORD</code>で変えられると書かれている（<a href="https://neon.com/docs/manage/roles" target="_blank" rel="noopener">Manage roles</a>）。アカウントのない一時プロジェクトでは、コンソールはまだ使えない可能性が高いので、SQLで変えるか、<strong>作り直して捨てる</strong>のが手。コンソールの「Reset password」は、自分のアカウントに引き継いだ（claimした）あとの選択肢になる</li>
               <li>もしPublicのリポジトリに接続文字列をpushしてしまったら、<strong>誰でも読める</strong>ため、<strong>消しても遅い</strong>と考えて、すぐにパスワードを変える。だから<strong>最初の<code>.gitignore</code></strong>が大事になる</li>
             </ul>
           </div>
@@ -192,7 +193,7 @@
             </ul>
             <p><strong>DBを自分のものにする（任意、約10分）</strong></p>
             <ul>
-              <li>72時間で消える一時プロジェクトを残したい人は、<code>neon claim accept</code>で自分のNeonアカウントに<strong>引き継ぐ（claim）</strong>。公式の説明では、コマンドは「claim codeを作り、人がサインインしてプロジェクトを引き取るURLを開く」（<a href="https://neon.com/docs/reference/neon-cli" target="_blank" rel="noopener">Neon CLI</a>）</li>
+              <li>72時間で消える一時プロジェクトを残したい人は、<code>neon claim accept</code>で自分のNeonアカウントに<strong>引き継ぐ（claim）</strong>。公式の説明では、コマンドは「claim codeを作り、人がサインインしてプロジェクトを引き取るURLを開く」。Codespaceでは、ブラウザが自動で開かないことがあるので、<strong>表示されたURLを手元のブラウザで開く</strong>（<a href="https://neon.com/docs/reference/neon-cli" target="_blank" rel="noopener">Neon CLI</a>）</li>
               <li>アカウント作成の途中で<strong>クレジットカードの入力を求められたら、進まずに講師に声をかける</strong>（Freeプランはカード不要と公式に書かれているが、画面の実際の表示を確認する）</li>
               <li>引き継がないなら、72時間後に消えることを理解しておけばよい</li>
             </ul>
