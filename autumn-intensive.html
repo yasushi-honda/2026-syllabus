@@ -59,8 +59,8 @@
         <li><a class="vz-chip" href="#sec-goals">到達目標</a></li>
         <li><a class="vz-chip" href="#sec-plan">授業計画</a></li>
         <li><a class="vz-chip" href="#sec-eval">評価</a></li>
-        <li><a class="vz-chip" href="#sec-quota">無料枠の注意</a></li>
         <li><a class="vz-chip" href="#sec-notes">履修上の注意点</a></li>
+        <li><a class="vz-chip" href="#sec-quota">無料枠の注意</a></li>
       </ul>
     </nav>
 
@@ -172,7 +172,7 @@
           <section class="vz-field vz-f-sl">
             <h4>変わらない：ログインするGitHubアカウント</h4>
             <p class="vz-field-count">代表者1名のまま固定</p>
-            <p>Codespacesは作成者本人しか再開できないため、5日間同じアカウントで起動・再開します。</p>
+            <p>Codespacesは作成者本人しか再開できないため、5日間同じアカウントで起動・再開します（無料枠が尽きた場合は、履修上の注意点の「無料枠の注意」を参照）。</p>
           </section>
           <section class="vz-field vz-f-sl">
             <h4>交代する：キーボードを持つ人（ドライバー）</h4>
@@ -328,7 +328,7 @@
         <li>（<strong>トラックA</strong>）AIレシピBを使うチームは、<strong>APIキーを必ずサーバ側のコードにのみ置いてください</strong>（ブラウザ側に書くと誰でも見られます）。ブラウザに持たせる合言葉も通信から取り出せるため本物のアクセス制限にはならず、公開URLを知っていれば誰でも呼び出せてしまうため、<strong>サーバ側でレート制限</strong>も設けましょう（公式: Gemini API Additional Terms of Service、無料版データはサービス改善に使われる場合あり）。</li>
         <li>余力があるチームが<strong>レシピC「お喋りAI」（Gemini Live API）</strong>に挑戦する場合も、APIキーの扱いは同じ原則です。公式はサーバ側で発行する一時的なトークン（ephemeral token）の使用を推奨しています。実装難易度が高いため、必須課題としては求めません。</li>
         <li><strong>Antigravity CLI（agy）はGoogleアカウントでの認証のみで追加契約は不要</strong>ですが、無償枠には利用制限があります。上限に達した場合はチーム内で待つ・使う頻度を調整するなどして対応してください。Codespaceを再開したのにagyが反応しない場合は、再認証してください。</li>
-        <li><strong>GitHub Codespacesは個人のGitHubアカウントごとに月120時間の無料枠</strong>があります（2-coreマシンでは実質60時間相当。公式: About billing for GitHub Codespaces）。本講座の使用量（代表者のアカウントに15時間程度）は無料枠に収まる見込みですが、他の授業でも使っている場合や、起動したまま放置した場合は消費が増えます。<strong>枠を使い切り、支払い方法も未登録の場合は、Codespacesを起動・再開できなくなり、集中講座が止まります</strong>。備えと回避策は下の図にまとめています。</li>
+        <li><strong>GitHub Codespacesは個人のGitHubアカウントごとに月120時間の無料枠</strong>があります（2-coreマシンでは実質60時間相当。公式: About billing for GitHub Codespaces）。本講座の使用量（代表者のアカウントに15時間程度）は無料枠に収まる見込みですが、他の授業でも使っている場合や、起動したまま放置した場合は消費が増えます。<strong>枠を使い切り、支払い方法も未登録の場合は、Codespacesを新たに起動・再開できなくなり、集中講座の続きが止まります</strong>。備えと回避策は下の図にまとめています。</li>
         <li>各自の端末の通信環境（学校のWi-Fiに接続できるか、モバイル回線の電波状況・データ通信量）は当日までに確認します。</li>
         <li>体調やメンタル面で不安がある場合は、無理せず担当教員または学校の相談窓口に相談してください。</li>
       </ul>
@@ -355,7 +355,9 @@
             <h4>止まったら（回避策）</h4>
             <ul>
               <li>チーム内で調整し、枠に余裕のあるメンバーのアカウントで新しいCodespaceを作って続ける（この場合に限り「5日間同じアカウント」の原則の例外）</li>
-              <li>新しいCodespaceでは公開URLが変わり、agyの再認証が必要になる場合がある</li>
+              <li>元のCodespaceを再開できるのは作成者本人だけのため、新しく作り直す。元の変更は、ブランチにエクスポートして引き継ぐ</li>
+              <li>新しいCodespaceの使用時間は、作ったメンバーの枠から消費される</li>
+              <li>新しいCodespaceでは公開URLが変わり、agyの再認証が必要になる場合がある。APIキーなどの設定も確認する</li>
               <li>誰のアカウントでも続けられない場合は、担当教員に相談する</li>
             </ul>
           </section>
