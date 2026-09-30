@@ -114,7 +114,7 @@
             </ul>
             <p><strong>アカウントなしで、一時的なDBを作る</strong></p>
             <ul>
-              <li>Neonの公式CLIを入れる: <code>npm i -g neon</code>（うまくいかないときは、エージェントに「Neon CLIを入れて」と頼んでよい。あとの<code>neon claim</code>が使えないと言われたら、<code>npm i -g neon@latest</code>で最新版にする。公式: <a href="https://neon.com/docs/reference/neon-cli" target="_blank" rel="noopener">Neon CLI</a>）</li>
+              <li>Neonの公式CLIを入れる: <code>npm i -g neon</code>（うまくいかないときは、エージェントに「Neon CLIを入れて」と頼んでよい。あとの<code>neon claim</code>が使えないと言われたら、<code>npm i -g neon@latest</code>で最新版にする。<code>npm i -g</code>が権限エラーで失敗したら、インストールせずに<code>npx neon@latest claim create --env-pull</code>のように、コマンドの頭に<code>npx neon@latest</code>を付けて実行してもよい。公式: <a href="https://neon.com/docs/reference/neon-cli" target="_blank" rel="noopener">Neon CLI</a>）</li>
               <li>次のコマンドで、<strong>アカウントを作らずに</strong>一時的なプロジェクトを作り、接続文字列を書き出す: <code>neon claim create --env-pull</code>（公式の説明では、既にある<code>.env</code>に書き込み、なければ<code>.env.local</code>に書き出す。<strong>先に空の<code>.env</code>を作っておく</strong>と、以降の説明どおりに進められる）</li>
               <li>公式の説明: 「Unclaimed projects expire in 72 hours (<code>project.expires_at</code>) and are capped at 100 MB storage and 1 GB transfer.」——<strong>72時間で期限切れ</strong>（あとで自分のアカウントに引き継ぐ手順は2限後半に扱う）（<a href="https://neon.com/docs/reference/claimable-postgres" target="_blank" rel="noopener">Claimable Neon</a>）</li>
               <li><code>.env</code>には<code>DATABASE_URL</code>など3つの値が入る。<code>DATABASE_URL</code>が<strong>DBに入るための鍵（パスワード相当）</strong>。中身をチャットや画面に貼らない。コマンドの実行結果には、プロジェクトの期限（72時間後）も表示される</li>
@@ -128,7 +128,7 @@
               <li>実行して、スコアが表示されれば成功。<strong>新しいターミナルでもう一度実行しても、スコアが残っている</strong>ことを確かめる（時間があれば、Codespaceを一度止めて再開しても残っていることも確かめる。スコアは手元ではなく<strong>クラウドのDB</strong>にあるため）</li>
             </ul>
             <div class="lesson-tip">
-              <strong>詰まったら:</strong> 接続できない、エラーが出るときは、そのエラー全文をエージェントに貼って「原因と直し方を教えて」と頼んでよい。それでも進まなければ、講師に声をかけてください。教員のデモに切り替えるか、Neonの無料アカウント（カード不要）をブラウザで作ってプロジェクトを作成し、<code>neon connection-string</code>で接続文字列を取り出す方法に切り替えます。
+              <strong>詰まったら:</strong> 接続できない、エラーが出るときは、そのエラー全文をエージェントに貼って「原因と直し方を教えて」と頼んでよい。エージェントから<strong>ネットワークへの接続や、コマンド実行の許可を求められたら</strong>、内容（何に接続し、何を実行するか）を読んで、問題なければ許可する。それでも進まなければ、講師に声をかけてください。教員のデモに切り替えるか、Neonの無料アカウント（カード不要）をブラウザで作ってプロジェクトを作成し、<code>neon connection-string</code>で接続文字列を取り出す方法に切り替えます。
             </div>
           </div>
         </div>
