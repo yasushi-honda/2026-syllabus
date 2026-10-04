@@ -15,6 +15,7 @@
   <!-- 2026-10-05: 実機確認（担当教員、Fork後のCodespace）で、devcontainer.jsonのportsAttributes.visibility=publicが効かず、ポート8000がPrivateのままだった。公式docsにもdevcontainer.jsonで公開範囲を指定する記載はない（docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace）。手順4を「必ず手動でPublicにする」に変更 -->
   <!-- 2026-10-05: 実機確認で、postStartCommand（自動起動）は作成ログ上successだがサーバーも/tmp/server.logも存在しなかった（原因未特定）。npm startを手動の必須手順に変更（yas-honda/Tetris#3と同期） -->
   <!-- 2026-10-05: 実機確認（担当教員）で、日本語表示のメニューは「ポートの表示範囲」→「Public」。スマホ（Wi-Fiを切った別回線）でも最初にGitHubの注意画面が出て、ボタンを押すと対戦に進めた。スマホの画面は1画面に収まっていた。手順の文言を実機に合わせた -->
+  <!-- 2026-10-05: 使いやすさ改善（監査）: ①見本ゲームのCodespacesにagyが入っていない抜けを補う手順を追加（agy導入は別環境のため再度必要。認証の再要求は未確認のため条件付きで記述）、②コピーボタンを追加（見本URL・npm start・agy導入・指示例2つ）、③見本ゲームの全体の流れとCodespaces2つの図を追加。スクリーンショットは載せない（ユーザー決定） -->
   <!-- 設計メモ: 2026-09-30（ユーザー決定: 1限=環境づくり／2限=動くもの、全員が一度Codespacesを開いて閉じる。親ページの Day1 記述を先に更新済み。チームのリポジトリは Private を既定とした——APIキー等を誤って公開しないため。共同作業者には Collaborator として招待する） -->
 </head>
 <body>
@@ -245,6 +246,19 @@
             <p>ポート転送を「Public」にすると何ができるのかを、担当教員が用意した見本ゲーム（2人対戦つきのテトリス。原型はagyだけで作成）で体験する。Forkは初めての人が多いので、画面を見ながら1つずつ進める。目安は、agyの導入に約20分、この対戦体験に約30分。</p>
 
             <p><strong>なぜForkするのか:</strong> 他の人のリポジトリは、そのままでは自分で書き換えられません（書き込みの権限がないため）。そこで「Fork」を使って、<strong>自分のアカウントにコピーを1つ作ります</strong>。コピーは自分のものなので、Codespacesで開いて自由に動かしたり、直したりできます。直しても、元の見本ゲームは変わりません。Forkは、GitHubでよく使われる基本の操作です。今日は初めての人が多いので、1つずつ進めます。</p>
+            <figure class="vz-fig" aria-labelledby="cap-sample-flow">
+              <p class="vz-fig-title" id="cap-sample-flow">見本ゲームの流れ：Codespacesは「2つ」ある</p>
+              <ol class="vz-flow">
+                <li class="vz-node"><b>1. Forkする</b>見本ゲームを、自分のアカウントにコピーする</li>
+                <li class="vz-node"><b>2. Codespacesを作る</b>コピーしたTetrisで、新しいCodespacesを作る</li>
+                <li class="vz-node"><b>3. npm start</b>ターミナルでゲームのサーバーを起動する</li>
+                <li class="vz-node vz-node--key"><b>4. Publicにする</b>「ポート」タブで、8000番を公開する</li>
+                <li class="vz-node"><b>5. 対戦する</b>リンクをチームに送り、スマホとPCで対戦する</li>
+              </ol>
+              <p class="vz-verdict">Codespacesは2つ。<strong>①チームのCodespaces</strong>（1限で作った。agyを入れた。チームの作品用）と、<strong>②見本ゲームのCodespaces</strong>（今から作る。見本の対戦とブラッシュアップ用）。②は別の環境なので、agyは入っていない。</p>
+              <figcaption>②でagyを使うときは、後の「②でagyを使うとき」の手順で、もう一度入れます。</figcaption>
+            </figure>
+
             <figure class="vz-fig" aria-labelledby="cap-fork">
               <p class="vz-fig-title" id="cap-fork">Forkとは：他の人のリポジトリを、自分のアカウントにコピーすること</p>
               <ul class="vz-flow" style="--cols:3">
@@ -256,10 +270,19 @@
             </figure>
 
             <ol class="vz-steps">
-              <li class="vz-step"><b>代表者: 見本ゲームのページを開く</b><a href="https://github.com/yas-honda/Tetris" target="_blank" rel="noopener">github.com/yas-honda/Tetris</a> を開く（GitHubにログインした状態で）。</li>
+              <li class="vz-step"><b>代表者: 見本ゲームのページを開く</b><a href="https://github.com/yas-honda/Tetris" target="_blank" rel="noopener">github.com/yas-honda/Tetris</a> を開く（GitHubにログインした状態で）。
+                <button class="copy-md-btn" data-md-source="sample-url">
+              <span class="btn-icon"></span> URLをコピー
+            </button>
+<pre id="sample-url" class="md-preview">https://github.com/yas-honda/Tetris</pre></li>
               <li class="vz-step"><b>代表者: Forkする</b>ページ右上の「Fork」ボタンをクリックする。「Create a new fork」の画面が出る。「Owner」が<strong>自分のアカウント</strong>になっていることを確認し、名前は変えずに、緑の「Create fork」をクリックする。自分のアカウントの下に <code>（自分のアカウント名）/Tetris</code> ができ、リポジトリ名の下に「forked from yas-honda/Tetris」と表示されれば成功（公式: <a href="https://docs.github.com/en/get-started/quickstart/fork-a-repo" target="_blank" rel="noopener">Fork a repo</a>）。</li>
               <li class="vz-step"><b>代表者: Forkした自分のリポジトリで、Codespacesを作る</b>表示されているのが「yas-honda/Tetris」ではなく<strong>自分のアカウントの Tetris</strong>であることを確認する。「Code」ボタン→「Codespaces」タブ→「＋」で作る。1〜2分ほどで、ブラウザ上にVS Codeの画面が立ち上がる（初回は数分かかることがある）。ゲームのサーバーは自動では起動しないので、次の手順で起動する。これは、前のブロックのチームのCodespacesとは<strong>別のCodespaces</strong>。</li>
-              <li class="vz-step"><b>代表者: ターミナルで <code>npm start</code> を実行し、ゲームのサーバーを起動する</b>下のパネルの「ターミナル」タブで、<code>npm start</code> と入力してEnter。「CYBER TETRIS Server running on http://localhost:8000」と表示されれば成功。<strong>このターミナルは、遊んでいる間ずっと使う</strong>（閉じたり、Ctrl+Cを押したりすると、ゲームが止まる）。ほかの作業は、ターミナルの右上の「＋」で新しいターミナルを開いて行う。</li>
+              <li class="vz-step"><b>代表者: ターミナルで <code>npm start</code> を実行し、ゲームのサーバーを起動する</b>下のパネルの「ターミナル」タブに、次のコマンドを入力してEnter。
+                <button class="copy-md-btn" data-md-source="cmd-npm-start">
+              <span class="btn-icon"></span> コマンドをコピー
+            </button>
+<pre id="cmd-npm-start" class="md-preview">npm start</pre>
+                「CYBER TETRIS Server running on http://localhost:8000」と表示されれば成功。<strong>このターミナルは、遊んでいる間ずっと使う</strong>（閉じたり、Ctrl+Cを押したりすると、ゲームが止まる）。ほかの作業は、ターミナルの右上の「＋」で新しいターミナルを開いて行う。</li>
               <li class="vz-step"><b>代表者: 「ポート」タブで、8000番をPublicにする</b>下のパネルの「ポート」タブに、8000番（Cyber Tetris Server）が表示される。「表示範囲（Visibility）」は最初<strong>Private</strong>なので、<strong>必ず手動でPublicに変更する</strong>（8000の行を右クリック→「ポートの表示範囲」→「Public」（英語表示の場合は「Port Visibility」）。設定ファイルでは、最初からPublicにはできない）。Publicにするのは、自分のスマートフォンや、チームの他の端末から開けるようにするため。ポートが表示されないときは、前の手順の <code>npm start</code> が動いているかを確認する。</li>
               <li class="vz-step"><b>チーム全員: 対戦する</b>8000番の行にある地球儀のアイコン（ブラウザーで開く）をクリックして、ゲーム画面を開く。初めて開くときにGitHubの注意画面が出たら、内容を読んでボタンを押して進む（スマートフォンで開くときも、最初に同じ画面が出る）。「ONLINE BATTLE」→「CREATE ROOM」→「COPY LINK」で招待リンクをコピーし、チームの別の端末（メンバーのスマートフォンやPC）に送って開く。全員が揃ったら、ホストが「START BATTLE」を押す。パソコンはキーボード、スマートフォンは画面のボタンで操作する。</li>
               <li class="vz-step"><b>チーム全員: 様子を見て、感想を共有する</b>対戦しない人は、画面を見てもらう。ドライバーを交代しながら、全員が一度は対戦する。「ブラウザだけで、スマホからも、離れた場所の人とも対戦できる」ことと、これが「ポート転送をPublicにする」仕組みで動いていることを確認する。</li>
@@ -293,6 +316,27 @@
               <li class="vz-step"><b>見本ゲームのブラッシュアップ</b>見本ゲームを、小さな指示で改造する。例: <code>ブロックの色を青系にしてください。</code>／<code>ライン消去の効果音を変えてください。</code>。1回に1つの変更にして、動くことを確認してから、次へ進む。</li>
               <li class="vz-step"><b>自分たちのテーマで「最初の動くもの」</b>自分たちで作りたいものを決め、最初の1画面を作る。進級制作の課題をAIで解決するワークでもよい（ただし、成果発表では進級制作そのものは発表できない）。下の「トラック別の例」を参考にする。</li>
             </ol>
+            <p><strong>②（見本のブラッシュアップ）でagyを使うとき</strong>：見本ゲームのCodespacesには、agyが入っていません。次の手順で入れる。</p>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>新しいターミナルを開く</b><code>npm start</code> を動かしているターミナルは、そのままにする。ターミナルの右上の「＋」で、新しいターミナルを開く。</li>
+              <li class="vz-step"><b>agyを入れる</b>新しいターミナルに、次のコマンドを貼り付けてEnter（1限・2限前半と同じコマンド）。
+                <button class="copy-md-btn" data-md-source="agy-install-command-2">
+              <span class="btn-icon"></span> コマンドをコピー
+            </button>
+<pre id="agy-install-command-2" class="md-preview">curl -fsSL https://antigravity.google/cli/install.sh | bash</pre>
+                終わったら <code>agy</code> と入力してEnter。認証を求められたら、2限前半と同じ手順で、Googleアカウントでサインインする。</li>
+              <li class="vz-step"><b>小さな指示を出す</b>次の指示を、1つずつ試す。1回に1つだけ頼み、動くことを確認してから、次へ進む。
+                <button class="copy-md-btn" data-md-source="prompt-tetris-color">
+              <span class="btn-icon"></span> 指示文をコピー（色）
+            </button>
+<pre id="prompt-tetris-color" class="md-preview">ブロックの色を青系にしてください。</pre>
+                <button class="copy-md-btn" data-md-source="prompt-tetris-sound">
+              <span class="btn-icon"></span> 指示文をコピー（効果音）
+            </button>
+<pre id="prompt-tetris-sound" class="md-preview">ライン消去の効果音を変えてください。</pre>
+                変更したら、ブラウザで開いているゲーム画面を再読み込みして確認する。サーバーを止める必要はない（<code>npm start</code> のターミナルは動かしたまま）。</li>
+            </ol>
+
             <p>コードを変えた場合は、変更をGitHubに記録する（下の「作って、確認して、記録する」）。見本のブラッシュアップは<strong>自分のFork</strong>に、自分たちのテーマは<strong>チームのリポジトリ</strong>に記録する。対戦体験の続きで、コードを変えていないチームは、記録するものがなければ不要。</p>
 
             <p><strong>「自分たちのテーマ」を選んだ場合：トラックを選ぶ</strong></p>
