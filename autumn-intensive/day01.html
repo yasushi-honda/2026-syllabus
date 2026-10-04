@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../styles.css?v=12">
   <!-- 公式情報確認: 2026-09-30 (docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository — Code > Codespaces タブ > +（New with options も可）、作成時に「誰が支払うか」のメッセージが出る / docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace — ポートを右クリック > Port Visibility > Public、既定は private、公開後は「anyone who knows the URL and port number can view the running application without needing to authenticate」 / docs.github.com/en/codespaces/developing-in-a-codespace/stopping-and-starting-a-codespace — github.com/codespaces の「…」> Stop codespace / docs.github.com/en/codespaces/about-codespaces/understanding-the-codespace-lifecycle — 既定で30分無操作で停止、保存済みの変更は再開後も残る / docs.github.com/en/account-and-profile/.../inviting-collaborators-to-a-personal-repository — Settings > Collaborators > Add people、招待メールを承認すると collaborator になる / docs.github.com/en/billing/concepts/product-billing/github-codespaces — 無料枠（Free は月120時間）、枠を使い切り支払い方法が未登録だと使用がブロックされる、使用状況は github.com/settings/billing で確認 / antigravity.google/docs/cli/install — インストールコマンドと、リモート環境での手動認証（URLを開き、表示されたコードを貼り付ける） / developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia — secure context（HTTPS または localhost）が必要、HTTPでは NotAllowedError）。Gemini CLI は 2026-06-18 に終了し Antigravity CLI（agy）へ移行済みであることも確認 -->
   <!-- 2026-10-05: 2限前半のPublic公開の確認を、公開確認用ページから見本ゲーム「CYBER TETRIS」（yas-honda/Tetris）のFork＋対戦体験に変更（全チーム向け）。Forkは初めての学生が多い前提で説明を厚くした。公式確認: docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks（公開リポジトリのForkはPublicで、Fork単体では変更不可）, docs.github.com/en/get-started/quickstart/fork-a-repo（Fork→Create fork）。新規Codespaceでの起動・Public維持・スマホ対戦は担当教員の実機確認待ち -->
-  <!-- 2026-10-05: Day1を経験者前倒し型に改訂（ユーザー決定）。チームビルディングは心構え3か条のみ。1限前半にagyの約束事を移し、2限後半はセキュリティ＋チームごとに進め方を選ぶ（①対戦体験の続き／②見本のブラッシュアップ／③自分たちのテーマ）。2年次はGitHub利用経験あり（Codespacesとagyは初めて）。有料AI（Codex・Claude Code等）は本人が操作する場合のみ可、アカウント貸与は不可 -->
+  <!-- 2026-10-05: Day1を経験者前倒し型に改訂（ユーザー決定）。チームビルディングは心構え3か条のみ。1限前半にagyの約束事を移し、2限後半はセキュリティ＋チームごとに進め方を選ぶ（①対戦体験の続き／②見本のアップデート／③自分たちのテーマ）。2年次はGitHub利用経験あり（Codespacesとagyは初めて）。有料AI（Codex・Claude Code等）は本人が操作する場合のみ可、アカウント貸与は不可 -->
   <!-- 2026-10-05: 実機確認（担当教員、Fork後のCodespace）で、devcontainer.jsonのportsAttributes.visibility=publicが効かず、ポート8000がPrivateのままだった。公式docsにもdevcontainer.jsonで公開範囲を指定する記載はない（docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace）。手順4を「必ず手動でPublicにする」に変更 -->
   <!-- 2026-10-05: 実機確認で、postStartCommand（自動起動）は作成ログ上successだがサーバーも/tmp/server.logも存在しなかった（原因未特定）。npm startを手動の必須手順に変更（yas-honda/Tetris#3と同期） -->
   <!-- 2026-10-05: 実機確認（担当教員）で、日本語表示のメニューは「ポートの表示範囲」→「Public」。スマホ（Wi-Fiを切った別回線）でも最初にGitHubの注意画面が出て、ボタンを押すと対戦に進めた。スマホの画面は1画面に収まっていた。手順の文言を実機に合わせた -->
@@ -68,11 +68,11 @@
         <li><strong>GitHubとCodespaces</strong>の基本を知り、<strong>全員が一度</strong>Codespacesを開いて閉じる</li>
         <li>代表者のアカウントでチームのCodespacesを使い、<strong>agy</strong>を導入する。見本ゲーム「CYBER TETRIS」を<strong>Fork</strong>し、<strong>ポート転送（Public）</strong>で公開して、チームで対戦を体験する</li>
         <li><strong>Codespacesの無料枠</strong>を確認し、止まったときの備えを決める</li>
-        <li><strong>セキュリティ</strong>（Publicは誰でも開ける）を確認し、チームで<strong>進め方を選ぶ</strong>（対戦体験の続き／見本ゲームのブラッシュアップ／自分たちのテーマの最初の「動くもの」）</li>
+        <li><strong>セキュリティ</strong>（Publicは誰でも開ける）を確認し、チームで<strong>方向性を選ぶ</strong>（対戦体験の続き／見本ゲームのアップデート／新しい方向性（進級制作への応用・新しい対戦ゲーム）の最初の「動くもの」）</li>
         <li>1日目の終わりに、明日の方向性をチームで一言ずつ共有する</li>
       </ul>
       <div class="lesson-tip">
-        <strong>今日の優先順位:</strong> 今日の主役は「環境づくり」と「対戦の体験」です。2年次はGitHubの利用経験がありますが、Codespacesとagyは初めてです。ハード科は少人数のため、必要に応じて別途フォローします。分からないことはその場で手を挙げ、経験のある人（1年次・3年次）は手助けをお願いします。<strong>早く進んだチームは、先に進んでかまいません</strong>（Forkと対戦体験へ前倒し、2限後半は見本のブラッシュアップなど）。
+        <strong>今日の優先順位:</strong> 今日の主役は「環境づくり」と「対戦の体験」です。2年次はGitHubの利用経験がありますが、Codespacesとagyは初めてです。ハード科は少人数のため、必要に応じて別途フォローします。分からないことはその場で手を挙げ、経験のある人（1年次・3年次）は手助けをお願いします。<strong>早く進んだチームは、先に進んでかまいません</strong>（Forkと対戦体験へ前倒し、2限後半は見本のアップデートなど）。
       </div>
 
       <div class="vz-timebar">
@@ -82,7 +82,7 @@
           <li style="--w:50"><a class="vz-seg" href="#blk-2"><span class="vz-seg-time">50分</span><span class="vz-seg-name">GitHubと<br>Codespaces入門</span></a></li>
           <li style="--w:10"><a class="vz-seg vz-seg--break"><span class="vz-seg-time">休憩</span><span class="vz-seg-name">10分</span></a></li>
           <li style="--w:50"><a class="vz-seg" href="#blk-3"><span class="vz-seg-time">50分</span><span class="vz-seg-name">agy導入<br>見本ゲームで対戦</span></a></li>
-          <li style="--w:30"><a class="vz-seg" href="#blk-4"><span class="vz-seg-time">30分</span><span class="vz-seg-name">セキュリティ<br>進め方を選ぶ</span></a></li>
+          <li style="--w:30"><a class="vz-seg" href="#blk-4"><span class="vz-seg-time">30分</span><span class="vz-seg-name">セキュリティ<br>方向性を選ぶ</span></a></li>
           <li style="--w:10"><a class="vz-seg" href="#blk-5"><span class="vz-seg-time">10分</span><span class="vz-seg-name">まとめ</span></a></li>
         </ol>
         <p class="vz-timebar-note">授業時間の合計は 40 + 50 + 50 + 30 + 10 = 180分（休憩を除く）</p>
@@ -122,8 +122,8 @@
               <p class="vz-fig-title" id="cap-days">5日間の流れ</p>
               <ol class="vz-flow" style="--cols:5">
                 <li class="vz-node vz-node--key"><b>Day1（今日）</b>環境をつくる</li>
-                <li class="vz-node"><b>Day2</b>入力を増やす／表現を広げる</li>
-                <li class="vz-node"><b>Day3</b>AIを載せる／みんなで同時に使えるようにする</li>
+                <li class="vz-node"><b>Day2</b>方向性を選ぶ／最初の制作</li>
+                <li class="vz-node"><b>Day3</b>挑戦する／仕上げる</li>
                 <li class="vz-node"><b>Day4</b>相互体験／つくりこむ</li>
                 <li class="vz-node"><b>Day5</b>成果発表会</li>
               </ol>
@@ -255,7 +255,7 @@
                 <li class="vz-node vz-node--key"><b>4. Publicにする</b>「ポート」タブで、8000番を公開する</li>
                 <li class="vz-node"><b>5. 対戦する</b>リンクをチームに送り、スマホとPCで対戦する</li>
               </ol>
-              <p class="vz-verdict">Codespacesは2つ。<strong>①チームのCodespaces</strong>（1限で作った。agyを入れた。チームの作品用）と、<strong>②見本ゲームのCodespaces</strong>（今から作る。見本の対戦とブラッシュアップ用）。②は別の環境なので、agyは入っていない。</p>
+              <p class="vz-verdict">Codespacesは2つ。<strong>①チームのCodespaces</strong>（1限で作った。agyを入れた。チームの作品用）と、<strong>②見本ゲームのCodespaces</strong>（今から作る。見本の対戦とアップデート用）。②は別の環境なので、agyは入っていない。</p>
               <figcaption>②でagyを使うときは、後の「②でagyを使うとき」の手順で、もう一度入れます。</figcaption>
             </figure>
 
@@ -286,12 +286,12 @@
               <li class="vz-step"><b>代表者: 「ポート」タブで、8000番をPublicにする</b>下のパネルの「ポート」タブに、8000番（Cyber Tetris Server）が表示される。「表示範囲（Visibility）」は最初<strong>Private</strong>なので、<strong>必ず手動でPublicに変更する</strong>（8000の行を右クリック→「ポートの表示範囲」→「Public」（英語表示の場合は「Port Visibility」）。設定ファイルでは、最初からPublicにはできない）。Publicにするのは、自分のスマートフォンや、チームの他の端末から開けるようにするため。ポートが表示されないときは、前の手順の <code>npm start</code> が動いているかを確認する。</li>
               <li class="vz-step"><b>チーム全員: 対戦する</b>8000番の行にある地球儀のアイコン（ブラウザーで開く）をクリックして、ゲーム画面を開く。初めて開くときにGitHubの注意画面が出たら、内容を読んでボタンを押して進む（スマートフォンで開くときも、最初に同じ画面が出る）。「ONLINE BATTLE」→「CREATE ROOM」→「COPY LINK」で招待リンクをコピーし、チームの別の端末（メンバーのスマートフォンやPC）に送って開く。全員が揃ったら、ホストが「START BATTLE」を押す。パソコンはキーボード、スマートフォンは画面のボタンで操作する。</li>
               <li class="vz-step"><b>チーム全員: 様子を見て、感想を共有する</b>対戦しない人は、画面を見てもらう。ドライバーを交代しながら、全員が一度は対戦する。「ブラウザだけで、スマホからも、離れた場所の人とも対戦できる」ことと、これが「ポート転送をPublicにする」仕組みで動いていることを確認する。</li>
-              <li class="vz-step"><b>代表者: 使い終わったらCodespacesを停止する</b>2限後半もこのCodespacesを使うチーム（対戦体験の続き・見本のブラッシュアップ）は、停止せずに続ける。使い終わったら、必ず停止する（最後の片付けでも確認する）。停止すると公開URLは開けなくなり、無料枠も減らなくなる（<a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> で、見本ゲーム用のCodespacesの「…」→「Stop codespace」）。</li>
+              <li class="vz-step"><b>代表者: 使い終わったらCodespacesを停止する</b>2限後半もこのCodespacesを使うチーム（対戦体験の続き・見本のアップデート）は、停止せずに続ける。使い終わったら、必ず停止する（最後の片付けでも確認する）。停止すると公開URLは開けなくなり、無料枠も減らなくなる（<a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> で、見本ゲーム用のCodespacesの「…」→「Stop codespace」）。</li>
             </ol>
             <div class="lesson-tip">
               <strong>うまくいかないとき:</strong> まず手を挙げる。時間がかかりすぎるときは、ゲーム画面をスマートフォンで開くところまでで進めてよい（それだけでも、Publicにすると別の端末から開けることは確認できる）。Publicにしたポートは、<strong>URLを知っている人なら誰でも、認証なしで開ける</strong>（公式: Forwarding ports in your codespace）。ゲームの中に、個人情報は入力しない。
             </div>
-            <p>公開URLは <code>https://</code> で始まります。トラックAのカメラは、この <code>https://</code> の環境が必要です。</p>
+            <p>公開URLは <code>https://</code> で始まります。</p>
           </div>
         </div>
 
@@ -300,7 +300,7 @@
             <span class="timeline-time">2限 後半</span>
             <span class="timeline-duration">約30分</span>
           </div>
-          <h3>セキュリティを確認し、チームで進め方を選ぶ</h3>
+          <h3>セキュリティを確認し、チームで方向性を選ぶ</h3>
           <div class="timeline-body">
             <p><strong>セキュリティの確認（全員・約10分）</strong></p>
             <ul>
@@ -310,13 +310,13 @@
               <li>使い終わったら、Codespacesを停止する（ポートの公開もやめる）</li>
             </ul>
 
-            <p><strong>チームで進め方を選ぶ（約20分）</strong>（スキルや進み具合に合わせて、チームごとに違ってよい）</p>
+            <p><strong>チームで方向性を選ぶ（約20分）</strong>（スキルや進み具合に合わせて、チームごとに違ってよい）</p>
             <ol class="vz-steps">
               <li class="vz-step"><b>対戦体験の続き</b>全員が対戦に参加できたかを確認し、ホストとゲストの両方を体験する。ドライバーを交代しながら、全員が操作する。</li>
-              <li class="vz-step"><b>見本ゲームのブラッシュアップ</b>見本ゲームを、小さな指示で改造する。例: <code>ブロックの色を青系にしてください。</code>／<code>ライン消去の効果音を変えてください。</code>。1回に1つの変更にして、動くことを確認してから、次へ進む。</li>
-              <li class="vz-step"><b>自分たちのテーマで「最初の動くもの」</b>自分たちで作りたいものを決め、最初の1画面を作る。進級制作の課題をAIで解決するワークでもよい（ただし、成果発表では進級制作そのものは発表できない）。下の「トラック別の例」を参考にする。</li>
+              <li class="vz-step"><b>見本ゲームのアップデート</b>見本ゲームを、小さな指示で改造する。例: <code>ブロックの色を青系にしてください。</code>／<code>ライン消去の効果音を変えてください。</code>。1回に1つの変更にして、動くことを確認してから、次へ進む。</li>
+              <li class="vz-step"><b>新しい方向性で「最初の動くもの」</b>進級制作への応用か、新しい対戦ゲーム（人生ゲームなど）のうち、作りたい方を決め、最初の1画面を作る。進級制作の課題をAIで解決するワークでもよい（ただし、成果発表では進級制作そのものは発表できない。活かしたい仕組みを取り出した小さなデモを発表の対象にする）。下の指示の例を参考にする。</li>
             </ol>
-            <p><strong>②（見本のブラッシュアップ）でagyを使うとき</strong>：見本ゲームのCodespacesには、agyが入っていません。次の手順で入れる。</p>
+            <p><strong>②（見本のアップデート）でagyを使うとき</strong>：見本ゲームのCodespacesには、agyが入っていません。次の手順で入れる。</p>
             <ol class="vz-steps">
               <li class="vz-step"><b>新しいターミナルを開く</b><code>npm start</code> を動かしているターミナルは、そのままにする。ターミナルの右上の「＋」で、新しいターミナルを開く。</li>
               <li class="vz-step"><b>agyを入れる</b>新しいターミナルに、次のコマンドを貼り付けてEnter（1限・2限前半と同じコマンド）。
@@ -337,33 +337,20 @@
                 変更したら、ブラウザで開いているゲーム画面を再読み込みして確認する。サーバーを止める必要はない（<code>npm start</code> のターミナルは動かしたまま）。</li>
             </ol>
 
-            <p>コードを変えた場合は、変更をGitHubに記録する（下の「作って、確認して、記録する」）。見本のブラッシュアップは<strong>自分のFork</strong>に、自分たちのテーマは<strong>チームのリポジトリ</strong>に記録する。対戦体験の続きで、コードを変えていないチームは、記録するものがなければ不要。</p>
+            <p>Day1の選択は仮のものでよい。Day2の冒頭に、あらためてチームで方向性を確定する。対戦体験の続きをしたチームも、Day2では3つの方向性（見本ゲームのアップデート／進級制作への応用／新しい対戦ゲーム）から選べる。「新しい方向性」の最初の1画面は、時間がなければ作らなくてもよい（任意）。</p>
 
-            <p><strong>「自分たちのテーマ」を選んだ場合：トラックを選ぶ</strong></p>
-            <figure class="vz-fig" aria-labelledby="cap-first">
-              <p class="vz-fig-title" id="cap-first">トラック別：今日のゴールとagyへの指示の例</p>
-              <div class="vz-fields">
-                <section class="vz-field vz-f-ka">
-                  <h4>トラックA「カメラ×AI」</h4>
-                  <p class="vz-field-count">ゴール: スマホでカメラ映像が画面に出る</p>
-                  <p>指示の例: <code>スマートフォンのカメラ映像を、画面いっぱいに表示する1枚のHTMLページを作ってください。</code></p>
-                  <ul class="vz-tags"><li>公開URLをスマホで開く</li><li>https が必要</li></ul>
-                </section>
-                <section class="vz-field vz-f-kb">
-                  <h4>トラックB「同時対戦ゲーム」</h4>
-                  <p class="vz-field-count">ゴール: 小さなゲームが1つ動く</p>
-                  <p>指示の例: <code>矢印キーで動かせる四角いキャラクターが1つだけいる、ブラウザで動く小さなゲームを作ってください。</code></p>
-                  <ul class="vz-tags"><li>まずは1人で動けばよい</li><li>同時に使うのはDay3</li></ul>
-                </section>
-                <section class="vz-field vz-f-kc">
-                  <h4>トラックC「自由テーマ」</h4>
-                  <p class="vz-field-count">ゴール: 自チームのテーマで最初の1画面</p>
-                  <p>指示の例: <code>（作りたいもの）を作りたいです。まず、いちばん小さな1画面だけ作ってください。</code></p>
-                  <ul class="vz-tags"><li>段階目標は自分たちで設定</li><li>A・Bの課題を参考に</li></ul>
-                </section>
-              </div>
-              <figcaption>チームの状況によっては、進級制作の課題をAIで解決するワークに取り組んでもかまいません。ただし成果発表では、進級制作そのものは発表できません。</figcaption>
-            </figure>
+            <p>コードを変えた場合は、変更をGitHubに記録する（下の「作って、確認して、記録する」）。見本のアップデートは<strong>自分のFork</strong>に、新しい方向性は<strong>チームのリポジトリ</strong>に記録する。対戦体験の続きで、コードを変えていないチームは、記録するものがなければ不要。</p>
+
+            <p><strong>「新しい方向性」を選んだ場合：最初の1画面を作る</strong></p>
+            <p>チームで相談して、作りたいものを決める。次のどちらかにする。agyには、いちばん小さな1画面だけを頼む。</p>
+            <ul>
+              <li>今回の体験を、<strong>進級制作に活かす</strong>ための試し（活かしたい仕組みを取り出した、小さなデモ。進級制作の課題をAIで解決するワークでもよい）</li>
+              <li><strong>新しい対戦ゲーム</strong>（Day2に人生ゲームに取り組む予定。今日は、構想を話し合うだけでもよい）</li>
+            </ul>
+            <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="prompt-first-screen">
+              <span class="btn-icon"></span> 指示文をコピー
+            </button>
+<pre id="prompt-first-screen" class="md-preview">（作りたいもの）を作りたいです。まず、いちばん小さな1画面だけ作ってください。</pre></div>
 
             <p><strong>作って、確認して、記録する</strong></p>
             <ul>
@@ -375,9 +362,6 @@
               <span class="btn-icon"></span> 指示文をコピー
             </button>
 <pre id="agy-push-prompt" class="md-preview">ここまでの変更をコミットして、GitHubにプッシュしてください。</pre></div>
-            <div class="lesson-tip">
-              <strong>トラックAの人へ（撮影・個人情報のルール）:</strong> カメラを使うと、他人を撮影する場面が出ます。撮影前に必ず声をかけて同意を得てください。撮った映像・画像を無断で公開・共有しないでください。カメラは、ブラウザが許可を求める画面で「許可」を選ぶと使えます（公式: MDN getUserMedia）。<code>http://</code> のページでは、カメラが使えません。
-            </div>
           </div>
         </div>
 
@@ -390,18 +374,18 @@
           <div class="timeline-body">
             <p><strong>チームの目標を発表する</strong></p>
             <ul>
-              <li>各チーム1分程度で、今日できたことと、明日の方向性（対戦体験の続き／見本のブラッシュアップ／自分たちのテーマ）を一言で伝える</li>
+              <li>各チーム1分程度で、今日できたことと、明日の方向性（対戦体験の続き／見本のアップデート／新しい方向性）を一言で伝える</li>
               <li>学年ごとの完成目標（1年次: まず完成させる／2年次: チーム開発を主導する／3年次以上: 下級生チームを支える）を意識して、明日の方向性を相談する</li>
             </ul>
             <p><strong>片付けチェック（全員で確認）</strong></p>
             <ol class="vz-steps">
-              <li class="vz-step"><b>変更があれば、プッシュした</b>コードを変えたチームだけ。見本のブラッシュアップは自分のFork、自分たちのテーマはチームのリポジトリで、GitHubに今日のファイルが見えることを確認する。変更がないチームは不要。</li>
+              <li class="vz-step"><b>変更があれば、プッシュした</b>コードを変えたチームだけ。見本のアップデートは自分のFork、新しい方向性はチームのリポジトリで、GitHubに今日のファイルが見えることを確認する。変更がないチームは不要。</li>
               <li class="vz-step"><b>ポートの公開をやめた（またはサーバーを止めた）</b>Publicのままにしない。</li>
               <li class="vz-step"><b>Codespacesを停止した</b>代表者のCodespacesも、全員の練習用のCodespacesも、見本ゲーム用のCodespacesも、github.com/codespaces で停止済みか確認する。</li>
             </ol>
             <p><strong>次回予告</strong></p>
             <ul>
-              <li>Day2：今日の体験をもとに、チームで方向性を話し合って進める。見本ゲームの対戦体験・ブラッシュアップを続けるチームは、<strong>トラックB「同時対戦ゲーム」</strong>の流れで進める（部屋での対戦は見本で体験済みなので、「何を競うかを洗い出す」から始める）。自分たちのテーマに進むチームで、まだトラックを選んでいないチームは、Day2の冒頭に選ぶ</li>
+              <li>Day2：今日の体験をもとに、チームで方向性を話し合って進める。Day2の冒頭に、チームで方向性（見本ゲームのアップデート／進級制作への応用／新しい対戦ゲーム）を選ぶ。新しい対戦ゲームを選んだチームは、人生ゲームに取り組む</li>
               <li>今日うまくいったこと・つまずいたことを、簡単にメモしておく</li>
             </ul>
           </div>
@@ -417,7 +401,7 @@
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
             <strong>今日の変更がある場合はGitHubにプッシュされていて、Codespacesが停止していることを確認する</strong>
-            <p>変更したチームの代表者は、リポジトリ（見本のブラッシュアップは自分のFork、自分たちのテーマはチームのリポジトリ）をGitHub上で開き、今日作ったファイルが反映されているか確認する。Codespacesは停止したままでよい（次回は「Create」ではなく、同じCodespacesを再開する）。</p>
+            <p>変更したチームの代表者は、リポジトリ（見本のアップデートは自分のFork、新しい方向性はチームのリポジトリ）をGitHub上で開き、今日作ったファイルが反映されているか確認する。Codespacesは停止したままでよい（次回は「Create」ではなく、同じCodespacesを再開する）。</p>
           </div>
         </div>
         <div class="lesson-task">
@@ -440,7 +424,6 @@
         <li><a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace" target="_blank" rel="noopener">Forwarding ports in your codespace（公式）</a> — ポート転送とPublic設定</li>
         <li><a href="https://docs.github.com/en/billing/concepts/product-billing/github-codespaces" target="_blank" rel="noopener">GitHub Codespaces billing（公式）</a> — 無料枠と、使い切った場合の挙動</li>
         <li><a href="https://antigravity.google/docs/cli/install" target="_blank" rel="noopener">Installation &amp; Auth - Antigravity CLI（公式）</a> — agyのインストールと認証</li>
-        <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia" target="_blank" rel="noopener">MediaDevices: getUserMedia() method（MDN）</a> — カメラ利用と、secure contextの要件</li>
       </ul>
     </div>
 
