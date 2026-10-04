@@ -91,6 +91,7 @@
         <li>チームで1つの<strong>GitHub Codespaces</strong>を起動し、<strong>Antigravity CLI（agy）</strong>でAIエージェントに指示を出しながら開発します。各日、<strong>1限はトラックごとの段階的なステージ課題、2限＋まとめはチームのブラッシュアップ</strong>に充てます（Day1のみ、環境づくりを含む構成です）。</li>
         <li><strong>GitHubとCodespacesの扱い方</strong>は、Day1に伝えます。1年次・3年次は経験がありますが、<strong>2年次とハード科は初めて使う</strong>ため、基本から丁寧に進めます。</li>
         <li><strong>Codespacesの無料枠</strong>には月間の上限があり、使い切ると開発が止まります。備えと、止まったときの回避策（別のメンバーのアカウントで続ける、チーム内で調整する）は、履修上の注意点にまとめています。</li>
+        <li><strong>agyの無償枠は週単位で回復</strong>し、複雑な指示ほど消費が大きくなります。そのため、動くものを土台に小さな指示で改造していく進め方を基本とします。Codex・Claude Codeなどを自分で使える人は使ってもかまいません。チームで助け合って進めてください。</li>
         <li><strong>チームビルディング</strong>として、Day1に役割分担・進め方をすり合わせる時間を取ります。役割はドライバー／ナビゲーターの交代制ですが、<strong>ログインするGitHubアカウントは代表者のまま</strong>（Codespacesは作成者本人しか再開できないため）とし、キーボードを持つ人（ドライバー）だけを交代します。</li>
         <li>Day4はチーム同士で作品を触り合う相互体験、Day5は<strong>ピックアップ形式の成果発表会</strong>（選ばれたチームがデモ実演）を行います。発表は<strong>デフォルトパス通りでも、独自の工夫を加えても構いません</strong>。</li>
       </ul>
@@ -259,7 +260,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td class="week-num">1</td><td class="week-theme"><a href="autumn-intensive/day01.html" class="week-link">進級制作チームで参加／環境をつくる</a></td><td>講座の狙いと3つのトラックを共有し、チームの役割（代表者・ドライバー／ナビゲーター・交代要員）を決める。<strong>GitHubとCodespacesの扱い方</strong>を学び（1年次・3年次は経験済み、<strong>2年次・ハード科は初めて使うため基本から丁寧に</strong>）、全員が一度Codespacesを開いて閉じる。代表者のアカウントでチームのCodespacesを起動し、Antigravity CLI（agy）とポート転送のPublic設定を確認する。無料枠の確認も行う。<strong>2限後半</strong>にトラックを選んで最初の「動くもの」を作る（<strong>トラックA</strong>は撮影・個人情報のルールもここで確認）。1日目の終わりに、当日の目標を発表して確定する。</td></tr>
+            <tr><td class="week-num">1</td><td class="week-theme"><a href="autumn-intensive/day01.html" class="week-link">進級制作チームで参加／環境をつくる</a></td><td>講座の狙いと3つのトラックを共有し、チームの役割（代表者・ドライバー／ナビゲーター・交代要員）を決める。<strong>GitHubとCodespacesの扱い方</strong>を学び（1年次・3年次は経験済み、<strong>2年次・ハード科は初めて使うため基本から丁寧に</strong>）、全員が一度Codespacesを開いて閉じる。代表者のアカウントでチームのCodespacesを起動し、Antigravity CLI（agy）とポート転送のPublic設定を確認する。agyの残り枠を<code>/usage</code>で確認し、小さな指示で進めるコツも共有する。無料枠の確認も行う。<strong>2限後半</strong>にトラックを選んで最初の「動くもの」を作る（<strong>トラックA</strong>は撮影・個人情報のルールもここで確認）。1日目の終わりに、当日の目標を発表して確定する。</td></tr>
             <tr><td class="week-num">2</td><td class="week-theme">入力を増やす／表現を広げる</td><td>トラックごとの段階課題（<strong>A</strong>: 映像の加工＋AIレシピA／<strong>B</strong>: 入力を増やし、何を競うかを洗い出す／<strong>C</strong>: 次の段階目標）。2限はブラッシュアップ。<strong>2年次</strong>はトラブルシューティングを主導する。</td></tr>
             <tr><td class="week-num">3</td><td class="week-theme">AIを載せる／みんなで同時に使えるようにする</td><td>トラックごとの段階課題（<strong>A</strong>: （余力があれば）AIレシピBと、APIキー・呼び出し回数・通信量の設計原則／<strong>B</strong>: ルームでリアルタイム同期し、パブリック公開の確認とパスコード以外の対策を1つ入れる／<strong>C</strong>: 次の段階目標）。2限で最初の動作確認を行う。</td></tr>
             <tr><td class="week-num">4</td><td class="week-theme">相互体験／つくりこむ</td><td><strong>チーム同士で作品を触り合う相互体験</strong>を行い、フィードバックを反映して実装を進める。<strong>3年次以上</strong>は下級生チームのサポートにも回る。うまく動かない状況をAIエージェントに説明する練習（エラーの伝え方）にも取り組む。</td></tr>
@@ -327,7 +328,13 @@
         <li>（<strong>トラックB</strong>）静的ファイル配信用とWebSocketサーバー用でポートを分けて転送すると、同一ポートに両方を載せた場合に起きうる接続不安定を避けやすくなります（分ける構成を推奨、両方をPublicに設定）。WebSocketの接続先は<strong>wss://の転送URL</strong>を指定します（<code>ws://</code>や<code>localhost</code>では他の端末から接続できません）。<strong>パスコードは本物のアクセス制限にはならない</strong>ため、接続数やメッセージ頻度の制限も1つ入れ、想定外の参加者が入ってきた場合の対処（部屋の作り直し等）もチームで決めておきましょう。</li>
         <li>（<strong>トラックA</strong>）AIレシピBを使うチームは、<strong>APIキーを必ずサーバ側のコードにのみ置いてください</strong>（ブラウザ側に書くと誰でも見られます）。ブラウザに持たせる合言葉も通信から取り出せるため本物のアクセス制限にはならず、公開URLを知っていれば誰でも呼び出せてしまうため、<strong>サーバ側でレート制限</strong>も設けましょう（公式: Gemini API Additional Terms of Service、無料版データはサービス改善に使われる場合あり）。</li>
         <li>余力があるチームが<strong>レシピC「お喋りAI」（Gemini Live API）</strong>に挑戦する場合も、APIキーの扱いは同じ原則です。公式はサーバ側で発行する一時的なトークン（ephemeral token）の使用を推奨しています。実装難易度が高いため、必須課題としては求めません。</li>
-        <li><strong>Antigravity CLI（agy）はGoogleアカウントでの認証のみで追加契約は不要</strong>ですが、無償枠には利用制限があります。上限に達した場合はチーム内で待つ・使う頻度を調整するなどして対応してください。Codespaceを再開したのにagyが反応しない場合は、再認証してください。</li>
+        <li><strong>Antigravity CLI（agy）はGoogleアカウントでの認証のみで追加契約は不要</strong>ですが、無償枠には利用制限があります。公式ドキュメントでは、無償枠は<strong>週単位で回復</strong>し、具体的な回数は公表されていません。使える量はAIが行う作業の量に応じて変わり、簡単な指示ほど多く送れ、複雑な指示ほど多く消費します（公式: Plans、確認日 2026-10-04）。上限は予告なく変わることもあります。枠を大切に使うため、次のことを心がけてください。
+          <ul>
+            <li>指示は小さく、1回に1つの変更にする。「全部作り直して」は避ける。</li>
+            <li>動いているものを土台にして、部分的に直す。</li>
+            <li><code>/usage</code>で、モデルごとの残りの枠を時々確認する。</li>
+          </ul>
+          枠が尽きたときは、無償枠が週単位のため、待っても授業期間中に回復しない場合があります。その場合は、枠に余裕のあるメンバーが交代する、有料の枠を持つ人やCodex・Claude Codeなどを自分で使える人が担当するなど、チーム内で助け合って続けてください。Codespaceを再開したのにagyが反応しない場合は、再認証してください。</li>
         <li><strong>GitHub Codespacesは個人のGitHubアカウントごとに月120時間の無料枠</strong>があります（2-coreマシンでは実質60時間相当。公式: About billing for GitHub Codespaces）。本講座の使用量（代表者のアカウントに15時間程度）は無料枠に収まる見込みですが、他の授業でも使っている場合や、起動したまま放置した場合は消費が増えます。<strong>枠を使い切り、支払い方法も未登録の場合は、Codespacesを新たに起動・再開できなくなり、集中講座の続きが止まります</strong>。備えと回避策は下の図にまとめています。</li>
         <li>各自の端末の通信環境（学校のWi-Fiに接続できるか、モバイル回線の電波状況・データ通信量）は当日までに確認します。</li>
         <li>体調やメンタル面で不安がある場合は、無理せず担当教員または学校の相談窓口に相談してください。</li>
