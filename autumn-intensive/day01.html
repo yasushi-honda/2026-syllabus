@@ -259,7 +259,7 @@
               <li class="vz-step"><b>代表者: 「ポート」タブで公開の設定を確認する</b>下のパネルの「ポート」タブに、8000番（Cyber Tetris Server）が表示される。「公開範囲（Visibility）」が<strong>Public</strong>になっているか確認する。Privateなどになっていたら、8000を右クリック→「Port Visibility」→「Public」に変更する。ポートが表示されない、またはゲームが開かないときは、ターミナルで <code>npm start</code> と入力してEnter。</li>
               <li class="vz-step"><b>チーム全員: 対戦する</b>8000番の行にある地球儀のアイコン（ブラウザーで開く）をクリックして、ゲーム画面を開く。初めて開くときにGitHubの注意画面が出たら、内容を読んで「Continue」で進む。「ONLINE BATTLE」→「CREATE ROOM」→「COPY LINK」で招待リンクをコピーし、チームの別の端末（メンバーのスマートフォンやPC）に送って開く。全員が揃ったら、ホストが「START BATTLE」を押す。パソコンはキーボード、スマートフォンは画面のボタンで操作する。</li>
               <li class="vz-step"><b>チーム全員: 様子を見て、感想を共有する</b>対戦しない人は、画面を見てもらう。ドライバーを交代しながら、全員が一度は対戦する。「ブラウザだけで、スマホからも、離れた場所の人とも対戦できる」ことと、これが「ポート転送をPublicにする」仕組みで動いていることを確認する。</li>
-              <li class="vz-step"><b>代表者: 終わったらCodespacesを停止する</b>停止すると公開URLは開けなくなり、無料枠も減らなくなる（<a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> で、見本ゲーム用のCodespacesの「…」→「Stop codespace」）。</li>
+              <li class="vz-step"><b>代表者: 使い終わったらCodespacesを停止する</b>2限後半もこのCodespacesを使うチーム（対戦体験の続き・見本のブラッシュアップ）は、停止せずに続ける。使い終わったら、必ず停止する（最後の片付けでも確認する）。停止すると公開URLは開けなくなり、無料枠も減らなくなる（<a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> で、見本ゲーム用のCodespacesの「…」→「Stop codespace」）。</li>
             </ol>
             <div class="lesson-tip">
               <strong>うまくいかないとき:</strong> まず手を挙げる。時間がかかりすぎるときは、ゲーム画面をスマートフォンで開くところまでで進めてよい（それだけでも、Publicにすると別の端末から開けることは確認できる）。Publicにしたポートは、<strong>URLを知っている人なら誰でも、認証なしで開ける</strong>（公式: Forwarding ports in your codespace）。ゲームの中に、個人情報は入力しない。
@@ -289,7 +289,7 @@
               <li class="vz-step"><b>見本ゲームのブラッシュアップ</b>見本ゲームを、小さな指示で改造する。例: <code>ブロックの色を青系にしてください。</code>／<code>ライン消去の効果音を変えてください。</code>。1回に1つの変更にして、動くことを確認してから、次へ進む。</li>
               <li class="vz-step"><b>自分たちのテーマで「最初の動くもの」</b>自分たちで作りたいものを決め、最初の1画面を作る。進級制作の課題をAIで解決するワークでもよい（ただし、成果発表では進級制作そのものは発表できない）。下の「トラック別の例」を参考にする。</li>
             </ol>
-            <p>どれを選んでも、できたら変更をGitHubに記録する（下の「作って、確認して、記録する」）。</p>
+            <p>コードを変えた場合は、変更をGitHubに記録する（下の「作って、確認して、記録する」）。見本のブラッシュアップは<strong>自分のFork</strong>に、自分たちのテーマは<strong>チームのリポジトリ</strong>に記録する。対戦体験の続きで、コードを変えていないチームは、記録するものがなければ不要。</p>
 
             <p><strong>「自分たちのテーマ」を選んだ場合：トラックを選ぶ</strong></p>
             <figure class="vz-fig" aria-labelledby="cap-first">
@@ -347,13 +347,13 @@
             </ul>
             <p><strong>片付けチェック（全員で確認）</strong></p>
             <ol class="vz-steps">
-              <li class="vz-step"><b>変更をプッシュした</b>GitHubで、今日のファイルが見えることを確認する。</li>
+              <li class="vz-step"><b>変更があれば、プッシュした</b>コードを変えたチームだけ。見本のブラッシュアップは自分のFork、自分たちのテーマはチームのリポジトリで、GitHubに今日のファイルが見えることを確認する。変更がないチームは不要。</li>
               <li class="vz-step"><b>ポートの公開をやめた（またはサーバーを止めた）</b>Publicのままにしない。</li>
               <li class="vz-step"><b>Codespacesを停止した</b>代表者のCodespacesも、全員の練習用のCodespacesも、見本ゲーム用のCodespacesも、github.com/codespaces で停止済みか確認する。</li>
             </ol>
             <p><strong>次回予告</strong></p>
             <ul>
-              <li>Day2：今日の体験をもとに、チームで方向性を話し合って進める</li>
+              <li>Day2：今日の体験をもとに、チームで方向性を話し合って進める。自分たちのテーマに進むチームで、まだトラックを選んでいないチームは、Day2の冒頭に選ぶ</li>
               <li>今日うまくいったこと・つまずいたことを、簡単にメモしておく</li>
             </ul>
           </div>
@@ -368,8 +368,8 @@
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>今日の変更がGitHubにプッシュされていて、Codespacesが停止していることを確認する</strong>
-            <p>代表者は、チームのリポジトリをGitHub上で開き、今日作ったファイルが反映されているか確認する。Codespacesは停止したままでよい（次回は「Create」ではなく、同じCodespacesを再開する）。</p>
+            <strong>今日の変更がある場合はGitHubにプッシュされていて、Codespacesが停止していることを確認する</strong>
+            <p>変更したチームの代表者は、リポジトリ（見本のブラッシュアップは自分のFork、自分たちのテーマはチームのリポジトリ）をGitHub上で開き、今日作ったファイルが反映されているか確認する。Codespacesは停止したままでよい（次回は「Create」ではなく、同じCodespacesを再開する）。</p>
           </div>
         </div>
         <div class="lesson-task">
