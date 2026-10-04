@@ -33,6 +33,7 @@ AIエージェントと一緒にゼロからアプリを作り上げる特別編
 - **GitHubとCodespacesの扱い方**は、Day1に伝えます。1年次・3年次は経験がありますが、**2年次とハード科は初めて使う** ため、基本から丁寧に進めます。
 - **Codespacesの無料枠** には月間の上限があり、使い切ると開発が止まります。備えと、止まったときの回避策（別のメンバーのアカウントで続ける、チーム内で調整する）は、履修上の注意点にまとめています。
 - **agyの無償枠は週単位で回復** し、複雑な指示ほど消費が大きくなります。そのため、動くものを土台に小さな指示で改造していく進め方を基本とします。Codex・Claude Codeなどを自分で使える人は使ってもかまいません。チームで助け合って進めてください。
+- Day1では、担当教員が用意した **見本ゲーム「CYBER TETRIS」**（2人対戦つきのテトリス。原型は担当教員がagyだけで作成）を使います。代表者のアカウントでForkしてCodespacesで起動し、ポート転送を「パブリック」にして、チームのスマートフォンとPCから実際に対戦します。「自然言語での指示で、ここまで作れる」という実感をチーム全員で共有することが、ねらいです。
 - **チームビルディング**として、Day1に役割分担・進め方をすり合わせる時間を取ります。役割はドライバー／ナビゲーターの交代制ですが、**ログインするGitHubアカウントは代表者のまま**（Codespacesは作成者本人しか再開できないため）とし、キーボードを持つ人（ドライバー）だけを交代します。
 - Day4はチーム同士で作品を触り合う相互体験、Day5は **ピックアップ形式の成果発表会**（選ばれたチームがデモ実演）を行います。発表は **デフォルトパス通りでも、独自の工夫を加えても構いません**。
 
@@ -73,7 +74,7 @@ AIエージェントと一緒にゼロからアプリを作り上げる特別編
 
 | 日 | テーマ | 主な内容・活動 |
 |:---:|:---|:---|
-| 1 | **進級制作チームで参加／環境をつくる** | 講座の狙いと3つのトラックを共有し、チームの役割（代表者・ドライバー／ナビゲーター・交代要員）を決める。**GitHubとCodespacesの扱い方**を学び（1年次・3年次は経験済み、**2年次・ハード科は初めて使うため基本から丁寧に**）、全員が一度Codespacesを開いて閉じる。代表者のアカウントでチームのCodespacesを起動し、Antigravity CLI（agy）とポート転送のPublic設定を確認する。agyの残り枠を`/usage`で確認し、小さな指示で進めるコツも共有する。無料枠の確認も行う。**2限後半**にトラックを選んで最初の「動くもの」を作る（**トラックA**は撮影・個人情報のルールもここで確認）。1日目の終わりに、当日の目標を発表して確定する。 |
+| 1 | **進級制作チームで参加／環境をつくる** | 講座の狙いと3つのトラックを共有し、チームの役割（代表者・ドライバー／ナビゲーター・交代要員）を決める。**GitHubとCodespacesの扱い方**を学び（1年次・3年次は経験済み、**2年次・ハード科は初めて使うため基本から丁寧に**）、全員が一度Codespacesを開いて閉じる。代表者のアカウントで見本ゲーム「CYBER TETRIS」をForkしてCodespacesを起動し、Antigravity CLI（agy）の導入とポート転送のPublic設定を確認する。確認したら、チームのスマートフォンとPCから対戦を体験し、メンバー全員で様子を見る。agyの残り枠を`/usage`で確認し、小さな指示で進めるコツも共有する。無料枠の確認も行う。**2限後半**にトラックを選んで最初の「動くもの」を作る（**トラックA**は撮影・個人情報のルールもここで確認）。1日目の終わりに、当日の目標を発表して確定する。 |
 | 2 | **入力を増やす／表現を広げる** | トラックごとの段階課題（**A**: 映像の加工＋AIレシピA／**B**: 入力を増やし、何を競うかを洗い出す／**C**: 次の段階目標）。2限はブラッシュアップ。**2年次**はトラブルシューティングを主導する。 |
 | 3 | **AIを載せる／みんなで同時に使えるようにする** | トラックごとの段階課題（**A**: （余力があれば）AIレシピBと、APIキー・呼び出し回数・通信量の設計原則／**B**: ルームでリアルタイム同期し、パブリック公開の確認とパスコード以外の対策を1つ入れる／**C**: 次の段階目標）。2限で最初の動作確認を行う。 |
 | 4 | **相互体験／つくりこむ** | **チーム同士で作品を触り合う相互体験**を行い、フィードバックを反映して実装を進める。**3年次以上**は下級生チームのサポートにも回る。うまく動かない状況をAIエージェントに説明する練習（エラーの伝え方）にも取り組む。 |
@@ -85,7 +86,7 @@ AIエージェントと一緒にゼロからアプリを作り上げる特別編
 
 ## 11. 使用テキスト・参考文献
 - 特定のテキストは使用しません。授業内で適宜、公式ドキュメントを紹介します。
-- 主な参考資料（随時更新）：Google — Antigravity CLI Installation & Auth 公式ドキュメント（antigravity.google）、Google AI Edge — Hand landmarks detection guide for Web 公式ガイド（ai.google.dev）、GitHub — Forwarding ports in your codespace 公式ドキュメント（docs.github.com、複数ポートの同時転送について記載）、GitHub — Security in GitHub Codespaces 公式ドキュメント（docs.github.com、パブリックポートが認証なしで誰からでもアクセス可能であることを記載）、GitHub — Opening an existing codespace 公式ドキュメント（docs.github.com、Codespaceは作成者本人しか開けない旨を記載）、GitHub — About billing for GitHub Codespaces 公式ドキュメント（docs.github.com、月間無料枠と、使い切った場合の挙動について記載）、MDN — MediaDevices: getUserMedia() method（developer.mozilla.org）、Google — Plans 公式ドキュメント（antigravity.google、無償枠の利用制限について記載）、Google — Gemini API Additional Terms of Service（ai.google.dev、無料版の利用データがサービス改善に使われる旨を記載）、Google — Gemini API Live API overview（ai.google.dev、レシピC「お喋りAI」の公式リファレンス。ephemeral tokenの推奨について記載）、MDN — WebSocket（developer.mozilla.org、トラックB「同時対戦ゲーム」のリアルタイム通信技術）
+- 主な参考資料（随時更新）：Google — Antigravity CLI Installation & Auth 公式ドキュメント（antigravity.google）、Google AI Edge — Hand landmarks detection guide for Web 公式ガイド（ai.google.dev）、GitHub — Forwarding ports in your codespace 公式ドキュメント（docs.github.com、複数ポートの同時転送について記載）、GitHub — Security in GitHub Codespaces 公式ドキュメント（docs.github.com、パブリックポートが認証なしで誰からでもアクセス可能であることを記載）、GitHub — Opening an existing codespace 公式ドキュメント（docs.github.com、Codespaceは作成者本人しか開けない旨を記載）、GitHub — About billing for GitHub Codespaces 公式ドキュメント（docs.github.com、月間無料枠と、使い切った場合の挙動について記載）、MDN — MediaDevices: getUserMedia() method（developer.mozilla.org）、Google — Plans 公式ドキュメント（antigravity.google、無償枠の利用制限について記載）、Google — Gemini API Additional Terms of Service（ai.google.dev、無料版の利用データがサービス改善に使われる旨を記載）、Google — Gemini API Live API overview（ai.google.dev、レシピC「お喋りAI」の公式リファレンス。ephemeral tokenの推奨について記載）、MDN — WebSocket（developer.mozilla.org、トラックB「同時対戦ゲーム」のリアルタイム通信技術）、CYBER TETRIS（見本ゲーム）— 担当教員作成の2人対戦つきテトリス（github.com/yas-honda/Tetris）。READMEの「授業で使うとき」に手順あり
 
 ## 12. 予習・復習
 - **予習:** GitHubアカウントをまだ持っていない場合は、事前に作成しておいてください（GitHub Codespacesの起動に必要です）。それ以外に必要な知識は5日間の中でその都度共有します。

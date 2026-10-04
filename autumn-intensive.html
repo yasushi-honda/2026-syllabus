@@ -10,6 +10,7 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="styles.css?v=12">
   <!-- 公式情報確認: 2026-09-15 (antigravity.google/docs/cli/install / ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker/web_js / docs.github.com/ja/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace / docs.github.com/en/codespaces/developing-in-a-codespace/opening-an-existing-codespace / docs.github.com/en/billing/.../about-billing-for-github-codespaces / developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia / github.com/google-antigravity/antigravity-cli/issues/10 / ai.google.dev/gemini-api/terms / ai.google.dev/gemini-api/docs/live-api / ai.google.dev/gemini-api/docs/pricing) -->
+  <!-- 2026-10-05: Day1に見本ゲーム「CYBER TETRIS」（github.com/yas-honda/Tetris、担当教員作成）を全チーム向けに追加（授業概要・Day1の行・参考資料）。新規Codespaceでの起動・スマホ対戦の確認は担当教員の実機確認待ち -->
   <!-- 2026-10-05: ポート分離の記述を「推奨」から「同一ポートでも動作した実例あり、不安定なら分離」に修正（担当教員の実機確認 2026-10-04。公式docsに明記はなく、実機確認ベース） -->
   <!-- 公式情報追加確認: 2026-09-24 (developer.mozilla.org/en-US/docs/Web/API/WebSocket / docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace — 複数ポートの同時転送・個別可視性設定に対応していることを確認。同一ポートでのHTTP+WebSocket接続不安定は公式docsに明記なし、コミュニティ報告ベースのため断定を避けた表現に留めた。ユーザー指示によりチーム編成（進級制作チーム・学科横断）とトラック制（カメラ×AI／同時対戦ゲーム／自由テーマ）を全面改訂） -->
   <!-- PR #226 レビュー反映: 2026-09-24（トラックBの「サーバー役PC」表記をCodespaces上で動かす旨に修正、自然言語開発Ⅱ実例との対比を「同様の構造と考えられる」に弱化——引用元自身が未検証の推測と留保しているため。同一ポート不安定の主張から根拠不明な具体条件（Web版限定・起動直後）を除去。WebSocket接続先はwss://の転送URLを使う旨を追記） -->
@@ -93,6 +94,7 @@
         <li><strong>GitHubとCodespacesの扱い方</strong>は、Day1に伝えます。1年次・3年次は経験がありますが、<strong>2年次とハード科は初めて使う</strong>ため、基本から丁寧に進めます。</li>
         <li><strong>Codespacesの無料枠</strong>には月間の上限があり、使い切ると開発が止まります。備えと、止まったときの回避策（別のメンバーのアカウントで続ける、チーム内で調整する）は、履修上の注意点にまとめています。</li>
         <li><strong>agyの無償枠は週単位で回復</strong>し、複雑な指示ほど消費が大きくなります。そのため、動くものを土台に小さな指示で改造していく進め方を基本とします。Codex・Claude Codeなどを自分で使える人は使ってもかまいません。チームで助け合って進めてください。</li>
+        <li>Day1では、担当教員が用意した<strong>見本ゲーム「CYBER TETRIS」</strong>（2人対戦つきのテトリス。原型は担当教員がagyだけで作成）を使います。代表者のアカウントでForkしてCodespacesで起動し、ポート転送を「パブリック」にして、チームのスマートフォンとPCから実際に対戦します。「自然言語での指示で、ここまで作れる」という実感をチーム全員で共有することが、ねらいです。</li>
         <li><strong>チームビルディング</strong>として、Day1に役割分担・進め方をすり合わせる時間を取ります。役割はドライバー／ナビゲーターの交代制ですが、<strong>ログインするGitHubアカウントは代表者のまま</strong>（Codespacesは作成者本人しか再開できないため）とし、キーボードを持つ人（ドライバー）だけを交代します。</li>
         <li>Day4はチーム同士で作品を触り合う相互体験、Day5は<strong>ピックアップ形式の成果発表会</strong>（選ばれたチームがデモ実演）を行います。発表は<strong>デフォルトパス通りでも、独自の工夫を加えても構いません</strong>。</li>
       </ul>
@@ -261,7 +263,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td class="week-num">1</td><td class="week-theme"><a href="autumn-intensive/day01.html" class="week-link">進級制作チームで参加／環境をつくる</a></td><td>講座の狙いと3つのトラックを共有し、チームの役割（代表者・ドライバー／ナビゲーター・交代要員）を決める。<strong>GitHubとCodespacesの扱い方</strong>を学び（1年次・3年次は経験済み、<strong>2年次・ハード科は初めて使うため基本から丁寧に</strong>）、全員が一度Codespacesを開いて閉じる。代表者のアカウントでチームのCodespacesを起動し、Antigravity CLI（agy）とポート転送のPublic設定を確認する。agyの残り枠を<code>/usage</code>で確認し、小さな指示で進めるコツも共有する。無料枠の確認も行う。<strong>2限後半</strong>にトラックを選んで最初の「動くもの」を作る（<strong>トラックA</strong>は撮影・個人情報のルールもここで確認）。1日目の終わりに、当日の目標を発表して確定する。</td></tr>
+            <tr><td class="week-num">1</td><td class="week-theme"><a href="autumn-intensive/day01.html" class="week-link">進級制作チームで参加／環境をつくる</a></td><td>講座の狙いと3つのトラックを共有し、チームの役割（代表者・ドライバー／ナビゲーター・交代要員）を決める。<strong>GitHubとCodespacesの扱い方</strong>を学び（1年次・3年次は経験済み、<strong>2年次・ハード科は初めて使うため基本から丁寧に</strong>）、全員が一度Codespacesを開いて閉じる。代表者のアカウントで見本ゲーム「CYBER TETRIS」をForkしてCodespacesを起動し、Antigravity CLI（agy）の導入とポート転送のPublic設定を確認する。確認したら、チームのスマートフォンとPCから対戦を体験し、メンバー全員で様子を見る。agyの残り枠を<code>/usage</code>で確認し、小さな指示で進めるコツも共有する。無料枠の確認も行う。<strong>2限後半</strong>にトラックを選んで最初の「動くもの」を作る（<strong>トラックA</strong>は撮影・個人情報のルールもここで確認）。1日目の終わりに、当日の目標を発表して確定する。</td></tr>
             <tr><td class="week-num">2</td><td class="week-theme">入力を増やす／表現を広げる</td><td>トラックごとの段階課題（<strong>A</strong>: 映像の加工＋AIレシピA／<strong>B</strong>: 入力を増やし、何を競うかを洗い出す／<strong>C</strong>: 次の段階目標）。2限はブラッシュアップ。<strong>2年次</strong>はトラブルシューティングを主導する。</td></tr>
             <tr><td class="week-num">3</td><td class="week-theme">AIを載せる／みんなで同時に使えるようにする</td><td>トラックごとの段階課題（<strong>A</strong>: （余力があれば）AIレシピBと、APIキー・呼び出し回数・通信量の設計原則／<strong>B</strong>: ルームでリアルタイム同期し、パブリック公開の確認とパスコード以外の対策を1つ入れる／<strong>C</strong>: 次の段階目標）。2限で最初の動作確認を行う。</td></tr>
             <tr><td class="week-num">4</td><td class="week-theme">相互体験／つくりこむ</td><td><strong>チーム同士で作品を触り合う相互体験</strong>を行い、フィードバックを反映して実装を進める。<strong>3年次以上</strong>は下級生チームのサポートにも回る。うまく動かない状況をAIエージェントに説明する練習（エラーの伝え方）にも取り組む。</td></tr>
@@ -288,6 +290,7 @@
         <li>Google — Gemini API Additional Terms of Service（ai.google.dev、無料版の利用データがサービス改善に使われる旨を記載）</li>
         <li>Google — Gemini API Live API overview（ai.google.dev、レシピC「お喋りAI」の公式リファレンス。ephemeral tokenの推奨について記載）</li>
         <li>MDN — WebSocket（developer.mozilla.org、トラックB「同時対戦ゲーム」のリアルタイム通信技術）</li>
+        <li>CYBER TETRIS（見本ゲーム）— 担当教員作成の2人対戦つきテトリス（github.com/yas-honda/Tetris）。READMEの「授業で使うとき」に手順あり</li>
       </ul>
     </div>
 
