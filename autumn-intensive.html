@@ -91,7 +91,7 @@
         <li><strong>規模の方針</strong>: 1〜5分で成果を見せられる規模を基本とし、複雑なシステムは避けます。新しい機能を増やすことよりも、使える状態に仕上げることを優先します。</li>
         <li>（<strong>全トラック共通の鍵となる事実</strong>）GitHub Codespacesの<strong>ポート転送を「パブリック」に設定するだけで</strong>、追加のクラウド契約なしに<strong>世界中からアクセスできる状態になります</strong>（公式: Security in GitHub Codespaces）。トラックBの同時対戦も、この標準機能だけで実現できます。一方で「パブリック」は<strong>認証なしで誰でもアクセスできる</strong>ことも意味するため、公開する場面ではセキュリティの基本もあわせて学びます（詳細は授業計画・履修上の注意点を参照）。</li>
         <li>チームで1つの<strong>GitHub Codespaces</strong>を起動し、<strong>Antigravity CLI（agy）</strong>でAIエージェントに指示を出しながら開発します。各日、<strong>1限はトラックごとの段階的なステージ課題、2限＋まとめはチームのブラッシュアップ</strong>に充てます（Day1のみ、環境づくりを含む構成です）。</li>
-        <li><strong>GitHubとCodespacesの扱い方</strong>は、Day1に伝えます。1年次・3年次は経験がありますが、<strong>2年次とハード科は初めて使う</strong>ため、基本から丁寧に進めます。</li>
+        <li><strong>GitHubとCodespacesの扱い方</strong>は、Day1に伝えます。1年次・3年次はGitHubとCodespacesの経験があり、2年次はGitHubの利用経験があります（Codespacesとagyは初めてです）。ハード科は少人数のため、必要に応じて別途フォローします。経験のあるチームは先に進んでかまいません。</li>
         <li><strong>Codespacesの無料枠</strong>には月間の上限があり、使い切ると開発が止まります。備えと、止まったときの回避策（別のメンバーのアカウントで続ける、チーム内で調整する）は、履修上の注意点にまとめています。</li>
         <li><strong>agyの無償枠は週単位で回復</strong>し、複雑な指示ほど消費が大きくなります。そのため、動くものを土台に小さな指示で改造していく進め方を基本とします。Codex・Claude Codeなどを自分で使える人は使ってもかまいません。チームで助け合って進めてください。</li>
         <li>Day1では、担当教員が用意した<strong>見本ゲーム「CYBER TETRIS」</strong>（2人対戦つきのテトリス。原型は担当教員がagyだけで作成）を使います。代表者のアカウントでForkしてCodespacesで起動し、ポート転送を「パブリック」にして、チームのスマートフォンとPCから実際に対戦します。「自然言語での指示で、ここまで作れる」という実感をチーム全員で共有することが、ねらいです。</li>
@@ -100,7 +100,7 @@
       </ul>
 
       <figure class="vz-fig" id="sec-tracks" aria-labelledby="cap-tracks">
-        <p class="vz-fig-title" id="cap-tracks">作るものは3つのトラックから選ぶ（Day1〜3の段階課題）</p>
+        <p class="vz-fig-title" id="cap-tracks">作るものは3つのトラックから選ぶ（Day1〜3の段階課題。Day1の課題は、Day1の2限後半または、まだ着手していないチームはDay2の冒頭に取り組む）</p>
         <div class="vz-fields">
           <section class="vz-field vz-f-ka">
             <h4>トラックA「カメラ×AI」</h4>
@@ -230,7 +230,7 @@
 
     <div class="syllabus-section" id="sec-plan">
       <h2>授業計画（全5日）</h2>
-      <p>各日の時間配分は固定です：1限前半40分／1限後半50分／（休憩10分・枠外）／2限前半50分／2限後半30分／まとめ10分（授業合計180分）。<strong>1限（90分）はトラックごとの段階的なステージ課題に取り組む共通の時間枠、2限＋まとめ（90分）はチームごとのブラッシュアップ・自由探究</strong>にあてる構成です。チームの状況によっては、この時間を進級制作の課題をAIで解決するワークに充ててもかまいません。ただしDay1だけは、1限を環境づくり（チームの役割決め、GitHubとCodespacesの入門）、2限前半をagyの導入とポート転送の確認、2限後半をトラック選択と最初の「動くもの」にあてます。技術的な詳細・図解は、日別の詳細ページ（Day1は作成済み、以降は作成予定）で扱います。</p>
+      <p>各日の時間配分は固定です：1限前半40分／1限後半50分／（休憩10分・枠外）／2限前半50分／2限後半30分／まとめ10分（授業合計180分）。<strong>1限（90分）はトラックごとの段階的なステージ課題に取り組む共通の時間枠、2限＋まとめ（90分）はチームごとのブラッシュアップ・自由探究</strong>にあてる構成です。チームの状況によっては、この時間を進級制作の課題をAIで解決するワークに充ててもかまいません。ただしDay1だけは、1限を環境づくり（チームの役割決め、心構え、agyの約束事、GitHubとCodespacesの入門）、2限前半をagyの導入と見本ゲームの対戦体験、2限後半をセキュリティの確認とチームごとの進め方の選択にあてます。トラックは、Day1の2限後半で「自分たちのテーマ」を選んだチームはそこで、まだ選んでいないチームは遅くともDay2の冒頭に選びます。見本ゲームの対戦体験・ブラッシュアップを続けるチームは、トラックB「同時対戦ゲーム」の流れで進めます。技術的な詳細・図解は、日別の詳細ページ（Day1は作成済み、以降は作成予定）で扱います。</p>
 
       <div class="vz-timebar vz-timebar--static">
         <p class="vz-fig-title">各日の180分の使い方</p>
@@ -245,7 +245,7 @@
       <figure class="vz-fig" aria-labelledby="cap-days">
         <p class="vz-fig-title" id="cap-days">5日間の流れ（詳しい内容は下の表）</p>
         <ol class="vz-steps">
-          <li class="vz-step"><b>進級制作チームで参加／環境をつくる</b>GitHubとCodespacesの扱い方を学び（2年次・ハード科は初めて使うので基本から）、Codespacesを起動する。チームビルディングを行い、最初の「動くもの」を作る。終わりに当日の目標を発表して確定する。</li>
+          <li class="vz-step"><b>進級制作チームで参加／環境をつくる</b>GitHubとCodespacesの扱い方を学び（2年次はGitHub経験あり・Codespacesとagyは初めて）、見本ゲームをForkして対戦を体験する。2限後半は、セキュリティを確認したうえで、チームごとに進め方を選ぶ。</li>
           <li class="vz-step"><b>入力を増やす／表現を広げる</b>トラックごとの段階課題（A: 映像の加工＋レシピA／B: 入力を増やす／C: 次の段階目標）。2年次はトラブルシューティングを主導する。</li>
           <li class="vz-step"><b>AIを載せる／みんなで同時に使えるようにする</b>A: レシピBとAPIキーの設計原則／B: ルームでリアルタイム同期／C: 次の段階目標。2限で最初の動作確認をする。</li>
           <li class="vz-step"><b>相互体験／つくりこむ</b>チーム同士で作品を触り合い、フィードバックを受け取る。3年次以上は下級生チームのサポートにも回る。エラーの伝え方も練習する。</li>
@@ -263,7 +263,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td class="week-num">1</td><td class="week-theme"><a href="autumn-intensive/day01.html" class="week-link">進級制作チームで参加／環境をつくる</a></td><td>講座の狙いと3つのトラックを共有し、チームの役割（代表者・ドライバー／ナビゲーター・交代要員）を決める。<strong>GitHubとCodespacesの扱い方</strong>を学び（1年次・3年次は経験済み、<strong>2年次・ハード科は初めて使うため基本から丁寧に</strong>）、全員が一度Codespacesを開いて閉じる。代表者のアカウントで見本ゲーム「CYBER TETRIS」をForkしてCodespacesを起動し、Antigravity CLI（agy）の導入とポート転送のPublic設定を確認する。確認したら、チームのスマートフォンとPCから対戦を体験し、メンバー全員で様子を見る。agyの残り枠を<code>/usage</code>で確認し、小さな指示で進めるコツも共有する。無料枠の確認も行う。<strong>2限後半</strong>にトラックを選んで最初の「動くもの」を作る（<strong>トラックA</strong>は撮影・個人情報のルールもここで確認）。1日目の終わりに、当日の目標を発表して確定する。</td></tr>
+            <tr><td class="week-num">1</td><td class="week-theme"><a href="autumn-intensive/day01.html" class="week-link">進級制作チームで参加／環境をつくる</a></td><td>講座の狙いと3つのトラックを共有し、チームの役割（代表者・ドライバー／ナビゲーター・交代要員）を決める。<strong>GitHubとCodespacesの扱い方</strong>を学び（1年次・3年次は経験済み、2年次はGitHub経験あり・Codespacesとagyは初めて、ハード科は必要に応じて別途フォロー）、全員が一度Codespacesを開いて閉じる。代表者のアカウントで見本ゲーム「CYBER TETRIS」をForkしてCodespacesを起動し、Antigravity CLI（agy）の導入とポート転送のPublic設定を確認する。確認したら、チームのスマートフォンとPCから対戦を体験し、メンバー全員で様子を見る。agyの残り枠を<code>/usage</code>で確認し、小さな指示で進めるコツも共有する。無料枠の確認も行う。<strong>2限後半</strong>は、セキュリティを確認したうえで、チームごとに進め方を選ぶ（対戦体験の続き／見本ゲームのブラッシュアップ／自分たちのテーマで最初の「動くもの」。<strong>トラックA</strong>は撮影・個人情報のルールもここで確認）。経験のあるチームは先に進んでよい。1日目の終わりに、明日の方向性を共有する。</td></tr>
             <tr><td class="week-num">2</td><td class="week-theme">入力を増やす／表現を広げる</td><td>トラックごとの段階課題（<strong>A</strong>: 映像の加工＋AIレシピA／<strong>B</strong>: 入力を増やし、何を競うかを洗い出す／<strong>C</strong>: 次の段階目標）。2限はブラッシュアップ。<strong>2年次</strong>はトラブルシューティングを主導する。</td></tr>
             <tr><td class="week-num">3</td><td class="week-theme">AIを載せる／みんなで同時に使えるようにする</td><td>トラックごとの段階課題（<strong>A</strong>: （余力があれば）AIレシピBと、APIキー・呼び出し回数・通信量の設計原則／<strong>B</strong>: ルームでリアルタイム同期し、パブリック公開の確認とパスコード以外の対策を1つ入れる／<strong>C</strong>: 次の段階目標）。2限で最初の動作確認を行う。</td></tr>
             <tr><td class="week-num">4</td><td class="week-theme">相互体験／つくりこむ</td><td><strong>チーム同士で作品を触り合う相互体験</strong>を行い、フィードバックを反映して実装を進める。<strong>3年次以上</strong>は下級生チームのサポートにも回る。うまく動かない状況をAIエージェントに説明する練習（エラーの伝え方）にも取り組む。</td></tr>
