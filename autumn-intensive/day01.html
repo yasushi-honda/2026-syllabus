@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="../styles.css?v=12">
   <!-- 公式情報確認: 2026-09-30 (docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository — Code > Codespaces タブ > +（New with options も可）、作成時に「誰が支払うか」のメッセージが出る / docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace — ポートを右クリック > Port Visibility > Public、既定は private、公開後は「anyone who knows the URL and port number can view the running application without needing to authenticate」 / docs.github.com/en/codespaces/developing-in-a-codespace/stopping-and-starting-a-codespace — github.com/codespaces の「…」> Stop codespace / docs.github.com/en/codespaces/about-codespaces/understanding-the-codespace-lifecycle — 既定で30分無操作で停止、保存済みの変更は再開後も残る / docs.github.com/en/account-and-profile/.../inviting-collaborators-to-a-personal-repository — Settings > Collaborators > Add people、招待メールを承認すると collaborator になる / docs.github.com/en/billing/concepts/product-billing/github-codespaces — 無料枠（Free は月120時間）、枠を使い切り支払い方法が未登録だと使用がブロックされる、使用状況は github.com/settings/billing で確認 / antigravity.google/docs/cli/install — インストールコマンドと、リモート環境での手動認証（URLを開き、表示されたコードを貼り付ける） / developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia — secure context（HTTPS または localhost）が必要、HTTPでは NotAllowedError）。Gemini CLI は 2026-06-18 に終了し Antigravity CLI（agy）へ移行済みであることも確認 -->
   <!-- 2026-10-05: 2限前半のPublic公開の確認を、公開確認用ページから見本ゲーム「CYBER TETRIS」（yas-honda/Tetris）のFork＋対戦体験に変更（全チーム向け）。Forkは初めての学生が多い前提で説明を厚くした。公式確認: docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks（公開リポジトリのForkはPublicで、Fork単体では変更不可）, docs.github.com/en/get-started/quickstart/fork-a-repo（Fork→Create fork）。新規Codespaceでの起動・Public維持・スマホ対戦は担当教員の実機確認待ち -->
+  <!-- 2026-10-05: Day1を経験者前倒し型に改訂（ユーザー決定）。チームビルディングは心構え3か条のみ。1限前半にagyの約束事を移し、2限後半はセキュリティ＋チームごとに進め方を選ぶ（①対戦体験の続き／②見本のブラッシュアップ／③自分たちのテーマ）。2年次はGitHub利用経験あり（Codespacesとagyは初めて）。有料AI（Codex・Claude Code等）は本人が操作する場合のみ可、アカウント貸与は不可 -->
   <!-- 設計メモ: 2026-09-30（ユーザー決定: 1限=環境づくり／2限=動くもの、全員が一度Codespacesを開いて閉じる。親ページの Day1 記述を先に更新済み。チームのリポジトリは Private を既定とした——APIキー等を誤って公開しないため。共同作業者には Collaborator として招待する） -->
 </head>
 <body>
@@ -63,21 +64,21 @@
         <li><strong>GitHubとCodespaces</strong>の基本を知り、<strong>全員が一度</strong>Codespacesを開いて閉じる</li>
         <li>代表者のアカウントでチームのCodespacesを使い、<strong>agy</strong>を導入する。見本ゲーム「CYBER TETRIS」を<strong>Fork</strong>し、<strong>ポート転送（Public）</strong>で公開して、チームで対戦を体験する</li>
         <li><strong>Codespacesの無料枠</strong>を確認し、止まったときの備えを決める</li>
-        <li>トラックを選び、最初の<strong>「動くもの」</strong>を1つ作る</li>
-        <li>1日目の終わりに、チームの目標を発表して確定する</li>
+        <li><strong>セキュリティ</strong>（Publicは誰でも開ける）を確認し、チームで<strong>進め方を選ぶ</strong>（対戦体験の続き／見本ゲームのブラッシュアップ／自分たちのテーマの最初の「動くもの」）</li>
+        <li>1日目の終わりに、明日の方向性をチームで一言ずつ共有する</li>
       </ul>
       <div class="lesson-tip">
-        <strong>今日の優先順位:</strong> 今日の主役は「環境づくり」です。2年次とハード科の人は、GitHubもCodespacesも初めてで当たり前です。分からないことはその場で手を挙げ、経験のある人（1年次・3年次）は手助けをお願いします。「最初の動くもの」は、動けば十分です。
+        <strong>今日の優先順位:</strong> 今日の主役は「環境づくり」と「対戦の体験」です。2年次はGitHubの利用経験がありますが、Codespacesとagyは初めてです。ハード科は少人数のため、必要に応じて別途フォローします。分からないことはその場で手を挙げ、経験のある人（1年次・3年次）は手助けをお願いします。<strong>早く進んだチームは、先に進んでかまいません</strong>（Forkと対戦体験へ前倒し、2限後半は見本のブラッシュアップなど）。
       </div>
 
       <div class="vz-timebar">
         <p class="vz-fig-title">180分の流れ（ブロックを押すと、その内容へ移動）</p>
         <ol class="vz-timebar-track">
-          <li style="--w:40"><a class="vz-seg" href="#blk-1"><span class="vz-seg-time">40分</span><span class="vz-seg-name">チームの役割を決める<br>講座の全体像</span></a></li>
+          <li style="--w:40"><a class="vz-seg" href="#blk-1"><span class="vz-seg-time">40分</span><span class="vz-seg-name">役割・心構え<br>agyの約束事</span></a></li>
           <li style="--w:50"><a class="vz-seg" href="#blk-2"><span class="vz-seg-time">50分</span><span class="vz-seg-name">GitHubと<br>Codespaces入門</span></a></li>
           <li style="--w:10"><a class="vz-seg vz-seg--break"><span class="vz-seg-time">休憩</span><span class="vz-seg-name">10分</span></a></li>
           <li style="--w:50"><a class="vz-seg" href="#blk-3"><span class="vz-seg-time">50分</span><span class="vz-seg-name">agy導入<br>見本ゲームで対戦</span></a></li>
-          <li style="--w:30"><a class="vz-seg" href="#blk-4"><span class="vz-seg-time">30分</span><span class="vz-seg-name">トラック選択<br>最初の動くもの</span></a></li>
+          <li style="--w:30"><a class="vz-seg" href="#blk-4"><span class="vz-seg-time">30分</span><span class="vz-seg-name">セキュリティ<br>進め方を選ぶ</span></a></li>
           <li style="--w:10"><a class="vz-seg" href="#blk-5"><span class="vz-seg-time">10分</span><span class="vz-seg-name">まとめ</span></a></li>
         </ol>
         <p class="vz-timebar-note">授業時間の合計は 40 + 50 + 50 + 30 + 10 = 180分（休憩を除く）</p>
@@ -106,7 +107,7 @@
             <span class="timeline-time">1限 前半</span>
             <span class="timeline-duration">約40分</span>
           </div>
-          <h3>チームで参加する：役割を決め、講座の全体像をつかむ</h3>
+          <h3>チームで参加する：役割を決め、心構えとagyの約束事を確認する</h3>
           <div class="timeline-body">
             <p><strong>講座の狙いと5日間の流れ</strong></p>
             <ul>
@@ -124,13 +125,7 @@
               </ol>
             </figure>
 
-            <p><strong>3つのトラックを知る</strong></p>
-            <ul>
-              <li><strong>A「カメラ×AI」</strong>（スマートフォンのカメラを使うWebアプリ）／<strong>B「同時対戦ゲーム」</strong>（複数人でリアルタイムに対戦）／<strong>C「自由テーマ」</strong>（AI×端末であれば形式自由）</li>
-              <li>選ぶのは、今日の2限後半。詳しい内容と学年ごとの位置づけは、<a href="../autumn-intensive.html#sec-tracks">授業概要の図解</a>で確認する</li>
-            </ul>
-
-            <p><strong>チームの役割を決める（チームビルディング）</strong></p>
+            <p><strong>チームの役割を決める</strong>（進級制作のチームのまま参加するので、手短に）</p>
             <figure class="vz-fig" aria-labelledby="cap-roles">
               <p class="vz-fig-title" id="cap-roles">チームで決めること（3つ）</p>
               <div class="vz-fields">
@@ -152,8 +147,23 @@
               </div>
             </figure>
             <div class="lesson-tip">
-              <strong>チームの進め方:</strong> 1年次・3年次はGitHubとCodespacesの経験があります。経験のある人は、初めて使う2年次・ハード科の人を助ける側に回ってください。学年をまたぐチームは、チーム内の各学年の完成目標をそれぞれの目安にします。
+              <strong>チームの進め方:</strong> 1年次・3年次はGitHubとCodespacesの経験があり、2年次はGitHubの利用経験があります。経験のある人は、Codespacesやagyが初めての人を助ける側に回ってください。学年をまたぐチームは、チーム内の各学年の完成目標をそれぞれの目安にします。
             </div>
+
+            <p><strong>心構え（3か条）</strong></p>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>困ったら、早めに声に出す</b>5分悩んだら、チームに共有する（報告・連絡・相談）。何を押して何が表示されたかを、そのまま伝える。</li>
+              <li class="vz-step"><b>経験のある人は、初めての人を助ける</b>代わりにやってしまわず、横で見ながら、一緒に進める。</li>
+              <li class="vz-step"><b>枠が尽きたら、交代する</b>agyやCodespacesの無料枠が尽きたら、枠に余裕のある人に交代する。有料プランを自分で使える人（CodexやClaude Codeなど）は、自分で操作して手伝ってよい。<strong>アカウントやログイン情報を、他の人に貸すことはしない</strong>。</li>
+            </ol>
+
+            <p><strong>agyの約束事</strong>（実際に触るのは2限前半。ここでは考え方だけ共有する）</p>
+            <ul>
+              <li><strong>agyとは:</strong> Codespacesのターミナルで動くAIエージェント。日本語で指示を出すと、コードを書いて直してくれる</li>
+              <li><strong>使い方の流れ:</strong> ドライバーが指示を入力し、ナビゲーターが結果を確認する。うまくいかないときは、表示された内容をそのままagyに伝える</li>
+              <li><strong>指示は小さく:</strong> 1回に1つの変更にする。「全部作り直して」は避ける</li>
+              <li><strong>無償枠には限りがある:</strong> 週単位で回復し、複雑な指示ほど多く消費する。agyの中で <code>/usage</code> と入力すると、残りの枠を確認できる（公式: <a href="https://antigravity.google/docs/plans" target="_blank" rel="noopener">Plans</a>）。上限に達したら、上の「枠が尽きたら、交代する」</li>
+            </ul>
           </div>
         </div>
 
@@ -263,9 +273,25 @@
             <span class="timeline-time">2限 後半</span>
             <span class="timeline-duration">約30分</span>
           </div>
-          <h3>トラックを選び、最初の「動くもの」を作る</h3>
+          <h3>セキュリティを確認し、チームで進め方を選ぶ</h3>
           <div class="timeline-body">
-            <p><strong>チームで相談して、トラックを選ぶ</strong></p>
+            <p><strong>セキュリティの確認（全員・約10分）</strong></p>
+            <ul>
+              <li>Publicにしたポートは、<strong>URLを知っている人なら誰でも、認証なしで開ける</strong>（公式: <a href="https://docs.github.com/en/codespaces/reference/security-in-github-codespaces" target="_blank" rel="noopener">Security in GitHub Codespaces</a>）</li>
+              <li>公開するものに、個人情報や機微な内容を<strong>映さない・入力しない</strong></li>
+              <li>合言葉やパスコードは、本物のアクセス制限にはならない</li>
+              <li>使い終わったら、Codespacesを停止する（ポートの公開もやめる）</li>
+            </ul>
+
+            <p><strong>チームで進め方を選ぶ（約20分）</strong>（スキルや進み具合に合わせて、チームごとに違ってよい）</p>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>対戦体験の続き</b>全員が対戦に参加できたかを確認し、ホストとゲストの両方を体験する。ドライバーを交代しながら、全員が操作する。</li>
+              <li class="vz-step"><b>見本ゲームのブラッシュアップ</b>見本ゲームを、小さな指示で改造する。例: <code>ブロックの色を青系にしてください。</code>／<code>ライン消去の効果音を変えてください。</code>。1回に1つの変更にして、動くことを確認してから、次へ進む。</li>
+              <li class="vz-step"><b>自分たちのテーマで「最初の動くもの」</b>自分たちで作りたいものを決め、最初の1画面を作る。進級制作の課題をAIで解決するワークでもよい（ただし、成果発表では進級制作そのものは発表できない）。下の「トラック別の例」を参考にする。</li>
+            </ol>
+            <p>どれを選んでも、できたら変更をGitHubに記録する（下の「作って、確認して、記録する」）。</p>
+
+            <p><strong>「自分たちのテーマ」を選んだ場合：トラックを選ぶ</strong></p>
             <figure class="vz-fig" aria-labelledby="cap-first">
               <p class="vz-fig-title" id="cap-first">トラック別：今日のゴールとagyへの指示の例</p>
               <div class="vz-fields">
@@ -316,8 +342,8 @@
           <div class="timeline-body">
             <p><strong>チームの目標を発表する</strong></p>
             <ul>
-              <li>各チーム1分程度で、選んだトラックと今日できたことを伝える</li>
-              <li>学年ごとの完成目標（1年次: まず完成させる／2年次: チーム開発を主導する／3年次以上: 下級生チームを支える）に沿って、5日間の目標を決めて発表する</li>
+              <li>各チーム1分程度で、今日できたことと、明日の方向性（対戦体験の続き／見本のブラッシュアップ／自分たちのテーマ）を一言で伝える</li>
+              <li>学年ごとの完成目標（1年次: まず完成させる／2年次: チーム開発を主導する／3年次以上: 下級生チームを支える）を意識して、明日の方向性を相談する</li>
             </ul>
             <p><strong>片付けチェック（全員で確認）</strong></p>
             <ol class="vz-steps">
@@ -327,7 +353,7 @@
             </ol>
             <p><strong>次回予告</strong></p>
             <ul>
-              <li>Day2：<strong>入力を増やす／表現を広げる</strong>——トラックごとの段階課題に取り組む</li>
+              <li>Day2：今日の体験をもとに、チームで方向性を話し合って進める</li>
               <li>今日うまくいったこと・つまずいたことを、簡単にメモしておく</li>
             </ul>
           </div>
