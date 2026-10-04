@@ -10,6 +10,7 @@
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=12">
   <!-- 公式情報確認: 2026-09-30 (docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository — Code > Codespaces タブ > +（New with options も可）、作成時に「誰が支払うか」のメッセージが出る / docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace — ポートを右クリック > Port Visibility > Public、既定は private、公開後は「anyone who knows the URL and port number can view the running application without needing to authenticate」 / docs.github.com/en/codespaces/developing-in-a-codespace/stopping-and-starting-a-codespace — github.com/codespaces の「…」> Stop codespace / docs.github.com/en/codespaces/about-codespaces/understanding-the-codespace-lifecycle — 既定で30分無操作で停止、保存済みの変更は再開後も残る / docs.github.com/en/account-and-profile/.../inviting-collaborators-to-a-personal-repository — Settings > Collaborators > Add people、招待メールを承認すると collaborator になる / docs.github.com/en/billing/concepts/product-billing/github-codespaces — 無料枠（Free は月120時間）、枠を使い切り支払い方法が未登録だと使用がブロックされる、使用状況は github.com/settings/billing で確認 / antigravity.google/docs/cli/install — インストールコマンドと、リモート環境での手動認証（URLを開き、表示されたコードを貼り付ける） / developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia — secure context（HTTPS または localhost）が必要、HTTPでは NotAllowedError）。Gemini CLI は 2026-06-18 に終了し Antigravity CLI（agy）へ移行済みであることも確認 -->
+  <!-- 2026-10-05: 2限前半のPublic公開の確認を、公開確認用ページから見本ゲーム「CYBER TETRIS」（yas-honda/Tetris）のFork＋対戦体験に変更（全チーム向け）。Forkは初めての学生が多い前提で説明を厚くした。公式確認: docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks（公開リポジトリのForkはPublicで、Fork単体では変更不可）, docs.github.com/en/get-started/quickstart/fork-a-repo（Fork→Create fork）。新規Codespaceでの起動・Public維持・スマホ対戦は担当教員の実機確認待ち -->
   <!-- 設計メモ: 2026-09-30（ユーザー決定: 1限=環境づくり／2限=動くもの、全員が一度Codespacesを開いて閉じる。親ページの Day1 記述を先に更新済み。チームのリポジトリは Private を既定とした——APIキー等を誤って公開しないため。共同作業者には Collaborator として招待する） -->
 </head>
 <body>
@@ -60,7 +61,7 @@
       <ul>
         <li>チームの<strong>役割</strong>（代表者・ドライバー／ナビゲーター・交代要員）を決める</li>
         <li><strong>GitHubとCodespaces</strong>の基本を知り、<strong>全員が一度</strong>Codespacesを開いて閉じる</li>
-        <li>代表者のアカウントでチームのCodespacesを使い、<strong>agy</strong>を導入して<strong>ポート転送（Public）</strong>で公開できることを確認する</li>
+        <li>代表者のアカウントでチームのCodespacesを使い、<strong>agy</strong>を導入する。見本ゲーム「CYBER TETRIS」を<strong>Fork</strong>し、<strong>ポート転送（Public）</strong>で公開して、チームで対戦を体験する</li>
         <li><strong>Codespacesの無料枠</strong>を確認し、止まったときの備えを決める</li>
         <li>トラックを選び、最初の<strong>「動くもの」</strong>を1つ作る</li>
         <li>1日目の終わりに、チームの目標を発表して確定する</li>
@@ -75,7 +76,7 @@
           <li style="--w:40"><a class="vz-seg" href="#blk-1"><span class="vz-seg-time">40分</span><span class="vz-seg-name">チームの役割を決める<br>講座の全体像</span></a></li>
           <li style="--w:50"><a class="vz-seg" href="#blk-2"><span class="vz-seg-time">50分</span><span class="vz-seg-name">GitHubと<br>Codespaces入門</span></a></li>
           <li style="--w:10"><a class="vz-seg vz-seg--break"><span class="vz-seg-time">休憩</span><span class="vz-seg-name">10分</span></a></li>
-          <li style="--w:50"><a class="vz-seg" href="#blk-3"><span class="vz-seg-time">50分</span><span class="vz-seg-name">agy導入<br>Public公開の確認</span></a></li>
+          <li style="--w:50"><a class="vz-seg" href="#blk-3"><span class="vz-seg-time">50分</span><span class="vz-seg-name">agy導入<br>見本ゲームで対戦</span></a></li>
           <li style="--w:30"><a class="vz-seg" href="#blk-4"><span class="vz-seg-time">30分</span><span class="vz-seg-name">トラック選択<br>最初の動くもの</span></a></li>
           <li style="--w:10"><a class="vz-seg" href="#blk-5"><span class="vz-seg-time">10分</span><span class="vz-seg-name">まとめ</span></a></li>
         </ol>
@@ -207,7 +208,7 @@
             <span class="timeline-time">2限 前半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>agyを導入し、ポート転送でPublicに公開してみる</h3>
+          <h3>agyを導入し、見本ゲームをForkして対戦を体験する</h3>
           <div class="timeline-body">
             <p><strong>ここからは代表者のCodespacesを使う</strong></p>
             <p>代表者は、1限後半に作って停止したCodespacesを、<a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> の一覧からCodespacesの名前をクリックして再開する（停止して再開する練習にもなる）。他のメンバーの練習用Codespacesは、停止したままにしておく。代表者のPC（画面）を使い、キーボードを持つ人（ドライバー）を交代しながら、全員が一度はキーボードを持つ。</p>
@@ -224,26 +225,36 @@
               <li class="vz-step"><b>認証できたか確認する</b>話しかけてみて（例: <code>あなたが何をできるか、自己紹介してください</code>）、返事が返ってくれば成功。agyの画面上部（ヘッダー）に、サインインしたアカウントのメールアドレスが表示される。</li>
             </ol>
             <div class="lesson-tip">
-              <strong>つまずいたとき:</strong> 認可URLが出ない → もう一度 <code>agy</code> と入力する。コードを貼ってもエラー → 前後に余分な空白や改行が入っていないか確認してコピーし直す。時間がかかりすぎる → <code>Ctrl+C</code> で中断して、<code>agy</code> から最初からやり直す。それでも動かなければ手を挙げる。agyの無償枠には利用制限があります。上限に達したら、チーム内で待つ・使う頻度を調整してください。
+              <strong>つまずいたとき:</strong> 認可URLが出ない → もう一度 <code>agy</code> と入力する。コードを貼ってもエラー → 前後に余分な空白や改行が入っていないか確認してコピーし直す。時間がかかりすぎる → <code>Ctrl+C</code> で中断して、<code>agy</code> から最初からやり直す。それでも動かなければ手を挙げる。agyの無償枠は週単位で回復し、複雑な指示ほど多く消費します。agyの中で <code>/usage</code> と入力すると、残りの枠を確認できます（公式: <a href="https://antigravity.google/docs/plans" target="_blank" rel="noopener">Plans</a>）。指示は小さく、1回に1つの変更にしましょう。
             </div>
 
-            <p><strong>ポート転送を「Public」にして、公開URLで開く</strong></p>
-            <p>まず、公開確認用の小さなページを作る。agyに頼んでもよいし、教員がサンプルを示してもよい。</p>
-            <button class="copy-md-btn" data-md-source="agy-hello-prompt">
-              <span class="btn-icon"></span> 指示文をコピー
-            </button>
-<pre id="agy-hello-prompt" class="md-preview">index.html を作って、「こんにちは、チームのみんな」と大きく表示する1枚のページにしてください。</pre>
-            <figure class="vz-fig" aria-labelledby="cap-port">
-              <p class="vz-fig-title" id="cap-port">公開URLで開くまでの流れ</p>
-              <ol class="vz-flow">
-                <li class="vz-node"><b>サーバーを起動する</b>ターミナルを1つ追加し、<code>python3 -m http.server 8000</code> と入力してEnter</li>
-                <li class="vz-node"><b>「ポート」タブを開く</b>下のパネルの「ポート」タブに、8000が表示される</li>
-                <li class="vz-node vz-node--key"><b>Publicに変更する</b>8000を右クリック→「Port Visibility」→「Public」</li>
-                <li class="vz-node"><b>URLをコピーして開く</b>ポートの右のコピーアイコンでURLをコピーし、スマホで開く</li>
-              </ol>
-              <p class="vz-verdict">ポートは、初期設定では自分だけが見られる。「Public」にすると、URLを知っている人なら誰でも、認証なしでアクセスできる（公式: Forwarding ports in your codespace）。</p>
-              <figcaption>公開URLは <code>https://</code> で始まります。トラックAのカメラは、この <code>https://</code> の環境が必要です。初めて開くとき、GitHubの注意画面が表示された場合は、内容を読んで進みます。確認が終わったら、ポートの公開をやめる（Publicにしない状態に戻す）か、<code>Ctrl+C</code> でサーバーを止めます。</figcaption>
+            <p><strong>見本ゲーム「CYBER TETRIS」をForkして、チームで対戦を体験する</strong></p>
+            <p>ポート転送を「Public」にすると何ができるのかを、担当教員が用意した見本ゲーム（2人対戦つきのテトリス。原型はagyだけで作成）で体験する。Forkは初めての人が多いので、画面を見ながら1つずつ進める。目安は、agyの導入に約20分、この対戦体験に約30分。</p>
+
+            <p><strong>なぜForkするのか:</strong> 他の人のリポジトリは、そのままでは自分で書き換えられません（書き込みの権限がないため）。そこで「Fork」を使って、<strong>自分のアカウントにコピーを1つ作ります</strong>。コピーは自分のものなので、Codespacesで開いて自由に動かしたり、直したりできます。直しても、元の見本ゲームは変わりません。Forkは、GitHubでよく使われる基本の操作です。今日は初めての人が多いので、1つずつ進めます。</p>
+            <figure class="vz-fig" aria-labelledby="cap-fork">
+              <p class="vz-fig-title" id="cap-fork">Forkとは：他の人のリポジトリを、自分のアカウントにコピーすること</p>
+              <ul class="vz-flow" style="--cols:3">
+                <li class="vz-node"><b>元のリポジトリ</b>担当教員の見本ゲーム（yas-honda/Tetris）</li>
+                <li class="vz-node vz-node--key"><b>Fork</b>自分のアカウントにできる、コピー。直しても元には影響しない</li>
+                <li class="vz-node"><b>Codespaces</b>コピーを元に、ブラウザで開く開発環境</li>
+              </ul>
+              <figcaption>Forkしたリポジトリの公開設定は、元と同じ「Public」で、あとから変えられません（公式: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks" target="_blank" rel="noopener">About forks</a>）。見本ゲームなので問題ありません。チームの作品は、1限で作った<strong>Privateのリポジトリ</strong>に置きます。</figcaption>
             </figure>
+
+            <ol class="vz-steps">
+              <li class="vz-step"><b>代表者: 見本ゲームのページを開く</b><a href="https://github.com/yas-honda/Tetris" target="_blank" rel="noopener">github.com/yas-honda/Tetris</a> を開く（GitHubにログインした状態で）。</li>
+              <li class="vz-step"><b>代表者: Forkする</b>ページ右上の「Fork」ボタンをクリックする。「Create a new fork」の画面が出る。「Owner」が<strong>自分のアカウント</strong>になっていることを確認し、名前は変えずに、緑の「Create fork」をクリックする。自分のアカウントの下に <code>（自分のアカウント名）/Tetris</code> ができ、リポジトリ名の下に「forked from yas-honda/Tetris」と表示されれば成功（公式: <a href="https://docs.github.com/en/get-started/quickstart/fork-a-repo" target="_blank" rel="noopener">Fork a repo</a>）。</li>
+              <li class="vz-step"><b>代表者: Forkした自分のリポジトリで、Codespacesを作る</b>表示されているのが「yas-honda/Tetris」ではなく<strong>自分のアカウントの Tetris</strong>であることを確認する。「Code」ボタン→「Codespaces」タブ→「＋」で作る。1〜2分ほどで、ブラウザ上にVS Codeの画面が立ち上がり、ゲームのサーバーが自動で起動する（初回は数分かかることがある）。これは、前のブロックのチームのCodespacesとは<strong>別のCodespaces</strong>。</li>
+              <li class="vz-step"><b>代表者: 「ポート」タブで公開の設定を確認する</b>下のパネルの「ポート」タブに、8000番（Cyber Tetris Server）が表示される。「公開範囲（Visibility）」が<strong>Public</strong>になっているか確認する。Privateなどになっていたら、8000を右クリック→「Port Visibility」→「Public」に変更する。ポートが表示されない、またはゲームが開かないときは、ターミナルで <code>npm start</code> と入力してEnter。</li>
+              <li class="vz-step"><b>チーム全員: 対戦する</b>8000番の行にある地球儀のアイコン（ブラウザーで開く）をクリックして、ゲーム画面を開く。初めて開くときにGitHubの注意画面が出たら、内容を読んで「Continue」で進む。「ONLINE BATTLE」→「CREATE ROOM」→「COPY LINK」で招待リンクをコピーし、チームの別の端末（メンバーのスマートフォンやPC）に送って開く。全員が揃ったら、ホストが「START BATTLE」を押す。パソコンはキーボード、スマートフォンは画面のボタンで操作する。</li>
+              <li class="vz-step"><b>チーム全員: 様子を見て、感想を共有する</b>対戦しない人は、画面を見てもらう。ドライバーを交代しながら、全員が一度は対戦する。「ブラウザだけで、スマホからも、離れた場所の人とも対戦できる」ことと、これが「ポート転送をPublicにする」仕組みで動いていることを確認する。</li>
+              <li class="vz-step"><b>代表者: 終わったらCodespacesを停止する</b>停止すると公開URLは開けなくなり、無料枠も減らなくなる（<a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> で、見本ゲーム用のCodespacesの「…」→「Stop codespace」）。</li>
+            </ol>
+            <div class="lesson-tip">
+              <strong>うまくいかないとき:</strong> まず手を挙げる。時間がかかりすぎるときは、ゲーム画面をスマートフォンで開くところまでで進めてよい（それだけでも、Publicにすると別の端末から開けることは確認できる）。Publicにしたポートは、<strong>URLを知っている人なら誰でも、認証なしで開ける</strong>（公式: Forwarding ports in your codespace）。ゲームの中に、個人情報は入力しない。
+            </div>
+            <p>公開URLは <code>https://</code> で始まります。トラックAのカメラは、この <code>https://</code> の環境が必要です。</p>
           </div>
         </div>
 
@@ -283,7 +294,7 @@
             <p><strong>作って、確認して、記録する</strong></p>
             <ul>
               <li>ドライバーがagyに指示を入力し、ナビゲーターが結果を確認する。うまくいかないときは、何を押したら何が表示されたかをagyにそのまま伝える</li>
-              <li>ポートの設定は前のブロックと同じ。<code>python3 -m http.server 8000</code> で動かして確認する</li>
+              <li>ポートの設定は、前のブロックの見本ゲームと同じ（「ポート」タブでPublicにする）。自分たちのアプリは <code>python3 -m http.server 8000</code> などで動かして確認する</li>
               <li>できたら、変更をGitHubに記録する。<strong>プッシュしないと、Codespacesの中にしか残りません</strong>。交代要員が引き継ぐためにも必要</li>
             </ul>
             <button class="copy-md-btn" data-md-source="agy-push-prompt">
@@ -312,7 +323,7 @@
             <ol class="vz-steps">
               <li class="vz-step"><b>変更をプッシュした</b>GitHubで、今日のファイルが見えることを確認する。</li>
               <li class="vz-step"><b>ポートの公開をやめた（またはサーバーを止めた）</b>Publicのままにしない。</li>
-              <li class="vz-step"><b>Codespacesを停止した</b>代表者のCodespacesも、全員の練習用のCodespacesも、github.com/codespaces で停止済みか確認する。</li>
+              <li class="vz-step"><b>Codespacesを停止した</b>代表者のCodespacesも、全員の練習用のCodespacesも、見本ゲーム用のCodespacesも、github.com/codespaces で停止済みか確認する。</li>
             </ol>
             <p><strong>次回予告</strong></p>
             <ul>
