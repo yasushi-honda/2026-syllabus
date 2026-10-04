@@ -230,10 +230,10 @@
             <p><strong>Antigravity CLI（agy）を導入して認証する</strong></p>
             <ol class="vz-steps">
               <li class="vz-step"><b>インストールする</b>Codespacesのターミナル（Linux）に次のコマンドを貼り付けてEnter。自分のPCのPowerShellなどには貼らない（公式: <a href="https://antigravity.google/docs/cli/install" target="_blank" rel="noopener">Installation &amp; Auth - Antigravity CLI</a>）。
-                <button class="copy-md-btn" data-md-source="agy-install-command">
+                <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="agy-install-command">
                   <span class="btn-icon"></span> コマンドをコピー
                 </button>
-<pre id="agy-install-command" class="md-preview">curl -fsSL https://antigravity.google/cli/install.sh | bash</pre>
+<pre id="agy-install-command" class="md-preview">curl -fsSL https://antigravity.google/cli/install.sh | bash</pre></div>
                 終わったら <code>agy --version</code> と入力してEnter。バージョン番号が表示されれば成功。</li>
               <li class="vz-step"><b>認証する</b>ターミナルで <code>agy</code> と入力してEnter。表示された認可URLを、<strong>Ctrlキー（Macの場合はCmdキー）を押しながらクリック</strong>して新しいタブで開き、Googleアカウントでサインインする。表示された英数字のコードをコピーし、ターミナルに戻って貼り付けてEnter。</li>
               <li class="vz-step"><b>認証できたか確認する</b>話しかけてみて（例: <code>あなたが何をできるか、自己紹介してください</code>）、返事が返ってくれば成功。agyの画面上部（ヘッダー）に、サインインしたアカウントのメールアドレスが表示される。</li>
@@ -271,17 +271,17 @@
 
             <ol class="vz-steps">
               <li class="vz-step"><b>代表者: 見本ゲームのページを開く</b><a href="https://github.com/yas-honda/Tetris" target="_blank" rel="noopener">github.com/yas-honda/Tetris</a> を開く（GitHubにログインした状態で）。
-                <button class="copy-md-btn" data-md-source="sample-url">
+                <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="sample-url">
               <span class="btn-icon"></span> URLをコピー
             </button>
-<pre id="sample-url" class="md-preview">https://github.com/yas-honda/Tetris</pre></li>
+<pre id="sample-url" class="md-preview">https://github.com/yas-honda/Tetris</pre></div></li>
               <li class="vz-step"><b>代表者: Forkする</b>ページ右上の「Fork」ボタンをクリックする。「Create a new fork」の画面が出る。「Owner」が<strong>自分のアカウント</strong>になっていることを確認し、名前は変えずに、緑の「Create fork」をクリックする。自分のアカウントの下に <code>（自分のアカウント名）/Tetris</code> ができ、リポジトリ名の下に「forked from yas-honda/Tetris」と表示されれば成功（公式: <a href="https://docs.github.com/en/get-started/quickstart/fork-a-repo" target="_blank" rel="noopener">Fork a repo</a>）。</li>
               <li class="vz-step"><b>代表者: Forkした自分のリポジトリで、Codespacesを作る</b>表示されているのが「yas-honda/Tetris」ではなく<strong>自分のアカウントの Tetris</strong>であることを確認する。「Code」ボタン→「Codespaces」タブ→「＋」で作る。1〜2分ほどで、ブラウザ上にVS Codeの画面が立ち上がる（初回は数分かかることがある）。ゲームのサーバーは自動では起動しないので、次の手順で起動する。これは、前のブロックのチームのCodespacesとは<strong>別のCodespaces</strong>。</li>
               <li class="vz-step"><b>代表者: ターミナルで <code>npm start</code> を実行し、ゲームのサーバーを起動する</b>下のパネルの「ターミナル」タブに、次のコマンドを入力してEnter。
-                <button class="copy-md-btn" data-md-source="cmd-npm-start">
+                <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="cmd-npm-start">
               <span class="btn-icon"></span> コマンドをコピー
             </button>
-<pre id="cmd-npm-start" class="md-preview">npm start</pre>
+<pre id="cmd-npm-start" class="md-preview">npm start</pre></div>
                 「CYBER TETRIS Server running on http://localhost:8000」と表示されれば成功。<strong>このターミナルは、遊んでいる間ずっと使う</strong>（閉じたり、Ctrl+Cを押したりすると、ゲームが止まる）。ほかの作業は、ターミナルの右上の「＋」で新しいターミナルを開いて行う。</li>
               <li class="vz-step"><b>代表者: 「ポート」タブで、8000番をPublicにする</b>下のパネルの「ポート」タブに、8000番（Cyber Tetris Server）が表示される。「表示範囲（Visibility）」は最初<strong>Private</strong>なので、<strong>必ず手動でPublicに変更する</strong>（8000の行を右クリック→「ポートの表示範囲」→「Public」（英語表示の場合は「Port Visibility」）。設定ファイルでは、最初からPublicにはできない）。Publicにするのは、自分のスマートフォンや、チームの他の端末から開けるようにするため。ポートが表示されないときは、前の手順の <code>npm start</code> が動いているかを確認する。</li>
               <li class="vz-step"><b>チーム全員: 対戦する</b>8000番の行にある地球儀のアイコン（ブラウザーで開く）をクリックして、ゲーム画面を開く。初めて開くときにGitHubの注意画面が出たら、内容を読んでボタンを押して進む（スマートフォンで開くときも、最初に同じ画面が出る）。「ONLINE BATTLE」→「CREATE ROOM」→「COPY LINK」で招待リンクをコピーし、チームの別の端末（メンバーのスマートフォンやPC）に送って開く。全員が揃ったら、ホストが「START BATTLE」を押す。パソコンはキーボード、スマートフォンは画面のボタンで操作する。</li>
@@ -320,20 +320,20 @@
             <ol class="vz-steps">
               <li class="vz-step"><b>新しいターミナルを開く</b><code>npm start</code> を動かしているターミナルは、そのままにする。ターミナルの右上の「＋」で、新しいターミナルを開く。</li>
               <li class="vz-step"><b>agyを入れる</b>新しいターミナルに、次のコマンドを貼り付けてEnter（1限・2限前半と同じコマンド）。
-                <button class="copy-md-btn" data-md-source="agy-install-command-2">
+                <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="agy-install-command-2">
               <span class="btn-icon"></span> コマンドをコピー
             </button>
-<pre id="agy-install-command-2" class="md-preview">curl -fsSL https://antigravity.google/cli/install.sh | bash</pre>
+<pre id="agy-install-command-2" class="md-preview">curl -fsSL https://antigravity.google/cli/install.sh | bash</pre></div>
                 終わったら <code>agy</code> と入力してEnter。認証を求められたら、2限前半と同じ手順で、Googleアカウントでサインインする。</li>
               <li class="vz-step"><b>小さな指示を出す</b>次の指示を、1つずつ試す。1回に1つだけ頼み、動くことを確認してから、次へ進む。
-                <button class="copy-md-btn" data-md-source="prompt-tetris-color">
+                <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="prompt-tetris-color">
               <span class="btn-icon"></span> 指示文をコピー（色）
             </button>
-<pre id="prompt-tetris-color" class="md-preview">ブロックの色を青系にしてください。</pre>
-                <button class="copy-md-btn" data-md-source="prompt-tetris-sound">
+<pre id="prompt-tetris-color" class="md-preview">ブロックの色を青系にしてください。</pre></div>
+                <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="prompt-tetris-sound">
               <span class="btn-icon"></span> 指示文をコピー（効果音）
             </button>
-<pre id="prompt-tetris-sound" class="md-preview">ライン消去の効果音を変えてください。</pre>
+<pre id="prompt-tetris-sound" class="md-preview">ライン消去の効果音を変えてください。</pre></div>
                 変更したら、ブラウザで開いているゲーム画面を再読み込みして確認する。サーバーを止める必要はない（<code>npm start</code> のターミナルは動かしたまま）。</li>
             </ol>
 
@@ -371,10 +371,10 @@
               <li>ポートの設定は、前のブロックの見本ゲームと同じ（「ポート」タブでPublicにする）。自分たちのアプリは <code>python3 -m http.server 8000</code> などで動かして確認する</li>
               <li>できたら、変更をGitHubに記録する。<strong>プッシュしないと、Codespacesの中にしか残りません</strong>。交代要員が引き継ぐためにも必要</li>
             </ul>
-            <button class="copy-md-btn" data-md-source="agy-push-prompt">
+            <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="agy-push-prompt">
               <span class="btn-icon"></span> 指示文をコピー
             </button>
-<pre id="agy-push-prompt" class="md-preview">ここまでの変更をコミットして、GitHubにプッシュしてください。</pre>
+<pre id="agy-push-prompt" class="md-preview">ここまでの変更をコミットして、GitHubにプッシュしてください。</pre></div>
             <div class="lesson-tip">
               <strong>トラックAの人へ（撮影・個人情報のルール）:</strong> カメラを使うと、他人を撮影する場面が出ます。撮影前に必ず声をかけて同意を得てください。撮った映像・画像を無断で公開・共有しないでください。カメラは、ブラウザが許可を求める画面で「許可」を選ぶと使えます（公式: MDN getUserMedia）。<code>http://</code> のページでは、カメラが使えません。
             </div>
