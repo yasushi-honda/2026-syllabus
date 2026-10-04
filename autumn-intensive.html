@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="styles.css?v=12">
+  <!-- 2026-10-05: Day2以降を改訂（担当教員の決定）。トラックA/B/Cを廃止し、Day1の見本ゲームの体験をもとにチームが方向性（見本のアップデート／進級制作への応用／新しい対戦ゲーム）を選ぶ構成に一本化。Day2=人生ゲーム、Day3=ボンバーマン（余力チーム）。カメラ×AI（トラックA）の記述・参考資料・評価・注意点は削除し、AI StudioのBuildを救済レーンとして1項目のみ記載 -->
   <!-- 公式情報確認: 2026-09-15 (antigravity.google/docs/cli/install / ai.google.dev/edge/mediapipe/solutions/vision/hand_landmarker/web_js / docs.github.com/ja/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace / docs.github.com/en/codespaces/developing-in-a-codespace/opening-an-existing-codespace / docs.github.com/en/billing/.../about-billing-for-github-codespaces / developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia / github.com/google-antigravity/antigravity-cli/issues/10 / ai.google.dev/gemini-api/terms / ai.google.dev/gemini-api/docs/live-api / ai.google.dev/gemini-api/docs/pricing) -->
   <!-- 2026-10-05: Day1に見本ゲーム「CYBER TETRIS」（github.com/yas-honda/Tetris、担当教員作成）を全チーム向けに追加（授業概要・Day1の行・参考資料）。新規Codespaceでの起動・スマホ対戦の確認は担当教員の実機確認待ち -->
   <!-- 2026-10-05: ポート分離の記述を「推奨」から「同一ポートでも動作した実例あり、不安定なら分離」に修正（担当教員の実機確認 2026-10-04。公式docsに明記はなく、実機確認ベース） -->
@@ -56,7 +57,7 @@
     <nav class="syllabus-section syllabus-section--nav" aria-label="このページの目次">
       <ul class="vz-jump">
         <li><a class="vz-chip" href="#sec-overview">授業概要</a></li>
-        <li><a class="vz-chip" href="#sec-tracks">3つのトラック</a></li>
+        <li><a class="vz-chip" href="#sec-direction">進め方（方向性）</a></li>
         <li><a class="vz-chip" href="#sec-public">公開のしくみ</a></li>
         <li><a class="vz-chip" href="#sec-goals">到達目標</a></li>
         <li><a class="vz-chip" href="#sec-plan">授業計画</a></li>
@@ -81,59 +82,57 @@
       <ul class="vz-stats">
         <li class="vz-stat"><div class="vz-stat-num">5<small>日間</small></div><div class="vz-stat-label">時間割枠外の集中講座</div></li>
         <li class="vz-stat"><div class="vz-stat-num">180<small>分／日</small></div><div class="vz-stat-label">1限90分＋2限・まとめ90分（休憩は枠外）</div></li>
-        <li class="vz-stat"><div class="vz-stat-num">3<small>トラック</small></div><div class="vz-stat-label">A カメラ×AI／B 同時対戦ゲーム／C 自由テーマ</div></li>
+        <li class="vz-stat"><div class="vz-stat-num">3<small>つの方向性</small></div><div class="vz-stat-label">見本のアップデート／進級制作への応用／新しい対戦ゲーム</div></li>
         <li class="vz-stat"><div class="vz-stat-num">1〜5<small>分</small></div><div class="vz-stat-label">成果を見せられる規模（発表の目安）</div></li>
       </ul>
       <ul>
         <li>通常の時間割枠に入らない、後期のスピンオフ企画「<strong>AI駆動でのチーム開発体験</strong>」です。<strong>学科横断で参加する既存の進級制作チーム</strong>のまま、AIエージェントと協働してアプリを開発します。新しくチームを組み直すことはせず、進級制作で積み重ねてきたチームワークをそのまま活かします（<strong>唯一の例外</strong>として、個人制作が中心のハード科は、今回に限り<strong>学科で1つのチーム</strong>を新たに編成し、協働する体験を積みます。学年をまたぐ場合は、チーム内の各学年の完成目標をそれぞれの目安にします）。</li>
         <li><strong>学年ごとの位置づけ</strong>: 1年次は自然言語での開発を体験し、まず完成させることを目指します。2年次はAIを活用した短納期でのチーム開発とトラブルシューティングを主導し、自然言語を使った課題解決を目指します。3年次以上は自チームの取り組みを進めながら、<strong>下級生チームのサポートに回り</strong>、教える側の視点で開発の注意点を学びます。</li>
-        <li>作るものは3つの選択肢から選びます。<strong>トラックA「カメラ×AI」</strong>（スマートフォンのカメラを使うWebアプリ）、<strong>トラックB「同時対戦ゲーム」</strong>（複数人でリアルタイムに対戦できるゲーム）、<strong>トラックC「自由テーマ」</strong>（AI×端末であれば形式自由の自チーム独自プロダクト）です。トラックA・Bには段階的な日次課題を用意し、トラックCは自チームで段階目標を設定します。チームの状況によっては、<strong>進級制作の課題をAIで解決するワーク</strong>に取り組んでもかまいません。ただし成果発表では進級制作そのものは発表できないため、発表の対象は今回選んだトラックの成果物にします。</li>
+        <li>Day1の見本ゲームの体験をもとに、Day2以降は<strong>チームで方向性を選びます</strong>。選べるのは、<strong>見本ゲームのアップデート</strong>（agyで小さく改造する）、<strong>今回の体験を進級制作に活かす</strong>、<strong>新しい対戦ゲームを作る</strong>（余力のあるチーム向け。Day2は人生ゲーム〔ターン制〕、Day3はボンバーマン〔6人同時〕）の3つです。チームの状況によっては、<strong>進級制作の課題をAIで解決するワーク</strong>に取り組んでもかまいません。ただし成果発表では進級制作そのものは発表できないため、発表の対象は今回の講座で作った成果物にします。</li>
         <li><strong>規模の方針</strong>: 1〜5分で成果を見せられる規模を基本とし、複雑なシステムは避けます。新しい機能を増やすことよりも、使える状態に仕上げることを優先します。</li>
-        <li>（<strong>全トラック共通の鍵となる事実</strong>）GitHub Codespacesの<strong>ポート転送を「パブリック」に設定するだけで</strong>、追加のクラウド契約なしに<strong>世界中からアクセスできる状態になります</strong>（公式: Security in GitHub Codespaces）。トラックBの同時対戦も、この標準機能だけで実現できます。一方で「パブリック」は<strong>認証なしで誰でもアクセスできる</strong>ことも意味するため、公開する場面ではセキュリティの基本もあわせて学びます（詳細は授業計画・履修上の注意点を参照）。</li>
-        <li>チームで1つの<strong>GitHub Codespaces</strong>を起動し、<strong>Antigravity CLI（agy）</strong>でAIエージェントに指示を出しながら開発します。各日、<strong>1限はトラックごとの段階的なステージ課題、2限＋まとめはチームのブラッシュアップ</strong>に充てます（Day1のみ、環境づくりを含む構成です）。</li>
+        <li>（<strong>全チーム共通の鍵となる事実</strong>）GitHub Codespacesの<strong>ポート転送を「パブリック」に設定するだけで</strong>、追加のクラウド契約なしに<strong>世界中からアクセスできる状態になります</strong>（公式: Security in GitHub Codespaces）。同時対戦も、この標準機能だけで実現できます。一方で「パブリック」は<strong>認証なしで誰でもアクセスできる</strong>ことも意味するため、公開する場面ではセキュリティの基本もあわせて学びます（詳細は授業計画・履修上の注意点を参照）。</li>
+        <li>チームで1つの<strong>GitHub Codespaces</strong>を起動し、<strong>Antigravity CLI（agy）</strong>でAIエージェントに指示を出しながら開発します。各日、<strong>1限はその日の課題、2限＋まとめはチームのブラッシュアップ</strong>に充てます（Day1のみ、環境づくりを含む構成です）。</li>
         <li><strong>GitHubとCodespacesの扱い方</strong>は、Day1に伝えます。1年次・3年次はGitHubとCodespacesの経験があり、2年次はGitHubの利用経験があります（Codespacesとagyは初めてです）。ハード科は少人数のため、必要に応じて別途フォローします。経験のあるチームは先に進んでかまいません。</li>
         <li><strong>Codespacesの無料枠</strong>には月間の上限があり、使い切ると開発が止まります。備えと、止まったときの回避策（別のメンバーのアカウントで続ける、チーム内で調整する）は、履修上の注意点にまとめています。</li>
         <li><strong>agyの無償枠は週単位で回復</strong>し、複雑な指示ほど消費が大きくなります。そのため、動くものを土台に小さな指示で改造していく進め方を基本とします。Codex・Claude Codeなどを自分で使える人は使ってもかまいません。チームで助け合って進めてください。</li>
+        <li><strong>救済レーン</strong>: agyの無償枠が尽きて進めなくなったチームは、教員が声をかけたうえで、<strong>Google AI StudioのBuild</strong>で簡単なアプリを作って共有する進め方に切り替えられます（学校のGoogleアカウントで利用できることを、担当教員が確認済み。2026-10-05）。通信対戦ができるかは未検証のため、1台で動くアプリを作って共有するところまでを想定します。通常の選択肢には並べません。</li>
         <li>Day1では、担当教員が用意した<strong>見本ゲーム「CYBER TETRIS」</strong>（2人対戦つきのテトリス。原型は担当教員がagyだけで作成）を使います。代表者のアカウントでForkしてCodespacesで起動し、ポート転送を「パブリック」にして、チームのスマートフォンとPCから実際に対戦します。「自然言語での指示で、ここまで作れる」という実感をチーム全員で共有することが、ねらいです。</li>
         <li><strong>チームビルディング</strong>として、Day1に役割分担・進め方をすり合わせる時間を取ります。役割はドライバー／ナビゲーターの交代制ですが、<strong>ログインするGitHubアカウントは代表者のまま</strong>（Codespacesは作成者本人しか再開できないため）とし、キーボードを持つ人（ドライバー）だけを交代します。</li>
         <li>Day4はチーム同士で作品を触り合う相互体験、Day5は<strong>ピックアップ形式の成果発表会</strong>（選ばれたチームがデモ実演）を行います。発表は<strong>デフォルトパス通りでも、独自の工夫を加えても構いません</strong>。</li>
       </ul>
 
-      <figure class="vz-fig" id="sec-tracks" aria-labelledby="cap-tracks">
-        <p class="vz-fig-title" id="cap-tracks">作るものは3つのトラックから選ぶ（Day1〜3の段階課題。Day1の課題は、Day1の2限後半または、まだ着手していないチームはDay2の冒頭に取り組む）</p>
+      <figure class="vz-fig" id="sec-direction" aria-labelledby="cap-direction">
+        <p class="vz-fig-title" id="cap-direction">Day2以降は、チームで方向性を選ぶ（Day1の見本ゲームの体験をもとに）</p>
         <div class="vz-fields">
           <section class="vz-field vz-f-ka">
-            <h4>トラックA「カメラ×AI」</h4>
-            <p class="vz-field-count">スマートフォンのカメラを使うWebアプリ</p>
+            <h4>見本ゲームのアップデート</h4>
+            <p class="vz-field-count">Day1のCYBER TETRISを、agyで小さく改造する</p>
             <ol class="vz-days">
-              <li><b>Day1</b><span>カメラ表示まで（secure context / HTTPS が必要な理由も確認）</span></li>
-              <li><b>Day2</b><span>映像の加工＋AIレシピA「その場で見るAI」</span></li>
-              <li><b>Day3</b><span>（余力があれば）AIレシピB「考えるAI」（Gemini API）</span></li>
+              <li><b>Day2</b><span>小さな指示で、色・効果音・操作などを改造する</span></li>
+              <li><b>Day3</b><span>続き、または仕上げ。公開時の安全面も確認する</span></li>
             </ol>
-            <ul class="vz-tags"><li>APIキーはサーバ側のみ</li><li>撮影は同意を得る</li></ul>
+            <ul class="vz-tags"><li>1回に1つの変更</li><li>/usage で枠を確認</li></ul>
+          </section>
+          <section class="vz-field vz-f-kc">
+            <h4>今回の体験を進級制作に活かす</h4>
+            <p class="vz-field-count">Fork・Codespaces・agyで得たやり方を、進級制作で使う</p>
+            <ol class="vz-days">
+              <li><b>Day2</b><span>活かせる点をチームで洗い出す</span></li>
+              <li><b>Day3</b><span>実際に進級制作で取り組む</span></li>
+            </ol>
+            <ul class="vz-tags"><li>成果発表では進級制作そのものは発表できない</li></ul>
           </section>
           <section class="vz-field vz-f-kb">
-            <h4>トラックB「同時対戦ゲーム」</h4>
-            <p class="vz-field-count">複数人でリアルタイムに対戦できるゲーム</p>
+            <h4>新しい対戦ゲームを作る</h4>
+            <p class="vz-field-count">余力のあるチーム向け</p>
             <ol class="vz-days">
-              <li><b>Day1</b><span>最初の「動くもの」を1つ作る</span></li>
-              <li><b>Day2</b><span>入力を増やし、何を競うかを洗い出す</span></li>
-              <li><b>Day3</b><span>パスコード付きの「部屋（ルーム）」でリアルタイム同期。ポートをパブリックにして確認</span></li>
+              <li><b>Day2</b><span>人生ゲーム（ターン制）を作る</span></li>
+              <li><b>Day3</b><span>ボンバーマン（6人同時）に挑戦する</span></li>
             </ol>
             <ul class="vz-tags"><li>WebSocket</li><li>パスコードは本物の制限ではない</li><li>ゲームは小さく保つ</li></ul>
           </section>
-          <section class="vz-field vz-f-kc">
-            <h4>トラックC「自由テーマ」</h4>
-            <p class="vz-field-count">AI×端末であれば形式自由の自チーム独自プロダクト</p>
-            <ol class="vz-days">
-              <li><b>Day1</b><span>最初の「動くもの」を1つ作る</span></li>
-              <li><b>Day2</b><span>自チームで設定した次の段階目標に取り組む</span></li>
-              <li><b>Day3</b><span>さらに次の段階目標に取り組む</span></li>
-            </ol>
-            <ul class="vz-tags"><li>A・Bの日次課題を参考に</li><li>段階目標は自分たちで設定</li></ul>
-          </section>
         </div>
-        <figcaption>Day4は全トラック共通でチーム同士の相互体験、Day5は成果発表会です。</figcaption>
+        <figcaption>Day4は全チーム共通でチーム同士の相互体験、Day5は成果発表会です。agyの枠が尽きて進めなくなったチームには、教員が声をかけて「救済レーン」（Google AI StudioのBuild）を案内します。</figcaption>
       </figure>
 
       <figure class="vz-fig" aria-labelledby="cap-grades">
@@ -159,7 +158,7 @@
       </figure>
 
       <figure class="vz-fig" id="sec-public" aria-labelledby="cap-public">
-        <p class="vz-fig-title" id="cap-public">全トラック共通：ポート転送を「パブリック」にすると、世界中から開ける</p>
+        <p class="vz-fig-title" id="cap-public">全チーム共通：ポート転送を「パブリック」にすると、世界中から開ける</p>
         <ul class="vz-flow">
           <li class="vz-node"><b>チームのCodespaces</b>代表者1名のアカウントで起動し、agyで開発する</li>
           <li class="vz-node vz-node--key"><b>ポート転送を「パブリック」に設定</b>追加のクラウド契約は不要</li>
@@ -192,28 +191,24 @@
 
       <h3>知識・理解</h3>
       <ol>
-        <li>（トラックA）ブラウザでカメラ映像を扱うには、通信が暗号化された安全な環境（secure context / HTTPS）が必要であることを理解している。</li>
         <li>AIエージェント（Antigravity CLI）が、人間の指示をコードに変換して実行する仕組みの概要を理解している。</li>
         <li>GitHub Codespaces上で動かしたプログラムを、インターネット経由でスマートフォンやPCから開く仕組み（ポート転送）の概要を理解している。</li>
-        <li>（トラックA）AIモデルのAPIキーを、ブラウザ側のコードに書いてはいけない理由を理解している。</li>
-        <li>（トラックB）複数人でリアルタイムに情報をやり取りする際、1台のサーバー役が全員の操作を受け取り配り直す「サーバー」と「部屋（ルーム）」の基本的な考え方を理解している。</li>
-        <li>GitHub Codespacesのポート転送を「パブリック」に設定するだけで世界中からアクセス可能になる仕組みと、それが「認証なしで誰でもアクセスできる」ことも意味するという、セキュリティ上の注意点を理解している（全トラック共通）。</li>
+        <li>（対戦ゲームを作るチーム）複数人でリアルタイムに情報をやり取りする際、1台のサーバー役が全員の操作を受け取り配り直す「サーバー」と「部屋（ルーム）」の基本的な考え方を理解している。</li>
+        <li>GitHub Codespacesのポート転送を「パブリック」に設定するだけで世界中からアクセス可能になる仕組みと、それが「認証なしで誰でもアクセスできる」ことも意味するという、セキュリティ上の注意点を理解している（全チーム共通）。</li>
         <li>チーム開発における役割分担（ドライバー／ナビゲーター）の意味を理解している。</li>
       </ol>
 
       <h3>思考・判断</h3>
       <ol>
-        <li>（トラックA）撮影した映像・画像を扱う際に、誰の同意が必要かを判断できる。</li>
         <li>通信量やAIエージェントの利用制限、「1〜5分で見せられる規模」という方針の中で、何を作るかを現実的に絞り込める。</li>
-        <li>自分たちのチーム・トラックで作りたいものを、実現可能な範囲に分解して計画できる。</li>
+        <li>自分たちのチームで作りたいものを、実現可能な範囲に分解して計画できる。</li>
       </ol>
 
       <h3>スキル・表現</h3>
       <ol>
         <li>GitHubとCodespacesの基本的な使い方を理解し、自分の手で起動して操作できる。</li>
         <li>Antigravity CLIに指示を出し、Webアプリを作成・修正できる。</li>
-        <li>（トラックA）カメラ映像を取得し、画面に表示・加工するプログラムを、AIエージェントと協働で書ける。／（トラックB）複数人の操作をリアルタイムに同期する仕組みを、AIエージェントと協働で組み込める。／（トラックC）自チームで設定した段階目標を、AIエージェントと協働で実装し、日ごとに進捗を示せる。</li>
-        <li>（トラックA）AIエージェント（レシピA・レシピBいずれか）を自分たちのアプリに組み込める。</li>
+        <li>自分たちのチームが選んだ方向性（見本ゲームのアップデート／進級制作への応用／新しい対戦ゲーム）を、AIエージェントと協働で実装し、日ごとに進捗を示せる。（対戦ゲームを作るチーム）複数人の操作をリアルタイムに同期する仕組みを、AIエージェントと協働で組み込める。</li>
         <li>チームで作ったアプリやゲームを、他チームの端末で実際に動かして見せられる。</li>
         <li>（1年次）AIエージェントへの指示（プロンプト）を通じて、自然言語による開発の可能性を体験できる。</li>
         <li>（2年次）チームの実装作業とトラブルシューティングを主導できる。</li>
@@ -230,12 +225,12 @@
 
     <div class="syllabus-section" id="sec-plan">
       <h2>授業計画（全5日）</h2>
-      <p>各日の時間配分は固定です：1限前半40分／1限後半50分／（休憩10分・枠外）／2限前半50分／2限後半30分／まとめ10分（授業合計180分）。<strong>1限（90分）はトラックごとの段階的なステージ課題に取り組む共通の時間枠、2限＋まとめ（90分）はチームごとのブラッシュアップ・自由探究</strong>にあてる構成です。チームの状況によっては、この時間を進級制作の課題をAIで解決するワークに充ててもかまいません。ただしDay1だけは、1限を環境づくり（チームの役割決め、心構え、agyの約束事、GitHubとCodespacesの入門）、2限前半をagyの導入と見本ゲームの対戦体験、2限後半をセキュリティの確認とチームごとの進め方の選択にあてます。トラックは、Day1の2限後半で「自分たちのテーマ」を選んだチームはそこで、まだ選んでいないチームは遅くともDay2の冒頭に選びます。見本ゲームの対戦体験・ブラッシュアップを続けるチームは、トラックB「同時対戦ゲーム」の流れで進めます。技術的な詳細・図解は、日別の詳細ページ（Day1は作成済み、以降は作成予定）で扱います。</p>
+      <p>各日の時間配分は固定です：1限前半40分／1限後半50分／（休憩10分・枠外）／2限前半50分／2限後半30分／まとめ10分（授業合計180分）。<strong>1限（90分）はその日の課題（Day2は方向性の決定と最初の制作、Day3は挑戦課題または続き）に取り組む共通の時間枠、2限＋まとめ（90分）はチームごとのブラッシュアップ・自由探究</strong>にあてる構成です。チームの状況によっては、この時間を進級制作の課題をAIで解決するワークに充ててもかまいません。ただしDay1だけは、1限を環境づくり（チームの役割決め、心構え、agyの約束事、GitHubとCodespacesの入門）、2限前半をagyの導入と見本ゲームの対戦体験、2限後半をセキュリティの確認とチームごとの進め方の選択にあてます。Day2の冒頭には、チームで方向性（見本ゲームのアップデート／進級制作への応用／新しい対戦ゲーム）を選びます。技術的な詳細・図解は、日別の詳細ページ（Day1は作成済み、以降は作成予定）で扱います。</p>
 
       <div class="vz-timebar vz-timebar--static">
         <p class="vz-fig-title">各日の180分の使い方</p>
         <ol class="vz-timebar-track">
-          <li style="--w:45"><a class="vz-seg"><span class="vz-seg-time">1限 90分</span><span class="vz-seg-name">トラックごとの段階的なステージ課題<br>（前半40分＋後半50分）</span></a></li>
+          <li style="--w:45"><a class="vz-seg"><span class="vz-seg-time">1限 90分</span><span class="vz-seg-name">その日の課題<br>（前半40分＋後半50分）</span></a></li>
           <li style="--w:5"><a class="vz-seg vz-seg--break"><span class="vz-seg-time">休憩</span><span class="vz-seg-name">10分</span></a></li>
           <li style="--w:45"><a class="vz-seg"><span class="vz-seg-time">2限＋まとめ 90分</span><span class="vz-seg-name">チームのブラッシュアップ<br>（50分＋30分＋まとめ10分）</span></a></li>
         </ol>
@@ -246,8 +241,8 @@
         <p class="vz-fig-title" id="cap-days">5日間の流れ（詳しい内容は下の表）</p>
         <ol class="vz-steps">
           <li class="vz-step"><b>進級制作チームで参加／環境をつくる</b>GitHubとCodespacesの扱い方を学び（2年次はGitHub経験あり・Codespacesとagyは初めて）、見本ゲームをForkして対戦を体験する。2限後半は、セキュリティを確認したうえで、チームごとに進め方を選ぶ。</li>
-          <li class="vz-step"><b>入力を増やす／表現を広げる</b>トラックごとの段階課題（A: 映像の加工＋レシピA／B: 入力を増やす／C: 次の段階目標）。2年次はトラブルシューティングを主導する。</li>
-          <li class="vz-step"><b>AIを載せる／みんなで同時に使えるようにする</b>A: レシピBとAPIキーの設計原則／B: ルームでリアルタイム同期／C: 次の段階目標。2限で最初の動作確認をする。</li>
+          <li class="vz-step"><b>方向性を選ぶ／最初の制作</b>前日の気づきを共有し、チームで方向性（見本ゲームのアップデート／進級制作への応用／新しい対戦ゲーム）を話し合って選ぶ。新しい対戦ゲームを選んだチームは、<strong>人生ゲーム</strong>（ターン制。ボンバーマンより同期する状態が少ない）に取り組む。2限はブラッシュアップ。<strong>2年次</strong>はトラブルシューティングを主導する。</li>
+          <li class="vz-step"><b>挑戦する／みんなで同時に使えるようにする</b>余力のあるチームは<strong>ボンバーマン</strong>（6人同時の対戦）に挑戦する。そのほかのチームは、Day2の続き（見本ゲームのアップデート・進級制作への応用・人生ゲームの仕上げ）を進める。対戦ゲームを公開するチームは、パブリック公開の確認とパスコード以外の対策を1つ入れる。2限で最初の動作確認を行う。</li>
           <li class="vz-step"><b>相互体験／つくりこむ</b>チーム同士で作品を触り合い、フィードバックを受け取る。3年次以上は下級生チームのサポートにも回る。エラーの伝え方も練習する。</li>
           <li class="vz-step"><b>🎤 成果発表会／仕上げて見せる</b>最終確認のあと、ピックアップ形式で1〜5分のデモ実演。全チームの作品を他チームの端末で実際に動かしてもらい、最後に振り返る。</li>
         </ol>
@@ -263,15 +258,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td class="week-num">1</td><td class="week-theme"><a href="autumn-intensive/day01.html" class="week-link">進級制作チームで参加／環境をつくる</a></td><td>講座の狙いと3つのトラックを共有し、チームの役割（代表者・ドライバー／ナビゲーター・交代要員）を決める。<strong>GitHubとCodespacesの扱い方</strong>を学び（1年次・3年次は経験済み、2年次はGitHub経験あり・Codespacesとagyは初めて、ハード科は必要に応じて別途フォロー）、全員が一度Codespacesを開いて閉じる。代表者のアカウントで見本ゲーム「CYBER TETRIS」をForkしてCodespacesを起動し、Antigravity CLI（agy）の導入とポート転送のPublic設定を確認する。確認したら、チームのスマートフォンとPCから対戦を体験し、メンバー全員で様子を見る。agyの残り枠を<code>/usage</code>で確認し、小さな指示で進めるコツも共有する。無料枠の確認も行う。<strong>2限後半</strong>は、セキュリティを確認したうえで、チームごとに進め方を選ぶ（対戦体験の続き／見本ゲームのブラッシュアップ／自分たちのテーマで最初の「動くもの」。<strong>トラックA</strong>は撮影・個人情報のルールもここで確認）。経験のあるチームは先に進んでよい。1日目の終わりに、明日の方向性を共有する。</td></tr>
-            <tr><td class="week-num">2</td><td class="week-theme">入力を増やす／表現を広げる</td><td>トラックごとの段階課題（<strong>A</strong>: 映像の加工＋AIレシピA／<strong>B</strong>: 入力を増やし、何を競うかを洗い出す／<strong>C</strong>: 次の段階目標）。2限はブラッシュアップ。<strong>2年次</strong>はトラブルシューティングを主導する。</td></tr>
-            <tr><td class="week-num">3</td><td class="week-theme">AIを載せる／みんなで同時に使えるようにする</td><td>トラックごとの段階課題（<strong>A</strong>: （余力があれば）AIレシピBと、APIキー・呼び出し回数・通信量の設計原則／<strong>B</strong>: ルームでリアルタイム同期し、パブリック公開の確認とパスコード以外の対策を1つ入れる／<strong>C</strong>: 次の段階目標）。2限で最初の動作確認を行う。</td></tr>
+            <tr><td class="week-num">1</td><td class="week-theme"><a href="autumn-intensive/day01.html" class="week-link">進級制作チームで参加／環境をつくる</a></td><td>講座の狙いと5日間の流れを共有し、チームの役割（代表者・ドライバー／ナビゲーター・交代要員）を決める。<strong>GitHubとCodespacesの扱い方</strong>を学び（1年次・3年次は経験済み、2年次はGitHub経験あり・Codespacesとagyは初めて、ハード科は必要に応じて別途フォロー）、全員が一度Codespacesを開いて閉じる。代表者のアカウントで見本ゲーム「CYBER TETRIS」をForkしてCodespacesを起動し、Antigravity CLI（agy）の導入とポート転送のPublic設定を確認する。確認したら、チームのスマートフォンとPCから対戦を体験し、メンバー全員で様子を見る。agyの残り枠を<code>/usage</code>で確認し、小さな指示で進めるコツも共有する。無料枠の確認も行う。<strong>2限後半</strong>は、セキュリティを確認したうえで、チームごとに進め方を選ぶ（対戦体験の続き／見本ゲームのブラッシュアップ／自分たちのテーマで最初の「動くもの」）。経験のあるチームは先に進んでよい。1日目の終わりに、明日の方向性を共有する。</td></tr>
+            <tr><td class="week-num">2</td><td class="week-theme">方向性を選ぶ／最初の制作</td><td>前日の気づきを共有し、チームで方向性（見本ゲームのアップデート／進級制作への応用／新しい対戦ゲーム）を話し合って選ぶ。新しい対戦ゲームを選んだチームは、<strong>人生ゲーム</strong>（ターン制。ボンバーマンより同期する状態が少ない）に取り組む。2限はブラッシュアップ。<strong>2年次</strong>はトラブルシューティングを主導する。</td></tr>
+            <tr><td class="week-num">3</td><td class="week-theme">挑戦する／みんなで同時に使えるようにする</td><td>余力のあるチームは<strong>ボンバーマン</strong>（6人同時の対戦）に挑戦する。そのほかのチームは、Day2の続き（見本ゲームのアップデート・進級制作への応用・人生ゲームの仕上げ）を進める。対戦ゲームを公開するチームは、パブリック公開の確認とパスコード以外の対策を1つ入れる。2限で最初の動作確認を行う。</td></tr>
             <tr><td class="week-num">4</td><td class="week-theme">相互体験／つくりこむ</td><td><strong>チーム同士で作品を触り合う相互体験</strong>を行い、フィードバックを反映して実装を進める。<strong>3年次以上</strong>は下級生チームのサポートにも回る。うまく動かない状況をAIエージェントに説明する練習（エラーの伝え方）にも取り組む。</td></tr>
             <tr><td class="week-num">5</td><td class="week-theme">🎤 成果発表会／仕上げて見せる</td><td>最終確認と発表準備のあと、<strong>ピックアップ形式の成果発表会</strong>（1〜5分のデモ実演）。全チームの作品を他チームの端末で実際に動かし合い、振り返る。</td></tr>
           </tbody>
         </table>
       </div>
-      <p>※内容は、学生の理解度や進度、当日の通信環境に応じて柔軟に変更する可能性があります。<br>※各日の冒頭で、前日からの気づき・トラブルを共有します。<br>※トラックCチームは、トラックA・Bの日次ステージ課題を参考にしながら、自分たちで各日の段階目標を設定してください。自チームの成果物をCodespacesのポート転送（Public設定）で公開する場合は、授業概要で触れた「全トラック共通の鍵となる事実」がそのまま当てはまります。</p>
+      <p>※内容は、学生の理解度や進度、当日の通信環境に応じて柔軟に変更する可能性があります。<br>※各日の冒頭で、前日からの気づき・トラブルを共有します。<br>※自チームの成果物をCodespacesのポート転送（Public設定）で公開する場合は、授業概要で触れた「全チーム共通の鍵となる事実」がそのまま当てはまります。</p>
     </div>
 
     <div class="syllabus-section">
@@ -280,16 +275,12 @@
       <p>主な参考資料（随時更新）：</p>
       <ul>
         <li>Google — Antigravity CLI Installation &amp; Auth 公式ドキュメント（antigravity.google）</li>
-        <li>Google AI Edge — Hand landmarks detection guide for Web 公式ガイド（ai.google.dev）</li>
         <li>GitHub — Forwarding ports in your codespace 公式ドキュメント（docs.github.com、複数ポートの同時転送について記載）</li>
         <li>GitHub — Security in GitHub Codespaces 公式ドキュメント（docs.github.com、パブリックポートが認証なしで誰からでもアクセス可能であることを記載）</li>
         <li>GitHub — Opening an existing codespace 公式ドキュメント（docs.github.com、Codespaceは作成者本人しか開けない旨を記載）</li>
         <li>GitHub — About billing for GitHub Codespaces 公式ドキュメント（docs.github.com、月間無料枠と、使い切った場合の挙動について記載）</li>
-        <li>MDN — MediaDevices: getUserMedia() method（developer.mozilla.org）</li>
         <li>Google — Plans 公式ドキュメント（antigravity.google、無償枠の利用制限について記載）</li>
-        <li>Google — Gemini API Additional Terms of Service（ai.google.dev、無料版の利用データがサービス改善に使われる旨を記載）</li>
-        <li>Google — Gemini API Live API overview（ai.google.dev、レシピC「お喋りAI」の公式リファレンス。ephemeral tokenの推奨について記載）</li>
-        <li>MDN — WebSocket（developer.mozilla.org、トラックB「同時対戦ゲーム」のリアルタイム通信技術）</li>
+        <li>MDN — WebSocket（developer.mozilla.org、対戦ゲームのリアルタイム通信技術）</li>
         <li>CYBER TETRIS（見本ゲーム）— 担当教員作成の2人対戦つきテトリス（github.com/yas-honda/Tetris）。READMEの「授業で使うとき」に手順あり</li>
       </ul>
     </div>
@@ -312,7 +303,7 @@
           <li class="vz-bar"><span class="vz-bar-name">チーム開発・実装の実践</span><span class="vz-bar-track"><i style="--v:25"></i></span><b>25%</b></li>
           <li class="vz-bar"><span class="vz-bar-name">AIエージェントとの協働プロセス</span><span class="vz-bar-track"><i style="--v:25"></i></span><b>25%</b></li>
           <li class="vz-bar"><span class="vz-bar-name">学年ごとの目標への到達</span><span class="vz-bar-track"><i style="--v:20"></i></span><b>20%</b></li>
-          <li class="vz-bar"><span class="vz-bar-name">トラックのコア機能と安全面への配慮</span><span class="vz-bar-track"><i style="--v:15"></i></span><b>15%</b></li>
+          <li class="vz-bar"><span class="vz-bar-name">選んだ方向性のコア機能と安全面への配慮</span><span class="vz-bar-track"><i style="--v:15"></i></span><b>15%</b></li>
           <li class="vz-bar"><span class="vz-bar-name">相互体験・発表・振り返りの実践</span><span class="vz-bar-track"><i style="--v:15"></i></span><b>15%</b></li>
         </ul>
       </figure>
@@ -320,18 +311,15 @@
       <div class="eval-item"><span class="eval-pct" style="color:var(--c-slate)">25%</span><span class="eval-label"><strong>チーム開発・実装の実践</strong> — 役割を交代しながら、実際に手を動かした度合い。</span></div>
       <div class="eval-item"><span class="eval-pct" style="color:var(--c-slate)">25%</span><span class="eval-label"><strong>AIエージェントとの協働プロセス</strong> — 指示の出し方、うまくいかないときの立て直し方。</span></div>
       <div class="eval-item"><span class="eval-pct" style="color:var(--c-slate)">20%</span><span class="eval-label"><strong>学年ごとの目標への到達</strong> — 1年次: まず完成させられたか／2年次: 自然言語を使った課題解決とトラブルシューティングを主導できたか／3年次以上: 自チームの取り組みと下級生チームのサポートに取り組めたか。</span></div>
-      <div class="eval-item"><span class="eval-pct" style="color:var(--c-slate)">15%</span><span class="eval-label"><strong>トラックのコア機能と安全面への配慮</strong> — 選んだトラックのコア機能（レシピA・Bの検出・応答、またはリアルタイム同期など）と、secure context・通信量・APIキー（該当する場合）の扱いなど安全面への配慮を踏まえた実装。</span></div>
+      <div class="eval-item"><span class="eval-pct" style="color:var(--c-slate)">15%</span><span class="eval-label"><strong>選んだ方向性のコア機能と安全面への配慮</strong> — 選んだ方向性のコア機能（見本ゲームの改良、進級制作への応用の成果、対戦ゲームのリアルタイム同期など）と、公開時の安全面（個人情報を映さない・入力しない、パスコード以外の対策、通信量の扱いなど）への配慮を踏まえた実装。</span></div>
       <div class="eval-item"><span class="eval-pct" style="color:var(--c-slate)">15%</span><span class="eval-label"><strong>相互体験・発表・振り返りの実践</strong> — Day4の相互体験、Day5の振り返りへの取り組み。<strong>ピックアップ発表に選ばれたかどうかで評価に差はつけません</strong>。</span></div>
     </div>
 
     <div class="syllabus-section" id="sec-notes">
       <h2>その他（履修上の注意点）</h2>
       <ul>
-        <li>（<strong>トラックA</strong>）カメラを使うため、<strong>他人を撮影する場面が発生します</strong>（肖像権・個人情報への配慮が必要です）。撮影前に必ず声をかけ、同意を得てください。撮った映像・画像を無断で公開・共有しないでください。レシピB使用時は、画像がGoogleに送信され、無料APIキーでは人間のレビュアーが確認する場合もある旨も伝えてください。</li>
-        <li>アプリの公開にはGitHub Codespacesの<strong>ポート転送（Public設定）</strong>を使います（公式: Forwarding ports in your codespace）。Publicにしたポートは<strong>URLを知っている人なら誰でも認証なしでアクセスできます</strong>——これが授業概要で触れた「全トラック共通の鍵となる事実」の裏返しです。個人情報や機微な内容を映さない・入力しない運用を徹底してください。</li>
-        <li>（<strong>トラックB</strong>）静的ファイル配信とWebSocketサーバーは、同じポート1つに載せても動作した実例があります（担当教員がagyとCodespacesで、1つのポートでHTTPとWebSocketを同居させ、対戦の同期を確認、2026-10-04）。接続が不安定なときは、ポートを分けて両方をPublicに設定すると原因を切り分けやすくなります。WebSocketの接続先は<strong>wss://の転送URL</strong>を指定します（<code>ws://</code>や<code>localhost</code>では他の端末から接続できません）。<strong>パスコードは本物のアクセス制限にはならない</strong>ため、接続数やメッセージ頻度の制限も1つ入れ、想定外の参加者が入ってきた場合の対処（部屋の作り直し等）もチームで決めておきましょう。</li>
-        <li>（<strong>トラックA</strong>）AIレシピBを使うチームは、<strong>APIキーを必ずサーバ側のコードにのみ置いてください</strong>（ブラウザ側に書くと誰でも見られます）。ブラウザに持たせる合言葉も通信から取り出せるため本物のアクセス制限にはならず、公開URLを知っていれば誰でも呼び出せてしまうため、<strong>サーバ側でレート制限</strong>も設けましょう（公式: Gemini API Additional Terms of Service、無料版データはサービス改善に使われる場合あり）。</li>
-        <li>余力があるチームが<strong>レシピC「お喋りAI」（Gemini Live API）</strong>に挑戦する場合も、APIキーの扱いは同じ原則です。公式はサーバ側で発行する一時的なトークン（ephemeral token）の使用を推奨しています。実装難易度が高いため、必須課題としては求めません。</li>
+        <li>アプリの公開にはGitHub Codespacesの<strong>ポート転送（Public設定）</strong>を使います（公式: Forwarding ports in your codespace）。Publicにしたポートは<strong>URLを知っている人なら誰でも認証なしでアクセスできます</strong>——これが授業概要で触れた「全チーム共通の鍵となる事実」の裏返しです。個人情報や機微な内容を映さない・入力しない運用を徹底してください。</li>
+        <li>（<strong>対戦ゲームを作るチーム</strong>）静的ファイル配信とWebSocketサーバーは、同じポート1つに載せても動作した実例があります（担当教員がagyとCodespacesで、1つのポートでHTTPとWebSocketを同居させ、対戦の同期を確認、2026-10-04）。接続が不安定なときは、ポートを分けて両方をPublicに設定すると原因を切り分けやすくなります。WebSocketの接続先は<strong>wss://の転送URL</strong>を指定します（<code>ws://</code>や<code>localhost</code>では他の端末から接続できません）。<strong>パスコードは本物のアクセス制限にはならない</strong>ため、接続数やメッセージ頻度の制限も1つ入れ、想定外の参加者が入ってきた場合の対処（部屋の作り直し等）もチームで決めておきましょう。</li>
         <li><strong>Antigravity CLI（agy）はGoogleアカウントでの認証のみで追加契約は不要</strong>ですが、無償枠には利用制限があります。公式ドキュメントでは、無償枠は<strong>週単位で回復</strong>し、具体的な回数は公表されていません。使える量はAIが行う作業の量に応じて変わり、簡単な指示ほど多く送れ、複雑な指示ほど多く消費します（公式: Plans、確認日 2026-10-04）。上限は予告なく変わることもあります。枠を大切に使うため、次のことを心がけてください。
           <ul>
             <li>指示は小さく、1回に1つの変更にする。「全部作り直して」は避ける。</li>
