@@ -16,6 +16,7 @@
   <!-- 2026-10-05: 実機確認で、postStartCommand（自動起動）は作成ログ上successだがサーバーも/tmp/server.logも存在しなかった（原因未特定）。npm startを手動の必須手順に変更（yas-honda/Tetris#3と同期） -->
   <!-- 2026-10-05: 実機確認（担当教員）で、日本語表示のメニューは「ポートの表示範囲」→「Public」。スマホ（Wi-Fiを切った別回線）でも最初にGitHubの注意画面が出て、ボタンを押すと対戦に進めた。スマホの画面は1画面に収まっていた。手順の文言を実機に合わせた -->
   <!-- 2026-10-05: 使いやすさ改善（監査）: ①見本ゲームのCodespacesにagyが入っていない抜けを補う手順を追加（agy導入は別環境のため再度必要。認証の再要求は未確認のため条件付きで記述）、②コピーボタンを追加（見本URL・npm start・agy導入・指示例2つ）、③見本ゲームの全体の流れとCodespaces2つの図を追加。スクリーンショットは載せない（ユーザー決定） -->
+  <!-- 2026-10-05: まとめの発表（各チーム1分）を、Googleフォームのアンケートに変更（担当教員の決定。初日から発表を入れると運営が大変なため）。チーム編成はそのまま（進級制作チームとハード科）で、アンケートは振り分けには使わない。フォームのURLは担当教員が作成後に追記 -->
   <!-- 設計メモ: 2026-09-30（ユーザー決定: 1限=環境づくり／2限=動くもの、全員が一度Codespacesを開いて閉じる。親ページの Day1 記述を先に更新済み。チームのリポジトリは Private を既定とした——APIキー等を誤って公開しないため。共同作業者には Collaborator として招待する） -->
 </head>
 <body>
@@ -69,7 +70,7 @@
         <li>代表者のアカウントでチームのCodespacesを使い、<strong>agy</strong>を導入する。見本ゲーム「CYBER TETRIS」を<strong>Fork</strong>し、<strong>ポート転送（Public）</strong>で公開して、チームで対戦を体験する</li>
         <li><strong>Codespacesの無料枠</strong>を確認し、止まったときの備えを決める</li>
         <li><strong>セキュリティ</strong>（Publicは誰でも開ける）を確認し、チームで<strong>方向性を選ぶ</strong>（対戦体験の続き／見本ゲームのアップデート／新しい方向性（進級制作への応用・新しい対戦ゲーム）の最初の「動くもの」）</li>
-        <li>1日目の終わりに、明日の方向性をチームで一言ずつ共有する</li>
+        <li>1日目の終わりに、Googleフォームのアンケートに答える</li>
       </ul>
       <div class="lesson-tip">
         <strong>今日の優先順位:</strong> 今日の主役は「環境づくり」と「対戦の体験」です。2年次はGitHubの利用経験がありますが、Codespacesとagyは初めてです。ハード科は少人数のため、必要に応じて別途フォローします。分からないことはその場で手を挙げ、経験のある人（1年次・3年次）は手助けをお願いします。<strong>早く進んだチームは、先に進んでかまいません</strong>（Forkと対戦体験へ前倒し、2限後半は見本のアップデートなど）。
@@ -83,7 +84,7 @@
           <li style="--w:10"><a class="vz-seg vz-seg--break"><span class="vz-seg-time">休憩</span><span class="vz-seg-name">10分</span></a></li>
           <li style="--w:50"><a class="vz-seg" href="#blk-3"><span class="vz-seg-time">50分</span><span class="vz-seg-name">agy導入<br>見本ゲームで対戦</span></a></li>
           <li style="--w:30"><a class="vz-seg" href="#blk-4"><span class="vz-seg-time">30分</span><span class="vz-seg-name">セキュリティ<br>方向性を選ぶ</span></a></li>
-          <li style="--w:10"><a class="vz-seg" href="#blk-5"><span class="vz-seg-time">10分</span><span class="vz-seg-name">まとめ</span></a></li>
+          <li style="--w:10"><a class="vz-seg" href="#blk-5"><span class="vz-seg-time">10分</span><span class="vz-seg-name">アンケート<br>片付け</span></a></li>
         </ol>
         <p class="vz-timebar-note">授業時間の合計は 40 + 50 + 50 + 30 + 10 = 180分（休憩を除く）</p>
       </div>
@@ -370,12 +371,12 @@
             <span class="timeline-time">まとめ</span>
             <span class="timeline-duration">約10分</span>
           </div>
-          <h3>チームの目標を発表して確定する／片付ける</h3>
+          <h3>アンケートに答える／片付ける</h3>
           <div class="timeline-body">
-            <p><strong>チームの目標を発表する</strong></p>
+            <p><strong>アンケートに答える（Googleフォーム、約3分）</strong></p>
             <ul>
-              <li>各チーム1分程度で、今日できたことと、明日の方向性（対戦体験の続き／見本のアップデート／新しい方向性）を一言で伝える</li>
-              <li>学年ごとの完成目標（1年次: まず完成させる／2年次: チーム開発を主導する／3年次以上: 下級生チームを支える）を意識して、明日の方向性を相談する</li>
+              <li>今日の進み具合、困ったこと・つまずいたこと、先生に伝えたいことを、Googleフォームで答える</li>
+              <li>フォームのリンクは、授業で先生が案内する</li>
             </ul>
             <p><strong>片付けチェック（全員で確認）</strong></p>
             <ol class="vz-steps">
