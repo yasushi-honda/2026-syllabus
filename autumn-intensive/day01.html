@@ -17,6 +17,7 @@
   <!-- 2026-10-05: 実機確認（担当教員）で、日本語表示のメニューは「ポートの表示範囲」→「Public」。スマホ（Wi-Fiを切った別回線）でも最初にGitHubの注意画面が出て、ボタンを押すと対戦に進めた。スマホの画面は1画面に収まっていた。手順の文言を実機に合わせた -->
   <!-- 2026-10-05: 使いやすさ改善（監査）: ①見本ゲームのCodespacesにagyが入っていない抜けを補う手順を追加（agy導入は別環境のため再度必要。認証の再要求は未確認のため条件付きで記述）、②コピーボタンを追加（見本URL・npm start・agy導入・指示例2つ）、③見本ゲームの全体の流れとCodespaces2つの図を追加。スクリーンショットは載せない（ユーザー決定） -->
   <!-- 2026-10-05: まとめの発表（各チーム1分）を、Googleフォームのアンケートに変更（担当教員の決定。初日から発表を入れると運営が大変なため）。チーム編成はそのまま（進級制作チームとハード科）で、アンケートは振り分けには使わない。フォームのURLは担当教員が作成後に追記 -->
+  <!-- 2026-10-05: 無料枠が尽きたときの交代は、リポジトリへのコラボレーター招待が前提（担当教員の指摘）。チームのリポジトリは1限後半に招待済みだが、見本ゲームのForkには手順がなかったため追加 -->
   <!-- 設計メモ: 2026-09-30（ユーザー決定: 1限=環境づくり／2限=動くもの、全員が一度Codespacesを開いて閉じる。親ページの Day1 記述を先に更新済み。チームのリポジトリは Private を既定とした——APIキー等を誤って公開しないため。共同作業者には Collaborator として招待する） -->
 </head>
 <body>
@@ -156,7 +157,7 @@
             <ol class="vz-steps">
               <li class="vz-step"><b>困ったら、早めに声に出す</b>5分悩んだら、チームに共有する（報告・連絡・相談）。何を押して何が表示されたかを、そのまま伝える。</li>
               <li class="vz-step"><b>経験のある人は、初めての人を助ける</b>代わりにやってしまわず、横で見ながら、一緒に進める。</li>
-              <li class="vz-step"><b>枠が尽きたら、交代する</b>agyやCodespacesの無料枠が尽きたら、枠に余裕のある人に交代する。有料プランを自分で使える人（CodexやClaude Codeなど）は、自分で操作して手伝ってよい。<strong>アカウントやログイン情報を、他の人に貸すことはしない</strong>。</li>
+              <li class="vz-step"><b>枠が尽きたら、交代する</b>agyやCodespacesの無料枠が尽きたら、枠に余裕のある人に交代する（交代できるよう、チームのリポジトリや見本のForkには、メンバーを招待しておく。手順は後で行う）。有料プランを自分で使える人（CodexやClaude Codeなど）は、自分で操作して手伝ってよい。<strong>アカウントやログイン情報を、他の人に貸すことはしない</strong>。</li>
             </ol>
 
             <p><strong>agyの約束事</strong>（実際に触るのは2限前半。ここでは考え方だけ共有する）</p>
@@ -274,6 +275,7 @@
             </button>
 <pre id="sample-url" class="md-preview">https://github.com/yas-honda/Tetris</pre></div></li>
               <li class="vz-step"><b>代表者: Forkする</b>ページ右上の「Fork」ボタンをクリックする。「Create a new fork」の画面が出る。「Owner」が<strong>自分のアカウント</strong>になっていることを確認し、名前は変えずに、緑の「Create fork」をクリックする。自分のアカウントの下に <code>（自分のアカウント名）/Tetris</code> ができ、リポジトリ名の下に「forked from yas-honda/Tetris」と表示されれば成功（公式: <a href="https://docs.github.com/en/get-started/quickstart/fork-a-repo" target="_blank" rel="noopener">Fork a repo</a>）。</li>
+              <li class="vz-step"><b>代表者: Forkしたリポジトリにも、チームのメンバーを招待する</b>1限後半と同じ手順で、Forkした自分のTetrisの「Settings」→「Collaborators」→「Add people」から、メンバーのGitHubアカウントを追加する。招待を受けた人は、届いたメールから承認する。無料枠が尽きたときに、別のメンバーが同じ内容で続けたり、改造した変更を引き継いだりできるようにするため（Forkは代表者のアカウントのものなので、招待しないと、他のメンバーは変更を保存できない）。</li>
               <li class="vz-step"><b>代表者: Forkした自分のリポジトリで、Codespacesを作る</b>表示されているのが「yas-honda/Tetris」ではなく<strong>自分のアカウントの Tetris</strong>であることを確認する。「Code」ボタン→「Codespaces」タブ→「＋」で作る。1〜2分ほどで、ブラウザ上にVS Codeの画面が立ち上がる（初回は数分かかることがある）。ゲームのサーバーは自動では起動しないので、次の手順で起動する。これは、前のブロックのチームのCodespacesとは<strong>別のCodespaces</strong>。</li>
               <li class="vz-step"><b>代表者: ターミナルで <code>npm start</code> を実行し、ゲームのサーバーを起動する</b>下のパネルの「ターミナル」タブに、次のコマンドを入力してEnter。
                 <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="cmd-npm-start">
