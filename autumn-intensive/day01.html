@@ -18,7 +18,7 @@
   <!-- 2026-10-05: 使いやすさ改善（監査）: ①見本ゲームのCodespacesにagyが入っていない抜けを補う手順を追加（agy導入は別環境のため再度必要。認証の再要求は未確認のため条件付きで記述）、②コピーボタンを追加（見本URL・npm start・agy導入・指示例2つ）、③見本ゲームの全体の流れとCodespaces2つの図を追加。スクリーンショットは載せない（ユーザー決定） -->
   <!-- 2026-10-05: まとめの発表（各チーム1分）を、Googleフォームのアンケートに変更（担当教員の決定。初日から発表を入れると運営が大変なため）。チーム編成はそのまま（進級制作チームとハード科）で、アンケートは振り分けには使わない。フォームのURLは担当教員が作成後に追記 -->
   <!-- 2026-10-05: 無料枠が尽きたときの交代は、リポジトリへのコラボレーター招待が前提（担当教員の指摘）。チームのリポジトリは1限後半に招待済みだが、見本ゲームのForkには手順がなかったため追加 -->
-  <!-- 設計メモ: 2026-09-30（ユーザー決定: 1限=環境づくり／2限=動くもの、全員が一度Codespacesを開いて閉じる。親ページの Day1 記述を先に更新済み。チームのリポジトリは Private を既定とした——APIキー等を誤って公開しないため。共同作業者には Collaborator として招待する） -->
+  <!-- 設計メモ: 2026-09-30（ユーザー決定: 1限=環境づくり／2限=動くもの、全員が一度Codespacesを開いて閉じる。親ページの Day1 記述を先に更新済み。チームのリポジトリは当初 Private を既定としたが、2026-10-05にPublicへ変更（ユーザー決定: 進級制作のリポジトリは別で、この講座のリポジトリでAPIキー等のセンシティブな情報は扱わない。Private リポジトリの Codespaces でポートを Public にできるかが未検証だった懸念も解消できる）。共同作業者には Collaborator として招待する） -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -191,7 +191,7 @@
             <p><strong>手順（教員の画面を見ながら、チーム全員で同じ手順を一斉に進める）</strong></p>
             <ol class="vz-steps">
               <li class="vz-step"><b>全員: GitHubにログインする</b>登録がまだの人は <a href="https://github.com/signup" target="_blank" rel="noopener">github.com/signup</a> から新規登録する。登録後、メールの確認（verify）を済ませる。教員が個別にフォローする。</li>
-              <li class="vz-step"><b>代表者: チームのリポジトリを作る</b>GitHub右上の「+」→「New repository」を選び、Repository name にチームの名前（例: <code>team-app</code>）を入力する。<strong>Private</strong>を選び（本授業ではPrivateにする。APIキー等を誤って公開しないため）、<strong>「Add a README file」にチェック</strong>を入れて「Create repository」をクリックする（最初のコミットがないと、Codespacesを作る元のブランチがない）。（公式: <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository" target="_blank" rel="noopener">Creating a new repository</a>）</li>
+              <li class="vz-step"><b>代表者: チームのリポジトリを作る</b>GitHub右上の「+」→「New repository」を選び、Repository name にチームの名前（例: <code>team-app</code>）を入力する。<strong>Public</strong>を選び（この講座では、APIキーや個人情報を扱わないのでPublicにする。<strong>これらはコミットしない</strong>）、<strong>「Add a README file」にチェック</strong>を入れて「Create repository」をクリックする（最初のコミットがないと、Codespacesを作る元のブランチがない）。（公式: <a href="https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-new-repository" target="_blank" rel="noopener">Creating a new repository</a>）</li>
               <li class="vz-step"><b>代表者: チームのメンバーを招待する</b>リポジトリの「Settings」→「Collaborators」→「Add people」で、メンバーのGitHubアカウントを追加する。招待を受けた人は、届いたメールから承認する。承認が済むと、リポジトリが見えるようになる（公式: <a href="https://docs.github.com/en/account-and-profile/how-tos/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository" target="_blank" rel="noopener">Inviting collaborators to a personal repository</a>）。</li>
               <li class="vz-step"><b>全員: 自分のアカウントでCodespacesを開く</b>招待の承認が済み、チームのリポジトリが見えることを確認してから進む。リポジトリを開き、「Code」ボタン→「Codespaces」タブ→「＋」で作る。ブラウザ上にVS Codeの画面が立ち上がれば成功。左にファイル一覧、真ん中にエディタ、下にターミナルがある。作成時のダイアログ下部に「誰が支払うか」のメッセージが出るので確認する。使った時間は、<strong>自分のアカウントの無料枠</strong>から引かれる（公式: <a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository" target="_blank" rel="noopener">Creating a codespace for a repository</a>）。</li>
               <li class="vz-step"><b>全員: 確認できたらすぐ停止する</b><a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> を開き、一覧のCodespaceの「…」→「Stop codespace」を選ぶ（公式: <a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/stopping-and-starting-a-codespace" target="_blank" rel="noopener">Stopping and starting a codespace</a>）。削除はしない。保存した変更は、次に起動したときも残る。代表者がここで作ったCodespacesが、2限でチームが使うものになる。</li>
@@ -309,6 +309,7 @@
             <ul>
               <li>Publicにしたポートは、<strong>URLを知っている人なら誰でも、認証なしで開ける</strong>（公式: <a href="https://docs.github.com/en/codespaces/reference/security-in-github-codespaces" target="_blank" rel="noopener">Security in GitHub Codespaces</a>）</li>
               <li>公開するものに、個人情報や機微な内容を<strong>映さない・入力しない</strong></li>
+              <li>チームのリポジトリもPublicなので、<strong>APIキー・パスワード・個人情報は、ファイルに書いてコミットしない</strong>（コミットすると、誰でも見られる）</li>
               <li>合言葉やパスコードは、本物のアクセス制限にはならない</li>
               <li>使い終わったら、Codespacesを停止する（ポートの公開もやめる）</li>
             </ul>
