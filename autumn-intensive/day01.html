@@ -165,7 +165,7 @@
               <li><strong>agyとは:</strong> 正式名称は<strong>Antigravity CLI</strong>（アンチグラビティ・シーエルアイ。「agy」はそのコマンド名で、この講座ではagyと呼ぶ）。Googleが提供する、Codespacesのターミナル（文字で操作する画面）で動くAIエージェント。日本語で指示を出すと、コードを書いて直してくれる</li>
               <li><strong>使い方の流れ:</strong> 入力する人が指示を入力し、確認する人が結果を確認する。うまくいかないときは、表示された内容をそのままagyに伝える</li>
               <li><strong>指示は小さく:</strong> 1回に1つの変更にする。「全部作り直して」は避ける</li>
-              <li><strong>無償枠には限りがある:</strong> 週単位で回復し、複雑な指示ほど多く消費する。agyの中で <code>/usage</code> と入力すると、残りの枠を確認できる（公式: <a href="https://antigravity.google/docs/plans" target="_blank" rel="noopener">Plans</a>）。上限に達したら、上の「枠が尽きたら、交代する」</li>
+              <li><strong>無償枠には限りがある:</strong> 週単位で回復し、複雑な指示ほど多く消費する。agyの中で <code>/usage</code> と入力すると、残りの枠をモデルごとに確認できる（公式: <a href="https://antigravity.google/docs/plans" target="_blank" rel="noopener">Plans</a>）。あるモデルの枠が尽きたら、<code>/model</code> で別のモデル（Geminiの別のモデルや、Claudeなど）に切り替えて続けられる。モデルごとに枠が分かれているので、切り替え後の残りは <code>/usage</code> で確認する（選べるモデルは<a href="https://antigravity.google/docs/models" target="_blank" rel="noopener">Models</a>。Claudeの無償枠向けモデルは2026-11-02に提供終了の予定）。それでも上限に達したら、上の「枠が尽きたら、交代する」</li>
             </ul>
           </div>
         </div>
@@ -238,7 +238,7 @@
               <li class="vz-step"><b>認証できたか確認する</b>話しかけてみて（例: <code>あなたが何をできるか、自己紹介してください</code>）、返事が返ってくれば成功。agyの画面上部（ヘッダー）に、サインインしたアカウントのメールアドレスが表示される。</li>
             </ol>
             <div class="lesson-tip">
-              <strong>つまずいたとき:</strong> 認可URLが出ない → もう一度 <code>agy</code> と入力する。コードを貼ってもエラー → 前後に余分な空白や改行が入っていないか確認してコピーし直す。時間がかかりすぎる → <code>Ctrl+C</code> で中断して、<code>agy</code> から最初からやり直す。それでも動かなければ手を挙げる。agyの無償枠は週単位で回復し、複雑な指示ほど多く消費します。agyの中で <code>/usage</code> と入力すると、残りの枠を確認できます（公式: <a href="https://antigravity.google/docs/plans" target="_blank" rel="noopener">Plans</a>）。指示は小さく、1回に1つの変更にしましょう。
+              <strong>つまずいたとき:</strong> 認可URLが出ない → もう一度 <code>agy</code> と入力する。コードを貼ってもエラー → 前後に余分な空白や改行が入っていないか確認してコピーし直す。時間がかかりすぎる → <code>Ctrl+C</code> で中断して、<code>agy</code> から最初からやり直す。それでも動かなければ手を挙げる。agyの無償枠は週単位で回復し、複雑な指示ほど多く消費します。agyの中で <code>/usage</code> と入力すると、モデルごとの残りの枠を確認できます（公式: <a href="https://antigravity.google/docs/plans" target="_blank" rel="noopener">Plans</a>）。Geminiの枠が尽きたら、<code>/model</code> でClaudeなど別のモデルに切り替えると続けられます。指示は小さく、1回に1つの変更にしましょう。
             </div>
 
             <p><strong>見本ゲーム「CYBER TETRIS」をForkして、チームで対戦を体験する</strong></p>
