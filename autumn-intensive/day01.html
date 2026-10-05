@@ -53,7 +53,7 @@
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">代表者 / ドライバー・ナビゲーター / 交代要員 / GitHub / リポジトリ / Codespaces / 無料枠 / Antigravity CLI（agy）/ ポート転送（Public）</div>
+          <div class="lesson-overview-value">代表者 / 入力する人・確認する人 / 交代要員 / GitHub / リポジトリ / Codespaces / 無料枠 / Antigravity CLI（agy）/ ポート転送（Public）</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
@@ -65,7 +65,7 @@
     <div class="syllabus-section">
       <h2>この回のゴール</h2>
       <ul>
-        <li>チームの<strong>役割</strong>（代表者・ドライバー／ナビゲーター・交代要員）を決める</li>
+        <li>チームの<strong>役割</strong>（代表者・入力する人／確認する人・交代要員）を決める</li>
         <li><strong>GitHubとCodespaces</strong>の基本を知り、<strong>全員が一度</strong>Codespacesを開いて閉じる</li>
         <li>代表者のアカウントでチームのCodespacesを使い、<strong>agy</strong>を導入する。見本ゲーム「CYBER TETRIS」を<strong>Fork</strong>し、<strong>ポート転送（Public）</strong>で公開して、チームで対戦を体験する</li>
         <li><strong>Codespacesの無料枠</strong>を確認し、止まったときの備えを決める</li>
@@ -140,9 +140,9 @@
                   <p>チームのリポジトリとCodespacesを作る人。Codespacesは作成者本人しか再開できないため、5日間同じアカウントで起動・再開します。</p>
                 </section>
                 <section class="vz-field vz-f-sl">
-                  <h4>② ドライバー／ナビゲーター</h4>
+                  <h4>② 入力する人／確認する人</h4>
                   <p class="vz-field-count">交代制</p>
-                  <p>ドライバーはキーボードを持ち、agyへの指示を入力する人。ナビゲーターは画面を見ながら、指示の内容や結果を確認・提案する人。交代するのは、キーボードを持つ人だけです。</p>
+                  <p>入力する人は、キーボードを持ち、agyへの指示を入力する人。確認する人は、画面を見ながら、指示の内容や結果を確認・提案する人。交代するのは、キーボードを持つ人だけです。</p>
                 </section>
                 <section class="vz-field vz-f-sl">
                   <h4>③ 交代要員</h4>
@@ -162,7 +162,7 @@
             <p><strong>agyの約束事</strong>（実際に触るのは2限前半。ここでは考え方だけ共有する）</p>
             <ul>
               <li><strong>agyとは:</strong> Codespacesのターミナルで動くAIエージェント。日本語で指示を出すと、コードを書いて直してくれる</li>
-              <li><strong>使い方の流れ:</strong> ドライバーが指示を入力し、ナビゲーターが結果を確認する。うまくいかないときは、表示された内容をそのままagyに伝える</li>
+              <li><strong>使い方の流れ:</strong> 入力する人が指示を入力し、確認する人が結果を確認する。うまくいかないときは、表示された内容をそのままagyに伝える</li>
               <li><strong>指示は小さく:</strong> 1回に1つの変更にする。「全部作り直して」は避ける</li>
               <li><strong>無償枠には限りがある:</strong> 週単位で回復し、複雑な指示ほど多く消費する。agyの中で <code>/usage</code> と入力すると、残りの枠を確認できる（公式: <a href="https://antigravity.google/docs/plans" target="_blank" rel="noopener">Plans</a>）。上限に達したら、上の「枠が尽きたら、交代する」</li>
             </ul>
@@ -223,7 +223,7 @@
           <h3>agyを導入し、見本ゲームをForkして対戦を体験する</h3>
           <div class="timeline-body">
             <p><strong>ここからは代表者のCodespacesを使う</strong></p>
-            <p>代表者は、1限後半に作って停止したCodespacesを、<a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> の一覧からCodespacesの名前をクリックして再開する（停止して再開する練習にもなる）。他のメンバーの練習用Codespacesは、停止したままにしておく。代表者のPC（画面）を使い、キーボードを持つ人（ドライバー）を交代しながら、全員が一度はキーボードを持つ。</p>
+            <p>代表者は、1限後半に作って停止したCodespacesを、<a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> の一覧からCodespacesの名前をクリックして再開する（停止して再開する練習にもなる）。他のメンバーの練習用Codespacesは、停止したままにしておく。代表者のPC（画面）を使い、キーボードを持つ人を交代しながら、全員が一度はキーボードを持つ。</p>
 
             <p><strong>Antigravity CLI（agy）を導入して認証する</strong></p>
             <ol class="vz-steps">
@@ -283,7 +283,7 @@
                 「CYBER TETRIS Server running on http://localhost:8000」と表示されれば成功。<strong>このターミナルは、遊んでいる間ずっと使う</strong>（閉じたり、Ctrl+Cを押したりすると、ゲームが止まる）。ほかの作業は、ターミナルの右上の「＋」で新しいターミナルを開いて行う。</li>
               <li class="vz-step"><b>代表者: 「ポート」タブで、8000番をPublicにする</b>下のパネルの「ポート」タブに、8000番（Cyber Tetris Server）が表示される。「表示範囲（Visibility）」は最初<strong>Private</strong>なので、<strong>必ず手動でPublicに変更する</strong>（8000の行を右クリック→「ポートの表示範囲」→「Public」（英語表示の場合は「Port Visibility」）。設定ファイルでは、最初からPublicにはできない）。Publicにするのは、自分のスマートフォンや、チームの他の端末から開けるようにするため。ポートが表示されないときは、前の手順の <code>npm start</code> が動いているかを確認する。</li>
               <li class="vz-step"><b>チーム全員: 対戦する</b>8000番の行にある地球儀のアイコン（ブラウザーで開く）をクリックして、ゲーム画面を開く。初めて開くときにGitHubの注意画面が出たら、内容を読んでボタンを押して進む（スマートフォンで開くときも、最初に同じ画面が出る）。「ONLINE BATTLE」→「CREATE ROOM」→「COPY LINK」で招待リンクをコピーし、チームの別の端末（メンバーのスマートフォンやPC）に送って開く。全員が揃ったら、ホストが「START BATTLE」を押す。パソコンはキーボード、スマートフォンは画面のボタンで操作する。</li>
-              <li class="vz-step"><b>チーム全員: 様子を見て、感想を共有する</b>対戦しない人は、画面を見てもらう。ドライバーを交代しながら、全員が一度は対戦する。「ブラウザだけで、スマホからも、離れた場所の人とも対戦できる」ことと、これが「ポート転送をPublicにする」仕組みで動いていることを確認する。</li>
+              <li class="vz-step"><b>チーム全員: 様子を見て、感想を共有する</b>対戦しない人は、画面を見てもらう。キーボードを持つ人を交代しながら、全員が一度は対戦する。「ブラウザだけで、スマホからも、離れた場所の人とも対戦できる」ことと、これが「ポート転送をPublicにする」仕組みで動いていることを確認する。</li>
               <li class="vz-step"><b>代表者: 使い終わったらCodespacesを停止する</b>2限後半もこのCodespacesを使うチーム（対戦体験の続き・見本のアップデート）は、停止せずに続ける。使い終わったら、必ず停止する（最後の片付けでも確認する）。停止すると公開URLは開けなくなり、無料枠も減らなくなる（<a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> で、見本ゲーム用のCodespacesの「…」→「Stop codespace」）。</li>
             </ol>
             <div class="lesson-tip">
@@ -310,7 +310,7 @@
 
             <p><strong>チームで方向性を選ぶ（約20分）</strong>（スキルや進み具合に合わせて、チームごとに違ってよい）</p>
             <ol class="vz-steps">
-              <li class="vz-step"><b>対戦体験の続き</b>全員が対戦に参加できたかを確認し、ホストとゲストの両方を体験する。ドライバーを交代しながら、全員が操作する。</li>
+              <li class="vz-step"><b>対戦体験の続き</b>全員が対戦に参加できたかを確認し、ホストとゲストの両方を体験する。キーボードを持つ人を交代しながら、全員が操作する。</li>
               <li class="vz-step"><b>見本ゲームのアップデート</b>見本ゲームを、小さな指示で改造する。例: <code>ブロックの色を青系にしてください。</code>／<code>ライン消去の効果音を変えてください。</code>。1回に1つの変更にして、動くことを確認してから、次へ進む。</li>
               <li class="vz-step"><b>新しい方向性で「最初の動くもの」</b>進級制作への応用か、新しい対戦ゲーム（人生ゲームなど）のうち、作りたい方を決め、最初の1画面を作る。進級制作の課題をAIで解決するワークでもよい（ただし、成果発表では進級制作そのものは発表できない。活かしたい仕組みを取り出した小さなデモを発表の対象にする）。下の指示の例を参考にする。</li>
             </ol>
@@ -352,7 +352,7 @@
 
             <p><strong>作って、確認して、記録する</strong></p>
             <ul>
-              <li>ドライバーがagyに指示を入力し、ナビゲーターが結果を確認する。うまくいかないときは、何を押したら何が表示されたかをagyにそのまま伝える</li>
+              <li>入力する人がagyに指示を入力し、確認する人が結果を確認する。うまくいかないときは、何を押したら何が表示されたかをagyにそのまま伝える</li>
               <li>ポートの設定は、前のブロックの見本ゲームと同じ（「ポート」タブでPublicにする）。自分たちのアプリは <code>python3 -m http.server 8000</code> などで動かして確認する</li>
               <li>できたら、変更をGitHubに記録する。<strong>プッシュしないと、Codespacesの中にしか残りません</strong>。交代要員が引き継ぐためにも必要</li>
             </ul>
