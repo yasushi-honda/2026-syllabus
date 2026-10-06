@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=13">
-  <!-- 公式情報確認: 2026-10-07（docs.meshy.ai/en/webapp/pricing — 無料プランは月100クレジット、無料プランの生成物はCC BY 4.0（表示を付ければ商用利用可）、有料プランは非公開・自分の所有 / help.suno.com/en/articles/2746945 — Basic（無料）プランの曲の所有者はSuno、非商用の利用は可、Pro・Premierは自分が所有、AI生成のみの曲は著作権保護の対象外になる場合がある（2026-09-04更新の記事）/ unity.com/products/unity-personal — 売上・調達資金が過去12か月で20万ドル未満の個人・小規模組織が対象 / developer.mozilla.org/ja/docs/Web/API/Gamepad_API/Using_the_Gamepad_API — gamepadconnected イベントで接続を検知、Firefoxではユーザーがゲームパッドを操作して初めて利用可能になる / docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork — Web UIの「Sync fork」→「Update branch」でフォークを最新にできる。競合時はプルリクエストの作成を促される）。ボンバーマンのサンプルは担当教員の土台リポジトリ yasushi-honda/battle-base に追加（?game=bomber で切り替え。PR #4）。1秒100通の上限は battle-base/server.js の MAX_MESSAGES_PER_SECOND で、接続（1人）ごとの上限。Gamepad API は安全なコンテキスト（HTTPS）でのみ使える（MDN Navigator.getGamepads）、Codespaces の公開URLは https://CODESPACENAME-PORT.app.github.dev（docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace）。-->
+  <!-- 公式情報確認: 2026-10-07（docs.meshy.ai/en/webapp/pricing — 無料プランは月100クレジット、無料プランの生成物はCC BY 4.0（表示を付ければ商用利用可）、有料プランは非公開・自分の所有 / help.suno.com/en/articles/2746945 — Basic（無料）プランの曲の所有者はSuno、非商用の利用は可、Pro・Premierは自分が所有、AI生成のみの曲は著作権保護の対象外になる場合がある（2026-09-04更新の記事）/ unity.com/products/unity-personal — 売上・調達資金が過去12か月で20万ドル未満の個人・小規模組織が対象 / developer.mozilla.org/ja/docs/Web/API/Gamepad_API/Using_the_Gamepad_API — gamepadconnected イベントで接続を検知、Firefoxではユーザーがゲームパッドを操作して初めて利用可能になる / docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork — Web UIの「Sync fork」→「Update branch」でフォークを最新にできる。競合時はプルリクエストの作成を促される）。ボンバーマンのサンプルは担当教員の土台リポジトリ yasushi-honda/battle-base に追加（?game=bomber で切り替え。PR #5、PR #4 の置き換え）。ボンバーマンの本物のルールは strategywiki.org/wiki/Super_Bomberman/Gameplay と /Power-ups（導火線3秒・十字の爆風・誘爆・アイテム3種・1分でサドンデス・制限2分・最後の1人が勝ち）、盤面（行も列も偶数のマスに固定ブロックの市松）は dev.to の Building Bomberman from a Grid of Integers で確認（2026-10-07）。1秒100通の上限は battle-base/server.js の MAX_MESSAGES_PER_SECOND で、接続（1人）ごとの上限。Gamepad API は安全なコンテキスト（HTTPS）でのみ使える（MDN Navigator.getGamepads）、Codespaces の公開URLは https://CODESPACENAME-PORT.app.github.dev（docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace）。-->
   <!-- 2026-10-07: Day3を新規作成。親ページ（autumn-intensive.html）のDay3・Day4・Day5の行を先に更新済み。Day2の様子（担当教員のフィードバック）を受けて、方向性④「自由に広げる」（生成AIツール・Unity・コントローラー）を追加し、端末・コントローラーの持ち込みを正式に許可。Day4は「チーム内2交代」の相互体験、Day5は「推薦されたチームがAIとの作り方を話す」発表に設計変更したため、Day3の2限後半に、見せる準備（紹介カード・体験の手順・動作確認）を組み込んだ -->
 </head>
 <body>
@@ -184,21 +184,24 @@
 
             <!-- ---------- ③ ---------- -->
             <h4 class="d2-h">方向性③ 新しい対戦ゲーム：ボンバーマンに挑戦する（リアルタイム）</h4>
-            <p>Day2の人生ゲーム（ターン制）は、<strong>1手ごとに1回</strong>送ればよかった。ボンバーマンは、<strong>全員が同時に動く</strong>ため、動くたびに送る。<strong>送る回数が多く、ずれや遅れが出やすい</strong>（Day2の図⑥）。そこで、サンプルでは次の工夫をしている。</p>
+            <p>本物のボンバーマン（スーパーボンバーマンのバトルモード）のルールに合わせて作ってある。ルールのうち、<strong>公式の資料で確認できたもの</strong>と、<strong>このサンプルで決めたもの</strong>は、分けて書く（出典: StrategyWiki「Super Bomberman/Gameplay・Power-ups」、確認日 2026-10-07）。</p>
             <ul class="vz-points">
               <li class="vz-point">
-                <b>自分の位置だけを送る</b>
-                <p>他の人の位置を計算して送るのではなく、<strong>自分の位置だけ</strong>を送る。他の人の位置は、届いた知らせで画面に出す。</p>
+                <b>本物のボンバーマンの決まり</b>
+                <p>爆弾は<strong>3秒</strong>で爆発し、爆風は<strong>上下左右の十字</strong>に広がる。爆風に触れた爆弾は<strong>誘爆</strong>する。壊せるブロックを壊すと、<strong>アイテム</strong>（ボム増加・火力アップ・スピードアップ）が出ることがある。<strong>最後の1人が勝ち</strong>。制限時間は2分で、<strong>1分たつとサドンデス</strong>（外側から壁が時計回りに落ちてくる。落ちた場所にいるとやられる）。盤面は、行も列も偶数のマスに固定ブロックが並ぶ<strong>市松模様</strong>。</p>
               </li>
               <li class="vz-point">
-                <b>変化があったときだけ、回数を抑えて送る</b>
-                <p>止まっているときは送らない。動いているときも、1秒あたり10回ほどに抑える。サーバーには、<strong>1人（1つの接続）あたり、1秒100通までの上限</strong>がある（Day2のBattle Base）。1秒10回ほどに抑えれば、6人が同時に動いても収まる。</p>
+                <b>このサンプルで決めたこと</b>
+                <p>最初の爆風の長さ（2マス）、爆風が残る時間、アイテムの出る確率と上限、歩く速さなどは、<strong>公式の値ではなく、このサンプルの決まり</strong>。<code>public/bomber.js</code> の先頭に、定数として並んでいる。書き換えるだけで、遊びが変わる。</p>
               </li>
               <li class="vz-point">
-                <b>爆発は、各自の画面が同じ計算で出す</b>
-                <p>爆弾を「置いた」という知らせだけを送り、<strong>爆風の広がりやブロックが壊れる様子は、全員の画面が同じルールで計算</strong>する。Day2の「3が出た」と同じ考え方。</p>
+                <b>通信のしくみ：1人が「審判」になる</b>
+                <p>人生ゲームは、「1人が操作→全員に送る→全員が同じ計算をする」でよかった（順番に動くため）。リアルタイムでそれをすると、<strong>通信の遅れで、画面ごとに結果がずれる</strong>。そこで、<strong>審判を1人決め、爆弾・爆発・誘爆・やられた判定・サドンデス・勝敗は、審判だけが計算</strong>して、結果を全員に配る。ふつうの人が送るのは、<strong>自分の位置</strong>（1秒に12回まで）と<strong>爆弾を置きたいという要求</strong>だけ。画面の下に「審判: ○○」と出る。</p>
               </li>
             </ul>
+            <div class="lesson-tip">
+              <strong>知っておくこと:</strong> 審判が部屋を抜けると、ゲームはそこで終わる（引き継ぎはしない）。審判は、ロビーのホストとは限らない。自分の位置は自己申告のため、画面を改造すればズルができる。教室の遊びとして、そのまま使ってよい。
+            </div>
             <p><strong>ボンバーマンを動かす</strong>（担当教員が、Battle Baseにサンプルを追加した。<strong>Battle Baseを使っていたチームか、Day3から新しく使うチームかで、最初の手順が違う</strong>）</p>
             <p><strong>A. Day2でBattle Baseを使っていたチーム</strong>（すでにForkとCodespacesがある）</p>
             <ol class="vz-steps">
@@ -212,7 +215,7 @@
             <p><strong>A・B共通</strong></p>
             <ol class="vz-steps">
               <li class="vz-step"><b>チーム: URLの末尾に「?game=bomber」を付けて開く</b>公開URLの最後に付けると、ボンバーマンになる（付けないと、人生ゲーム）。部屋を作ったら、<strong>招待リンクにも、同じ印が引き継がれる</strong>。<strong>全員が、この印つきのリンクで入る</strong>（部屋コードだけを手で打って入ると、その人だけ人生ゲームの画面になり、対戦できない）。</li>
-              <li class="vz-step"><b>チーム: 2人以上で、まず遊ぶ</b>矢印キーかWASDで動き、スペースで爆弾を置く。スマホでは、画面のボタンで動かせる。1人しかいないときは、別のブラウザのタブ（シークレットウィンドウ）で、招待リンクを開くと2人目として入れる。</li>
+              <li class="vz-step"><b>チーム: 2人以上で、まず遊ぶ</b>矢印キーかWASDで動き、スペースで爆弾を置く。スマホでは、画面の方向パッドと💣ボタンで動かせる。アイテムを拾うと、ボム数・火力・スピードが上がる。1人しかいないときは、別のブラウザのタブ（シークレットウィンドウ）で、招待リンクを開くと2人目として入れる。<strong>自分の爆風にも当たる</strong>ので、爆弾を置いたら離れる。</li>
             </ol>
             <div class="lesson-tip">
               <strong>時間が足りないチームへ:</strong> 1限後半の50分では、<strong>「遊ぶ」ところまで</strong>で十分です。改造は、2限前半に回してかまいません。
@@ -307,11 +310,11 @@
             <ul class="vz-points">
               <li class="vz-point">
                 <b>相手の動きが、カクカクする・遅れる</b>
-                <p>リアルタイムでは、<strong>送る回数</strong>と<strong>通信の遅れ</strong>で、ずれが出る。agyに「位置を送る回数を、1秒10回までに抑えて」と頼む。<strong>1人が1秒に100通を超えると、超えた分はサーバーに捨てられて届かない</strong>。</p>
+                <p>リアルタイムでは、<strong>送る回数</strong>と<strong>通信の遅れ</strong>で、ずれが出る。agyに「位置を送る回数を、1秒10回までに抑えて」と頼む。<strong>1人が1秒に100通を超えると、超えた分はサーバーに捨てられて届かない</strong>（ボンバーマンの位置は、1秒に12回まで）。</p>
               </li>
               <li class="vz-point">
-                <b>人によって、見える状態が違う</b>
-                <p>全員が<strong>同じルールで同じ計算</strong>をしているか。盤面の元になる乱数（<code>ctx.seed</code>）を、全員が同じものにしているか、agyに確かめてもらう。</p>
+                <b>人によって、見える状態が違う（ボンバーマン）</b>
+                <p>ボンバーマンでは、爆弾・爆発・やられた判定は<strong>審判だけ</strong>が計算して配る。審判の画面（下に「審判: ○○」と出る）が止まっていないか、確認する。審判が別のタブに切り替えたり、重くなったりすると、全員の判定が遅れる。審判が部屋を抜けた場合は、ゲームが終わる。</p>
               </li>
               <li class="vz-point">
                 <b>コントローラーが認識されない</b>
