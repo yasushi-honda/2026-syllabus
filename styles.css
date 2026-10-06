@@ -3305,6 +3305,7 @@ main .vz-svg .t-sm { font-size: 12px; fill: var(--c-text-muted); }
 main .vz-svg .t-b { font-weight: 700; }
 main .vz-svg .t-c { text-anchor: middle; }
 main .vz-svg .t-w { fill: #fff; }
+main .vz-svg .t-halo { paint-order: stroke; stroke: var(--c-surface); stroke-width: 5px; stroke-linejoin: round; }
 main .vz-svg .t-mono { font-family: var(--font-mono); font-size: 12px; fill: var(--c-text); }
 main .vz-svg .box { fill: var(--c-slate-soft); stroke: var(--c-slate-border); stroke-width: 1.5; }
 main .vz-svg .box-white { fill: var(--c-surface); stroke: var(--c-slate-border); stroke-width: 1.5; }
@@ -3330,7 +3331,9 @@ main .vz-shot img { display: block; width: 100%; height: auto; border: 1px solid
 main .vz-shot figcaption { margin-top: var(--sp-2); font-size: 0.82rem; line-height: 1.6; color: var(--c-text-muted); }
 main .vz-shots--wide .vz-shot { flex-basis: 320px; }
 main .vz-code { margin: var(--sp-3) 0; padding: var(--sp-3) var(--sp-4); background: var(--c-slate-soft); border: 1px solid var(--c-slate-border); border-radius: var(--r-md); font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.7; overflow-x: auto; white-space: pre; }
-main .vz-code .vz-code-add { background: #d7f0e2; color: var(--c-text); display: inline-block; width: 100%; }
+main .vz-code .vz-code-line { display: block; min-width: max-content; }
+@media (max-width: 480px) { main .vz-code { font-size: 0.72rem; padding: var(--sp-3); } }
+main .vz-code .vz-code-add { background: #d7f0e2; color: var(--c-text); }
 
 main .d2-h { margin: var(--sp-6) 0 var(--sp-2); padding: 2px 0 2px var(--sp-3); border-left: 4px solid var(--c-slate); font-size: 1rem; line-height: 1.6; color: var(--c-slate); }
 main .d2-note { margin: var(--sp-3) 0; padding: var(--sp-3) var(--sp-4); background: var(--c-slate-soft); border-left: 4px solid var(--c-slate); border-radius: 0 var(--r-md) var(--r-md) 0; font-size: 0.9rem; line-height: 1.8; }
