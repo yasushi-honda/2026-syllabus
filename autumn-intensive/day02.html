@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day2 通信対戦のしくみを知る／方向性を選ぶ | 秋の集中講座</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=13">
+  <!-- 公式情報確認: 2026-10-06（docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace — ポートを公開すると、URLとポート番号を知っている人は認証なしで見られる / docs.github.com/en/codespaces/reference/security-in-github-codespaces — 公開ポートはインターネットから認証なしでアクセスできる / developer.mozilla.org/ja/docs/Web/API/WebSockets_API — WebSocketはブラウザとサーバーの間で双方向のやり取りを続ける仕組み / docs.github.com/en/codespaces/setting-your-user-preferences/setting-your-timeout-period-for-github-codespaces — 操作がない状態が既定30分続くとCodespacesは停止、ポートを公開していても、操作・ターミナル出力がなければ止まる / docs.github.com/en/codespaces/developing-in-a-codespace/stopping-and-starting-a-codespace — github.com/codespaces で名前をクリックして再開、停止すると実行中のプロセスも止まる）。通信のしくみの図解は、担当教員の土台リポジトリ yasushi-honda/battle-base の server.js・public/ の実装（部屋はサーバーのメモリ上、1通64KB・毎秒100通の上限、中身を見ずに同じ部屋の他の人へ中継）に基づく -->
+  <!-- 2026-10-06: Day2を新規作成。親ページ（autumn-intensive.html）のDay2の行を先に更新済み（通信対戦のしくみの図解を1限前半に追加、方向性の決定は1限後半へ）。スクリーンショット5枚は battle-base をローカルで動かし、架空の名前（あや・ボブ）で撮影（images/day02-*.png）。ターン制の例は人生ゲーム、リアルタイムの例はボンバーマン。スマホからの参加は任意（学生は基本パソコンで操作するため） -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--slate">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../autumn-intensive.html">秋の集中講座</a>
+        <span>/</span>
+        <span>Day2</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">通信対戦のしくみを知る／<wbr>方向性を選ぶ</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Day 2</span>
+            <span class="page-badge">全5日間の2日目 / 180分</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-slate">
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+        <marker id="mk-b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1e5fcc"/></marker>
+        <marker id="mk-g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0e8a5f"/></marker>
+        <marker id="mk-o" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#c2530c"/></marker>
+      </defs>
+    </svg>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">離れた人と対戦できる<strong>通信のしくみ</strong>を図で理解し、チームで<strong>方向性</strong>を選んで、最初の制作に入る</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">ブラウザ / サーバー / WebSocket / 部屋（ルーム）/ メッセージの中継 / ターン制・リアルタイム / battle-base / 方向性</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">Day1で作った<strong>代表者のCodespaces</strong>（停止中のものを再開する）。Codespacesの無料枠の残りを、Day1の手順で確認しておく。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>前日の気づきを共有し、agyに頼む<strong>「型」</strong>（小さく頼む→確認する→直す）を思い出す</li>
+        <li>通信対戦が動く<strong>しくみ</strong>（ブラウザ・サーバー・部屋・メッセージの中継）を、図を見ながら説明できる</li>
+        <li>チームで<strong>方向性</strong>（見本ゲームのアップデート／進級制作への応用／新しい対戦ゲーム）を選び、<strong>最初の制作</strong>に入る</li>
+        <li>動く状態を確かめ、<strong>安全面</strong>（Public・個人情報・APIキー）を確認して、変更を記録して片付ける</li>
+      </ul>
+      <div class="lesson-tip">
+        <strong>今日の優先順位:</strong> 今日の主役は「しくみを知ること」と「方向性を選んで、最初の一歩を動かすこと」です。しくみの説明は、<strong>図を見て、だいたい分かれば十分</strong>です。2年次は、チームのトラブルシューティングを主導します（2限の「困ったときの確認表」を使います）。3年次以上は、自チームを進めながら、下級生チームを支えます。
+      </div>
+
+      <div class="vz-timebar">
+        <p class="vz-fig-title">180分の流れ（ブロックを押すと、その内容へ移動）</p>
+        <ol class="vz-timebar-track">
+          <li style="--w:40"><a class="vz-seg" href="#blk-1"><span class="vz-seg-time">40分</span><span class="vz-seg-name">ふりかえり<br>通信のしくみ</span></a></li>
+          <li style="--w:50"><a class="vz-seg" href="#blk-2"><span class="vz-seg-time">50分</span><span class="vz-seg-name">方向性を選ぶ<br>最初の制作</span></a></li>
+          <li style="--w:10"><a class="vz-seg vz-seg--break"><span class="vz-seg-time">休憩</span><span class="vz-seg-name">10分</span></a></li>
+          <li style="--w:50"><a class="vz-seg" href="#blk-3"><span class="vz-seg-time">50分</span><span class="vz-seg-name">小さな指示で<br>育てる</span></a></li>
+          <li style="--w:30"><a class="vz-seg" href="#blk-4"><span class="vz-seg-time">30分</span><span class="vz-seg-name">確認・安全<br>記録する</span></a></li>
+          <li style="--w:10"><a class="vz-seg" href="#blk-5"><span class="vz-seg-time">10分</span><span class="vz-seg-name">アンケート<br>片付け</span></a></li>
+        </ol>
+        <p class="vz-timebar-note">授業時間の合計は 40 + 50 + 50 + 30 + 10 = 180分（休憩を除く）</p>
+      </div>
+
+      <figure class="vz-fig" aria-labelledby="cap-today">
+        <p class="vz-fig-title" id="cap-today">今日の流れ</p>
+        <ol class="vz-flow">
+          <li class="vz-node"><b>しくみを知る</b>通信対戦は、なぜ動くのか（図解）</li>
+          <li class="vz-node vz-node--key"><b>方向性を選ぶ</b>チームで、3つから1つ決める</li>
+          <li class="vz-node"><b>最初の制作</b>選んだ方向性で、動くところまで</li>
+          <li class="vz-node"><b>確認して記録</b>安全を確かめ、GitHubに残す</li>
+        </ol>
+        <figcaption>1限で「しくみ」と「方向性」、2限で「育てる」と「確認」です。</figcaption>
+      </figure>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <!-- ================= 1限 前半 ================= -->
+        <div class="timeline-block" id="blk-1">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前日をふりかえり、通信対戦のしくみを知る</h3>
+          <div class="timeline-body">
+
+            <p><strong>前日の気づきを共有する（約5分）</strong></p>
+            <ul>
+              <li>チームで、昨日のメモ（うまくいったこと・つまずいたこと）を見せ合う。今日やりたいことも、1つだけ出す</li>
+              <li>気づきは、アンケートの声も含めて、先生が口頭で共有する</li>
+            </ul>
+
+            <p><strong>agyに頼む「型」を思い出す（約5分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-agy-type">
+              <p class="vz-fig-title" id="cap-agy-type">agyに頼む「型」</p>
+              <ol class="vz-flow" style="--cols:3">
+                <li class="vz-node"><b>1. 小さく頼む</b>1回に1つの変更。「全部作り直して」は避ける</li>
+                <li class="vz-node"><b>2. 動かして確認する</b>確認する人が、画面を見て確かめる</li>
+                <li class="vz-node"><b>3. 状況をそのまま伝える</b>うまくいかないときは、何を押して何が出たかを、agyに伝える</li>
+              </ol>
+              <figcaption>枠の確認は <code>/usage</code>、モデルの切り替えは <code>/model</code>（Day1と同じ）。無料枠は週単位で回復し、複雑な指示ほど多く消費します。</figcaption>
+            </figure>
+
+            <p><strong>通信対戦のしくみを知る（約30分）</strong></p>
+            <p>Day1のCYBER TETRISも、これから使うBattle Baseも、<strong>同じしくみ</strong>で動いています。まず全体像、次に「どうやって届くのか」を、図で見ていきます。</p>
+
+            <h4 class="d2-h">① 登場するもの：ブラウザ、インターネット、サーバー</h4>
+            <figure class="vz-fig" aria-labelledby="cap-whole">
+              <p class="vz-fig-title" id="cap-whole">通信対戦の全体像</p>
+              <svg class="vz-svg" viewBox="0 0 360 380" role="img" aria-labelledby="svg1-t svg1-d">
+                <title id="svg1-t">通信対戦の全体像</title>
+                <desc id="svg1-d">パソコン2台とスマホ1台のブラウザが、インターネットを通って、Codespaces上で動くサーバーとつながっている。サーバーには部屋と中継の役割がある。</desc>
+                <rect class="box-blue" x="8" y="12" width="104" height="80" rx="10"/>
+                <text class="t-c" style="font-size:22px" x="60" y="40">💻</text>
+                <text class="t-c t-b" x="60" y="62">あなた</text>
+                <text class="t-c t-sm" x="60" y="80">パソコン</text>
+                <rect class="box-blue" x="128" y="12" width="104" height="80" rx="10"/>
+                <text class="t-c" style="font-size:22px" x="180" y="40">💻</text>
+                <text class="t-c t-b" x="180" y="62">ボブ</text>
+                <text class="t-c t-sm" x="180" y="80">パソコン</text>
+                <rect class="box-blue" x="248" y="12" width="104" height="80" rx="10"/>
+                <text class="t-c" style="font-size:22px" x="300" y="40">📱</text>
+                <text class="t-c t-b" x="300" y="62">さくら</text>
+                <text class="t-c t-sm" x="300" y="80">スマホ</text>
+                <line class="line-blue" x1="60" y1="96" x2="60" y2="134" marker-start="url(#mk-b)" marker-end="url(#mk-b)"/>
+                <line class="line-blue" x1="180" y1="96" x2="180" y2="134" marker-start="url(#mk-b)" marker-end="url(#mk-b)"/>
+                <line class="line-blue" x1="300" y1="96" x2="300" y2="134" marker-start="url(#mk-b)" marker-end="url(#mk-b)"/>
+                <rect class="band" x="8" y="138" width="344" height="52" rx="26"/>
+                <text class="t-c t-b" x="180" y="160">インターネット</text>
+                <text class="t-c t-sm" x="180" y="178">学校のWi-Fi・スマホの回線など</text>
+                <line class="line-blue" x1="60" y1="194" x2="60" y2="244" marker-start="url(#mk-b)" marker-end="url(#mk-b)"/>
+                <line class="line-blue" x1="180" y1="194" x2="180" y2="244" marker-start="url(#mk-b)" marker-end="url(#mk-b)"/>
+                <line class="line-blue" x1="300" y1="194" x2="300" y2="244" marker-start="url(#mk-b)" marker-end="url(#mk-b)"/>
+                <rect class="box-green box-key" x="8" y="248" width="344" height="100" rx="12"/>
+                <text class="t-c t-b" x="180" y="270">Codespaces（GitHubのクラウド上の開発環境）</text>
+                <rect class="box-white" x="22" y="282" width="150" height="54" rx="8"/>
+                <text class="t-c t-b t-mono" x="97" y="304">server.js</text>
+                <text class="t-c t-sm" x="97" y="322">部屋と中継（npm start）</text>
+                <rect class="box-white" x="188" y="282" width="150" height="54" rx="8"/>
+                <text class="t-c t-b t-mono" x="263" y="304">public/</text>
+                <text class="t-c t-sm" x="263" y="322">画面のファイル</text>
+                <text class="t-c t-sm" x="180" y="368">▲ ポート8000を「Public」にすると、入口が開く</text>
+              </svg>
+              <figcaption>3人はそれぞれ別の端末ですが、どの端末も<strong>同じサーバー</strong>とつながります。サーバーは、代表者のCodespacesの中で <code>npm start</code> で動いています。</figcaption>
+            </figure>
+
+            <h4 class="d2-h">② 2種類の通信：手紙と電話</h4>
+            <figure class="vz-fig" aria-labelledby="cap-two">
+              <p class="vz-fig-title" id="cap-two">画面をもらう通信と、対戦中の通信は、別のもの</p>
+              <ul class="vz-points">
+                <li class="vz-point">
+                  <b>✉️ 手紙：HTTP（画面をもらう）</b>
+                  <p>URLを開いたときに、1回だけ。ブラウザが「画面のファイルをください」と頼み、サーバーが画面（HTML・JavaScript・CSS）を返して、<strong>やり取りは終わり</strong>。</p>
+                </li>
+                <li class="vz-point">
+                  <b>📞 電話：WebSocket（対戦中の通信）</b>
+                  <p>画面が届いたあと、ブラウザがサーバーに<strong>つなぎっぱなしの線</strong>を開く。この線で、<strong>どちらからでも、いつでも</strong>メッセージを送れる。</p>
+                </li>
+              </ul>
+              <figcaption>2つとも、同じ入口（ポート8000）から入ります。画面をもらったあとで、同じ入口から電話の線に切り替えます。</figcaption>
+            </figure>
+            <p class="d2-note">なぜ電話が必要か：手紙の方式では、サーバーから「今、相手がさいころを振ったよ」と、こちらへ知らせることができません。つなぎっぱなしの線なら、サーバーから先に知らせられます。これが、対戦の相手の動きがすぐ画面に出る理由です。</p>
+
+            <h4 class="d2-h">③ 部屋のしくみ：同じ部屋の人にだけ届く</h4>
+            <figure class="vz-fig" aria-labelledby="cap-room">
+              <p class="vz-fig-title" id="cap-room">サーバーの中には「部屋」がある</p>
+              <svg class="vz-svg" viewBox="0 0 360 300" role="img" aria-labelledby="svg3-t svg3-d">
+                <title id="svg3-t">部屋のしくみ</title>
+                <desc id="svg3-d">サーバーの中に、部屋RJ7F（あや、ボブ、さくら）と部屋K3QM（たろう、はなこ）がある。メッセージは同じ部屋の人にだけ届く。</desc>
+                <rect class="box-green box-key" x="8" y="8" width="344" height="226" rx="12"/>
+                <text class="t-c t-b" x="180" y="30">サーバー（server.js）</text>
+                <rect class="box-white" x="20" y="44" width="156" height="178" rx="10"/>
+                <text class="t-c t-b" x="98" y="66">部屋 RJ7F</text>
+                <rect class="box-blue" x="32" y="76" width="132" height="28" rx="14"/>
+                <text class="t-c" x="98" y="95">あや（ホスト）</text>
+                <rect class="box-blue" x="32" y="112" width="132" height="28" rx="14"/>
+                <text class="t-c" x="98" y="131">ボブ</text>
+                <rect class="box-blue" x="32" y="148" width="132" height="28" rx="14"/>
+                <text class="t-c" x="98" y="167">さくら</text>
+                <text class="t-c t-sm" x="98" y="198">この3人の間だけで</text>
+                <text class="t-c t-sm" x="98" y="213">メッセージが届く</text>
+                <rect class="box-white" x="184" y="44" width="156" height="178" rx="10"/>
+                <text class="t-c t-b" x="262" y="66">部屋 K3QM</text>
+                <rect class="box-orange" x="196" y="76" width="132" height="28" rx="14"/>
+                <text class="t-c" x="262" y="95">たろう（ホスト）</text>
+                <rect class="box-orange" x="196" y="112" width="132" height="28" rx="14"/>
+                <text class="t-c" x="262" y="131">はなこ</text>
+                <text class="t-c t-sm" x="262" y="198">別の部屋には</text>
+                <text class="t-c t-sm" x="262" y="213">届かない</text>
+                <text class="t-c t-b" x="180" y="258">部屋コード（4文字）で、入る部屋が決まる</text>
+                <text class="t-c t-sm" x="180" y="278">ホストが「ゲームを始める」を押すと、開始の合図が全員に届く</text>
+              </svg>
+              <figcaption>部屋は、サーバーの<strong>メモリの中</strong>にあります。そのため、サーバーを止める（<code>npm start</code> をやり直す）と、部屋は消えます。</figcaption>
+            </figure>
+
+            <h4 class="d2-h">④ 1手の流れ：「3が出た」が全員に届くまで</h4>
+            <figure class="vz-fig" aria-labelledby="cap-seq">
+              <p class="vz-fig-title" id="cap-seq">ターン制ゲームで、1回さいころを振ったとき</p>
+              <svg class="vz-svg" viewBox="0 0 360 430" role="img" aria-labelledby="svg4-t svg4-d">
+                <title id="svg4-t">さいころを振ってから、全員の画面が同じになるまでの流れ</title>
+                <desc id="svg4-d">あやがさいころを振って3が出る。あやがサーバーに「3が出た」を送る。サーバーはそのままボブとさくらに転送する。全員が同じ計算で3マス進める。全員の盤面が同じになる。</desc>
+                <rect class="box-blue" x="10" y="8" width="100" height="42" rx="8"/>
+                <text class="t-c t-b" x="60" y="26">あや</text>
+                <text class="t-c t-sm" x="60" y="42">振った人</text>
+                <rect class="box-green" x="130" y="8" width="100" height="42" rx="8"/>
+                <text class="t-c t-b" x="180" y="26">サーバー</text>
+                <text class="t-c t-sm" x="180" y="42">中継するだけ</text>
+                <rect class="box-orange" x="250" y="8" width="100" height="42" rx="8"/>
+                <text class="t-c t-b" x="300" y="26">ボブ・さくら</text>
+                <text class="t-c t-sm" x="300" y="42">ほかの人</text>
+                <line class="life" x1="60" y1="52" x2="60" y2="414"/>
+                <line class="life" x1="180" y1="52" x2="180" y2="414"/>
+                <line class="life" x1="300" y1="52" x2="300" y2="414"/>
+                <rect class="box-white" x="14" y="68" width="92" height="40" rx="8"/>
+                <text class="t-c" x="60" y="86">① さいころを</text>
+                <text class="t-c" x="60" y="101">振る → 3</text>
+                <text class="t-c t-b" x="120" y="146">② 「3が出た」を送る</text>
+                <line class="line-blue" x1="62" y1="158" x2="178" y2="158" marker-end="url(#mk-b)"/>
+                <text class="t-c t-b" x="240" y="216">③ そのまま転送</text>
+                <text class="t-c t-sm" x="240" y="234">（中身は見ない）</text>
+                <line class="line-green" x1="182" y1="244" x2="298" y2="244" marker-end="url(#mk-g)"/>
+                <rect class="box-white" x="14" y="276" width="92" height="44" rx="8"/>
+                <text class="t-c" x="60" y="295">④ 3マス進める</text>
+                <text class="t-c t-sm" x="60" y="311">（自分の画面）</text>
+                <rect class="box-white" x="254" y="276" width="92" height="44" rx="8"/>
+                <text class="t-c" x="300" y="295">④ 3マス進める</text>
+                <text class="t-c t-sm" x="300" y="311">（各自の画面）</text>
+                <text class="t-c t-sm" x="180" y="292">同じルール、</text>
+                <text class="t-c t-sm" x="180" y="308">同じ計算</text>
+                <rect class="box-white box-key" x="14" y="348" width="332" height="50" rx="10"/>
+                <text class="t-c t-b" x="180" y="370">⑤ 全員の盤面が、同じ状態になる</text>
+                <text class="t-c t-sm" x="180" y="388">サーバーは勝ち負けを判定せず、判定は各自の画面が行う</text>
+              </svg>
+              <figcaption>ポイントは2つです。<strong>送るのは、結果の画面ではなく「3が出た」という小さな知らせだけ</strong>。そして<strong>全員の画面が、同じルールで同じ計算をする</strong>から、同じ盤面になります。</figcaption>
+            </figure>
+            <p>この「3が出た」を送るコードは、ゲームの中身（<code>public/game.js</code>）に、実際にこう書かれています。</p>
+            <pre class="vz-code">ctx.send({ kind: 'roll', value: 3 });   // 自分以外の全員に送る
+ctx.onMessage(({ from, payload }) => { ... });   // 届いたら、同じ計算をする</pre>
+
+            <h4 class="d2-h">⑤ 実際の画面で見る：同じ盤面が2台に出る</h4>
+            <figure class="vz-fig" aria-labelledby="cap-shots">
+              <p class="vz-fig-title" id="cap-shots">Battle Baseのサンプル（ミニ人生ゲーム）を、あやとボブの2台で見たところ</p>
+              <div class="vz-shots">
+                <figure class="vz-shot">
+                  <img src="images/day02-game-aya-390.png" alt="あやの画面。ボブの番です、と表示され、盤面には赤い「あ」と青い「ボ」のコマが並んでいる。" width="358" height="778" loading="lazy">
+                  <figcaption>あやの画面<br>「ボブの番です」</figcaption>
+                </figure>
+                <figure class="vz-shot">
+                  <img src="images/day02-game-bob-390.png" alt="ボブの画面。あなたの番です、と表示され、盤面には赤い「あ」と青い「ボ」のコマが、あやの画面と同じ位置にある。" width="358" height="778" loading="lazy">
+                  <figcaption>ボブの画面<br>「あなたの番です」</figcaption>
+                </figure>
+              </div>
+              <figcaption>2台とも、<strong>コマの位置もお金も同じ</strong>です。違うのは、「あなたの番」かどうかの表示だけです。</figcaption>
+            </figure>
+
+            <h4 class="d2-h">⑥ ゲームの種類で、送る回数が変わる</h4>
+            <figure class="vz-fig" aria-labelledby="cap-types">
+              <p class="vz-fig-title" id="cap-types">ターン制とリアルタイム：送る回数がちがう</p>
+              <svg class="vz-svg" viewBox="0 0 360 250" role="img" aria-labelledby="svg6-t svg6-d">
+                <title id="svg6-t">ターン制とリアルタイムの、送る回数の違い</title>
+                <desc id="svg6-d">ターン制は1手ごとに1回だけ送るので回数が少ない。リアルタイムは動くたびに何十回も送るので回数がとても多く、1秒100通の上限に気をつける。</desc>
+                <text class="t-b" x="10" y="22">ターン制（人生ゲーム・Day2）</text>
+                <line class="line" x1="10" y1="56" x2="350" y2="56"/>
+                <circle class="dot-blue" cx="50" cy="56" r="9"/>
+                <circle class="dot-blue" cx="130" cy="56" r="9"/>
+                <circle class="dot-blue" cx="210" cy="56" r="9"/>
+                <circle class="dot-blue" cx="290" cy="56" r="9"/>
+                <text class="t-sm" x="10" y="90">1手につき1回だけ送る。回数が少ない</text>
+                <text class="t-sm" x="10" y="108">→ 同期するものが少なく、作りやすい</text>
+                <text class="t-b" x="10" y="136">リアルタイム（ボンバーマン・Day3）</text>
+                <line class="line" x1="10" y1="172" x2="350" y2="172"/>
+                <line class="tick" x1="16" y1="140" x2="16" y2="172"/><line class="tick" x1="25" y1="140" x2="25" y2="172"/><line class="tick" x1="34" y1="140" x2="34" y2="172"/><line class="tick" x1="43" y1="140" x2="43" y2="172"/><line class="tick" x1="52" y1="140" x2="52" y2="172"/><line class="tick" x1="61" y1="140" x2="61" y2="172"/><line class="tick" x1="70" y1="140" x2="70" y2="172"/><line class="tick" x1="79" y1="140" x2="79" y2="172"/><line class="tick" x1="88" y1="140" x2="88" y2="172"/><line class="tick" x1="97" y1="140" x2="97" y2="172"/><line class="tick" x1="106" y1="140" x2="106" y2="172"/><line class="tick" x1="115" y1="140" x2="115" y2="172"/><line class="tick" x1="124" y1="140" x2="124" y2="172"/><line class="tick" x1="133" y1="140" x2="133" y2="172"/><line class="tick" x1="142" y1="140" x2="142" y2="172"/><line class="tick" x1="151" y1="140" x2="151" y2="172"/><line class="tick" x1="160" y1="140" x2="160" y2="172"/><line class="tick" x1="169" y1="140" x2="169" y2="172"/><line class="tick" x1="178" y1="140" x2="178" y2="172"/><line class="tick" x1="187" y1="140" x2="187" y2="172"/><line class="tick" x1="196" y1="140" x2="196" y2="172"/><line class="tick" x1="205" y1="140" x2="205" y2="172"/><line class="tick" x1="214" y1="140" x2="214" y2="172"/><line class="tick" x1="223" y1="140" x2="223" y2="172"/><line class="tick" x1="232" y1="140" x2="232" y2="172"/><line class="tick" x1="241" y1="140" x2="241" y2="172"/><line class="tick" x1="250" y1="140" x2="250" y2="172"/><line class="tick" x1="259" y1="140" x2="259" y2="172"/><line class="tick" x1="268" y1="140" x2="268" y2="172"/><line class="tick" x1="277" y1="140" x2="277" y2="172"/><line class="tick" x1="286" y1="140" x2="286" y2="172"/><line class="tick" x1="295" y1="140" x2="295" y2="172"/><line class="tick" x1="304" y1="140" x2="304" y2="172"/><line class="tick" x1="313" y1="140" x2="313" y2="172"/><line class="tick" x1="322" y1="140" x2="322" y2="172"/><line class="tick" x1="331" y1="140" x2="331" y2="172"/><line class="tick" x1="340" y1="140" x2="340" y2="172"/>
+                <text class="t-sm" x="10" y="206">動くたびに、何十回も送る。回数がとても多い</text>
+                <text class="t-sm" x="10" y="224">→ ずれや遅れが出やすく、1秒100通の上限にも気をつける</text>
+              </svg>
+              <figcaption>Day2は、送る回数が少ない<strong>ターン制（人生ゲーム）</strong>から始めます。Day3に、余力のあるチームが<strong>リアルタイム（ボンバーマン）</strong>に挑戦します。</figcaption>
+            </figure>
+
+            <h4 class="d2-h">⑦ どのファイルが、どの役目か</h4>
+            <figure class="vz-fig" aria-labelledby="cap-files">
+              <p class="vz-fig-title" id="cap-files">Battle Baseのファイルと、図の対応</p>
+              <ul class="vz-points">
+                <li class="vz-point">
+                  <b>server.js（サーバー）</b>
+                  <p>部屋を作る・入れる、メッセージの中継。受け取る1通の大きさ（64KB）と、1秒あたりの回数（100通）に上限がある。</p>
+                </li>
+                <li class="vz-point">
+                  <b>net.js（電話の線）</b>
+                  <p>ブラウザからサーバーにつなぎっぱなしの線を開き、送る・受け取るを担当する。ふだんは触らない。</p>
+                </li>
+                <li class="vz-point">
+                  <b>main.js（ロビー）</b>
+                  <p>部屋を作る・入る、参加者の一覧、ゲーム開始。ふだんは触らない。</p>
+                </li>
+                <li class="vz-point">
+                  <b>game.js（ゲームの中身）★</b>
+                  <p><strong>自分たちで作る部分。</strong>ルール、画面、「何を送るか」を書く。ここだけを書き換えれば、別のゲームになる。</p>
+                </li>
+              </ul>
+              <figcaption>Day1のCYBER TETRISも、部屋・中継・画面の役割分担は同じです（server.jsと、テトリスの画面）。</figcaption>
+            </figure>
+
+            <p><strong>理解度チェック（自分で確かめる）</strong></p>
+            <p class="lesson-note">回答はこのページの中で判定されるだけで、どこにも送信・保存されず、成績にも含まれない。何度でも試せる。</p>
+            <div class="quiz-set">
+
+              <div class="quiz" aria-live="polite" data-answer="ウ">
+                <p class="quiz-q"><span class="quiz-q-num">Q1</span>このゲームで、サーバーがしていることとして、正しいものはどれか。</p>
+                <div class="quiz-choices">
+                  <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span>勝ち負けを判定して、結果を全員に知らせる</span></button>
+                  <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span>全員の画面を、サーバーが描いて送る</span></button>
+                  <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span>届いたメッセージを、同じ部屋の他の人に転送する</span></button>
+                </div>
+                <div class="quiz-feedback" hidden>
+                  <p class="quiz-result"></p>
+                  <p>サーバーは、メッセージの中身を見ずに、同じ部屋の他の人へ中継します。ルールの判定や、画面を描くことは、各自のブラウザ（game.js）が行います。</p>
+                  <button type="button" class="quiz-retry">もう一度</button>
+                </div>
+              </div>
+
+              <div class="quiz" aria-live="polite" data-answer="イ">
+                <p class="quiz-q"><span class="quiz-q-num">Q2</span>あやがさいころで3を出した。ボブの画面でも、あやのコマが3マス進むのはなぜか。</p>
+                <div class="quiz-choices">
+                  <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span>ボブのブラウザが、あやの画面をのぞいているから</span></button>
+                  <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span>「3が出た」というメッセージが届き、ボブの画面でも同じ計算をするから</span></button>
+                  <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span>サーバーが、ボブの画面を直接書き換えるから</span></button>
+                </div>
+                <div class="quiz-feedback" hidden>
+                  <p class="quiz-result"></p>
+                  <p>送るのは「3が出た」という小さな知らせだけです。全員の画面が同じルールで同じ計算をするので、同じ盤面になります。</p>
+                  <button type="button" class="quiz-retry">もう一度</button>
+                </div>
+              </div>
+
+              <div class="quiz" aria-live="polite" data-answer="ア">
+                <p class="quiz-q"><span class="quiz-q-num">Q3</span>部屋RJ7Fの人が送ったメッセージは、別の部屋K3QMの人に届くか。</p>
+                <div class="quiz-choices">
+                  <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span>届かない。中継は、同じ部屋の中だけ</span></button>
+                  <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span>サーバーにつながっている全員に届く</span></button>
+                  <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span>別の部屋のホストにだけ届く</span></button>
+                </div>
+                <div class="quiz-feedback" hidden>
+                  <p class="quiz-result"></p>
+                  <p>メッセージは、同じ部屋の人にだけ中継されます。部屋コードで、どの部屋に入るかが決まります。</p>
+                  <button type="button" class="quiz-retry">もう一度</button>
+                </div>
+              </div>
+
+            </div>
+            <div class="lesson-tip">
+              <strong>余裕のあるチームへ:</strong> Day1の見本ゲームのCodespacesを開いて、agyに <code>server.js</code> を説明してもらうと、図とコードがつながります（Codespacesを再開する手順は、次の「方向性①」と同じ）。
+            </div>
+            <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d2-prompt-explain-server">
+              <span class="btn-icon"></span> 指示文をコピー
+            </button>
+<pre id="d2-prompt-explain-server" class="md-preview">server.js を読んで、部屋の作り方と、メッセージを同じ部屋の人に中継するしくみを、プログラミングを学び始めた人にも分かる言葉で説明してください。</pre></div>
+
+          </div>
+        </div>
+
+        <!-- ================= 1限 後半 ================= -->
+        <div class="timeline-block" id="blk-2">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>チームで方向性を選び、最初の制作に入る</h3>
+          <div class="timeline-body">
+
+            <p><strong>方向性を選ぶ（約10分）</strong></p>
+            <p>Day1の選択は仮のものでよい。あらためて、チームで<strong>1つ</strong>決める。迷ったら、「Day1で触った見本ゲームのアップデート」から始めてよい。</p>
+            <figure class="vz-fig" aria-labelledby="cap-direction2">
+              <p class="vz-fig-title" id="cap-direction2">3つの方向性（今日やること）</p>
+              <div class="vz-fields">
+                <section class="vz-field vz-f-ka">
+                  <h4>① 見本ゲームのアップデート</h4>
+                  <p class="vz-field-count">Day1のCYBER TETRISを、agyで小さく改造する</p>
+                  <ol class="vz-days">
+                    <li><b>今日</b><span>Codespacesを再開し、色・効果音・操作などを1つ変える</span></li>
+                  </ol>
+                  <ul class="vz-tags"><li>記録先: 自分のFork</li></ul>
+                </section>
+                <section class="vz-field vz-f-kc">
+                  <h4>② 進級制作に活かす</h4>
+                  <p class="vz-field-count">今回のやり方を、進級制作で使えるか考える</p>
+                  <ol class="vz-days">
+                    <li><b>今日</b><span>使えそうな仕組みを洗い出し、Day3の「小さなデモ」を1つ決める</span></li>
+                  </ol>
+                  <ul class="vz-tags"><li>記録先: メモ（進級制作のコードは触らない）</li></ul>
+                </section>
+                <section class="vz-field vz-f-kb">
+                  <h4>③ 新しい対戦ゲーム</h4>
+                  <p class="vz-field-count">余力のあるチーム向け。まず人生ゲーム（ターン制）</p>
+                  <ol class="vz-days">
+                    <li><b>今日</b><span>Battle BaseをForkして遊び、マスを1つ増やす</span></li>
+                  </ol>
+                  <ul class="vz-tags"><li>記録先: Battle BaseのFork</li></ul>
+                </section>
+              </div>
+            </figure>
+
+            <p><strong>最初の制作（約40分）：選んだ方向性のところだけ進める</strong></p>
+
+            <!-- ---------- ① ---------- -->
+            <h4 class="d2-h">方向性① 見本ゲームのアップデート</h4>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>代表者: 見本ゲームのCodespacesを再開する</b><a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> を開き、見本ゲーム（Tetris）のCodespacesを選んで開く。停止中のものは、開くと再開される。「Create」ではなく、<strong>同じCodespacesを再開</strong>する（Day1で作ったもの）。</li>
+              <li class="vz-step"><b>代表者: サーバーを動かし、ポートを確認する</b>ターミナルで <code>npm start</code> を入力する。再開したあとは、動かし直しが必要。「ポート」タブの8000番の表示範囲が<strong>Public</strong>のままか確認し、Privateに戻っていたら、右クリック→「ポートの表示範囲」→「Public」にする。</li>
+              <li class="vz-step"><b>代表者: agyを起動する</b>新しいターミナル（右上の「＋」）で <code>agy</code> と入力する。再度ログインを求められる場合がある（手順はDay1の<a href="day01.html#blk-3">「agyを導入して認証する」</a>と同じ）。</li>
+              <li class="vz-step"><b>入力する人: 小さな指示を1つ出す</b>下の指示文を、agyに入力する。</li>
+            </ol>
+            <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d2-prompt-tetris-color">
+              <span class="btn-icon"></span> 指示文をコピー
+            </button>
+<pre id="d2-prompt-tetris-color" class="md-preview">ブロックの色を青系にしてください。</pre></div>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>確認する人: 画面で確かめる</b>ブラウザを再読み込みして、色が変わったかを見る。<strong>再読み込みすると部屋から抜ける</strong>ので、部屋を作り直して確かめる。変わらないときは、何を見て何が起きたかをagyに伝える。</li>
+            </ol>
+
+            <!-- ---------- ② ---------- -->
+            <h4 class="d2-h">方向性② 今回の体験を進級制作に活かす</h4>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>チーム: 進級制作の「今のしくみ」を3行で書く</b>何を作っているか／どんな画面か／どこで動いているか。</li>
+              <li class="vz-step"><b>チーム: 今回の仕組みが使えるかを、表で洗い出す</b>下の表を、Googleドキュメントなどのメモにコピーして貼り、○△×と理由を書く。</li>
+              <li class="vz-step"><b>チーム: Day3に作る「小さなデモ」を1つ決める</b>表の中から、いちばん小さく作れそうなものを選び、1行で書く（例:「agyへの小さな指示で、進級制作のリポジトリに、機能を1つ足す」）。</li>
+            </ol>
+            <div class="table-wrap">
+              <table class="schedule-table">
+                <thead><tr><th>今回使った仕組み</th><th>進級制作で使えそう？（○△×）</th><th>理由・使い方の案</th></tr></thead>
+                <tbody>
+                  <tr><td>Fork（他のリポジトリをコピーして始める）</td><td></td><td></td></tr>
+                  <tr><td>Codespaces（ブラウザで開く開発環境）</td><td></td><td></td></tr>
+                  <tr><td>agyへの小さな指示（作りながら直す）</td><td></td><td></td></tr>
+                  <tr><td>ポート転送（Public）で、スマホや他の人に見せる</td><td></td><td></td></tr>
+                  <tr><td>対戦の通信（部屋・メッセージの中継）</td><td></td><td></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d2-template-table">
+              <span class="btn-icon"></span> この表をコピー（Googleドキュメントなどに貼る）
+            </button>
+<pre id="d2-template-table" class="md-preview" hidden>| 今回使った仕組み | 進級制作で使えそう？（○△×） | 理由・使い方の案 |
+|---|---|---|
+| Fork（他のリポジトリをコピーして始める） | | |
+| Codespaces（ブラウザで開く開発環境） | | |
+| agyへの小さな指示（作りながら直す） | | |
+| ポート転送（Public）で、スマホや他の人に見せる | | |
+| 対戦の通信（部屋・メッセージの中継） | | |</pre></div>
+            <div class="lesson-tip">
+              <strong>注意:</strong> 今日は<strong>洗い出しだけ</strong>で、進級制作のコードには触らない。進級制作のリポジトリには、APIキーや個人情報が入っている場合があるので、このCodespacesに持ち込んだり、Publicにして公開したりしない。発表の対象は、進級制作そのものではなく、Day3に作る小さなデモです。
+            </div>
+
+            <!-- ---------- ③ ---------- -->
+            <h4 class="d2-h">方向性③ 新しい対戦ゲーム（Battle Baseで人生ゲーム）</h4>
+            <p>担当教員が用意した<strong>Battle Base</strong>（対戦ゲームの土台）を使う。通信の部分はできあがっていて、<strong>サンプルのミニ人生ゲーム</strong>が最初から動く。ゲームのルールを書く場所は <code>public/game.js</code> だけ。</p>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>代表者: Battle BaseをForkする</b>下のURLを開き、右上の「Fork」→「Create fork」をクリックする（Day1と同じ手順）。Forkしたあと、Day1と同じように、<strong>Forkにもメンバーを招待</strong>する（「Settings」→「Collaborators」→「Add people」）。</li>
+            </ol>
+            <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d2-url-battle-base">
+              <span class="btn-icon"></span> URLをコピー
+            </button>
+<pre id="d2-url-battle-base" class="md-preview">https://github.com/yasushi-honda/battle-base</pre></div>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>代表者: ForkからCodespacesを作る</b>Forkしたリポジトリで、「Code」→「Codespaces」→「＋」。新しいCodespacesなので、Day1の見本ゲームと同じく、<strong>agyは入っていない</strong>。入れる手順は、次の枠のとおり。</li>
+              <li class="vz-step"><b>代表者: サーバーを動かす</b>ターミナルで次を入力する。「Battle Base Server running on http://localhost:8000」と表示されれば成功。<strong>このターミナルは、遊んでいる間ずっと使う</strong>。部屋を作る・入る・ゲームを始めるたびに、このターミナルに<strong>1行ずつ記録が出る</strong>（サーバーが部屋を管理している様子が見える）。</li>
+            </ol>
+            <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d2-cmd-npm-start">
+              <span class="btn-icon"></span> コマンドをコピー
+            </button>
+<pre id="d2-cmd-npm-start" class="md-preview">npm start</pre></div>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>代表者: 「ポート」タブで、8000番をPublicにする</b>8000番を右クリック→「ポートの表示範囲」→「Public」（英語表示は「Port Visibility」）。設定ファイルでは、最初からPublicにはできない。</li>
+              <li class="vz-step"><b>チーム全員: 画面を開いて、部屋に入る</b>8000番の行の地球儀アイコンで開く。最初に出るGitHubの注意画面（英語で「You are about to access a development port served by someone's codespace」）は、自分たちのリンクなら、緑の<strong>「Continue」ボタン</strong>を押して進む。名前を入れて、代表者が「部屋を作る」→「招待リンクをコピー」で、チームに送る。2人以上そろったら、ホストが「ゲームを始める」を押す。名前は、本名ではなく、ニックネームにする。</li>
+            </ol>
+            <figure class="vz-fig" aria-labelledby="cap-lobby">
+              <p class="vz-fig-title" id="cap-lobby">最初に開く画面（ロビー）</p>
+              <div class="vz-shots">
+                <figure class="vz-shot">
+                  <img src="images/day02-lobby-390.png" alt="Battle Baseのロビー画面。上に「これは通信対戦ゲームの土台です」という説明、下に名前の入力欄と、部屋を作る・部屋に入るボタンがある。" width="390" height="756" loading="lazy">
+                  <figcaption>名前を入れて「部屋を作る」。部屋コードを知っている人は、「部屋に入る」</figcaption>
+                </figure>
+              </div>
+            </figure>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>チーム: サンプルのミニ人生ゲームを遊ぶ</b>順番にさいころを振り、お金が増えるマス（緑）・減るマス（赤）・1回休み（黄）・進む／戻る（青）を体験する。全員がゴールすると終わり。<strong>着順ではなく、お金がいちばん多い人の勝ち</strong>。1人しかいないときは、別のブラウザのタブ（シークレットウィンドウ）で、自分の招待リンクを開くと、2人目として入れる。</li>
+              <li class="vz-step"><b>（任意）チームで1人、スマホからも入ってみる</b>招待リンクを、自分のスマホに送って開く。注意画面で「Continue」を押す。<strong>別の端末・別の回線から、同じ部屋に入れる</strong>ことが、実感できる。学校のWi-Fiでも、スマホの回線でもよい（回線のデータ通信量は、自分で気をつける）。</li>
+            </ol>
+
+            <p><strong>改造してみる：マスを1つ変える</strong></p>
+            <p>ゲームの盤面は、<code>public/game.js</code> の <code>BOARD</code> に、マスの並びとして書いてある。1行を変えると、盤面が変わる。</p>
+            <pre class="vz-code">    plus('アルバイト代', 10),
+<span class="vz-code-add">    plus('ごほうび', 50),     ← 3マス目を、お金が50万円増えるマスに変えた</span>    minus('財布を落とした', 10),</pre>
+            <figure class="vz-fig" aria-labelledby="cap-board">
+              <p class="vz-fig-title" id="cap-board">BOARDを1行変えたら、盤面が変わった</p>
+              <div class="vz-shots vz-shots--wide">
+                <figure class="vz-shot">
+                  <img src="images/day02-board-before-390.png" alt="改造の前の盤面。3マス目は空きマス。" width="324" height="397" loading="lazy">
+                  <figcaption>変える前<br>3マス目は、何も起きない</figcaption>
+                </figure>
+                <figure class="vz-shot">
+                  <img src="images/day02-board-after-390.png" alt="改造の後の盤面。3マス目が緑色の「ごほうび +50」のマスになっている。" width="324" height="397" loading="lazy">
+                  <figcaption>変えた後<br>3マス目が「ごほうび +50」</figcaption>
+                </figure>
+              </div>
+            </figure>
+            <p>agyに頼むときは、次のように、<strong>小さく、1つだけ</strong>頼む。画面の再読み込みで反映される（<code>game.js</code> を変えたときは、<code>npm start</code> のやり直しは不要。<code>server.js</code> を変えたときだけ、やり直す）。再読み込みすると部屋から抜けるので、入り直す。</p>
+            <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d2-prompt-board">
+              <span class="btn-icon"></span> 指示文をコピー
+            </button>
+<pre id="d2-prompt-board" class="md-preview">public/game.js の BOARD の3マス目を、お金が50万円増える「ごほうび」のマスに変えてください。</pre></div>
+            <p><strong>agyを入れる（Battle BaseのCodespacesで、使うとき）</strong>：新しいターミナル（右上の「＋」）で、次を入力する。認証の手順は、Day1の<a href="day01.html#blk-3">「agyを導入して認証する」</a>と同じ。</p>
+            <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d2-agy-install">
+              <span class="btn-icon"></span> コマンドをコピー
+            </button>
+<pre id="d2-agy-install" class="md-preview">curl -fsSL https://antigravity.google/cli/install.sh | bash</pre></div>
+
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <!-- ================= 2限 前半 ================= -->
+        <div class="timeline-block" id="blk-3">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>小さな指示で、少しずつ育てる</h3>
+          <div class="timeline-body">
+            <p>1限の続きを、チームのペースで進める。<strong>1回に1つの変更</strong>を、「頼む→動かす→確かめる」で繰り返す。</p>
+            <figure class="vz-fig" aria-labelledby="cap-next">
+              <p class="vz-fig-title" id="cap-next">方向性ごとの、次の小さな一歩（例）</p>
+              <ul class="vz-points">
+                <li class="vz-point">
+                  <b>① 見本ゲームのアップデート</b>
+                  <p>効果音を変える、背景色を変える、ゲームオーバーのメッセージを変える、など。1つ変えるたびに、確認する人が画面で確かめる。</p>
+                </li>
+                <li class="vz-point">
+                  <b>② 進級制作に活かす</b>
+                  <p>選んだ「小さなデモ」を、2〜3行の手順に分ける。Day3に、agyへ頼む順番を決める。進級制作の課題を、AIの力で解決するワークに充ててもよい。</p>
+                </li>
+                <li class="vz-point">
+                  <b>③ 新しい対戦ゲーム</b>
+                  <p>マスを増やす・イベントを新しくする、最初のお金を変える、などから1つ。慣れたら、新しい種類のマス（例: 全員から5万円もらう）を、agyと一緒に作る。</p>
+                </li>
+              </ul>
+            </figure>
+            <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d2-prompt-board-new-type">
+              <span class="btn-icon"></span> 指示文をコピー（③の例）
+            </button>
+<pre id="d2-prompt-board-new-type" class="md-preview">public/game.js のマスの種類に、「全員から5万円もらう」マスを足してください。BOARD にも、このマスを1つ置いてください。</pre></div>
+
+            <p><strong>困ったときの確認表（2年次が中心になって、切り分ける）</strong></p>
+            <ul class="vz-points">
+              <li class="vz-point">
+                <b>「ポート」タブに8000番が出ない</b>
+                <p>ターミナルで <code>npm start</code> が動いているか。動いていなければ、もう一度入力する。</p>
+              </li>
+              <li class="vz-point">
+                <b>画面が開けない・接続できない</b>
+                <p>8000番の表示範囲が<strong>Public</strong>か。注意画面が出ていたら、「Continue」を押したか。</p>
+              </li>
+              <li class="vz-point">
+                <b>遊んでいる途中で、急に接続が切れた</b>
+                <p>Codespacesは、<strong>キーボード・マウスの操作も、ターミナルの出力もない状態が、既定で30分続くと止まる</strong>（公式）。ゲームで遊ぶだけでは「操作あり」にならない。<a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> でCodespacesを再開し、<code>npm start</code> をやり直して、部屋を作り直す。</p>
+              </li>
+              <li class="vz-point">
+                <b>「部屋が見つかりません」と出る</b>
+                <p>コードの打ち間違いか。サーバーを止める・やり直すと部屋が消えるので、<strong>部屋を作り直す</strong>。</p>
+              </li>
+              <li class="vz-point">
+                <b>変えたのに、画面が変わらない</b>
+                <p>ブラウザを再読み込みしたか。<code>server.js</code> を変えたときは、<code>npm start</code> を止めて（<code>Ctrl+C</code>）、もう一度入力する。</p>
+              </li>
+              <li class="vz-point">
+                <b>agyが反応しない・枠がなくなった</b>
+                <p>再認証が必要な場合がある（Day1の手順）。<code>/usage</code> で残りを見て、<code>/model</code> で別のモデルに切り替える。それでも進めないときは、交代要員（Day1）へ。</p>
+              </li>
+              <li class="vz-point">
+                <b>うまく動かない原因が分からない</b>
+                <p>何を押して、何が表示されたかを、そのままagyに伝える。画面のエラー表示は、読まずにコピーして貼るだけでもよい。</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ================= 2限 後半 ================= -->
+        <div class="timeline-block" id="blk-4">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>動くことを確かめ、安全を確認して、変更を記録する</h3>
+          <div class="timeline-body">
+            <p><strong>動作を確認する（約10分）</strong></p>
+            <ul>
+              <li>今日変えたところが、<strong>動いている</strong>ことを、チーム全員の前で確認する（変えていないチームは、通信が動くところまで）</li>
+              <li>（任意）隣のチームと、画面を見せ合う。「何を変えたか」と「agyにどう頼んだか」を、1分ずつ話す。<strong>見せるだけで、発表資料は不要</strong></li>
+            </ul>
+
+            <p><strong>安全を確認する（約10分）</strong></p>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>Publicのままにしていないか</b>使い終わったら、ポートの公開をやめるか、サーバーを止める。URLを知っている人は、誰でも開ける。</li>
+              <li class="vz-step"><b>個人情報を、画面や名前に入れていないか</b>本名・住所・電話番号などは、入力しない・映さない。名前は、ニックネームにする。</li>
+              <li class="vz-step"><b>APIキーやパスワードを、ファイルに書いていないか</b>リポジトリが<strong>Public</strong>のものは、コミットすると誰でも見られる。</li>
+              <li class="vz-step"><b>進級制作のコードを、持ち込んでいないか</b>方向性②のチームは、今日は洗い出しだけで、進級制作のコードを、このCodespacesや公開ポートに載せない。</li>
+            </ol>
+
+            <p><strong>変更をGitHubに記録する（約10分）</strong></p>
+            <ul>
+              <li>コードを変えたチームは、変更をGitHubに記録する。<strong>プッシュしないと、Codespacesの中にしか残りません</strong>。交代要員が引き継ぐためにも必要</li>
+              <li>記録先は、①見本ゲームのアップデートは<strong>自分のFork（Tetris）</strong>、③新しい対戦ゲームは<strong>Battle BaseのFork</strong>。②進級制作に活かすチームは、洗い出したメモが残っていればよい</li>
+            </ul>
+            <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d2-prompt-push">
+              <span class="btn-icon"></span> 指示文をコピー
+            </button>
+<pre id="d2-prompt-push" class="md-preview">ここまでの変更をコミットして、GitHubにプッシュしてください。</pre></div>
+          </div>
+        </div>
+
+        <!-- ================= まとめ ================= -->
+        <div class="timeline-block" id="blk-5">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>アンケートに答える／片付ける</h3>
+          <div class="timeline-body">
+            <p><strong>アンケートに答える（Googleフォーム、約3分）</strong></p>
+            <ul>
+              <li>フォームは、この講座の<strong>Google Classroomの専用ルーム</strong>で共有される。Classroomを開いて、今日のアンケートを探して答える</li>
+            </ul>
+            <p><strong>片付けチェック（全員で確認）</strong></p>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>変更があれば、プッシュした</b>コードを変えたチームだけ。GitHubで、今日のファイルが見えることを確認する。</li>
+              <li class="vz-step"><b>ポートの公開をやめた（またはサーバーを止めた）</b>Publicのままにしない。</li>
+              <li class="vz-step"><b>Codespacesを停止した</b>見本ゲーム用・Battle Base用・Day1のチーム用、すべて <a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> で停止済みか確認する。</li>
+            </ol>
+            <p><strong>次回予告</strong></p>
+            <ul>
+              <li>Day3：チームで、<strong>挑戦する</strong>か<strong>続き</strong>かを決める。余力のあるチームは、<strong>ボンバーマン</strong>（6人同時の対戦）に挑戦する。そのほかのチームは、Day2の続きを進める。公開するチームは、パブリック公開の確認と、パスコード以外の対策を1つ入れる</li>
+              <li>今日うまくいったこと・つまずいたことを、簡単にメモしておく</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>今日の変更がある場合はGitHubにプッシュされていて、Codespacesが停止していることを確認する</strong>
+            <p>変更したチームの代表者は、リポジトリ（①は自分のFork、③はBattle BaseのFork）をGitHub上で開き、今日作ったファイルが反映されているか確認する。Codespacesは停止したままでよい（次回は「Create」ではなく、同じCodespacesを再開する）。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>今日うまくいったこと・つまずいたことをメモする</strong>
+            <p>次回の冒頭で、前日の気づき・トラブルを共有します。簡単なメモで十分です。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>図を見ながら、通信のしくみを、自分の言葉で1分で説明してみる</strong>
+            <p>「ブラウザ」「サーバー」「部屋」「メッセージの中継」という言葉を使う。隣の人に話してみるとよい。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://github.com/yasushi-honda/battle-base" target="_blank" rel="noopener">Battle Base（対戦ゲームの土台）</a> — 担当教員作成。READMEに、使い方・サンプルのルール・改造の例がある</li>
+        <li><a href="https://github.com/yas-honda/Tetris" target="_blank" rel="noopener">CYBER TETRIS（見本ゲーム）</a> — Day1の見本ゲーム</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/WebSockets_API" target="_blank" rel="noopener">WebSocket API (WebSockets)（MDN）</a> — WebSocketの仕組みの解説</li>
+        <li><a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace" target="_blank" rel="noopener">Forwarding ports in your codespace（公式）</a> — ポート転送とPublic設定</li>
+        <li><a href="https://docs.github.com/en/codespaces/reference/security-in-github-codespaces" target="_blank" rel="noopener">Security in GitHub Codespaces（公式）</a> — 公開ポートのセキュリティ</li>
+        <li><a href="https://docs.github.com/en/codespaces/setting-your-user-preferences/setting-your-timeout-period-for-github-codespaces" target="_blank" rel="noopener">Setting your timeout period for GitHub Codespaces（公式）</a> — 操作がないと止まる時間（既定30分）</li>
+        <li><a href="https://docs.github.com/en/codespaces/developing-in-a-codespace/stopping-and-starting-a-codespace" target="_blank" rel="noopener">Stopping and starting a codespace（公式）</a> — 停止と再開の手順</li>
+        <li><a href="https://docs.github.com/en/billing/concepts/product-billing/github-codespaces" target="_blank" rel="noopener">GitHub Codespaces billing（公式）</a> — 無料枠と、使い切った場合の挙動</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="day01.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">Day1 チームで参加／環境をつくる</span>
+      </a>
+      <a href="../autumn-intensive.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">秋の集中講座</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">Day3（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>

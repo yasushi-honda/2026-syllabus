@@ -120,6 +120,8 @@ natural-language-dev-2/       # 自然言語開発Ⅱ の各回詳細ページ
 autumn-intensive.html   # 秋の集中講座（時間割枠外・後期スピンオフ企画・全5日間。授業内容確定済み、日別詳細ページ順次作成中）
 autumn-intensive/       # 秋の集中講座 の日別詳細ページ（週ページではなく Day N）
   day01.html            #   Day1 チームで参加／環境をつくる
+  day02.html            #   Day2 通信対戦のしくみを知る／方向性を選ぶ（SVG図解・スクリーンショット・理解度クイズ付き）
+  images/               #   Day2 の説明用スクリーンショット（battle-baseの画面。day02-*.png。/screenshot skill で撮影）
 styles.css              # 共通スタイル（Editorial Paper Edition ライトテーマ）
 app.js                  # Markdownコピー等
 favicon.svg             # ファビコン
@@ -153,7 +155,7 @@ content/                # Markdownソース（コピーボタン用。全HTMLペ
 | 自然言語開発Ⅱ（後期） | `natural-language-dev-2.html` | `natural-language-dev-2/` | `page-header--green` | 木3・4限 | IT・情報処理専攻(システム) 3年次 |
 | ITパスポート テクノロジー系（後期） | `it-passport-technology.html` | `it-passport-technology/` | `page-header--amber` | 水1・2限 | グローバルIT 2年次（全員が外国人留学生） |
 
-上表は週ページ（詳細ディレクトリ）を運用している科目が対象。ITパスポート テクノロジー系を除く後期の科目（システム開発実習AⅡ・システム開発B・プログラミング基礎II(Java)）は現時点で枠組み（親ページ）のみのため、週ページ運用を開始した時点で追記する。**秋の集中講座**は週ではなく日単位（Day N）のため上表の対象外で、日別詳細ページを `autumn-intensive/dayNN.html` に置く（2026-09-30にDay1を作成。テーマ色 `page-header--slate`、`<main>` に `theme-slate` クラスを付けて図解部品 `vz-*` を slate 基調に読み替える。時間配分は固定ルールと同じ40/50/休10/50/30/10。ただしDay1は1限=環境づくり、2限前半=agy導入とPublic確認、2限後半=トラック選択と最初の「動くもの」）。
+上表は週ページ（詳細ディレクトリ）を運用している科目が対象。ITパスポート テクノロジー系を除く後期の科目（システム開発実習AⅡ・システム開発B・プログラミング基礎II(Java)）は現時点で枠組み（親ページ）のみのため、週ページ運用を開始した時点で追記する。**秋の集中講座**は週ではなく日単位（Day N）のため上表の対象外で、日別詳細ページを `autumn-intensive/dayNN.html` に置く（2026-09-30にDay1、2026-10-06にDay2を作成。Day2は通信のしくみを図解で教える回で、SVG図解（`styles.css` の `.vz-svg`。viewBox幅360の縦長で作り、スマホでも文字が小さくなりすぎないようにする。文字サイズは13.5px/12px基準）と、battle-base のスクリーンショットを使う。テーマ色 `page-header--slate`、`<main>` に `theme-slate` クラスを付けて図解部品 `vz-*` を slate 基調に読み替える。時間配分は固定ルールと同じ40/50/休10/50/30/10。ただしDay1は1限=環境づくり、2限前半=agy導入とPublic確認、2限後半=トラック選択と最初の「動くもの」）。
 
 ### 後期科目 → テーマ色・配置対応表（2026年度後期。プログラム基礎Ⅱ・AIコミュニケーション基礎Ⅱ・AI活用プログラミング基礎Ⅱ・自然言語開発Ⅱは上表に統合済み）
 
