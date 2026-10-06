@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=13">
-  <!-- 公式情報確認: 2026-10-07（docs.meshy.ai/en/webapp/pricing — 無料プランは月100クレジット、無料プランの生成物はCC BY 4.0（表示を付ければ商用利用可）、有料プランは非公開・自分の所有 / help.suno.com/en/articles/2746945 — Basic（無料）プランの曲の所有者はSuno、非商用の利用は可、Pro・Premierは自分が所有、AI生成のみの曲は著作権保護の対象外になる場合がある（2026-09-04更新の記事）/ unity.com/products/unity-personal — 売上・調達資金が過去12か月で20万ドル未満の個人・小規模組織が対象 / developer.mozilla.org/ja/docs/Web/API/Gamepad_API/Using_the_Gamepad_API — gamepadconnected イベントで接続を検知、Firefoxではユーザーがゲームパッドを操作して初めて利用可能になる / docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork — Web UIの「Sync fork」→「Update branch」でフォークを最新にできる。競合時はプルリクエストの作成を促される）。ボンバーマンのサンプルは担当教員の土台リポジトリ yasushi-honda/battle-base に追加（?game=bomber で切り替え）。-->
+  <!-- 公式情報確認: 2026-10-07（docs.meshy.ai/en/webapp/pricing — 無料プランは月100クレジット、無料プランの生成物はCC BY 4.0（表示を付ければ商用利用可）、有料プランは非公開・自分の所有 / help.suno.com/en/articles/2746945 — Basic（無料）プランの曲の所有者はSuno、非商用の利用は可、Pro・Premierは自分が所有、AI生成のみの曲は著作権保護の対象外になる場合がある（2026-09-04更新の記事）/ unity.com/products/unity-personal — 売上・調達資金が過去12か月で20万ドル未満の個人・小規模組織が対象 / developer.mozilla.org/ja/docs/Web/API/Gamepad_API/Using_the_Gamepad_API — gamepadconnected イベントで接続を検知、Firefoxではユーザーがゲームパッドを操作して初めて利用可能になる / docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork — Web UIの「Sync fork」→「Update branch」でフォークを最新にできる。競合時はプルリクエストの作成を促される）。ボンバーマンのサンプルは担当教員の土台リポジトリ yasushi-honda/battle-base に追加（?game=bomber で切り替え。PR #4）。1秒100通の上限は battle-base/server.js の MAX_MESSAGES_PER_SECOND で、接続（1人）ごとの上限。Gamepad API は安全なコンテキスト（HTTPS）でのみ使える（MDN Navigator.getGamepads）、Codespaces の公開URLは https://CODESPACENAME-PORT.app.github.dev（docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace）。-->
   <!-- 2026-10-07: Day3を新規作成。親ページ（autumn-intensive.html）のDay3・Day4・Day5の行を先に更新済み。Day2の様子（担当教員のフィードバック）を受けて、方向性④「自由に広げる」（生成AIツール・Unity・コントローラー）を追加し、端末・コントローラーの持ち込みを正式に許可。Day4は「チーム内2交代」の相互体験、Day5は「推薦されたチームがAIとの作り方を話す」発表に設計変更したため、Day3の2限後半に、見せる準備（紹介カード・体験の手順・動作確認）を組み込んだ -->
 </head>
 <body>
@@ -160,7 +160,7 @@
 
             <p><strong>Codespacesを再開する（約5分）</strong></p>
             <ul>
-              <li>代表者が <a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> を開き、<strong>前回と同じCodespaces</strong>を再開する（「Create」ではなく再開）。<code>npm start</code> をやり直し、8000番がPublicか確認する（Day2と同じ）</li>
+              <li>代表者が <a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> を開き、<strong>前回と同じCodespaces</strong>を再開する（「Create」ではなく再開）。<code>npm start</code> をやり直し、8000番がPublicか確認する（Day2と同じ）。agyを使うときは、再度ログインを求められる場合がある（手順はDay1の<a href="day01.html#blk-3">「Antigravity CLI（agy）を導入して認証する」</a>と同じ）</li>
             </ul>
           </div>
         </div>
@@ -192,19 +192,27 @@
               </li>
               <li class="vz-point">
                 <b>変化があったときだけ、回数を抑えて送る</b>
-                <p>止まっているときは送らない。動いているときも、1秒あたり10回ほどに抑える。サーバーには、<strong>1秒100通までの上限</strong>がある（Day2のBattle Base）。6人が同時に動いても、上限に収まる。</p>
+                <p>止まっているときは送らない。動いているときも、1秒あたり10回ほどに抑える。サーバーには、<strong>1人（1つの接続）あたり、1秒100通までの上限</strong>がある（Day2のBattle Base）。1秒10回ほどに抑えれば、6人が同時に動いても収まる。</p>
               </li>
               <li class="vz-point">
                 <b>爆発は、各自の画面が同じ計算で出す</b>
                 <p>爆弾を「置いた」という知らせだけを送り、<strong>爆風の広がりやブロックが壊れる様子は、全員の画面が同じルールで計算</strong>する。Day2の「3が出た」と同じ考え方。</p>
               </li>
             </ul>
-            <p><strong>ボンバーマンの土台を取り込む</strong>（担当教員が、Battle Baseにサンプルを追加する。<strong>準備ができ次第、このページに手順を確定して載せる</strong>。それまでは、Day2の人生ゲームの続きを進めてよい）</p>
+            <p><strong>ボンバーマンを動かす</strong>（担当教員が、Battle Baseにサンプルを追加した。<strong>Battle Baseを使っていたチームか、Day3から新しく使うチームかで、最初の手順が違う</strong>）</p>
+            <p><strong>A. Day2でBattle Baseを使っていたチーム</strong>（すでにForkとCodespacesがある）</p>
             <ol class="vz-steps">
-              <li class="vz-step"><b>代表者: ForkのCodespacesで、最新のBattle Baseを取り込む</b>GitHubで、自分のFork（Battle Base）のページを開き、ファイル一覧の上の<strong>「Sync fork」</strong>→<strong>「Update branch」</strong>を押す（公式: Syncing a fork）。変更が競合した場合は、GitHubからプルリクエストの作成を促されるので、<strong>人生ゲームを改造したチームは、担当教員か2年次に相談する</strong>。</li>
-              <li class="vz-step"><b>代表者: Codespacesで、更新を取り込む</b>ターミナルで <code>git pull</code> を入力し、<code>npm start</code> をやり直す。</li>
-              <li class="vz-step"><b>チーム: URLの末尾に「?game=bomber」を付けて開く</b>公開URLの最後に付けると、ボンバーマンになる（付けないと、人生ゲーム）。部屋を作ったら、<strong>招待リンクにも、同じ印が引き継がれる</strong>。</li>
-              <li class="vz-step"><b>チーム: 2人以上で、まず遊ぶ</b>矢印キーかWASDで動き、スペースで爆弾を置く。1人しかいないときは、別のブラウザのタブ（シークレットウィンドウ）で、招待リンクを開くと2人目として入れる。</li>
+              <li class="vz-step"><b>代表者: Forkを最新にする</b>GitHubで、自分のFork（Battle Base）のページを開き、ファイル一覧の上の<strong>「Sync fork」</strong>→<strong>「Update branch」</strong>を押す（公式: Syncing a fork）。変更が競合した場合は、GitHubからプルリクエストの作成を促されるので、<strong>人生ゲームを改造したチームは、担当教員か2年次に相談する</strong>。</li>
+              <li class="vz-step"><b>代表者: Codespacesに取り込む</b>Battle BaseのCodespacesを再開し、ターミナルで <code>git pull</code> を入力してから、<code>npm start</code> をやり直す。</li>
+            </ol>
+            <p><strong>B. Day3からBattle Baseを使うチーム</strong>（見本ゲームや進級制作のデモから、方向を変えるチーム）</p>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>代表者: Battle BaseをForkして、Codespacesを作る</b><a href="day02.html#blk-2">Day2の「方向性③」の手順</a>（Fork→招待→Codespacesを作る→<code>npm start</code>→8000番をPublic）と同じ。Forkしたあとは、すでに最新なので、Sync forkは不要。agyは入っていないので、同じ枠の手順で入れる。</li>
+            </ol>
+            <p><strong>A・B共通</strong></p>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>チーム: URLの末尾に「?game=bomber」を付けて開く</b>公開URLの最後に付けると、ボンバーマンになる（付けないと、人生ゲーム）。部屋を作ったら、<strong>招待リンクにも、同じ印が引き継がれる</strong>。<strong>全員が、この印つきのリンクで入る</strong>（部屋コードだけを手で打って入ると、その人だけ人生ゲームの画面になり、対戦できない）。</li>
+              <li class="vz-step"><b>チーム: 2人以上で、まず遊ぶ</b>矢印キーかWASDで動き、スペースで爆弾を置く。スマホでは、画面のボタンで動かせる。1人しかいないときは、別のブラウザのタブ（シークレットウィンドウ）で、招待リンクを開くと2人目として入れる。</li>
             </ol>
             <div class="lesson-tip">
               <strong>時間が足りないチームへ:</strong> 1限後半の50分では、<strong>「遊ぶ」ところまで</strong>で十分です。改造は、2限前半に回してかまいません。
@@ -235,7 +243,7 @@
                   <tr>
                     <td>ゲームのコントローラー</td>
                     <td>パソコンにつないで、ゲームを操作する</td>
-                    <td>ブラウザのゲームでは、<strong>Gamepad API</strong>を使う（2限前半で、agyへの指示文を紹介）。つないでも認識されないときは、<strong>コントローラーのボタンを1回押す</strong>（公式: MDN。Firefoxは、ユーザーが操作するまで使えない）</td>
+                    <td>ブラウザのゲームでは、<strong>Gamepad API</strong>を使う（2限前半で、agyへの指示文を紹介）。つないでも認識されないときは、<strong>コントローラーのボタンを1回押す</strong>（公式: MDN。Firefoxでは、ページが表示されている状態で、ユーザーが操作したときにはじめて使える）</td>
                   </tr>
                 </tbody>
               </table>
@@ -285,7 +293,7 @@
             </figure>
 
             <p><strong>コントローラーで動かせるようにする（agyへの指示文の例）</strong></p>
-            <p>ブラウザのゲームでは、<strong>Gamepad API</strong>という標準の仕組みで、コントローラーを読み取れる（公式: MDN）。コードを自分で書かなくても、agyに<strong>小さく</strong>頼めばよい。Codespacesの公開URLは<strong>https</strong>なので、そのまま試せる。</p>
+            <p>ブラウザのゲームでは、<strong>Gamepad API</strong>という標準の仕組みで、コントローラーを読み取れる（公式: MDN）。コードを自分で書かなくても、agyに<strong>小さく</strong>頼めばよい。Gamepad APIは、<strong>安全なコンテキスト（HTTPS）でのみ</strong>使える（公式: MDN）。Codespacesの公開URLは<strong>https</strong>なので、そのまま試せる。</p>
             <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d3-prompt-gamepad">
               <span class="btn-icon"></span> 指示文をコピー
             </button>
@@ -299,7 +307,7 @@
             <ul class="vz-points">
               <li class="vz-point">
                 <b>相手の動きが、カクカクする・遅れる</b>
-                <p>リアルタイムでは、<strong>送る回数</strong>と<strong>通信の遅れ</strong>で、ずれが出る。agyに「位置を送る回数を、1秒10回までに抑えて」と頼む。<strong>1秒100通を超えると、超えた分は届かない</strong>（サーバーの上限）。</p>
+                <p>リアルタイムでは、<strong>送る回数</strong>と<strong>通信の遅れ</strong>で、ずれが出る。agyに「位置を送る回数を、1秒10回までに抑えて」と頼む。<strong>1人が1秒に100通を超えると、超えた分はサーバーに捨てられて届かない</strong>。</p>
               </li>
               <li class="vz-point">
                 <b>人によって、見える状態が違う</b>
@@ -332,21 +340,21 @@
 
             <p><strong>安全を確認する（約8分）</strong></p>
             <ol class="vz-steps">
-              <li class="vz-step"><b>公開するなら、パスコード以外の対策を1つ入れた</b>部屋のパスコードや合言葉は、<strong>本物のアクセス制限にはならない</strong>。次のどれか1つを、agyに頼んで入れる（下の指示文の例）。</li>
-            </ol>
-            <ul>
-              <li>部屋に入れる<strong>人数の上限</strong>を、チームの人数に合わせる</li>
-              <li>1秒あたりに送れるメッセージの<strong>回数の上限</strong>を、必要な数に絞る</li>
-              <li>想定外の参加者が入ったときは、<strong>部屋を作り直す</strong>（その手順を、チームで決めておく）</li>
-            </ul>
-            <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d3-prompt-safety">
-              <span class="btn-icon"></span> 指示文をコピー（例）
-            </button>
-<pre id="d3-prompt-safety" class="md-preview">server.js の MAX_PLAYERS を、チームの人数に合わせて変更してください。変更したあと、何が変わるかを短く説明してください。</pre></div>
-            <ol class="vz-steps" start="2">
+              <li class="vz-step"><b>公開するなら、パスコード以外の対策を1つ入れた</b>部屋のパスコードや合言葉は、<strong>本物のアクセス制限にはならない</strong>。次のどれか1つを選び、agyに頼んで入れる。
+                <ul>
+                  <li>部屋に入れる<strong>人数の上限</strong>を、チームの人数に合わせる（Battle Baseの初期値は6人。6人より少ないチームが対象）</li>
+                  <li>1人が1秒に送れるメッセージの<strong>回数の上限</strong>を、必要な数まで下げる（初期値は100通）</li>
+                  <li>想定外の参加者が入ったときは、<strong>部屋を作り直す</strong>（その手順を、チームで決めておく）</li>
+                </ul>
+              </li>
               <li class="vz-step"><b>個人情報・APIキーを入れていない</b>本名・住所・電話番号、APIキーやパスワードは、画面にも、ファイルにも入れない（リポジトリはPublic）。名前は、ニックネームにする。</li>
               <li class="vz-step"><b>画像・音楽・3Dの権利と表示</b>④のチームは、使ったツールの名前を、紹介カード（次）に書く。他人の作品・顔や名前が分かるものは使っていないか確認する。</li>
             </ol>
+            <p>人数の上限を変える場合の、agyへの指示文の例（6人より少ないチーム向け。チームの人数に合わせて数字を変える）：</p>
+            <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d3-prompt-safety">
+              <span class="btn-icon"></span> 指示文をコピー（例）
+            </button>
+<pre id="d3-prompt-safety" class="md-preview">server.js の MAX_PLAYERS を、4 に変更してください。変更したあと、何が変わるかを短く説明してください。</pre></div>
 
             <p><strong>明日、見せる準備をする（約17分）</strong></p>
             <p>明日（Day4）は、<strong>他のチームが、自分たちの作品を触りに来る</strong>。そのとき、<strong>説明する人がいなくても迷わず触れる</strong>よう、3つを用意する。<strong>紹介カードは、Day5でも、そのまま使う</strong>。</p>
@@ -440,7 +448,7 @@
               <li>フォームは、この講座の<strong>Google Classroomの専用ルーム</strong>で共有される。Classroomを開いて、今日のアンケートを探して答える</li>
             </ul>
 
-            <p><strong>片付けチェック（全員で確認）</strong></p>
+            <p><strong>片付けチェック（全員で確認、約2分）</strong></p>
             <ol class="vz-steps">
               <li class="vz-step"><b>変更があれば、プッシュした</b>GitHubで、今日のファイルが見えることを確認する。</li>
               <li class="vz-step"><b>ポートの公開をやめた（またはサーバーを止めた）</b>Publicのままにしない。<strong>明日の相互体験の直前に、もう一度公開する</strong>。</li>
@@ -488,9 +496,9 @@
     <div class="syllabus-section">
       <h2>参考リンク</h2>
       <ul>
-        <li><a href="https://github.com/yasushi-honda/battle-base" target="_blank" rel="noopener">Battle Base（対戦ゲームの土台）</a> — 担当教員作成。ボンバーマンのサンプル（準備ができ次第、追加）</li>
+        <li><a href="https://github.com/yasushi-honda/battle-base" target="_blank" rel="noopener">Battle Base（対戦ゲームの土台）</a> — 担当教員作成。ボンバーマンのサンプル（URLの末尾に ?game=bomber）</li>
         <li><a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork" target="_blank" rel="noopener">Syncing a fork（公式）</a> — Forkを最新にする手順（Sync fork）</li>
-        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/Gamepad_API/Using_the_Gamepad_API" target="_blank" rel="noopener">Gamepad API の使用（MDN）</a> — コントローラーをブラウザで読み取る仕組み</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/Gamepad_API/Using_the_Gamepad_API" target="_blank" rel="noopener">ゲームパッド API の使用（MDN）</a> — コントローラーをブラウザで読み取る仕組み</li>
         <li><a href="https://docs.meshy.ai/en/webapp/pricing" target="_blank" rel="noopener">Pricing &amp; Credits（Meshy）</a> — 無料プランのクレジットと、生成物のライセンス</li>
         <li><a href="https://help.suno.com/en/articles/2746945" target="_blank" rel="noopener">Do I have the copyrights to songs I made?（Suno）</a> — 無料プランと有料プランでの、曲の所有者と使い方</li>
         <li><a href="https://unity.com/products/unity-personal" target="_blank" rel="noopener">Unity Personal（Unity）</a> — 無料で使える条件</li>
