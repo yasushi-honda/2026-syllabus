@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=13">
-  <!-- 公式情報確認: 2026-10-07（docs.meshy.ai/en/webapp/pricing — 無料プランは月100クレジット、無料プランの生成物はCC BY 4.0（表示を付ければ商用利用可）、有料プランは非公開・自分の所有 / help.suno.com/en/articles/2746945 — Basic（無料）プランの曲の所有者はSuno、非商用の利用は可、Pro・Premierは自分が所有、AI生成のみの曲は著作権保護の対象外になる場合がある（2026-09-04更新の記事）/ unity.com/products/unity-personal — 売上・調達資金が過去12か月で20万ドル未満の個人・小規模組織が対象 / developer.mozilla.org/ja/docs/Web/API/Gamepad_API/Using_the_Gamepad_API — gamepadconnected イベントで接続を検知、Firefoxではユーザーがゲームパッドを操作して初めて利用可能になる / docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork — Web UIの「Sync fork」→「Update branch」でフォークを最新にできる。競合時はプルリクエストの作成を促される）。ボンバーマンのサンプルは担当教員の土台リポジトリ yasushi-honda/battle-base に追加（?game=bomber で切り替え。PR #5、PR #4 の置き換え）。ボンバーマンの本物のルールは strategywiki.org/wiki/Super_Bomberman/Gameplay と /Power-ups（導火線3秒・十字の爆風・誘爆・アイテム3種・1分でサドンデス・制限2分・最後の1人が勝ち）、盤面（行も列も偶数のマスに固定ブロックの市松）は dev.to の Building Bomberman from a Grid of Integers で確認（2026-10-07）。1秒100通の上限は battle-base/server.js の MAX_MESSAGES_PER_SECOND で、接続（1人）ごとの上限。Gamepad API は安全なコンテキスト（HTTPS）でのみ使える（MDN Navigator.getGamepads）、Codespaces の公開URLは https://CODESPACENAME-PORT.app.github.dev（docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace）。-->
+  <!-- 公式情報確認: 2026-10-07（docs.meshy.ai/en/webapp/pricing — 無料プランは月100クレジット、無料プランの生成物はCC BY 4.0（表示を付ければ商用利用可）、有料プランは非公開・自分の所有 / help.suno.com/en/articles/2746945 — Basic（無料）プランの曲の所有者はSuno、非商用の利用は可、Pro・Premierは自分が所有、AI生成のみの曲は著作権保護の対象外になる場合がある（2026-09-04更新の記事）/ unity.com/products/unity-personal — 売上・調達資金が過去12か月で20万ドル未満の個人・小規模組織が対象 / developer.mozilla.org/ja/docs/Web/API/Gamepad_API/Using_the_Gamepad_API — gamepadconnected イベントで接続を検知、Firefoxではユーザーがゲームパッドを操作して初めて利用可能になる / docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork — Web UIの「Sync fork」→「Update branch」でフォークを最新にできる。競合時はプルリクエストの作成を促される）。ボンバーマンのサンプルは担当教員の土台リポジトリ yasushi-honda/battle-base に追加（?game=bomber で切り替え。PR #5、PR #4 の置き換え）。ボンバーマンの本物のルールは strategywiki.org/wiki/Super_Bomberman/Gameplay と /Power-ups（導火線3秒・十字の爆風・壊せるブロックからアイテムが出る・1分でサドンデス・制限2分・最後の1人が勝ち。StrategyWikiはファンが作る解説サイトで、ゲームの会社の公式資料ではない。誘爆は、Gameplayページの「they will successively explode in a chain reaction」の記述から確認。アイテムが3種類なのはサンプルの選択）、盤面（行も列も偶数のマスに固定ブロックの市松）は dev.to の Building Bomberman from a Grid of Integers で確認（2026-10-07）。1秒100通の上限は battle-base/server.js の MAX_MESSAGES_PER_SECOND で、接続（1人）ごとの上限。Gamepad API は安全なコンテキスト（HTTPS）でのみ使える（MDN Navigator.getGamepads）、Codespaces の公開URLは https://CODESPACENAME-PORT.app.github.dev（docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace）。-->
   <!-- 2026-10-07: ボンバーマンのスクリーンショット3枚（images/day03-bomber-*.png）は、/screenshot skill 経由で battle-base（main、PR #5）をローカルで動かし、架空の名前（あや・ボブ・さくら）で撮影。 -->
   <!-- 2026-10-07: Day3を新規作成。親ページ（autumn-intensive.html）のDay3・Day4・Day5の行を先に更新済み。Day2の様子（担当教員のフィードバック）を受けて、方向性④「自由に広げる」（生成AIツール・Unity・コントローラー）を追加し、端末・コントローラーの持ち込みを正式に許可。Day4は「チーム内2交代」の相互体験、Day5は「推薦されたチームがAIとの作り方を話す」発表に設計変更したため、Day3の2限後半に、見せる準備（紹介カード・体験の手順・動作確認）を組み込んだ -->
 </head>
@@ -185,15 +185,15 @@
 
             <!-- ---------- ③ ---------- -->
             <h4 class="d2-h">方向性③ 新しい対戦ゲーム：ボンバーマンに挑戦する（リアルタイム）</h4>
-            <p>本物のボンバーマン（スーパーボンバーマンのバトルモード）のルールに合わせて作ってある。ルールのうち、<strong>公式の資料で確認できたもの</strong>と、<strong>このサンプルで決めたもの</strong>は、分けて書く（出典: StrategyWiki「Super Bomberman/Gameplay・Power-ups」、確認日 2026-10-07）。</p>
+            <p>本物のボンバーマン（スーパーボンバーマンのバトルモード）のルールに合わせて作ってある。ルールのうち、<strong>ファンが作る解説サイト（StrategyWiki）や技術記事で確認できたもの</strong>と、<strong>このサンプルで決めたもの</strong>は、分けて書く（出典: StrategyWiki「Super Bomberman/Gameplay・Power-ups」、盤面は DEV Community「Building Bomberman from a Grid of Integers」、確認日 2026-10-07。どれも、ゲームの会社の公式資料ではない）。</p>
             <ul class="vz-points">
               <li class="vz-point">
-                <b>本物のボンバーマンの決まり</b>
-                <p>爆弾は<strong>3秒</strong>で爆発し、爆風は<strong>上下左右の十字</strong>に広がる。爆風に触れた爆弾は<strong>誘爆</strong>する。壊せるブロックを壊すと、<strong>アイテム</strong>（ボム増加・火力アップ・スピードアップ）が出ることがある。<strong>最後の1人が勝ち</strong>。制限時間は2分で、<strong>1分たつとサドンデス</strong>（外側から壁が時計回りに落ちてくる。落ちた場所にいるとやられる）。盤面は、行も列も偶数のマスに固定ブロックが並ぶ<strong>市松模様</strong>。</p>
+                <b>本物のボンバーマンの決まり（上の出典で確認したもの）</b>
+                <p>爆弾は<strong>3秒</strong>で爆発し、爆風は<strong>上下左右の十字</strong>に広がる。爆風に触れた爆弾は<strong>誘爆</strong>する。壊せるブロックを壊すと、<strong>アイテム</strong>が出ることがある（このサンプルでは、ボム増加・火力アップ・スピードアップの3種類だけにしている。本物には、もっと多くの種類がある）。<strong>最後の1人が勝ち</strong>。制限時間は2分で、<strong>1分たつとサドンデス</strong>（外側から壁が時計回りに落ちてくる。落ちた場所にいるとやられる）。盤面は、行も列も偶数のマスに固定ブロックが並ぶ<strong>市松模様</strong>。</p>
               </li>
               <li class="vz-point">
                 <b>このサンプルで決めたこと</b>
-                <p>最初の爆風の長さ（2マス）、爆風が残る時間、アイテムの出る確率と上限、歩く速さなどは、<strong>公式の値ではなく、このサンプルの決まり</strong>。<code>public/bomber.js</code> の先頭に、定数として並んでいる。書き換えるだけで、遊びが変わる。</p>
+                <p>最初の爆風の長さ（2マス）、爆風が残る時間、アイテムの出る確率と上限、歩く速さなどは、<strong>出典で確認できた値ではなく、このサンプルの決まり</strong>。<code>public/bomber.js</code> の先頭に、定数として並んでいる。書き換えるだけで、遊びが変わる。</p>
               </li>
               <li class="vz-point">
                 <b>通信のしくみ：1人が「審判」になる</b>
@@ -201,7 +201,7 @@
               </li>
             </ul>
             <div class="lesson-tip">
-              <strong>知っておくこと:</strong> 審判が部屋を抜けると、ゲームはそこで終わる（引き継ぎはしない）。審判は、ロビーのホストとは限らない。自分の位置は自己申告のため、画面を改造すればズルができる。教室の遊びとして、そのまま使ってよい。
+              <strong>知っておくこと:</strong> 審判が部屋を抜けると、ゲームはそこで終わる（引き継ぎはしない）。審判は、ロビーのホストとは限らない。自分の位置は自己申告のため、画面を改造すればズルができる。教室の遊びとして、そのまま使ってよい。<br><strong>時間切れ・同時にやられた場合:</strong> 2分たっても2人以上が残っていたら引き分け。全員が同時にやられた場合も、引き分け。
             </div>
             <figure class="vz-fig" aria-labelledby="cap-bshots">
               <p class="vz-fig-title" id="cap-bshots">ボンバーマン（3人で対戦したところ）</p>
@@ -215,8 +215,8 @@
                   <figcaption>1分でサドンデスの警告が出る</figcaption>
                 </figure>
                 <figure class="vz-shot">
-                  <img src="images/day03-bomber-sudden.png" alt="外側の2周が灰色の壁に変わっている。画面の中央に「ボブ の勝ち！」と表示されている。" width="494" height="429" loading="lazy">
-                  <figcaption>外側から壁が落ち、最後の1人が勝ち</figcaption>
+                  <img src="images/day03-bomber-sudden.png" alt="画面の上の辺に、灰色の壁が落ちている（壁は外側から時計回りに落ちる）。画面の中央に「ボブ の勝ち！」と表示され、右下にボブが1人残っている。" width="494" height="429" loading="lazy">
+                  <figcaption>壁が落ち始め、最後の1人が勝ち（6秒でサドンデスにして撮影）</figcaption>
                 </figure>
               </div>
               <figcaption>画像は、練習用に作った架空の名前（あや・ボブ・さくら）で撮影した。サドンデスの画面は、<code>sd=6</code>（6秒でサドンデス）で撮影したもの。</figcaption>
@@ -329,7 +329,7 @@
             <ul class="vz-points">
               <li class="vz-point">
                 <b>相手の動きが、カクカクする・遅れる</b>
-                <p>リアルタイムでは、<strong>送る回数</strong>と<strong>通信の遅れ</strong>で、ずれが出る。agyに「位置を送る回数を、1秒10回までに抑えて」と頼む。<strong>1人が1秒に100通を超えると、超えた分はサーバーに捨てられて届かない</strong>（ボンバーマンの位置は、1秒に12回まで）。</p>
+                <p>リアルタイムでは、<strong>送る回数</strong>と<strong>通信の遅れ</strong>で、ずれが出る。たとえば、agyに「位置を送る回数を、1秒あたり○回までに抑えて」と頼む。<strong>1人が1秒に100通を超えると、超えた分はサーバーに捨てられて届かない</strong>（ボンバーマンの位置は、初期値が1秒に12回まで）。</p>
               </li>
               <li class="vz-point">
                 <b>人によって、見える状態が違う（ボンバーマン）</b>
