@@ -2958,6 +2958,11 @@ main .vz-step:not(:last-child)::after {
 }
 
 main .vz-step b { display: block; margin-bottom: 2px; color: var(--c-text); }
+main .vz-step-img { display: block; width: 100%; max-width: 360px; height: auto; margin-top: var(--sp-3); border: 1px solid var(--c-border); border-radius: var(--r-md); }
+@media (min-width: 720px) {
+  main .vz-step:has(.vz-step-img) { display: flow-root; }
+  main .vz-step-img { float: right; width: 260px; margin: 0 0 var(--sp-1) var(--sp-4); }
+}
 
 @media (min-width: 900px) {
   main .vz-steps--row { grid-template-columns: repeat(var(--cols, 3), 1fr); gap: 1.75rem; }
