@@ -10,6 +10,7 @@
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=13">
   <!-- 公式情報確認: 2026-10-07（docs.meshy.ai/en/webapp/pricing — 無料プランは月100クレジット、無料プランの生成物はCC BY 4.0（表示を付ければ商用利用可）、有料プランは非公開・自分の所有 / help.suno.com/en/articles/2746945 — Basic（無料）プランの曲の所有者はSuno、非商用の利用は可、Pro・Premierは自分が所有、AI生成のみの曲は著作権保護の対象外になる場合がある（2026-09-04更新の記事）/ unity.com/products/unity-personal — 売上・調達資金が過去12か月で20万ドル未満の個人・小規模組織が対象 / developer.mozilla.org/ja/docs/Web/API/Gamepad_API/Using_the_Gamepad_API — gamepadconnected イベントで接続を検知、Firefoxではユーザーがゲームパッドを操作して初めて利用可能になる / docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork — Web UIの「Sync fork」→「Update branch」でフォークを最新にできる。競合時はプルリクエストの作成を促される）。ボンバーマンのサンプルは担当教員の土台リポジトリ yasushi-honda/battle-base に追加（?game=bomber で切り替え。PR #5、PR #4 の置き換え）。ボンバーマンの本物のルールは strategywiki.org/wiki/Super_Bomberman/Gameplay と /Power-ups（導火線3秒・十字の爆風・誘爆・アイテム3種・1分でサドンデス・制限2分・最後の1人が勝ち）、盤面（行も列も偶数のマスに固定ブロックの市松）は dev.to の Building Bomberman from a Grid of Integers で確認（2026-10-07）。1秒100通の上限は battle-base/server.js の MAX_MESSAGES_PER_SECOND で、接続（1人）ごとの上限。Gamepad API は安全なコンテキスト（HTTPS）でのみ使える（MDN Navigator.getGamepads）、Codespaces の公開URLは https://CODESPACENAME-PORT.app.github.dev（docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace）。-->
+  <!-- 2026-10-07: ボンバーマンのスクリーンショット3枚（images/day03-bomber-*.png）は、/screenshot skill 経由で battle-base（main、PR #5）をローカルで動かし、架空の名前（あや・ボブ・さくら）で撮影。 -->
   <!-- 2026-10-07: Day3を新規作成。親ページ（autumn-intensive.html）のDay3・Day4・Day5の行を先に更新済み。Day2の様子（担当教員のフィードバック）を受けて、方向性④「自由に広げる」（生成AIツール・Unity・コントローラー）を追加し、端末・コントローラーの持ち込みを正式に許可。Day4は「チーム内2交代」の相互体験、Day5は「推薦されたチームがAIとの作り方を話す」発表に設計変更したため、Day3の2限後半に、見せる準備（紹介カード・体験の手順・動作確認）を組み込んだ -->
 </head>
 <body>
@@ -202,6 +203,24 @@
             <div class="lesson-tip">
               <strong>知っておくこと:</strong> 審判が部屋を抜けると、ゲームはそこで終わる（引き継ぎはしない）。審判は、ロビーのホストとは限らない。自分の位置は自己申告のため、画面を改造すればズルができる。教室の遊びとして、そのまま使ってよい。
             </div>
+            <figure class="vz-fig" aria-labelledby="cap-bshots">
+              <p class="vz-fig-title" id="cap-bshots">ボンバーマン（3人で対戦したところ）</p>
+              <div class="vz-shots vz-shots--wide">
+                <figure class="vz-shot">
+                  <img src="images/day03-bomber-bomb.png" alt="ボンバーマンの対戦画面。灰色の固定ブロックが市松状に並び、レンガ柄の壊せるブロックの間に、3人のキャラがいる。左上のキャラの隣に、導火線に火がついた爆弾が置かれている。" width="494" height="429" loading="lazy">
+                  <figcaption>対戦中。爆弾を置いたところ（3秒で爆発）</figcaption>
+                </figure>
+                <figure class="vz-shot">
+                  <img src="images/day03-bomber-warn.png" alt="画面の中央に、赤い大きな文字で「サドンデス！」、白い文字で「壁がせまってくる」と表示されている。" width="494" height="429" loading="lazy">
+                  <figcaption>1分でサドンデスの警告が出る</figcaption>
+                </figure>
+                <figure class="vz-shot">
+                  <img src="images/day03-bomber-sudden.png" alt="外側の2周が灰色の壁に変わっている。画面の中央に「ボブ の勝ち！」と表示されている。" width="494" height="429" loading="lazy">
+                  <figcaption>外側から壁が落ち、最後の1人が勝ち</figcaption>
+                </figure>
+              </div>
+              <figcaption>画像は、練習用に作った架空の名前（あや・ボブ・さくら）で撮影した。サドンデスの画面は、<code>sd=6</code>（6秒でサドンデス）で撮影したもの。</figcaption>
+            </figure>
             <p><strong>ボンバーマンを動かす</strong>（担当教員が、Battle Baseにサンプルを追加した。<strong>Battle Baseを使っていたチームか、Day3から新しく使うチームかで、最初の手順が違う</strong>）</p>
             <p><strong>A. Day2でBattle Baseを使っていたチーム</strong>（すでにForkとCodespacesがある）</p>
             <ol class="vz-steps">
