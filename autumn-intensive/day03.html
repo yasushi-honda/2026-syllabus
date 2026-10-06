@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day3 挑戦する／仕上げる／見せる準備をする | 秋の集中講座</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=13">
+  <!-- 公式情報確認: 2026-10-07（docs.meshy.ai/en/webapp/pricing — 無料プランは月100クレジット、無料プランの生成物はCC BY 4.0（表示を付ければ商用利用可）、有料プランは非公開・自分の所有 / help.suno.com/en/articles/2746945 — Basic（無料）プランの曲の所有者はSuno、非商用の利用は可、Pro・Premierは自分が所有、AI生成のみの曲は著作権保護の対象外になる場合がある（2026-09-04更新の記事）/ unity.com/products/unity-personal — 売上・調達資金が過去12か月で20万ドル未満の個人・小規模組織が対象 / developer.mozilla.org/ja/docs/Web/API/Gamepad_API/Using_the_Gamepad_API — gamepadconnected イベントで接続を検知、Firefoxではユーザーがゲームパッドを操作して初めて利用可能になる / docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork — Web UIの「Sync fork」→「Update branch」でフォークを最新にできる。競合時はプルリクエストの作成を促される）。ボンバーマンのサンプルは担当教員の土台リポジトリ yasushi-honda/battle-base に追加（?game=bomber で切り替え。PR #5、PR #4 の置き換え）。ボンバーマンの本物のルールは strategywiki.org/wiki/Super_Bomberman/Gameplay と /Power-ups（導火線3秒・十字の爆風・壊せるブロックからアイテムが出る・1分でサドンデス・制限2分・最後の1人が勝ち。StrategyWikiはファンが作る解説サイトで、ゲームの会社の公式資料ではない。誘爆は、Gameplayページの「they will successively explode in a chain reaction」の記述から確認。アイテムが3種類なのはサンプルの選択）、盤面（行も列も偶数のマスに固定ブロックの市松）は dev.to の Building Bomberman from a Grid of Integers で確認（2026-10-07）。1秒100通の上限は battle-base/server.js の MAX_MESSAGES_PER_SECOND で、接続（1人）ごとの上限。Gamepad API は安全なコンテキスト（HTTPS）でのみ使える（MDN Navigator.getGamepads）、Codespaces の公開URLは https://CODESPACENAME-PORT.app.github.dev（docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace）。-->
+  <!-- 2026-10-07: ボンバーマンのスクリーンショット3枚（images/day03-bomber-*.png）は、/screenshot skill 経由で battle-base（main、PR #5）をローカルで動かし、架空の名前（あや・ボブ・さくら）で撮影。 -->
+  <!-- 2026-10-07: Day3を新規作成。親ページ（autumn-intensive.html）のDay3・Day4・Day5の行を先に更新済み。Day2の様子（担当教員のフィードバック）を受けて、方向性④「自由に広げる」（生成AIツール・Unity・コントローラー）を追加し、端末・コントローラーの持ち込みを正式に許可。Day4は「チーム内2交代」の相互体験、Day5は「推薦されたチームがAIとの作り方を話す」発表に設計変更したため、Day3の2限後半に、見せる準備（紹介カード・体験の手順・動作確認）を組み込んだ -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--slate">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../autumn-intensive.html">秋の集中講座</a>
+        <span>/</span>
+        <span>Day3</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">挑戦する／仕上げる／<wbr>見せる準備をする</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Day 3</span>
+            <span class="page-badge">全5日間の3日目 / 180分</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-slate">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">チームで<strong>挑戦するか、続きを仕上げるか</strong>を決めて進め、明日の<strong>相互体験で見せる準備</strong>まで整える</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">方向性（4つ）/ リアルタイム対戦 / ボンバーマン / 自由に広げる / コントローラー / 生成AIの権利・表示 / 紹介カード / 体験の手順</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">Day2で使った<strong>代表者のCodespaces</strong>（停止中のものを再開する）。<strong>端末やゲームのコントローラーの持ち込みは、持っている人はOK</strong>です（学校の機器・ネットワークの決まりは守る）。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>前日の気づきを共有し、チームで<strong>方向性</strong>（見本ゲームのアップデート／進級制作への応用／新しい対戦ゲーム／<strong>自由に広げる</strong>）を決める</li>
+        <li>余力のあるチームは、<strong>リアルタイム対戦（ボンバーマン）</strong>に挑戦する。そのほかは、Day2の続きを仕上げる</li>
+        <li>広げたいチームは、<strong>生成AIのツール・Unity・コントローラー</strong>を、権利と「見せられる規模」に気をつけて取り入れる</li>
+        <li>公開するチームは、<strong>パスコード以外の対策を1つ</strong>入れる</li>
+        <li><strong>明日の相互体験で、他のチームに触ってもらう準備</strong>（紹介カード・体験の手順・動作確認）をする</li>
+      </ul>
+      <div class="lesson-tip">
+        <strong>今日の優先順位:</strong> 今日は、新しい機能を増やすことより、<strong>明日、他のチームが迷わず触れる状態に仕上げること</strong>を優先します。ボンバーマンや、広げる挑戦は、<strong>余力があるチームだけ</strong>で十分です。2年次は引き続きトラブルシューティングを主導し、3年次以上は自チームを進めながら、下級生チームを支えます。
+      </div>
+
+      <div class="vz-timebar">
+        <p class="vz-fig-title">180分の流れ（ブロックを押すと、その内容へ移動）</p>
+        <ol class="vz-timebar-track">
+          <li style="--w:40"><a class="vz-seg" href="#blk-1"><span class="vz-seg-time">40分</span><span class="vz-seg-name">ふりかえり<br>方向性を決める</span></a></li>
+          <li style="--w:50"><a class="vz-seg" href="#blk-2"><span class="vz-seg-time">50分</span><span class="vz-seg-name">最初の一歩<br>（挑戦／仕上げ）</span></a></li>
+          <li style="--w:10"><a class="vz-seg vz-seg--break"><span class="vz-seg-time">休憩</span><span class="vz-seg-name">10分</span></a></li>
+          <li style="--w:50"><a class="vz-seg" href="#blk-3"><span class="vz-seg-time">50分</span><span class="vz-seg-name">小さな指示で<br>育てる</span></a></li>
+          <li style="--w:30"><a class="vz-seg" href="#blk-4"><span class="vz-seg-time">30分</span><span class="vz-seg-name">安全確認<br>見せる準備</span></a></li>
+          <li style="--w:10"><a class="vz-seg" href="#blk-5"><span class="vz-seg-time">10分</span><span class="vz-seg-name">Day4の説明<br>片付け</span></a></li>
+        </ol>
+        <p class="vz-timebar-note">授業時間の合計は 40 + 50 + 50 + 30 + 10 = 180分（休憩を除く）</p>
+      </div>
+
+      <figure class="vz-fig" aria-labelledby="cap-road">
+        <p class="vz-fig-title" id="cap-road">Day3は、Day4・Day5につながる日</p>
+        <ol class="vz-flow">
+          <li class="vz-node"><b>Day3（今日）</b>仕上げて、見せる準備をする（紹介カード・体験の手順・動作確認）</li>
+          <li class="vz-node vz-node--key"><b>Day4</b>チーム内2交代で、他のチームを回って体験する。体験した人が推薦する</li>
+          <li class="vz-node"><b>Day5</b>推薦されたチームが、AIとの作り方を話す。最後に全体で振り返る</li>
+        </ol>
+        <figcaption>Day4・Day5の動き方は、今日の「まとめ」でも説明します（詳しくは、Day4のページ）。</figcaption>
+      </figure>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <!-- ================= 1限 前半 ================= -->
+        <div class="timeline-block" id="blk-1">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前日をふりかえり、今日の方向性を決める</h3>
+          <div class="timeline-body">
+
+            <p><strong>前日の気づきを共有する（約10分）</strong></p>
+            <ul>
+              <li>チームで、昨日のメモ（うまくいったこと・つまずいたこと）を見せ合う。今日やりたいことも、1つだけ出す</li>
+              <li>先生が、昨日の様子を口頭で共有する。<strong>画像から3Dのモデルを作るツール、音楽を作るツール、Unityを使って、3Dのロボットバトルを作り始めたチーム</strong>や、<strong>ゲームのコントローラーをパソコンにつないで、自分たちのゲームで通信対戦を始めたチーム</strong>があった。<strong>決まった枠にとどまらず、自分たちで広げてよい</strong></li>
+              <li>端末やコントローラーの持ち込みは、持っている人はOK（学校の機器・ネットワークの決まりは守る）</li>
+            </ul>
+
+            <p><strong>今日の方向性を、チームで1つ決める（約15分）</strong></p>
+            <p>Day2で選んだ方向性を<strong>続けても、変えてもよい</strong>。迷ったら、「今の続き」を選んで、明日見せられる形に仕上げる。</p>
+            <figure class="vz-fig" aria-labelledby="cap-dir3">
+              <p class="vz-fig-title" id="cap-dir3">4つの方向性（今日やること）</p>
+              <div class="vz-fields">
+                <section class="vz-field vz-f-ka">
+                  <h4>① 見本ゲームのアップデート</h4>
+                  <p class="vz-field-count">CYBER TETRISを、agyで小さく改造する</p>
+                  <ol class="vz-days">
+                    <li><b>今日</b><span>Day2の続き、または仕上げ。公開時の安全面も確認する</span></li>
+                  </ol>
+                </section>
+                <section class="vz-field vz-f-kc">
+                  <h4>② 進級制作に活かす</h4>
+                  <p class="vz-field-count">活かしたい仕組みを、小さなデモにする</p>
+                  <ol class="vz-days">
+                    <li><b>今日</b><span>Day2で決めたデモを、agyへの小さな指示で作る</span></li>
+                  </ol>
+                </section>
+                <section class="vz-field vz-f-kb">
+                  <h4>③ 新しい対戦ゲーム</h4>
+                  <p class="vz-field-count">余力のあるチームは、ボンバーマンに挑戦</p>
+                  <ol class="vz-days">
+                    <li><b>今日</b><span>ボンバーマン（6人同時）に挑戦。余力がなければ、人生ゲームの仕上げ</span></li>
+                  </ol>
+                </section>
+                <section class="vz-field vz-f-mg">
+                  <h4>④ 自由に広げる（新）</h4>
+                  <p class="vz-field-count">生成AIのツール・Unity・コントローラーなどで広げる</p>
+                  <ol class="vz-days">
+                    <li><b>今日</b><span>①〜③の作品に、画像・3D・音楽・コントローラー操作などを足す、または自分たちのやり方で作る</span></li>
+                  </ol>
+                </section>
+              </div>
+              <figcaption>④は、①〜③と<strong>組み合わせてもよい</strong>（例: 対戦ゲームに、コントローラー操作を足す）。ただし、<strong>明日、他のチームに触ってもらえる状態</strong>を、今日の終わりの目標にする。</figcaption>
+            </figure>
+
+            <p><strong>今日のゴールを、チームで1行にする（約10分）</strong></p>
+            <ul>
+              <li>「今日の終わりに、〇〇が動いている」の形で1行書く（例:「ボンバーマンで、2人が同時に動かせる」）</li>
+              <li>1行に収まらない場合は、<strong>小さく切る</strong>。明日、他のチームに触ってもらう状態を、最低ラインにする</li>
+              <li>agyの枠は、<code>/usage</code> で確認する（Day1と同じ）。<strong>難しい挑戦ほど、枠を多く使う</strong>ので、枠が少ないメンバーに集中させない</li>
+            </ul>
+
+            <p><strong>Codespacesを再開する（約5分）</strong></p>
+            <ul>
+              <li>代表者が <a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> を開き、<strong>前回と同じCodespaces</strong>を再開する（「Create」ではなく再開）。<code>npm start</code> をやり直し、8000番がPublicか確認する（Day2と同じ）。agyを使うときは、再度ログインを求められる場合がある（手順はDay1の<a href="day01.html#blk-3">「Antigravity CLI（agy）を導入して認証する」</a>と同じ）</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ================= 1限 後半 ================= -->
+        <div class="timeline-block" id="blk-2">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>選んだ方向性で、最初の一歩を進める</h3>
+          <div class="timeline-body">
+            <p>選んだ方向性のところだけ進める。<strong>1回に1つの変更</strong>を、「頼む→動かす→確かめる」で繰り返す（Day2と同じ）。</p>
+
+            <!-- ---------- ①② ---------- -->
+            <h4 class="d2-h">方向性①② 続き・仕上げ</h4>
+            <ul>
+              <li><strong>①見本ゲーム</strong>: Day2で変えたものの続き。色・効果音・メッセージなど、<strong>小さな変更を1つずつ</strong>足す。変えたら、確認する人が画面で確かめる</li>
+              <li><strong>②進級制作に活かす</strong>: Day2で決めた「小さなデモ」を作る。<strong>進級制作のリポジトリ自体は、このCodespacesに持ち込まず</strong>、仕組みだけを取り出して試作する。APIキーや個人情報は入れない</li>
+            </ul>
+
+            <!-- ---------- ③ ---------- -->
+            <h4 class="d2-h">方向性③ 新しい対戦ゲーム：ボンバーマンに挑戦する（リアルタイム）</h4>
+            <p>本物のボンバーマン（スーパーボンバーマンのバトルモード）のルールに合わせて作ってある。ルールのうち、<strong>ファンが作る解説サイト（StrategyWiki）や技術記事で確認できたもの</strong>と、<strong>このサンプルで決めたもの</strong>は、分けて書く（出典: StrategyWiki「Super Bomberman/Gameplay・Power-ups」、盤面は DEV Community「Building Bomberman from a Grid of Integers」、確認日 2026-10-07。どれも、ゲームの会社の公式資料ではない）。</p>
+            <ul class="vz-points">
+              <li class="vz-point">
+                <b>本物のボンバーマンの決まり（上の出典で確認したもの）</b>
+                <p>爆弾は<strong>3秒</strong>で爆発し、爆風は<strong>上下左右の十字</strong>に広がる。爆風に触れた爆弾は<strong>誘爆</strong>する。壊せるブロックを壊すと、<strong>アイテム</strong>が出ることがある（このサンプルでは、ボム増加・火力アップ・スピードアップの3種類だけにしている。本物には、もっと多くの種類がある）。<strong>最後の1人が勝ち</strong>。制限時間は2分で、<strong>1分たつとサドンデス</strong>（外側から壁が時計回りに落ちてくる。落ちた場所にいるとやられる）。盤面は、行も列も偶数のマスに固定ブロックが並ぶ<strong>市松模様</strong>。</p>
+              </li>
+              <li class="vz-point">
+                <b>このサンプルで決めたこと</b>
+                <p>最初の爆風の長さ（2マス）、爆風が残る時間、アイテムの出る確率と上限、歩く速さなどは、<strong>出典で確認できた値ではなく、このサンプルの決まり</strong>。<code>public/bomber.js</code> の先頭に、定数として並んでいる。書き換えるだけで、遊びが変わる。</p>
+              </li>
+              <li class="vz-point">
+                <b>通信のしくみ：1人が「審判」になる</b>
+                <p>人生ゲームは、「1人が操作→全員に送る→全員が同じ計算をする」でよかった（順番に動くため）。リアルタイムでそれをすると、<strong>通信の遅れで、画面ごとに結果がずれる</strong>。そこで、<strong>審判を1人決め、爆弾・爆発・誘爆・やられた判定・サドンデス・勝敗は、審判だけが計算</strong>して、結果を全員に配る。ふつうの人が送るのは、<strong>自分の位置</strong>（1秒に12回まで）と<strong>爆弾を置きたいという要求</strong>だけ。画面の下に「審判: ○○」と出る。</p>
+              </li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>知っておくこと:</strong> 審判が部屋を抜けると、ゲームはそこで終わる（引き継ぎはしない）。審判は、ロビーのホストとは限らない。自分の位置は自己申告のため、画面を改造すればズルができる。教室の遊びとして、そのまま使ってよい。<br><strong>時間切れ・同時にやられた場合:</strong> 2分たっても2人以上が残っていたら引き分け。全員が同時にやられた場合も、引き分け。
+            </div>
+            <figure class="vz-fig" aria-labelledby="cap-bshots">
+              <p class="vz-fig-title" id="cap-bshots">ボンバーマン（3人で対戦したところ）</p>
+              <div class="vz-shots vz-shots--wide">
+                <figure class="vz-shot">
+                  <img src="images/day03-bomber-bomb.png" alt="ボンバーマンの対戦画面。灰色の固定ブロックが市松状に並び、レンガ柄の壊せるブロックの間に、3人のキャラがいる。左上のキャラの隣に、導火線に火がついた爆弾が置かれている。" width="494" height="429" loading="lazy">
+                  <figcaption>対戦中。爆弾を置いたところ（3秒で爆発）</figcaption>
+                </figure>
+                <figure class="vz-shot">
+                  <img src="images/day03-bomber-warn.png" alt="画面の中央に、赤い大きな文字で「サドンデス！」、白い文字で「壁がせまってくる」と表示されている。" width="494" height="429" loading="lazy">
+                  <figcaption>1分でサドンデスの警告が出る</figcaption>
+                </figure>
+                <figure class="vz-shot">
+                  <img src="images/day03-bomber-sudden.png" alt="画面の上の辺に、灰色の壁が落ちている（壁は外側から時計回りに落ちる）。画面の中央に「ボブ の勝ち！」と表示され、右下にボブが1人残っている。" width="494" height="429" loading="lazy">
+                  <figcaption>壁が落ち始め、最後の1人が勝ち（6秒でサドンデスにして撮影）</figcaption>
+                </figure>
+              </div>
+              <figcaption>画像は、練習用に作った架空の名前（あや・ボブ・さくら）で撮影した。サドンデスの画面は、<code>sd=6</code>（6秒でサドンデス）で撮影したもの。</figcaption>
+            </figure>
+            <p><strong>ボンバーマンを動かす</strong>（担当教員が、Battle Baseにサンプルを追加した。<strong>Battle Baseを使っていたチームか、Day3から新しく使うチームかで、最初の手順が違う</strong>）</p>
+            <p><strong>A. Day2でBattle Baseを使っていたチーム</strong>（すでにForkとCodespacesがある）</p>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>代表者: Forkを最新にする</b>GitHubで、自分のFork（Battle Base）のページを開き、ファイル一覧の上の<strong>「Sync fork」</strong>→<strong>「Update branch」</strong>を押す（公式: Syncing a fork）。変更が競合した場合は、GitHubからプルリクエストの作成を促されるので、<strong>人生ゲームを改造したチームは、担当教員か2年次に相談する</strong>。</li>
+              <li class="vz-step"><b>代表者: Codespacesに取り込む</b>Battle BaseのCodespacesを再開し、ターミナルで <code>git pull</code> を入力してから、<code>npm start</code> をやり直す。</li>
+            </ol>
+            <p><strong>B. Day3からBattle Baseを使うチーム</strong>（見本ゲームや進級制作のデモから、方向を変えるチーム）</p>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>代表者: Battle BaseをForkして、Codespacesを作る</b><a href="day02.html#blk-2">Day2の「方向性③」の手順</a>（Fork→招待→Codespacesを作る→<code>npm start</code>→8000番をPublic）と同じ。Forkしたあとは、すでに最新なので、Sync forkは不要。agyは入っていないので、同じ枠の手順で入れる。</li>
+            </ol>
+            <p><strong>A・B共通</strong></p>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>チーム: URLの末尾に「?game=bomber」を付けて開く</b>公開URLの最後に付けると、ボンバーマンになる（付けないと、人生ゲーム）。部屋を作ったら、<strong>招待リンクにも、同じ印が引き継がれる</strong>。<strong>全員が、この印つきのリンクで入る</strong>（部屋コードだけを手で打って入ると、その人だけ人生ゲームの画面になり、対戦できない）。</li>
+              <li class="vz-step"><b>チーム: 2人以上で、まず遊ぶ</b>矢印キーかWASDで動き、スペースで爆弾を置く。スマホでは、画面の方向パッドと💣ボタンで動かせる。アイテムを拾うと、ボム数・火力・スピードが上がる。1人しかいないときは、別のブラウザのタブ（シークレットウィンドウ）で、招待リンクを開くと2人目として入れる。<strong>自分の爆風にも当たる</strong>ので、爆弾を置いたら離れる。</li>
+            </ol>
+            <div class="lesson-tip">
+              <strong>時間が足りないチームへ:</strong> 1限後半の50分では、<strong>「遊ぶ」ところまで</strong>で十分です。改造は、2限前半に回してかまいません。
+            </div>
+
+            <!-- ---------- ④ ---------- -->
+            <h4 class="d2-h">方向性④ 自由に広げる：使う前に、確認しておくこと</h4>
+            <p>昨日、一部のチームが使い始めたツールを、<strong>誰でも使えるように</strong>整理する。どれも<strong>必須ではない</strong>。使うときは、下の「規模」と「権利」に気をつける。</p>
+            <div class="table-wrap">
+              <table class="schedule-table">
+                <thead><tr><th>ツール・やり方</th><th>できること</th><th>気をつけること（確認日 2026-10-07）</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><a href="https://www.meshy.ai/ja/" target="_blank" rel="noopener">Meshy</a>（画像から3Dを作る）</td>
+                    <td>画像やテキストから、3Dのモデルを作る</td>
+                    <td>無料プランは<strong>月100クレジット</strong>。無料プランで作ったものは<strong>CC BY 4.0</strong>（<strong>作ったツールの名前などの表示を付ければ</strong>、商用でも使える。公式: Pricing &amp; Credits）。作品の紹介に、<strong>「Meshyで作成」と書く</strong></td>
+                  </tr>
+                  <tr>
+                    <td><a href="https://suno.com/home" target="_blank" rel="noopener">Suno</a>（音楽を作る）</td>
+                    <td>テキストから、曲やBGMを作る</td>
+                    <td>Basic（無料）プランでは、<strong>曲の所有者はSuno</strong>で、使えるのは<strong>非商用</strong>の目的だけ（公式: Do I have the copyrights to songs I made?）。授業で見せる・遊ぶのは問題ないが、<strong>収益化や、他人への納品には使わない</strong></td>
+                  </tr>
+                  <tr>
+                    <td><a href="https://unity.com/products/unity-personal" target="_blank" rel="noopener">Unity</a>（ゲームエンジン）</td>
+                    <td>3Dのゲームを作る。コントローラーにも対応しやすい</td>
+                    <td>Unity Personalは、売上と調達資金が過去12か月で<strong>20万ドル未満</strong>の個人・小規模組織が対象。<strong>Codespacesの中ではなく、自分のパソコンで動かす</strong>のが基本。<strong>1〜5分で見せられる規模</strong>に絞る</td>
+                  </tr>
+                  <tr>
+                    <td>ゲームのコントローラー</td>
+                    <td>パソコンにつないで、ゲームを操作する</td>
+                    <td>ブラウザのゲームでは、<strong>Gamepad API</strong>を使う（2限前半で、agyへの指示文を紹介）。つないでも認識されないときは、<strong>コントローラーのボタンを1回押す</strong>（公式: MDN。Firefoxでは、ページが表示されている状態で、ユーザーが操作したときにはじめて使える）</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="lesson-tip">
+              <strong>共通のルール:</strong> ① 作ったものを<strong>公開する（Public）なら</strong>、画像・3D・音楽も、リポジトリに置くと<strong>誰でも見られる</strong>。他人の作品や、顔・名前が分かるものは使わない。② 使ったツールの名前を、作品の紹介に書く。③ <strong>新しいことを増やしすぎない</strong>。明日見せられる形が最優先。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <!-- ================= 2限 前半 ================= -->
+        <div class="timeline-block" id="blk-3">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>小さな指示で、少しずつ育てる</h3>
+          <div class="timeline-body">
+            <p>1限の続きを、チームのペースで進める。<strong>1回に1つの変更</strong>を、「頼む→動かす→確かめる」で繰り返す。</p>
+            <figure class="vz-fig" aria-labelledby="cap-next3">
+              <p class="vz-fig-title" id="cap-next3">方向性ごとの、次の小さな一歩（例）</p>
+              <ul class="vz-points">
+                <li class="vz-point">
+                  <b>① 見本ゲーム</b>
+                  <p>効果音を足す、ゲームオーバーの表示を変える、操作のしやすさを直す、など。</p>
+                </li>
+                <li class="vz-point">
+                  <b>② 進級制作に活かす</b>
+                  <p>デモを、「動く状態」にして、2〜3行で説明できる形にする。</p>
+                </li>
+                <li class="vz-point">
+                  <b>③ ボンバーマン／人生ゲーム</b>
+                  <p>爆風の長さ、ブロックの数、爆弾の導火線の時間を変える。人生ゲームは、新しいマスを足して、仕上げる。</p>
+                </li>
+                <li class="vz-point">
+                  <b>④ 自由に広げる</b>
+                  <p>作った画像・音を足す、コントローラーで動かせるようにする、など（下の指示文）。</p>
+                </li>
+              </ul>
+            </figure>
+
+            <p><strong>コントローラーで動かせるようにする（agyへの指示文の例）</strong></p>
+            <p>ブラウザのゲームでは、<strong>Gamepad API</strong>という標準の仕組みで、コントローラーを読み取れる（公式: MDN）。コードを自分で書かなくても、agyに<strong>小さく</strong>頼めばよい。Gamepad APIは、<strong>安全なコンテキスト（HTTPS）でのみ</strong>使える（公式: MDN）。Codespacesの公開URLは<strong>https</strong>なので、そのまま試せる。</p>
+            <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d3-prompt-gamepad">
+              <span class="btn-icon"></span> 指示文をコピー
+            </button>
+<pre id="d3-prompt-gamepad" class="md-preview">ゲームのキーボード操作（矢印キーとスペース）と同じ動きを、ゲームのコントローラー（十字キーまたは左スティックで移動、Aボタンで爆弾など）でもできるようにしてください。ブラウザの Gamepad API を使い、既存のキーボード操作はそのまま残してください。</pre></div>
+            <ul>
+              <li>つないでも反応しないときは、<strong>コントローラーのボタンを1回押す</strong>。それでもだめなら、別のブラウザ（Chromeなど）で試す</li>
+              <li>確認する人が、実際にコントローラーを持って、動きを確かめる。<strong>ずれや遅れ</strong>が気になるときは、状況をそのままagyに伝える</li>
+            </ul>
+
+            <p><strong>困ったときの確認表（2年次が中心になって、切り分ける）</strong></p>
+            <ul class="vz-points">
+              <li class="vz-point">
+                <b>相手の動きが、カクカクする・遅れる</b>
+                <p>リアルタイムでは、<strong>送る回数</strong>と<strong>通信の遅れ</strong>で、ずれが出る。たとえば、agyに「位置を送る回数を、1秒あたり○回までに抑えて」と頼む。<strong>1人が1秒に100通を超えると、超えた分はサーバーに捨てられて届かない</strong>（ボンバーマンの位置は、初期値が1秒に12回まで）。</p>
+              </li>
+              <li class="vz-point">
+                <b>人によって、見える状態が違う（ボンバーマン）</b>
+                <p>ボンバーマンでは、爆弾・爆発・やられた判定は<strong>審判だけ</strong>が計算して配る。審判の画面（下に「審判: ○○」と出る）が止まっていないか、確認する。審判が別のタブに切り替えたり、重くなったりすると、全員の判定が遅れる。審判が部屋を抜けた場合は、ゲームが終わる。</p>
+              </li>
+              <li class="vz-point">
+                <b>コントローラーが認識されない</b>
+                <p>ボタンを1回押す。USB・Bluetoothの接続を確かめる。別のブラウザで試す。</p>
+              </li>
+              <li class="vz-point">
+                <b>Meshy・Sunoのファイルが、リポジトリに入らない・重い</b>
+                <p>大きなファイルは、無理に入れず、<strong>自分のパソコンで見せる</strong>ことにする。Public設定のリポジトリには、他人に見られたくないものを置かない。</p>
+              </li>
+              <li class="vz-point">
+                <b>そのほか（接続できない、部屋が見つからない、agyが反応しない）</b>
+                <p>Day2の「困ったときの確認表」と同じ。<a href="day02.html#blk-3">Day2の確認表</a>を見る。</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ================= 2限 後半 ================= -->
+        <div class="timeline-block" id="blk-4">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>安全を確認し、明日、見せる準備をする</h3>
+          <div class="timeline-body">
+
+            <p><strong>安全を確認する（約8分）</strong></p>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>公開するなら、パスコード以外の対策を1つ入れた</b>部屋のパスコードや合言葉は、<strong>本物のアクセス制限にはならない</strong>。次のどれか1つを選び、agyに頼んで入れる。
+                <ul>
+                  <li>部屋に入れる<strong>人数の上限</strong>を、チームの人数に合わせる（Battle Baseの初期値は6人。6人より少ないチームが対象）</li>
+                  <li>1人が1秒に送れるメッセージの<strong>回数の上限</strong>を、必要な数まで下げる（初期値は100通）</li>
+                  <li>想定外の参加者が入ったときは、<strong>部屋を作り直す</strong>（その手順を、チームで決めておく）</li>
+                </ul>
+              </li>
+              <li class="vz-step"><b>個人情報・APIキーを入れていない</b>本名・住所・電話番号、APIキーやパスワードは、画面にも、ファイルにも入れない（リポジトリはPublic）。名前は、ニックネームにする。</li>
+              <li class="vz-step"><b>画像・音楽・3Dの権利と表示</b>④のチームは、使ったツールの名前を、紹介カード（次）に書く。他人の作品・顔や名前が分かるものは使っていないか確認する。</li>
+            </ol>
+            <p>人数の上限を変える場合の、agyへの指示文の例（6人より少ないチーム向け。チームの人数に合わせて数字を変える）：</p>
+            <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d3-prompt-safety">
+              <span class="btn-icon"></span> 指示文をコピー（例）
+            </button>
+<pre id="d3-prompt-safety" class="md-preview">server.js の MAX_PLAYERS を、4 に変更してください。変更したあと、何が変わるかを短く説明してください。</pre></div>
+
+            <p><strong>明日、見せる準備をする（約17分）</strong></p>
+            <p>明日（Day4）は、<strong>他のチームが、自分たちの作品を触りに来る</strong>。そのとき、<strong>説明する人がいなくても迷わず触れる</strong>よう、3つを用意する。<strong>紹介カードは、Day5でも、そのまま使う</strong>。</p>
+            <figure class="vz-fig" aria-labelledby="cap-prep">
+              <p class="vz-fig-title" id="cap-prep">見せる準備（3つ）</p>
+              <ul class="vz-points">
+                <li class="vz-point">
+                  <b>① 紹介カード（3行）</b>
+                  <p>Googleドキュメントなどに、3行で書く。<strong>（1）何を作ったか</strong> ／ <strong>（2）どこを触ってほしいか</strong> ／ <strong>（3）AIにどう頼んで作ったか（工夫したこと）</strong>。④のチームは、使ったツールの名前も書く。</p>
+                </li>
+                <li class="vz-point">
+                  <b>② 体験の手順（1分で伝わる）</b>
+                  <p>他のチームが触るときの手順を、順番に書く。URL・部屋コードの作り方・操作・終わり方。<strong>見るだけで分かる</strong>形にする。</p>
+                </li>
+                <li class="vz-point">
+                  <b>③ 動作確認</b>
+                  <p><strong>別の端末</strong>（スマホ、他のチームのパソコン）で開いて、動くことを<strong>1回確かめる</strong>。確認する人が、手順どおりに触る。</p>
+                </li>
+              </ul>
+              <figcaption>3つとも、チームの代表者が持つ共有メモ（Googleドキュメントなど）に、まとめておく。</figcaption>
+            </figure>
+            <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d3-template-card">
+              <span class="btn-icon"></span> 紹介カードの型をコピー（Googleドキュメントなどに貼る）
+            </button>
+<pre id="d3-template-card" class="md-preview" hidden>【チーム名】
+
+■ 何を作ったか（1行）
+
+
+■ どこを触ってほしいか（1行）
+
+
+■ AIにどう頼んで作ったか・工夫したこと（1〜2行）
+
+
+■ 使ったツール（Meshy・Suno・Unityなど、使った場合のみ）
+
+
+■ 体験の手順（1分で伝わるように）
+1.
+2.
+3.
+
+■ 動作確認（別の端末で、手順どおりに触って動いた）
+□ 確認した（日時・端末）</pre></div>
+
+            <p><strong>変更をGitHubに記録する（約5分）</strong></p>
+            <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d3-prompt-push">
+              <span class="btn-icon"></span> 指示文をコピー
+            </button>
+<pre id="d3-prompt-push" class="md-preview">ここまでの変更をコミットして、GitHubにプッシュしてください。</pre></div>
+            <ul>
+              <li>プッシュしないと、変更はCodespacesの中にしか残らない。記録先は、①自分のFork（Tetris）、③Battle BaseのFork。大きな画像・音楽・3Dのファイルは、無理に入れなくてよい</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ================= まとめ ================= -->
+        <div class="timeline-block" id="blk-5">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>Day4・Day5の動き方を確認する／アンケート／片付ける</h3>
+          <div class="timeline-body">
+            <p><strong>Day4の動き方を確認する（約4分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-day4">
+              <p class="vz-fig-title" id="cap-day4">Day4：チーム内で2交代、他のチームを回って体験する</p>
+              <ol class="vz-flow" style="--cols:3">
+                <li class="vz-node"><b>前半</b>チームの<strong>半分</strong>が、自分たちの席に残り、体験に来た人に触ってもらう。<strong>残りの半分</strong>が、他のチームを回って体験する</li>
+                <li class="vz-node vz-node--key"><b>交代</b>後半は、役割を入れ替える。<strong>全員が、「見せる」と「回る」の両方</strong>を経験する</li>
+                <li class="vz-node"><b>推薦する</b>回って体験した人が、「ここがよかった」というチームを、理由つきで推薦する</li>
+              </ol>
+              <figcaption>12チーム以上・約50名でも、<strong>どのチームの席にも、常に誰かがいる</strong>ので、混み合いにくく、触ってもらう機会が偏りにくい。回り方の詳細は、Day4のページで案内する。</figcaption>
+            </figure>
+            <ul>
+              <li>回るときは、<strong>1つのチームに5〜8分</strong>ほど。ただ見るだけでなく、<strong>触って、感想を1言</strong>伝える</li>
+              <li>推薦するときの観点: ① おもしろかった・触って楽しかった ② 工夫が見えた ③ <strong>AIとの作り方に、学びがあった</strong>（どう頼んだか、詰まって立て直したか）</li>
+              <li>3年次以上は、下級生のチームを回るときに、<strong>教える側の視点</strong>で助言する（答えを言わず、気づかせる）</li>
+            </ul>
+
+            <p><strong>Day5の動き方を知っておく（約2分）</strong></p>
+            <ul>
+              <li><strong>推薦されたチーム（ピックアップ）</strong>が、1〜5分で、<strong>作品を見せながら、AIとの作り方</strong>を話す。Day4で触った人にとっては、<strong>「作品を知っている」状態で聞ける</strong>ので、Day4の紹介のくり返しにならない</li>
+              <li>話す内容は、紹介カードをもとに、次の3つ: ① 何を作ったか ② どうAIに頼んだか・詰まったところと立て直し方 ③ もう一度やるなら、何を変えるか</li>
+              <li><strong>選ばれたかどうかで、評価に差はつけません</strong></li>
+            </ul>
+
+            <p><strong>アンケートに答える（Googleフォーム、約2分）</strong></p>
+            <ul>
+              <li>フォームは、この講座の<strong>Google Classroomの専用ルーム</strong>で共有される。Classroomを開いて、今日のアンケートを探して答える</li>
+            </ul>
+
+            <p><strong>片付けチェック（全員で確認、約2分）</strong></p>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>変更があれば、プッシュした</b>GitHubで、今日のファイルが見えることを確認する。</li>
+              <li class="vz-step"><b>ポートの公開をやめた（またはサーバーを止めた）</b>Publicのままにしない。<strong>明日の相互体験の直前に、もう一度公開する</strong>。</li>
+              <li class="vz-step"><b>Codespacesを停止した</b>見本ゲーム用・Battle Base用・Day1のチーム用、すべて <a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> で停止済みか確認する。</li>
+            </ol>
+
+            <p><strong>次回予告</strong></p>
+            <ul>
+              <li>Day4：<strong>相互体験</strong>。チーム内で2交代して、他のチームの作品を体験し、推薦する。<strong>紹介カードと体験の手順</strong>を、すぐ出せるようにしておく</li>
+              <li>今日うまくいったこと・つまずいたことを、簡単にメモしておく</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>紹介カード（3行）と体験の手順を、共有メモにまとめ、別の端末で動作確認をする</strong>
+            <p>2限後半に終わらなかった部分は、次回の冒頭の時間（Day4の席の準備）で仕上げてもよい。ただし、<strong>他のチームが触れる状態</strong>にしておく。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>今日の変更がある場合はGitHubにプッシュされていて、Codespacesが停止していることを確認する</strong>
+            <p>変更したチームの代表者は、リポジトリをGitHub上で開き、今日作ったファイルが反映されているか確認する。Codespacesは停止したままでよい（次回は同じCodespacesを再開する）。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>今日うまくいったこと・つまずいたことをメモする</strong>
+            <p>Day5の「AIとの作り方」の話の材料になる。<strong>どう頼んで、どこで詰まって、どう立て直したか</strong>を、1〜2行でメモしておく。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://github.com/yasushi-honda/battle-base" target="_blank" rel="noopener">Battle Base（対戦ゲームの土台）</a> — 担当教員作成。ボンバーマンのサンプル（URLの末尾に ?game=bomber）</li>
+        <li><a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork" target="_blank" rel="noopener">Syncing a fork（公式）</a> — Forkを最新にする手順（Sync fork）</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/Gamepad_API/Using_the_Gamepad_API" target="_blank" rel="noopener">ゲームパッド API の使用（MDN）</a> — コントローラーをブラウザで読み取る仕組み</li>
+        <li><a href="https://docs.meshy.ai/en/webapp/pricing" target="_blank" rel="noopener">Pricing &amp; Credits（Meshy）</a> — 無料プランのクレジットと、生成物のライセンス</li>
+        <li><a href="https://help.suno.com/en/articles/2746945" target="_blank" rel="noopener">Do I have the copyrights to songs I made?（Suno）</a> — 無料プランと有料プランでの、曲の所有者と使い方</li>
+        <li><a href="https://unity.com/products/unity-personal" target="_blank" rel="noopener">Unity Personal（Unity）</a> — 無料で使える条件</li>
+        <li><a href="https://docs.github.com/en/codespaces/reference/security-in-github-codespaces" target="_blank" rel="noopener">Security in GitHub Codespaces（公式）</a> — 公開ポートのセキュリティ</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="day02.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">Day2 通信対戦のしくみを知る／方向性を選ぶ</span>
+      </a>
+      <a href="../autumn-intensive.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">秋の集中講座</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">Day4（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
