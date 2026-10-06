@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第2回 情報が漏れる日：脅威はどこから来るのか | ITパスポート テクノロジー系</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=13">
+  <!-- 公式情報確認: 2026-10-07 (IPA 情報セキュリティ10大脅威 2026 [組織] 1位ランサム攻撃による被害・5位機密情報を狙った標的型攻撃 https://www.ipa.go.jp/security/10threats/10threats2026.html / IPA「企業組織を狙う攻撃メールの手口とその対策」2026年8月3日 PDF: 標的型攻撃の説明・標的型攻撃メールとばらまき型の違い・ソーシャルエンジニアリング「人の心理的な弱点に付け込む」「相手に対する信頼感を逆手に取り」・差出人のディスプレイ名を偽る手口・ランサムウェアによるデータの暗号化 / 総務省 国民のためのサイバーセキュリティサイト 用語集 https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ja_07/ マルウェア・ja_06 標的型攻撃・ja_03 ショルダハッキング・ja_04 トラッシング / 特許庁パンフレット「アイデア・デザイン・ブランドを守るためには？ 特許権・意匠権・商標権を知ろう！」https://www.jpo.go.jp/resources/report/sonota-info/document/panhu/panhu03.pdf 産業財産権の4つの権利・保護対象・保護期間 / 著作権法（e-Gov）第10条第3項・第17条第2項・第51条第2項 / 個人情報の保護に関する法律（e-Gov）第1条・第2条第1項 / 個人情報保護委員会「漏えい等の対応とお役立ち資料」https://www.ppc.go.jp/personalinfo/legal/leakAction/ 漏えい等報告が義務になる場合 / 令和7年度ITパスポート試験 公開問題 問12・問30・問92・問93 と解答例 / 教科書 p.352-359・p.046-054 は親ページの記載に従う（教科書本文は未突合）) -->
+  <!-- 用語カードの6語は、フォーム「ITパスポート 第2回 今回覚えた用語」（forms-gas/code_full.gs の定義）と一致 -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--amber">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../it-passport-technology.html">ITパスポート テクノロジー系</a>
+        <span>/</span>
+        <span>第2回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">情報が漏れる日：<wbr>脅威はどこから来るのか</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 2</span>
+            <span class="page-badge">水曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="message-box">このページはブラウザの翻訳機能で母語に翻訳できます。ただし、試験に出る主な専門用語（例: <span translate="no">マルウェア</span>、<span translate="no">標的型攻撃</span>）は翻訳されないように設定しています。<strong>本番のITパスポート試験は日本語で行われる</strong>ので、専門用語は日本語のまま覚えてください。</div>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">もし会社の顧客情報が流出したら——脅威を知り、守る法律を知る</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value"><span translate="no">マルウェア</span> / <span translate="no">ソーシャルエンジニアリング</span> / <span translate="no">標的型攻撃</span> / <span translate="no">知的財産権</span> / <span translate="no">産業財産権</span> / <span translate="no">個人情報保護法</span></div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">教科書（学研「ITパスポートをひとつひとつわかりやすく。」）の p.352-359 と p.046-054 を読んでおく。授業の最後に、用語カードのフォームを使う（学校のGoogleアカウント）</div>
+        </div>
+      </div>
+    </div>
+
+    <nav aria-label="このページの目次">
+      <ul class="vz-jump">
+        <li><a class="vz-chip" href="#sec-flow">授業の流れ</a></li>
+        <li><a class="vz-chip" href="#sec-terms">用語カード</a></li>
+        <li><a class="vz-chip" href="#sec-quiz">クイズ</a></li>
+        <li><a class="vz-chip" href="#sec-tasks">課題</a></li>
+        <li><a class="vz-chip" href="#sec-refs">参考リンク</a></li>
+        <li><a class="vz-chip vz-chip--cta" href="https://docs.google.com/forms/d/e/1FAIpQLSfu-KShy5AVrNjj14Y3T_1C5eG5sJzKwWD_0V3wRezCY770-g/viewform" target="_blank" rel="noopener">用語カードを提出する ↗</a></li>
+      </ul>
+    </nav>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>情報が漏れる原因になる脅威（<span translate="no">マルウェア</span>・<span translate="no">ソーシャルエンジニアリング</span>・<span translate="no">標的型攻撃</span>）を、例で説明できる</li>
+        <li>会社が守るものは、<strong>お客さんの情報</strong>と<strong>会社の知的財産</strong>の2つだと分かる</li>
+        <li><span translate="no">知的財産権</span>の中の<span translate="no">産業財産権</span>（4つ）と、<span translate="no">著作権</span>の違いを説明できる</li>
+        <li><span translate="no">個人情報保護法</span>で、情報が漏れたときに何をしなければならないかを知る</li>
+        <li>過去問（令和7年度 4問）を、問い方の型を使って解く</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section" id="sec-flow">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。休憩10分は授業時間に含めません。</p>
+
+      <div class="vz-timebar">
+        <p class="vz-fig-title">180分の流れ（ブロックを押すと、その内容へ移動）</p>
+        <ol class="vz-timebar-track">
+          <li style="--w:40"><a class="vz-seg" href="#blk-1"><span class="vz-seg-time">40分</span><span class="vz-seg-name">復習テスト<br>ストーリー導入</span></a></li>
+          <li style="--w:50"><a class="vz-seg" href="#blk-2"><span class="vz-seg-time">50分</span><span class="vz-seg-name">脅威の中身<br>（テクノロジ系）</span></a></li>
+          <li style="--w:10"><a class="vz-seg vz-seg--break"><span class="vz-seg-time">休憩</span><span class="vz-seg-name">10分</span></a></li>
+          <li style="--w:50"><a class="vz-seg" href="#blk-3"><span class="vz-seg-time">50分</span><span class="vz-seg-name">守る法律<br>（ストラテジ系）</span></a></li>
+          <li style="--w:30"><a class="vz-seg" href="#blk-4"><span class="vz-seg-time">30分</span><span class="vz-seg-name">過去問<br>メール見分けワーク</span></a></li>
+          <li style="--w:10"><a class="vz-seg" href="#blk-5"><span class="vz-seg-time">10分</span><span class="vz-seg-name">まとめ</span></a></li>
+        </ol>
+        <p class="vz-timebar-note">授業時間の合計は 40 + 50 + 50 + 30 + 10 = 180分（休憩を除く）</p>
+      </div>
+
+      <div class="timeline">
+
+        <!-- ================= 1限 前半 ================= -->
+        <div class="timeline-block" id="blk-1">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の復習ミニテスト → 「情報が漏れる日」のストーリー</h3>
+          <div class="timeline-body">
+
+            <p><strong>前回の復習ミニテスト（約10分）</strong></p>
+            <p class="lesson-note">自分で確認するための3問。回答はこのページの中で判定されるだけで、どこにも送信・保存されず、成績にも含まれない。</p>
+            <div class="quiz-set">
+
+              <div class="quiz" aria-live="polite" data-answer="イ">
+                <p class="quiz-q"><span class="quiz-q-num">復習1</span>ITパスポート試験の合格基準として，最も適切なものはどれか。</p>
+                <div class="quiz-choices">
+                  <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span><span translate="no">総合評価点</span>が600点以上であれば，合格である。</span></button>
+                  <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span><span translate="no">総合評価点</span>が600点以上で，かつ3分野それぞれの<span translate="no">分野別評価点</span>が300点以上であれば，合格である。</span></button>
+                  <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span>3分野のうち2分野で<span translate="no">分野別評価点</span>が300点以上であれば，合格である。</span></button>
+                </div>
+                <div class="quiz-feedback" hidden>
+                  <p class="quiz-result"></p>
+                  <p>総合評価点600点以上と、3分野すべてで300点以上の両方が必要。</p>
+                  <button type="button" class="quiz-retry">もう一度</button>
+                </div>
+              </div>
+
+              <div class="quiz" aria-live="polite" data-answer="ウ">
+                <p class="quiz-q"><span class="quiz-q-num">復習2</span>100問のうち，採点の対象になる問題は何問か。</p>
+                <div class="quiz-choices">
+                  <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span>80問</span></button>
+                  <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span>100問</span></button>
+                  <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span>92問</span></button>
+                </div>
+                <div class="quiz-feedback" hidden>
+                  <p class="quiz-result"></p>
+                  <p>採点されるのは92問（<span translate="no">ストラテジ系</span>32問・<span translate="no">マネジメント系</span>18問・<span translate="no">テクノロジ系</span>42問）。残りの8問は採点に入らない。</p>
+                  <button type="button" class="quiz-retry">もう一度</button>
+                </div>
+              </div>
+
+              <div class="quiz" aria-live="polite" data-answer="ア">
+                <p class="quiz-q"><span class="quiz-q-num">復習3</span>「…だけを全て挙げたものはどれか。」と聞かれたとき，正しい進め方はどれか。</p>
+                <div class="quiz-choices">
+                  <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span>a・b・cを1つずつ判断してから，当てはまる組合せの選択肢を選ぶ。</span></button>
+                  <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span>いちばん正しそうな1つだけを選ぶ。</span></button>
+                  <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span>知らない言葉があるときは，問題を飛ばす。</span></button>
+                </div>
+                <div class="quiz-feedback" hidden>
+                  <p class="quiz-result"></p>
+                  <p>a・b・cをそれぞれ判断してから、組合せの選択肢を選ぶ。1つでも間違えると、組合せは合わなくなる。</p>
+                  <button type="button" class="quiz-retry">もう一度</button>
+                </div>
+              </div>
+
+            </div>
+
+            <p><strong>今日のストーリー：ある会社に起きた1日（約10分）</strong></p>
+            <p>架空の会社「あおぞらストア」（文房具をインターネットで売る会社）に起きたことを、順番に読む。<strong>どこが「脅威」か</strong>を考えながら読む。</p>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>月曜の朝：取引先からメールが届く</b>営業担当のAさんに、「請求書の確認をお願いします。本日中に開いてください」というメールが届く。添付ファイルが付いている。</li>
+              <li class="vz-step"><b>Aさんが添付ファイルを開く</b>パソコンが<span translate="no">マルウェア</span>に感染する。Aさんは、何も起きていないと思っている。</li>
+              <li class="vz-step"><b>昼：電話がかかってくる</b>「システム担当です。トラブルです。今すぐパスワードを教えてください」。Aさんは慌てて、パスワードを答えてしまう。</li>
+              <li class="vz-step"><b>夜：攻撃者が社内に入る</b>攻撃者は、パスワードを使って社内のシステムに入る。<strong>お客さんの情報</strong>（名前・住所・メールアドレス）と、<strong>まだ発売していない新商品のデザイン</strong>を、外に送る。</li>
+              <li class="vz-step"><b>火曜：取引先から連絡が来る</b>「うちの情報が、外に出回っているようだ」。会社は、大きな問題に気づく。</li>
+            </ol>
+
+            <p><strong>ペアで話す：どこで止められたか（約10分）</strong></p>
+            <ul>
+              <li>上のストーリーで、被害を止められた場所を、<strong>3つ</strong>探す。ペアで、日本語で話す</li>
+              <li>話したあとに、下の「止められた場所の例」を開いて、自分たちの答えと比べる</li>
+            </ul>
+            <details class="vz-more">
+              <summary>止められた場所の例を見る</summary>
+              <ul>
+                <li><strong>メールを開く前</strong>：差出人のアドレスは本物か。「本日中に」と急がせていないか。</li>
+                <li><strong>電話の相手が、本当にシステム担当か</strong>：パスワードは、電話では教えない。名前と部署を、社内の別の方法で確認する。</li>
+                <li><strong>感染した後</strong>：すぐに決められた担当に報告する。大事なデータのバックアップを、別の場所に置いておく。</li>
+              </ul>
+              <p class="lesson-note">今日は、この3つの場所を、これから学ぶ用語に結びつけていく。</p>
+            </details>
+
+            <p><strong>本物のデータで確認する：IPA 情報セキュリティ10大脅威 2026（約10分）</strong></p>
+            <p>IPA（情報処理推進機構）は、毎年「情報セキュリティ10大脅威」を発表している。<strong>組織（会社など）向け</strong>の2026年版の順位から、今日のストーリーに関係するものを見る。</p>
+            <div class="table-wrap">
+              <table class="schedule-table">
+                <thead><tr><th>順位</th><th>組織向けの脅威（2026年）</th><th>今日のストーリーとのつながり</th></tr></thead>
+                <tbody>
+                  <tr><td>1位</td><td>ランサム攻撃による被害</td><td><span translate="no">マルウェア</span>の1つ（ランサムウェア）が使われる</td></tr>
+                  <tr><td>5位</td><td>機密情報を狙った<span translate="no">標的型攻撃</span></td><td>特定の会社を狙ったメール</td></tr>
+                  <tr><td>7位</td><td>内部不正による情報漏えい等</td><td>外からの攻撃だけでなく、内部の人が原因になることもある</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="lesson-note">出典：IPA「情報セキュリティ10大脅威 2026」（組織向け）。「ランサム攻撃による被害」は11年連続11回目、「機密情報を狙った標的型攻撃」も11年連続11回目の選出。</p>
+          </div>
+        </div>
+
+        <!-- ================= 1限 後半 ================= -->
+        <div class="timeline-block" id="blk-2">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>脅威の中身を知る（テクノロジ系：セキュリティ 教科書 p.352-359）</h3>
+          <div class="timeline-body">
+
+            <p><strong>「脅威」とは何か（約10分）</strong></p>
+            <p>まず、この授業でいちばん使う言葉の、意味を確かめる。次の過去問を、自分で解いてみる。</p>
+            <div class="exam-q">
+              <p class="exam-q-text">【例題①】問93　情報セキュリティにおける<span translate="no">脅威</span>の説明として，適切なものはどれか。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>攻撃者が付け込むことのできる情報システムの弱点</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>情報資産が被害に遭う確率と被害規模の組合せ</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>情報資産に損害を与える原因となるもの</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>情報システムの弱点を利用した攻撃によって被害を受ける可能性</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問93（<span translate="no">テクノロジ系</span>。問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：ウ</strong>（型：説明に合うものを選ぶ）。<span translate="no">脅威</span>は、情報（情報資産）に損害を与える<strong>原因</strong>のこと。マルウェアや、人をだます電話・メールは、どれも脅威の例。アは、攻撃者が付け込む「弱点」（<span translate="no">脆弱性</span>）の説明。イは、「確率と被害の大きさ」を組み合わせた説明で、リスクの説明に近い（第3回で学ぶ）。エは、「被害を受ける可能性」を述べていて、損害の原因そのものを指す脅威の説明ではない。</p>
+              </details>
+            </div>
+
+            <p><strong>① <span translate="no">マルウェア</span>（約15分）</strong></p>
+            <ul class="vz-points">
+              <li class="vz-point">
+                <b>意味</b>
+                <p>「Malicious Software」（悪意のあるソフトウェア）を略した言葉。さまざまな弱点や情報を使って攻撃をするソフトウェアの<strong>総称</strong>（まとめた呼び名。総務省 用語集）。</p>
+              </li>
+              <li class="vz-point">
+                <b>名前だけ知っておく種類</b>
+                <p>ウイルス、ワーム、スパイウェア、アドウェア、ボット、キーロガーなど（総務省 用語集が、マルウェアの例として挙げているものの一部）。コンピュータウイルスと同じ意味で使われることもあるが、厳密には、マルウェアのほうが広い言葉。</p>
+              </li>
+              <li class="vz-point">
+                <b>感染のしかた</b>
+                <p>メールの添付ファイルを開く。メールの本文のURLを開く。そこから、マルウェアが入る（IPA）。</p>
+              </li>
+              <li class="vz-point">
+                <b>起きる被害の例（IPA）</b>
+                <p><strong><span translate="no">ランサムウェア</span></strong>：データを暗号化されて、使えなくなる。／<strong>情報窃取型マルウェア</strong>：パソコンに保存されたID・パスワードなどを盗まれる。</p>
+              </li>
+            </ul>
+
+            <p><strong>② <span translate="no">標的型攻撃</span>（約10分）</strong></p>
+            <ul>
+              <li><strong>意味</strong>：特定の組織を狙って、<strong>機密情報</strong>や知的財産、アカウント情報（ID・パスワード）などを盗もうとする攻撃（総務省 用語集）</li>
+              <li><strong>よく使われる手口</strong>：標的の組織がよくやり取りする形のメールを送り、添付ファイルやリンクを開かせて、マルウェアに感染させる</li>
+            </ul>
+            <div class="table-wrap">
+              <table class="schedule-table">
+                <thead><tr><th></th><th><span translate="no">標的型攻撃</span>メール</th><th>「ばらまき型」のメール</th></tr></thead>
+                <tbody>
+                  <tr><td>相手</td><td>狙う人（組織）を、先に決める</td><td>不特定多数に、同じメールを送る</td></tr>
+                  <tr><td>内容</td><td>相手の仕事を調べて、仕事に関係する内容にする</td><td>誰にでも当てはまる内容</td></tr>
+                  <tr><td>開かせるくふう</td><td>知らない人からでも、相手が思わず開いてしまう内容・興味をひく内容にする</td><td>特定の相手のための内容ではない</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="lesson-note">出典：IPA「企業組織を狙う攻撃メールの手口とその対策」（2026年8月3日）を、やさしい日本語にまとめた。</p>
+
+            <p><strong>③ <span translate="no">ソーシャルエンジニアリング</span>（約10分）</strong></p>
+            <ul>
+              <li><strong>意味</strong>：「人の心理的な弱点に付け込む」、または「相手に対する信頼感を逆手に取り」、ターゲットをだます手法（IPA）。やさしく言うと、人の弱点や、人を信じる気持ちを使って、だます方法。<strong>コンピュータの弱点ではなく、人の弱点を狙う</strong></li>
+              <li><strong>例①（IPA）</strong>：自社の社長を名乗るメールを社員に送る。内容が急で不自然でも、社長への信頼感があるため、従ってしまうことがある</li>
+              <li><strong>例②（総務省 用語集）</strong>：<strong>ショルダハッキング</strong>（肩越しに画面やキーボードをのぞき見て、パスワードを盗む）、<strong>トラッシング</strong>（ごみ箱あさり）</li>
+              <li>今日のストーリーの「システム担当を名乗る電話」は、これに当たる</li>
+            </ul>
+
+            <p><strong>感染したら、被害を小さくするには（約5分）</strong></p>
+            <div class="exam-q">
+              <p class="exam-q-text">【例題②】問92　従業員が使用するPCが<span translate="no">ランサムウェア</span>に感染した場合の損害を軽減する対策例として，適切なものはどれか。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>PCが接続するファイルサーバの<span translate="no">HDD</span>のバックアップデータを定期的に取得し，ネットワークから切り離して保管する。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>PCに多要素認証の仕組みを導入する。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>PCの<span translate="no">HDD</span>を暗号化する。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>PCへのログイン時に，パスワードを複数回間違えたら，当該<span translate="no">ID</span>をロックする。</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問92（<span translate="no">テクノロジ系</span>。問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：ア</strong>（型：適切なものを1つ選ぶ）。ランサムウェアは、データを暗号化して使えなくする。バックアップがあれば、データを元に戻せる。一般に、ネットワークにつながったままのバックアップは、一緒に暗号化されるおそれがある。そのため、問題の選択肢のように<strong>切り離して保管する</strong>。イとエは、ログインを守る対策、ウは、パソコンの紛失や盗難のときに中身を読まれないようにする対策で、感染したあとにデータを元に戻すための対策としては、直接つながりにくい。</p>
+              </details>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <!-- ================= 2限 前半 ================= -->
+        <div class="timeline-block" id="blk-3">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>情報が漏れたら、何の法律が関係するか（ストラテジ系：企業と法務 教科書 p.046-054）</h3>
+          <div class="timeline-body">
+
+            <p><strong>会社が守るものは2つ（約3分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-two">
+              <p class="vz-fig-title" id="cap-two">ストーリーで漏れたものは、2種類</p>
+              <div class="vz-fields vz-fields--2">
+                <section class="vz-field vz-f-st">
+                  <h4>お客さんの情報</h4>
+                  <p>名前・住所・メールアドレス</p>
+                  <ul class="vz-tags"><li><span translate="no">個人情報保護法</span></li></ul>
+                </section>
+                <section class="vz-field vz-f-st">
+                  <h4>会社の知的財産</h4>
+                  <p>新商品のデザイン、ブランド、プログラムや文章</p>
+                  <ul class="vz-tags"><li><span translate="no">知的財産権</span></li><li><span translate="no">産業財産権</span></li><li><span translate="no">著作権</span></li></ul>
+                </section>
+              </div>
+            </figure>
+
+            <p><strong>① <span translate="no">知的財産権</span>と<span translate="no">産業財産権</span>（約15分）（教科書 p.046-050）</strong></p>
+            <ul>
+              <li><strong>知的財産</strong>：人が考えて生み出したアイデア・技術・デザインなど。形がないので「無形資産」とも言う（特許庁）。これを守る権利が、<span translate="no">知的財産権</span>（特許庁）</li>
+              <li>知的財産権の中の、<strong>特許権・実用新案権・意匠権・商標権</strong>の4つを、<span translate="no">産業財産権</span>と言う。特許庁が担当する（特許庁）</li>
+              <li><span translate="no">著作権</span>は、産業財産権とは別の権利（次の項目で学ぶ）</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-ip">
+              <p class="vz-fig-title" id="cap-ip"><span translate="no">産業財産権</span>の4つ（特許庁パンフレット）</p>
+              <div class="table-wrap">
+                <table class="schedule-table">
+                  <thead><tr><th>権利</th><th>守るもの</th><th>例（特許庁）</th><th>保護期間</th></tr></thead>
+                  <tbody>
+                    <tr><td><span translate="no">特許権</span></td><td>発明（技術的なアイデア）</td><td>潰しやすいペットボトルの構造、スマートフォンのプログラム</td><td>出願から最長20年（一部例外あり）</td></tr>
+                    <tr><td><span translate="no">実用新案権</span></td><td>物品の形状などの考案</td><td>衝撃を吸収する液晶保護フィルム</td><td>出願から最長10年</td></tr>
+                    <tr><td><span translate="no">意匠権</span></td><td>デザイン（物の見た目）</td><td>椅子の形、アプリのアイコン画像</td><td>出願から最長25年</td></tr>
+                    <tr><td><span translate="no">商標権</span></td><td>商品・サービスに使うマーク（ブランド）</td><td>商品の名前、サービスに使われるマーク</td><td>登録から10年（更新できる）</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <figcaption>出典：特許庁「アイデア・デザイン・ブランドを守るためには？ 特許権・意匠権・商標権を知ろう！」。特許権・意匠権・商標権は、特許庁に出願（申し込み）して、審査（内容を調べて確かめること）を通ると権利になる。</figcaption>
+            </figure>
+            <p><strong>ペアで確認（上の約15分のうち、約5分）</strong>：次の3つは、4つの権利のどれで守るのが合っているか。ペアで話してから、答えを見る。</p>
+            <ol>
+              <li>新しい見た目（形・色・模様）の、飲み物のボトル</li>
+              <li>会社が新しく売り出す、お菓子の名前</li>
+              <li>潰して小さくできる、新しい構造のペットボトル</li>
+            </ol>
+            <details class="vz-more">
+              <summary>答えを見る</summary>
+              <ul>
+                <li>1. <strong><span translate="no">意匠権</span></strong>（物の見た目＝デザイン）。持ちやすさなど、機能の工夫を守りたいときは、実用新案権や特許権の可能性もある。見た目を守るのが意匠権。</li>
+                <li>2. <strong><span translate="no">商標権</span></strong>（商品の名前＝ブランド）。</li>
+                <li>3. <strong><span translate="no">特許権</span></strong>（技術的なアイデア＝発明）。特許庁の例は「潰しやすいペットボトルの構造」。</li>
+              </ul>
+            </details>
+
+            <p><strong>② <span translate="no">著作権</span>（約10分）</strong></p>
+            <ul class="vz-points">
+              <li class="vz-point">
+                <b>登録がいらない</b>
+                <p>著作者の権利は、<strong>登録などの手続きをしなくても</strong>、作った時から持てる（著作権法 第17条第2項・第51条第1項）。</p>
+              </li>
+              <li class="vz-point">
+                <b>保護期間</b>
+                <p>原則として、著作者の<strong>死後70年</strong>まで（著作権法 第51条第2項）。</p>
+              </li>
+              <li class="vz-point">
+                <b>プログラムの注意</b>
+                <p>プログラムの著作物の保護は、プログラム言語・<strong>規約・解法</strong>には及ばない（著作権法 第10条第3項）。試験では、<strong>ソースプログラムは保護される。アルゴリズム（解法）や通信プロトコル（規約の例として扱われる）は対象にならない</strong>、と整理して出題される。</p>
+              </li>
+            </ul>
+            <p class="lesson-note">この内容は、2限後半の過去問（問30）で使う。</p>
+
+            <p><strong>③ <span translate="no">個人情報保護法</span>（約15分）（教科書 p.051-054）</strong></p>
+            <ul>
+              <li><strong>目的</strong>：個人情報を役立てること（有用性）にも配慮しながら、<strong>個人の権利と利益を守る</strong>こと（法 第1条）</li>
+              <li><strong>個人情報</strong>：生存する個人に関する情報で、名前や生年月日などによって、特定の個人が分かるもの（法 第2条第1項）</li>
+              <li>ストーリーの「お客さんの名前・住所・メールアドレス」は、個人情報に当たる</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-leak">
+              <p class="vz-fig-title" id="cap-leak">個人データが漏れたとき、国（個人情報保護委員会）への報告が義務になる場合（事業者）</p>
+              <div class="vz-fields">
+                <section class="vz-field vz-f-st">
+                  <h4>① 要配慮個人情報が含まれる</h4>
+                  <p>病歴・健康診断の結果など、特に注意して扱う情報（法律で決められている）。例：患者の診療情報を入れたUSBメモリを紛失した。</p>
+                </section>
+                <section class="vz-field vz-f-st">
+                  <h4>② 財産的な被害のおそれ</h4>
+                  <p>悪用されると、お金の被害が出るおそれがある。例：ECサイトから、クレジットカード番号を含む個人データが漏れた。</p>
+                </section>
+                <section class="vz-field vz-f-st">
+                  <h4>③ 不正の目的で行われたおそれ</h4>
+                  <p>例：不正アクセスで漏れた。<strong>ランサムウェア等で個人データが暗号化され、元に戻せなくなった。</strong></p>
+                </section>
+                <section class="vz-field vz-f-st">
+                  <h4>④ 本人の数が1,000人を超える</h4>
+                  <p>例：設定のミスで、1,000人を超える人の個人データが、インターネット上で見られる状態になった。</p>
+                </section>
+              </div>
+              <figcaption>出典：個人情報保護委員会「漏えい等の対応とお役立ち資料」。期限は、まずは速やかに報告する。そのうえで、不正な目的で行われたおそれがある場合は、発覚日から60日以内（60日待ってよい、という意味ではない）。</figcaption>
+            </figure>
+            <p><strong>ペアで確認（上の約15分のうち、約5分）</strong>：ストーリーの事件は、上の①〜④のどれに当たるか。ペアで話してから、答えを見る。</p>
+            <details class="vz-more">
+              <summary>答えを見る</summary>
+              <p><strong>③ 不正の目的</strong>に当たる。マルウェアに感染し、攻撃者がパスワードを使って社内システムに入り込み、お客さんの情報を外に送ったのは、不正アクセスによる漏えい。個人情報保護委員会への報告が義務になる。お客さんの数が1,000人を超えれば、④にも当たる。</p>
+            </details>
+
+            <p><strong>用語を、ペアで説明し合う（約7分）</strong></p>
+            <ul>
+              <li>下の「用語カード」の6つの用語から、3つずつ選ぶ</li>
+              <li>1人が、<strong>やさしい日本語で</strong>、用語の意味を説明する。もう1人は、どの用語かを当てる</li>
+              <li>交代して、もう一度行う</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ================= 2限 後半 ================= -->
+        <div class="timeline-block" id="blk-4">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>過去問を2問 → 手を動かすワーク：あやしいメールを見分ける</h3>
+          <div class="timeline-body">
+
+            <p><strong>過去問演習（約12分）</strong>：問い方の型を使って、解く。</p>
+            <div class="exam-q">
+              <p class="exam-q-text">【例題③】問30　<span translate="no">著作権</span>に関して，次の記述中のa，bに入れる字句の適切な組合せはどれか。</p>
+              <p><span translate="no">a</span> は著作権法による保護の対象になるが，<span translate="no">b</span> は対象にならない。</p>
+              <div class="table-wrap">
+                <table class="schedule-table">
+                  <thead><tr><th>選択肢</th><th style="text-transform:none">a</th><th style="text-transform:none">b</th></tr></thead>
+                  <tbody>
+                    <tr><td>ア</td><td>アルゴリズム</td><td>操作マニュアル</td></tr>
+                    <tr><td>イ</td><td>アルゴリズム</td><td>通信プロトコル</td></tr>
+                    <tr><td>ウ</td><td>ソースプログラム</td><td>操作マニュアル</td></tr>
+                    <tr><td>エ</td><td>ソースプログラム</td><td>通信プロトコル</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問30（<span translate="no">ストラテジ系</span>。問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：エ（a＝ソースプログラム、b＝通信プロトコル）</strong>（型：空欄の組合せ）。ソースプログラムは、プログラムの著作物として保護される。アルゴリズム（解法）と、通信プロトコル（試験では「規約」の例として扱う）は、著作権法の保護の対象にならない（第10条第3項）。操作マニュアルは、文章の著作物として保護される。</p>
+              </details>
+            </div>
+
+            <div class="exam-q">
+              <p class="exam-q-text">【例題④】問12　商標法における<span translate="no">サービスマーク</span>を説明したものはどれか。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>企業が，企業そのものを他社と区別するために表示する商標である。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>製造業者，販売業者が提供する商品を，他社の商品と区別するために表示する商標である。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>大規模小売業者が開発したプライベートブランドの商品を，他社の商品と区別するために表示する商標である。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>輸送業者，金融業者などが提供する役務を，他社の役務と区別するために表示する商標である。</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問12（<span translate="no">ストラテジ系</span>。問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：エ</strong>（型：説明に合うものを選ぶ）。商標は、商品やサービスに使うマーク（特許庁）。そのうち、<strong>サービス（役務）</strong>に使うマークが、サービスマーク（役務は、サービスのこと）。輸送や金融などのサービスを、他社のサービスと区別するために表示する。イは、商品に使う商標の説明。</p>
+              </details>
+            </div>
+
+            <p><strong>手を動かすワーク：あやしいメールを見分ける（約18分）</strong></p>
+            <p>次のメールは、ストーリーの月曜の朝にAさんに届いた、<strong>架空のメール</strong>。<strong>あやしい点を3つ以上</strong>探す。ペアで話してから、下の「あやしい点の例」を開く。</p>
+            <figure class="vz-fig" aria-labelledby="cap-mail">
+              <p class="vz-fig-title" id="cap-mail">Aさんに届いたメール（架空）</p>
+              <div class="table-wrap">
+                <table class="schedule-table">
+                  <tbody>
+                    <tr><td>差出人</td><td>経理部 ○○　&lt;keiri@aozora-st0re.example&gt;</td></tr>
+                    <tr><td>宛先</td><td>営業担当の皆様</td></tr>
+                    <tr><td>件名</td><td>【至急】請求書の再送のお願い（本日中）</td></tr>
+                    <tr><td>添付</td><td>請求書_修正版.pdf.exe</td></tr>
+                    <tr><td>本文</td><td>いつもお世話になっております。先日の請求書に誤りがありました。添付の修正版を、<strong>本日中に開いて確認してください</strong>。確認がないと、取引を止めることになります。</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <figcaption>会社名やアドレスは、すべて架空。「.example」は、例として使うための名前で、実際には使われない。</figcaption>
+            </figure>
+            <details class="vz-more">
+              <summary>あやしい点の例を見る</summary>
+              <ul>
+                <li><strong>差出人のアドレスが、本物と少し違う</strong>：会社名の「o」が「0」（ゼロ）になっている。表示の名前だけでなく、<strong>実際のアドレス</strong>を確認する（IPAの報告書には、正規のドメインに似たドメインを取得する手口と、ディスプレイ名を社長の名前にして、実際の送信元は別のアドレスという手口が紹介されている）。</li>
+                <li><strong>急がせる・おどす</strong>：「至急」「本日中」「取引を止める」。考える時間を与えない。これは、<span translate="no">ソーシャルエンジニアリング</span>で、人の心理的な弱点に付け込む手口。</li>
+                <li><strong>添付ファイルが「.pdf.exe」</strong>：名前の最後（拡張子）が「.exe」なら、PDFではなく、<strong>実行するプログラム</strong>。パソコンの設定によっては、拡張子が表示されず、「請求書_修正版.pdf」のように見えることもある。開くと、<span translate="no">マルウェア</span>が動く可能性がある。</li>
+                <li><strong>宛先が、特定の人ではない</strong>：「営業担当の皆様」。ただし、<span translate="no">標的型攻撃</span>メールは、相手の仕事を調べて、仕事に関係する内容にすることもあるので、<strong>宛先だけでは判断できない</strong>。</li>
+              </ul>
+              <p><strong>あやしいと思ったら</strong>：添付ファイルやリンクを開かない。決められた担当（情報システム部など）に、報告する（IPAは、不審なメールの報告手順を、社内で周知しておくことを勧めている）。</p>
+            </details>
+          </div>
+        </div>
+
+        <!-- ================= まとめ ================= -->
+        <div class="timeline-block" id="blk-5">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>用語カードの提出・クイズ・次回予告</h3>
+          <div class="timeline-body">
+            <ul>
+              <li><strong>用語カード</strong>：今回覚えた用語にチェックを入れて、フォームで提出する（約3分）</li>
+              <li>このページの下の<strong>サイト内クイズ</strong>で、今日の内容を確認する（約5分）</li>
+              <li>質問と、次回までの課題の確認（約2分）</li>
+              <li>次回（第3回）：<strong>誰が守るのか：組織のルールと技術的な備え</strong>——<span translate="no">情報セキュリティの3要素</span>（機密性・完全性・可用性）、リスクマネジメント、<span translate="no">ISMS</span>と<span translate="no">セキュリティ</span>対策の手法（<span translate="no">セキュリティ</span> p.360-370）、<span translate="no">システム監査</span>・<span translate="no">内部統制</span>、<span translate="no">SLA</span>・<span translate="no">BCP</span>（p.176-189）</li>
+            </ul>
+            <div class="vz-cta">
+              <a class="vz-btn vz-btn--ext" href="https://docs.google.com/forms/d/e/1FAIpQLSfu-KShy5AVrNjj14Y3T_1C5eG5sJzKwWD_0V3wRezCY770-g/viewform" target="_blank" rel="noopener">第2回 今回覚えた用語を提出する（Googleフォーム）</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-terms">
+      <h2>用語カード（今日の用語）</h2>
+      <p class="lesson-note">用語カードは、今日の授業で出る用語と、その意味のリスト。授業の最後に、フォームで<strong>今回覚えた用語</strong>にチェックを入れて提出する。用語は日本語のまま覚える。試験は日本語で行われる。</p>
+      <div class="table-wrap">
+        <table class="schedule-table">
+          <thead><tr><th>用語</th><th>意味</th></tr></thead>
+          <tbody>
+            <tr><td><span translate="no">マルウェア</span></td><td>悪意のあるソフトウェアの総称。ウイルスやランサムウェアなど</td></tr>
+            <tr><td><span translate="no">ソーシャルエンジニアリング</span></td><td>人の心理的な弱点や、信頼を利用して、だます手口</td></tr>
+            <tr><td><span translate="no">標的型攻撃</span></td><td>特定の組織を狙って、機密情報などを盗もうとする攻撃</td></tr>
+            <tr><td><span translate="no">知的財産権</span></td><td>人が考えて生み出したアイデアや作品などを守る権利</td></tr>
+            <tr><td><span translate="no">産業財産権</span></td><td>知的財産権のうち、特許権・実用新案権・意匠権・商標権の4つ（特許庁が担当）</td></tr>
+            <tr><td><span translate="no">個人情報保護法</span></td><td>個人の権利と利益を守るために、個人情報の取り扱いを決めた法律</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-quiz">
+      <h2>理解度チェック（サイト内クイズ）</h2>
+      <p class="lesson-note">自分で確認するためのクイズ。回答はこのページの中で判定されるだけで、どこにも送信・保存されず、成績にも含まれない。何度でも試せる。</p>
+
+      <div class="quiz-set">
+
+        <div class="quiz" aria-live="polite" data-answer="ア">
+          <p class="quiz-q"><span class="quiz-q-num">Q1</span><span translate="no">標的型攻撃</span>の説明として，最も適切なものはどれか。</p>
+          <div class="quiz-choices">
+            <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span>特定の組織を狙って，機密情報などを盗もうとする攻撃</span></button>
+            <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span>大量のアクセスを送って，Webサイトを止める攻撃</span></button>
+            <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span>不特定多数に，同じ内容のメールを送る攻撃だけを指す言葉</span></button>
+            <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span>パソコンのHDDを暗号化して，紛失したときに読めなくする対策</span></button>
+          </div>
+          <div class="quiz-feedback" hidden>
+            <p class="quiz-result"></p>
+            <p>標的型攻撃は、特定の組織を狙い、主に機密情報を盗むことが目的（総務省・IPA）。イは、サービスを止める攻撃（今回は扱わない）、ウは、ばらまき型の説明、エは、攻撃ではなく、守るための対策。</p>
+            <button type="button" class="quiz-retry">もう一度</button>
+          </div>
+        </div>
+
+        <div class="quiz" aria-live="polite" data-answer="ウ">
+          <p class="quiz-q"><span class="quiz-q-num">Q2</span><span translate="no">ソーシャルエンジニアリング</span>の例として，最も適切なものはどれか。</p>
+          <div class="quiz-choices">
+            <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span>ソフトウェアの弱点を見つけて，プログラムで攻撃する。</span></button>
+            <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span>大量のデータを送って，サーバを動かなくする。</span></button>
+            <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span>社長を名乗るメールで，社員に急いで対応するように指示して，従わせる。</span></button>
+            <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span>ウイルス対策ソフトを最新の状態にする。</span></button>
+          </div>
+          <div class="quiz-feedback" hidden>
+            <p class="quiz-result"></p>
+            <p>ソーシャルエンジニアリングは、人の心理的な弱点や信頼を利用して、だます手法（IPA）。社長を名乗るメールは、IPAの報告書にも例として出ている。アとイは、コンピュータの弱点を狙う攻撃、エは、守るための対策。</p>
+            <button type="button" class="quiz-retry">もう一度</button>
+          </div>
+        </div>
+
+        <div class="quiz" aria-live="polite" data-answer="エ">
+          <p class="quiz-q"><span class="quiz-q-num">Q3</span><span translate="no">産業財産権</span>に<strong>含まれない</strong>ものはどれか。</p>
+          <div class="quiz-choices">
+            <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span translate="no">特許権</span></button>
+            <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span translate="no">意匠権</span></button>
+            <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span translate="no">商標権</span></button>
+            <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span translate="no">著作権</span></button>
+          </div>
+          <div class="quiz-feedback" hidden>
+            <p class="quiz-result"></p>
+            <p>産業財産権は、特許権・実用新案権・意匠権・商標権の4つ。著作権は、知的財産権の1つだが、産業財産権には含まれない（特許庁）。「含まれない」ものを選ぶ問いは、選ぶ向きが逆になる。</p>
+            <button type="button" class="quiz-retry">もう一度</button>
+          </div>
+        </div>
+
+        <div class="quiz" aria-live="polite" data-answer="ア">
+          <p class="quiz-q"><span class="quiz-q-num">Q4</span><span translate="no">個人情報保護法</span>で，個人データの漏えい等が起きたとき，個人情報保護委員会への報告が義務になる場合として，適切なものはどれか。</p>
+          <div class="quiz-choices">
+            <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span>不正アクセスによって，個人データが漏えいした。</span></button>
+            <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span>会社の備品の一覧表が，社外の人に見られた。</span></button>
+            <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span>個人情報を含まない社内の会議資料を，間違った相手に送った。</span></button>
+            <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span>個人データを含まないWebサイトの，デザインを変えた。</span></button>
+          </div>
+          <div class="quiz-feedback" hidden>
+            <p class="quiz-result"></p>
+            <p>不正アクセスなど、不正の目的で行われたおそれがある漏えい等は、報告が義務になる場合の1つ（個人情報保護委員会）。イ・ウ・エは、個人データの漏えいではない。</p>
+            <button type="button" class="quiz-retry">もう一度</button>
+          </div>
+        </div>
+
+        <div class="quiz" aria-live="polite" data-answer="イ">
+          <p class="quiz-q"><span class="quiz-q-num">Q5</span><span translate="no">マルウェア</span>の説明として，最も適切なものはどれか。</p>
+          <div class="quiz-choices">
+            <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span>ウイルス対策ソフトの，別の呼び方</span></button>
+            <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span>悪意のあるソフトウェアの総称。ウイルス・ワーム・ランサムウェアなどを含む</span></button>
+            <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span>電話で相手をだまして，情報を聞き出す手口</span></button>
+            <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span>会社の知的財産を守る権利</span></button>
+          </div>
+          <div class="quiz-feedback" hidden>
+            <p class="quiz-result"></p>
+            <p>マルウェアは「Malicious Software」（悪意のあるソフトウェア）の略で、攻撃をするソフトウェアの総称（総務省）。アは、守るためのソフト、ウは、ソーシャルエンジニアリング、エは、知的財産権の説明。</p>
+            <button type="button" class="quiz-retry">もう一度</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-tasks">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>第3回の予習：教科書を読む</strong>
+            <p>教科書 p.360-370 と p.176-189 を読み、<span translate="no">情報セキュリティの3要素</span>（機密性・完全性・可用性）、<span translate="no">ISMS</span>、<span translate="no">システム監査</span>・<span translate="no">内部統制</span>、<span translate="no">SLA</span>・<span translate="no">BCP</span>の意味を確認しておく。第3回の授業の最後に、覚えた用語をフォームで提出する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>サイト内クイズを、全問正解になるまで繰り返す</strong>
+            <p>間違えた問題は、解説を読んでから「もう一度」を押して解き直す。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>自分に届いたメールを、見る目で確認する</strong>
+            <p>差出人の<strong>本当のアドレス</strong>と、急がせる言葉、添付ファイルの種類を確認してみる。知らない相手の添付ファイルは、開かない。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-refs">
+      <h2>参考リンク</h2>
+      <ul class="vz-links">
+        <li><a class="vz-link" href="https://www.ipa.go.jp/security/10threats/10threats2026.html" target="_blank" rel="noopener"><b>情報セキュリティ10大脅威 2026</b><span>IPA。組織向け・個人向けの脅威の順位</span></a></li>
+        <li><a class="vz-link" href="https://www.ipa.go.jp/security/support/rcu1hd0000019vmo-att/20260803_1.pdf" target="_blank" rel="noopener"><b>企業組織を狙う攻撃メールの手口とその対策（PDF）</b><span>IPA（2026年8月3日）。標的型攻撃メール・ソーシャルエンジニアリングの説明</span></a></li>
+        <li><a class="vz-link" href="https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ja_07/" target="_blank" rel="noopener"><b>用語集（ま行）：マルウェア</b><span>総務省「国民のためのサイバーセキュリティサイト」</span></a></li>
+        <li><a class="vz-link" href="https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ja_06/" target="_blank" rel="noopener"><b>用語集（は行）：標的型攻撃</b><span>総務省「国民のためのサイバーセキュリティサイト」</span></a></li>
+        <li><a class="vz-link" href="https://www.jpo.go.jp/resources/report/sonota-info/document/panhu/panhu03.pdf" target="_blank" rel="noopener"><b>アイデア・デザイン・ブランドを守るためには？ 特許権・意匠権・商標権を知ろう！（PDF）</b><span>特許庁。産業財産権の4つの権利と保護期間</span></a></li>
+        <li><a class="vz-link" href="https://laws.e-gov.go.jp/law/345AC0000000048" target="_blank" rel="noopener"><b>著作権法（e-Gov法令検索）</b><span>第10条第3項・第17条第2項・第51条第2項</span></a></li>
+        <li><a class="vz-link" href="https://laws.e-gov.go.jp/law/415AC0000000057" target="_blank" rel="noopener"><b>個人情報の保護に関する法律（e-Gov法令検索）</b><span>第1条（目的）・第2条第1項（個人情報の定義）</span></a></li>
+        <li><a class="vz-link" href="https://www.ppc.go.jp/personalinfo/legal/leakAction/" target="_blank" rel="noopener"><b>漏えい等の対応とお役立ち資料</b><span>個人情報保護委員会。漏えい等の報告が義務になる場合</span></a></li>
+        <li><a class="vz-link" href="https://www.ipa.go.jp/shiken/mondai-kaiotu/index.html" target="_blank" rel="noopener"><b>過去問題 | 試験情報 | IPA</b><span>公開問題と解答例の一覧。法令に特別の定めがある場合を除き、許諾・使用料は不要（IPA公式）。この授業では、年度と問番号を出典として書く</span></a></li>
+        <li><a class="vz-link" href="https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2025r07_ip_qs.pdf" target="_blank" rel="noopener"><b>令和7年度 ITパスポート試験 公開問題（PDF）</b><span>例題の出典（問12・問30・問92・問93）</span></a></li>
+        <li><a class="vz-link" href="https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2025r07_ip_ans.pdf" target="_blank" rel="noopener"><b>令和7年度 ITパスポート試験 公開問題 解答例（PDF）</b><span>例題の正答の確認</span></a></li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week01.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第1回 3分野の地図を手に入れる</span>
+      </a>
+      <a href="../it-passport-technology.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">ITパスポート テクノロジー系</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第3回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js?v=2"></script>
+</body>
+</html>
