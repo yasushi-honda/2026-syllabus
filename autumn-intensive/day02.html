@@ -447,7 +447,7 @@ ctx.onMessage(({ from, payload }) => { ... });   // 届いたら、同じ計算�
             </button>
 <pre id="d2-prompt-tetris-color" class="md-preview">ブロックの色を青系にしてください。</pre></div>
             <ol class="vz-steps">
-              <li class="vz-step"><b>確認する人: 画面で確かめる</b>ブラウザを再読み込みして、色が変わったかを見る。<strong>再読み込みすると部屋から抜ける</strong>ので、部屋を作り直して確かめる。変わらないときは、何を見て何が起きたかをagyに伝える。</li>
+              <li class="vz-step"><b>確認する人: 画面で確かめる</b>ブラウザを再読み込みして、色が変わったかを見る。<strong>再読み込みすると部屋から抜け、始まった部屋には戻れない</strong>ので、新しい部屋を作り直して確かめる。変わらないときは、何を見て何が起きたかをagyに伝える。</li>
             </ol>
 
             <!-- ---------- ② ---------- -->
@@ -536,7 +536,7 @@ ctx.onMessage(({ from, payload }) => { ... });   // 届いたら、同じ計算�
                 </figure>
               </div>
             </figure>
-            <p>agyに頼むときは、次のように、<strong>小さく、1つだけ</strong>頼む。画面の再読み込みで反映される（<code>game.js</code> を変えたときは、<code>npm start</code> のやり直しは不要。<code>server.js</code> を変えたときだけ、やり直す）。再読み込みすると部屋から抜けるので、入り直す。</p>
+            <p>agyに頼むときは、次のように、<strong>小さく、1つだけ</strong>頼む。画面の再読み込みで反映される（<code>game.js</code> を変えたときは、<code>npm start</code> のやり直しは不要。<code>server.js</code> を変えたときだけ、やり直す）。再読み込みすると部屋から抜け、<strong>ゲームが始まった部屋には戻れない</strong>ので、全員が再読み込みして、<strong>新しい部屋を作り直して</strong>確かめる。</p>
             <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d2-prompt-board">
               <span class="btn-icon"></span> 指示文をコピー
             </button>
@@ -600,7 +600,7 @@ ctx.onMessage(({ from, payload }) => { ... });   // 届いたら、同じ計算�
               </li>
               <li class="vz-point">
                 <b>遊んでいる途中で、急に接続が切れた</b>
-                <p>Codespacesは、<strong>キーボード・マウスの操作も、ターミナルの出力もない状態が、既定で30分続くと止まる</strong>（公式）。ゲームで遊ぶだけでは「操作あり」にならない。<a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> でCodespacesを再開し、<code>npm start</code> をやり直して、部屋を作り直す。</p>
+                <p>Codespacesは、<strong>キーボード・マウスの操作も、ターミナルの出力もない状態が、既定で30分続くと止まる</strong>（公式）。見本ゲーム（Tetris）は、遊ぶだけでは「操作あり」にならない。Battle Baseは、遊んでいる間、1分ごとの記録がターミナルに出るので、止まりにくい。<strong>ただし、自動で止まることを当てにしない</strong>。使い終わったら、必ず自分で停止する。止まってしまったときは、<a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> でCodespacesを再開し、<code>npm start</code> をやり直して、部屋を作り直す。</p>
               </li>
               <li class="vz-point">
                 <b>「部屋が見つかりません」と出る</b>
