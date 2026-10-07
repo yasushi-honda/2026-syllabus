@@ -3359,3 +3359,100 @@ main .d2-note { margin: var(--sp-3) 0; padding: var(--sp-3) var(--sp-4); backgro
     break-inside: avoid;
   }
 }
+
+/* ========================================
+   ふりがなトグル（追随ボタン）とルビ
+   <body data-furigana="…"> があるページだけ、app.js がボタンを出す
+   ======================================== */
+.furigana-toggle {
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0 0.75rem 0 0.4rem;
+  border: 1.5px solid var(--c-border-strong);
+  border-radius: 999px;
+  background: var(--c-surface);
+  color: var(--c-text);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1;
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.furigana-toggle:hover { background: var(--c-surface-hover); }
+.furigana-toggle:focus-visible { outline: 3px solid var(--c-amber); outline-offset: 3px; }
+.furigana-toggle-icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--c-amber-soft);
+  color: var(--c-amber);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+.furigana-toggle-state {
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  background: var(--c-bg-alt);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.furigana-toggle[aria-pressed="true"] {
+  border-color: var(--c-amber);
+  background: var(--c-amber);
+  color: #fff;
+}
+.furigana-toggle[aria-pressed="true"] .furigana-toggle-icon { background: #fff; color: var(--c-amber); }
+.furigana-toggle[aria-pressed="true"] .furigana-toggle-state { background: rgba(255, 255, 255, 0.22); color: #fff; }
+/* 通常は読み上げ専用（画面には見えない）。.is-visible のときだけ画面に出す */
+.furigana-notice:not(.is-visible) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+.furigana-notice.is-visible {
+  position: fixed;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: calc(max(16px, env(safe-area-inset-bottom)) + 52px);
+  z-index: 100;
+  max-width: min(22rem, calc(100vw - 32px));
+  padding: 0.6rem 0.9rem;
+  border: 1.5px solid var(--c-amber-border);
+  border-radius: var(--r-md);
+  background: var(--c-amber-soft);
+  color: var(--c-text);
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.5;
+  box-shadow: var(--shadow-card);
+}
+.has-furigana-toggle .site-footer { padding-bottom: 5rem; }
+
+ruby { ruby-align: center; ruby-position: over; }
+rt {
+  font-size: max(0.5em, 0.6rem);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--c-text-muted);
+}
+html.furigana-on main { line-height: 2.1; }
+html.furigana-on .timeline-body li,
+html.furigana-on .vz-step { line-height: 2.1; }
+
+@media print {
+  .furigana-toggle { display: none; }
+}

@@ -103,6 +103,7 @@ it-passport-technology/       # ITパスポート テクノロジー系 の各�
   week01.html           #   第1回 3分野の地図を手に入れる
   week02.html           #   第2回 情報が漏れる日：脅威はどこから来るのか（マルウェア・標的型攻撃・ソーシャルエンジニアリングと、知的財産権・個人情報保護法。令和7年度の過去問4問、メール見分けワーク、サイト内クイズ）
   images/               #   第2回「今日のストーリー」の挿絵（week02-story-1〜5.jpg。画像生成AIで作った架空の場面。文字・ロゴなし）
+  furigana/             #   ふりがなの辞書（ページごとのJSON。tools/furigana/build_dict.py で生成し、レビュー済みの状態でコミット）
 system-dev-practice-a2.html   # システム開発実習AⅡ（水3・4限／後期。授業内容確定済み、週ページ未作成）
 ai-programming-2.html   # AI活用プログラミング基礎Ⅱ（木1・2限／後期。授業内容確定済み、週ページ順次作成中）
 ai-programming-2/       # AI活用プログラミング基礎Ⅱ の各回詳細ページ
@@ -125,8 +126,9 @@ autumn-intensive/       # 秋の集中講座 の日別詳細ページ（週ペ�
   day02.html            #   Day2 通信対戦のしくみを知る／方向性を選ぶ（SVG図解・スクリーンショット・理解度クイズ付き）
   day03.html            #   Day3 挑戦する／仕上げる／見せる準備をする（方向性④「自由に広げる」・ボンバーマン・Day4/5の動き方の事前説明）
   images/               #   Day2 の説明用スクリーンショット（battle-baseの画面。day02-*.png。/screenshot skill で撮影）
+tools/furigana/        # ふりがな辞書の生成（build_dict.py・overrides.tsv・テスト・requirements.txt。仮想環境 .venv は管理対象外）
 styles.css              # 共通スタイル（Editorial Paper Edition ライトテーマ）
-app.js                  # Markdownコピー等
+app.js                  # Markdownコピー、サイト内クイズ、ふりがなトグル（<body data-furigana> があるページだけ）
 favicon.svg             # ファビコン
 content/                # Markdownソース（コピーボタン用。全HTMLページに1対1で対応）
 .github/workflows/      # GitHub Pagesデプロイ設定
@@ -198,7 +200,8 @@ content/                # Markdownソース（コピーボタン用。全HTMLペ
 3. **二層テスト**: 成績に関わる評価（親ページ評価方法30%「授業内ミニテストの到達度」等）はGoogleフォーム→スプレッドシート（i-seifu.jpドメイン限定、回答はドライブ内に閉じる）を使う。公開サイトに載せるのはフォームのURLのみで、`target="_blank" rel="noopener"` の別タブリンクで開く（iframe埋め込みは前例なし・使わない）。**サイト内JSクイズ（記録なし・個人情報なし・成績に含めない即時フィードバック用）はITパスポート テクノロジー系で採用決定済み**（2026-09-16、分野横断ストーリー型への改訂時。成績評価はGoogleフォームのみが対象で、サイト内クイズは含めない）。**第1回（`it-passport-technology/week01.html`）で共通部品を実装済み**（2026-09-29）。設問はHTMLに `<div class="quiz" data-answer="ウ">` で書き、部品は `styles.css` の `.quiz*`、動作は `app.js` の末尾ブロック（回答は判定のみで保存・送信しない）。第2回以降は week01 の「理解度チェック」セクションのマークアップを流用し、部品側は変更しない。過去問の抜粋表示は `.exam-q*`（出典行 `.exam-q-source` 必須）
 3b. **毎回の確認テスト（同じ5問前後を2回）**: 第2回から試行（2026-10-07）。各回の最後に、その回の範囲の確認テストを**1回目→振り返り→2回目**の順で受けさせ、「振り返れば点数が上がる」体験で自信をつけさせ、1人ごとの1回目→2回目の変化と回ごとの推移を取る。同じ問題で、フォームを「1回目」「2回目」の2つに分ける（2回目は問題の順番だけシャッフル）。Googleフォームのクイズモード（成績は送信直後に表示・不正解の質問/正解/点数を表示・問ごとの解説（フィードバック）をGASで設定・メールは「確認済み」・名前欄あり・1人1回まで）。回答は評価用スプレッドシートの別タブに集まり、メールアドレスで1回目と2回目を突き合わせる。配置は2限後半の終わりに1回目（約5分）、まとめで振り返り（約3分）＋2回目（約3分）。サイト内クイズは「確認テストと同じ内容の練習用（記録なし）」に位置づけ直した。また、各回の最初の「前回の復習」も、サイト内クイズではなくGoogleフォーム（復習テスト・前回分、3問前後・同じクイズモード設定）で集める（第2回から。第3回以降は前回の確認テストの問題から出し、1回目→2回目→翌週の定着の推移を取る。第2回の前回=診断テストは比較データなし）。フォーム作成コードは `~/Projects/学校/forms-gas/code_full.gs` の `SPEC_W02` / `createW02ReviewTests()`。回答は回答スプレッドシートの「第N回_確認テスト1回目/2回目」タブに集まり、「第N回_確認テスト分析」タブ（問別の正答率・全体の平均・個人別の1回目/2回目/差）で見られる（作成は `forms-gas/addition_review_analysis.gs` の `buildReviewAnalysis_`。回答の増加に影響されない列全体参照、ダミー回答での検証済み）。分析の使い方は作業チェックリスト 3b。うまくいけば第3回以降に広げる（成績への扱いは次項のとおり合否に直結させない）
 4. **評価は合否に直結させない**: 試験の実施停止・会場都合等で受験できない学生が成績で救済されないため、日々の到達度・提出物・参加度を主軸にし、試験合格は加点として扱う
-5. **使ってはいけない教材**: 教科書のデジタル特典PDFは購入者特典のため配布・転載不可（章対応表の記載は可）。過去問道場の単語集（`itpassportsiken.com/word/`）はリンクのみで転載不可
+5. **ふりがなトグル（2026-10-07、留学生の要望）**: ITパスポートの全ページに、右下に追随する「ふりがな」ボタン（オン/オフ。初期はオフ、選んだ状態は端末の `localStorage` に保存）。オンにすると漢字**すべて**にルビが付く。仕組み: ①`tools/furigana/build_dict.py`（`fugashi`＋`unidic-lite`）が、ページの文章を**ブロック単位（p/li/td…）で文脈つきに**解析し、ページごとの辞書 `it-passport-technology/furigana/<ページ名>.json` を作る（キーは文章の塊のFNV-1aハッシュ。`<body data-furigana="…">` も自動で付く）②`app.js` が、オンにしたときだけ辞書を読み込んで `<ruby>` に組み替え、オフで元に戻す（**オフの間はDOMを変えない**ので Chrome の翻訳と競合しない。オン中の翻訳は非推奨）。③誤読は `tools/furigana/overrides.tsv`（表記・付ける部分・読み）で上書き（辞書の既定の読みが学習者の期待と違う語、区切りを誤る語、数字＋助数詞）。数字＋分/月/日/人は `build_dict.py` の規則（分=ぷん/ふん、7日=なのか、1人=ひとり）。④**ページを書いたり変えたりしたら辞書を作り直す**（作業チェックリスト 13c）。文を変えるとその文だけふりがなが付かなくなる（壊れはしない）。用語カードに「ふりがな列」を設けない方針は変えない（別の軸）
+6. **使ってはいけない教材**: 教科書のデジタル特典PDFは購入者特典のため配布・転載不可（章対応表の記載は可）。過去問道場の単語集（`itpassportsiken.com/word/`）はリンクのみで転載不可
 
 ### 親ページ正本原則（Single Source of Truth）
 
@@ -264,6 +267,7 @@ content/                # Markdownソース（コピーボタン用。全HTMLペ
 □ 13. **整合性検証**: ステップ4のメモの全項目が週ページに登場するか grep で確認
        例: `grep -F "【学習データ①】" {dir}/week{NN}.html`
 □ 13b. **Markdown 残留チェック**: `grep -nE '\*\*[^*]+\*\*' {dir}/week{NN}.html` を実行し、Markdown 記法の強調が HTML に混入していないか確認。HTML 内では `<strong>…</strong>` で統一する（PR #53 教訓: `**使い分け**` が1箇所残留して code-reviewer に Important で指摘された）
+□ 13c. **（ITパスポート）ふりがな辞書を更新**: `tools/furigana/.venv/bin/python tools/furigana/build_dict.py`（初回は `python3 -m venv tools/furigana/.venv && tools/furigana/.venv/bin/pip install -r tools/furigana/requirements.txt`）→ `--list` で新しい語の読みを確認（誤読は `overrides.tsv` に追記）→ `--check` が `uncovered kanji: 0` → 辞書JSONと `<body data-furigana>` をコミット。`python3 tools/furigana/test_build_dict.py` も通す
 □ 14. 親ページの該当 Week セルを <a href="{dir}/week{NN}.html" class="week-link"> でリンク化
 □ 14b. **直前回の week ページの lesson-nav「次の回」リンクを有効化**: `week{NN-1}.html` 末尾の `<div class="lesson-nav-item lesson-nav-item--disabled">第{NN}回（準備中）</div>` を `<a href="week{NN}.html" class="lesson-nav-item">第{NN}回 {テーマ名}</a>` に置換（PR #58 教訓: code-reviewer から Critical 指摘を受けた漏れ。週ページ間のサイト内ナビが片方向破綻しないよう、新規週ページ追加時はセット更新）
 □ 15. このCLAUDE.mdの「ファイル構成」に新ファイルを追記
