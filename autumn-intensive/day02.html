@@ -445,7 +445,7 @@
               <span class="btn-icon"></span> 指示文をコピー
             </button>
 <pre id="d2-prompt-tetris-color" class="md-preview">ブロックの色を青系にしてください。</pre></div>
-            <ol class="vz-steps">
+            <ol class="vz-steps" style="counter-reset: vz-step 4">
               <li class="vz-step"><b>確認する人: 画面で確かめる</b>ブラウザを再読み込みして、色が変わったかを見る。<strong>再読み込みすると部屋から抜ける</strong>ので、新しい部屋を作り直して確かめる。変わらないときは、何を見て何が起きたかをagyに伝える。</li>
             </ol>
 
@@ -492,7 +492,7 @@
               <span class="btn-icon"></span> URLをコピー
             </button>
 <pre id="d2-url-battle-base" class="md-preview">https://github.com/yasushi-honda/battle-base</pre></div>
-            <ol class="vz-steps">
+            <ol class="vz-steps" style="counter-reset: vz-step 1">
               <li class="vz-step"><b>代表者: ForkからCodespacesを作る</b>Forkしたリポジトリで、「Code」→「Codespaces」→「＋」。新しいCodespacesなので、Day1の見本ゲームと同じく、<strong>agyは入っていない</strong>。入れる手順は、このあとの「agyを入れる」の枠のとおり（遊んだあと、改造の前に入れる）。</li>
               <li class="vz-step"><b>代表者: サーバーを動かす</b>ターミナルで次を入力する。「Battle Base Server running on http://localhost:8000」と表示されれば成功。<strong>このターミナルは、遊んでいる間ずっと使う</strong>。部屋を作る・入る・ゲームを始めるたびに、このターミナルに<strong>1行ずつ記録が出る</strong>（サーバーが部屋を管理している様子が見える）。</li>
             </ol>
@@ -500,7 +500,7 @@
               <span class="btn-icon"></span> コマンドをコピー
             </button>
 <pre id="d2-cmd-npm-start" class="md-preview">npm start</pre></div>
-            <ol class="vz-steps">
+            <ol class="vz-steps" style="counter-reset: vz-step 3">
               <li class="vz-step"><b>代表者: 「ポート」タブで、8000番をPublicにする</b>8000番を右クリック→「ポートの表示範囲」→「Public」（英語表示は「Port Visibility」）。設定ファイルでは、最初からPublicにはできない。</li>
               <li class="vz-step"><b>チーム全員: 画面を開いて、部屋に入る</b>8000番の行の地球儀アイコンで開く。最初に出るGitHubの注意画面（英語で「You are about to access a development port served by someone's codespace」）は、自分たちのリンクなら、緑の<strong>「Continue」ボタン</strong>を押して進む。名前を入れて、代表者が「部屋を作る」→「招待リンクをコピー」で、チームに送る。2人以上そろったら、ホストが「ゲームを始める」を押す。名前は、本名ではなく、ニックネームにする。</li>
             </ol>
@@ -513,7 +513,7 @@
                 </figure>
               </div>
             </figure>
-            <ol class="vz-steps">
+            <ol class="vz-steps" style="counter-reset: vz-step 5">
               <li class="vz-step"><b>チーム: サンプルのミニ人生ゲームを遊ぶ</b>順番にさいころを振り、お金が増えるマス（緑）・減るマス（赤）・1回休み（黄）・進む／戻る（青）を体験する。ゴールすると、着順に応じたボーナス（1着 +50万円、2着 +30万円、3着 +10万円）がもらえる。全員がゴールすると終わり。<strong>着順ではなく、お金がいちばん多い人の勝ち</strong>。1人しかいないときは、別のブラウザのタブ（シークレットウィンドウ）で、自分の招待リンクを開くと、2人目として入れる。</li>
               <li class="vz-step"><b>（任意）チームで1人、スマホからも入ってみる</b>招待リンクを、自分のスマホに送って開く。注意画面で「Continue」を押す。<strong>別の端末・別の回線から、同じ部屋に入れる</strong>ことが、実感できる。学校のWi-Fiでも、スマホの回線でもよい（回線のデータ通信量は、自分で気をつける）。</li>
             </ol>
