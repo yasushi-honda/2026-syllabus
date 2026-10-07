@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day4 先輩チームを巡回する／見せる・答える | 秋の集中講座</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=13">
+  <!-- 2026-10-08: Day4を新規作成。担当教員の設計: 1年生が4グループに分かれ、1ラウンド（巡回30分＋バッファ15分）に1グループずつ、2年次・3年次以上・ハード科のチームを自由にばらばらに回る。4ラウンドで180分を埋める。待機中の1年生は制作を続ける（時間のズレ込みや、迎える側の調整のため）。投票・推薦はしない（旧設計の「チーム内2交代＋推薦」は廃止）。1年生は巡回のふりかえりをGoogle Classroom経由のGoogleフォームで提出する（シラバスにURLは載せない）。Day5は仮の方向（前半はDay4の刺激をもとにアップデート、後半はハード科・上級生が1年生の教室で制作のアプローチを解説）。外部サービスの新しい事実は扱わないため、公式情報の確認は不要（Codespacesの公開ポートの事実は、Day3と同じ公式Security in GitHub Codespacesに基づく）。 -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--slate">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../autumn-intensive.html">秋の集中講座</a>
+        <span>/</span>
+        <span>Day4</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">先輩チームを巡回する／<wbr>見せる・答える</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Day 4</span>
+            <span class="page-badge">全5日間の4日目 / 180分</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-slate">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value"><strong>1年生が、2年次・3年次以上・ハード科のチームを巡回</strong>して、作品を体験し、質問する。上級生は、<strong>見せて、答える</strong></div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">巡回 / 体験 / 質問 / 見せる・答える / 制作の継続 / 巡回のふりかえり</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value"><strong>迎える側（2年次・3年次以上・ハード科）</strong>: Day3で作った紹介カードと体験の手順、<strong>作品を見せられる状態</strong>（Codespacesで動かすチームは、代表者のCodespacesを再開→<code>npm start</code>→8000番をPublic。Unityなど別の方法のチームは、その方法で）。<strong>1年次</strong>: 巡回で聞きたいことを1つ決めておく。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li><strong>1年次</strong>: 先輩のチームを巡回して、作品に<strong>触れて、質問し</strong>、自分たちの制作に<strong>活かせそうなこと</strong>を持ち帰る</li>
+        <li><strong>2年次・3年次以上・ハード科</strong>: 下級生を迎えて、作品を<strong>見せ、質問に答える</strong>。説明する練習と、下級生から刺激を受ける機会にする</li>
+        <li><strong>3年次以上</strong>は、答えを言い切らず、<strong>教える側の視点</strong>で助言する。<strong>2年次</strong>は、うまく動かないときの切り分けを主導する</li>
+        <li>巡回していない1年生は、<strong>自分たちの制作を進める</strong></li>
+      </ul>
+      <div class="lesson-tip">
+        <strong>今日のルール:</strong> 今日は、<strong>投票も推薦もしません</strong>。順位をつける日ではなく、<strong>見せ合い、聞き合う日</strong>です。巡回の30分は、<strong>先輩のどのチームを、どう回ってもよい</strong>（1チームでじっくりでも、いくつかのチームでも）。
+      </div>
+
+      <div class="vz-timebar">
+        <p class="vz-fig-title">180分の流れ（ブロックを押すと、その内容へ移動）</p>
+        <ol class="vz-timebar-track">
+          <li style="--w:30"><a class="vz-seg" href="#blk-1"><span class="vz-seg-time">30分</span><span class="vz-seg-name">1回目<br>巡回</span></a></li>
+          <li style="--w:15"><a class="vz-seg" href="#blk-1"><span class="vz-seg-time">15分</span><span class="vz-seg-name">バッファ</span></a></li>
+          <li style="--w:30"><a class="vz-seg" href="#blk-2"><span class="vz-seg-time">30分</span><span class="vz-seg-name">2回目<br>巡回</span></a></li>
+          <li style="--w:15"><a class="vz-seg" href="#blk-2"><span class="vz-seg-time">15分</span><span class="vz-seg-name">バッファ</span></a></li>
+          <li style="--w:10"><a class="vz-seg vz-seg--break"><span class="vz-seg-time">休憩</span><span class="vz-seg-name">10分</span></a></li>
+          <li style="--w:30"><a class="vz-seg" href="#blk-3"><span class="vz-seg-time">30分</span><span class="vz-seg-name">3回目<br>巡回</span></a></li>
+          <li style="--w:15"><a class="vz-seg" href="#blk-3"><span class="vz-seg-time">15分</span><span class="vz-seg-name">バッファ</span></a></li>
+          <li style="--w:30"><a class="vz-seg" href="#blk-4"><span class="vz-seg-time">30分</span><span class="vz-seg-name">4回目<br>巡回</span></a></li>
+          <li style="--w:15"><a class="vz-seg" href="#blk-4"><span class="vz-seg-time">15分</span><span class="vz-seg-name">まとめ・<br>フォーム・<br>Day5説明</span></a></li>
+        </ol>
+        <p class="vz-timebar-note">授業時間の合計は (30 + 15) × 4 = 180分（休憩を除く）。休憩は2回目のバッファのあとに入る。1回目だけ、巡回の最初の数分を、迎える側の準備に使う。</p>
+      </div>
+
+      <figure class="vz-fig" aria-labelledby="cap-rounds">
+        <p class="vz-fig-title" id="cap-rounds">1年生は4グループ。1回ごとに、1グループが巡回する</p>
+        <ol class="vz-flow" style="--cols:4">
+          <li class="vz-node"><b>1回目</b>グループ1が巡回。<br>ほかの3グループは制作</li>
+          <li class="vz-node"><b>2回目</b>グループ2が巡回。<br>ほかの3グループは制作</li>
+          <li class="vz-node"><b>3回目</b>グループ3が巡回。<br>ほかの3グループは制作</li>
+          <li class="vz-node"><b>4回目</b>グループ4が巡回。<br>ほかの3グループは制作</li>
+        </ol>
+        <figcaption>グループ分けは、担当教員が当日に伝える。<strong>2年次・3年次以上・ハード科</strong>のチームは、4回の巡回のあいだに、1年生のグループが順に訪ねてくる。巡回のない時間は、自分たちの制作を進める。</figcaption>
+      </figure>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。巡回30分とバッファ15分の組を、4回くり返す（最後のバッファは、まとめ・フォーム・Day5の説明に使う）。途中、2回目のあとに休憩10分（授業時間に含めない）。</p>
+
+      <div class="timeline">
+
+        <!-- ================= 1回目 ================= -->
+        <div class="timeline-block" id="blk-1">
+          <div class="timeline-header">
+            <span class="timeline-time">1回目</span>
+            <span class="timeline-duration">巡回30分 ＋ バッファ15分</span>
+          </div>
+          <h3>グループ1が巡回する／迎える側は準備を整える</h3>
+          <div class="timeline-body">
+
+            <p><strong>始める前に、各チームが準備する（巡回の最初の数分）</strong></p>
+            <ul>
+              <li><strong>2年次・3年次以上・ハード科（迎える側）</strong>: <strong>作品を見せられる状態</strong>にする。Codespacesで動かすチームは、代表者が、<a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> から<strong>前回と同じCodespaces</strong>を再開し（「Create」ではない）、<code>npm start</code> をやり直して、<strong>8000番がPublicか確認</strong>する。Unityなど、別の方法で見せるチームは、その方法で準備する。agyを使うときは、再度ログインを求められる場合がある（手順はDay1の<a href="day01.html#blk-3">「Antigravity CLI（agy）を導入して認証する」</a>と同じ）。Day3で作った<strong>紹介カードと体験の手順</strong>を、すぐ出せるようにする</li>
+              <li><strong>1年次</strong>: 巡回する前に、<strong>ひとつだけ聞きたいこと</strong>を、チームで決めておく（下の「質問の例」から選んでよい）。巡回しない3グループは、自分たちの制作を始める</li>
+            </ul>
+
+            <p><strong>巡回する（30分）</strong></p>
+            <ul>
+              <li><strong>1年次（巡回するグループ）</strong>: 上級生のチームを、<strong>自由に、ばらばらに</strong>回る。1チームでじっくり話しても、いくつかのチームを回ってもよい。<strong>触って、感想を一言伝える</strong>。質問する</li>
+              <li><strong>迎える側</strong>: 紹介カードと体験の手順で、<strong>触ってもらう</strong>。質問に答える。来る人が少ない時間は、自分たちの制作を進める</li>
+            </ul>
+
+            <p><strong>質問の例（コピーして、メモにも使える）</strong></p>
+            <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d4-text-questions">
+              <span class="btn-icon"></span> 質問の例をコピー
+            </button>
+<pre id="d4-text-questions" class="md-preview">■ 質問の例（1つ以上、聞いてみる）
+・AIに、最初にどう頼みましたか？
+・詰まったところは、どこですか？ どう立て直しましたか？
+・チームで、役割をどう分けましたか？
+・公開するときに、気をつけたこと（安全面）は何ですか？
+・これを作るのに、いちばん時間がかかったところは？
+・もう一度作るなら、何を変えますか？</pre></div>
+
+            <div class="lesson-tip">
+              <strong>迎える側へ:</strong> 質問には、<strong>答えをそのまま言い切らず</strong>、「どう頼んだか」「どこで詰まったか」を、<strong>自分たちの言葉で</strong>話してみましょう。3年次以上は、下級生に<strong>気づいてもらう</strong>つもりで話す。うまく動かないときは、<strong>2年次が中心になって、切り分ける</strong>（Day3の「困ったときの確認表」と同じ）。
+            </div>
+
+            <p><strong>バッファ（15分）</strong></p>
+            <ul>
+              <li><strong>時間のズレを吸収する</strong>。巡回が長引いたチームは、ここで切り上げる</li>
+              <li><strong>1年次（巡回した人）</strong>: 自分のチームの席に戻り、<strong>聞いたこと・活かせそうなこと</strong>を、チームに共有する。次のグループが移動する</li>
+              <li><strong>迎える側</strong>: 部屋の作り直し・不具合の修正・次の迎える準備をする。ここも、制作に使ってよい</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ================= 2回目 ================= -->
+        <div class="timeline-block" id="blk-2">
+          <div class="timeline-header">
+            <span class="timeline-time">2回目</span>
+            <span class="timeline-duration">巡回30分 ＋ バッファ15分</span>
+          </div>
+          <h3>グループ2が巡回する</h3>
+          <div class="timeline-body">
+            <p>進め方は、1回目と同じ。巡回するのは<strong>グループ2</strong>。ほかの3グループは、制作を続ける。</p>
+            <ul>
+              <li>1回目で出た質問や、<strong>うまく伝わらなかったところ</strong>があれば、迎える側は、<strong>バッファのうちに、紹介カードや手順を直す</strong></li>
+              <li>1回目のグループが聞いてきて共有した内容を、制作中の1年次のチームが<strong>少しでも取り入れてみる</strong>（小さな変更を1つ、「頼む→動かす→確かめる」）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <!-- ================= 3回目 ================= -->
+        <div class="timeline-block" id="blk-3">
+          <div class="timeline-header">
+            <span class="timeline-time">3回目</span>
+            <span class="timeline-duration">巡回30分 ＋ バッファ15分</span>
+          </div>
+          <h3>グループ3が巡回する</h3>
+          <div class="timeline-body">
+            <p>進め方は、1回目と同じ。巡回するのは<strong>グループ3</strong>。休憩のあと、<strong>Codespacesで見せているチームは、動いていて、8000番がPublicか</strong>を、もう一度確かめる（止まっていることがある）。</p>
+            <ul>
+              <li>agyに<strong>制限がかかった</strong>チームは、Day3の「agyに『制限がかかった』と表示されたとき」の手順で、別のGoogleアカウントに切り替える（<a href="day03.html#blk-1">Day3の手順</a>）</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ================= 4回目 ================= -->
+        <div class="timeline-block" id="blk-4">
+          <div class="timeline-header">
+            <span class="timeline-time">4回目</span>
+            <span class="timeline-duration">巡回30分 ＋ まとめ15分</span>
+          </div>
+          <h3>グループ4が巡回する／まとめ・フォーム・Day5の説明</h3>
+          <div class="timeline-body">
+            <p><strong>巡回する（30分）</strong></p>
+            <p>進め方は、1回目と同じ。巡回するのは<strong>グループ4</strong>。</p>
+
+            <p><strong>最後の15分：Day4のまとめ・ふりかえりフォーム・Day5の説明・片付け</strong></p>
+            <p>最後のバッファは、ズレの吸収ではなく、<strong>今日を締めくくる時間</strong>にする。</p>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>Day4のまとめ（約3分）</b>席に戻って、今日の気づきを、チームで1つずつ出し合う。担当教員が、全体に向けて、今日の様子を短く伝える。</li>
+              <li class="vz-step"><b>ふりかえりフォームの記入（約5分）</b>1年次は、巡回のふりかえりを、Googleフォームで提出する。フォームは、この講座の<strong>Google Classroomの専用ルーム</strong>で共有される。<strong>聞いたこと・触ったもの・自分たちの制作に活かせそうなこと</strong>を書く（誰かを順位づけするものではない）。続けて、<strong>全員</strong>が、今日のアンケートにも答える。<strong>2年次・3年次以上・ハード科</strong>は、今日、聞かれたこと・答えにくかったことを、短くメモする（Day5で、どんなアプローチで作ったかを話す材料になる）。</li>
+              <li class="vz-step"><b>Day5の説明（約4分）</b>下の「次回予告」のとおり。担当教員が説明する。</li>
+              <li class="vz-step"><b>片付け（約3分）</b>下の「片付けチェック」を、全員で確認する。</li>
+            </ol>
+
+            <p><strong>片付けチェック</strong></p>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>変更があれば、プッシュした</b>GitHubで、今日のファイルが見えることを確認する。</li>
+              <li class="vz-step"><b>ポートの公開をやめた（またはサーバーを止めた）</b>Publicのままにしない。</li>
+              <li class="vz-step"><b>Codespacesを停止した</b>見本ゲーム用・Battle Base用・Day1のチーム用、すべて <a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> で停止済みか確認する。</li>
+            </ol>
+
+            <p><strong>次回予告（Day5・内容は調整中）</strong></p>
+            <ul>
+              <li>Day5の前半は、<strong>今日の刺激をもとに、自分たちの作品をアップデートする時間</strong>になる予定。巡回のふりかえりを、見直しておく</li>
+              <li>Day5の後半は、<strong>ハード科・上級生の作品が、どんなアプローチで作られたか</strong>を、1年生の教室で解説してもらう予定。くわしくは、担当教員が伝える</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>安全のこと（Day3と同じ）</h2>
+      <ul>
+        <li><strong>Publicにすると、URLを知っている人は、ログインなしで入れる</strong>。部屋のパスコードや合言葉は、本物のアクセス制限にはならない</li>
+        <li>名前は、本名ではなく<strong>ニックネーム</strong>。個人情報・APIキーは、画面にも、ファイルにも入れない</li>
+        <li><strong>想定外の参加者が入った</strong>ときは、部屋を作り直す（Day3で決めた手順）</li>
+        <li>端末やコントローラーの持ち込みは、持っている人はOK（学校の機器・ネットワークの決まりは守る）</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>1年次: 巡回のふりかえりフォームを、提出する</strong>
+            <p>今日の最後のバッファで終わらなかった場合は、<strong>次回の前まで</strong>に提出する。活かしたいことを、<strong>1つ</strong>決めておく（Day5の前半で、アップデートに使う）。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>今日の変更がある場合はGitHubにプッシュされていて、Codespacesが停止していることを確認する</strong>
+            <p>代表者は、リポジトリをGitHub上で開き、反映されているか確認する。Codespacesは停止したままでよい。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>2年次・3年次以上・ハード科: 今日の「聞かれたこと・答えにくかったこと」を、1〜2行でメモしておく</strong>
+            <p>自分たちの振り返りになる。Day5の後半で、「どんなアプローチで作ったか」を話すことになった場合の材料にもなる。<strong>どう頼んで、どこで詰まって、どう立て直したか</strong>も、書いておくとよい。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://github.com/yasushi-honda/battle-base" target="_blank" rel="noopener">Battle Base（対戦ゲームの土台）</a> — 担当教員作成</li>
+        <li><a href="https://docs.github.com/en/codespaces/reference/security-in-github-codespaces" target="_blank" rel="noopener">Security in GitHub Codespaces（公式）</a> — 公開ポートのセキュリティ</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="day03.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">Day3 挑戦する／仕上げる／見せる準備をする</span>
+      </a>
+      <a href="../autumn-intensive.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">秋の集中講座</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">Day5（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>

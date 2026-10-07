@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="../styles.css?v=13">
   <!-- 公式情報確認: 2026-10-07（antigravity.google/docs/cli/reference/ — /logout は「Disconnect your profile and purge authentication tokens from the secure keyring」、/usage は残り枠の表示。「/logout で別アカウントに入り直せば回復する」「Codespacesを停止して再開すると切り替えられることがある」は教員の実地知見（公式の記述ではないため「ことがある」と書く） / docs.meshy.ai/en/webapp/pricing — 無料プランは月100クレジット、無料プランの生成物はCC BY 4.0（表示を付ければ商用利用可）、有料プランは非公開・自分の所有 / help.suno.com/en/articles/2746945 — Basic（無料）プランの曲の所有者はSuno、非商用の利用は可、Pro・Premierは自分が所有、AI生成のみの曲は著作権保護の対象外になる場合がある（2026-09-04更新の記事）/ unity.com/products/unity-personal — 売上・調達資金が過去12か月で20万ドル未満の個人・小規模組織が対象 / developer.mozilla.org/ja/docs/Web/API/Gamepad_API/Using_the_Gamepad_API — gamepadconnected イベントで接続を検知、Firefoxではユーザーがゲームパッドを操作して初めて利用可能になる / docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork — Web UIの「Sync fork」→「Update branch」でフォークを最新にできる。競合時はプルリクエストの作成を促される）。ボンバーマンのサンプルは担当教員の土台リポジトリ yasushi-honda/battle-base に追加（?game=bomber で切り替え。PR #5、PR #4 の置き換え）。ボンバーマンの本物のルールは strategywiki.org/wiki/Super_Bomberman/Gameplay と /Power-ups（導火線3秒・十字の爆風・壊せるブロックからアイテムが出る・1分でサドンデス・制限2分・最後の1人が勝ち。StrategyWikiはファンが作る解説サイトで、ゲームの会社の公式資料ではない。誘爆は、Gameplayページの「they will successively explode in a chain reaction」の記述から確認。アイテムが3種類なのはサンプルの選択）、盤面（行も列も偶数のマスに固定ブロックの市松）は dev.to の Building Bomberman from a Grid of Integers で確認（2026-10-07）。1秒100通の上限は battle-base/server.js の MAX_MESSAGES_PER_SECOND で、接続（1人）ごとの上限。Gamepad API は安全なコンテキスト（HTTPS）でのみ使える（MDN Navigator.getGamepads）、Codespaces の公開URLは https://CODESPACENAME-PORT.app.github.dev（docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace）。-->
   <!-- 2026-10-07: ボンバーマンのスクリーンショット3枚（images/day03-bomber-*.png）は、/screenshot skill 経由で battle-base（main、PR #5）をローカルで動かし、架空の名前（あや・ボブ・さくら）で撮影。 -->
+  <!-- 2026-10-08: Day4の設計変更（1年生が4グループで、2年次・3年次以上・ハード科のチームを巡回。投票・推薦なし、Day5は調整中）に合わせて、Day4・Day5の説明と「見せる準備」を書き直し、「次の回」をday04.htmlへつないだ。 -->
   <!-- 2026-10-07: Day3を新規作成。親ページ（autumn-intensive.html）のDay3・Day4・Day5の行を先に更新済み。Day2の様子（担当教員のフィードバック）を受けて、方向性④「自由に広げる」（生成AIツール・Unity・コントローラー）を追加し、端末・コントローラーの持ち込みを正式に許可。Day4は「チーム内2交代」の相互体験、Day5は「推薦されたチームがAIとの作り方を話す」発表に設計変更したため、Day3の2限後半に、見せる準備（紹介カード・体験の手順・動作確認）を組み込んだ -->
 </head>
 <body>
@@ -43,7 +44,7 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">チームで<strong>挑戦するか、続きを仕上げるか</strong>を決めて進め、明日の<strong>相互体験で見せる準備</strong>まで整える</div>
+          <div class="lesson-overview-value">チームで<strong>挑戦するか、続きを仕上げるか</strong>を決めて進め、明日の<strong>下級生の巡回に向けた準備</strong>まで整える</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
@@ -63,10 +64,10 @@
         <li>余力のあるチームは、<strong>リアルタイム対戦（ボンバーマン）</strong>に挑戦する。そのほかは、Day2の続きを仕上げる</li>
         <li>広げたいチームは、<strong>生成AIのツール・Unity・コントローラー</strong>を、権利と「見せられる規模」に気をつけて取り入れる</li>
         <li>公開するチームは、<strong>パスコード以外の対策を1つ</strong>入れる</li>
-        <li><strong>明日の相互体験で、他のチームに触ってもらう準備</strong>（紹介カード・体験の手順・動作確認）をする</li>
+        <li><strong>明日（Day4）、1年生が巡回して来たときに、見せて答える準備</strong>（紹介カード・体験の手順・動作確認）をする（1年次は、巡回する前に聞きたいことを考える）</li>
       </ul>
       <div class="lesson-tip">
-        <strong>今日の優先順位:</strong> 今日は、新しい機能を増やすことより、<strong>明日、他のチームが迷わず触れる状態に仕上げること</strong>を優先します。ボンバーマンや、広げる挑戦は、<strong>余力があるチームだけ</strong>で十分です。2年次は引き続きトラブルシューティングを主導し、3年次以上は自チームを進めながら、下級生チームを支えます。
+        <strong>今日の優先順位:</strong> 今日は、新しい機能を増やすことより、<strong>明日、見に来た人が迷わず触れる状態に仕上げること</strong>を優先します。ボンバーマンや、広げる挑戦は、<strong>余力があるチームだけ</strong>で十分です。2年次は引き続きトラブルシューティングを主導し、3年次以上は自チームを進めながら、下級生チームを支えます。
       </div>
 
       <div class="vz-timebar">
@@ -86,10 +87,10 @@
         <p class="vz-fig-title" id="cap-road">Day3は、Day4・Day5につながる日</p>
         <ol class="vz-flow">
           <li class="vz-node"><b>Day3（今日）</b>仕上げて、見せる準備をする（紹介カード・体験の手順・動作確認）</li>
-          <li class="vz-node vz-node--key"><b>Day4</b>チーム内2交代で、他のチームを回って体験する。体験した人が推薦する</li>
-          <li class="vz-node"><b>Day5</b>推薦されたチームが、AIとの作り方を話す。最後に全体で振り返る</li>
+          <li class="vz-node vz-node--key"><b>Day4</b>1年生が4グループに分かれ、先輩（2年次・3年次以上・ハード科）のチームを巡回する。先輩は見せて、答える（投票はしない）</li>
+          <li class="vz-node"><b>Day5</b>（調整中）前半はDay4の刺激をもとにアップデート。後半は、上級生・ハード科が、作り方を1年生の教室で解説する</li>
         </ol>
-        <figcaption>Day4・Day5の動き方は、今日の「まとめ」でも説明します（詳しくは、Day4のページ）。</figcaption>
+        <figcaption>Day4・Day5の動き方は、今日の「まとめ」でも説明します（詳しくは、<a href="day04.html">Day4のページ</a>）。</figcaption>
       </figure>
     </div>
 
@@ -149,13 +150,13 @@
                   </ol>
                 </section>
               </div>
-              <figcaption>④は、①〜③と<strong>組み合わせてもよい</strong>（例: 対戦ゲームに、コントローラー操作を足す）。ただし、<strong>明日、他のチームに触ってもらえる状態</strong>を、今日の終わりの目標にする。</figcaption>
+              <figcaption>④は、①〜③と<strong>組み合わせてもよい</strong>（例: 対戦ゲームに、コントローラー操作を足す）。ただし、<strong>明日、見に来た人が触れる状態</strong>を、今日の終わりの目標にする。</figcaption>
             </figure>
 
             <p><strong>今日のゴールを、チームで1行にする（約10分）</strong></p>
             <ul>
               <li>「今日の終わりに、〇〇が動いている」の形で1行書く（例:「ボンバーマンで、2人が同時に動かせる」）</li>
-              <li>1行に収まらない場合は、<strong>小さく切る</strong>。明日、他のチームに触ってもらう状態を、最低ラインにする</li>
+              <li>1行に収まらない場合は、<strong>小さく切る</strong>。明日、見に来た人が触れる状態を、最低ラインにする</li>
               <li>agyの枠は、<code>/usage</code> で確認する（Day1と同じ）。<strong>難しい挑戦ほど、枠を多く使う</strong>ので、枠が少ないメンバーに集中させない</li>
             </ul>
 
@@ -411,7 +412,7 @@
             <span class="timeline-time">2限 後半</span>
             <span class="timeline-duration">約30分</span>
           </div>
-          <h3>安全を確認し、明日、見せる準備をする</h3>
+          <h3>安全を確認し、明日の巡回に向けて準備をする</h3>
           <div class="timeline-body">
 
             <p><strong>安全を確認する（約8分）</strong></p>
@@ -432,8 +433,8 @@
             </button>
 <pre id="d3-prompt-safety" class="md-preview">server.js の MAX_PLAYERS を、4 に変更してください。変更したあと、何が変わるかを短く説明してください。</pre></div>
 
-            <p><strong>明日、見せる準備をする（約17分）</strong></p>
-            <p>明日（Day4）は、<strong>他のチームが、自分たちの作品を触りに来る</strong>。そのとき、<strong>説明する人がいなくても迷わず触れる</strong>よう、3つを用意する。<strong>紹介カードは、Day5でも、そのまま使う</strong>。</p>
+            <p><strong>明日の準備をする（約17分）</strong></p>
+            <p>明日（Day4）は、<strong>1年生が、先輩のチームを巡回して、作品を触りに来る</strong>。<strong>2年次・3年次以上・ハード科</strong>は、<strong>来た人が迷わず触れて、質問に答えられる</strong>よう、3つを用意する（<strong>1年次は、回る側</strong>なので、③の動作確認と、「聞きたいことを1つ決める」だけでよい。待っている間は、制作を進める）。紹介カードは、Day5でも、<strong>制作のアプローチを話すときの材料</strong>になる。</p>
             <figure class="vz-fig" aria-labelledby="cap-prep">
               <p class="vz-fig-title" id="cap-prep">見せる準備（3つ）</p>
               <ul class="vz-points">
@@ -443,11 +444,11 @@
                 </li>
                 <li class="vz-point">
                   <b>② 体験の手順（1分で伝わる）</b>
-                  <p>他のチームが触るときの手順を、順番に書く。URL・部屋コードの作り方・操作・終わり方。<strong>見るだけで分かる</strong>形にする。</p>
+                  <p>見に来た人が触るときの手順を、順番に書く。URL・部屋コードの作り方・操作・終わり方。<strong>見るだけで分かる</strong>形にする。</p>
                 </li>
                 <li class="vz-point">
                   <b>③ 動作確認</b>
-                  <p><strong>別の端末</strong>（スマホ、他のチームのパソコン）で開いて、動くことを<strong>1回確かめる</strong>。確認する人が、手順どおりに触る。</p>
+                  <p><strong>別の端末</strong>（スマホ、チームの別のパソコン）で開いて、動くことを<strong>1回確かめる</strong>。確認する人が、手順どおりに触る。</p>
                 </li>
               </ul>
               <figcaption>3つとも、チームの代表者が持つ共有メモ（Googleドキュメントなど）に、まとめておく。</figcaption>
@@ -498,25 +499,24 @@
           <div class="timeline-body">
             <p><strong>Day4の動き方を確認する（約4分）</strong></p>
             <figure class="vz-fig" aria-labelledby="cap-day4">
-              <p class="vz-fig-title" id="cap-day4">Day4：チーム内で2交代、他のチームを回って体験する</p>
+              <p class="vz-fig-title" id="cap-day4">Day4：1年生が先輩のチームを巡回する（投票はしない）</p>
               <ol class="vz-flow" style="--cols:3">
-                <li class="vz-node"><b>前半</b>チームの<strong>半分</strong>が、自分たちの席に残り、体験に来た人に触ってもらう。<strong>残りの半分</strong>が、他のチームを回って体験する</li>
-                <li class="vz-node vz-node--key"><b>交代</b>後半は、役割を入れ替える。<strong>全員が、「見せる」と「回る」の両方</strong>を経験する</li>
-                <li class="vz-node"><b>推薦する</b>回って体験した人が、「ここがよかった」というチームを、理由つきで推薦する</li>
+                <li class="vz-node"><b>巡回する（1年次）</b>1年生は4グループに分かれ、<strong>1回に1グループ</strong>が、30分、先輩のチームを<strong>自由に、ばらばらに</strong>回る。触って、質問する。ほかのグループは、制作を続ける</li>
+                <li class="vz-node vz-node--key"><b>迎える（2年次・3年次以上・ハード科）</b>紹介カードと体験の手順で、<strong>見せて、質問に答える</strong>。来る人が少ない間は、制作を進める</li>
+                <li class="vz-node"><b>バッファ</b>巡回のあとに15分。ズレの吸収と、戻って共有する時間。<strong>これを4回くり返す</strong></li>
               </ol>
-              <figcaption>12チーム以上・約50名でも、<strong>どのチームの席にも、常に誰かがいる</strong>ので、混み合いにくく、触ってもらう機会が偏りにくい。回り方の詳細は、Day4のページで案内する。</figcaption>
+              <figcaption>1回は、巡回30分＋バッファ15分。4回で180分。<strong>1年生は、巡回のふりかえりを、Googleフォームで提出</strong>する。くわしくは、<a href="day04.html">Day4のページ</a>。</figcaption>
             </figure>
             <ul>
-              <li>回るときは、<strong>1つのチームに5〜8分</strong>ほど。ただ見るだけでなく、<strong>触って、感想を1言</strong>伝える</li>
-              <li>推薦するときの観点: ① おもしろかった・触って楽しかった ② 工夫が見えた ③ <strong>AIとの作り方に、学びがあった</strong>（どう頼んだか、詰まって立て直したか）</li>
-              <li>3年次以上は、下級生のチームを回るときに、<strong>教える側の視点</strong>で助言する（答えを言わず、気づかせる）</li>
+              <li>1年次は、巡回の前に、<strong>聞きたいことを1つ</strong>決めておく（例: 「AIにどう頼んだか」「詰まったところ」）</li>
+              <li>3年次以上は、下級生が来たときに、<strong>教える側の視点</strong>で助言する（答えを言い切らず、気づいてもらう）</li>
             </ul>
 
-            <p><strong>Day5の動き方を知っておく（約2分）</strong></p>
+            <p><strong>Day5の動き方を知っておく（約2分・内容は調整中）</strong></p>
             <ul>
-              <li><strong>推薦されたチーム（ピックアップ）</strong>が、1〜5分で、<strong>作品を見せながら、AIとの作り方</strong>を話す。Day4で触った人にとっては、<strong>「作品を知っている」状態で聞ける</strong>ので、Day4の紹介のくり返しにならない</li>
-              <li>話す内容は、紹介カードをもとに、次の3つ: ① 何を作ったか ② どうAIに頼んだか・詰まったところと立て直し方 ③ もう一度やるなら、何を変えるか</li>
-              <li><strong>選ばれたかどうかで、評価に差はつけません</strong></li>
+              <li>前半は、<strong>Day4の刺激をもとに、自分たちの作品をアップデート</strong>する時間になる予定</li>
+              <li>後半は、<strong>ハード科・上級生の作品が、どんなアプローチで作られたか</strong>を、1年生の教室で解説してもらう予定。紹介カードや、「聞かれたこと」のメモが、材料になる</li>
+              <li>くわしくは、担当教員が伝える</li>
             </ul>
 
             <p><strong>アンケートに答える（Googleフォーム、約2分）</strong></p>
@@ -527,13 +527,13 @@
             <p><strong>片付けチェック（全員で確認、約2分）</strong></p>
             <ol class="vz-steps">
               <li class="vz-step"><b>変更があれば、プッシュした</b>GitHubで、今日のファイルが見えることを確認する。</li>
-              <li class="vz-step"><b>ポートの公開をやめた（またはサーバーを止めた）</b>Publicのままにしない。<strong>明日の相互体験の直前に、もう一度公開する</strong>。</li>
+              <li class="vz-step"><b>ポートの公開をやめた（またはサーバーを止めた）</b>Publicのままにしない。<strong>明日の巡回の直前に、もう一度公開する</strong>。</li>
               <li class="vz-step"><b>Codespacesを停止した</b>見本ゲーム用・Battle Base用・Day1のチーム用、すべて <a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> で停止済みか確認する。</li>
             </ol>
 
             <p><strong>次回予告</strong></p>
             <ul>
-              <li>Day4：<strong>相互体験</strong>。チーム内で2交代して、他のチームの作品を体験し、推薦する。<strong>紹介カードと体験の手順</strong>を、すぐ出せるようにしておく</li>
+              <li>Day4：<strong>先輩チームの巡回</strong>。1年生が4グループに分かれて、2年次・3年次以上・ハード科のチームを回る。迎える側は、<strong>紹介カードと体験の手順</strong>を、すぐ出せるようにしておく</li>
               <li>今日うまくいったこと・つまずいたことを、簡単にメモしておく</li>
             </ul>
           </div>
@@ -548,8 +548,8 @@
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>紹介カード（3行）と体験の手順を、共有メモにまとめ、別の端末で動作確認をする</strong>
-            <p>2限後半に終わらなかった部分は、次回の冒頭の時間（Day4の席の準備）で仕上げてもよい。ただし、<strong>他のチームが触れる状態</strong>にしておく。</p>
+            <strong>（2年次・3年次以上・ハード科）紹介カード（3行）と体験の手順を、共有メモにまとめ、別の端末で動作確認をする</strong>
+            <p>1年次は、<strong>巡回で聞きたいことを1つ</strong>決めておけばよい。2限後半に終わらなかった部分は、次回の冒頭の時間（Day4の迎える準備）で仕上げてもよい。ただし、<strong>見に来た人が触れる状態</strong>にしておく。</p>
           </div>
         </div>
         <div class="lesson-task">
@@ -563,7 +563,7 @@
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
             <strong>今日うまくいったこと・つまずいたことをメモする</strong>
-            <p>Day5の「AIとの作り方」の話の材料になる。<strong>どう頼んで、どこで詰まって、どう立て直したか</strong>を、1〜2行でメモしておく。</p>
+            <p>Day4で聞かれる質問や、Day5の「どんなアプローチで作ったか」の材料になる。<strong>どう頼んで、どこで詰まって、どう立て直したか</strong>を、1〜2行でメモしておく。</p>
           </div>
         </div>
       </div>
@@ -591,10 +591,10 @@
         <span class="lesson-nav-label">授業計画一覧</span>
         <span class="lesson-nav-title">秋の集中講座</span>
       </a>
-      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+      <a href="day04.html" class="lesson-nav-item" style="text-align:right">
         <span class="lesson-nav-label">次の回</span>
-        <span class="lesson-nav-title">Day4（準備中）</span>
-      </div>
+        <span class="lesson-nav-title">Day4 先輩チームを巡回する／見せる・答える</span>
+      </a>
     </nav>
 
   </main>
