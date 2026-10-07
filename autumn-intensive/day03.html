@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=13">
-  <!-- 公式情報確認: 2026-10-07（docs.meshy.ai/en/webapp/pricing — 無料プランは月100クレジット、無料プランの生成物はCC BY 4.0（表示を付ければ商用利用可）、有料プランは非公開・自分の所有 / help.suno.com/en/articles/2746945 — Basic（無料）プランの曲の所有者はSuno、非商用の利用は可、Pro・Premierは自分が所有、AI生成のみの曲は著作権保護の対象外になる場合がある（2026-09-04更新の記事）/ unity.com/products/unity-personal — 売上・調達資金が過去12か月で20万ドル未満の個人・小規模組織が対象 / developer.mozilla.org/ja/docs/Web/API/Gamepad_API/Using_the_Gamepad_API — gamepadconnected イベントで接続を検知、Firefoxではユーザーがゲームパッドを操作して初めて利用可能になる / docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork — Web UIの「Sync fork」→「Update branch」でフォークを最新にできる。競合時はプルリクエストの作成を促される）。ボンバーマンのサンプルは担当教員の土台リポジトリ yasushi-honda/battle-base に追加（?game=bomber で切り替え。PR #5、PR #4 の置き換え）。ボンバーマンの本物のルールは strategywiki.org/wiki/Super_Bomberman/Gameplay と /Power-ups（導火線3秒・十字の爆風・壊せるブロックからアイテムが出る・1分でサドンデス・制限2分・最後の1人が勝ち。StrategyWikiはファンが作る解説サイトで、ゲームの会社の公式資料ではない。誘爆は、Gameplayページの「they will successively explode in a chain reaction」の記述から確認。アイテムが3種類なのはサンプルの選択）、盤面（行も列も偶数のマスに固定ブロックの市松）は dev.to の Building Bomberman from a Grid of Integers で確認（2026-10-07）。1秒100通の上限は battle-base/server.js の MAX_MESSAGES_PER_SECOND で、接続（1人）ごとの上限。Gamepad API は安全なコンテキスト（HTTPS）でのみ使える（MDN Navigator.getGamepads）、Codespaces の公開URLは https://CODESPACENAME-PORT.app.github.dev（docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace）。-->
+  <!-- 公式情報確認: 2026-10-07（antigravity.google/docs/cli/reference/ — /logout は「Disconnect your profile and purge authentication tokens from the secure keyring」、/usage は残り枠の表示。「/logout で別アカウントに入り直せば回復する」「Codespacesを停止して再開すると切り替えられることがある」は教員の実地知見（公式の記述ではないため「ことがある」と書く） / docs.meshy.ai/en/webapp/pricing — 無料プランは月100クレジット、無料プランの生成物はCC BY 4.0（表示を付ければ商用利用可）、有料プランは非公開・自分の所有 / help.suno.com/en/articles/2746945 — Basic（無料）プランの曲の所有者はSuno、非商用の利用は可、Pro・Premierは自分が所有、AI生成のみの曲は著作権保護の対象外になる場合がある（2026-09-04更新の記事）/ unity.com/products/unity-personal — 売上・調達資金が過去12か月で20万ドル未満の個人・小規模組織が対象 / developer.mozilla.org/ja/docs/Web/API/Gamepad_API/Using_the_Gamepad_API — gamepadconnected イベントで接続を検知、Firefoxではユーザーがゲームパッドを操作して初めて利用可能になる / docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/syncing-a-fork — Web UIの「Sync fork」→「Update branch」でフォークを最新にできる。競合時はプルリクエストの作成を促される）。ボンバーマンのサンプルは担当教員の土台リポジトリ yasushi-honda/battle-base に追加（?game=bomber で切り替え。PR #5、PR #4 の置き換え）。ボンバーマンの本物のルールは strategywiki.org/wiki/Super_Bomberman/Gameplay と /Power-ups（導火線3秒・十字の爆風・壊せるブロックからアイテムが出る・1分でサドンデス・制限2分・最後の1人が勝ち。StrategyWikiはファンが作る解説サイトで、ゲームの会社の公式資料ではない。誘爆は、Gameplayページの「they will successively explode in a chain reaction」の記述から確認。アイテムが3種類なのはサンプルの選択）、盤面（行も列も偶数のマスに固定ブロックの市松）は dev.to の Building Bomberman from a Grid of Integers で確認（2026-10-07）。1秒100通の上限は battle-base/server.js の MAX_MESSAGES_PER_SECOND で、接続（1人）ごとの上限。Gamepad API は安全なコンテキスト（HTTPS）でのみ使える（MDN Navigator.getGamepads）、Codespaces の公開URLは https://CODESPACENAME-PORT.app.github.dev（docs.github.com/en/codespaces/developing-in-a-codespace/forwarding-ports-in-your-codespace）。-->
   <!-- 2026-10-07: ボンバーマンのスクリーンショット3枚（images/day03-bomber-*.png）は、/screenshot skill 経由で battle-base（main、PR #5）をローカルで動かし、架空の名前（あや・ボブ・さくら）で撮影。 -->
   <!-- 2026-10-07: Day3を新規作成。親ページ（autumn-intensive.html）のDay3・Day4・Day5の行を先に更新済み。Day2の様子（担当教員のフィードバック）を受けて、方向性④「自由に広げる」（生成AIツール・Unity・コントローラー）を追加し、端末・コントローラーの持ち込みを正式に許可。Day4は「チーム内2交代」の相互体験、Day5は「推薦されたチームがAIとの作り方を話す」発表に設計変更したため、Day3の2限後半に、見せる準備（紹介カード・体験の手順・動作確認）を組み込んだ -->
 </head>
@@ -163,6 +163,30 @@
             <ul>
               <li>代表者が <a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> を開き、<strong>前回と同じCodespaces</strong>を再開する（「Create」ではなく再開）。<code>npm start</code> をやり直し、8000番がPublicか確認する（Day2と同じ）。agyを使うときは、再度ログインを求められる場合がある（手順はDay1の<a href="day01.html#blk-3">「Antigravity CLI（agy）を導入して認証する」</a>と同じ）</li>
             </ul>
+
+            <p><strong>agyに「制限がかかった」と表示されたとき（枠が尽きたとき）</strong></p>
+            <p>agyには、使える量（枠）がある。枠が尽きると、そのGoogleアカウントでは、しばらく使えなくなる。<code>/usage</code> で、残りを確認できる。<strong>別のGoogleアカウントでサインインし直すと、また使えるようになる</strong>。次の順で進める。</p>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>agyの入力欄に、次の <code>/logout</code> を入力してEnter</b>今のアカウントのログイン情報が消えて、agyからサインアウトされる（公式: CLI reference「/logout — Disconnect your profile and purge authentication tokens from the secure keyring」、確認日 2026-10-07）。</li>
+            </ol>
+            <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d3-cmd-agy-logout">
+              <span class="btn-icon"></span> コマンドをコピー
+            </button>
+<pre id="d3-cmd-agy-logout" class="md-preview">/logout</pre></div>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>もう一度 <code>agy</code> と入力してEnter</b>ターミナルで <code>agy</code> と入力する。認可URLが出るので、<strong>Ctrlキー（Macの場合はCmdキー）を押しながらクリック</strong>して新しいタブで開く。</li>
+              <li class="vz-step"><b>別のGoogleアカウントでサインインする</b>ブラウザで、<strong>制限がかかったのとは別のアカウント</strong>を選ぶ（自分の別のアカウント、または枠に余裕のあるメンバーが、<strong>自分でサインイン</strong>する。他の人のパスワードを聞いて入力しない）。表示された英数字のコードをコピーし、ターミナルに戻って貼り付けてEnter。</li>
+              <li class="vz-step"><b>切り替わったか確認する</b>agyの画面上部（ヘッダー）に、<strong>新しいアカウントのメールアドレス</strong>が出ていれば成功。話しかけて、返事が返ってくるか確かめる。</li>
+            </ol>
+            <div class="lesson-tip">
+              <strong>うまく切り替わらないとき:</strong> <code>/logout</code> のあと、前のアカウントのまま入ってしまう、または、サインインの画面が進まないことがある。そのときは、<strong>Codespacesを、いったん停止してから再開</strong>すると、agyのGoogleアカウントを切り替えられるようになることがある（次の手順）。
+              <ol class="vz-steps" style="margin-top:8px">
+                <li class="vz-step"><b>Codespacesを停止する</b><a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> を開き、該当するCodespacesの右にある「…」→「Stop codespace」。</li>
+                <li class="vz-step"><b>同じCodespacesを再開する</b>停止したあと、そのCodespacesの名前をクリックすると、再開される（「Create」ではない）。</li>
+                <li class="vz-step"><b>ターミナルで <code>agy</code> と入力する</b>もう一度サインインの画面が出るので、別のGoogleアカウントでサインインする。サーバー（<code>npm start</code>）も止まっているので、<strong>やり直し、8000番がPublicか確認する</strong>。</li>
+              </ol>
+              それでも入れない場合は、枠に余裕のあるメンバー（Day1で決めた交代要員）に交代するか、担当教員・2年次に声をかける。
+            </div>
           </div>
         </div>
 
@@ -222,10 +246,13 @@
               <figcaption>画像は、練習用に作った架空の名前（あや・ボブ・さくら）で撮影した。サドンデスの画面は、<code>sd=6</code>（6秒でサドンデス）で撮影したもの。</figcaption>
             </figure>
             <p><strong>ボンバーマンを動かす</strong>（担当教員が、Battle Baseにサンプルを追加した。<strong>Battle Baseを使っていたチームか、Day3から新しく使うチームかで、最初の手順が違う</strong>）</p>
+            <div class="lesson-tip">
+              <strong>初めての人へ:</strong> 「<strong>Fork</strong>」は、他の人のリポジトリを、<strong>自分のアカウントにコピーして、自由に直せるようにする</strong>ことです（Day1で見本ゲームにも使いました）。コピーしたものを、この授業では「Fork」と呼びます。「<strong>Codespaces</strong>」は、ブラウザの中で動く、プログラムを書く・動かすための作業場です。下の手順は、<strong>代表者が1人で進め</strong>、ほかのメンバーは画面を見ながら、わからないところを声に出して聞いてください。
+            </div>
             <p><strong>A. Day2でBattle Baseを使っていたチーム</strong>（すでにForkとCodespacesがある）</p>
             <ol class="vz-steps">
-              <li class="vz-step"><b>代表者: Forkを最新にする</b>GitHubで、自分のFork（Battle Base）のページを開き、ファイル一覧の上の<strong>「Sync fork」</strong>→<strong>「Update branch」</strong>を押す（公式: Syncing a fork）。変更が競合した場合は、GitHubからプルリクエストの作成を促されるので、<strong>人生ゲームを改造したチームは、担当教員か2年次に相談する</strong>。</li>
-              <li class="vz-step"><b>代表者: Codespacesに取り込む</b>Battle BaseのCodespacesを再開し、ターミナルで次の <code>git pull</code> を入力してから、<code>npm start</code> をやり直す。</li>
+              <li class="vz-step"><b>代表者: Forkを最新にする</b>GitHubで、自分のFork（Battle Base）のページを開き、ファイル一覧の上にある<strong>「Sync fork」</strong>（「このForkを、元のBattle Baseの最新に合わせる」ボタン）→<strong>「Update branch」</strong>を押す（公式: Syncing a fork）。「This branch is up to date」と出ていれば、すでに最新なので、押さなくてよい。変更が競合した場合は、GitHubからプルリクエストの作成を促されるので、<strong>人生ゲームを改造したチームは、担当教員か2年次に相談する</strong>。</li>
+              <li class="vz-step"><b>代表者: Codespacesに取り込む</b>Battle BaseのCodespacesを再開し、ターミナル（画面の下の、文字を打つところ）に、次の <code>git pull</code>（<strong>GitHub上の最新を、Codespacesに取り込む</strong>コマンド）を入力してEnter。終わったら、<code>npm start</code> をもう一度入力して、サーバーを動かし直す（前のサーバーが動いたままなら、Ctrl＋Cで止めてから）。</li>
             </ol>
             <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d3-cmd-git-pull">
               <span class="btn-icon"></span> コマンドをコピー
@@ -237,26 +264,26 @@
 <pre id="d3-cmd-npm-start-a" class="md-preview">npm start</pre></div>
             <p><strong>B. Day3からBattle Baseを使うチーム</strong>（見本ゲームや進級制作のデモから、方向を変えるチーム）</p>
             <ol class="vz-steps">
-              <li class="vz-step"><b>代表者: Battle BaseをForkする</b>下のURLを開き、右上の「Fork」→「Create fork」をクリックする（Day1・Day2と同じ手順）。Forkしたあと、<strong>Forkにもメンバーを招待</strong>する（「Settings」→「Collaborators」→「Add people」）。Forkしたあとは、すでに最新なので、Sync forkは不要。</li>
+              <li class="vz-step"><b>代表者: Battle BaseをForkする</b>下のURL（「URLをコピー」でコピーできる）をブラウザで開き、右上の「Fork」→「Owner」が<strong>自分のアカウント</strong>になっていることを確認して、「Create fork」をクリックする（Day1・Day2と同じ手順）。Forkしたあと、<strong>Forkにもメンバーを招待</strong>する（「Settings」→「Collaborators」→「Add people」）。Forkしたあとは、すでに最新なので、Sync forkは不要。</li>
             </ol>
             <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d3-url-battle-base">
               <span class="btn-icon"></span> URLをコピー
             </button>
 <pre id="d3-url-battle-base" class="md-preview">https://github.com/yasushi-honda/battle-base</pre></div>
             <ol class="vz-steps">
-              <li class="vz-step"><b>代表者: ForkからCodespacesを作る</b>Forkしたリポジトリで、「Code」→「Codespaces」→「＋」。新しいCodespacesなので、<strong>agyは入っていない</strong>。入れる手順は、<a href="day01.html#blk-3">Day1の「Antigravity CLI（agy）を導入して認証する」</a>と同じ。</li>
-              <li class="vz-step"><b>代表者: サーバーを動かす</b>ターミナルで次を入力する。「Battle Base Server running on http://localhost:8000」と表示されれば成功。</li>
+              <li class="vz-step"><b>代表者: ForkからCodespacesを作る</b>Forkしたリポジトリ（表示されているのが、元のyasushi-hondaではなく、<strong>自分のアカウントのbattle-base</strong>であることを確認する）で、「Code」ボタン→「Codespaces」タブ→「＋」。1〜2分ほどで、ブラウザ上にVS Codeの画面が立ち上がる。新しいCodespacesなので、<strong>agyは入っていない</strong>。入れる手順は、<a href="day01.html#blk-3">Day1の「Antigravity CLI（agy）を導入して認証する」</a>と同じ。</li>
+              <li class="vz-step"><b>代表者: サーバーを動かす</b>ターミナルで次を入力する。「Battle Base Server running on http://localhost:8000」と表示されれば成功。このターミナルは、<strong>遊んでいる間、閉じずに</strong>そのままにしておく。</li>
             </ol>
             <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d3-cmd-npm-start-b">
               <span class="btn-icon"></span> コマンドをコピー
             </button>
 <pre id="d3-cmd-npm-start-b" class="md-preview">npm start</pre></div>
             <ol class="vz-steps">
-              <li class="vz-step"><b>代表者: 「ポート」タブで、8000番をPublicにする</b>8000番を右クリック→「ポートの表示範囲」→「Public」（英語表示は「Port Visibility」）。設定ファイルでは、最初からPublicにはできない。</li>
+              <li class="vz-step"><b>代表者: 「ポート」タブで、8000番をPublicにする</b>画面の下の「ポート」タブを開き、8000番を右クリック→「ポートの表示範囲」→「Public」（英語表示は「Port Visibility」）。設定ファイルでは、最初からPublicにはできない。<strong>Publicにすると、URLを知っている人は、ログインなしで入れる</strong>（だから、チームのメンバーが、それぞれの端末から入れる）。URLは、「ポート」タブの8000番の行にある。</li>
             </ol>
             <p><strong>A・B共通</strong></p>
             <ol class="vz-steps">
-              <li class="vz-step"><b>チーム: URLの末尾に「?game=bomber」を付けて開く</b>公開URLの最後に付けると、ボンバーマンになる（付けないと、人生ゲーム）。部屋を作ったら、<strong>招待リンクにも、同じ印が引き継がれる</strong>。<strong>全員が、この印つきのリンクで入る</strong>（部屋コードだけを手で打って入ると、その人だけ人生ゲームの画面になり、対戦できない）。</li>
+              <li class="vz-step"><b>チーム: URLの末尾に「?game=bomber」を付けて開く</b>「ポート」タブの8000番にある<strong>公開URL</strong>をコピーして、ブラウザに貼り付け、<strong>最後に「?game=bomber」を付けて</strong>開く（下の「印をコピー」を使うと、打ち間違えない）。この印を付けると、ボンバーマンになる（付けないと、人生ゲーム）。部屋を作ったら、<strong>招待リンクにも、同じ印が引き継がれる</strong>。<strong>全員が、この印つきのリンクで入る</strong>（部屋コードだけを手で打って入ると、その人だけ人生ゲームの画面になり、対戦できない）。</li>
               <li class="vz-step"><b>チーム: 2人以上で、まず遊ぶ</b>矢印キーかWASDで動き、スペースで爆弾を置く。スマホでは、画面の方向パッドと💣ボタンで動かせる。アイテムを拾うと、ボム数・火力・スピードが上がる。1人しかいないときは、別のブラウザのタブ（シークレットウィンドウ）で、招待リンクを開くと2人目として入れる。<strong>自分の爆風にも当たる</strong>ので、爆弾を置いたら離れる。</li>
             </ol>
             <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d3-text-game-bomber">
