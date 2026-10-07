@@ -173,7 +173,7 @@
               <span class="btn-icon"></span> コマンドをコピー
             </button>
 <pre id="d3-cmd-agy-logout" class="md-preview">/logout</pre></div>
-            <ol class="vz-steps">
+            <ol class="vz-steps" style="counter-reset: vz-step 1">
               <li class="vz-step"><b>もう一度 <code>agy</code> と入力してEnter</b>ターミナルで <code>agy</code> と入力する。認可URLが出るので、<strong>Ctrlキー（Macの場合はCmdキー）を押しながらクリック</strong>して新しいタブで開く。</li>
               <li class="vz-step"><b>別のGoogleアカウントでサインインする</b>ブラウザで、<strong>制限がかかったのとは別のアカウント</strong>を選ぶ（自分の別のアカウント、または枠に余裕のあるメンバーが、<strong>自分でサインイン</strong>する。他の人のパスワードを聞いて入力しない）。表示された英数字のコードをコピーし、ターミナルに戻って貼り付けてEnter。</li>
               <li class="vz-step"><b>切り替わったか確認する</b>agyの画面上部（ヘッダー）に、<strong>新しいアカウントのメールアドレス</strong>が出ていれば成功。話しかけて、返事が返ってくるか確かめる。</li>
@@ -270,7 +270,7 @@
               <span class="btn-icon"></span> URLをコピー
             </button>
 <pre id="d3-url-battle-base" class="md-preview">https://github.com/yasushi-honda/battle-base</pre></div>
-            <ol class="vz-steps">
+            <ol class="vz-steps" style="counter-reset: vz-step 1">
               <li class="vz-step"><b>代表者: ForkからCodespacesを作る</b>Forkしたリポジトリ（表示されているのが、元のyasushi-hondaではなく、<strong>自分のアカウントのbattle-base</strong>であることを確認する）で、「Code」ボタン→「Codespaces」タブ→「＋」。1〜2分ほどで、ブラウザ上にVS Codeの画面が立ち上がる。新しいCodespacesなので、<strong>agyは入っていない</strong>。入れる手順は、<a href="day01.html#blk-3">Day1の「Antigravity CLI（agy）を導入して認証する」</a>と同じ。</li>
               <li class="vz-step"><b>代表者: サーバーを動かす</b>ターミナルで次を入力する。「Battle Base Server running on http://localhost:8000」と表示されれば成功。このターミナルは、<strong>遊んでいる間、閉じずに</strong>そのままにしておく。</li>
             </ol>
@@ -278,7 +278,7 @@
               <span class="btn-icon"></span> コマンドをコピー
             </button>
 <pre id="d3-cmd-npm-start-b" class="md-preview">npm start</pre></div>
-            <ol class="vz-steps">
+            <ol class="vz-steps" style="counter-reset: vz-step 3">
               <li class="vz-step"><b>代表者: 「ポート」タブで、8000番をPublicにする</b>画面の下の「ポート」タブを開き、8000番を右クリック→「ポートの表示範囲」→「Public」（英語表示は「Port Visibility」）。設定ファイルでは、最初からPublicにはできない。<strong>Publicにすると、URLを知っている人は、ログインなしで入れる</strong>（だから、チームのメンバーが、それぞれの端末から入れる）。URLは、「ポート」タブの8000番の行にある。</li>
             </ol>
             <p><strong>A・B共通</strong></p>
