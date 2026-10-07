@@ -264,26 +264,26 @@
 <pre id="d3-cmd-npm-start-a" class="md-preview">npm start</pre></div>
             <p><strong>B. Day3からBattle Baseを使うチーム</strong>（見本ゲームや進級制作のデモから、方向を変えるチーム）</p>
             <ol class="vz-steps">
-              <li class="vz-step"><b>代表者: Battle BaseをForkする</b>下のURL（「URLをコピー」でコピーできる）をブラウザで開き、右上の「Fork」→「Owner」が<strong>自分のアカウント</strong>になっていることを確認して、「Create fork」をクリックする（Day1・Day2と同じ手順）。Forkしたあと、<strong>Forkにもメンバーを招待</strong>する（「Settings」→「Collaborators」→「Add people」）。Forkしたあとは、すでに最新なので、Sync forkは不要。</li>
+              <li class="vz-step"><b>代表者: Battle BaseをForkする</b>下のURLを開き、右上の「Fork」→「Create fork」をクリックする（Day1と同じ手順）。Forkしたあと、Day1と同じように、<strong>Forkにもメンバーを招待</strong>する（「Settings」→「Collaborators」→「Add people」）。Forkしたあとは、すでに最新なので、Sync forkは不要。<strong>「Owner」が自分のアカウントになっていること</strong>を確認してから、「Create fork」を押す。</li>
             </ol>
             <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d3-url-battle-base">
               <span class="btn-icon"></span> URLをコピー
             </button>
 <pre id="d3-url-battle-base" class="md-preview">https://github.com/yasushi-honda/battle-base</pre></div>
             <ol class="vz-steps" style="counter-reset: vz-step 1">
-              <li class="vz-step"><b>代表者: ForkからCodespacesを作る</b>Forkしたリポジトリ（表示されているのが、元のyasushi-hondaではなく、<strong>自分のアカウントのbattle-base</strong>であることを確認する）で、「Code」ボタン→「Codespaces」タブ→「＋」。1〜2分ほどで、ブラウザ上にVS Codeの画面が立ち上がる。新しいCodespacesなので、<strong>agyは入っていない</strong>。入れる手順は、<a href="day01.html#blk-3">Day1の「Antigravity CLI（agy）を導入して認証する」</a>と同じ。</li>
-              <li class="vz-step"><b>代表者: サーバーを動かす</b>ターミナルで次を入力する。「Battle Base Server running on http://localhost:8000」と表示されれば成功。このターミナルは、<strong>遊んでいる間、閉じずに</strong>そのままにしておく。</li>
+              <li class="vz-step"><b>代表者: ForkからCodespacesを作る</b>Forkしたリポジトリで、「Code」→「Codespaces」→「＋」。新しいCodespacesなので、Day1の見本ゲームと同じく、<strong>agyは入っていない</strong>。入れる手順は、<a href="day01.html#blk-3">Day1の「Antigravity CLI（agy）を導入して認証する」</a>と同じ（遊んだあと、改造の前に入れる）。</li>
+              <li class="vz-step"><b>代表者: サーバーを動かす</b>ターミナルで次を入力する。「Battle Base Server running on http://localhost:8000」と表示されれば成功。<strong>このターミナルは、遊んでいる間ずっと使う</strong>。部屋を作る・入る・ゲームを始めるたびに、このターミナルに<strong>1行ずつ記録が出る</strong>（サーバーが部屋を管理している様子が見える）。</li>
             </ol>
             <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d3-cmd-npm-start-b">
               <span class="btn-icon"></span> コマンドをコピー
             </button>
 <pre id="d3-cmd-npm-start-b" class="md-preview">npm start</pre></div>
             <ol class="vz-steps" style="counter-reset: vz-step 3">
-              <li class="vz-step"><b>代表者: 「ポート」タブで、8000番をPublicにする</b>画面の下の「ポート」タブを開き、8000番を右クリック→「ポートの表示範囲」→「Public」（英語表示は「Port Visibility」）。設定ファイルでは、最初からPublicにはできない。<strong>Publicにすると、URLを知っている人は、ログインなしで入れる</strong>（だから、チームのメンバーが、それぞれの端末から入れる）。URLは、「ポート」タブの8000番の行にある。</li>
+              <li class="vz-step"><b>代表者: 「ポート」タブで、8000番をPublicにする</b>8000番を右クリック→「ポートの表示範囲」→「Public」（英語表示は「Port Visibility」）。設定ファイルでは、最初からPublicにはできない。<strong>Publicにすると、URLを知っている人は、ログインなしで入れる</strong>。</li>
             </ol>
             <p><strong>A・B共通</strong></p>
             <ol class="vz-steps">
-              <li class="vz-step"><b>チーム: URLの末尾に「?game=bomber」を付けて開く</b>「ポート」タブの8000番にある<strong>公開URL</strong>をコピーして、ブラウザに貼り付け、<strong>最後に「?game=bomber」を付けて</strong>開く（下の「印をコピー」を使うと、打ち間違えない）。この印を付けると、ボンバーマンになる（付けないと、人生ゲーム）。部屋を作ったら、<strong>招待リンクにも、同じ印が引き継がれる</strong>。<strong>全員が、この印つきのリンクで入る</strong>（部屋コードだけを手で打って入ると、その人だけ人生ゲームの画面になり、対戦できない）。</li>
+              <li class="vz-step"><b>チーム全員: 画面を開いて、部屋に入る</b>8000番の行の地球儀アイコンで開く（Day2と同じ）。最初に出るGitHubの注意画面（英語で「You are about to access a development port served by someone's codespace」）は、自分たちのリンクなら、緑の<strong>「Continue」ボタン</strong>を押して進む。<strong>開いたら、ブラウザのアドレスの最後に「?game=bomber」を付けて、開き直す</strong>（付けると、ボンバーマンになる。付けないと、人生ゲーム。下の「印をコピー」を使うと、打ち間違えない）。名前を入れて、代表者が「部屋を作る」→「招待リンクをコピー」で、チームに送る。招待リンクにも、同じ印が引き継がれる。<strong>全員が、この印つきのリンクで入る</strong>（部屋コードだけを手で打って入ると、その人だけ人生ゲームの画面になり、対戦できない）。名前は、本名ではなく、ニックネームにする。</li>
               <li class="vz-step"><b>チーム: 2人以上で、まず遊ぶ</b>矢印キーかWASDで動き、スペースで爆弾を置く。スマホでは、画面の方向パッドと💣ボタンで動かせる。アイテムを拾うと、ボム数・火力・スピードが上がる。1人しかいないときは、別のブラウザのタブ（シークレットウィンドウ）で、招待リンクを開くと2人目として入れる。<strong>自分の爆風にも当たる</strong>ので、爆弾を置いたら離れる。</li>
             </ol>
             <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d3-text-game-bomber">
