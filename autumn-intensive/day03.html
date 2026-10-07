@@ -225,17 +225,44 @@
             <p><strong>A. Day2でBattle Baseを使っていたチーム</strong>（すでにForkとCodespacesがある）</p>
             <ol class="vz-steps">
               <li class="vz-step"><b>代表者: Forkを最新にする</b>GitHubで、自分のFork（Battle Base）のページを開き、ファイル一覧の上の<strong>「Sync fork」</strong>→<strong>「Update branch」</strong>を押す（公式: Syncing a fork）。変更が競合した場合は、GitHubからプルリクエストの作成を促されるので、<strong>人生ゲームを改造したチームは、担当教員か2年次に相談する</strong>。</li>
-              <li class="vz-step"><b>代表者: Codespacesに取り込む</b>Battle BaseのCodespacesを再開し、ターミナルで <code>git pull</code> を入力してから、<code>npm start</code> をやり直す。</li>
+              <li class="vz-step"><b>代表者: Codespacesに取り込む</b>Battle BaseのCodespacesを再開し、ターミナルで次の <code>git pull</code> を入力してから、<code>npm start</code> をやり直す。</li>
             </ol>
+            <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d3-cmd-git-pull">
+              <span class="btn-icon"></span> コマンドをコピー
+            </button>
+<pre id="d3-cmd-git-pull" class="md-preview">git pull</pre></div>
+            <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d3-cmd-npm-start-a">
+              <span class="btn-icon"></span> コマンドをコピー
+            </button>
+<pre id="d3-cmd-npm-start-a" class="md-preview">npm start</pre></div>
             <p><strong>B. Day3からBattle Baseを使うチーム</strong>（見本ゲームや進級制作のデモから、方向を変えるチーム）</p>
             <ol class="vz-steps">
-              <li class="vz-step"><b>代表者: Battle BaseをForkして、Codespacesを作る</b><a href="day02.html#blk-2">Day2の「方向性③」の手順</a>（Fork→招待→Codespacesを作る→<code>npm start</code>→8000番をPublic）と同じ。Forkしたあとは、すでに最新なので、Sync forkは不要。agyは入っていないので、同じ枠の手順で入れる。</li>
+              <li class="vz-step"><b>代表者: Battle BaseをForkする</b>下のURLを開き、右上の「Fork」→「Create fork」をクリックする（Day1・Day2と同じ手順）。Forkしたあと、<strong>Forkにもメンバーを招待</strong>する（「Settings」→「Collaborators」→「Add people」）。Forkしたあとは、すでに最新なので、Sync forkは不要。</li>
+            </ol>
+            <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d3-url-battle-base">
+              <span class="btn-icon"></span> URLをコピー
+            </button>
+<pre id="d3-url-battle-base" class="md-preview">https://github.com/yasushi-honda/battle-base</pre></div>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>代表者: ForkからCodespacesを作る</b>Forkしたリポジトリで、「Code」→「Codespaces」→「＋」。新しいCodespacesなので、<strong>agyは入っていない</strong>。入れる手順は、<a href="day01.html#blk-3">Day1の「Antigravity CLI（agy）を導入して認証する」</a>と同じ。</li>
+              <li class="vz-step"><b>代表者: サーバーを動かす</b>ターミナルで次を入力する。「Battle Base Server running on http://localhost:8000」と表示されれば成功。</li>
+            </ol>
+            <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d3-cmd-npm-start-b">
+              <span class="btn-icon"></span> コマンドをコピー
+            </button>
+<pre id="d3-cmd-npm-start-b" class="md-preview">npm start</pre></div>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>代表者: 「ポート」タブで、8000番をPublicにする</b>8000番を右クリック→「ポートの表示範囲」→「Public」（英語表示は「Port Visibility」）。設定ファイルでは、最初からPublicにはできない。</li>
             </ol>
             <p><strong>A・B共通</strong></p>
             <ol class="vz-steps">
               <li class="vz-step"><b>チーム: URLの末尾に「?game=bomber」を付けて開く</b>公開URLの最後に付けると、ボンバーマンになる（付けないと、人生ゲーム）。部屋を作ったら、<strong>招待リンクにも、同じ印が引き継がれる</strong>。<strong>全員が、この印つきのリンクで入る</strong>（部屋コードだけを手で打って入ると、その人だけ人生ゲームの画面になり、対戦できない）。</li>
               <li class="vz-step"><b>チーム: 2人以上で、まず遊ぶ</b>矢印キーかWASDで動き、スペースで爆弾を置く。スマホでは、画面の方向パッドと💣ボタンで動かせる。アイテムを拾うと、ボム数・火力・スピードが上がる。1人しかいないときは、別のブラウザのタブ（シークレットウィンドウ）で、招待リンクを開くと2人目として入れる。<strong>自分の爆風にも当たる</strong>ので、爆弾を置いたら離れる。</li>
             </ol>
+            <div class="copy-block" style="margin:8px 0 6px"><button class="copy-md-btn" data-md-source="d3-text-game-bomber">
+              <span class="btn-icon"></span> 印をコピー
+            </button>
+<pre id="d3-text-game-bomber" class="md-preview">?game=bomber</pre></div>
             <div class="lesson-tip">
               <strong>時間が足りないチームへ:</strong> 1限後半の50分では、<strong>「遊ぶ」ところまで</strong>で十分です。改造は、2限前半に回してかまいません。
             </div>
