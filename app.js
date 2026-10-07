@@ -95,7 +95,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const STORAGE_KEY = 'syllabus-furigana';
   const KANJI = /[㐀-䶿一-鿿々〆]/;
-  const SKIP = 'script,style,textarea,svg,ruby,code,pre,title,noscript,[data-no-furigana],.furigana-toggle';
+  // build_dict.py の EXCLUDE_TAGS と同じ（＋ボタン自身）
+  const SKIP = 'script,style,textarea,svg,ruby,code,pre,title,noscript,option,[data-no-furigana],.furigana-toggle,.furigana-notice';
 
   // build_dict.py の node_key と同じ（FNV-1a 32bit、UTF-16の単位）
   function nodeKey(text) {
@@ -122,11 +123,17 @@ document.addEventListener('DOMContentLoaded', () => {
     let records = [];   // 置き換えた記録（オフで元に戻す）
     let isOn = false;
     let busy = false;
+    let applying = false;
+    let observer = null;
+    let noticeTimer = null;
+    const layoutCache = new Map();
 
+    // ボタン（名前は固定。状態は aria-pressed だけで伝える）
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'furigana-toggle';
     btn.setAttribute('aria-pressed', 'false');
+    btn.setAttribute('aria-label', 'ふりがな');
     btn.title = '漢字にふりがなをつけます（オン／オフ）';
     const icon = document.createElement('span');
     icon.className = 'furigana-toggle-icon';
@@ -134,16 +141,27 @@ document.addEventListener('DOMContentLoaded', () => {
     icon.textContent = 'あ';
     const label = document.createElement('span');
     label.className = 'furigana-toggle-label';
+    label.setAttribute('aria-hidden', 'true');
     label.textContent = 'ふりがな';
     const state = document.createElement('span');
     state.className = 'furigana-toggle-state';
+    state.setAttribute('aria-hidden', 'true');
     state.textContent = 'オフ';
-    const status = document.createElement('span');
-    status.className = 'furigana-status';
-    status.setAttribute('role', 'status');
-    btn.append(icon, label, state, status);
-    document.body.appendChild(btn);
+    btn.append(icon, label, state);
+
+    // 画面に見えるお知らせ（読み込みの失敗など）と、読み上げ用の状態通知。どちらもボタンの外に置く
+    const notice = document.createElement('div');
+    notice.className = 'furigana-notice';
+    notice.setAttribute('role', 'status');
+    document.body.append(btn, notice);
     document.body.classList.add('has-furigana-toggle');
+
+    function say(message, visible) {
+      notice.textContent = message;
+      notice.classList.toggle('is-visible', !!visible);   // 見えない通知は読み上げ専用
+      clearTimeout(noticeTimer);
+      if (visible) noticeTimer = setTimeout(() => { notice.classList.remove('is-visible'); }, 6000);
+    }
 
     function render() {
       btn.setAttribute('aria-pressed', isOn ? 'true' : 'false');
@@ -160,61 +178,87 @@ document.addEventListener('DOMContentLoaded', () => {
       return dictPromise;
     }
 
+    // 1つのテキストノードをルビに置き換える
+    function annotate(node, dict) {
+      const text = node.nodeValue;
+      const spans = dict.n[nodeKey(text)];
+      if (!spans) return;
+      const frag = document.createDocumentFragment();
+      let pos = 0;
+      spans.forEach(sp => {
+        const s = sp[0], l = sp[1], r = sp[2];
+        if (s < pos || s + l > text.length) return;
+        if (s > pos) frag.appendChild(document.createTextNode(text.slice(pos, s)));
+        const ruby = document.createElement('ruby');
+        ruby.appendChild(document.createTextNode(text.slice(s, s + l)));
+        const rt = document.createElement('rt');
+        rt.textContent = r;
+        ruby.appendChild(rt);
+        frag.appendChild(ruby);
+        pos = s + l;
+      });
+      if (pos === 0) return;
+      if (pos < text.length) frag.appendChild(document.createTextNode(text.slice(pos)));
+      // 親が flex/grid だと、ルビが別々の項目になって折り返せない。1つの span にまとめて1項目にする
+      const parent = node.parentNode;
+      if (!layoutCache.has(parent)) layoutCache.set(parent, /flex|grid/.test(getComputedStyle(parent).display));
+      let inserted;
+      if (layoutCache.get(parent)) {
+        const wrap = document.createElement('span');
+        wrap.appendChild(frag);
+        inserted = [wrap];
+        parent.replaceChild(wrap, node);
+      } else {
+        inserted = Array.from(frag.childNodes);
+        parent.replaceChild(frag, node);
+      }
+      records.push({ node, inserted });
+    }
+
+    function eligible(n) {
+      if (n.nodeType !== 3 || !KANJI.test(n.nodeValue)) return false;
+      const p = n.parentElement;
+      return !!p && !p.closest(SKIP);
+    }
+
     function apply(dict) {
-      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
-        acceptNode(n) {
-          if (!KANJI.test(n.nodeValue)) return NodeFilter.FILTER_REJECT;
-          const p = n.parentElement;
-          return p && p.closest(SKIP) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
-        }
-      });
-      const nodes = [];
-      while (walker.nextNode()) nodes.push(walker.currentNode);
-      const layoutCache = new Map();
-      nodes.forEach(node => {
-        const text = node.nodeValue;
-        const spans = dict.n[nodeKey(text)];
-        if (!spans) return;
-        const frag = document.createDocumentFragment();
-        let pos = 0;
-        spans.forEach(sp => {
-          const s = sp[0], l = sp[1], r = sp[2];
-          if (s < pos || s + l > text.length) return;
-          if (s > pos) frag.appendChild(document.createTextNode(text.slice(pos, s)));
-          const ruby = document.createElement('ruby');
-          ruby.appendChild(document.createTextNode(text.slice(s, s + l)));
-          const rt = document.createElement('rt');
-          rt.textContent = r;
-          ruby.appendChild(rt);
-          frag.appendChild(ruby);
-          pos = s + l;
+      applying = true;
+      try {
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+          acceptNode(n) { return eligible(n) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT; }
         });
-        if (pos === 0) return;
-        if (pos < text.length) frag.appendChild(document.createTextNode(text.slice(pos)));
-        // 親が flex/grid だと、ルビが別々の項目になって折り返せない。1つの span にまとめて1項目にする
-        const parent = node.parentNode;
-        if (!layoutCache.has(parent)) layoutCache.set(parent, /flex|grid/.test(getComputedStyle(parent).display));
-        let inserted;
-        if (layoutCache.get(parent)) {
-          const wrap = document.createElement('span');
-          wrap.appendChild(frag);
-          inserted = [wrap];
-          parent.replaceChild(wrap, node);
-        } else {
-          inserted = Array.from(frag.childNodes);
-          parent.replaceChild(frag, node);
+        const nodes = [];
+        while (walker.nextNode()) nodes.push(walker.currentNode);
+        nodes.forEach(n => annotate(n, dict));
+      } finally {
+        applying = false;
+      }
+      // 操作のあとに作られる文字（クイズの結果、「すべて開く／閉じる」など）にも付ける
+      observer = new MutationObserver(muts => {
+        if (applying) return;
+        applying = true;
+        try {
+          muts.forEach(m => m.addedNodes.forEach(n => { if (eligible(n)) annotate(n, dict); }));
+        } finally {
+          applying = false;
         }
-        records.push({ node, inserted });
       });
+      observer.observe(document.body, { childList: true, subtree: true });
     }
 
     function remove() {
-      records.forEach(rec => {
-        const first = rec.inserted.find(n => n.parentNode);
-        if (!first) return;
-        first.parentNode.insertBefore(rec.node, first);
-        rec.inserted.forEach(n => { if (n.parentNode) n.parentNode.removeChild(n); });
-      });
+      if (observer) { observer.disconnect(); observer = null; }
+      applying = true;
+      try {
+        records.forEach(rec => {
+          const first = rec.inserted.find(n => n.parentNode);
+          if (!first) return;   // 操作で消えた文字は戻さない
+          first.parentNode.insertBefore(rec.node, first);
+          rec.inserted.forEach(n => { if (n.parentNode) n.parentNode.removeChild(n); });
+        });
+      } finally {
+        applying = false;
+      }
       records = [];
     }
 
@@ -228,11 +272,12 @@ document.addEventListener('DOMContentLoaded', () => {
           remove();
         }
         isOn = on;
-        status.textContent = on ? 'ふりがなをつけました' : 'ふりがなをなくしました';
+        say(on ? 'ふりがなをつけました' : 'ふりがなをなくしました', false);
         if (persist) writeSaved(on);
       } catch (e) {
-        status.textContent = 'ふりがなを読み込めませんでした。あとでもう一度お試しください';
-        btn.title = status.textContent;
+        remove();   // 途中まで置き換えていたら元に戻す
+        isOn = false;
+        say('ふりがなを読み込めませんでした。時間をおいて、もう一度おしてください', true);
       } finally {
         busy = false;
         render();

@@ -59,6 +59,29 @@ class CollectTest(unittest.TestCase):
         self.assertEqual(nodes, ['A&B 漢字'])
 
 
+class ReviewFixesTest(unittest.TestCase):
+    def test_comment_splits_text_nodes_like_browsers(self):
+        _, nodes = bd.collect_blocks('<p>標的<!-- 確認日 -->型</p>')
+        self.assertEqual(nodes, ['標的', '型'])
+
+    def test_option_is_excluded(self):
+        _, nodes = bd.collect_blocks('<select><option>選択</option></select><p>本文</p>')
+        self.assertEqual(nodes, ['本文'])
+
+    def test_third_person_is_not_a_counter(self):
+        r = spans_text('<p>3人称と3人</p>')
+        self.assertNotIn(('3人', 'ひとり'), r)
+        self.assertIn(('人', 'にん'), r)
+
+    def test_fullwidth_digits_do_not_crash(self):
+        spans_text('<p>１０分と２人</p>')   # 全角数字は規則の対象外（MeCabに任せる）
+
+    def test_dynamic_texts_are_in_every_dictionary(self):
+        d, _, _ = bd.build_page_dict('<p>本文</p>', bd.Analyzer(overrides=[]))
+        for t in bd.DYNAMIC_TEXTS:
+            self.assertIn(bd.node_key(t), d['n'], t)
+
+
 class KeyTest(unittest.TestCase):
     def test_known_value(self):
         # app.js の nodeKey と同じ値になること（FNV-1a 32bit、UTF-16単位）。'a' = 0xe40c292c
@@ -122,7 +145,8 @@ class AnalyzeTest(unittest.TestCase):
 
     def test_same_text_dedupes(self):
         d, _, conflicts = bd.build_page_dict('<p>脅威</p><p>脅威</p>', bd.Analyzer(overrides=[]))
-        self.assertEqual(len(d['n']), 1)
+        dynamic = {bd.node_key(t) for t in bd.DYNAMIC_TEXTS}
+        self.assertEqual(len(set(d['n']) - dynamic), 1)   # 同じ文は1件にまとまる
         self.assertEqual(conflicts, [])
 
 

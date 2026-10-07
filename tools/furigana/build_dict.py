@@ -26,7 +26,10 @@ OVERRIDES = Path(__file__).with_name('overrides.tsv')
 DEFAULT_PAGES = ['it-passport-technology.html', 'it-passport-technology/week*.html']
 
 KANJI_RE = re.compile(r'[㐀-䶿一-鿿々〆]')
-EXCLUDE_TAGS = {'script', 'style', 'code', 'pre', 'textarea', 'title', 'noscript', 'svg', 'ruby', 'head'}
+EXCLUDE_TAGS = {'script', 'style', 'code', 'pre', 'textarea', 'title', 'noscript', 'svg', 'ruby', 'head', 'option'}
+
+# ページのJSが操作のあとに作る文字（app.js のクイズの結果、親ページの「すべて開く/閉じる」）。ふりがなを付けられるよう全ページの辞書に入れる
+DYNAMIC_TEXTS = ['正解です'] + ['不正解です（正解: %s）' % c for c in 'アイウエ'] + ['すべて開く', 'すべて閉じる']
 VOID_TAGS = {'br', 'wbr', 'img', 'input', 'meta', 'link', 'hr', 'source', 'area', 'col', 'embed', 'base', 'track'}
 BLOCK_TAGS = {'p', 'li', 'ul', 'ol', 'td', 'th', 'tr', 'table', 'thead', 'tbody', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
               'div', 'section', 'header', 'footer', 'main', 'nav', 'summary', 'details', 'figure', 'figcaption',
@@ -112,6 +115,16 @@ class BlockCollector(HTMLParser):
                     self._flush()
                 return
 
+    # ブラウザはコメント等でテキストノードを分けるので、同じ位置で区切る
+    def handle_comment(self, data):
+        self._end_node()
+
+    def handle_decl(self, decl):
+        self._end_node()
+
+    def handle_pi(self, data):
+        self._end_node()
+
     def handle_data(self, data):
         if self.excl > 0:
             return
@@ -183,9 +196,9 @@ DAYS = {1: 'ついたち', 2: 'ふつか', 3: 'みっか', 4: 'よっか', 5: '�
 def counter_assignments(text):
     """数字＋助数詞（分・月・日・人）の読みを規則で決める。[(開始, 終了, 読み)]（text上の位置）"""
     out = []
-    for m in re.finditer(r'(\d+)分(?![野類析散割別担離子配布岐解数量])', text):
+    for m in re.finditer(r'([0-9]+)分(?![野類析散割別担離子配布岐解数量])', text):
         out.append((m.end() - 1, m.end(), MIN_BUN[m.group(1)[-1]]))
-    for m in re.finditer(r'(\d+)月(?:(\d+)日)?', text):
+    for m in re.finditer(r'([0-9]+)月(?:([0-9]+)日)?', text):
         gl = len(m.group(1))
         out.append((m.start() + gl, m.start() + gl + 1, 'がつ'))
         if m.group(2):
@@ -194,13 +207,13 @@ def counter_assignments(text):
                 out.append((m.start(2), m.end(), DAYS[n]))      # 日付: 数字ごと（7日=なのか）
             else:
                 out.append((m.end() - 1, m.end(), 'にち'))
-    for m in re.finditer(r'(?<![\d月])(\d+)日', text):
+    for m in re.finditer(r'(?<![0-9月])([0-9]+)日', text):
         n = int(m.group(1))
         if n in DAYS and n != 1:
             out.append((m.start(), m.end(), DAYS[n]))
         else:
             out.append((m.end() - 1, m.end(), 'にち'))
-    for m in re.finditer(r'(\d+)人', text):
+    for m in re.finditer(r'([0-9]+)人(?!称)', text):
         n = m.group(1)
         if n == '1':
             out.append((m.start(), m.end(), 'ひとり'))
@@ -308,6 +321,9 @@ def build_page_dict(html_text, analyzer):
                 conflicts.append(n)
                 continue
             entries.setdefault(k, spans)
+    for text in DYNAMIC_TEXTS:
+        for n, spans in analyzer.analyze_block([text]).items():
+            entries.setdefault(node_key(n), spans)
     return {'v': 1, 'n': entries}, all_nodes, conflicts
 
 
