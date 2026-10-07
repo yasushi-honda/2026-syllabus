@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=13">
-  <!-- 2026-10-08: Day4を新規作成。担当教員の設計: 1年生が4グループに分かれ、1ラウンド（巡回30分＋バッファ15分）に1グループずつ、2年次・3年次以上・ハード科のチームを自由にばらばらに回る。4ラウンドで180分を埋める。待機中の1年生は制作を続ける（時間のズレ込みや、迎える側の調整のため）。投票・推薦はしない（旧設計の「チーム内2交代＋推薦」は廃止）。1年生は巡回のふりかえりをGoogle Classroom経由のGoogleフォームで提出する（シラバスにURLは載せない）。Day5は仮の方向（前半はDay4の刺激をもとにアップデート、後半はハード科・上級生が1年生の教室で制作のアプローチを解説）。外部サービスの新しい事実は扱わないため、公式情報の確認は不要（Codespacesの公開ポートの事実は、Day3と同じ公式Security in GitHub Codespacesに基づく）。 -->
+  <!-- 2026-10-08: Day4を新規作成。担当教員の設計: 1年生が4グループに分かれ、1回ずつ1グループが、2年次・3年次以上・ハード科のチームを自由にばらばらに回る。時間配分は、1限＝今日の説明と上級生の準備15分・巡回30分・バッファ15分・巡回30分、休憩、2限＝巡回30分・バッファ15分・巡回30分・まとめ15分（合計180分。同日に、当初の「(30+15)×4」から変更）。待機中の1年生は制作を続ける（時間のズレ込みや、迎える側の調整のため）。投票・推薦はしない（旧設計の「チーム内2交代＋推薦」は廃止）。1年生は巡回のふりかえりをGoogle Classroom経由のGoogleフォームで提出する（シラバスにURLは載せない）。Day5は仮の方向（前半はDay4の刺激をもとにアップデート、後半はハード科・上級生が1年生の教室で制作のアプローチを解説）。外部サービスの新しい事実は扱わないため、公式情報の確認は不要（Codespacesの公開ポートの事実は、Day3と同じ公式Security in GitHub Codespacesに基づく）。 -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -69,17 +69,17 @@
       <div class="vz-timebar">
         <p class="vz-fig-title">180分の流れ（ブロックを押すと、その内容へ移動）</p>
         <ol class="vz-timebar-track">
+          <li style="--w:15"><a class="vz-seg" href="#blk-0"><span class="vz-seg-time">15分</span><span class="vz-seg-name">今日の説明<br>上級生の<br>準備</span></a></li>
           <li style="--w:30"><a class="vz-seg" href="#blk-1"><span class="vz-seg-time">30分</span><span class="vz-seg-name">1回目<br>巡回</span></a></li>
           <li style="--w:15"><a class="vz-seg" href="#blk-1"><span class="vz-seg-time">15分</span><span class="vz-seg-name">バッファ</span></a></li>
           <li style="--w:30"><a class="vz-seg" href="#blk-2"><span class="vz-seg-time">30分</span><span class="vz-seg-name">2回目<br>巡回</span></a></li>
-          <li style="--w:15"><a class="vz-seg" href="#blk-2"><span class="vz-seg-time">15分</span><span class="vz-seg-name">バッファ</span></a></li>
           <li style="--w:10"><a class="vz-seg vz-seg--break"><span class="vz-seg-time">休憩</span><span class="vz-seg-name">10分</span></a></li>
           <li style="--w:30"><a class="vz-seg" href="#blk-3"><span class="vz-seg-time">30分</span><span class="vz-seg-name">3回目<br>巡回</span></a></li>
           <li style="--w:15"><a class="vz-seg" href="#blk-3"><span class="vz-seg-time">15分</span><span class="vz-seg-name">バッファ</span></a></li>
           <li style="--w:30"><a class="vz-seg" href="#blk-4"><span class="vz-seg-time">30分</span><span class="vz-seg-name">4回目<br>巡回</span></a></li>
           <li style="--w:15"><a class="vz-seg" href="#blk-4"><span class="vz-seg-time">15分</span><span class="vz-seg-name">まとめ・<br>フォーム・<br>Day5説明</span></a></li>
         </ol>
-        <p class="vz-timebar-note">授業時間の合計は (30 + 15) × 4 = 180分（休憩を除く）。休憩は2回目のバッファのあとに入る。1回目だけ、巡回の最初の数分を、迎える側の準備に使う。</p>
+        <p class="vz-timebar-note">授業時間の合計は 15 + 30 + 15 + 30 + 30 + 15 + 30 + 15 = 180分（休憩を除く）。1限は、最初の15分で今日の説明と上級生の準備をしてから、巡回2回を行う。休憩は、2回目の巡回のあとに入る。</p>
       </div>
 
       <figure class="vz-fig" aria-labelledby="cap-rounds">
@@ -96,9 +96,30 @@
 
     <div class="syllabus-section">
       <h2>授業の流れ</h2>
-      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。巡回30分とバッファ15分の組を、4回くり返す（最後のバッファは、まとめ・フォーム・Day5の説明に使う）。途中、2回目のあとに休憩10分（授業時間に含めない）。</p>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。1限は「今日の説明・上級生の準備15分 → 巡回30分 → バッファ15分 → 巡回30分」、2限は「巡回30分 → バッファ15分 → 巡回30分 → まとめ15分」。1限と2限のあいだに休憩10分（授業時間に含めない）。</p>
 
       <div class="timeline">
+
+        <!-- ================= 開始15分 ================= -->
+        <div class="timeline-block" id="blk-0">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 最初</span>
+            <span class="timeline-duration">約15分</span>
+          </div>
+          <h3>今日の説明をする／上級生は迎える準備をする</h3>
+          <div class="timeline-body">
+            <p><strong>今日の説明（約5分）</strong></p>
+            <ul>
+              <li>担当教員が、今日の流れ（巡回30分・バッファ15分・休憩・まとめ）と、<strong>投票も推薦もしない</strong>ことを説明する</li>
+              <li><strong>1年次</strong>は、4グループに分かれる（グループ分けは、担当教員が伝える）。巡回するのは、1回目がグループ1、2回目がグループ2、休憩のあとの3回目がグループ3、4回目がグループ4</li>
+            </ul>
+            <p><strong>各チームの準備（約10分）</strong></p>
+            <ul>
+              <li><strong>2年次・3年次以上・ハード科（迎える側）</strong>: <strong>作品を見せられる状態</strong>にする。Codespacesで動かすチームは、代表者が、<a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> から<strong>前回と同じCodespaces</strong>を再開し（「Create」ではない）、<code>npm start</code> をやり直して、<strong>8000番がPublicか確認</strong>する。Unityなど、別の方法で見せるチームは、その方法で準備する。agyを使うときは、再度ログインを求められる場合がある（手順はDay1の<a href="day01.html#blk-3">「Antigravity CLI（agy）を導入して認証する」</a>と同じ）。Day3で作った<strong>紹介カードと体験の手順</strong>を、すぐ出せるようにする</li>
+              <li><strong>1年次</strong>: 巡回する前に、<strong>ひとつだけ聞きたいこと</strong>を、チームで決めておく（下の「質問の例」から選んでよい）。巡回しないグループは、巡回が始まったら、自分たちの制作を始める</li>
+            </ul>
+          </div>
+        </div>
 
         <!-- ================= 1回目 ================= -->
         <div class="timeline-block" id="blk-1">
@@ -106,14 +127,8 @@
             <span class="timeline-time">1回目</span>
             <span class="timeline-duration">巡回30分 ＋ バッファ15分</span>
           </div>
-          <h3>グループ1が巡回する／迎える側は準備を整える</h3>
+          <h3>グループ1が巡回する</h3>
           <div class="timeline-body">
-
-            <p><strong>始める前に、各チームが準備する（巡回の最初の数分）</strong></p>
-            <ul>
-              <li><strong>2年次・3年次以上・ハード科（迎える側）</strong>: <strong>作品を見せられる状態</strong>にする。Codespacesで動かすチームは、代表者が、<a href="https://github.com/codespaces" target="_blank" rel="noopener">github.com/codespaces</a> から<strong>前回と同じCodespaces</strong>を再開し（「Create」ではない）、<code>npm start</code> をやり直して、<strong>8000番がPublicか確認</strong>する。Unityなど、別の方法で見せるチームは、その方法で準備する。agyを使うときは、再度ログインを求められる場合がある（手順はDay1の<a href="day01.html#blk-3">「Antigravity CLI（agy）を導入して認証する」</a>と同じ）。Day3で作った<strong>紹介カードと体験の手順</strong>を、すぐ出せるようにする</li>
-              <li><strong>1年次</strong>: 巡回する前に、<strong>ひとつだけ聞きたいこと</strong>を、チームで決めておく（下の「質問の例」から選んでよい）。巡回しない3グループは、自分たちの制作を始める</li>
-            </ul>
 
             <p><strong>巡回する（30分）</strong></p>
             <ul>
@@ -150,13 +165,13 @@
         <div class="timeline-block" id="blk-2">
           <div class="timeline-header">
             <span class="timeline-time">2回目</span>
-            <span class="timeline-duration">巡回30分 ＋ バッファ15分</span>
+            <span class="timeline-duration">巡回30分</span>
           </div>
           <h3>グループ2が巡回する</h3>
           <div class="timeline-body">
-            <p>進め方は、1回目と同じ。巡回するのは<strong>グループ2</strong>。ほかの3グループは、制作を続ける。</p>
+            <p>進め方は、1回目と同じ。巡回するのは<strong>グループ2</strong>。ほかの3グループは、制作を続ける。この巡回のあとは、<strong>休憩</strong>に入る（迎える側は、休憩のうちに、部屋の作り直しや不具合の修正をしてよい）。</p>
             <ul>
-              <li>1回目で出た質問や、<strong>うまく伝わらなかったところ</strong>があれば、迎える側は、<strong>バッファのうちに、紹介カードや手順を直す</strong></li>
+              <li>1回目で出た質問や、<strong>うまく伝わらなかったところ</strong>があれば、迎える側は、<strong>1回目のあとのバッファのうちに、紹介カードや手順を直す</strong></li>
               <li>1回目のグループが聞いてきて共有した内容を、制作中の1年次のチームが<strong>少しでも取り入れてみる</strong>（小さな変更を1つ、「頼む→動かす→確かめる」）</li>
             </ul>
           </div>
@@ -177,7 +192,7 @@
           </div>
           <h3>グループ3が巡回する</h3>
           <div class="timeline-body">
-            <p>進め方は、1回目と同じ。巡回するのは<strong>グループ3</strong>。休憩のあと、<strong>Codespacesで見せているチームは、動いていて、8000番がPublicか</strong>を、もう一度確かめる（止まっていることがある）。</p>
+            <p>進め方は、1回目と同じ。巡回するのは<strong>グループ3</strong>。1限が終わって休憩のあと、<strong>Codespacesで見せているチームは、動いていて、8000番がPublicか</strong>を、もう一度確かめる（止まっていることがある）。</p>
             <ul>
               <li>agyに<strong>制限がかかった</strong>チームは、Day3の「agyに『制限がかかった』と表示されたとき」の手順で、別のGoogleアカウントに切り替える（<a href="day03.html#blk-1">Day3の手順</a>）</li>
             </ul>
@@ -196,7 +211,7 @@
             <p>進め方は、1回目と同じ。巡回するのは<strong>グループ4</strong>。</p>
 
             <p><strong>最後の15分：Day4のまとめ・ふりかえりフォーム・Day5の説明・片付け</strong></p>
-            <p>最後のバッファは、ズレの吸収ではなく、<strong>今日を締めくくる時間</strong>にする。</p>
+            <p>最後の15分は、ズレの吸収ではなく、<strong>今日を締めくくる時間</strong>にする。</p>
             <ol class="vz-steps">
               <li class="vz-step"><b>Day4のまとめ（約3分）</b>席に戻って、今日の気づきを、チームで1つずつ出し合う。担当教員が、全体に向けて、今日の様子を短く伝える。</li>
               <li class="vz-step"><b>ふりかえりフォームの記入（約5分）</b>1年次は、巡回のふりかえりを、Googleフォームで提出する。フォームは、この講座の<strong>Google Classroomの専用ルーム</strong>で共有される。<strong>聞いたこと・触ったもの・自分たちの制作に活かせそうなこと</strong>を書く（誰かを順位づけするものではない）。続けて、<strong>全員</strong>が、今日のアンケートにも答える。<strong>2年次・3年次以上・ハード科</strong>は、今日、聞かれたこと・答えにくかったことを、短くメモする（Day5で、どんなアプローチで作ったかを話す材料になる）。</li>
@@ -239,7 +254,7 @@
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
             <strong>1年次: 巡回のふりかえりフォームを、提出する</strong>
-            <p>今日の最後のバッファで終わらなかった場合は、<strong>次回の前まで</strong>に提出する。活かしたいことを、<strong>1つ</strong>決めておく（Day5の前半で、アップデートに使う）。</p>
+            <p>今日の最後の15分で終わらなかった場合は、<strong>次回の前まで</strong>に提出する。活かしたいことを、<strong>1つ</strong>決めておく（Day5の前半で、アップデートに使う）。</p>
           </div>
         </div>
         <div class="lesson-task">
