@@ -94,29 +94,31 @@
             </ul>
             <figure class="vz-fig" aria-labelledby="cap-n5-flow">
               <p class="vz-fig-title" id="cap-n5-flow">データは、どこへ行くのか</p>
-              <svg class="vz-svg" viewBox="0 0 360 336" role="img" aria-labelledby="n5-flow-t n5-flow-d">
+              <svg class="vz-svg" viewBox="0 0 360 372" role="img" aria-labelledby="n5-flow-t n5-flow-d">
                 <title id="n5-flow-t">データは、どこへ行くのか</title>
-                <desc id="n5-flow-d">自分のCodespaceにはスコアを保存するスクリプトのscores.jsと、DBの鍵であるDATABASE_URLを書いた.envがある。Codespaceから、クラウド上のDBであるNeonへは接続文字列でつながり、スコアはCodespaceを止めても残る。AIエージェントの提供元のサーバーへは、指示文と出力が送られ、読ませたファイルも送られうる。.envを読ませると接続文字列も送られうるため、読ませるかどうかは判断が必要。</desc>
-                <rect class="box-green" x="8" y="6" width="344" height="90" rx="10"/>
+                <desc id="n5-flow-d">自分のCodespaceには、スコアを保存するスクリプトのscores.jsと、DBの鍵であるDATABASE_URLを書いた.envがあり、AIエージェントもここで動く。Codespaceから、クラウド上のDBであるNeonへは接続文字列でつながり、スコアはCodespaceを止めても残る。AIの提供元のモデルのサーバーへは、指示文と出力が送られ、読ませたファイルの内容は送られうる。.envを読ませると接続文字列も送られうるため、読ませるかどうかは判断が必要。</desc>
+                <rect class="box-green" x="8" y="6" width="344" height="108" rx="10"/>
                 <text class="t-c t-b" x="180" y="28">自分のCodespace（作業の場所）</text>
                 <text class="t-c t-sm" x="180" y="48">scores.js（スコアを保存するスクリプト）</text>
                 <text class="t-c t-sm" x="180" y="66">.env（DATABASE_URL ＝ DBの鍵）</text>
-                <line class="line" x1="92" y1="98" x2="92" y2="148" marker-start="url(#mk-s)" marker-end="url(#mk-s)"/>
-                <line class="line" x1="268" y1="98" x2="268" y2="148" marker-start="url(#mk-s)" marker-end="url(#mk-s)"/>
-                <rect class="box-white" x="8" y="152" width="168" height="92" rx="10"/>
-                <text class="t-c t-b" x="92" y="174">Neon</text>
-                <text class="t-c t-sm" x="92" y="194">クラウド上のDB</text>
-                <text class="t-c t-sm" x="92" y="211">接続文字列でつなぐ</text>
-                <text class="t-c t-sm" x="92" y="228">止めてもスコアが残る</text>
-                <rect class="box-white" x="184" y="152" width="168" height="92" rx="10"/>
-                <text class="t-c t-b" x="268" y="174">AIエージェント</text>
-                <text class="t-c t-sm" x="268" y="194">（提供元のサーバー）</text>
-                <text class="t-c t-sm" x="268" y="211">指示文・出力が送られる</text>
-                <text class="t-c t-sm" x="268" y="228">読ませたファイルも</text>
-                <rect class="box-white box-key" x="8" y="262" width="344" height="66" rx="10"/>
-                <text class="t-c t-b" x="180" y="284">ここが判断のポイント</text>
-                <text class="t-c t-sm" x="180" y="303">.envをエージェントに読ませると、</text>
-                <text class="t-c t-sm" x="180" y="320">接続文字列も指示文の一部として送られうる</text>
+                <text class="t-c t-sm" x="180" y="84">AIエージェントも、ここで動く</text>
+                <line class="line" x1="92" y1="116" x2="92" y2="166" marker-start="url(#mk-s)" marker-end="url(#mk-s)"/>
+                <line class="line" x1="268" y1="116" x2="268" y2="166" marker-start="url(#mk-s)" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="170" width="168" height="110" rx="10"/>
+                <text class="t-c t-b" x="92" y="192">Neon</text>
+                <text class="t-c t-sm" x="92" y="212">クラウド上のDB</text>
+                <text class="t-c t-sm" x="92" y="229">接続文字列でつなぐ</text>
+                <text class="t-c t-sm" x="92" y="246">止めてもスコアが残る</text>
+                <rect class="box-white" x="184" y="170" width="168" height="110" rx="10"/>
+                <text class="t-c t-b" x="268" y="192">AIの提供元</text>
+                <text class="t-c t-sm" x="268" y="212">（モデルのサーバー）</text>
+                <text class="t-c t-sm" x="268" y="229">指示文・出力は送られる</text>
+                <text class="t-c t-sm" x="268" y="246">ファイルの内容は</text>
+                <text class="t-c t-sm" x="268" y="263">送られうる</text>
+                <rect class="box-white box-key" x="8" y="298" width="344" height="66" rx="10"/>
+                <text class="t-c t-b" x="180" y="320">ここが判断のポイント</text>
+                <text class="t-c t-sm" x="180" y="339">.envをエージェントに読ませると、</text>
+                <text class="t-c t-sm" x="180" y="356">接続文字列も指示文の一部として送られうる</text>
               </svg>
               <figcaption>矢印は、データが行き来する向きです。エージェントに何を読ませるかは、自分で判断します。</figcaption>
             </figure>
@@ -146,7 +148,7 @@
                 <text class="t-c t-sm" x="180" y="190">こうした要素を組み合わせて、</text>
                 <text class="t-c t-sm" x="180" y="207">個人情報を扱えるレベルの安全設計になる</text>
               </svg>
-              <figcaption>上の4つは要素の例です。1つだけでは、安全設計とは言えません。</figcaption>
+              <figcaption>上の4つは要素の例です。「学習に使われない」だけでは、安全とは言えません。</figcaption>
             </figure>
             <p><strong>今日使うDB: Neon</strong></p>
             <ul>
@@ -165,31 +167,32 @@
           <div class="timeline-body">
             <figure class="vz-fig" aria-labelledby="cap-n5-make">
               <p class="vz-fig-title" id="cap-n5-make">DBを作って、スコアを保存するまで</p>
-              <svg class="vz-svg" viewBox="0 0 360 376" role="img" aria-labelledby="n5-make-t n5-make-d">
+              <svg class="vz-svg" viewBox="0 0 360 392" role="img" aria-labelledby="n5-make-t n5-make-d">
                 <title id="n5-make-t">DBを作って、スコアを保存するまで</title>
-                <desc id="n5-make-d">1 最初に.gitignoreを作り、.envなどを書く。2 アカウントなしで一時的なDBを作る（neon claim create --env-pull。72時間で期限切れ）。3 エージェントにscores.jsを頼む。4 書かれたコードを読んでから実行し、接続文字列が直書きでないか確認する。5 新しいターミナルで再実行して、スコアが残るか確かめる。</desc>
-                <rect class="box-green box-key" x="8" y="6" width="344" height="54" rx="10"/>
-                <text class="t-b" x="22" y="28">1 .gitignoreを先に作る</text>
-                <text class="t-sm" x="22" y="47">.env・.env.local・node_modulesを書く</text>
-                <line class="line" x1="180" y1="62" x2="180" y2="78" marker-end="url(#mk-s)"/>
-                <rect class="box-green" x="8" y="80" width="344" height="68" rx="10"/>
-                <text class="t-b" x="22" y="102">2 一時的なDBを作る</text>
-                <text class="t-sm" x="22" y="121">neon claim create --env-pull</text>
-                <text class="t-sm" x="22" y="138">アカウント不要・72時間で期限切れ</text>
-                <line class="line" x1="180" y1="150" x2="180" y2="166" marker-end="url(#mk-s)"/>
-                <rect class="box-green" x="8" y="168" width="344" height="54" rx="10"/>
-                <text class="t-b" x="22" y="190">3 エージェントにscores.jsを頼む</text>
-                <text class="t-sm" x="22" y="209">接続は、.envのDATABASE_URLを使う</text>
-                <line class="line" x1="180" y1="224" x2="180" y2="240" marker-end="url(#mk-s)"/>
-                <rect class="box-green" x="8" y="242" width="344" height="54" rx="10"/>
-                <text class="t-b" x="22" y="264">4 書かれたコードを読んでから実行</text>
-                <text class="t-sm" x="22" y="283">接続文字列が直書きでないか確認</text>
-                <line class="line" x1="180" y1="298" x2="180" y2="314" marker-end="url(#mk-s)"/>
-                <rect class="box-green" x="8" y="316" width="344" height="54" rx="10"/>
-                <text class="t-b" x="22" y="338">5 スコアが残るか確かめる</text>
-                <text class="t-sm" x="22" y="357">新しいターミナルで再実行（再開しても残る）</text>
+                <desc id="n5-make-d">1 最初に.gitignoreと空の.envを作る（.envなどを.gitignoreに書く。空の.envがないと、接続文字列は.env.localに書かれる）。2 アカウントなしで一時的なDBを作る（neon claim create --env-pull。72時間で期限切れ）。3 エージェントにscores.jsを頼む。4 書かれたコードを読んでから実行し、接続文字列が直書きでないか確認する。5 新しいターミナルで再実行して、スコアが残るか確かめる（時間があれば、Codespaceを再開しても確かめる）。</desc>
+                <rect class="box-green box-key" x="8" y="6" width="344" height="70" rx="10"/>
+                <text class="t-b" x="22" y="28">1 .gitignoreと、空の.envを先に作る</text>
+                <text class="t-sm" x="22" y="47">.env・.env.local・node_modulesを.gitignoreに書く</text>
+                <text class="t-sm" x="22" y="64">空の.envも作る（なければ.env.localに書かれる）</text>
+                <line class="line" x1="180" y1="78" x2="180" y2="94" marker-end="url(#mk-s)"/>
+                <rect class="box-green" x="8" y="96" width="344" height="68" rx="10"/>
+                <text class="t-b" x="22" y="118">2 一時的なDBを作る</text>
+                <text class="t-sm" x="22" y="137">neon claim create --env-pull</text>
+                <text class="t-sm" x="22" y="154">アカウント不要・72時間で期限切れ</text>
+                <line class="line" x1="180" y1="166" x2="180" y2="182" marker-end="url(#mk-s)"/>
+                <rect class="box-green" x="8" y="184" width="344" height="54" rx="10"/>
+                <text class="t-b" x="22" y="206">3 エージェントにscores.jsを頼む</text>
+                <text class="t-sm" x="22" y="225">接続は、.envのDATABASE_URLを使う</text>
+                <line class="line" x1="180" y1="240" x2="180" y2="256" marker-end="url(#mk-s)"/>
+                <rect class="box-green" x="8" y="258" width="344" height="54" rx="10"/>
+                <text class="t-b" x="22" y="280">4 書かれたコードを読んでから実行</text>
+                <text class="t-sm" x="22" y="299">接続文字列が直書きでないか確認</text>
+                <line class="line" x1="180" y1="314" x2="180" y2="330" marker-end="url(#mk-s)"/>
+                <rect class="box-green" x="8" y="332" width="344" height="54" rx="10"/>
+                <text class="t-b" x="22" y="354">5 スコアが残るか確かめる</text>
+                <text class="t-sm" x="22" y="373">新しいターミナルで再実行（時間があれば再開も）</text>
               </svg>
-              <figcaption>太い枠の1番が、最初にやることです（接続文字列を、誤ってGitHubに載せないための備え）。</figcaption>
+              <figcaption>太い枠の1番が、最初にやることです（接続文字列を、誤ってGitHubに載せないための備え）。Neon CLIの導入や、<code>.gitignore</code>に<code>.env</code>が入っているかの確認は、本文を見てください。</figcaption>
             </figure>
             <p><strong>Codespaceを再開して、作業フォルダを用意する</strong></p>
             <ul>
@@ -242,28 +245,23 @@
             <p><strong>ミッション2: 権限を絞る（最小権限）</strong>（約20分）</p>
             <figure class="vz-fig" aria-labelledby="cap-n5-perm">
               <p class="vz-fig-title" id="cap-n5-perm">接続文字列でできること</p>
-              <svg class="vz-svg" viewBox="0 0 360 332" role="img" aria-labelledby="n5-perm-t n5-perm-d">
+              <svg class="vz-svg" viewBox="0 0 360 224" role="img" aria-labelledby="n5-perm-t n5-perm-d">
                 <title id="n5-perm-t">接続文字列でできること</title>
-                <desc id="n5-perm-d">持ち主の鍵であるDATABASE_URLでは、読む、足す、消すがすべてできる。読み取り専用の鍵（READONLY_DATABASE_URL）では、読むだけができ、足すと消すはできない。接続文字列が漏れたら、パスワードを変える（ローテーション）。一時プロジェクトは作り直して捨てる手もある。Publicのリポジトリにpushしてしまったら、すぐにパスワードを変える。</desc>
+                <desc id="n5-perm-d">持ち主の鍵であるDATABASE_URLでは、読む、足す、消すがすべてできる。読み取り専用の鍵（名前の例はREADONLY_DATABASE_URL）では、読むだけができ、足すと消すはできない。</desc>
                 <rect class="box-green" x="8" y="6" width="344" height="100" rx="10"/>
                 <text class="t-b" x="22" y="34">持ち主の鍵</text>
                 <text class="t-sm" x="22" y="54">DATABASE_URL</text>
-                <text class="" x="210" y="36">SELECT（読む）　○</text>
-                <text class="" x="210" y="56">INSERT（足す）　○</text>
-                <text class="" x="210" y="76">DELETE（消す）　○</text>
+                <text x="210" y="36">SELECT（読む）　○</text>
+                <text x="210" y="56">INSERT（足す）　○</text>
+                <text x="210" y="76">DELETE（消す）　○</text>
                 <rect class="box-white box-key" x="8" y="116" width="344" height="100" rx="10"/>
                 <text class="t-b" x="22" y="144">読み取り専用の鍵</text>
                 <text class="t-sm" x="22" y="164">READONLY_DATABASE_URL</text>
-                <text class="" x="210" y="146">SELECT（読む）　○</text>
-                <text class="" x="210" y="166">INSERT（足す）　×</text>
-                <text class="" x="210" y="186">DELETE（消す）　×</text>
-                <rect class="box-white" x="8" y="232" width="344" height="92" rx="10"/>
-                <text class="t-b" x="22" y="256">漏れたらどうする？</text>
-                <text class="t-sm" x="22" y="276">パスワードを変える（ローテーション）</text>
-                <text class="t-sm" x="22" y="294">一時プロジェクトは作り直して捨てる手もある</text>
-                <text class="t-sm" x="22" y="312">Publicにpushしたら、すぐにパスワードを変える</text>
+                <text x="210" y="146">SELECT（読む）　○</text>
+                <text x="210" y="166">INSERT（足す）　×</text>
+                <text x="210" y="186">DELETE（消す）　×</text>
               </svg>
-              <figcaption>○はできる、×はできない、です。必要な権限だけを与えるのが、最小権限の考え方です。</figcaption>
+              <figcaption>○はできる、×はできない、です。鍵を絞るには、GRANTで必要な権限だけを与えます（鍵の名前は例です）。</figcaption>
             </figure>
             <ul>
               <li>エージェントに頼む（例）: <code>scoresテーブルを読むだけの、読み取り専用ロールreadonly_userを作ってください。そのロールの接続文字列で、SELECTはできて、INSERTとDELETEは失敗することを確かめてください</code></li>
@@ -273,6 +271,25 @@
               <li>うまくいかない場合は、エラー全文をエージェントに貼って原因を聞くか、講師のデモで確認する</li>
             </ul>
             <p><strong>ミッション3: 漏れたらどうするか</strong>（約10分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-n5-leak">
+              <p class="vz-fig-title" id="cap-n5-leak">漏れたらどうするか</p>
+              <svg class="vz-svg" viewBox="0 0 360 260" role="img" aria-labelledby="n5-leak-t n5-leak-d">
+                <title id="n5-leak-t">漏れたらどうするか</title>
+                <desc id="n5-leak-d">接続文字列が漏れたら、パスワードを変える（ローテーション）ことで使えなくする。アカウントのない一時プロジェクトでは、SQLでパスワードを変えるか、作り直して捨てる。コンソールで変えられるのは、claimしたあと。Publicのリポジトリにpushしたら、誰でも読めるので消しても遅いと考え、すぐにパスワードを変える。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="62" rx="10"/>
+                <text class="t-b" x="22" y="30">パスワードを変える（ローテーション）</text>
+                <text class="t-sm" x="22" y="50">漏れた接続文字列を、使えなくする</text>
+                <rect class="box-white" x="8" y="78" width="344" height="82" rx="10"/>
+                <text class="t-b" x="22" y="102">アカウントのない一時プロジェクトの場合</text>
+                <text class="t-sm" x="22" y="122">SQLでパスワードを変えるか、作り直して捨てる</text>
+                <text class="t-sm" x="22" y="140">※コンソールで変えられるのは、claimしたあと</text>
+                <rect class="box-white box-key" x="8" y="170" width="344" height="82" rx="10"/>
+                <text class="t-b" x="22" y="194">Publicのリポジトリにpushしたら</text>
+                <text class="t-sm" x="22" y="214">誰でも読める。消しても遅いと考える</text>
+                <text class="t-sm" x="22" y="232">→ すぐにパスワードを変える</text>
+              </svg>
+              <figcaption>最初の<code>.gitignore</code>が大事になるのは、この「消しても遅い」があるからです。</figcaption>
+            </figure>
             <ul>
               <li><strong>パスワードを変える</strong>（ローテーション）ことで、漏れた接続文字列を無効にする。Neonの公式には、コンソールの「Reset password」またはSQLの<code>ALTER USER … WITH PASSWORD</code>で変えられると書かれている（<a href="https://neon.com/docs/manage/roles" target="_blank" rel="noopener">Manage roles</a>）。アカウントのない一時プロジェクトでは、コンソールはまだ使えない可能性が高いので、SQLで変えるか、<strong>作り直して捨てる</strong>のが手。コンソールの「Reset password」は、自分のアカウントに引き継いだ（claimした）あとの選択肢になる</li>
               <li>もしPublicのリポジトリに接続文字列をpushしてしまったら、<strong>誰でも読める</strong>うえ、履歴・フォーク・他人のコピーに残りうるため、<strong>消しても遅い</strong>と考えて、すぐにパスワードを変える。だから<strong>最初の<code>.gitignore</code></strong>が大事になる</li>
@@ -327,7 +344,7 @@
                 <text class="t-c t-sm" x="180" y="248">途中でクレジットカードの入力を</text>
                 <text class="t-c t-sm" x="180" y="266">求められたら、進まずに講師に声をかける</text>
               </svg>
-              <figcaption>引き継ぎは任意です。引き継がないなら、72時間後に消えることを理解しておけば十分です。</figcaption>
+              <figcaption>引き継ぎは任意です。引き継がないなら、72時間後に消えることを理解しておけば十分です。Codespaceで引き継ぐときは、<code>neon claim accept --no-open</code>で表示されたURLを、手元のブラウザで開きます。</figcaption>
             </figure>
             <ul>
               <li>72時間で消える一時プロジェクトを残したい人は、<code>neon claim accept</code>で自分のNeonアカウントに<strong>引き継ぐ（claim）</strong>。このコマンドは、既定ではブラウザを開こうとする。Codespaceでは開かないので、<code>neon claim accept --no-open</code>と実行して<strong>表示されたURLを手元のブラウザで開く</strong>（<a href="https://neon.com/docs/cli/claim" target="_blank" rel="noopener">claim（Neon公式）</a>）</li>
