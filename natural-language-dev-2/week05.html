@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-  <link rel="stylesheet" href="../styles.css?v=5">
+  <link rel="stylesheet" href="../styles.css?v=9">
   <!-- 公式情報確認: 2026-09-30 (neon.com/pricing / neon.com/docs/reference/claimable-postgres / neon.com/docs/reference/neon-cli / neon.com/docs/connect/connect-from-any-app / neon.com/docs/manage/roles / neon.com/docs/manage/database-access / neon.com/docs/introduction/regions / code.claude.com/docs/en/data-usage / antigravity.google/terms / docs.aws.amazon.com/bedrock/latest/userguide/data-protection.html)。npmレジストリで、旧コマンド`npx neondb`は非推奨（`neon-new`へ改名）、現行のCLIは`neon`パッケージであることを確認。OpenAI Codexの記述は help.openai.com の検索結果抜粋のみが根拠（403で本文未取得）。実機確認（2026-09-30、教員のMacで実施）: `neon claim create --env-pull`はneon loginなしで成功し、.envにDATABASE_URL・DATABASE_URL_UNPOOLED・NEON_BRANCHの3つを書き出した（.gitignoreには.neonのみ追記され、.envは入らなかった）。`node --env-file=.env`＋pgで保存・取得ができ、再実行してもデータが残った。未claimプロジェクトでもCREATE ROLE・GRANT・読み取り専用ロールでのINSERT/DELETE拒否を確認。pgはSSLモードの警告を出すが動作する。未確認（授業前に教員がCodespaceで確認）: Codespace上での`npm i -g neon`の権限・外向き接続、ai-agent各種でのコード生成の再現性、claim後の接続文字列の取り直し手順 -->
 </head>
 <body>
@@ -35,7 +35,14 @@
     </div>
   </header>
 
-  <main class="container syllabus-content">
+  <main class="container syllabus-content theme-green">
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
 
     <div class="lesson-overview">
       <div class="lesson-overview-grid">
@@ -85,6 +92,34 @@
             <ul>
               <li>前回のゲームは、Codespaceを止めると<strong>スコアが消える</strong>。スコアを<strong>クラウドのDB</strong>に残したい——今日はそのための無料の道具を使う</li>
             </ul>
+            <figure class="vz-fig" aria-labelledby="cap-n5-flow">
+              <p class="vz-fig-title" id="cap-n5-flow">データは、どこへ行くのか</p>
+              <svg class="vz-svg" viewBox="0 0 360 336" role="img" aria-labelledby="n5-flow-t n5-flow-d">
+                <title id="n5-flow-t">データは、どこへ行くのか</title>
+                <desc id="n5-flow-d">自分のCodespaceにはスコアを保存するスクリプトのscores.jsと、DBの鍵であるDATABASE_URLを書いた.envがある。Codespaceから、クラウド上のDBであるNeonへは接続文字列でつながり、スコアはCodespaceを止めても残る。AIエージェントの提供元のサーバーへは、指示文と出力が送られ、読ませたファイルも送られうる。.envを読ませると接続文字列も送られうるため、読ませるかどうかは判断が必要。</desc>
+                <rect class="box-green" x="8" y="6" width="344" height="90" rx="10"/>
+                <text class="t-c t-b" x="180" y="28">自分のCodespace（作業の場所）</text>
+                <text class="t-c t-sm" x="180" y="48">scores.js（スコアを保存するスクリプト）</text>
+                <text class="t-c t-sm" x="180" y="66">.env（DATABASE_URL ＝ DBの鍵）</text>
+                <line class="line" x1="92" y1="98" x2="92" y2="148" marker-start="url(#mk-s)" marker-end="url(#mk-s)"/>
+                <line class="line" x1="268" y1="98" x2="268" y2="148" marker-start="url(#mk-s)" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="152" width="168" height="92" rx="10"/>
+                <text class="t-c t-b" x="92" y="174">Neon</text>
+                <text class="t-c t-sm" x="92" y="194">クラウド上のDB</text>
+                <text class="t-c t-sm" x="92" y="211">接続文字列でつなぐ</text>
+                <text class="t-c t-sm" x="92" y="228">止めてもスコアが残る</text>
+                <rect class="box-white" x="184" y="152" width="168" height="92" rx="10"/>
+                <text class="t-c t-b" x="268" y="174">AIエージェント</text>
+                <text class="t-c t-sm" x="268" y="194">（提供元のサーバー）</text>
+                <text class="t-c t-sm" x="268" y="211">指示文・出力が送られる</text>
+                <text class="t-c t-sm" x="268" y="228">読ませたファイルも</text>
+                <rect class="box-white box-key" x="8" y="262" width="344" height="66" rx="10"/>
+                <text class="t-c t-b" x="180" y="284">ここが判断のポイント</text>
+                <text class="t-c t-sm" x="180" y="303">.envをエージェントに読ませると、</text>
+                <text class="t-c t-sm" x="180" y="320">接続文字列も指示文の一部として送られうる</text>
+              </svg>
+              <figcaption>矢印は、データが行き来する向きです。エージェントに何を読ませるかは、自分で判断します。</figcaption>
+            </figure>
             <p><strong>AIエージェントに何が送られるか（教員が要点だけ提示）</strong></p>
             <ul>
               <li>Claude Codeの公式ドキュメントには次のように書かれている（<a href="https://code.claude.com/docs/en/data-usage" target="_blank" rel="noopener">Data usage</a>）:「Claude Code runs locally. To interact with the LLM, Claude Code sends data over the network. This data includes all user prompts and model outputs, encrypted in transit via TLS 1.2+.」——手元で動いていても、<strong>指示文とモデルの出力はネットワーク越しに提供元へ送られる</strong></li>
@@ -92,6 +127,27 @@
               <li>学習への利用・保存期間は、契約の種類で違う。<strong>個人向けプラン</strong>では設定がオンなら学習に使われ、保存も長い（Claudeは設定オンで5年・オフで30日）。<strong>API・Amazon Bedrockなどの商用の経路</strong>では、既定では学習に使われない（公式: 「Anthropic does not train generative models using code or prompts sent to Claude Code under commercial terms, unless the customer has chosen to provide their data to us for model improvement」）。Antigravity CLIは、Gemini Enterprise（Google Cloud）などの組織向け契約や、Gemini Enterprise APIキー経由の場合は、この追加規約ではなく<strong>管理者が承諾した契約が適用される</strong>と書かれている（<a href="https://antigravity.google/terms" target="_blank" rel="noopener">Google Antigravity Additional Terms of Service</a>）。<strong>利用経路によって扱いが変わる</strong>ので、自分の契約を確認する。Codex CLIについては、OpenAIのヘルプセンターで各自が確認する（<a href="https://help.openai.com/en/articles/5722486-how-your-data-is-used-to-improve-model-performance" target="_blank" rel="noopener">How your data is used to improve model performance</a>。教員は本文を直接確認できていないため、必ず各自が公式ページで読む）</li>
               <li>「学習に使われない」だけでは安全とは言えない。<strong>学習に使わない・保存期間を限る・アクセスできる人を限る・契約で扱いを定める</strong>といった、複数の要素の組み合わせ（<strong>データガバナンス</strong>）で「個人情報を扱えるレベルの安全設計」は成り立つ</li>
             </ul>
+            <figure class="vz-fig" aria-labelledby="cap-n5-gov">
+              <p class="vz-fig-title" id="cap-n5-gov">「学習に使われない」だけでは足りない</p>
+              <svg class="vz-svg" viewBox="0 0 360 230" role="img" aria-labelledby="n5-gov-t n5-gov-d">
+                <title id="n5-gov-t">「学習に使われない」だけでは足りない</title>
+                <desc id="n5-gov-d">学習に使わない、保存期間を限る、アクセスできる人を限る、契約で扱いを定める、という要素の例がある。こうした複数の要素を組み合わせたものがデータガバナンスで、個人情報を扱えるレベルの安全設計になる。</desc>
+                <rect class="box-green" x="8" y="6" width="168" height="50" rx="10"/>
+                <text class="t-c" x="92" y="36">学習に使わない</text>
+                <rect class="box-green" x="184" y="6" width="168" height="50" rx="10"/>
+                <text class="t-c" x="268" y="36">保存期間を限る</text>
+                <rect class="box-green" x="8" y="66" width="168" height="50" rx="10"/>
+                <text class="t-c" x="92" y="96">アクセスできる人を限る</text>
+                <rect class="box-green" x="184" y="66" width="168" height="50" rx="10"/>
+                <text class="t-c" x="268" y="96">契約で扱いを定める</text>
+                <line class="line" x1="180" y1="120" x2="180" y2="142" marker-end="url(#mk-s)"/>
+                <rect class="box-white box-key" x="8" y="146" width="344" height="76" rx="10"/>
+                <text class="t-c t-b" x="180" y="170">データガバナンス</text>
+                <text class="t-c t-sm" x="180" y="190">こうした要素を組み合わせて、</text>
+                <text class="t-c t-sm" x="180" y="207">個人情報を扱えるレベルの安全設計になる</text>
+              </svg>
+              <figcaption>上の4つは要素の例です。1つだけでは、安全設計とは言えません。</figcaption>
+            </figure>
             <p><strong>今日使うDB: Neon</strong></p>
             <ul>
               <li><strong>Neon</strong>は、Postgres（表形式のデータベース）のクラウドサービス。公式の料金ページには「Build and learn free with no time limits and no credit card required.」と書かれている（<a href="https://neon.com/pricing" target="_blank" rel="noopener">Pricing（Neon公式）</a>）——<strong>クレジットカードなしで使い始められる</strong></li>
@@ -107,6 +163,34 @@
           </div>
           <h3>アカウントなしでDBを作り、AIエージェントにスコア保存を頼む</h3>
           <div class="timeline-body">
+            <figure class="vz-fig" aria-labelledby="cap-n5-make">
+              <p class="vz-fig-title" id="cap-n5-make">DBを作って、スコアを保存するまで</p>
+              <svg class="vz-svg" viewBox="0 0 360 376" role="img" aria-labelledby="n5-make-t n5-make-d">
+                <title id="n5-make-t">DBを作って、スコアを保存するまで</title>
+                <desc id="n5-make-d">1 最初に.gitignoreを作り、.envなどを書く。2 アカウントなしで一時的なDBを作る（neon claim create --env-pull。72時間で期限切れ）。3 エージェントにscores.jsを頼む。4 書かれたコードを読んでから実行し、接続文字列が直書きでないか確認する。5 新しいターミナルで再実行して、スコアが残るか確かめる。</desc>
+                <rect class="box-green box-key" x="8" y="6" width="344" height="54" rx="10"/>
+                <text class="t-b" x="22" y="28">1 .gitignoreを先に作る</text>
+                <text class="t-sm" x="22" y="47">.env・.env.local・node_modulesを書く</text>
+                <line class="line" x1="180" y1="62" x2="180" y2="78" marker-end="url(#mk-s)"/>
+                <rect class="box-green" x="8" y="80" width="344" height="68" rx="10"/>
+                <text class="t-b" x="22" y="102">2 一時的なDBを作る</text>
+                <text class="t-sm" x="22" y="121">neon claim create --env-pull</text>
+                <text class="t-sm" x="22" y="138">アカウント不要・72時間で期限切れ</text>
+                <line class="line" x1="180" y1="150" x2="180" y2="166" marker-end="url(#mk-s)"/>
+                <rect class="box-green" x="8" y="168" width="344" height="54" rx="10"/>
+                <text class="t-b" x="22" y="190">3 エージェントにscores.jsを頼む</text>
+                <text class="t-sm" x="22" y="209">接続は、.envのDATABASE_URLを使う</text>
+                <line class="line" x1="180" y1="224" x2="180" y2="240" marker-end="url(#mk-s)"/>
+                <rect class="box-green" x="8" y="242" width="344" height="54" rx="10"/>
+                <text class="t-b" x="22" y="264">4 書かれたコードを読んでから実行</text>
+                <text class="t-sm" x="22" y="283">接続文字列が直書きでないか確認</text>
+                <line class="line" x1="180" y1="298" x2="180" y2="314" marker-end="url(#mk-s)"/>
+                <rect class="box-green" x="8" y="316" width="344" height="54" rx="10"/>
+                <text class="t-b" x="22" y="338">5 スコアが残るか確かめる</text>
+                <text class="t-sm" x="22" y="357">新しいターミナルで再実行（再開しても残る）</text>
+              </svg>
+              <figcaption>太い枠の1番が、最初にやることです（接続文字列を、誤ってGitHubに載せないための備え）。</figcaption>
+            </figure>
             <p><strong>Codespaceを再開して、作業フォルダを用意する</strong></p>
             <ul>
               <li>これまでと同じ手順でCodespaceを再開し、新しい作業フォルダ（例: <code>score-db</code>）を作る</li>
@@ -156,6 +240,31 @@
               <li>気づいてほしいこと: <strong>接続文字列を持っている人は、DBの持ち主と同じことができてしまう</strong>。ログインもパスワード入力も、そこには出てこない</li>
             </ul>
             <p><strong>ミッション2: 権限を絞る（最小権限）</strong>（約20分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-n5-perm">
+              <p class="vz-fig-title" id="cap-n5-perm">接続文字列でできること</p>
+              <svg class="vz-svg" viewBox="0 0 360 332" role="img" aria-labelledby="n5-perm-t n5-perm-d">
+                <title id="n5-perm-t">接続文字列でできること</title>
+                <desc id="n5-perm-d">持ち主の鍵であるDATABASE_URLでは、読む、足す、消すがすべてできる。読み取り専用の鍵（READONLY_DATABASE_URL）では、読むだけができ、足すと消すはできない。接続文字列が漏れたら、パスワードを変える（ローテーション）。一時プロジェクトは作り直して捨てる手もある。Publicのリポジトリにpushしてしまったら、すぐにパスワードを変える。</desc>
+                <rect class="box-green" x="8" y="6" width="344" height="100" rx="10"/>
+                <text class="t-b" x="22" y="34">持ち主の鍵</text>
+                <text class="t-sm" x="22" y="54">DATABASE_URL</text>
+                <text class="" x="210" y="36">SELECT（読む）　○</text>
+                <text class="" x="210" y="56">INSERT（足す）　○</text>
+                <text class="" x="210" y="76">DELETE（消す）　○</text>
+                <rect class="box-white box-key" x="8" y="116" width="344" height="100" rx="10"/>
+                <text class="t-b" x="22" y="144">読み取り専用の鍵</text>
+                <text class="t-sm" x="22" y="164">READONLY_DATABASE_URL</text>
+                <text class="" x="210" y="146">SELECT（読む）　○</text>
+                <text class="" x="210" y="166">INSERT（足す）　×</text>
+                <text class="" x="210" y="186">DELETE（消す）　×</text>
+                <rect class="box-white" x="8" y="232" width="344" height="92" rx="10"/>
+                <text class="t-b" x="22" y="256">漏れたらどうする？</text>
+                <text class="t-sm" x="22" y="276">パスワードを変える（ローテーション）</text>
+                <text class="t-sm" x="22" y="294">一時プロジェクトは作り直して捨てる手もある</text>
+                <text class="t-sm" x="22" y="312">Publicにpushしたら、すぐにパスワードを変える</text>
+              </svg>
+              <figcaption>○はできる、×はできない、です。必要な権限だけを与えるのが、最小権限の考え方です。</figcaption>
+            </figure>
             <ul>
               <li>エージェントに頼む（例）: <code>scoresテーブルを読むだけの、読み取り専用ロールreadonly_userを作ってください。そのロールの接続文字列で、SELECTはできて、INSERTとDELETEは失敗することを確かめてください</code></li>
               <li>Neonの公式ドキュメントでは、Postgresでは<strong>データベース・スキーマ・テーブルの各レベルで権限を与える</strong>必要があると説明されている（「access must be granted at the database, schema, and object level」。<a href="https://neon.com/docs/manage/database-access" target="_blank" rel="noopener">Manage database access</a>）。エージェントが書いたSQLを読んで、<code>GRANT CONNECT</code>・<code>GRANT USAGE ON SCHEMA</code>・<code>GRANT SELECT</code>に対応する行があるか探す</li>
@@ -194,6 +303,32 @@
               <li>第3回で扱ったAWSのFree Planは<strong>評価目的に限られ、機微なデータの処理には使わない</strong>とされている（本科目の履修上の注意点）。「安全な設計」でも、<strong>そのアカウントで扱ってよいデータの範囲</strong>は別に決まっている</li>
             </ul>
             <p><strong>DBを自分のものにする（任意、約10分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-n5-claim">
+              <p class="vz-fig-title" id="cap-n5-claim">一時プロジェクトを、自分のものにするには</p>
+              <svg class="vz-svg" viewBox="0 0 360 292" role="img" aria-labelledby="n5-claim-t n5-claim-d">
+                <title id="n5-claim-t">一時プロジェクトを、自分のものにするには</title>
+                <desc id="n5-claim-d">アカウントなしで作った一時プロジェクトは、72時間で期限切れになり、容量は100MBまで。自分のNeonアカウントに引き継ぐ（claim）と、接続文字列が変わるので、.envを書き換える。引き継がない場合は、72時間後に消える。アカウント作成の途中でクレジットカードの入力を求められたら、進まずに講師に声をかける。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="60" rx="10"/>
+                <text class="t-c t-b" x="180" y="30">一時プロジェクト（アカウントなしで作った）</text>
+                <text class="t-c t-sm" x="180" y="50">72時間で期限切れ・容量100MBまで</text>
+                <line class="line" x1="92" y1="68" x2="92" y2="100" marker-end="url(#mk-s)"/>
+                <line class="line" x1="268" y1="68" x2="268" y2="100" marker-end="url(#mk-s)"/>
+                <rect class="box-green" x="8" y="104" width="168" height="104" rx="10"/>
+                <text class="t-c t-b" x="92" y="126">引き継ぐ（claim）</text>
+                <text class="t-c t-sm" x="92" y="146">自分のNeonアカウントへ</text>
+                <text class="t-c t-sm" x="92" y="163">接続文字列が変わる</text>
+                <text class="t-c t-sm" x="92" y="180">.envを書き換える</text>
+                <rect class="box-white" x="184" y="104" width="168" height="104" rx="10"/>
+                <text class="t-c t-b" x="268" y="126">引き継がない</text>
+                <text class="t-c t-sm" x="268" y="146">72時間後に消える</text>
+                <text class="t-c t-sm" x="268" y="163">（それでよければ</text>
+                <text class="t-c t-sm" x="268" y="180">　何もしなくてよい）</text>
+                <rect class="box-white box-key" x="8" y="224" width="344" height="62" rx="10"/>
+                <text class="t-c t-sm" x="180" y="248">途中でクレジットカードの入力を</text>
+                <text class="t-c t-sm" x="180" y="266">求められたら、進まずに講師に声をかける</text>
+              </svg>
+              <figcaption>引き継ぎは任意です。引き継がないなら、72時間後に消えることを理解しておけば十分です。</figcaption>
+            </figure>
             <ul>
               <li>72時間で消える一時プロジェクトを残したい人は、<code>neon claim accept</code>で自分のNeonアカウントに<strong>引き継ぐ（claim）</strong>。このコマンドは、既定ではブラウザを開こうとする。Codespaceでは開かないので、<code>neon claim accept --no-open</code>と実行して<strong>表示されたURLを手元のブラウザで開く</strong>（<a href="https://neon.com/docs/cli/claim" target="_blank" rel="noopener">claim（Neon公式）</a>）</li>
               <li><strong>引き継ぐと、接続文字列（パスワード）が変わる</strong>ため、それまでの<code>.env</code>の値は使えなくなる。引き継いだあとは、Neonのコンソールで新しい接続文字列を取り直し、<code>.env</code>を書き換える</li>
