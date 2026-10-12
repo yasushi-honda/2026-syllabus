@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-  <link rel="stylesheet" href="../styles.css?v=5">
+  <link rel="stylesheet" href="../styles.css?v=8">
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -34,7 +34,14 @@
     </div>
   </header>
 
-  <main class="container syllabus-content">
+  <main class="container syllabus-content theme-purple">
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
 
     <div class="lesson-overview">
       <div class="lesson-overview-grid">
@@ -86,6 +93,33 @@
               <li>これまでと同じ手順で<code>python3 -m http.server 8000</code>を実行し、「ポート」タブ→<strong>「エディターでプレビュー」</strong>（画面アイコン）でSimple Browserを開いておく</li>
             </ul>
             <p><strong>今日の全体像を知る（20分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-a5-day">
+              <p class="vz-fig-title" id="cap-a5-day">今日の流れ</p>
+              <svg class="vz-svg" viewBox="0 0 360 366" role="img" aria-labelledby="a5-day-t a5-day-d">
+                <title id="a5-day-t">今日の流れ</title>
+                <desc id="a5-day-d">1限前半は指示メモを確認し環境を整える。1限後半は指示メモを送りagyの作業を観察する（今日の中心）。2限前半は言ったことと起きたことを比べる。2限後半は成果物を見せ合い気づきをまとめる。最後に次回予告と振り返りを行う。</desc>
+                <rect class="box-purple" x="8" y="6" width="344" height="52" rx="10"/>
+                <text class="t-sm" x="22" y="26">1限 前半（約40分）</text>
+                <text class="" x="22" y="46">指示メモを確認し、環境を整える</text>
+                <line class="line" x1="180" y1="60" x2="180" y2="78" marker-end="url(#mk-s)"/>
+                <rect class="box-purple box-key" x="8" y="80" width="344" height="52" rx="10"/>
+                <text class="t-sm" x="22" y="100">1限 後半（約50分）</text>
+                <text class="t-b" x="22" y="120">指示メモを送り、agyの作業を観察する</text>
+                <line class="line" x1="180" y1="134" x2="180" y2="152" marker-end="url(#mk-s)"/>
+                <rect class="box-purple" x="8" y="154" width="344" height="52" rx="10"/>
+                <text class="t-sm" x="22" y="174">2限 前半（約50分）</text>
+                <text class="" x="22" y="194">「言ったこと」と「起きたこと」を比べる</text>
+                <line class="line" x1="180" y1="208" x2="180" y2="226" marker-end="url(#mk-s)"/>
+                <rect class="box-purple" x="8" y="228" width="344" height="52" rx="10"/>
+                <text class="t-sm" x="22" y="248">2限 後半（約30分）</text>
+                <text class="" x="22" y="268">成果物を見せ合い、気づきをまとめる</text>
+                <line class="line" x1="180" y1="282" x2="180" y2="300" marker-end="url(#mk-s)"/>
+                <rect class="box-purple" x="8" y="302" width="344" height="52" rx="10"/>
+                <text class="t-sm" x="22" y="322">まとめ（約10分）</text>
+                <text class="" x="22" y="342">次回予告と今日の振り返り</text>
+              </svg>
+              <figcaption>太い枠の1限後半が、今日の中心です（うまくできたかより、agyの動きをよく見る）。</figcaption>
+            </figure>
             <ul>
               <li>これまで（第2〜4回）は、既にある自己紹介ページへの<strong>小さな修正</strong>を練習してきた。今日は「agyへの指示メモ」に書いた<strong>まとまった依頼</strong>を初めて送り、agyがどう作業するかをじっくり観察する</li>
               <li><strong>1限後半</strong>: 指示メモを送り、agyの作業の様子を観察する</li>
@@ -114,6 +148,48 @@
               <li><code>plan</code>モードを使わず<code>default</code>モードのまま送った場合は、ファイルを変更する前に<strong>差分が表示されて承認待ちになる</strong>ことがある（第3回で学んだ通り）。止まったように見えても失敗ではないので、内容を確認して承認し、そのまま先に進める</li>
             </ul>
             <p><strong>作業の様子を観察する（25分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-a5-watch">
+              <p class="vz-fig-title" id="cap-a5-watch">指示メモを送ってから、結果を見るまで</p>
+              <svg class="vz-svg" viewBox="0 0 360 592" role="img" aria-labelledby="a5-watch-t a5-watch-d">
+                <title id="a5-watch-t">指示メモを送ってから、結果を見るまで</title>
+                <desc id="a5-watch-d">指示メモをagyに送る前に、planモード（計画を先に見せてもらい、納得してから実行する。使うかは任意）かdefaultモード（ファイルの変更前に差分が出て、承認待ちになることがある。止まって見えても失敗ではない）の、どちらかを選べる。どちらを選んでも、agyの作業に進む。agyの作業は、例として調べる、計画する、ファイルを変更するの順に進む。観察する視点は、どんな順番で作業しているか、途中で質問や確認が入るか、どのファイルがどう変わったかの3つ。できあがった成果物はSimple Browserで見た目を確認する。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="50" rx="10"/>
+                <text class="t-c t-b" x="180" y="28">指示メモ（Googleドキュメント）</text>
+                <text class="t-c t-sm" x="180" y="46">対象・変化・基準が入った指示文</text>
+                <line class="line" x1="180" y1="58" x2="180" y2="72" marker-end="url(#mk-s)"/>
+                <text class="t-sm" x="8" y="88">送る前に、どちらかを選べる（planモードは任意）</text>
+                <rect class="box-white" x="8" y="96" width="292" height="48" rx="10"/>
+                <text class="t-c t-b" x="154" y="116">planモード</text>
+                <text class="t-c t-sm" x="154" y="134">計画を先に見せてもらい、納得してから実行</text>
+                <text class="t-c t-sm" x="154" y="164">または</text>
+                <rect class="box-white" x="8" y="172" width="292" height="60" rx="10"/>
+                <text class="t-c t-b" x="154" y="192">defaultモード</text>
+                <text class="t-c t-sm" x="154" y="209">ファイル変更前に差分が出て、</text>
+                <text class="t-c t-sm" x="154" y="225">承認待ちになることがある（失敗ではない）</text>
+                <polyline class="line" points="300,120 330,120 330,248" marker-end="url(#mk-s)"/>
+                <line class="line" x1="300" y1="202" x2="330" y2="202"/>
+                <rect class="box-purple" x="8" y="252" width="344" height="258" rx="10"/>
+                <text class="t-b" x="22" y="272">agyの作業（例）</text>
+                <rect class="box-white" x="28" y="286" width="304" height="34" rx="8"/>
+                <text class="t-c" x="180" y="309">調べる</text>
+                <line class="line" x1="180" y1="321" x2="180" y2="331" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="28" y="332" width="304" height="34" rx="8"/>
+                <text class="t-c" x="180" y="355">計画する</text>
+                <line class="line" x1="180" y1="367" x2="180" y2="377" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="28" y="378" width="304" height="34" rx="8"/>
+                <text class="t-c" x="180" y="401">ファイルを変更する</text>
+                <line class="band" x1="22" y1="424" x2="338" y2="424"/>
+                <text class="t-b" x="22" y="444">観察する視点</text>
+                <text class="t-sm" x="28" y="464">①どんな順番で作業しているか</text>
+                <text class="t-sm" x="28" y="482">②途中で質問や確認が入るか</text>
+                <text class="t-sm" x="28" y="500">③どのファイルが、どう変わったか</text>
+                <line class="line" x1="180" y1="512" x2="180" y2="530" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="534" width="344" height="50" rx="10"/>
+                <text class="t-c t-b" x="180" y="556">成果物</text>
+                <text class="t-c t-sm" x="180" y="574">Simple Browserで見た目を確認</text>
+              </svg>
+              <figcaption>送る前に、planモード（任意）かdefaultモードかを選びます。どちらでも、agyの作業を①〜③の視点で観察します。作業の順番は、この例どおりとは限りません。</figcaption>
+            </figure>
             <ul>
               <li>agyが実行している間、<strong>起きていることを口に出しながらペアで観察する</strong>。観察の視点:
                 <ul>
@@ -158,6 +234,35 @@
                 </ul>
               </li>
             </ul>
+            <figure class="vz-fig" aria-labelledby="cap-a5-cmp">
+              <p class="vz-fig-title" id="cap-a5-cmp">「言ったこと」と「起きたこと」を比べる</p>
+              <svg class="vz-svg" viewBox="0 0 360 376" role="img" aria-labelledby="a5-cmp-t a5-cmp-d">
+                <title id="a5-cmp-t">「言ったこと」と「起きたこと」を比べる</title>
+                <desc id="a5-cmp-d">①自分が送った指示文、②agyが実際にした作業、③できあがった結果の3つを書き出す。①と③を比べて、ズレがあったかを確認する。ズレがあれば、指示文のどこが曖昧だったか（対象・変化・基準）を考える。そのうえで追加の指示を1つ送る。</desc>
+                <rect class="box-purple" x="8" y="6" width="250" height="54" rx="10"/>
+                <text class="t-b" x="22" y="28">① 自分が送った指示文</text>
+                <text class="t-sm" x="22" y="48">そのまま貼り付ける</text>
+                <line class="line" x1="133" y1="62" x2="133" y2="78" marker-end="url(#mk-s)"/>
+                <rect class="box-purple" x="8" y="82" width="250" height="54" rx="10"/>
+                <text class="t-b" x="22" y="104">② agyが実際にした作業</text>
+                <text class="t-sm" x="22" y="124">見た順番に、短く要約する</text>
+                <line class="line" x1="133" y1="138" x2="133" y2="154" marker-end="url(#mk-s)"/>
+                <rect class="box-purple" x="8" y="158" width="250" height="54" rx="10"/>
+                <text class="t-b" x="22" y="180">③ できあがった結果</text>
+                <text class="t-sm" x="22" y="200">Simple Browserで見た内容</text>
+                <polyline class="line" points="258,33 300,33 300,185 258,185" marker-start="url(#mk-s)" marker-end="url(#mk-s)"/>
+                <text class="t-b" x="310" y="114">比べる</text>
+                <line class="line" x1="133" y1="214" x2="133" y2="232" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="236" width="344" height="68" rx="10"/>
+                <text class="t-c t-b" x="180" y="258">ズレはあった？</text>
+                <text class="t-c t-sm" x="180" y="277">あれば、指示文のどこが曖昧だったか考える</text>
+                <text class="t-c t-sm" x="180" y="294">（対象・変化・基準のどれか）</text>
+                <line class="line" x1="180" y1="306" x2="180" y2="322" marker-end="url(#mk-s)"/>
+                <rect class="box-white box-key" x="8" y="326" width="344" height="42" rx="10"/>
+                <text class="t-c t-b" x="180" y="352">追加の指示を1つ送ってみる</text>
+              </svg>
+              <figcaption>①と③を比べます。「指示を重ねる」やり方は、次回（第6回）でさらに深めます。</figcaption>
+            </figure>
             <p><strong>意図と結果を比べる（15分）</strong></p>
             <ul>
               <li>自分が思っていた通りにできたか、それとも<strong>ズレ</strong>があったかをペアで話し合う</li>
