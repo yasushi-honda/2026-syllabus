@@ -3221,6 +3221,13 @@ main.theme-slate {
 }
 main.theme-slate a.vz-chip:hover { background: #d9e2ea; }
 
+/* プログラム基礎Ⅱなど blue 基調のページでも vz-* を使えるように、main.theme-blue 内では blue 基調に読み替える */
+main.theme-blue {
+  --c-amber: var(--c-blue);
+  --c-amber-soft: var(--c-blue-soft);
+  --c-amber-border: var(--c-blue-border);
+}
+
 main .syllabus-section--nav { padding-top: var(--sp-3); padding-bottom: var(--sp-3); }
 main .syllabus-section--nav .vz-jump { margin: 0; }
 
@@ -3328,6 +3335,8 @@ main .vz-svg .life { stroke: var(--c-slate-border); stroke-width: 1.5; stroke-da
 main .vz-svg .dot { fill: var(--c-slate); }
 main .vz-svg .dot-blue { fill: var(--c-blue); }
 main .vz-svg .dot-orange { fill: var(--c-orange); }
+main .vz-svg .dot-green { fill: var(--c-green); }
+main .vz-svg .dot-purple { fill: var(--c-purple); }
 main .vz-svg .num { fill: var(--c-slate); }
 main .vz-svg .tick { stroke: var(--c-orange); stroke-width: 2; }
 main .vz-shots { display: flex; flex-wrap: wrap; gap: var(--sp-3); justify-content: center; align-items: flex-start; margin: var(--sp-3) 0; }
