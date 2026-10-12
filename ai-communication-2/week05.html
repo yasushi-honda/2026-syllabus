@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-  <link rel="stylesheet" href="../styles.css?v=7">
+  <link rel="stylesheet" href="../styles.css?v=8">
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -97,10 +97,10 @@
               <p class="vz-fig-title" id="cap-a5-day">今日の流れ</p>
               <svg class="vz-svg" viewBox="0 0 360 366" role="img" aria-labelledby="a5-day-t a5-day-d">
                 <title id="a5-day-t">今日の流れ</title>
-                <desc id="a5-day-d">1限前半は環境を整え今日の全体像を知る。1限後半は指示メモを送りagyの作業を観察する（今日の中心）。2限前半は言ったことと起きたことを比べる。2限後半は成果物を見せ合い気づきをまとめる。最後に次回予告と振り返りを行う。</desc>
+                <desc id="a5-day-d">1限前半は指示メモを確認し環境を整える。1限後半は指示メモを送りagyの作業を観察する（今日の中心）。2限前半は言ったことと起きたことを比べる。2限後半は成果物を見せ合い気づきをまとめる。最後に次回予告と振り返りを行う。</desc>
                 <rect class="box-purple" x="8" y="6" width="344" height="52" rx="10"/>
                 <text class="t-sm" x="22" y="26">1限 前半（約40分）</text>
-                <text class="" x="22" y="46">環境を整え、今日の全体像を知る</text>
+                <text class="" x="22" y="46">指示メモを確認し、環境を整える</text>
                 <line class="line" x1="180" y1="60" x2="180" y2="78" marker-end="url(#mk-s)"/>
                 <rect class="box-purple box-key" x="8" y="80" width="344" height="52" rx="10"/>
                 <text class="t-sm" x="22" y="100">1限 後半（約50分）</text>
@@ -150,38 +150,43 @@
             <p><strong>作業の様子を観察する（25分）</strong></p>
             <figure class="vz-fig" aria-labelledby="cap-a5-watch">
               <p class="vz-fig-title" id="cap-a5-watch">指示メモを送ってから、結果を見るまで</p>
-              <svg class="vz-svg" viewBox="0 0 360 480" role="img" aria-labelledby="a5-watch-t a5-watch-d">
+              <svg class="vz-svg" viewBox="0 0 360 572" role="img" aria-labelledby="a5-watch-t a5-watch-d">
                 <title id="a5-watch-t">指示メモを送ってから、結果を見るまで</title>
-                <desc id="a5-watch-d">指示メモをagyに送ると、agyが調べる、計画する、ファイルを変更するの順に作業する。観察の視点は、どんな順番で動くか、途中で質問や確認が入るか、どのファイルが変わったかの3つ。できあがった成果物はSimple Browserで見た目を確認する。planモードでは計画を先に見せてもらい納得してから実行する。defaultモードでは変更前に差分が出て承認待ちになることがあるが、失敗ではない。</desc>
+                <desc id="a5-watch-d">指示メモをagyに送る前に、planモード（計画を先に見せてもらい、納得してから実行する。使うかは任意）か、defaultモード（ファイルの変更前に差分が出て、承認待ちになることがある。止まって見えても失敗ではない）かを選べる。agyの作業は、例として調べる、計画する、ファイルを変更するの順に進む。観察する視点は、どんな順番で作業しているか、途中で質問や確認が入るか、どのファイルがどう変わったかの3つ。できあがった成果物はSimple Browserで見た目を確認する。</desc>
                 <rect class="box-white" x="8" y="6" width="344" height="50" rx="10"/>
                 <text class="t-c t-b" x="180" y="28">指示メモ（Googleドキュメント）</text>
                 <text class="t-c t-sm" x="180" y="46">対象・変化・基準が入った指示文</text>
-                <line class="line" x1="180" y1="58" x2="180" y2="82" marker-end="url(#mk-s)"/>
-                <rect class="box-purple" x="8" y="86" width="344" height="190" rx="10"/>
-                <text class="t-b" x="22" y="106">agyの作業を観察する</text>
-                <rect class="box-white" x="28" y="120" width="184" height="36" rx="8"/>
-                <text class="t-c" x="120" y="143">調べる</text>
-                <line class="line" x1="120" y1="158" x2="120" y2="170" marker-end="url(#mk-s)"/>
-                <rect class="box-white" x="28" y="172" width="184" height="36" rx="8"/>
-                <text class="t-c" x="120" y="195">計画する</text>
-                <line class="line" x1="120" y1="210" x2="120" y2="222" marker-end="url(#mk-s)"/>
-                <rect class="box-white" x="28" y="224" width="184" height="36" rx="8"/>
-                <text class="t-c" x="120" y="247">ファイルを変更する</text>
-                <text class="t-sm" x="222" y="143">①この順番で動く</text>
-                <text class="t-sm" x="222" y="195">②途中で質問は？</text>
-                <text class="t-sm" x="222" y="247">③どのファイルが？</text>
-                <line class="line" x1="180" y1="278" x2="180" y2="298" marker-end="url(#mk-s)"/>
-                <rect class="box-white" x="8" y="302" width="344" height="50" rx="10"/>
-                <text class="t-c t-b" x="180" y="324">成果物</text>
-                <text class="t-c t-sm" x="180" y="342">Simple Browserで見た目を確認</text>
-                <rect class="box-white" x="8" y="368" width="344" height="48" rx="10"/>
-                <text class="t-c t-b" x="180" y="390">planモード</text>
-                <text class="t-c t-sm" x="180" y="407">計画を先に見せてもらい、納得してから実行</text>
-                <rect class="box-white" x="8" y="424" width="344" height="48" rx="10"/>
-                <text class="t-c t-b" x="180" y="446">defaultモード</text>
-                <text class="t-c t-sm" x="180" y="463">変更前に差分が出て承認待ちに（失敗ではない）</text>
+                <line class="line" x1="180" y1="58" x2="180" y2="72" marker-end="url(#mk-s)"/>
+                <text class="t-sm" x="8" y="88">送る前に、モードを選べる（planモードは任意）</text>
+                <rect class="box-white" x="8" y="96" width="344" height="48" rx="10"/>
+                <text class="t-c t-b" x="180" y="116">planモード</text>
+                <text class="t-c t-sm" x="180" y="134">計画を先に見せてもらい、納得してから実行</text>
+                <rect class="box-white" x="8" y="152" width="344" height="58" rx="10"/>
+                <text class="t-c t-b" x="180" y="172">defaultモード</text>
+                <text class="t-c t-sm" x="180" y="189">変更前に差分が出て、承認待ちになることがある</text>
+                <text class="t-c t-sm" x="180" y="205">（止まって見えても失敗ではない）</text>
+                <line class="line" x1="180" y1="212" x2="180" y2="228" marker-end="url(#mk-s)"/>
+                <rect class="box-purple" x="8" y="232" width="344" height="258" rx="10"/>
+                <text class="t-b" x="22" y="252">agyの作業（例）</text>
+                <rect class="box-white" x="28" y="266" width="304" height="34" rx="8"/>
+                <text class="t-c" x="180" y="289">調べる</text>
+                <line class="line" x1="180" y1="301" x2="180" y2="311" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="28" y="312" width="304" height="34" rx="8"/>
+                <text class="t-c" x="180" y="335">計画する</text>
+                <line class="line" x1="180" y1="347" x2="180" y2="357" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="28" y="358" width="304" height="34" rx="8"/>
+                <text class="t-c" x="180" y="381">ファイルを変更する</text>
+                <line class="band" x1="22" y1="404" x2="338" y2="404"/>
+                <text class="t-b" x="22" y="424">観察する視点</text>
+                <text class="t-sm" x="28" y="444">①どんな順番で作業しているか</text>
+                <text class="t-sm" x="28" y="462">②途中で質問や確認が入るか</text>
+                <text class="t-sm" x="28" y="480">③どのファイルが、どう変わったか</text>
+                <line class="line" x1="180" y1="492" x2="180" y2="510" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="514" width="344" height="50" rx="10"/>
+                <text class="t-c t-b" x="180" y="536">成果物</text>
+                <text class="t-c t-sm" x="180" y="554">Simple Browserで見た目を確認</text>
               </svg>
-              <figcaption>①〜③が、下の「観察の視点」です。送る前に、planモード（計画を先に見る）かdefaultモードかを選べます。</figcaption>
+              <figcaption>送る前にモードを選び（planモードは任意）、agyの作業を①〜③の視点で観察します。作業の順番は、この例どおりとは限りません。</figcaption>
             </figure>
             <ul>
               <li>agyが実行している間、<strong>起きていることを口に出しながらペアで観察する</strong>。観察の視点:
@@ -231,7 +236,7 @@
               <p class="vz-fig-title" id="cap-a5-cmp">「言ったこと」と「起きたこと」を比べる</p>
               <svg class="vz-svg" viewBox="0 0 360 376" role="img" aria-labelledby="a5-cmp-t a5-cmp-d">
                 <title id="a5-cmp-t">「言ったこと」と「起きたこと」を比べる</title>
-                <desc id="a5-cmp-d">1 自分が送った指示文、2 agyが実際にした作業、3 できあがった結果の3つを書き出す。1と3を比べて、ズレがあったかを確認する。ズレがあれば、指示文のどこが曖昧だったか（対象・変化・基準）を考える。そのうえで追加の指示を1つ送る。</desc>
+                <desc id="a5-cmp-d">①自分が送った指示文、②agyが実際にした作業、③できあがった結果の3つを書き出す。①と③を比べて、ズレがあったかを確認する。ズレがあれば、指示文のどこが曖昧だったか（対象・変化・基準）を考える。そのうえで追加の指示を1つ送る。</desc>
                 <rect class="box-purple" x="8" y="6" width="250" height="54" rx="10"/>
                 <text class="t-b" x="22" y="28">① 自分が送った指示文</text>
                 <text class="t-sm" x="22" y="48">そのまま貼り付ける</text>

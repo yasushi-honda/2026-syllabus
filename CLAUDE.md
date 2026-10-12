@@ -246,7 +246,7 @@ content/                # Markdownソース（コピーボタン用。全HTMLペ
 
 - **共通ルール**: ①SVGは `role="img"` + `<title>` + `<desc>`、画像は `alt` を必ず付ける ②色だけで意味を伝えない（文字ラベルを併記する）③375〜390px幅で横スクロールが出ないこと、文字が実寸で約11px以上あることを、Playwrightで確認する（viewBox幅360のSVGは幅が縮むと文字も縮むため、`main.theme-blue` / `main.theme-purple` ではスマホ幅だけ余白を詰めて文字を大きくしている） ④図の内容（回の番号・テーマ名・機能名）は親ページ・他の週ページと突き合わせ、comment-analyzerに依頼する
 - **テーマ色**: `vz-*` は amber 基調。`main.theme-slate`（秋の集中講座）／`main.theme-blue`（プログラム基礎Ⅱ）／`main.theme-purple`（AIコミュニケーション基礎Ⅱ）のように、`<main>` にクラスを付けて読み替える。**新しい色の科目で使うときは `styles.css` に読み替え（`main.theme-xxx`）を追加する**。丸点の色は `.dot` / `.dot-blue` / `.dot-orange`（白い数字を載せるので、コントラスト4.5:1以上の色だけ使う。`--c-green` は4.36:1で不足）。**`main.theme-slate` 専用のセレクタ（`.vz-field ul` など）もあるため、blue基調のページで SVG（`.vz-svg`）・`vz-fig`・`vz-flow` 以外の `vz-*` 部品を使うときは表示を確認する**
-- **CSSを触ったとき**: 週ページ側の `styles.css?v=N` を上げると、古いキャッシュを待たずに反映できる（`styles.css` を変えるたびに連番を上げる。現在の最新は `?v=7`）
+- **CSSを触ったとき**: 週ページ側の `styles.css?v=N` を上げると、古いキャッシュを待たずに反映できる（`styles.css` を変えるたびに連番を上げる。現在の最新は `?v=8`）
 
 ### 時間配分（固定・絶対厳守）
 
