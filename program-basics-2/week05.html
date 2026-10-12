@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第5回 後期テーマ選択＆企画 | プログラム基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=5">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <!-- 公式情報確認: 2026-10-12（参考リンクのMDN 3ページの生存とタイトルを確認。外部サービスの操作手順は扱わない） -->
+  <header class="page-header page-header--blue">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../program-basics-2.html">プログラム基礎 II</a>
+        <span>/</span>
+        <span>第5回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">後期テーマ選択<wbr>＆企画</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 5</span>
+            <span class="page-badge">火曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content">
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">後期に作る作品のジャンル（<strong>ゲーム制作</strong>か<strong>ECサイト制作</strong>）を選び、<strong>企画シート</strong>（画面構成・必要な機能の洗い出し）を作る</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">ジャンル選択 / 企画シート / 画面構成 / 機能の洗い出し / 必須とできれば</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">前期から使っているGitHubリポジトリとCodespaces。予習は必須ではないが、<strong>好きなゲームや、よく見るネットショップの画面</strong>を思い浮かべておくと選びやすい</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>ゲーム制作かECサイト制作のどちらかを選び、<strong>選んだ理由</strong>を自分の言葉で言える</li>
+        <li>作品の<strong>画面構成</strong>を、画面ごとに「何を表示するか」として書き出せる</li>
+        <li>必要な機能を洗い出し、<strong>「必須」と「できれば」</strong>に分けられる</li>
+        <li>企画シートを<code>plan.md</code>としてリポジトリに保存し、commit・pushできる</li>
+        <li>企画をAIに見てもらい、指摘ごとに<strong>採用・不採用とその理由</strong>を記録できる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>後期のゴールを確認し、2つのジャンルを比べて選ぶ</h3>
+          <div class="timeline-body">
+            <p><strong>ここまでの4回と、これからの流れを確認する（10分）</strong></p>
+            <ul>
+              <li>第1回で示した後期のゴールを思い出す——<strong>ゲーム制作かECサイト制作を選んで、1つの作品を完成させる</strong></li>
+              <li>第2〜4回で学んだ<strong>オブジェクトと配列</strong>、<strong>フォーム入力</strong>、<strong><code>localStorage</code>での保存</strong>は、この作品を作るための部品だったことを確認する</li>
+              <li>今日は企画の回で、本格的な制作は第8回から始まる。今日決めた企画が、第8・9・11回の「何を作るか」になる</li>
+            </ul>
+            <p><strong>2つのジャンルを比べる（15分）</strong></p>
+            <ul>
+              <li><strong>ゲーム制作</strong>——ルールを決めて、動かして遊べるものを作る。第8〜11回の流れは次のとおり
+                <ul>
+                  <li>第8回: 盤面・キャラクター表示</li>
+                  <li>第9回: 当たり判定・スコア計算</li>
+                  <li>第11回: レベルアップ・タイマー</li>
+                </ul>
+              </li>
+              <li><strong>ECサイト制作</strong>——商品のデータを並べて見せ、選んだ商品を計算する。第8〜11回の流れは次のとおり
+                <ul>
+                  <li>第8回: 商品一覧表示</li>
+                  <li>第9回: カート追加・合計金額計算</li>
+                  <li>第11回: 検索・絞り込み</li>
+                </ul>
+              </li>
+              <li>どちらも、第2〜4回の部品を使う。<strong>オブジェクトの配列</strong>は「キャラクターや商品のデータ」に、<strong>フォーム</strong>は「名前の入力や検索欄」に、<strong><code>localStorage</code></strong>は「ハイスコアやカートの保存」に使える</li>
+            </ul>
+            <p><strong>自分のジャンルを選ぶ（15分）</strong></p>
+            <ul>
+              <li>次の3つの問いに、自分の答えをメモする
+                <ul>
+                  <li>作っている途中で、どちらのほうが「続けたい」と思えそうか</li>
+                  <li>どちらのほうが、最後まで完成させるイメージが持てるか</li>
+                  <li>完成したら、誰に見せたいか</li>
+                </ul>
+              </li>
+              <li>メモをもとに、ジャンルを1つ選ぶ。<strong>迷ったら講師に相談する</strong>（親ページの履修上の注意点のとおり）</li>
+              <li>選んだジャンルを、隣の人に「どちらを選んだか」「その理由」の2点だけ伝える</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>作品のアイデアを出し、画面構成と必要な機能を書き出す</h3>
+          <div class="timeline-body">
+            <p><strong>作りたい作品を出して、1つに絞る（15分）</strong></p>
+            <ul>
+              <li>選んだジャンルで、作りたい作品のアイデアを3つ書き出し、その中から1つ選ぶ</li>
+              <li>絞るときの基準は「<strong>1行で説明できるか</strong>」と「<strong>第8・9・11回の3回の授業で作れそうな大きさか</strong>」の2つ。大きすぎるアイデアは、いちばん面白い部分だけに小さくする</li>
+              <li>例（ゲーム）: もぐらたたき——穴からもぐらが出てきて、クリックするとスコアが増える</li>
+              <li>例（ECサイト）: 架空の雑貨店——商品を一覧で見て、カートに入れると合計金額が出る</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>ECサイトは架空のお店にする:</strong> 作品はGitHub Pagesで公開されます。実在のお店やブランドの名前、商品の写真をそのまま使わず、お店の名前も商品も自分で考えたものにしてください。商品の画像は、絵文字や色つきの四角で代用してかまいません。
+            </div>
+            <p><strong>画面構成を書く（20分）</strong></p>
+            <ul>
+              <li>作品に出てくる<strong>画面ごとに「何が表示されるか」と「何を押せるか」</strong>を書く。画面が1つだけの作品なら、1つでよい</li>
+              <li>文字で書く簡単な図でよい。きれいな絵は不要で、<strong>どこに何があるか</strong>が分かればよい。紙に描いてもよいが、最終的には次の時間の<code>plan.md</code>に文字で写す</li>
+              <li>文字で書く図の例（もぐらたたき）:
+<pre><code>[ もぐらたたき ]
+スコア: 3
+[穴1] [穴2] [穴3]
+[穴4] [穴5] [穴6]
+[ はじめる ]</code></pre>
+              </li>
+              <li>文字で書く図の例（架空の雑貨店）:
+<pre><code>[ ミニ雑貨店 ]
+[ 検索欄 ]
+[商品カード] [商品カード] [商品カード]
+  名前 / 価格 / [カートに入れる]
+カート: 2点  合計 1,200円</code></pre>
+              </li>
+              <li>この図は、第6回（CSS発展：レイアウトを整える）で<strong>Grid/Flexboxを使って実際に組む</strong>画面の設計図になる</li>
+            </ul>
+            <p><strong>必要な機能を洗い出し、「必須」と「できれば」に分ける（15分）</strong></p>
+            <ul>
+              <li>機能は「<strong>ユーザーが何をすると、何が起きるか</strong>」の形で書く
+                <ul>
+                  <li>ゲームの例: 穴をクリックするとモグラが消えて、スコアが1増える</li>
+                  <li>ECサイトの例: 「カートに入れる」を押すと、カートの点数と合計金額が増える</li>
+                </ul>
+              </li>
+              <li>書き出した機能を、次の2つに分ける
+                <ul>
+                  <li><strong>必須</strong>: これがないと作品として成り立たないもの</li>
+                  <li><strong>できれば</strong>: 時間が余ったら足すもの</li>
+                </ul>
+              </li>
+              <li>分けるときは、第8回で作る部分（ゲームなら盤面・キャラクター表示、ECサイトなら商品一覧表示）が<strong>必須の先頭に入っているか</strong>を確認する</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>企画シート<code>plan.md</code>を作り、制作の予定まで書く</h3>
+          <div class="timeline-body">
+            <p><strong>Codespacesで<code>plan.md</code>を作る（10分）</strong></p>
+            <ul>
+              <li>前期から使っているリポジトリをCodespacesで開く（再開でよい）</li>
+              <li>リポジトリの一番上のフォルダに、新規ファイル<code>plan.md</code>を作り、下の雛形を貼り付けて保存する
+                <button class="copy-md-btn" data-md-source="plan-md-template">
+                  <span class="btn-icon"></span> plan.mdの雛形をコピー
+                </button>
+<pre id="plan-md-template" class="md-preview"># 後期作品 企画シート
+
+## 1. 基本情報
+- ジャンル: ゲーム / ECサイト（どちらかを残す）
+- 作品名:
+- ひとこと説明（どんな作品？）:
+- このジャンルを選んだ理由:
+
+## 2. 画面構成
+画面ごとに「何が表示されるか」「何を押せるか」を書く。
+
+### 画面1:
+- 表示するもの:
+- ボタンや入力欄:
+
+## 3. 必要な機能
+「〜すると、〜になる」の形で書く。
+
+### 必須（これがないと作品にならない）
+- [ ]
+
+### できれば（時間が余ったら）
+- [ ]
+
+## 4. 持つデータ
+どんな情報をひとまとめ（オブジェクト）にするか。
+- データの例（ゲームならキャラクター、ECサイトなら商品）:
+- localStorageに保存するもの:
+
+## 5. 制作の予定
+- 第8回（基礎機能）:
+- 第9回（インタラクション）:
+- 第11回（仕上げ機能）:
+
+## 6. AIメモ
+AIに企画を見てもらい、指摘ごとに採用するかどうかと理由を書く。
+
+| AIの指摘 | 採用 / 不採用 | 理由 |
+| --- | --- | --- |
+|  |  |  |</pre>
+              </li>
+              <li><code>plan.md</code>はMarkdownという書き方のメモ用ファイル。見出しは<code>#</code>、箇条書きは<code>-</code>で書く。今日は形式を気にせず、雛形の空欄を埋めればよい</li>
+            </ul>
+            <p><strong>雛形の空欄を埋める（30分）</strong></p>
+            <ul>
+              <li>1限で考えた内容を、上の項目から順に書き写す。足りない部分はここで考えて足す</li>
+              <li><strong>「4. 持つデータ」</strong>は第2回で学んだオブジェクトで考える
+                <ul>
+                  <li>ゲームの例: キャラクターは<code>{ name: "もぐら", point: 1 }</code>のようにまとめる。あわせて、盤面（例: 6つの穴の並び）やスコアのように、<strong>第8・9回で必要になるデータ</strong>も書く</li>
+                  <li>ECサイトの例: 商品は<code>{ name: "マグカップ", price: 600 }</code>のようにまとめる</li>
+                </ul>
+              </li>
+              <li><strong><code>localStorage</code>に保存するもの</strong>は、第4回で学んだ「保存できる作品」の考え方で決める（例: ハイスコア、カートの中身）。保存するものがなければ「なし」でよい</li>
+              <li><strong>「5. 制作の予定」</strong>は、1限で分けた機能を第8・9・11回に振り分ける。親ページの予定（第8回は基礎機能、第9回はインタラクション、第11回は仕上げ機能）に合わせる</li>
+            </ul>
+            <p><strong>自分でチェックする（10分）</strong></p>
+            <ul>
+              <li>「第8回に最初に作る部分」が、具体的に書けているか</li>
+              <li>「必須」の機能が、第8・9・11回の授業で作れる量に収まっているか。多すぎると感じたら、いくつかを「できれば」に移す</li>
+              <li>画面構成に書いたボタンや入力欄が、機能の一覧に1つ以上対応しているか</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>AIに企画を見てもらい、指摘を採用・不採用に分けて記録する</h3>
+          <div class="timeline-body">
+            <p><strong>AIに企画のレビューを頼む（10分）</strong></p>
+            <ul>
+              <li>前期から使っているAIチャット（Copilot Chatなど）が使える人は、<code>plan.md</code>の内容を貼り付けて、下の依頼文で見てもらう。<strong>先に自分で書いてから</strong>AIに見せるのがこの回のルール
+                <button class="copy-md-btn" data-md-source="ai-review-prompt">
+                  <span class="btn-icon"></span> 依頼文をコピー
+                </button>
+<pre id="ai-review-prompt" class="md-preview">次の企画シートを読んで、次の3点を教えてください。コードは書かないでください。
+1. 授業3回分（各180分）で作るには大きすぎる点
+2. 抜けている画面や機能
+3. 分かりにくい書き方
+
+（ここに plan.md の内容を貼り付ける）</pre>
+              </li>
+              <li>AIが使えない人は、隣の人に<code>plan.md</code>を読んでもらい、同じ3点を口頭で指摘してもらう</li>
+            </ul>
+            <p><strong>指摘を採用するか決めて、理由を記録する（15分）</strong></p>
+            <ul>
+              <li>指摘を1つずつ読み、<code>plan.md</code>の「6. AIメモ」の表に<strong>「採用」か「不採用」と、その理由</strong>を書く。不採用でも理由を書く</li>
+              <li>AIは、自分の技術や授業の残り時間を知らない。そのため<strong>指摘をそのまま受け入れず</strong>、「自分の作品に本当に必要か」「授業で作れるか」で判断する</li>
+              <li>採用した指摘は、<code>plan.md</code>の該当する項目も書き直す</li>
+              <li>この記録は、評価の「AIの批判的活用」（採用・不採用の理由が記録されているか）にそのままつながる</li>
+            </ul>
+            <p><strong>commit・pushする（5分）</strong></p>
+            <ul>
+              <li>前期第4回と同じ手順で、<code>plan.md</code>を<code>commit</code>・<code>push</code>する（コミットメッセージ例: <code>後期作品の企画シートを追加</code>）</li>
+              <li>リポジトリがPublicなら、<code>plan.md</code>はGitHub上で誰でも読める。名前や連絡先など、公開したくないことは書かない</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ program-basics-2.html Week 6 「CSS発展：レイアウトを整える」と同期 -->
+              <li>次回（第6回）: <strong>CSS発展：レイアウトを整える</strong>——<strong>CSS Grid/Flexbox</strong>でゲーム画面や商品一覧など複雑なレイアウトを組む練習。今日書いた画面構成を見ながら進める</li>
+              <li>今日のキーワード「<strong>ジャンル選択</strong>」「<strong>企画シート</strong>」「<strong>必須とできれば</strong>」を口に出して言えるか確認して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>plan.md</code>を仕上げて、pushする</strong>
+            <p>授業内で書ききれなかった項目は家で埋める。「第8回に最初に作る部分」が具体的に書けている状態にして、push後にGitHub上で<code>plan.md</code>が見えることを確認する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>好きなゲーム画面やネットショップの画面を観察する</strong>
+            <p>ボタンや商品カードが「どう並んでいるか」を見ておくと、第6回のレイアウトの練習で組みたい形のイメージを持ちやすい。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <p>第6回（CSS発展：レイアウトを整える）の予習に使えるリンクです。必須ではありません。</p>
+      <ul>
+        <li><a href="https://developer.mozilla.org/ja/docs/Learn_web_development/Core/CSS_layout" target="_blank" rel="noopener">MDN — CSS のレイアウト</a> — レイアウトの考え方をまとめた入口のページ</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Learn_web_development/Core/CSS_layout/Flexbox" target="_blank" rel="noopener">MDN — フレックスボックス</a> — 横や縦に並べるレイアウトの解説</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Learn_web_development/Core/CSS_layout/Grids" target="_blank" rel="noopener">MDN — CSS グリッドレイアウト</a> — 格子状に並べるレイアウトの解説</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week04.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第4回 🎯ミニ完成① 保存できる作品を公開</span>
+      </a>
+      <a href="../program-basics-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">プログラム基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第6回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
