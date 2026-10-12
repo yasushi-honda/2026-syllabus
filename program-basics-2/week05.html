@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-  <link rel="stylesheet" href="../styles.css?v=5">
+  <link rel="stylesheet" href="../styles.css?v=6">
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -35,7 +35,14 @@
     </div>
   </header>
 
-  <main class="container syllabus-content">
+  <main class="container syllabus-content theme-blue">
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
 
     <div class="lesson-overview">
       <div class="lesson-overview-grid">
@@ -84,6 +91,54 @@
               <li>第2〜4回で学んだ<strong>オブジェクトと配列</strong>、<strong>フォーム入力</strong>、<strong><code>localStorage</code>での保存</strong>は、この作品を作るための部品だったことを確認する</li>
               <li>今日は企画の回で、本格的な制作は第8回から始まる。今日決めた企画が、第8・9・11回の「何を作るか」になる</li>
             </ul>
+            <figure class="vz-fig" aria-labelledby="cap-w5-flow">
+              <p class="vz-fig-title" id="cap-w5-flow">第5回から第14回までの流れ</p>
+              <svg class="vz-svg" viewBox="0 0 360 372" role="img" aria-labelledby="w5-flow-t w5-flow-d">
+                <title id="w5-flow-t">第5回から第14回までの流れ</title>
+                <desc id="w5-flow-d">第5回の企画（今日）、第6・7回、第8・9回の制作、第10回の中間相互レビュー、第11回の制作、第12回の公開とスマホ確認、第13回の最終調整、第14回の発表の順に進む。オレンジの丸が制作の回。</desc>
+                <line class="line" x1="22" y1="24" x2="22" y2="348"/>
+                <rect class="box-white box-key" x="2" y="7" width="356" height="34" rx="8"/>
+                <circle class="dot-blue" cx="22" cy="24" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="29">5</text>
+                <text class="t-b" x="44" y="29">後期テーマ選択＆企画</text>
+                <text class="t-sm" x="350" y="28" text-anchor="end">企画（今日）</text>
+                <circle class="dot" cx="22" cy="60" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="65">6</text>
+                <text x="44" y="65">CSS発展：レイアウトを整える</text>
+                <circle class="dot" cx="22" cy="96" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="101">7</text>
+                <text x="44" y="101">🔧バグ修正ワーク④</text>
+                <circle class="dot-orange" cx="22" cy="132" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="137">8</text>
+                <text x="44" y="137">個人制作① 基礎機能</text>
+                <text class="t-sm" x="350" y="136" text-anchor="end">制作</text>
+                <circle class="dot-orange" cx="22" cy="168" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="173">9</text>
+                <text x="44" y="173">個人制作② インタラクション</text>
+                <text class="t-sm" x="350" y="172" text-anchor="end">制作</text>
+                <circle class="dot" cx="22" cy="204" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="209">10</text>
+                <text x="44" y="209">中間相互レビュー</text>
+                <text class="t-sm" x="350" y="208" text-anchor="end">レビュー</text>
+                <circle class="dot-orange" cx="22" cy="240" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="245">11</text>
+                <text x="44" y="245">個人制作③ 仕上げ機能</text>
+                <text class="t-sm" x="350" y="244" text-anchor="end">制作</text>
+                <circle class="dot" cx="22" cy="276" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="281">12</text>
+                <text x="44" y="281">🎯ミニ完成② 公開＆スマホ確認</text>
+                <text class="t-sm" x="350" y="280" text-anchor="end">公開</text>
+                <circle class="dot" cx="22" cy="312" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="317">13</text>
+                <text x="44" y="317">デバッグ集中回／最終調整</text>
+                <text class="t-sm" x="350" y="316" text-anchor="end">最終調整</text>
+                <circle class="dot" cx="22" cy="348" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="353">14</text>
+                <text x="44" y="353">🎯完成＆発表・振り返り</text>
+                <text class="t-sm" x="350" y="352" text-anchor="end">発表</text>
+              </svg>
+              <figcaption>青が今日の第5回、オレンジが作品を作る回です。今日の企画が、第8・9・11回の「何を作るか」になります。</figcaption>
+            </figure>
             <p><strong>2つのジャンルを比べる（15分）</strong></p>
             <ul>
               <li><strong>ゲーム制作</strong>——ルールを決めて、動かして遊べるものを作る。第8〜11回の流れは次のとおり
@@ -102,6 +157,47 @@
               </li>
               <li>どちらも、第2〜4回の部品を使う。<strong>オブジェクトの配列</strong>は「キャラクターや商品のデータ」に、<strong>フォーム</strong>は「名前の入力や検索欄」に、<strong><code>localStorage</code></strong>は「ハイスコアやカートの保存」に使える</li>
             </ul>
+            <figure class="vz-fig" aria-labelledby="cap-w5-genre">
+              <p class="vz-fig-title" id="cap-w5-genre">2つのジャンルで、第8・9・11回に作るもの</p>
+              <svg class="vz-svg" viewBox="0 0 360 336" role="img" aria-labelledby="w5-genre-t w5-genre-d">
+                <title id="w5-genre-t">ゲーム制作とECサイト制作の、第8・9・11回で作るもの</title>
+                <desc id="w5-genre-d">第8回の基礎機能は、ゲームが盤面・キャラクター表示、ECサイトが商品一覧表示。第9回のインタラクションは、ゲームが当たり判定・スコア計算、ECサイトがカート追加・合計金額計算。第10回は中間相互レビュー。第11回の仕上げ機能は、ゲームがレベルアップ・タイマー、ECサイトが検索・絞り込み。</desc>
+                <rect class="box-orange" x="46" y="4" width="150" height="34" rx="8"/>
+                <text class="t-c t-b" x="121" y="26">🎮 ゲーム制作</text>
+                <rect class="box-green" x="202" y="4" width="150" height="34" rx="8"/>
+                <text class="t-c t-b" x="277" y="26">🛒 ECサイト制作</text>
+                <line class="line" x1="22" y1="90" x2="22" y2="296"/>
+                <rect class="band" x="46" y="204" width="306" height="28" rx="14"/>
+                <text class="t-c t-sm" x="199" y="223">第10回　中間相互レビュー（作品を見せ合う）</text>
+                <circle class="dot" cx="22" cy="218" r="7"/>
+                <text class="t-sm" x="46" y="60">基礎機能</text>
+                <rect class="box-orange" x="46" y="66" width="150" height="48" rx="8"/>
+                <text class="t-c" x="121" y="88">盤面・</text>
+                <text class="t-c" x="121" y="106">キャラクター表示</text>
+                <rect class="box-green" x="202" y="66" width="150" height="48" rx="8"/>
+                <text class="t-c" x="277" y="95">商品一覧表示</text>
+                <circle class="dot" cx="22" cy="90" r="14"/>
+                <text class="t-w t-b t-c" x="22" y="95">8</text>
+                <text class="t-sm" x="46" y="140">インタラクション</text>
+                <rect class="box-orange" x="46" y="146" width="150" height="48" rx="8"/>
+                <text class="t-c" x="121" y="168">当たり判定・</text>
+                <text class="t-c" x="121" y="186">スコア計算</text>
+                <rect class="box-green" x="202" y="146" width="150" height="48" rx="8"/>
+                <text class="t-c" x="277" y="168">カート追加・</text>
+                <text class="t-c" x="277" y="186">合計金額計算</text>
+                <circle class="dot" cx="22" cy="170" r="14"/>
+                <text class="t-w t-b t-c" x="22" y="175">9</text>
+                <text class="t-sm" x="46" y="266">仕上げ機能</text>
+                <rect class="box-orange" x="46" y="272" width="150" height="48" rx="8"/>
+                <text class="t-c" x="121" y="294">レベルアップ・</text>
+                <text class="t-c" x="121" y="312">タイマー</text>
+                <rect class="box-green" x="202" y="272" width="150" height="48" rx="8"/>
+                <text class="t-c" x="277" y="301">検索・絞り込み</text>
+                <circle class="dot" cx="22" cy="296" r="14"/>
+                <text class="t-w t-b t-c" x="22" y="301">11</text>
+              </svg>
+              <figcaption>どちらのジャンルでも、第2〜4回の部品（オブジェクトの配列・フォーム・<code>localStorage</code>）を使います。</figcaption>
+            </figure>
             <p><strong>自分のジャンルを選ぶ（15分）</strong></p>
             <ul>
               <li>次の3つの問いに、自分の答えをメモする
@@ -135,6 +231,49 @@
               <strong>ECサイトは架空のお店にする:</strong> 作品はGitHub Pagesで公開されます。実在のお店やブランドの名前、商品の写真をそのまま使わず、お店の名前も商品も自分で考えたものにしてください。商品の画像は、絵文字や色つきの四角で代用してかまいません。
             </div>
             <p><strong>画面構成を書く（20分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-w5-wire">
+              <p class="vz-fig-title" id="cap-w5-wire">画面構成の例（きれいな絵でなくてよい）</p>
+              <svg class="vz-svg" viewBox="0 0 360 534" role="img" aria-labelledby="w5-wire-t w5-wire-d">
+                <title id="w5-wire-t">画面構成の例：もぐらたたきと架空の雑貨店</title>
+                <desc id="w5-wire-d">もぐらたたきの画面には、タイトル、スコア、6つの穴、はじめるボタンがある。架空の雑貨店の画面には、タイトル、検索欄、マグ・ノート・ペンの3つの商品カード（それぞれにカートに入れるボタン）、カートの点数と合計金額がある。ボタンや入力欄は太い枠で示している。</desc>
+                <text class="t-b" x="8" y="20">例①　もぐらたたき（ゲーム）</text>
+                <rect class="box-white" x="8" y="30" width="344" height="196" rx="10"/>
+                <text class="t-c t-b" x="180" y="56">もぐらたたき</text>
+                <text class="t-c" x="180" y="80">スコア: 3</text>
+                <circle class="box" cx="100" cy="118" r="22"/><circle class="box" cx="100" cy="166" r="22"/><circle class="box" cx="180" cy="118" r="22"/><circle class="box" cx="180" cy="166" r="22"/><circle class="box" cx="260" cy="118" r="22"/><circle class="box" cx="260" cy="166" r="22"/>
+                <text class="t-c t-sm" x="180" y="123">もぐら</text>
+                <rect class="box-white box-key" x="140" y="196" width="80" height="26" rx="6"/>
+                <text class="t-c" x="180" y="214">はじめる</text>
+                <text class="t-b" x="8" y="252">例②　架空の雑貨店（ECサイト）</text>
+                <rect class="box-white" x="8" y="262" width="344" height="230" rx="10"/>
+                <text class="t-c t-b" x="180" y="288">ミニ雑貨店</text>
+                <rect class="box-white box-key" x="26" y="300" width="308" height="28" rx="6"/>
+                <text class="t-sm" x="38" y="319">検索欄</text>
+                <rect class="box-white" x="26" y="340" width="96" height="100" rx="8"/>
+                <text class="t-c t-b" x="74" y="362">マグ</text>
+                <text class="t-c t-sm" x="74" y="382">600円</text>
+                <rect class="box-white box-key" x="34" y="394" width="80" height="36" rx="6"/>
+                <text class="t-c" x="74" y="409">カートに</text>
+                <text class="t-c" x="74" y="424">入れる</text>
+                <rect class="box-white" x="132" y="340" width="96" height="100" rx="8"/>
+                <text class="t-c t-b" x="180" y="362">ノート</text>
+                <text class="t-c t-sm" x="180" y="382">300円</text>
+                <rect class="box-white box-key" x="140" y="394" width="80" height="36" rx="6"/>
+                <text class="t-c" x="180" y="409">カートに</text>
+                <text class="t-c" x="180" y="424">入れる</text>
+                <rect class="box-white" x="238" y="340" width="96" height="100" rx="8"/>
+                <text class="t-c t-b" x="286" y="362">ペン</text>
+                <text class="t-c t-sm" x="286" y="382">150円</text>
+                <rect class="box-white box-key" x="246" y="394" width="80" height="36" rx="6"/>
+                <text class="t-c" x="286" y="409">カートに</text>
+                <text class="t-c" x="286" y="424">入れる</text>
+                <rect class="box" x="26" y="452" width="308" height="30" rx="6"/>
+                <text class="t-c" x="180" y="472">カート: 2点　合計 1,200円</text>
+                <rect class="box-white box-key" x="8" y="506" width="28" height="16" rx="4"/>
+                <text class="t-sm" x="44" y="519">太い枠 ＝ 押す・入力する部品（機能の入口）</text>
+              </svg>
+              <figcaption>太い枠の部品を1つずつ、「押すと何が起きるか」として次の機能の洗い出しに書きます。</figcaption>
+            </figure>
             <ul>
               <li>作品に出てくる<strong>画面ごとに「何が表示されるか」と「何を押せるか」</strong>を書く。画面が1つだけの作品なら、1つでよい</li>
               <li>文字で書く簡単な図でよい。きれいな絵は不要で、<strong>どこに何があるか</strong>が分かればよい。紙に描いてもよいが、最終的には次の時間の<code>plan.md</code>に文字で写す</li>
@@ -239,6 +378,44 @@ AIに企画を見てもらい、指摘ごとに採用するかどうかと理由
               <li><code>plan.md</code>はMarkdownという書き方のメモ用ファイル。見出しは<code>#</code>、箇条書きは<code>-</code>で書く。今日は形式を気にせず、雛形の空欄を埋めればよい</li>
             </ul>
             <p><strong>雛形の空欄を埋める（30分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-w5-plan">
+              <p class="vz-fig-title" id="cap-w5-plan">plan.mdの6つの項目のつながり</p>
+              <svg class="vz-svg" viewBox="0 0 360 452" role="img" aria-labelledby="w5-plan-t w5-plan-d">
+                <title id="w5-plan-t">plan.mdの6つの項目のつながり</title>
+                <desc id="w5-plan-d">1 基本情報から、2 画面構成、3 必要な機能へ進む。3 必要な機能からは、扱う情報として4 持つデータ、いつ作るかとして5 制作の予定へ分かれる。最後に、1〜5の企画全体をAIに見てもらい、6 AIメモに指摘の採用・不採用と理由を記録する。</desc>
+                <rect class="box-blue" x="60" y="6" width="240" height="50" rx="10"/>
+                <text class="t-c t-b" x="180" y="28">1 基本情報</text>
+                <text class="t-c t-sm" x="180" y="46">ジャンル・作品名・選んだ理由</text>
+                <line class="line" x1="180" y1="58" x2="180" y2="86" marker-end="url(#mk-s)"/>
+                <rect class="box-blue" x="60" y="90" width="240" height="50" rx="10"/>
+                <text class="t-c t-b" x="180" y="112">2 画面構成</text>
+                <text class="t-c t-sm" x="180" y="130">何を表示し、何を押せるか</text>
+                <line class="line" x1="180" y1="142" x2="180" y2="178" marker-end="url(#mk-s)"/>
+                <text class="t-sm t-halo" x="192" y="165">押せるもの → 起きること</text>
+                <rect class="box-blue" x="60" y="182" width="240" height="50" rx="10"/>
+                <text class="t-c t-b" x="180" y="204">3 必要な機能</text>
+                <text class="t-c t-sm" x="180" y="222">必須 と できれば</text>
+                <line class="line" x1="130" y1="234" x2="92" y2="272" marker-end="url(#mk-s)"/>
+                <line class="line" x1="230" y1="234" x2="268" y2="272" marker-end="url(#mk-s)"/>
+                <text class="t-sm t-halo" x="104" y="258" text-anchor="end">扱う情報は？</text>
+                <text class="t-sm t-halo" x="262" y="258">いつ作る？</text>
+                <rect class="box-green" x="8" y="276" width="168" height="54" rx="10"/>
+                <text class="t-c t-b" x="92" y="299">4 持つデータ</text>
+                <text class="t-c t-sm" x="92" y="318">オブジェクトで考える</text>
+                <rect class="box-orange" x="184" y="276" width="168" height="54" rx="10"/>
+                <text class="t-c t-b" x="268" y="299">5 制作の予定</text>
+                <text class="t-c t-sm" x="268" y="318">第8・9・11回に振り分け</text>
+                <line class="band" x1="92" y1="332" x2="92" y2="350"/>
+                <line class="band" x1="268" y1="332" x2="268" y2="350"/>
+                <line class="band" x1="92" y1="350" x2="268" y2="350"/>
+                <line class="line" x1="180" y1="350" x2="180" y2="376" marker-end="url(#mk-s)"/>
+                <rect class="box-purple" x="40" y="380" width="280" height="64" rx="10"/>
+                <text class="t-c t-b" x="180" y="403">6 AIメモ</text>
+                <text class="t-c t-sm" x="180" y="421">1〜5の企画をまとめてAIに見てもらい、</text>
+                <text class="t-c t-sm" x="180" y="437">採用・不採用と理由を記録</text>
+              </svg>
+              <figcaption>1〜3は上から順に埋め、3から4と5へ進みます。6は、1〜5を書き終えてからAIに見てもらい、その記録を書く欄です。</figcaption>
+            </figure>
             <ul>
               <li>1限で考えた内容を、上の項目から順に書き写す。足りない部分はここで考えて足す</li>
               <li><strong>「4. 持つデータ」</strong>は第2回で学んだオブジェクトで考える

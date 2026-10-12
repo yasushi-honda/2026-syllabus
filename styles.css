@@ -3221,6 +3221,19 @@ main.theme-slate {
 }
 main.theme-slate a.vz-chip:hover { background: #d9e2ea; }
 
+/* プログラム基礎Ⅱなど blue 基調のページでも vz-* を使えるように、main.theme-blue 内では blue 基調に読み替える */
+main.theme-blue {
+  --c-amber: var(--c-blue);
+  --c-amber-soft: var(--c-blue-soft);
+  --c-amber-border: var(--c-blue-border);
+}
+/* スマホ幅ではSVGが縮んで文字が小さくなるため、余白を詰め、文字を少し大きくする（実寸で約11px以上を目安） */
+@media (max-width: 480px) {
+  main.theme-blue .vz-fig { padding: var(--sp-3) var(--sp-2); }
+  main.theme-blue .vz-svg text { font-size: 14.5px; }
+  main.theme-blue .vz-svg .t-sm { font-size: 13px; }
+}
+
 main .syllabus-section--nav { padding-top: var(--sp-3); padding-bottom: var(--sp-3); }
 main .syllabus-section--nav .vz-jump { margin: 0; }
 
