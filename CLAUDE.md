@@ -206,6 +206,7 @@ content/                # Markdownソース（コピーボタン用。全HTMLペ
 4. **評価は合否に直結させない**: 試験の実施停止・会場都合等で受験できない学生が成績で救済されないため、日々の到達度・提出物・参加度を主軸にし、試験合格は加点として扱う
 5. **ふりがなトグル（2026-10-07、留学生の要望）**: ITパスポートの全ページに、右下に追随する「ふりがな」ボタン（オン/オフ。初期はオフ、選んだ状態は端末の `localStorage` に保存）。オンにすると漢字**すべて**にルビが付く。仕組み: ①`tools/furigana/build_dict.py`（`fugashi`＋`unidic-lite`）が、ページの文章を**ブロック単位（p/li/td…）で文脈つきに**解析し、ページごとの辞書 `it-passport-technology/furigana/<ページ名>.json` を作る（キーは文章の塊のFNV-1aハッシュ。`<body data-furigana="…">` も自動で付く）②`app.js` が、オンにしたときだけ辞書を読み込んで `<ruby>` に組み替え、オフで元に戻す（**オフの間はDOMを変えない**ので Chrome の翻訳と競合しない。オン中の翻訳は非推奨）。③誤読は `tools/furigana/overrides.tsv`（表記・付ける部分・読み）で上書き（辞書の既定の読みが学習者の期待と違う語、区切りを誤る語、数字＋助数詞）。数字＋分/月/日/人は `build_dict.py` の規則（分=ぷん/ふん、7日=なのか、1人=ひとり）。④**ページを書いたり変えたりしたら辞書を作り直す**（作業チェックリスト 13c）。文を変えるとその文だけふりがなが付かなくなる（壊れはしない）。用語カードに「ふりがな列」を設けない方針は変えない（別の軸）
 6. **使ってはいけない教材**: 教科書のデジタル特典PDFは購入者特典のため配布・転載不可（章対応表の記載は可）。過去問道場の単語集（`itpassportsiken.com/word/`）はリンクのみで転載不可
+7. **自分の成績ページ（2026-10-14、先生の提案）**: 学生が学校のGoogleアカウントで開くと、**本人の分だけ**の点数の推移（診断・復習テスト・確認テスト1回目/2回目）と、次に復習するとよい用語が出る。GASのウェブアプリ（Apps Scriptプロジェクト「ITパスポート_自分の成績」、実行=先生の権限、アクセス=学校法人 清風明育社 内の全員）。本人の確認は `Session.getActiveUser().getEmail()` だけで、他人を指定する入口は作らない。学生にスプレッドシートの権限は渡さない。コードは公開リポジトリ外の `~/Projects/学校/forms-gas/mypage.gs`、計算部分の偽データテストは `node test_mypage.js`。回答タブはフォームIDで探す（タブ名に依存しない）。**フォームは選択肢の全角スペースを半角スペースにして保存する**ため、正答との比較は空白をそろえてから行う。アドバイスはルール方式（成績を外部のAIに送らない）。「復習するとよい用語」は、用語ごとの最新の結果（復習テスト・確認テスト1回目/2回目）がまだ不正解のものだけを出す。1つの回のタブが読めなくてもその回だけ「準備中」にし、全員の画面は止めない。キャッシュするのは「スプレッドシートID」と「テスト→タブの対応」だけ（5分）で、成績・メールは入れない。デプロイ前に必ず `node test_mypage.js`（40件）を通す。公開サイトは親ページの「自分の成績を見る」と各回のまとめのリンクだけ（作業チェックリスト 13d）
 
 ### 親ページ正本原則（Single Source of Truth）
 
@@ -289,6 +290,7 @@ content/                # Markdownソース（コピーボタン用。全HTMLペ
        例: `grep -F "【学習データ①】" {dir}/week{NN}.html`
 □ 13b. **Markdown 残留チェック**: `grep -nE '\*\*[^*]+\*\*' {dir}/week{NN}.html` を実行し、Markdown 記法の強調が HTML に混入していないか確認。HTML 内では `<strong>…</strong>` で統一する（PR #53 教訓: `**使い分け**` が1箇所残留して code-reviewer に Important で指摘された）
 □ 13c. **（ITパスポート）ふりがな辞書を更新**: `tools/furigana/.venv/bin/python tools/furigana/build_dict.py`（初回は `python3 -m venv tools/furigana/.venv && tools/furigana/.venv/bin/pip install -r tools/furigana/requirements.txt`）→ `--list` で新しい語の読みを確認（誤読は `overrides.tsv` に追記）→ `--check` が `uncovered kanji: 0` → 辞書JSONと `<body data-furigana>` をコミット。`python3 tools/furigana/test_build_dict.py` も通す
+□ 13d. **（ITパスポート）自分の成績ページに、その回を足す**: その回のフォーム（復習テスト・確認テスト1回目/2回目）を作ったら、`forms-gas/mypage.gs` の `MYPAGE_TESTS` に3行足す（`formId`・正答 `key`・問ごとの用語 `topics`・用語カードの `link`・復習テストは前回の確認テストの何問目かの `recapOf`）→ `node test_mypage.js` → Apps Scriptに入れてSHA-256で照合 → `checkMyPageStructure` で全テストが OK → 「デプロイを管理 → 編集 → 新しいバージョン」で更新（URLは変わらない）
 □ 14. 親ページの該当 Week セルを <a href="{dir}/week{NN}.html" class="week-link"> でリンク化
 □ 14b. **直前回の week ページの lesson-nav「次の回」リンクを有効化**: `week{NN-1}.html` 末尾の `<div class="lesson-nav-item lesson-nav-item--disabled">第{NN}回（準備中）</div>` を `<a href="week{NN}.html" class="lesson-nav-item">第{NN}回 {テーマ名}</a>` に置換（PR #58 教訓: code-reviewer から Critical 指摘を受けた漏れ。週ページ間のサイト内ナビが片方向破綻しないよう、新規週ページ追加時はセット更新）
 □ 15. このCLAUDE.mdの「ファイル構成」に新ファイルを追記
