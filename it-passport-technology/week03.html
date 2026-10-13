@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第3回 誰が守るのか：組織のルールと技術的な備え | ITパスポート テクノロジー系</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=16">
+  <!-- 公式情報確認: 2026-10-14 (総務省「国民のためのサイバーセキュリティサイト」用語集 https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ ja_02 機密性・完全性・可用性 / ja_03 情報セキュリティポリシー・情報セキュリティマネジメント / ja_09 リスクマネジメント / ISMS-AC「ISMSとは」https://isms.jp/isms/index.html（JIS Q 27000:2019 引用の3要素・JIS Q 27001の位置づけ）/ 金融庁 企業会計審議会「財務報告に係る内部統制の評価及び監査の基準」令和5年4月7日改訂意見書 https://www.fsa.go.jp/news/r4/sonota/20230407/1.pdf 内部統制の4つの目的と6つの基本的要素（令和5年改訂で「財務報告の信頼性」が「報告の信頼性」に変更）/ 経済産業省「システム監査基準」2023年4月26日改訂 https://www.meti.go.jp/policy/netsecurity/sys-kansa/sys-kansa-2023r.pdf システム監査の意義・監査人の独立性と客観性 / 総務省「ガイドラインに基づくサービス仕様適合開示書及びサービス・レベル合意書（SLA）参考例」令和2年8月 https://www.soumu.go.jp/main_content/000703895.pdf SLAの説明 / 内閣府 防災担当「事業継続ガイドライン」平成25年8月改定 https://www.bousai.go.jp/kyoiku/kigyou/pdf/guideline03.pdf 事業継続計画（BCP）の定義 / 令和7年度ITパスポート試験 公開問題 問51・問53・問59・問88・問91・問97 と解答例。「リスク回避」「リスク保有」の説明は一次資料で定義文を確認できていないため、試験で出る呼び名と、よく使われる意味をやさしくまとめた。教科書 p.360-370・p.176-189 は親ページの記載に従う（教科書本文は未突合）) -->
+  <!-- 用語カードの7語は、フォーム「ITパスポート 第3回 今回覚えた用語」（forms-gas/code_full.gs の定義）と一致 -->
+</head>
+<body data-furigana="furigana/week03.json">
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--amber">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../it-passport-technology.html">ITパスポート テクノロジー系</a>
+        <span>/</span>
+        <span>第3回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">誰が守るのか：<wbr>組織のルールと技術的な備え</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 3</span>
+            <span class="page-badge">水曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-amber">
+
+    <div class="message-box">このページはブラウザの翻訳機能で母語に翻訳できます。ただし、試験に出る主な専門用語（例: <span translate="no">機密性</span>、<span translate="no">BCP</span>）は翻訳されないように設定しています。<strong>本番のITパスポート試験は日本語で行われる</strong>ので、専門用語は日本語のまま覚えてください。</div>
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">事件のあと、会社は何を決めるのか——技術だけでは守れないから、組織のルールと仕組みで守る</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value"><span translate="no">情報セキュリティの3要素</span>（<span translate="no">機密性・完全性・可用性</span>） / <span translate="no">リスクマネジメント</span> / <span translate="no">ISMS</span> / <span translate="no">システム監査</span> / <span translate="no">内部統制</span> / <span translate="no">SLA</span> / <span translate="no">BCP</span></div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">教科書（学研「ITパスポートをひとつひとつわかりやすく。」）の p.360-370 と p.176-189 を読んでおく。授業の最初に復習テスト、最後に確認テスト（1回目と、任意の2回目）と用語カードのフォームを使う（学校のGoogleアカウント）</div>
+        </div>
+      </div>
+    </div>
+
+    <nav aria-label="このページの目次">
+      <ul class="vz-jump">
+        <li><a class="vz-chip" href="#sec-flow">授業の流れ</a></li>
+        <li><a class="vz-chip" href="#sec-terms">用語カード</a></li>
+        <li><a class="vz-chip" href="#sec-quiz">練習クイズ</a></li>
+        <li><a class="vz-chip" href="#sec-tasks">課題</a></li>
+        <li><a class="vz-chip" href="#sec-refs">参考リンク</a></li>
+        <li><a class="vz-chip vz-chip--cta" href="https://docs.google.com/forms/d/e/1FAIpQLSderlPukJ5NgdbPcvRGCccQNcPOpAkki0eCOa3mDvuOyxBoPw/viewform" target="_blank" rel="noopener">第3回 今回覚えた用語を提出する ↗</a></li>
+      </ul>
+    </nav>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>守るものを、<span translate="no">機密性</span>・<span translate="no">完全性</span>・<span translate="no">可用性</span>の3つの目で説明できる（<span translate="no">情報セキュリティの3要素</span>）</li>
+        <li><span translate="no">リスクマネジメント</span>で、リスクへの対応が4つの選択肢（<span translate="no">回避・移転・低減・保有</span>）に分かれることを知る</li>
+        <li>会社が決まりと仕組みで守る考え方（<span translate="no">情報セキュリティポリシー</span>・<span translate="no">ISMS</span>）と、対策の3つの種類（技術的・物理的・人的）を区別できる</li>
+        <li><span translate="no">内部統制</span>と<span translate="no">システム監査</span>の違い（自分たちで守る仕組みと、独立した人の点検）を説明できる</li>
+        <li>止まったときに備える<span translate="no">SLA</span>と<span translate="no">BCP</span>の意味を言える</li>
+        <li>過去問（令和7年度 6問）を、問い方の型を使って解く</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section" id="sec-flow">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。休憩10分は授業時間に含めません。</p>
+
+      <div class="vz-timebar">
+        <p class="vz-fig-title">180分の流れ（ブロックを押すと、その内容へ移動）</p>
+        <ol class="vz-timebar-track">
+          <li style="--w:40"><a class="vz-seg" href="#blk-1"><span class="vz-seg-time">40分</span><span class="vz-seg-name">復習テスト<br>今日の地図</span></a></li>
+          <li style="--w:50"><a class="vz-seg" href="#blk-2"><span class="vz-seg-time">50分</span><span class="vz-seg-name">守る考え方<br>（テクノロジ系）</span></a></li>
+          <li style="--w:10"><a class="vz-seg vz-seg--break"><span class="vz-seg-time">休憩</span><span class="vz-seg-name">10分</span></a></li>
+          <li style="--w:50"><a class="vz-seg" href="#blk-3"><span class="vz-seg-time">50分</span><span class="vz-seg-name">守らせる仕組み<br>（マネジメント系）</span></a></li>
+          <li style="--w:30"><a class="vz-seg" href="#blk-4"><span class="vz-seg-time">30分</span><span class="vz-seg-name">過去問・ワーク<br>確認テスト1回目</span></a></li>
+          <li style="--w:10"><a class="vz-seg" href="#blk-5"><span class="vz-seg-time">10分</span><span class="vz-seg-name">まとめ</span></a></li>
+        </ol>
+        <p class="vz-timebar-note">授業時間の合計は 40 + 50 + 50 + 30 + 10 = 180分（休憩を除く）</p>
+      </div>
+
+      <div class="timeline">
+
+        <!-- ================= 1限 前半 ================= -->
+        <div class="timeline-block" id="blk-1">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の復習テスト → 事件のあと、会社は何を決めるか</h3>
+          <div class="timeline-body">
+
+            <p><strong>前回の復習テスト（約10分）</strong></p>
+            <p>前回（第2回）の内容を、1週間たって、どれだけ覚えているかを確かめる3問（約3分）。<strong>点数を競うものではない</strong>。覚えていることと、忘れていることを、自分で知るためのテスト。送信すると、点数と、正解・解説が表示される。そのあと、間違えた問題の解説を読む。分からないところは、隣の人か先生に聞く。</p>
+            <div class="vz-cta">
+              <a class="vz-btn vz-btn--ext" href="https://docs.google.com/forms/d/e/1FAIpQLScblEmdgyp8KyP3GL-4M0Zt6mO5CuCvgZbsRvBwOq_u3GWCDA/viewform" target="_blank" rel="noopener">第3回 復習テスト（前回分）を受ける（Googleフォーム）</a>
+            </div>
+
+            <p><strong>今日のストーリー：事件のあとの会議（約10分）</strong></p>
+            <p>第2回の「あおぞらストア」の事件のあと。社長が、全員を集めた。「<strong>二度と起こさないために、何を決めるか</strong>」。会議で出たことを、順番に読む。<strong>誰が・何を決めているか</strong>を考えながら読む。</p>
+            <ol class="vz-steps">
+              <li class="vz-step"><b>まず、何を守るかをはっきりさせる</b>お客さんの情報が<strong>見られてしまった</strong>。でも、それだけではない。情報が<strong>書き換えられる</strong>ことも、注文サイトが<strong>止まる</strong>ことも、会社には困る。</li>
+              <li class="vz-step"><b>次に、どんな被害がありえるかを考える</b>被害の大きさと、起こりやすさを考えて、どう扱うかを決める。</li>
+              <li class="vz-step"><b>そして、決まりを作る</b>「パスワードは電話で教えない」「持ち出しは申請する」。社員全員が守る決まりと、それを続ける仕組みを作る。</li>
+              <li class="vz-step"><b>決まりが守られているかを、確かめる</b>自分たちで確かめる仕組みと、外から独立した人に点検してもらう仕組みがある。</li>
+              <li class="vz-step"><b>それでも止まったときに備える</b>サービスの水準を取引先と約束しておく。大きな災害や事故でも、重要な仕事を止めない計画を持っておく。</li>
+            </ol>
+
+            <p><strong>ペアで話す：誰が決めて、誰が守るのか（約10分）</strong></p>
+            <ul>
+              <li>上のストーリーの1〜5で、<strong>決める人</strong>（社長・経営者）と、<strong>守る人</strong>（社員全員）は、それぞれ誰か。ペアで、日本語で話す</li>
+              <li>自分の学校やアルバイト先にも、「情報を守る決まり」があるか。思い出して話す</li>
+            </ul>
+            <details class="vz-more">
+              <summary>話すときのヒントを見る</summary>
+              <ul>
+                <li>決まりを作る・続ける責任は、<strong>経営者</strong>にある。技術（ソフト）だけでは、人の使い方や、決まりの守り方は変えられない。</li>
+                <li>守るのは、<strong>社員全員</strong>。ひとりが決まりを破ると、会社全体の被害になる（第2回のストーリーのAさん）。</li>
+              </ul>
+            </details>
+
+            <p><strong>今日の地図（約10分）</strong>：今日学ぶ7つの用語は、この6つの順番に並ぶ。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w3-map">
+              <p class="vz-fig-title" id="cap-w3-map">事件のあと、会社が決める6つのこと</p>
+              <svg class="vz-svg" viewBox="0 0 360 344" role="img" aria-labelledby="w3-map-t w3-map-d">
+                <title id="w3-map-t">事件のあと、会社が決める6つのこと</title>
+                <desc id="w3-map-d">上から順に、1 何を守るか決める（機密性・完全性・可用性）、2 どんな被害があるか考える（リスクマネジメント）、3 決まりと仕組みを作る（ポリシー・ISMS）、4 具体的な対策をする（技術・物理・人）、5 守られているか確かめる（内部統制・システム監査）、6 止まったときに備える（SLA・BCP）。</desc>
+                <line class="line" x1="22" y1="30" x2="22" y2="314"/>
+                <rect class="box-white" x="2" y="8" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="32" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="37">1</text>
+                <text class="t-b" x="44" y="29">何を守るか決める</text>
+                <text class="t-sm" x="44" y="47">機密性・完全性・可用性</text>
+                <rect class="box-white" x="2" y="64" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="88" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="93">2</text>
+                <text class="t-b" x="44" y="85">どんな被害があるか考える</text>
+                <text class="t-sm" x="44" y="103">リスクマネジメント</text>
+                <rect class="box-white" x="2" y="120" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="144" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="149">3</text>
+                <text class="t-b" x="44" y="141">決まりと仕組みを作る</text>
+                <text class="t-sm" x="44" y="159">情報セキュリティポリシー・ISMS</text>
+                <rect class="box-white" x="2" y="176" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="200" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="205">4</text>
+                <text class="t-b" x="44" y="197">具体的な対策をする</text>
+                <text class="t-sm" x="44" y="215">技術的・物理的・人的</text>
+                <rect class="box-white" x="2" y="232" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="256" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="261">5</text>
+                <text class="t-b" x="44" y="253">守られているか確かめる</text>
+                <text class="t-sm" x="44" y="271">内部統制・システム監査</text>
+                <rect class="box-white" x="2" y="288" width="356" height="48" rx="8"/>
+                <circle class="dot-orange" cx="22" cy="312" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="317">6</text>
+                <text class="t-b" x="44" y="309">止まったときに備える</text>
+                <text class="t-sm" x="44" y="327">SLA・BCP</text>
+              </svg>
+              <figcaption>1〜4は1限、5〜6は2限で学ぶ。</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <!-- ================= 1限 後半 ================= -->
+        <div class="timeline-block" id="blk-2">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>守る考え方を知る（テクノロジ系：セキュリティ 教科書 p.360-370）</h3>
+          <div class="timeline-body">
+
+            <p><strong>① <span translate="no">情報セキュリティの3要素</span>（約15分）</strong></p>
+            <p>情報を守る、と言っても、「守る」の中身は1つではない。国際標準（ISO）は、3つの要素で整理している（総務省 用語集・ISMS-AC）。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w3-three">
+              <p class="vz-fig-title" id="cap-w3-three">情報セキュリティの3要素</p>
+              <svg class="vz-svg" viewBox="0 0 360 254" role="img" aria-labelledby="w3-three-t w3-three-d">
+                <title id="w3-three-t">情報セキュリティの3要素</title>
+                <desc id="w3-three-d">機密性は、認められた人だけが見られること。損なわれる例は情報の漏えい。完全性は、情報が正確で、勝手に書き換えられていないこと。損なわれる例は、誤った内容のまま使われること。可用性は、必要なときに使えること。損なわれる例は、システムが止まること。</desc>
+                <rect class="box-blue" x="2" y="6" width="356" height="72" rx="8"/>
+                <text class="t-b" x="14" y="28">機密性（Confidentiality）</text>
+                <text class="t-sm" x="14" y="46">認められた人だけが、情報を見られる</text>
+                <text class="t-sm" x="14" y="64">損なわれる例：情報が外に漏れる</text>
+                <rect class="box-green" x="2" y="86" width="356" height="72" rx="8"/>
+                <text class="t-b" x="14" y="108">完全性（Integrity）</text>
+                <text class="t-sm" x="14" y="126">情報が正確で、勝手に変えられていない</text>
+                <text class="t-sm" x="14" y="144">損なわれる例：誤った内容のまま使われる</text>
+                <rect class="box-orange" x="2" y="166" width="356" height="72" rx="8"/>
+                <text class="t-b" x="14" y="188">可用性（Availability）</text>
+                <text class="t-sm" x="14" y="206">認められた人が、必要なときに使える</text>
+                <text class="t-sm" x="14" y="224">損なわれる例：システムが止まる</text>
+              </svg>
+              <figcaption>出典：総務省「国民のためのサイバーセキュリティサイト」用語集、ISMS-AC「ISMSとは」（JIS Q 27000:2019）。確認日：2026-10-14。</figcaption>
+            </figure>
+            <ul>
+              <li>第2回の事件（お客さんの情報が外に出た）は、<span translate="no">機密性</span>が損なわれた例</li>
+              <li>「3要素の1つだけ守ればよい」のではない。<strong>3つを、バランスよく</strong>守る（ISMS-AC：「<span translate="no">機密性・完全性・可用性</span>をバランス良く維持・改善」）</li>
+            </ul>
+            <div class="exam-q">
+              <p class="exam-q-text">【例題①】問97　情報セキュリティにおいて，<span translate="no">可用性</span>が損なわれた事象だけを全て挙げたものはどれか。</p>
+              <p>a　関連取引先との電子決済システムが<span translate="no">DoS</span>攻撃を受け，処理ができなくなった。<br>b　顧客情報管理システムの顧客情報が誤った内容のまま運用されていた。<br>c　社内のサーバに不正侵入されて，社外秘の情報が漏えいした。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>a</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>a, b</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>b, c</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>c</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問97（<span translate="no">テクノロジ系</span>。問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：ア</strong>（型：当てはまるものを全て選ぶ）。aは、システムが使えなくなったので<strong><span translate="no">可用性</span></strong>。bは、情報が正確でない（誤った内容のまま）ので<span translate="no">完全性</span>。cは、情報が外に漏れたので<span translate="no">機密性</span>。「可用性が損なわれた事象だけ」を選ぶので、aだけになる。</p>
+              </details>
+            </div>
+
+            <p><strong>② <span translate="no">リスクマネジメント</span>（約15分）</strong></p>
+            <ul class="vz-points">
+              <li class="vz-point">
+                <b>意味（総務省 用語集）</b>
+                <p>発生する可能性のある事故に対して、その発生をできるだけ少なくし、事故が発生した場合の損害を最小に抑えるようにするために行う一連の行動や規範のこと。</p>
+              </li>
+              <li class="vz-point">
+                <b>リスクの考え方</b>
+                <p>リスクは、「被害に遭う<strong>確率</strong>」と「被害の<strong>大きさ</strong>」の組合せで考える（試験では、問93の選択肢イの文「情報資産が被害に遭う確率と被害規模の組合せ」が出た。この問いは<span translate="no">脅威</span>を聞いたので、イは正解ではない）。</p>
+              </li>
+              <li class="vz-point">
+                <b>リスクへの対応は4つの選択肢</b>
+                <p>下の図の4つ。試験では、<strong>順番に進める手順ではなく、状況に合わせて選ぶ選択肢</strong>として出る（問91）。</p>
+              </li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-w3-risk">
+              <p class="vz-fig-title" id="cap-w3-risk">リスク対応の4つの選択肢</p>
+              <svg class="vz-svg" viewBox="0 0 360 188" role="img" aria-labelledby="w3-risk-t w3-risk-d">
+                <title id="w3-risk-t">リスク対応の4つの選択肢</title>
+                <desc id="w3-risk-d">リスク回避は、原因になる活動をやめる。リスク移転は、保険などで損害を他の人に移す。リスク低減は、対策をして被害を小さくする。リスク保有は、対策をせずに受け入れる。</desc>
+                <rect class="box-blue" x="2" y="4" width="172" height="86" rx="8"/>
+                <text class="t-b" x="12" y="28">リスク回避</text>
+                <text class="t-sm" x="12" y="50">原因になる活動を</text>
+                <text class="t-sm" x="12" y="68">やめる</text>
+                <rect class="box-green" x="186" y="4" width="172" height="86" rx="8"/>
+                <text class="t-b" x="196" y="28">リスク移転</text>
+                <text class="t-sm" x="196" y="50">保険などで、損害を</text>
+                <text class="t-sm" x="196" y="68">他の人に移す</text>
+                <rect class="box-orange" x="2" y="98" width="172" height="86" rx="8"/>
+                <text class="t-b" x="12" y="122">リスク低減</text>
+                <text class="t-sm" x="12" y="144">対策をして、被害を</text>
+                <text class="t-sm" x="12" y="162">小さくする</text>
+                <rect class="box-purple" x="186" y="98" width="172" height="86" rx="8"/>
+                <text class="t-b" x="196" y="122">リスク保有</text>
+                <text class="t-sm" x="196" y="144">対策をせずに、</text>
+                <text class="t-sm" x="196" y="162">受け入れる</text>
+              </svg>
+              <figcaption>色だけで区別しない。名前は、箱の中の文字で読む。「回避」「保有」の説明は、試験で出る呼び名をやさしくまとめたもの。</figcaption>
+            </figure>
+            <p>試験の例（問91）：<strong>ノート<span translate="no">PC</span>の紛失や盗難に備えて、社外への持ち出しをより厳重に管理する</strong>ことは、<span translate="no">リスク低減</span>。<strong>リスクが現実になることに備えて保険を掛けておく</strong>ことは、<span translate="no">リスク回避</span>ではなく、保険で損害を他の人に移す<span translate="no">リスク移転</span>に当たる。</p>
+            <div class="exam-q">
+              <p class="exam-q-text">【例題②】問91　情報セキュリティのリスクマネジメントにおけるリスク対応を，リスク移転，リスク回避，リスク低減及びリスク保有の四つに分けて実施することにしたとき，これらに関する記述として，適切なものはどれか。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>リスク対応の実施手順であり，リスク回避，リスク移転，リスク低減，リスク保有の順番で進める。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>リスク対応の実施手順であり，リスク保有，リスク低減，リスク移転，リスク回避の順番で進める。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>リスク対応の選択肢であり，管理対象としたリスクの顕在化に備えて保険を掛けておくことは，リスク回避に該当する。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>リスク対応の選択肢であり，ノート<span translate="no">PC</span>の紛失や盗難に備えて社外への持出しをより厳重に管理することは，リスク低減に該当する。</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問91（<span translate="no">テクノロジ系</span>。問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：エ</strong>（型：適切なものを1つ選ぶ）。4つは「手順」ではなく「選択肢」なので、ア・イは不適切。ウは、保険を掛けるのは損害を他の人に移すことなので、リスク回避ではなく<span translate="no">リスク移転</span>。エは、持ち出しの管理を厳しくして被害を小さくするので、<span translate="no">リスク低減</span>で合っている。</p>
+              </details>
+            </div>
+
+            <p><strong>③ 決まりと仕組み：<span translate="no">情報セキュリティポリシー</span>と<span translate="no">ISMS</span>（約10分）</strong></p>
+            <ul class="vz-points">
+              <li class="vz-point">
+                <b><span translate="no">情報セキュリティポリシー</span>（総務省 用語集）</b>
+                <p>情報の機密性や完全性、可用性を維持していくために規定する、<strong>組織の方針や行動指針</strong>をまとめたもの。</p>
+              </li>
+              <li class="vz-point">
+                <b><span translate="no">ISMS</span>（情報セキュリティマネジメントシステム）</b>
+                <p>企業・組織において、サイバーセキュリティを運用・管理するための<strong>仕組み</strong>（総務省 用語集）。ISMS-ACは、「組織のマネジメントとして、自らのリスクアセスメントにより必要なセキュリティレベルを決め、プランを持ち、資源を配分して、システムを運用すること」と説明している。</p>
+              </li>
+              <li class="vz-point">
+                <b>規格と認証</b>
+                <p>ISMSの要求事項を定めた規格が、<span translate="no">JIS Q 27001</span>（<span translate="no">ISO/IEC 27001</span>）。組織が、ISMSを確立し、実施し、維持し、<strong>継続的に改善する</strong>ための要求事項を示している（ISMS-AC）。</p>
+              </li>
+            </ul>
+
+            <p><strong>④ 対策の3つの種類（約10分）</strong></p>
+            <p>情報セキュリティ対策は、<strong>技術的</strong>・<strong>物理的</strong>・<strong>人的</strong>の3つに分けられる（試験の問88の分け方）。</p>
+            <div class="table-wrap">
+              <table class="schedule-table">
+                <thead><tr><th>種類</th><th>どんな対策か</th><th>試験（問88）の例</th></tr></thead>
+                <tbody>
+                  <tr><td>技術的</td><td>ソフトやシステムの設定で守る</td><td>Webサーバへのアクセスログを取得し、必要に応じて通信を遮断する</td></tr>
+                  <tr><td>物理的</td><td>場所や物で守る</td><td>サーバ室などの場所ごとにセキュリティレベルを設定し、<span translate="no">IC</span>カードで入退室を管理する</td></tr>
+                  <tr><td>人的</td><td>人の意識・約束で守る</td><td>採用時に守秘義務の契約書を取り交わし、在籍中は機密情報の取扱いの教育を行う</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="lesson-note">この3つは、2限後半の過去問（問88）で使う。</p>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <!-- ================= 2限 前半 ================= -->
+        <div class="timeline-block" id="blk-3">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>決まりを守らせる・止まったときに備える（マネジメント系：サービスマネジメント 教科書 p.176-189）</h3>
+          <div class="timeline-body">
+
+            <p><strong>① <span translate="no">内部統制</span>（約15分）</strong></p>
+            <ul class="vz-points">
+              <li class="vz-point">
+                <b>意味（金融庁の基準）</b>
+                <p>内部統制とは、基本的に、<strong>業務の有効性及び効率性、報告の信頼性、事業活動に関わる法令等の遵守、資産の保全</strong>の4つの目的が達成されているとの合理的な保証を得るために、業務に組み込まれ、組織内の全ての者によって遂行されるプロセス。</p>
+              </li>
+              <li class="vz-point">
+                <b>6つの基本的要素</b>
+                <p><span translate="no">統制環境・リスクの評価と対応・統制活動・情報と伝達・モニタリング（監視活動）・ITへの対応</span>。この6つが、内部統制の目的を達成するために必要になる。</p>
+              </li>
+              <li class="vz-point">
+                <b>やさしく言うと</b>
+                <p>会社が、<strong>自分たちで</strong>、仕事のミスや不正を防ぐように、仕事のやり方に決まりと確認を組み込む仕組み。</p>
+              </li>
+            </ul>
+            <p class="lesson-note">出典：金融庁 企業会計審議会「財務報告に係る内部統制の評価及び監査の基準」令和5年4月7日の改訂。この改訂で、4つの目的の1つ「財務報告の信頼性」が「報告の信頼性」に変わった。古い教材や本には、「財務報告の信頼性」と書かれていることがある。確認日：2026-10-14。</p>
+            <div class="exam-q">
+              <p class="exam-q-text">【例題③】問53　内部統制の基本的要素の一つである“<span translate="no">IT</span>への対応”に関する記述として，最も適切なものはどれか。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span><span translate="no">IT</span>を活用すると業務処理を迅速化でき，不注意によるミスを全て防止できる。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>既存の<span translate="no">IT</span>の利用者の拡大や，使い方の変更などで組織目標を達成できるのであれば，新たな<span translate="no">IT</span>システムの導入や<span translate="no">IT</span>システムの更新を強いるものではない。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>全ての業務プロセスを<span translate="no">IT</span>で自動化することによって，業務プロセスを大幅に修正することが容易になる。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>組織の業務が<span translate="no">IT</span>に大きく依存すると，内部統制の目的を達成することが難しくなる。</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問53（<span translate="no">マネジメント系</span>。問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：イ</strong>（型：最も適切なものを1つ選ぶ）。「ITへの対応」は、6つの基本的要素の1つ。ア（ミスを<strong>全て</strong>防止できる）とウ（<strong>全ての</strong>業務プロセスを自動化）は、「全て」と言い切っているので不適切。エは、ITの利用を、内部統制の目的を達成しにくくするものと決めつけているので不適切。イは、新しいITを必ず入れるものではなく、既存のITの使い方を変える方法もある、という内容で適切。</p>
+              </details>
+            </div>
+
+            <p><strong>② <span translate="no">システム監査</span>（約10分）</strong></p>
+            <ul class="vz-points">
+              <li class="vz-point">
+                <b>意味（経済産業省「システム監査基準」）</b>
+                <p>監査人が、一定の基準に基づいて<span translate="no">IT</span>システムの利活用に係る検証・評価を行い、ガバナンスやマネジメント等について、<strong>一定の保証や改善のための助言</strong>を行うもの。</p>
+              </li>
+              <li class="vz-point">
+                <b>監査人は「独立」</b>
+                <p>監査人とは、<strong>独立にして客観的な立場</strong>から、情報システムに係る保証や助言の活動を行う者（同基準）。<strong>自分の仕事を自分で点検しない</strong>のが大切。</p>
+              </li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-w3-two">
+              <p class="vz-fig-title" id="cap-w3-two"><span translate="no">内部統制</span>と<span translate="no">システム監査</span>の違い</p>
+              <div class="vz-fields vz-fields--2">
+                <section class="vz-field vz-f-mg">
+                  <h4>内部統制</h4>
+                  <p>会社が、自分たちの仕事の中に組み込む、守る仕組み。</p>
+                  <ul class="vz-tags"><li>だれが：組織内の全ての者</li><li>いつ：日々の仕事の中で</li></ul>
+                </section>
+                <section class="vz-field vz-f-mg">
+                  <h4>システム監査</h4>
+                  <p>独立した人が、基準に基づいて点検し、保証や助言をする。</p>
+                  <ul class="vz-tags"><li>だれが：独立した監査人</li><li>いつ：決めた時に</li></ul>
+                </section>
+              </div>
+              <figcaption>内部統制の仕組みが、ちゃんと働いているかを、システム監査の人が点検することもある。</figcaption>
+            </figure>
+            <div class="exam-q">
+              <p class="exam-q-text">【例題④】問51　社内で開発及び運用を行っている経理システムの内部監査を実施するとき，システム監査人として，最も適切なものはどれか。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>経理システムの運用担当者</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>経理システムの開発を担当した委託会社の従業員</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>経理システムの利用者である経理担当者</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>経理と<span translate="no">IT</span>の知識を有する経営者直轄組織の従業員</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問51（<span translate="no">マネジメント系</span>。問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：エ</strong>（型：最も適切なものを1つ選ぶ）。監査人は、<strong>独立にして客観的な立場</strong>でなければならない。ア（運用する人）・イ（開発した人）・ウ（使っている人）は、監査される経理システムに直接関わっているので、自分の仕事を点検することになる。エは、経営者直轄の組織にいて、経理とITの知識もあるので、独立した立場で点検できる。</p>
+              </details>
+            </div>
+
+            <p><strong>③ <span translate="no">SLA</span>と<span translate="no">BCP</span>：止まったときに備える（約15分）</strong></p>
+            <ul class="vz-points">
+              <li class="vz-point">
+                <b><span translate="no">SLA</span>（サービス・レベル合意書）</b>
+                <p>サービスの<strong>具体的な内容、水準、免責内容</strong>などについて、事業者と顧客の間で<strong>前もって合意</strong>しておくもの（総務省 SLA参考例）。例えば、「システムが使える割合」や「問い合わせへの返事の速さ」を、前もって約束しておく。</p>
+              </li>
+              <li class="vz-point">
+                <b><span translate="no">BCP</span>（事業継続計画）</b>
+                <p>地震などの自然災害、感染症、事件、大事故などの不測の事態が起きても、<strong>重要な事業を中断させない、または中断しても可能な限り短い期間で復旧させる</strong>ための方針、体制、手順等を示した計画（内閣府 事業継続ガイドライン）。</p>
+              </li>
+              <li class="vz-point">
+                <b>BCPの考え方：「目標復旧時間」</b>
+                <p>内閣府のガイドラインでは、重要業務ごとに、<strong>いつまでに復旧するか（目標復旧時間）</strong>と、どの水準まで復旧するか（目標復旧レベル）を考える。</p>
+              </li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-w3-bcp">
+              <p class="vz-fig-title" id="cap-w3-bcp"><span translate="no">BCP</span>の時間の流れ</p>
+              <svg class="vz-svg" viewBox="0 0 360 236" role="img" aria-labelledby="w3-bcp-t w3-bcp-d">
+                <title id="w3-bcp-t">BCPの時間の流れ</title>
+                <desc id="w3-bcp-d">上から順に、1 平常時：BCPを作り、訓練する。2 事故が起きる：業務が止まる。3 目標復旧時間までに：重要な業務を再開する。4 平常に戻る。</desc>
+                <line class="line" x1="22" y1="30" x2="22" y2="206"/>
+                <rect class="box-white" x="2" y="8" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="32" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="37">1</text>
+                <text class="t-b" x="44" y="29">平常時</text>
+                <text class="t-sm" x="44" y="47">BCPを作る・訓練する</text>
+                <rect class="box-white" x="2" y="64" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="88" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="93">2</text>
+                <text class="t-b" x="44" y="85">事故・災害が起きる</text>
+                <text class="t-sm" x="44" y="103">業務が止まる</text>
+                <rect class="box-white box-key" x="2" y="120" width="356" height="48" rx="8"/>
+                <circle class="dot-orange" cx="22" cy="144" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="149">3</text>
+                <text class="t-b" x="44" y="141">目標復旧時間までに</text>
+                <text class="t-sm" x="44" y="159">重要な業務を再開する</text>
+                <rect class="box-white" x="2" y="176" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="200" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="205">4</text>
+                <text class="t-b" x="44" y="197">平常に戻る</text>
+                <text class="t-sm" x="44" y="215">すべての業務を再開</text>
+              </svg>
+              <figcaption>太い枠が、BCPで決めておく目標（出典：内閣府「事業継続ガイドライン」平成25年8月改定。確認日：2026-10-14）。</figcaption>
+            </figure>
+            <p class="lesson-note"><span translate="no">SLA</span>は「平常時に、サービスの水準を約束する」もの。<span translate="no">BCP</span>は「大きな事故のときに、重要な事業を続ける・早く戻す」ための計画。目的と、使う場面が違う。</p>
+
+            <p><strong>用語を、ペアで説明し合う（約10分）</strong></p>
+            <ul>
+              <li>下の「用語カード」の7つの用語から、3つずつ選ぶ</li>
+              <li>1人が、<strong>やさしい日本語で</strong>、用語の意味を説明する。もう1人は、どの用語かを当てる</li>
+              <li>交代して、もう一度行う</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- ================= 2限 後半 ================= -->
+        <div class="timeline-block" id="blk-4">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>過去問を2問 → 事件を3要素と対策に分ける → 確認テスト（1回目）</h3>
+          <div class="timeline-body">
+
+            <p><strong>過去問演習（約10分）</strong>：問い方の型を使って、解く。</p>
+            <div class="exam-q">
+              <p class="exam-q-text">【例題⑤】問59　<span translate="no">ISMS</span>における内部監査に関する記述のうち，適切なものはどれか。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span><span translate="no">JIS Q 27001</span>の要求事項及び組織自体が規定した要求事項によって定める監査基準への適合性だけでなく，<span translate="no">ISMS</span>活動の組織に対する有効性も判定する。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span><span translate="no">JIS Q 27001</span>の要求事項ではなく，組織自体が規定した要求事項を監査基準とする。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>内部監査の実施のためのプログラムを確立するときには，前回の内部監査の結果は考慮しない。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>不定期かつ抜き打ちでの実施を原則とする。</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問59（<span translate="no">テクノロジ系</span>。問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：ア</strong>（型：適切なものを1つ選ぶ）。ISMSの内部監査は、<span translate="no">JIS Q 27001</span>の要求事項と、組織が自分で決めた要求事項の両方への適合性を見て、さらに、ISMSの活動が組織にとって有効かも判定する。イは、<span translate="no">JIS Q 27001</span>の要求事項を外しているので不適切。ウは、前回の監査の結果を考慮しない、と言い切っているので不適切（一般に、前回までの結果を次の計画に生かす）。エは、不定期かつ抜き打ちを原則とする、と言い切っているので不適切（一般に、計画に基づいて実施する）。</p>
+              </details>
+            </div>
+
+            <div class="exam-q">
+              <p class="exam-q-text">【例題⑥】問88　情報セキュリティ対策を，“技術的セキュリティ対策”，“人的セキュリティ対策”及び“物理的セキュリティ対策”に分類したとき，“物理的セキュリティ対策”の例として，適切なものはどれか。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>業務に関係のない掲示板や<span translate="no">SNS</span>などへの従業員による書込み，閲覧を防止するために，Webサーバへのアクセスログを取得し，必要に応じて通信を遮断する。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>サーバ室，執務室などの場所ごとにセキュリティレベルを設定し，従業員ごとのアクセス権が付与された<span translate="no">IC</span>カードで入退室管理を行う。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>従業員の採用時には，守秘義務に関する契約書を取り交わし，在籍中は機密情報の取扱いに関する教育，啓発を実施する。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>退職者が，在籍中のアカウントを用いた不正アクセスを行わないように，従業員の退職時にアカウントを削除する。</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問88（<span translate="no">テクノロジ系</span>。問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：イ</strong>（型：分類に合う例を選ぶ）。物理的な対策は、場所や物で守る対策。サーバ室などの入退室を、<span translate="no">IC</span>カードで管理するのが、これに当たる。アは、アクセスログの取得と通信の遮断なので、技術的な対策。ウは、契約と教育なので、人的な対策。エは、アカウントの管理（システムの設定）なので、物理的な対策ではない。</p>
+              </details>
+            </div>
+
+            <p><strong>手を動かすワーク：事件を3要素と対策に分ける（約15分）</strong></p>
+            <p>第2回の事件と、今日のストーリーの出来事を、次の3つに分ける。ペアで話してから、下の「答えの例」を開く。</p>
+            <ol>
+              <li>お客さんの情報が外に送られた——3要素のどれが損なわれたか</li>
+              <li>注文サイトが、攻撃で1日止まった——3要素のどれが損なわれたか</li>
+              <li>再発を防ぐために、<strong>退職者のアカウントの削除ルール</strong>を作って社員に教える——これは、技術的・物理的・人的のどれが中心か</li>
+            </ol>
+            <details class="vz-more">
+              <summary>答えの例を見る</summary>
+              <ul>
+                <li>1. <strong><span translate="no">機密性</span></strong>（認められていない人に、情報が見られた）。</li>
+                <li>2. <strong><span translate="no">可用性</span></strong>（必要なときに使えなかった）。</li>
+                <li>3. 「アカウントの削除」は、システムの設定の対策。ルールを作って社員に教える部分は、人的な対策。<strong>1つの対策に、複数の種類が混ざることもある</strong>。試験では、問われている分類に最も合う例を選ぶ。</li>
+              </ul>
+            </details>
+
+            <p><strong>確認テスト（1回目）（約5分）</strong></p>
+            <p>今日の内容の5問。<strong>点数を競うものではない</strong>。今、どこまで分かっているかを、自分で知るためのテスト。分からない問題は、思い出せる範囲で答える。送信すると、点数と、正解・解説が表示される。</p>
+            <div class="vz-cta">
+              <a class="vz-btn vz-btn--ext" href="https://docs.google.com/forms/d/e/1FAIpQLScnAX473D4OdeeJHuKYwxRBAB6nQR5CUtyQ3ud4am_LwvhhzA/viewform" target="_blank" rel="noopener">第3回 確認テスト（1回目）を受ける（Googleフォーム）</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= まとめ ================= -->
+        <div class="timeline-block" id="blk-5">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り → 確認テスト（2回目・任意）→ 用語カードの提出・次回予告</h3>
+          <div class="timeline-body">
+            <ul>
+              <li><strong>振り返り</strong>（約3分）：1回目の結果の画面で、<strong>間違えた問題の解説</strong>を読む。分からないところは、隣の人に聞く、または、このページの<a href="#sec-terms">用語カード</a>・<a href="#sec-quiz">練習クイズ</a>で確かめる</li>
+              <li><strong>確認テスト（2回目）は任意</strong>（約3分）：1回目と同じ5問（問題の順番は違う）。受けると、1回目より点数が上がったかを、結果の画面で見られる。時間がある人、確かめたい人は受ける</li>
+              <li><strong>用語カード</strong>：今回覚えた用語にチェックを入れて、フォームで提出する（約3分）</li>
+              <li>質問と、次回までの課題の確認（約1分）</li>
+              <li>次回（第4回）：<strong>秘密を守る・本人を確かめる</strong>——<span translate="no">共通鍵・公開鍵暗号</span>・<span translate="no">デジタル署名</span>（<span translate="no">セキュリティ</span> p.371-377）、<span translate="no">多要素認証・生体認証</span>（p.378-380）、<span translate="no">e-ビジネス</span>（p.102-105）</li>
+            </ul>
+            <div class="vz-cta">
+              <a class="vz-btn vz-btn--ext" href="https://docs.google.com/forms/d/e/1FAIpQLSem6vMF-D8TMfmQ3YdMM41X_GxPBsjD91wjv70P53anUXQMLw/viewform" target="_blank" rel="noopener">第3回 確認テスト（2回目・任意）を受ける（Googleフォーム）</a>
+              <a class="vz-btn vz-btn--ext" href="https://docs.google.com/forms/d/e/1FAIpQLSderlPukJ5NgdbPcvRGCccQNcPOpAkki0eCOa3mDvuOyxBoPw/viewform" target="_blank" rel="noopener">第3回 今回覚えた用語を提出する（Googleフォーム）</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-terms">
+      <h2>用語カード（今日の用語）</h2>
+      <p class="lesson-note">用語カードは、今日の授業で出る用語と、その意味のリスト。授業の最後に、フォームで<strong>今回覚えた用語</strong>にチェックを入れて提出する。用語は日本語のまま覚える。試験は日本語で行われる。</p>
+      <div class="table-wrap">
+        <table class="schedule-table">
+          <thead><tr><th>用語</th><th>意味</th></tr></thead>
+          <tbody>
+            <tr><td><span translate="no">情報セキュリティの3要素</span></td><td>守る情報の3つの面。機密性（認められた人だけが見られる）・完全性（正確で、勝手に変えられていない）・可用性（必要なときに使える）</td></tr>
+            <tr><td><span translate="no">リスクマネジメント</span></td><td>事故が起きる可能性を減らし、起きたときの損害を小さくするための一連の行動</td></tr>
+            <tr><td><span translate="no">ISMS</span></td><td>情報セキュリティマネジメントシステム。組織が情報を守る仕組みを作り、続けて改善していくこと</td></tr>
+            <tr><td><span translate="no">システム監査</span></td><td>独立した監査人が、基準に基づいてITシステムを検証・評価し、保証や助言をすること</td></tr>
+            <tr><td><span translate="no">内部統制</span></td><td>会社が、自分たちの仕事の中に組み込む、ミスや不正を防ぎ、目的を達成するための仕組み</td></tr>
+            <tr><td><span translate="no">SLA</span></td><td>サービス・レベル合意書。サービスの内容や水準を、事業者と顧客が前もって合意しておくもの</td></tr>
+            <tr><td><span translate="no">BCP</span></td><td>事業継続計画。事故や災害でも、重要な事業を止めない、または短い期間で復旧させるための計画</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-quiz">
+      <h2>練習クイズ（サイト内・記録なし）</h2>
+      <p class="lesson-note">確認テストの内容を、自分のペースで練習するためのクイズ（確認テストと同じ内容）。回答はこのページの中で判定されるだけで、どこにも送信・保存されず、成績にも含まれない。何度でも試せる。</p>
+
+      <div class="quiz-set">
+
+        <div class="quiz" aria-live="polite" data-answer="ウ">
+          <p class="quiz-q"><span class="quiz-q-num">Q1</span>通販サイトが大量のアクセスで止まり，客が注文できなくなった。このとき損なわれた情報セキュリティの要素はどれか。</p>
+          <div class="quiz-choices">
+            <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span translate="no">機密性</span></button>
+            <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span translate="no">完全性</span></button>
+            <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span translate="no">可用性</span></button>
+            <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span translate="no">リスク移転</span></button>
+          </div>
+          <div class="quiz-feedback" hidden>
+            <p class="quiz-result"></p>
+            <p>必要なときに使えなくなったので、損なわれたのは可用性（総務省：認可された利用者が、必要なときに情報にアクセスできることを確実にすること）。機密性は情報が見られないこと、完全性は情報が正確であること。リスク移転は、リスク対応の1つで、3要素ではない。</p>
+            <button type="button" class="quiz-retry">もう一度</button>
+          </div>
+        </div>
+
+        <div class="quiz" aria-live="polite" data-answer="イ">
+          <p class="quiz-q"><span class="quiz-q-num">Q2</span>顧客の住所が，誤った内容のまま登録されていた。このとき損なわれた情報セキュリティの要素はどれか。</p>
+          <div class="quiz-choices">
+            <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span translate="no">機密性</span></button>
+            <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span translate="no">完全性</span></button>
+            <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span translate="no">可用性</span></button>
+            <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span translate="no">リスク低減</span></button>
+          </div>
+          <div class="quiz-feedback" hidden>
+            <p class="quiz-result"></p>
+            <p>情報が正確でない状態なので、損なわれたのは完全性（総務省：情報および処理方法の正確さおよび完全である状態を安全防護すること）。アは、情報が見られること、ウは、使えないこと。エは、リスク対応の1つで、3要素ではない。</p>
+            <button type="button" class="quiz-retry">もう一度</button>
+          </div>
+        </div>
+
+        <div class="quiz" aria-live="polite" data-answer="ア">
+          <p class="quiz-q"><span class="quiz-q-num">Q3</span>ノートPCの紛失に備えて，保険に入った。このリスク対応として，最も適切なものはどれか。</p>
+          <div class="quiz-choices">
+            <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span translate="no">リスク移転</span></button>
+            <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span translate="no">リスク低減</span></button>
+            <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span translate="no">リスク保有</span></button>
+            <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span translate="no">内部統制</span></button>
+          </div>
+          <div class="quiz-feedback" hidden>
+            <p class="quiz-result"></p>
+            <p>保険は、損害を他の人（保険会社）に移すので、リスク移転。リスク低減は、対策をして被害を小さくすること（例：持ち出しの管理を厳しくする）。リスク保有は、対策をせずに受け入れること。内部統制は、リスク対応の選択肢ではない。</p>
+            <button type="button" class="quiz-retry">もう一度</button>
+          </div>
+        </div>
+
+        <div class="quiz" aria-live="polite" data-answer="エ">
+          <p class="quiz-q"><span class="quiz-q-num">Q4</span><span translate="no">システム監査</span>の説明として，最も適切なものはどれか。</p>
+          <div class="quiz-choices">
+            <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span>システムを開発した人が，自分で作ったシステムを点検する。</span></button>
+            <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span>災害のときに，重要な事業を続けるための計画を作る。</span></button>
+            <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span>サービスの水準を，事業者と顧客が前もって合意する。</span></button>
+            <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span>独立した立場の監査人が，基準に基づいて検証・評価し，保証や助言をする。</span></button>
+          </div>
+          <div class="quiz-feedback" hidden>
+            <p class="quiz-result"></p>
+            <p>システム監査は、独立にして客観的な立場の監査人が、基準に基づいて検証・評価し、保証や助言をすること（経済産業省）。アは、自分の仕事を自分で点検するので独立していない。イはBCP、ウはSLAの説明。</p>
+            <button type="button" class="quiz-retry">もう一度</button>
+          </div>
+        </div>
+
+        <div class="quiz" aria-live="polite" data-answer="イ">
+          <p class="quiz-q"><span class="quiz-q-num">Q5</span>地震などが起きても，重要な事業を中断させない，または中断しても短い期間で復旧させるための方針・体制・手順を示した計画はどれか。</p>
+          <div class="quiz-choices">
+            <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span translate="no">SLA</span></button>
+            <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span translate="no">BCP</span></button>
+            <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span translate="no">ISMS</span></button>
+            <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span translate="no">内部統制</span></button>
+          </div>
+          <div class="quiz-feedback" hidden>
+            <p class="quiz-result"></p>
+            <p>これは事業継続計画（BCP）の説明（内閣府 事業継続ガイドライン）。SLAは、サービスの水準の合意。ISMSは、情報セキュリティを管理する仕組み。内部統制は、仕事の中に組み込む、ミスや不正を防ぐ仕組み。</p>
+            <button type="button" class="quiz-retry">もう一度</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-tasks">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>第4回の予習：教科書を読む</strong>
+            <p>教科書 p.371-380 と p.102-105 を読み、<span translate="no">共通鍵・公開鍵暗号</span>、<span translate="no">デジタル署名</span>、<span translate="no">多要素認証・生体認証</span>、<span translate="no">e-ビジネス</span>の意味を確認しておく。第4回の授業の最後に、覚えた用語をフォームで提出する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>練習クイズを、全問正解になるまで繰り返す</strong>
+            <p>間違えた問題は、解説を読んでから「もう一度」を押して解き直す。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>アルバイト先や学校の「情報を守る決まり」を、1つ探す</strong>
+            <p>3要素のどれを守るための決まりか、考えてみる。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-refs">
+      <h2>参考リンク</h2>
+      <ul class="vz-links">
+        <li><a class="vz-link" href="https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ja_02/" target="_blank" rel="noopener"><b>用語集（か行）：可用性・完全性・機密性</b><span>総務省「国民のためのサイバーセキュリティサイト」</span></a></li>
+        <li><a class="vz-link" href="https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ja_03/" target="_blank" rel="noopener"><b>用語集（さ行）：情報セキュリティポリシー・情報セキュリティマネジメント</b><span>総務省「国民のためのサイバーセキュリティサイト」</span></a></li>
+        <li><a class="vz-link" href="https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ja_09/" target="_blank" rel="noopener"><b>用語集（ら行）：リスクマネジメント</b><span>総務省「国民のためのサイバーセキュリティサイト」</span></a></li>
+        <li><a class="vz-link" href="https://isms.jp/isms/index.html" target="_blank" rel="noopener"><b>ISMS（情報セキュリティマネジメントシステム）とは</b><span>ISMS-AC（情報マネジメントシステム認定センター）。3要素の定義と、JIS Q 27001の説明</span></a></li>
+        <li><a class="vz-link" href="https://www.fsa.go.jp/news/r4/sonota/20230407/20230407.html" target="_blank" rel="noopener"><b>「財務報告に係る内部統制の評価及び監査の基準…の改訂について（意見書）」の公表について</b><span>金融庁（2023年4月7日）。内部統制の4つの目的と6つの基本的要素</span></a></li>
+        <li><a class="vz-link" href="https://www.meti.go.jp/policy/netsecurity/sys-kansa/sys-kansa-2023r.pdf" target="_blank" rel="noopener"><b>システム監査基準（2023年4月26日改訂）（PDF）</b><span>経済産業省。システム監査の意義と、監査人の独立性</span></a></li>
+        <li><a class="vz-link" href="https://www.soumu.go.jp/main_content/000703895.pdf" target="_blank" rel="noopener"><b>サービス仕様適合開示書及びサービス・レベル合意書（SLA）参考例（PDF）</b><span>総務省（令和2年8月）。SLAは、サービスの内容・水準・免責内容などを事業者と顧客が合意するもの</span></a></li>
+        <li><a class="vz-link" href="https://www.bousai.go.jp/kyoiku/kigyou/pdf/guideline03.pdf" target="_blank" rel="noopener"><b>事業継続ガイドライン（平成25年8月改定）（PDF）</b><span>内閣府 防災担当。事業継続計画（BCP）の定義と、目標復旧時間の考え方</span></a></li>
+        <li><a class="vz-link" href="https://www.ipa.go.jp/shiken/mondai-kaiotu/index.html" target="_blank" rel="noopener"><b>過去問題 | 試験情報 | IPA</b><span>公開問題と解答例の一覧。法令に特別の定めがある場合を除き、許諾・使用料は不要（IPA公式）。この授業では、年度と問番号を出典として書く</span></a></li>
+        <li><a class="vz-link" href="https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2025r07_ip_qs.pdf" target="_blank" rel="noopener"><b>令和7年度 ITパスポート試験 公開問題（PDF）</b><span>例題の出典（問51・問53・問59・問88・問91・問97）</span></a></li>
+        <li><a class="vz-link" href="https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2025r07_ip_ans.pdf" target="_blank" rel="noopener"><b>令和7年度 ITパスポート試験 公開問題 解答例（PDF）</b><span>例題の正答の確認</span></a></li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week02.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第2回 情報が漏れる日：脅威はどこから来るのか</span>
+      </a>
+      <a href="../it-passport-technology.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">ITパスポート テクノロジー系</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第4回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js?v=3"></script>
+</body>
+</html>
