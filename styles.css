@@ -2958,6 +2958,7 @@ main .vz-step:not(:last-child)::after {
 }
 
 main .vz-step b { display: block; margin-bottom: 2px; color: var(--c-text); }
+main .vz-fig-img { display: block; width: 100%; max-width: 520px; height: auto; margin: var(--sp-2) auto var(--sp-3); border: 1px solid var(--c-border); border-radius: var(--r-md); }
 main .vz-step-img { display: block; width: 100%; max-width: 360px; height: auto; margin-top: var(--sp-3); border: 1px solid var(--c-border); border-radius: var(--r-md); }
 @media (min-width: 720px) {
   main .vz-step:has(.vz-step-img) { display: flow-root; }

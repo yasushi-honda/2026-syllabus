@@ -8,8 +8,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-  <link rel="stylesheet" href="../styles.css?v=16">
+  <link rel="stylesheet" href="../styles.css?v=17">
   <!-- 公式情報確認: 2026-10-14 (総務省「国民のためのサイバーセキュリティサイト」用語集 https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ ja_02 機密性・完全性・可用性 / ja_03 情報セキュリティポリシー・情報セキュリティマネジメント / ja_09 リスクマネジメント / ISMS-AC「ISMSとは」https://isms.jp/isms/index.html（JIS Q 27000:2019 引用の3要素・JIS Q 27001の位置づけ）/ 金融庁 企業会計審議会「財務報告に係る内部統制の評価及び監査の基準」令和5年4月7日改訂意見書 https://www.fsa.go.jp/news/r4/sonota/20230407/1.pdf 内部統制の4つの目的と6つの基本的要素（令和5年改訂で「財務報告の信頼性」が「報告の信頼性」に変更）/ 経済産業省「システム監査基準」2023年4月26日改訂 https://www.meti.go.jp/policy/netsecurity/sys-kansa/sys-kansa-2023r.pdf システム監査の意義・監査人の独立性と客観性 / 総務省「ガイドラインに基づくサービス仕様適合開示書及びサービス・レベル合意書（SLA）参考例」令和2年8月 https://www.soumu.go.jp/main_content/000703895.pdf SLAの説明 / 内閣府 防災担当「事業継続ガイドライン」平成25年8月改定 https://www.bousai.go.jp/kyoiku/kigyou/pdf/guideline03.pdf 事業継続計画（BCP）の定義 / 令和7年度ITパスポート試験 公開問題 問51・問53・問59・問88・問91・問97 と解答例。問59の解説のうち、ウ・エの「一般に」の部分はJIS Q 27001の内部監査の考え方による一般的な説明で、規格の原文は未突合。「リスク回避」「リスク保有」の説明は一次資料で定義文を確認できていないため、試験で出る呼び名と、よく使われる意味をやさしくまとめた。教科書 p.360-370・p.176-189 は親ページの記載に従う（教科書本文は未突合）) -->
+  <!-- 挿絵7枚（images/week03-story-1〜5.jpg、week03-three.jpg、week03-risk.jpg）は、画像生成AI（Gemini 3.1 Flash Image）で作った架空の場面のイラスト（2026-10-14）。画像内に文字・実在の人物や企業のロゴは含めない。Aさん=第2回と同じ架空の社員 -->
   <!-- 用語カードの7語は、フォーム「ITパスポート 第3回 今回覚えた用語」（forms-gas/code_full.gs の定義）と一致 -->
 </head>
 <body data-furigana="furigana/week03.json">
@@ -125,11 +126,11 @@
             <p><strong>今日のストーリー：事件のあとの会議（約10分）</strong></p>
             <p>第2回の「あおぞらストア」の事件のあと。社長が、全員を集めた。「<strong>二度と起こさないために、何を決めるか</strong>」。会議で出たことを、順番に読む。<strong>誰が・何を決めているか</strong>を考えながら読む。</p>
             <ol class="vz-steps">
-              <li class="vz-step"><b>まず、何を守るかをはっきりさせる</b>お客さんの情報が<strong>見られてしまった</strong>。でも、それだけではない。情報が<strong>書き換えられる</strong>ことも、注文サイトが<strong>止まる</strong>ことも、会社には困る。</li>
-              <li class="vz-step"><b>次に、どんな被害がありえるかを考える</b>被害の大きさと、起こりやすさを考えて、どう扱うかを決める。</li>
-              <li class="vz-step"><b>そして、決まりを作る</b>「パスワードは電話で教えない」「持ち出しは申請する」。社員全員が守る決まりと、それを続ける仕組みを作る。</li>
-              <li class="vz-step"><b>決まりが守られているかを、確かめる</b>自分たちで確かめる仕組みと、仕事の担当から離れた、独立した人に点検してもらう仕組みがある。</li>
-              <li class="vz-step"><b>サービスの約束と、止まったときの備えを決める</b>サービスの水準を、お客さん（顧客）と約束しておく。大きな災害や事故でも、重要な仕事を止めない計画を持っておく。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week03-story-1.jpg" alt="会議室で、社長がホワイトボードの前に立っている。ボードには、盾と、鍵と、はてなマークの絵がある。Aさんたち社員が、ノートパソコンを開いて、話を聞いている。" width="800" height="597" loading="lazy"><b>まず、何を守るかをはっきりさせる</b>お客さんの情報が<strong>見られてしまった</strong>。でも、それだけではない。情報が<strong>書き換えられる</strong>ことも、注文サイトが<strong>止まる</strong>ことも、会社には困る。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week03-story-2.jpg" alt="Aさんが、ボードの図を指している。図には、小さい炎と大きい炎の絵が、場所を変えて並んでいる（被害の大きさと、起こりやすさのイメージ）。同僚と社長が、考えながら見ている。" width="800" height="597" loading="lazy"><b>次に、どんな被害がありえるかを考える</b>被害の大きさと、起こりやすさを考えて、どう扱うかを決める。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week03-story-3.jpg" alt="Aさんが、掲示板に、決まりの紙を貼っている。紙には、電話と鍵にバツ印、USBメモリにバツ印、鍵のかかったドアにチェック印の絵がある。社長と社員が、うなずいて見ている。" width="800" height="597" loading="lazy"><b>そして、決まりを作る</b>「パスワードは電話で教えない」「持ち出しは申請する」。社員全員が守る決まりと、それを続ける仕組みを作る。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week03-story-4.jpg" alt="左では、Aさんと社長と社員が、チェックリストを一緒に確かめている。右では、ガラスの仕切りの向こうで、外部の監査人が、虫めがねを持って、書類を調べている。" width="800" height="597" loading="lazy"><b>決まりが守られているかを、確かめる</b>自分たちで確かめる仕組みと、仕事の担当から離れた、独立した人に点検してもらう仕組みがある。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week03-story-5.jpg" alt="嵐の日に、お店のシステムが止まった。パソコンの画面には、抜けた電源プラグの絵がある。Aさんたちが、ノートパソコンを持って、社長が指す避難先の部屋へ向かっている。壁の時計には、復旧の目標の時間が、色で示されている。" width="800" height="597" loading="lazy"><b>サービスの約束と、止まったときの備えを決める</b>サービスの水準を、お客さん（顧客）と約束しておく。大きな災害や事故でも、重要な仕事を止めない計画を持っておく。</li>
             </ol>
 
             <p><strong>ペアで話す：誰が決めて、誰が守るのか（約10分）</strong></p>
@@ -201,6 +202,7 @@
             <p>情報を守る、と言っても、「守る」の中身は1つではない。国際標準（ISO）は、3つの要素で整理している（総務省 用語集・ISMS-AC）。</p>
             <figure class="vz-fig" aria-labelledby="cap-w3-three">
               <p class="vz-fig-title" id="cap-w3-three">情報セキュリティの3要素</p>
+              <img class="vz-fig-img" src="images/week03-three.jpg" alt="3つの場面。左: 鍵のかかったフォルダ。鍵を持つ人だけが開けられ、怪しい人は盾で止められている（機密性）。中: 書類を虫めがねで調べている。書き換えようとする鉛筆の手があるが、正しい内容かをチェックしている（完全性）。右: ノートパソコンのお店のページが、問題なく開いて使われている（可用性）。" width="1000" height="558" loading="lazy">
               <svg class="vz-svg" viewBox="0 0 360 254" role="img" aria-labelledby="w3-three-t w3-three-d">
                 <title id="w3-three-t">情報セキュリティの3要素</title>
                 <desc id="w3-three-d">機密性は、認められた人だけが見られること。損なわれる例は情報の漏えい。完全性は、情報が正確で、勝手に書き換えられていないこと。損なわれる例は、誤った内容のまま使われること。可用性は、必要なときに使えること。損なわれる例は、システムが止まること。</desc>
@@ -217,7 +219,7 @@
                 <text class="t-sm" x="14" y="206">認められた人が、必要なときに使える</text>
                 <text class="t-sm" x="14" y="224">損なわれる例：システムが止まる</text>
               </svg>
-              <figcaption>出典：総務省「国民のためのサイバーセキュリティサイト」用語集、ISMS-AC「ISMSとは」（JIS Q 27000:2019）。確認日：2026-10-14。</figcaption>
+              <figcaption>上の絵は、左から機密性・完全性・可用性のイメージ。出典：総務省「国民のためのサイバーセキュリティサイト」用語集、ISMS-AC「ISMSとは」（JIS Q 27000:2019）。確認日：2026-10-14。</figcaption>
             </figure>
             <ul>
               <li>第2回の事件（お客さんの情報が外に出た）は、<span translate="no">機密性</span>が損なわれた例</li>
@@ -254,6 +256,7 @@
             </ul>
             <figure class="vz-fig" aria-labelledby="cap-w3-risk">
               <p class="vz-fig-title" id="cap-w3-risk">リスク対応の4つの選択肢</p>
+              <img class="vz-fig-img" src="images/week03-risk.jpg" alt="雨の日のたとえ。左上: 雨を見て、家にいる（回避）。右上: 保険の盾を、保険の担当者から受け取る（移転）。左下: 傘とレインコートで雨を防いで歩く（低減）。右下: 少し濡れるのを受け入れて、笑顔で歩く（保有）。" width="800" height="597" loading="lazy">
               <svg class="vz-svg" viewBox="0 0 360 188" role="img" aria-labelledby="w3-risk-t w3-risk-d">
                 <title id="w3-risk-t">リスク対応の4つの選択肢</title>
                 <desc id="w3-risk-d">リスク回避は、原因になる活動をやめる。リスク移転は、保険などで損害を他の人に移す。リスク低減は、対策をして被害を小さくする。リスク保有は、対策をせずに受け入れる。</desc>
@@ -274,7 +277,7 @@
                 <text class="t-sm" x="196" y="144">対策をせずに、</text>
                 <text class="t-sm" x="196" y="162">受け入れる</text>
               </svg>
-              <figcaption>色だけで区別しない。名前は、箱の中の文字で読む。4つの説明は、公式の定義文ではなく、問91の選択肢をもとにやさしく書いた一般的な考え方。</figcaption>
+              <figcaption>上の絵は「雨の日」のたとえ（左上から順に、回避・移転・低減・保有）。色だけで区別しない。名前は、箱の中の文字で読む。4つの説明は、公式の定義文ではなく、問91の選択肢をもとにやさしく書いた一般的な考え方。</figcaption>
             </figure>
             <p>試験の例（問91）：<strong>ノート<span translate="no">PC</span>の紛失や盗難に備えて、社外への持ち出しをより厳重に管理する</strong>ことは、<span translate="no">リスク低減</span>。<strong>リスクが現実になることに備えて保険を掛けておく</strong>ことは、<span translate="no">リスク回避</span>ではなく、保険で損害を他の人に移す<span translate="no">リスク移転</span>に当たる。</p>
             <div class="exam-q">
