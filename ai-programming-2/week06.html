@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第6回 Google AI Studio Build modeに触れてみよう① | AI活用プログラミング基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=18">
+  <!-- 公式情報確認: 2026-10-14 (ai.google.dev/gemini-api/docs/aistudio-build-mode・ai.google.dev/gemini-api/docs/workspace を生HTMLで確認: Import from GitHub は「Add files (+ icon) menu in the prompt input box」にある／Settings の GitHub タブで「create a new GitHub repository from your app or link to an existing one」／two-way sync／「Resolve conflicts」ダイアログ／Gemini APIキーは「automatically configures your Gemini API key as a secret in the app's server-side environment」／Workspace for Education は18歳未満は使えない、管理者がオン/オフを切り替えられる)。Import from GitHub の対応範囲（非公開リポジトリ、素のHTML/JSのままか作り替えられるか）は公式に記載がなく未確認——授業前に教員が学校アカウントで素のHTMLリポジトリを取り込んで確認する -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--orange">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-programming-2.html">AI活用プログラミング基礎 II</a>
+        <span>/</span>
+        <span>第6回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">Google AI Studio Build modeに<wbr>触れてみよう①</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 6</span>
+            <span class="page-badge">木曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-orange">
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">第3〜4回でagyと育てた<strong>GitHubリポジトリ</strong>を、ブラウザだけで使うGoogle AI Studioの<strong>Build mode</strong>に「Import from GitHub」で取り込み、同じ成果物の続きを自然言語の指示で作る</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">Google AI Studio / Build mode / Import from GitHub / GitHubがハブ / Gemini APIキーの自動設定（シークレット）</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">自分のGitHubリポジトリの名前（第5回で控えたもの）／Googleアカウント（学校用・個人用どちらでもよい）で、ブラウザからaistudio.google.comを開けること。Codespaceは今日は使わない。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>Google AI Studioの<strong>Build mode</strong>が何をする道具か（自然言語で指示し、右側のプレビューで確かめる）を、agyと比べて説明できる</li>
+        <li>自分のGitHubリポジトリを<strong>Import from GitHub</strong>で取り込み、<strong>同じ成果物</strong>がブラウザの中で動くところまで進める</li>
+        <li>agyのときと同じように、<strong>1回に1つずつ</strong>自然言語で指示を出して、成果物を改善する</li>
+        <li>Gemini APIを使うアプリでは、<strong>APIキーが自動でシークレットとして設定される</strong>仕組みを確認する（キーを自分で書かない）</li>
+        <li>agyとBuild modeを使い比べて、気づいたことを<strong>自分の言葉で</strong>メモに残す</li>
+      </ul>
+      <div class="lesson-tip">
+        <strong>今日の優先順位:</strong> 上手に作ることより、<strong>「GitHubを真ん中に置くと、別の道具で同じものの続きを作れる」</strong>ことを体験するのが目的です。取り込んだ結果が元と少し違っても失敗ではありません。違いに気づくこと自体が、今日の学びです。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>Build modeとは何か——agyとの違いを知る</h3>
+          <div class="timeline-body">
+            <p><strong>第5回のつづき——GitHubが「ハブ」になる</strong></p>
+            <ul>
+              <li>第3〜5回で、自分のゲームは<strong>GitHubのリポジトリ</strong>に入っている。リポジトリは、Codespaceが停止しても残る「自分の作品の置き場所」</li>
+              <li>置き場所がGitHubにあるので、<strong>agy以外の道具からも、同じ作品を読み込める</strong>。今日はその道具として<strong>Google AI Studio</strong>を使う</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-a6-hub">
+              <p class="vz-fig-title" id="cap-a6-hub">同じリポジトリを、別の道具で触る</p>
+              <svg class="vz-svg" viewBox="0 0 360 304" role="img" aria-labelledby="a6-hub-t a6-hub-d">
+                <title id="a6-hub-t">同じリポジトリを、別の道具で触る</title>
+                <desc id="a6-hub-d">真ん中の上にGitHubのリポジトリがあり、第3〜5回で育てた自分のものである。そこから左右に矢印が伸びる。左はagyで、Codespaceの黒い画面に文字で指示する。右はAI StudioのBuild modeで、ブラウザの画面で指示し、右側のプレビューで確かめる。今日はじめて使うのは右側。</desc>
+                <rect class="box-orange box-key" x="8" y="6" width="344" height="68" rx="10"/>
+                <text class="t-c t-b" x="180" y="32">GitHubのリポジトリ</text>
+                <text class="t-c t-sm" x="180" y="54">第3〜5回で育てた、自分のもの</text>
+                <line class="line" x1="92" y1="76" x2="92" y2="120" marker-start="url(#mk-s)" marker-end="url(#mk-s)"/>
+                <line class="line" x1="268" y1="76" x2="268" y2="120" marker-start="url(#mk-s)" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="124" width="168" height="114" rx="10"/>
+                <text class="t-c t-b" x="92" y="148">agy</text>
+                <text class="t-c t-sm" x="92" y="167">（Codespace）</text>
+                <text class="t-c t-sm" x="92" y="187">黒い画面で</text>
+                <text class="t-c t-sm" x="92" y="204">文字で指示する</text>
+                <text class="t-c t-sm" x="92" y="224">これまで使った</text>
+                <rect class="box-orange" x="184" y="124" width="168" height="114" rx="10"/>
+                <text class="t-c t-b" x="268" y="148">Build mode</text>
+                <text class="t-c t-sm" x="268" y="167">（AI Studio）</text>
+                <text class="t-c t-sm" x="268" y="187">ブラウザの画面で指示</text>
+                <text class="t-c t-sm" x="268" y="204">右でプレビュー</text>
+                <text class="t-c t-sm" x="268" y="224">今日はじめて使う</text>
+                <rect class="box-white box-key" x="8" y="254" width="344" height="42" rx="10"/>
+                <text class="t-c t-b" x="180" y="280">作品は同じ。道具だけが変わる</text>
+              </svg>
+              <figcaption>矢印は、リポジトリから「読み込む」向きと、あとで「書き戻す」向きです。書き戻すのは次回です。</figcaption>
+            </figure>
+            <p><strong>Build modeとは</strong></p>
+            <ul>
+              <li>Google AI Studioの中の機能で、<strong>自然言語で指示を書くと、AIがコードを書き、アプリとして動く様子が右側のプレビューに出る</strong>（公式: <a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio</a>）</li>
+              <li>agyとの違いは、<strong>道具の形</strong>。agyは「黒い画面（CLI）に文字で指示」、Build modeは「ブラウザの画面で指示し、プレビューを見ながら進める」。どちらも<strong>自然言語で指示する</strong>点は同じ</li>
+              <li>どちらが優れているかを決める回ではない。<strong>同じ作品を両方で触って、違いを自分で感じる</strong>のが今日のねらい</li>
+            </ul>
+            <p><strong>使うアカウントについて</strong></p>
+            <ul>
+              <li>Googleアカウントでログインする。<strong>学校用・個人用どちらでもよい</strong>（第3回のagyと同じ。本科目ではアカウントの種類は問わない）</li>
+              <li>公式には、Workspace for Educationのアカウントでは<strong>18歳未満は使えない</strong>と書かれている（<a href="https://ai.google.dev/gemini-api/docs/workspace" target="_blank" rel="noopener">Access Google AI Studio with your Workspace account</a>）。本校の学生は全員18歳以上なので、この年齢の制限には当たらない。ただし、<strong>組織の管理者が設定でオフにしている</strong>と学校用では開けないことがある。そのときは個人用のGoogleアカウントで進める</li>
+              <li>今日は、<strong>支払いや請求の設定は一切しない</strong>。画面で有料や請求に関する案内が出たら、進まずに講師に声をかける</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>自分のリポジトリを取り込み、プレビューで動かす</h3>
+          <div class="timeline-body">
+            <figure class="vz-fig" aria-labelledby="cap-a6-steps">
+              <p class="vz-fig-title" id="cap-a6-steps">Import from GitHub の手順</p>
+              <svg class="vz-svg" viewBox="0 0 360 348" role="img" aria-labelledby="a6-steps-t a6-steps-d">
+                <title id="a6-steps-t">Import from GitHub の手順</title>
+                <desc id="a6-steps-d">1 aistudio.google.comをGoogleアカウントでログインして開く。2 Build（ビルド）を選び、アプリを作る画面を開く。3 プロンプト入力欄のAdd files（プラスの印）メニューの中からImport from GitHubを選ぶ。4 自分のリポジトリを選ぶ。連携の許可を求められたら画面を読んで進む。5 指示を送ると、ファイルが生成され、右側にアプリのプレビューが表示される。</desc>
+                <rect class="box-orange" x="8" y="6" width="344" height="54" rx="10"/>
+                <text class="t-b" x="22" y="28">1 AI Studioを開く</text>
+                <text class="t-sm" x="22" y="48">aistudio.google.com にログイン</text>
+                <line class="line" x1="180" y1="62" x2="180" y2="74" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="76" width="344" height="54" rx="10"/>
+                <text class="t-b" x="22" y="98">2 Build（ビルド）を選ぶ</text>
+                <text class="t-sm" x="22" y="118">アプリを作る画面を開く</text>
+                <line class="line" x1="180" y1="132" x2="180" y2="144" marker-end="url(#mk-s)"/>
+                <rect class="box-orange box-key" x="8" y="146" width="344" height="54" rx="10"/>
+                <text class="t-b" x="22" y="168">3 Import from GitHub を選ぶ</text>
+                <text class="t-sm" x="22" y="188">入力欄の Add files（＋）メニューの中</text>
+                <line class="line" x1="180" y1="202" x2="180" y2="214" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="216" width="344" height="54" rx="10"/>
+                <text class="t-b" x="22" y="238">4 自分のリポジトリを選ぶ</text>
+                <text class="t-sm" x="22" y="258">連携の許可は、画面を読んで進む</text>
+                <line class="line" x1="180" y1="272" x2="180" y2="284" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="286" width="344" height="54" rx="10"/>
+                <text class="t-b" x="22" y="308">5 指示を送って、プレビューを見る</text>
+                <text class="t-sm" x="22" y="328">ファイルが生成され、右側にアプリが出る</text>
+              </svg>
+              <figcaption>太い枠の3番が、今日の中心の操作です。画面の見た目や文言は変わることがあるので、図と違うときは表示を読んで進めてください。</figcaption>
+            </figure>
+            <p><strong>取り込む</strong></p>
+            <ul>
+              <li>公式の説明: Build modeで、プロンプト入力欄の<strong>Add files（＋のアイコン）メニューからImport from GitHub</strong>を選ぶと、既存のコードを取り込める。プロンプトを実行すると、必要なコードとファイルが生成され、アプリのライブプレビューが表示される（<a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio</a>）</li>
+              <li>取り込むのは、第3回で作った<strong>自分のリポジトリ</strong>（第5回で名前を控えたもの）。リポジトリは<strong>Public</strong>のままにしておく（第3回で案内したとおり）</li>
+              <li>取り込んだあと、プロンプト欄に<strong>最初の指示</strong>を書いて送信する。例: <code>取り込んだコードのゲームの遊び方を、初心者向けに3行で説明してください。コードは変えないでください</code></li>
+            </ul>
+            <p><strong>まず「何も変えずに」確かめる</strong></p>
+            <ul>
+              <li>右側のプレビューで、<strong>元のゲームが動くか</strong>を確かめる。遊んでみて、第4〜5回に作った機能が残っているかを見る</li>
+              <li>取り込んだコードが<strong>書き直されたり、ファイルの構成が変わったり</strong>して、元のゲームと<strong>見た目や構成が変わる</strong>可能性がある（公式には、取り込んだコードがどう扱われるかは書かれていない。Build modeは、既定で画面とサーバーの両方を持つアプリを作る仕組みと説明されている）。変わっていたら、<strong>どこが違うかをメモする</strong>——失敗ではなく、2限の観察の材料になる</li>
+              <li>動かない、読み込みが進まない、リポジトリが一覧に出ないときは、講師に声をかける。エラーが出たら、<strong>その全文をプロンプト欄に貼って「原因と直し方を教えて」</strong>と頼んでもよい</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>今日はさわらない場所:</strong> AI Studioの<strong>Settings（設定）にあるGitHubタブ</strong>には、「アプリから新しいGitHubリポジトリを作る」操作がある（公式: Settingsの<strong>GitHubタブ</strong>で、新しいリポジトリを作るか、既存のリポジトリにリンクできる）。今日これを押すと、<strong>意図しない新しいリポジトリ</strong>が自分のGitHubに増えてしまう。GitHubへ書き戻す操作は<strong>次回（第7回）に一緒に行う</strong>ので、今日は触らない。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>自然言語で続きを作る——agyのときとの違いを観察する</h3>
+          <div class="timeline-body">
+            <figure class="vz-fig" aria-labelledby="cap-a6-loop">
+              <p class="vz-fig-title" id="cap-a6-loop">指示を出して、確かめて、直す</p>
+              <svg class="vz-svg" viewBox="0 0 360 206" role="img" aria-labelledby="a6-loop-t a6-loop-d">
+                <title id="a6-loop-t">指示を出して、確かめて、直す</title>
+                <desc id="a6-loop-d">1 指示を1つだけ書いて送る。2 右側のプレビューで、思ったとおりか確かめる。3 違うところを言葉にして、追加で指示する。そして1に戻って、これをくり返す。</desc>
+                <rect class="box-orange" x="8" y="6" width="344" height="54" rx="10"/>
+                <text class="t-b" x="22" y="28">1 指示を1つだけ書いて送る</text>
+                <text class="t-sm" x="22" y="48">例: スコアの表示を大きくして</text>
+                <line class="line" x1="180" y1="62" x2="180" y2="74" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="76" width="344" height="54" rx="10"/>
+                <text class="t-b" x="22" y="98">2 プレビューで確かめる</text>
+                <text class="t-sm" x="22" y="118">思ったとおりに動くか、遊んで見る</text>
+                <line class="line" x1="180" y1="132" x2="180" y2="144" marker-end="url(#mk-s)"/>
+                <rect class="box-orange box-key" x="8" y="146" width="344" height="54" rx="10"/>
+                <text class="t-b" x="22" y="168">3 違うところを言葉にして、追加で指示</text>
+                <text class="t-sm" x="22" y="188">そして1に戻って、くり返す</text>
+              </svg>
+              <figcaption>第4回にagyで練習した「具体的に、1回に1つ」と同じ進め方です。</figcaption>
+            </figure>
+            <p><strong>やること</strong>（約35分）</p>
+            <ul>
+              <li>取り込んだゲームに、自然言語で<strong>改善を1つずつ</strong>頼む。例: スコアの表示を大きくする、ゲームオーバーの画面を作る、難しさを選べるようにする、色や見た目を変える</li>
+              <li>第4回に学んだとおり、<strong>あいまいな指示より、具体的な指示</strong>のほうが思ったものに近づく。思い通りにならないときは、「何が違うか」を言葉にして追加で指示する</li>
+              <li>1つ指示するたびに、<strong>プレビューで遊んで確かめる</strong>。確かめてから、次の指示に進む</li>
+            </ul>
+            <p><strong>agyのときとの違いを観察する</strong>（メモを取りながら、約15分）</p>
+            <ul>
+              <li>①<strong>指示を出してから、結果が見えるまで</strong>の流れはどう違うか（プレビューの有無）</li>
+              <li>②<strong>どのファイルが、どう変わったか</strong>は、どこで分かるか（ファイル一覧や変更の表示を探してみる）</li>
+              <li>③思い通りにならなかったとき、<strong>やり直しや直し方</strong>はどう違うか</li>
+              <li>④取り込み直後に気づいた「元との違い」は、使っているうちに影響が出たか</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>Gemini APIの自動設定を確かめ、振り返りメモを書く</h3>
+          <div class="timeline-body">
+            <p><strong>Gemini APIを使う機能（任意、約15分）</strong></p>
+            <ul>
+              <li>公式の説明: Gemini APIを使う新しいアプリを作ると、AI Studioが<strong>Gemini APIキーを、アプリのサーバー側の環境のシークレットとして自動で設定する</strong>。キーは「Secrets」パネルで確認・管理できる（<a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio</a>の「API Key management」）。つまり、<strong>自分でAPIキーを書かなくてよい</strong></li>
+              <li>試す人は、例えば<code>ゲームオーバーのときに、Geminiがひとことコメントを出す機能を足してください</code>と頼む。出てきた画面の案内を読んで進める。公式の説明は「Gemini APIを使う<strong>新しいアプリ</strong>を作ると」という書き方なので、<strong>取り込んだアプリでも同じように設定されるかは公式に書かれていない</strong>。SettingsのSecretsパネルで、実際にキーが設定されているかを確かめる</li>
+              <li><strong>APIキーは、コード・チャット・スクリーンショットのどこにも貼らない</strong>。公式には、キーはサーバー側で扱われると書かれている（ブラウザ側のコードに書いてしまうと、ページを開いた人に見えてしまう）</li>
+              <li>次回の公開について: GitHub Pagesは、HTML・CSS・JavaScriptのファイルを置いて公開する<strong>静的サイト向け</strong>の仕組み（公式: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages" target="_blank" rel="noopener">What is GitHub Pages?</a>）。サーバー側で動く処理に頼る機能は、<strong>そのままでは動かない可能性がある</strong>。また、Geminiのキーをブラウザ側のJavaScriptに直接書いて公開すると、誰にでも見えてしまう。公開できるかは、次回に確かめる</li>
+            </ul>
+            <p><strong>振り返りメモ（約15分）</strong></p>
+            <ul>
+              <li>次の3行を、自分の言葉で書く（第7回の最後で見返す）
+                <ul>
+                  <li>①agyとBuild modeを使い比べて、<strong>違うと感じたところ</strong></li>
+                  <li>②Build modeで<strong>良かったこと</strong>と<strong>困ったこと</strong></li>
+                  <li>③次回、<strong>自分の作品で試したいこと</strong>（例: 見た目、遊び方、新しい機能）</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告＆振り返りメモ</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>次回（第7回）：<strong>Google AI Studio Build modeで仕上げよう②</strong>——今日取り込んだアプリを、自然言語の追加指示でさらに改善し、<strong>GitHubへプッシュ</strong>し、<strong>GitHub Pages</strong>で公開する。「指示したら形になった」という成功体験を、ひとことメモに残す</li>
+              <li>今日のうちに、<strong>AI Studioのプロジェクトを削除しない</strong>。GitHubのリポジトリ名とあわせて、使ったプロジェクト名もメモしておく</li>
+              <li>「今日いちばん違うと感じたこと」を一言メモして退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>使ったリポジトリ名とAI Studioのプロジェクト名をメモする</strong>
+            <p>次回、同じものの続きから始めるため。あわせて、今日の<strong>振り返りメモの3行</strong>が書けているか確かめておく。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>もう1つ、改善を指示して試してみる</strong>
+            <p>空き時間に、AI Studioでもう1つ改善を頼んでみましょう。うまくいかなかったことも、次回の話題になります。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio（Google公式）</a> — Build modeの使い方・Import from GitHub・APIキーの自動設定</li>
+        <li><a href="https://ai.google.dev/gemini-api/docs/workspace" target="_blank" rel="noopener">Access Google AI Studio with your Workspace account（Google公式）</a> — 学校のアカウントでの利用条件</li>
+        <li><a href="https://aistudio.google.com" target="_blank" rel="noopener">Google AI Studio</a> — 今日使うサービス本体</li>
+        <li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages" target="_blank" rel="noopener">What is GitHub Pages?（GitHub公式）</a> — 次回の公開に使う仕組み</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week05.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第5回 GitHubでチーム開発をシミュレーションしよう</span>
+      </a>
+      <a href="../ai-programming-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AI活用プログラミング基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第7回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>

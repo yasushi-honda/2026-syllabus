@@ -115,6 +115,7 @@ ai-programming-2/       # AI活用プログラミング基礎Ⅱ の各回詳細
   week04.html           #   第4回 agyと一緒につくる①
   week05.html           #   第5回 GitHubでチーム開発をシミュレーションしよう
   github-team-sim.html  #     第5回 GitHubチーム開発シミュレーター（1 ファイル HTML、JS のみ・記録なし。コマンド／agy自然言語の2モード）
+  week06.html           #   第6回 Google AI Studio Build modeに触れてみよう①
 natural-language-dev-2.html   # 自然言語開発Ⅱ（木3・4限／後期。授業内容確定済み、週ページ順次作成中）
 natural-language-dev-2/       # 自然言語開発Ⅱ の各回詳細ページ
   week01.html           #   第1回 前期振り返り＆後期オリエンテーション
@@ -122,6 +123,7 @@ natural-language-dev-2/       # 自然言語開発Ⅱ の各回詳細ページ
   week03.html           #   第3回 AIエージェントを選ぼう（AWS登録は対象者のみ）
   week04.html           #   第4回 対戦ゲームの仕組みを読み解こう
   week05.html           #   第5回 スコアを保存して守ろう：カード不要のNeonとセキュリティ
+  week06.html           #   第6回 自然言語でデータを残そう：カード不要のNeon実習（第5回の内容のうち実習部分。第5回の授業は別内容だったため、2026-10-14に差し替え）
 autumn-intensive.html   # 秋の集中講座（時間割枠外・後期スピンオフ企画・全5日間。授業内容確定済み、日別詳細ページ順次作成中）
 autumn-intensive/       # 秋の集中講座 の日別詳細ページ（週ページではなく Day N）
   day01.html            #   Day1 チームで参加／環境をつくる
@@ -248,7 +250,7 @@ content/                # Markdownソース（コピーボタン用。全HTMLペ
 
 - **共通ルール**: ①SVGは `role="img"` + `<title>` + `<desc>`、画像は `alt` を必ず付ける ②色だけで意味を伝えない（文字ラベルを併記する）③375〜390px幅で横スクロールが出ないこと、375px幅で補足文字が実寸約11px・本文が約11.7px以上あることを、Playwrightで実測して確認する（360px幅の小さいスマホでは補足文字が約10.4pxまで下がる。それより小さくしない）（viewBox幅360のSVGは幅が縮むと文字も縮むため、`main.theme-blue` / `main.theme-purple` ではスマホ幅だけ余白を詰めて文字を大きくしている） ④図の内容（回の番号・テーマ名・機能名）は親ページ・他の週ページと突き合わせ、comment-analyzerに依頼する
 - **テーマ色**: `vz-*` は amber 基調。`main.theme-slate`（秋の集中講座）／`main.theme-blue`（プログラム基礎Ⅱ）／`main.theme-purple`（AIコミュニケーション基礎Ⅱ）のように、`<main>` にクラスを付けて読み替える。**新しい色の科目で使うときは `styles.css` に読み替え（`main.theme-xxx`）を追加する**。丸点の色は `.dot` / `.dot-blue` / `.dot-orange`（白い数字を載せるので、コントラスト4.5:1以上の色だけ使う。`--c-green` は4.36:1で不足）。**`main.theme-slate` 専用のセレクタ（`.vz-field ul` など）もあるため、blue基調のページで SVG（`.vz-svg`）・`vz-fig`・`vz-flow` 以外の `vz-*` 部品を使うときは表示を確認する**
-- **CSSを触ったとき**: 週ページ側の `styles.css?v=N` を上げると、古いキャッシュを待たずに反映できる（`styles.css` を変えるたびに連番を上げる。現在の最新は `?v=16`（ITパスポート week03 が使用。他のページは古い連番のままで、影響する変更は入っていない））
+- **CSSを触ったとき**: 週ページ側の `styles.css?v=N` を上げると、古いキャッシュを待たずに反映できる（`styles.css` を変えるたびに連番を上げる。現在の最新は `?v=18`（AI活用プログラミング基礎Ⅱ week06・自然言語開発Ⅱ week06 が使用。`main.theme-orange` の追加で orange 基調のページでも `vz-*` を使える。他のページは古い連番のままで、影響する変更は入っていない））
 
 ### 時間配分（固定・絶対厳守）
 

@@ -153,7 +153,7 @@
             <p><strong>今日使うDB: Neon</strong></p>
             <ul>
               <li><strong>Neon</strong>は、Postgres（表形式のデータベース）のクラウドサービス。公式の料金ページには「Build and learn free with no time limits and no credit card required.」と書かれている（<a href="https://neon.com/pricing" target="_blank" rel="noopener">Pricing（Neon公式）</a>）——<strong>クレジットカードなしで使い始められる</strong></li>
-              <li>Freeプランは、1プロジェクトあたり0.5 GBまで。使っていない（非アクティブな）ときは自動で休止する（公式の料金表: 「After 5 minutes」）</li>
+              <li>Freeプランは、1プロジェクトあたり1 GBまで（2026-10-14の公式料金ページで確認）。使っていない（非アクティブな）ときは自動で休止する（公式の料金表: 「After 5 minutes」）</li>
             </ul>
           </div>
         </div>
@@ -205,14 +205,14 @@
               <li>次のコマンドで、<strong>アカウントを作らずに</strong>一時的なプロジェクトを作り、接続文字列を書き出す: <code>neon claim create --env-pull</code>（公式の説明では、既にある<code>.env</code>に書き込み、なければ<code>.env.local</code>に書き出す。<strong>先に空の<code>.env</code>を作っておく</strong>と、以降の説明どおりに進められる）</li>
               <li>公式の説明: 「Unclaimed projects expire in 72 hours (<code>project.expires_at</code>) and are capped at 100 MB storage and 1 GB transfer.」——<strong>72時間で期限切れ</strong>（あとで自分のアカウントに引き継ぐ手順は2限後半に扱う）（<a href="https://neon.com/docs/reference/claimable-postgres" target="_blank" rel="noopener">Claimable Neon</a>）</li>
               <li><code>.env</code>には<code>DATABASE_URL</code>など3つの値が入る。<code>DATABASE_URL</code>が<strong>DBに入るための鍵（パスワード相当）</strong>。中身をチャットや画面に貼らない。コマンドの実行結果には、プロジェクトの期限（72時間後）も表示される</li>
-              <li>コマンドは<code>.gitignore</code>に<code>.neon</code>を追加することがあるが、<code>.env</code>を入れてくれるとは限らない。<strong><code>.gitignore</code>に<code>.env</code>が入っているか、必ず自分で確認する</strong></li>
+              <li>公式には、<code>--env-pull</code>は書き込み先のファイルを<code>.gitignore</code>に入れると書かれている（<a href="https://neon.com/docs/cli/claim" target="_blank" rel="noopener">Neon CLI command: claim</a>）。ただし、教員が2026-09-30に試したときは<code>.neon</code>だけが追加され、<code>.env</code>は入らなかった。バージョンや環境で違うことがあるので、<strong><code>.gitignore</code>に<code>.env</code>が入っているか、必ず自分で確認する</strong></li>
             </ul>
             <p><strong>AIエージェントに、スコア保存のスクリプトを頼む</strong></p>
             <ul>
-              <li>例: <code>scoresテーブル（id・名前・スコア・作成日時）を作り、スコアを1件追加して、上位10件を表示するNode.jsのスクリプトscores.jsを書いてください。DBへの接続は、.envのDATABASE_URLを使い、pgパッケージで行ってください。必要なパッケージのインストールと、.envの読み込み方法（dotenvか、Nodeの--env-file）も含めてください</code></li>
+              <li>例: <code>scoresテーブル（id・名前・スコア・作成日時）を使うNode.jsのスクリプトscores.jsを書いてください。「node scores.js add 名前 スコア」でスコアを1件追加し、引数なしの「node scores.js」では何も追加せずに、上位10件を表示してください。テーブルがなければ作ってください。DBへの接続は、.envのDATABASE_URLを使い、pgパッケージで行ってください。必要なパッケージのインストールと、.envの読み込み方法（dotenvか、Nodeの--env-file）も含めてください</code>（追加する操作と、見る操作を分けるのがポイント。見るたびに追加されると、「残っている」ことの確認にならない）</li>
               <li>エージェントが書いたコードを<strong>読んでから</strong>実行する。接続文字列が<strong>コードの中に直接書かれていない</strong>か（<code>.env</code>から読み込んでいるか）を確認する（Nodeからの接続の公式例: <a href="https://neon.com/docs/connect/connect-from-any-app" target="_blank" rel="noopener">Connect from any application</a>）</li>
               <li>実行すると、pgの<strong>SSLに関する警告</strong>が出ることがあるが、動作には影響しない。意味が分からなければエージェントに聞いてよい（警告を消すことが目的ではない）</li>
-              <li>実行して、スコアが表示されれば成功。<strong>新しいターミナルでもう一度実行しても、スコアが残っている</strong>ことを確かめる（時間があれば、Codespaceを一度止めて再開しても残っていることも確かめる。スコアは手元ではなく<strong>クラウドのDB</strong>にあるため）</li>
+              <li>まず<code>node scores.js add たろう 120</code>のように追加し、<code>node scores.js</code>で一覧を見て、スコアが表示されれば成功。次に<strong>新しいターミナルで、追加せずに</strong><code>node scores.js</code>だけを実行し、<strong>さっき追加したスコアが残っている</strong>ことを確かめる（時間があれば、Codespaceを一度止めて再開しても残っていることも確かめる。スコアは手元ではなく<strong>クラウドのDB</strong>にあるため）</li>
             </ul>
             <div class="lesson-tip">
               <strong>詰まったら:</strong> 接続できない、エラーが出るときは、そのエラー全文をエージェントに貼って「原因と直し方を教えて」と頼んでよい。エージェントから<strong>ネットワークへの接続や、コマンド実行の許可を求められたら</strong>、内容（何に接続し、何を実行するか）を読んで、問題なければ許可する。それでも進まなければ、講師に声をかけてください。教員のデモに切り替えるか、Neonの無料アカウント（カード不要）をブラウザで作ってプロジェクトを作成し、<code>neon connection-string</code>で接続文字列を取り出す方法に切り替えます。
@@ -347,7 +347,7 @@
               <figcaption>引き継ぎは任意です。引き継がないなら、72時間後に消えることを理解しておけば十分です。Codespaceで引き継ぐときは、<code>neon claim accept --no-open</code>で表示されたURLを、手元のブラウザで開きます。</figcaption>
             </figure>
             <ul>
-              <li>72時間で消える一時プロジェクトを残したい人は、<code>neon claim accept</code>で自分のNeonアカウントに<strong>引き継ぐ（claim）</strong>。このコマンドは、既定ではブラウザを開こうとする。Codespaceでは開かないので、<code>neon claim accept --no-open</code>と実行して<strong>表示されたURLを手元のブラウザで開く</strong>（<a href="https://neon.com/docs/cli/claim" target="_blank" rel="noopener">claim（Neon公式）</a>）</li>
+              <li>72時間で消える一時プロジェクトを残したい人は、<code>neon claim accept</code>で自分のNeonアカウントに<strong>引き継ぐ（claim）</strong>。このコマンドは、既定ではブラウザを開こうとする。Codespaceでは自動で開かないことがあるので、<code>neon claim accept --no-open</code>と実行して<strong>表示されたURLを手元のブラウザで開く</strong>（<a href="https://neon.com/docs/cli/claim" target="_blank" rel="noopener">Neon CLI command: claim（Neon公式）</a>）</li>
               <li><strong>引き継ぐと、接続文字列（パスワード）が変わる</strong>ため、それまでの<code>.env</code>の値は使えなくなる。引き継いだあとは、Neonのコンソールで新しい接続文字列を取り直し、<code>.env</code>を書き換える</li>
               <li>アカウント作成の途中で<strong>クレジットカードの入力を求められたら、進まずに講師に声をかける</strong>（Freeプランはカード不要と公式に書かれているが、画面の実際の表示を確認する）</li>
               <li>引き継がないなら、72時間後に消えることを理解しておけばよい</li>
@@ -368,8 +368,8 @@
           <h3>次回予告＆今日の振り返り</h3>
           <div class="timeline-body">
             <ul>
-              <li>次回（第6回）：<strong>Firebaseに触れてみよう</strong>——Firebaseの基本概念（Hosting等）に触れ、使用中のAIエージェントから<strong>Firebase CLI</strong>（<code>firebase deploy</code>等）を使って、進級制作に簡単な機能を組み込む。今日は「データを置く側」、次回は「ページを公開する側」の話へ</li>
-              <li>第9回のFirestoreは、今日のNeon（表形式のPostgres）とは別の種類のDB（NoSQL）。違いは第9回で比べる</li>
+              <li>次回（第6回）：<strong>自然言語でデータを残そう：カード不要のNeon実習</strong>——今日の内容のうち、DBを作ってデータを保存する部分を、エージェントに自然言語で頼む実習として行う</li>
+              <li>後半のFirestoreの回で扱うDBは、今日のNeon（表形式のPostgres）とは別の種類のDB（NoSQL）。違いはその回で比べる</li>
               <li>「今日、壊して分かったこと」と「自分の入力ルール」を一言メモして退出</li>
             </ul>
           </div>
@@ -404,7 +404,7 @@
         <li><a href="https://neon.com/pricing" target="_blank" rel="noopener">Pricing（Neon公式）</a> — Freeプランの内容（カード不要・容量・休止）</li>
         <li><a href="https://neon.com/docs/reference/claimable-postgres" target="_blank" rel="noopener">Claimable Neon（Neon公式）</a> — アカウントなしの一時プロジェクトと、引き継ぎ（claim）</li>
         <li><a href="https://neon.com/docs/reference/neon-cli" target="_blank" rel="noopener">Neon CLI（Neon公式）</a> — <code>neon login</code>・<code>neon claim</code>・<code>neon connection-string</code>など</li>
-        <li><a href="https://neon.com/docs/cli/claim" target="_blank" rel="noopener">claim（Neon公式）</a> — 一時プロジェクトの作成と引き継ぎ（<code>--no-open</code>など）</li>
+        <li><a href="https://neon.com/docs/cli/claim" target="_blank" rel="noopener">Neon CLI command: claim（Neon公式）</a> — 一時プロジェクトの作成と引き継ぎ（<code>--no-open</code>など）</li>
         <li><a href="https://neon.com/docs/connect/connect-from-any-app" target="_blank" rel="noopener">Connect from any application（Neon公式）</a> — Node.jsからの接続の書き方</li>
         <li><a href="https://neon.com/docs/manage/database-access" target="_blank" rel="noopener">Manage database access（Neon公式）</a> — 読み取り専用ロールの作り方</li>
         <li><a href="https://neon.com/docs/manage/roles" target="_blank" rel="noopener">Manage roles（Neon公式）</a> — ロールの作成とパスワードのリセット</li>
@@ -424,10 +424,10 @@
         <span class="lesson-nav-label">授業計画一覧</span>
         <span class="lesson-nav-title">自然言語開発 II</span>
       </a>
-      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+      <a href="week06.html" class="lesson-nav-item" style="text-align:right">
         <span class="lesson-nav-label">次の回</span>
-        <span class="lesson-nav-title">第6回（準備中）</span>
-      </div>
+        <span class="lesson-nav-title">第6回 自然言語でデータを残そう：カード不要のNeon実習</span>
+      </a>
     </nav>
 
   </main>
