@@ -3240,11 +3240,17 @@ main.theme-green {
   --c-amber-soft: var(--c-green-soft);
   --c-amber-border: var(--c-green-border);
 }
+/* AI活用プログラミング基礎Ⅱなど orange 基調のページ用 */
+main.theme-orange {
+  --c-amber: var(--c-orange);
+  --c-amber-soft: var(--c-orange-soft);
+  --c-amber-border: var(--c-orange-border);
+}
 /* スマホ幅ではSVGが縮んで文字が小さくなるため、余白を詰め、文字を少し大きくする（実寸で約11px以上を目安） */
 @media (max-width: 480px) {
-  main.theme-blue .vz-fig, main.theme-purple .vz-fig, main.theme-green .vz-fig, main.theme-amber .vz-fig { padding: var(--sp-3) var(--sp-2); }
-  main.theme-blue .vz-svg text, main.theme-purple .vz-svg text, main.theme-green .vz-svg text, main.theme-amber .vz-svg text { font-size: 14.5px; }
-  main.theme-blue .vz-svg .t-sm, main.theme-purple .vz-svg .t-sm, main.theme-green .vz-svg .t-sm, main.theme-amber .vz-svg .t-sm { font-size: 13.5px; }
+  main.theme-blue .vz-fig, main.theme-purple .vz-fig, main.theme-green .vz-fig, main.theme-orange .vz-fig, main.theme-amber .vz-fig { padding: var(--sp-3) var(--sp-2); }
+  main.theme-blue .vz-svg text, main.theme-purple .vz-svg text, main.theme-green .vz-svg text, main.theme-orange .vz-svg text, main.theme-amber .vz-svg text { font-size: 14.5px; }
+  main.theme-blue .vz-svg .t-sm, main.theme-purple .vz-svg .t-sm, main.theme-green .vz-svg .t-sm, main.theme-orange .vz-svg .t-sm, main.theme-amber .vz-svg .t-sm { font-size: 13.5px; }
 }
 
 main .syllabus-section--nav { padding-top: var(--sp-3); padding-bottom: var(--sp-3); }

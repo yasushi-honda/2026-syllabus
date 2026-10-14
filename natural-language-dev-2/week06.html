@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第6回 自然言語でデータを残そう：カード不要のNeon実習 | 自然言語開発 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=18">
+  <!-- 公式情報確認: 2026-10-14 (neon.com/pricing・neon.com/docs/reference/claimable-postgres・neon.com/docs/cli/claim・neon.com/docs/reference/neon-cli を生HTMLで確認: Freeプランは「no credit card required」・1プロジェクトあたり1 GB・非アクティブ5分で休止／アカウントなしの一時プロジェクトは72時間で期限切れ・100 MB／claim codeは15分で期限切れ／`neon claim accept --no-open`はURLを表示するだけ／引き継ぎを始めるとDATABASE_URLが変わる。npmの`neon`パッケージは8.4.4（2026-10-14更新）)。実機確認は第5回作成時（2026-09-30、教員のMac）。未確認（授業前に教員が確認）: Codespace上での`npm i -g neon`の権限と外向き接続、Claude Code・Codex CLI・Antigravity CLIそれぞれで「neon claim createを実行して」と頼んだ場合の動作（サンドボックスや承認の既定の違い） -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev-2.html">自然言語開発 II</a>
+        <span>/</span>
+        <span>第6回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">自然言語でデータを残そう：<wbr>カード不要のNeon実習</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 6</span>
+            <span class="page-badge">木曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-green">
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value"><strong>クレジットカード不要</strong>の無料クラウドDB <strong>Neon</strong>を、使っているAIエージェントから<strong>CLI</strong>と<strong>自然言語</strong>で作り、スコアなどの<strong>データを永続化</strong>（Codespaceを止めても残す）する体験をする</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">Neon（Postgres） / データの永続化 / 一時プロジェクト（72時間） / 接続文字列（パスワード相当） / 自然言語でDBに質問する / 読み取り専用ロール</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">自分が使うAIエージェント（Claude Code／Codex CLI／Antigravity CLI）が使える状態のCodespace。ノートPCで公式ページを開けること。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>Codespaceを止めると<strong>消えるデータ</strong>と、クラウドのDBに置いて<strong>残るデータ</strong>の違いを、自分の言葉で説明できる</li>
+        <li><strong>クレジットカードも、アカウント登録もなし</strong>で、エージェントに頼んで<strong>DBを1つ作る</strong>（CLIの<code>neon claim create</code>）</li>
+        <li>エージェントに頼んで<strong>データを保存</strong>し、新しいターミナルや再開後にも<strong>残っている</strong>ことを確かめる</li>
+        <li>DBの中身を、<strong>自然言語で質問</strong>して答えてもらう（エージェントがSQLを書いて実行する）流れを体験し、<strong>書かれたSQLを読む</strong></li>
+        <li>接続文字列が<strong>「パスワード相当」の秘密</strong>であることを、<code>.env</code>と<code>.gitignore</code>で守る基本として身につける</li>
+      </ul>
+      <div class="lesson-tip">
+        <strong>今日の進め方:</strong> 説明を聞く時間より、<strong>エージェントに頼んで作る</strong>時間を長くします。壊してよいのは、今日作る<strong>自分の使い捨てのDB</strong>だけです。他人のサービスや、本物の個人情報には絶対に触れないでください。データの扱いやセキュリティの根拠をくわしく知りたい人は、<a href="week05.html">第5回のページ</a>に公式資料つきでまとめてあります。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>スコアを残したい——データが消える場所・残る場所を知る</h3>
+          <div class="timeline-body">
+            <p><strong>前回までの対戦ゲームを思い出す</strong></p>
+            <ul>
+              <li>第4回で読み解いた対戦ゲームは、遊んだ結果（スコア）を<strong>どこにも残していない</strong>。Codespaceを止めたり、サーバーを再起動したりすると、<strong>メモリの中のデータは消える</strong></li>
+              <li>データを残すには、手元のCodespaceとは別の場所——<strong>クラウドのDB</strong>に置く。今日はそのための無料の道具を、エージェントから使う</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-n6-keep">
+              <p class="vz-fig-title" id="cap-n6-keep">消えるデータと、残るデータ</p>
+              <svg class="vz-svg" viewBox="0 0 360 286" role="img" aria-labelledby="n6-keep-t n6-keep-d">
+                <title id="n6-keep-t">消えるデータと、残るデータ</title>
+                <desc id="n6-keep-d">左は自分のCodespaceで、プログラムが持っているデータはメモリの中にあり、止めると消える。右はクラウド上のDBであるNeonで、接続文字列でつなぐと、スコアなどのデータが置かれ、Codespaceを止めても残る。下に、今日の流れとして、エージェントに頼んでDBを作り、データを保存し、自然言語で質問する、と書かれている。</desc>
+                <rect class="box-white" x="8" y="6" width="168" height="130" rx="10"/>
+                <text class="t-c t-b" x="92" y="30">自分のCodespace</text>
+                <text class="t-c t-sm" x="92" y="52">プログラムの</text>
+                <text class="t-c t-sm" x="92" y="70">メモリの中のデータ</text>
+                <text class="t-c t-b" x="92" y="104">止めると消える</text>
+                <rect class="box-green" x="184" y="6" width="168" height="130" rx="10"/>
+                <text class="t-c t-b" x="268" y="30">Neon</text>
+                <text class="t-c t-sm" x="268" y="52">クラウド上のDB</text>
+                <text class="t-c t-sm" x="268" y="70">表の形でデータを置く</text>
+                <text class="t-c t-b" x="268" y="104">止めても残る</text>
+                <rect class="box-green box-key" x="8" y="152" width="344" height="128" rx="10"/>
+                <text class="t-b" x="22" y="176">今日の流れ（すべてエージェントに頼む）</text>
+                <text class="t-sm" x="22" y="198">1 DBを作る（カードもアカウントも不要）</text>
+                <text class="t-sm" x="22" y="218">2 スコアを保存して、残るか確かめる</text>
+                <text class="t-sm" x="22" y="238">3 自然言語で質問して、答えてもらう</text>
+                <text class="t-sm" x="22" y="258">4 鍵（接続文字列）を守る</text>
+              </svg>
+              <figcaption>CodespaceからNeonへは、「接続文字列」という鍵を使ってつなぎます。この鍵が今日の重要な秘密です。</figcaption>
+            </figure>
+            <p><strong>今日使うDB: Neon</strong></p>
+            <ul>
+              <li><strong>Neon</strong>は、Postgres（表形式のデータベース）のクラウドサービス。公式の料金ページには「Build and learn free with no time limits and no credit card required.」と書かれている（<a href="https://neon.com/pricing" target="_blank" rel="noopener">Pricing（Neon公式）</a>）——<strong>クレジットカードなしで使い始められる</strong></li>
+              <li>Freeプランは、1プロジェクトあたり1 GBまで。使っていない（非アクティブな）ときは自動で休止する（公式の料金表: 「After 5 minutes」）</li>
+              <li>公式CLI（<code>neon</code>コマンド）に、<strong>アカウントを作らずに</strong>一時的なプロジェクトを作る<code>neon claim create</code>がある（<a href="https://neon.com/docs/reference/claimable-postgres" target="_blank" rel="noopener">Claimable Neon</a>）。コマンドで動くので、<strong>エージェントに頼める</strong></li>
+            </ul>
+            <p><strong>最初に守る3つのこと</strong>（理由は、後の実習で体験する）</p>
+            <ul>
+              <li>DBの<strong>接続文字列は「パスワード相当」の秘密</strong>。コードにも、チャットにも、画面共有にも出さない</li>
+              <li>秘密は<code>.env</code>に置き、<strong><code>.gitignore</code>に<code>.env</code>を入れて</strong>、GitHubに載せない</li>
+              <li>エージェントに、<code>.env</code>の中身を<strong>貼らない・読ませない</strong>（ファイルの内容は、指示文の一部として提供元へ送られうる。根拠は<a href="week05.html">第5回のページ</a>）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>自然言語で頼んで、アカウントなしでDBを作る</h3>
+          <div class="timeline-body">
+            <figure class="vz-fig" aria-labelledby="cap-n6-make">
+              <p class="vz-fig-title" id="cap-n6-make">DBを作るまで</p>
+              <svg class="vz-svg" viewBox="0 0 360 330" role="img" aria-labelledby="n6-make-t n6-make-d">
+                <title id="n6-make-t">DBを作るまで</title>
+                <desc id="n6-make-d">1 最初に.gitignoreと空の.envを作る。2 エージェントに頼んで、Neon CLIを入れ、neon claim create --env-pullで一時的なDBを作る。アカウントもカードも不要で、72時間で期限切れ。3 .envにDATABASE_URLなどが書かれたか、変数名だけで確かめる。値は見ない。4 .gitignoreに.envが入っているか確かめる。</desc>
+                <rect class="box-green box-key" x="8" y="6" width="344" height="62" rx="10"/>
+                <text class="t-b" x="22" y="28">1 .gitignoreと、空の.envを先に作る</text>
+                <text class="t-sm" x="22" y="48">.env・.env.local・node_modulesを書く</text>
+                <line class="line" x1="180" y1="70" x2="180" y2="84" marker-end="url(#mk-s)"/>
+                <rect class="box-green" x="8" y="86" width="344" height="76" rx="10"/>
+                <text class="t-b" x="22" y="108">2 エージェントに頼んで、一時的なDBを作る</text>
+                <text class="t-sm" x="22" y="128">neon claim create --env-pull</text>
+                <text class="t-sm" x="22" y="147">アカウント不要・カード不要・72時間で期限切れ</text>
+                <line class="line" x1="180" y1="164" x2="180" y2="178" marker-end="url(#mk-s)"/>
+                <rect class="box-green" x="8" y="180" width="344" height="68" rx="10"/>
+                <text class="t-b" x="22" y="202">3 .envに入ったか、名前だけで確かめる</text>
+                <text class="t-sm" x="22" y="222">DATABASE_URL などの変数名を見る</text>
+                <text class="t-sm" x="22" y="240">値（鍵そのもの）は表示しない</text>
+                <line class="line" x1="180" y1="250" x2="180" y2="264" marker-end="url(#mk-s)"/>
+                <rect class="box-green" x="8" y="266" width="344" height="56" rx="10"/>
+                <text class="t-b" x="22" y="288">4 .gitignoreに.envが入っているか確かめる</text>
+                <text class="t-sm" x="22" y="308">入っていなければ、自分で足す</text>
+              </svg>
+              <figcaption>太い枠の1番が、最初にやることです。鍵（接続文字列）を誤ってGitHubに載せないための備えです。</figcaption>
+            </figure>
+            <p><strong>Codespaceを再開して、作業フォルダを用意する</strong></p>
+            <ul>
+              <li>これまでと同じ手順でCodespaceを再開し、新しい作業フォルダ（例: <code>score-db</code>）を作って、そこでエージェントを起動する</li>
+              <li><strong>最初に</strong>、フォルダに<code>.gitignore</code>を作り、<code>.env</code>・<code>.env.local</code>・<code>node_modules</code>を書き込み、空の<code>.env</code>も作っておく（書き方が分からなければ、エージェントに頼んでよい）</li>
+            </ul>
+            <p><strong>エージェントに、DBを作ってもらう</strong></p>
+            <ul>
+              <li>エージェントへの頼み方の例: <code>Neonの公式CLI（neon）をインストールして、neon claim create --env-pull を実行して、アカウントなしの一時的なDBを作ってください。.envの中身は表示しないでください</code></li>
+              <li>実行して必要な許可を求められたら、<strong>何に接続し、何を実行するのか</strong>を読んで、問題なければ許可する（初めてのパッケージのインストールや、ネットワーク接続の許可が出ることがある）</li>
+              <li>手でやる場合の基本形: <code>npm i -g neon</code>のあとに<code>neon claim create --env-pull</code>（公式: <a href="https://neon.com/docs/reference/neon-cli" target="_blank" rel="noopener">Neon CLI</a>）。<code>npm i -g</code>が権限エラーで失敗したら、<code>npx neon@latest claim create --env-pull</code>のように、コマンドの頭に<code>npx neon@latest</code>を付けて実行してもよい</li>
+              <li>公式の説明: 「Unclaimed projects expire in 72 hours (<code>project.expires_at</code>) and are capped at 100 MB storage and 1 GB transfer.」——アカウントを作らずに作った一時プロジェクトは<strong>72時間で期限切れ</strong>（残したい場合のあとの手順は、2限後半で扱う）</li>
+            </ul>
+            <p><strong>できたものを、自分の目で確かめる</strong></p>
+            <ul>
+              <li><code>.env</code>に値が書かれたことを、<strong>変数名だけ</strong>で確かめる。例: <code>grep -o '^[A-Z_]*=' .env</code>（<code>DATABASE_URL=</code>などの名前だけが出る。<strong>鍵の値は画面に出さない</strong>）</li>
+              <li><code>DATABASE_URL</code>が<strong>DBに入るための鍵（パスワード相当）</strong>。中身をチャットや画面に貼らない</li>
+              <li>コマンドは<code>.gitignore</code>に<code>.neon</code>を追加することがあるが、<code>.env</code>を入れてくれるとは限らない。<strong><code>.gitignore</code>に<code>.env</code>が入っているか、必ず自分で確認する</strong></li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>詰まったら:</strong> エラーが出るときは、そのエラー全文をエージェントに貼って「原因と直し方を教えて」と頼んでよい（接続文字列そのものは貼らない）。それでも進まなければ、講師に声をかけてください。教員のデモに切り替えるか、Neonの無料アカウント（カード不要）をブラウザで作ってプロジェクトを作り、<code>neon connection-string</code>で接続文字列を取り出す方法に切り替えます。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>データを保存して、自然言語で質問する</h3>
+          <div class="timeline-body">
+            <p><strong>スコアを保存するスクリプトを、エージェントに頼む</strong>（約25分）</p>
+            <ul>
+              <li>例: <code>scoresテーブル（id・名前・スコア・作成日時）を作り、スコアを3件追加して、上位10件を表示するNode.jsのスクリプトscores.jsを書いてください。DBへの接続は、.envのDATABASE_URLを使い、pgパッケージで行ってください。必要なパッケージのインストールと、.envの読み込み方法（dotenvか、Nodeの--env-file）も含めてください</code></li>
+              <li>エージェントが書いたコードを<strong>読んでから</strong>実行する。接続文字列が<strong>コードの中に直接書かれていない</strong>か（<code>.env</code>から読み込んでいるか）を確認する（Nodeからの接続の公式例: <a href="https://neon.com/docs/connect/connect-from-any-app" target="_blank" rel="noopener">Connect from any application</a>）</li>
+              <li>実行すると、pgの<strong>SSLに関する警告</strong>が出ることがあるが、動作には影響しない。意味が分からなければエージェントに聞いてよい</li>
+              <li>スコアが表示されたら、<strong>新しいターミナルを開いて、もう一度実行しても</strong>スコアが残っていることを確かめる（時間があれば、Codespaceを一度止めて再開しても確かめる。スコアは手元ではなく<strong>クラウドのDB</strong>にあるため）</li>
+            </ul>
+            <p><strong>自然言語で、DBに質問する</strong>（約25分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-n6-ask">
+              <p class="vz-fig-title" id="cap-n6-ask">自然言語で質問すると、何が起きるか</p>
+              <svg class="vz-svg" viewBox="0 0 360 296" role="img" aria-labelledby="n6-ask-t n6-ask-d">
+                <title id="n6-ask-t">自然言語で質問すると、何が起きるか</title>
+                <desc id="n6-ask-d">1 自分が自然言語で質問する。例は、いちばん高いスコアの人は誰か。2 エージェントがSQLという問い合わせの言葉に書き換える。3 SQLをNeonのDBで実行する。4 結果をエージェントが日本語で答える。SQLは自分で読んで確かめる。</desc>
+                <rect class="box-green" x="8" y="6" width="344" height="58" rx="10"/>
+                <text class="t-b" x="22" y="28">1 自然言語で質問する</text>
+                <text class="t-sm" x="22" y="48">例: いちばん高いスコアの人は誰？</text>
+                <line class="line" x1="180" y1="66" x2="180" y2="78" marker-end="url(#mk-s)"/>
+                <rect class="box-green box-key" x="8" y="80" width="344" height="68" rx="10"/>
+                <text class="t-b" x="22" y="102">2 エージェントが、SQLに書き換える</text>
+                <text class="t-sm" x="22" y="122">SQL ＝ DBに問い合わせる言葉</text>
+                <text class="t-sm" x="22" y="140">ここを自分の目で読んで確かめる</text>
+                <line class="line" x1="180" y1="150" x2="180" y2="162" marker-end="url(#mk-s)"/>
+                <rect class="box-green" x="8" y="164" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="186">3 NeonのDBで実行する</text>
+                <text class="t-sm" x="22" y="205">接続文字列（鍵）を使ってつなぐ</text>
+                <line class="line" x1="180" y1="218" x2="180" y2="230" marker-end="url(#mk-s)"/>
+                <rect class="box-green" x="8" y="232" width="344" height="58" rx="10"/>
+                <text class="t-b" x="22" y="254">4 結果を、日本語で答える</text>
+                <text class="t-sm" x="22" y="274">答えが正しいか、データと照らして見る</text>
+              </svg>
+              <figcaption>太い枠の2番が大事です。AIが書いたSQLを、読まずに実行しないようにします。</figcaption>
+            </figure>
+            <ul>
+              <li>エージェントに頼む（例）: <code>scoresテーブルから、いちばん高いスコアの人と、全員の平均スコアを調べて、日本語で答えてください。使ったSQLも見せてください</code></li>
+              <li>返ってきた<strong>SQLを読む</strong>。「何を選び（<code>SELECT</code>）、どの表から（<code>FROM</code>）、どう並べるか（<code>ORDER BY</code>）」が読めれば十分。分からない部分は、エージェントに「この行は何をしているの？」と聞く</li>
+              <li>答えが<strong>実際のデータと合っているか</strong>を、自分の目で確かめる（データが少ないうちは、一覧と見比べやすい）</li>
+              <li>さらに質問してみる: 「名前ごとの最高スコアを並べて」「3位までを教えて」「スコアを1件追加して、もう一度順位を出して」など</li>
+              <li><strong>データを変える（追加・消す）依頼は、実行の前に、何を変えるのかを確かめる</strong>。特に「消す」は、条件を読み間違えると全部消えてしまう</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>自分の制作につなぐ考え方と、鍵を守る最小限</h3>
+          <div class="timeline-body">
+            <p><strong>自分のゲームや進級制作に、どうつなぐか</strong>（グループで話し合い、約10分）</p>
+            <ul>
+              <li>ブラウザで動くゲームのコードに、<strong>DBの接続文字列を直接書く</strong>と、ページを開いた人なら誰でも読めてしまう。では、スコアは<strong>どこから</strong>DBへ送るのが安全か？</li>
+              <li>ヒント: ブラウザから直接ではなく、<strong>間にサーバーを置いて</strong>、サーバーだけが鍵を持つ形にする。どんなサーバーを、どこに置くかは、これから学ぶクラウドの内容につながる</li>
+              <li>自分のゲームに足すなら、どんなデータを保存したいか（ニックネームとスコア、遊んだ日時など）を、1行で書き出す。<strong>本名やメールアドレスのような個人情報は入れない</strong>前提で考える</li>
+            </ul>
+            <p><strong>権限を絞る（読み取り専用ロール）</strong>（約10分）</p>
+            <ul>
+              <li>エージェントに頼む（例）: <code>scoresテーブルを読むだけの、読み取り専用ロールreadonly_userを作ってください。そのロールの接続文字列で、SELECTはできて、INSERTとDELETEは失敗することを確かめてください</code></li>
+              <li>読み取り専用の接続文字列も<strong>もう1つの秘密</strong>。<code>.env</code>に別の名前（例: <code>READONLY_DATABASE_URL</code>）で書き、コードには直接書かない</li>
+              <li>これが<strong>最小権限</strong>（必要な権限だけを与える）の考え方。「見るだけの人」には、見るだけの鍵を渡す。くわしい考え方や、漏れたときの対応は、<a href="week05.html">第5回のページ</a>にまとめてある</li>
+            </ul>
+            <p><strong>72時間で消えるDBを、残すか決める</strong>（任意、約10分）</p>
+            <ul>
+              <li>残したい人は、<code>neon claim accept --no-open</code>で自分のNeonアカウントに<strong>引き継ぐ（claim）</strong>。Codespaceではブラウザが開かないので、<code>--no-open</code>を付けると<strong>URLが表示される</strong>。それを手元のブラウザで開く（公式: <a href="https://neon.com/docs/cli/claim" target="_blank" rel="noopener">claim（Neon公式）</a>）</li>
+              <li>引き継ぎ用のコード（claim code）は、<strong>15分で期限が切れる</strong>（公式）。URLが出たら、すぐに開く</li>
+              <li><strong>引き継ぎを始めると、接続文字列（パスワード）が変わる</strong>ため、それまでの<code>.env</code>の値は使えなくなる。引き継いだあとは、新しい接続文字列を取り直して<code>.env</code>を書き換える</li>
+              <li>アカウント作成の途中で<strong>クレジットカードの入力を求められたら、進まずに講師に声をかける</strong>（Freeプランはカード不要と公式に書かれているが、画面の実際の表示を確認する）</li>
+              <li>引き継がないなら、72時間後に消えることを理解しておけばよい（今日の練習用のDBなので、それで十分）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告＆今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>今日は「データを<strong>置く側</strong>」を体験した。次回以降は、これをクラウドの別のサービスとどうつなぐかへ進む予定（内容は<a href="../natural-language-dev-2.html">授業計画一覧</a>で確認する）</li>
+              <li>「今日、<strong>自然言語だけでできたこと</strong>」と「<strong>自分の目で確かめないと危なかったこと</strong>」を、一言ずつメモして退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>接続文字列（<code>.env</code>）が、GitHubにpushされていないことを確認する</strong>
+            <p>自分のリポジトリを開き、<code>.env</code>が見えないことを確かめる。もし見えてしまっていたら、すぐに講師に伝えて、パスワードを変える（作り直して捨ててもよい）。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>スコアの保存を、自分のゲームに組み込む相談をする</strong>
+            <p>前回のゲームに、スコアを送る処理を足すなら、どこから送るのが安全か、エージェントと相談してみましょう。接続文字列をブラウザのコードに直接書くのは避けます。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://neon.com/pricing" target="_blank" rel="noopener">Pricing（Neon公式）</a> — Freeプランの内容（カード不要・容量・休止）</li>
+        <li><a href="https://neon.com/docs/reference/claimable-postgres" target="_blank" rel="noopener">Claimable Neon（Neon公式）</a> — アカウントなしの一時プロジェクトと、引き継ぎ（claim）</li>
+        <li><a href="https://neon.com/docs/reference/neon-cli" target="_blank" rel="noopener">Neon CLI（Neon公式）</a> — <code>neon claim</code>・<code>neon connection-string</code>など</li>
+        <li><a href="https://neon.com/docs/cli/claim" target="_blank" rel="noopener">claim（Neon公式）</a> — 一時プロジェクトの作成と引き継ぎ（<code>--no-open</code>など）</li>
+        <li><a href="https://neon.com/docs/connect/connect-from-any-app" target="_blank" rel="noopener">Connect from any application（Neon公式）</a> — Node.jsからの接続の書き方</li>
+        <li><a href="week05.html">第5回 スコアを保存して守ろう（本サイト）</a> — データの扱い・最小権限・漏れたときの対応を、公式資料つきでまとめたページ</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week05.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第5回 スコアを保存して守ろう：カード不要のNeonとセキュリティ</span>
+      </a>
+      <a href="../natural-language-dev-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">自然言語開発 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第7回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
