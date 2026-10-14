@@ -205,7 +205,7 @@
               <li>次のコマンドで、<strong>アカウントを作らずに</strong>一時的なプロジェクトを作り、接続文字列を書き出す: <code>neon claim create --env-pull</code>（公式の説明では、既にある<code>.env</code>に書き込み、なければ<code>.env.local</code>に書き出す。<strong>先に空の<code>.env</code>を作っておく</strong>と、以降の説明どおりに進められる）</li>
               <li>公式の説明: 「Unclaimed projects expire in 72 hours (<code>project.expires_at</code>) and are capped at 100 MB storage and 1 GB transfer.」——<strong>72時間で期限切れ</strong>（あとで自分のアカウントに引き継ぐ手順は2限後半に扱う）（<a href="https://neon.com/docs/reference/claimable-postgres" target="_blank" rel="noopener">Claimable Neon</a>）</li>
               <li><code>.env</code>には<code>DATABASE_URL</code>など3つの値が入る。<code>DATABASE_URL</code>が<strong>DBに入るための鍵（パスワード相当）</strong>。中身をチャットや画面に貼らない。コマンドの実行結果には、プロジェクトの期限（72時間後）も表示される</li>
-              <li>コマンドは<code>.gitignore</code>に<code>.neon</code>を追加することがあるが、<code>.env</code>を入れてくれるとは限らない。<strong><code>.gitignore</code>に<code>.env</code>が入っているか、必ず自分で確認する</strong></li>
+              <li>公式には、<code>--env-pull</code>は書き込み先のファイルを<code>.gitignore</code>に入れると書かれている（<a href="https://neon.com/docs/cli/claim" target="_blank" rel="noopener">Neon CLI command: claim</a>）。ただし、教員が2026-09-30に試したときは<code>.neon</code>だけが追加され、<code>.env</code>は入らなかった。バージョンや環境で違うことがあるので、<strong><code>.gitignore</code>に<code>.env</code>が入っているか、必ず自分で確認する</strong></li>
             </ul>
             <p><strong>AIエージェントに、スコア保存のスクリプトを頼む</strong></p>
             <ul>
@@ -347,7 +347,7 @@
               <figcaption>引き継ぎは任意です。引き継がないなら、72時間後に消えることを理解しておけば十分です。Codespaceで引き継ぐときは、<code>neon claim accept --no-open</code>で表示されたURLを、手元のブラウザで開きます。</figcaption>
             </figure>
             <ul>
-              <li>72時間で消える一時プロジェクトを残したい人は、<code>neon claim accept</code>で自分のNeonアカウントに<strong>引き継ぐ（claim）</strong>。このコマンドは、既定ではブラウザを開こうとする。Codespaceでは開かないので、<code>neon claim accept --no-open</code>と実行して<strong>表示されたURLを手元のブラウザで開く</strong>（<a href="https://neon.com/docs/cli/claim" target="_blank" rel="noopener">claim（Neon公式）</a>）</li>
+              <li>72時間で消える一時プロジェクトを残したい人は、<code>neon claim accept</code>で自分のNeonアカウントに<strong>引き継ぐ（claim）</strong>。このコマンドは、既定ではブラウザを開こうとする。Codespaceでは自動で開かないことがあるので、<code>neon claim accept --no-open</code>と実行して<strong>表示されたURLを手元のブラウザで開く</strong>（<a href="https://neon.com/docs/cli/claim" target="_blank" rel="noopener">Neon CLI command: claim（Neon公式）</a>）</li>
               <li><strong>引き継ぐと、接続文字列（パスワード）が変わる</strong>ため、それまでの<code>.env</code>の値は使えなくなる。引き継いだあとは、Neonのコンソールで新しい接続文字列を取り直し、<code>.env</code>を書き換える</li>
               <li>アカウント作成の途中で<strong>クレジットカードの入力を求められたら、進まずに講師に声をかける</strong>（Freeプランはカード不要と公式に書かれているが、画面の実際の表示を確認する）</li>
               <li>引き継がないなら、72時間後に消えることを理解しておけばよい</li>
@@ -404,7 +404,7 @@
         <li><a href="https://neon.com/pricing" target="_blank" rel="noopener">Pricing（Neon公式）</a> — Freeプランの内容（カード不要・容量・休止）</li>
         <li><a href="https://neon.com/docs/reference/claimable-postgres" target="_blank" rel="noopener">Claimable Neon（Neon公式）</a> — アカウントなしの一時プロジェクトと、引き継ぎ（claim）</li>
         <li><a href="https://neon.com/docs/reference/neon-cli" target="_blank" rel="noopener">Neon CLI（Neon公式）</a> — <code>neon login</code>・<code>neon claim</code>・<code>neon connection-string</code>など</li>
-        <li><a href="https://neon.com/docs/cli/claim" target="_blank" rel="noopener">claim（Neon公式）</a> — 一時プロジェクトの作成と引き継ぎ（<code>--no-open</code>など）</li>
+        <li><a href="https://neon.com/docs/cli/claim" target="_blank" rel="noopener">Neon CLI command: claim（Neon公式）</a> — 一時プロジェクトの作成と引き継ぎ（<code>--no-open</code>など）</li>
         <li><a href="https://neon.com/docs/connect/connect-from-any-app" target="_blank" rel="noopener">Connect from any application（Neon公式）</a> — Node.jsからの接続の書き方</li>
         <li><a href="https://neon.com/docs/manage/database-access" target="_blank" rel="noopener">Manage database access（Neon公式）</a> — 読み取り専用ロールの作り方</li>
         <li><a href="https://neon.com/docs/manage/roles" target="_blank" rel="noopener">Manage roles（Neon公式）</a> — ロールの作成とパスワードのリセット</li>

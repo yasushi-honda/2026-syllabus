@@ -178,7 +178,7 @@
             <p><strong>まず「何も変えずに」確かめる</strong></p>
             <ul>
               <li>右側のプレビューで、<strong>元のゲームが動くか</strong>を確かめる。遊んでみて、第4〜5回に作った機能が残っているかを見る</li>
-              <li>取り込むときにAIがコードを<strong>書き直す</strong>ことがあるため、元のゲームと<strong>見た目やファイルの構成が変わる</strong>場合がある（公式に、書き直しの有無は書かれていない）。変わっていたら、<strong>どこが違うかをメモする</strong>——失敗ではなく、2限の観察の材料になる</li>
+              <li>取り込んだコードが<strong>書き直されたり、ファイルの構成が変わったり</strong>して、元のゲームと<strong>見た目や構成が変わる</strong>可能性がある（公式には、取り込んだコードがどう扱われるかは書かれていない。Build modeは、既定で画面とサーバーの両方を持つアプリを作る仕組みと説明されている）。変わっていたら、<strong>どこが違うかをメモする</strong>——失敗ではなく、2限の観察の材料になる</li>
               <li>動かない、読み込みが進まない、リポジトリが一覧に出ないときは、講師に声をかける。エラーが出たら、<strong>その全文をプロンプト欄に貼って「原因と直し方を教えて」</strong>と頼んでもよい</li>
             </ul>
             <div class="lesson-tip">
@@ -246,9 +246,9 @@
             <p><strong>Gemini APIを使う機能（任意、約15分）</strong></p>
             <ul>
               <li>公式の説明: Gemini APIを使う新しいアプリを作ると、AI Studioが<strong>Gemini APIキーを、アプリのサーバー側の環境のシークレットとして自動で設定する</strong>。キーは「Secrets」パネルで確認・管理できる（<a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio</a>の「API Key management」）。つまり、<strong>自分でAPIキーを書かなくてよい</strong></li>
-              <li>試す人は、例えば<code>ゲームオーバーのときに、Geminiがひとことコメントを出す機能を足してください</code>と頼む。出てきた画面の案内を読んで進める</li>
-              <li><strong>APIキーは、コード・チャット・スクリーンショットのどこにも貼らない</strong>。自動で設定されるのは、キーを人に見せなくて済むようにするため</li>
-              <li>次回の公開について: GitHub Pagesは、HTML・CSS・JavaScriptのファイルを置いて公開する<strong>静的サイト向け</strong>の仕組み（公式: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages" target="_blank" rel="noopener">About GitHub Pages</a>）。サーバー側で動く処理に頼る機能は、<strong>そのままでは動かない可能性がある</strong>。公開できるかは、次回に確かめる</li>
+              <li>試す人は、例えば<code>ゲームオーバーのときに、Geminiがひとことコメントを出す機能を足してください</code>と頼む。出てきた画面の案内を読んで進める。公式の説明は「Gemini APIを使う<strong>新しいアプリ</strong>を作ると」という書き方なので、<strong>取り込んだアプリでも同じように設定されるかは公式に書かれていない</strong>。SettingsのSecretsパネルで、実際にキーが設定されているかを確かめる</li>
+              <li><strong>APIキーは、コード・チャット・スクリーンショットのどこにも貼らない</strong>。公式には、キーはサーバー側で扱われると書かれている（ブラウザ側のコードに書いてしまうと、ページを開いた人に見えてしまう）</li>
+              <li>次回の公開について: GitHub Pagesは、HTML・CSS・JavaScriptのファイルを置いて公開する<strong>静的サイト向け</strong>の仕組み（公式: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages" target="_blank" rel="noopener">What is GitHub Pages?</a>）。サーバー側で動く処理に頼る機能は、<strong>そのままでは動かない可能性がある</strong>。また、Geminiのキーをブラウザ側のJavaScriptに直接書いて公開すると、誰にでも見えてしまう。公開できるかは、次回に確かめる</li>
             </ul>
             <p><strong>振り返りメモ（約15分）</strong></p>
             <ul>
@@ -307,7 +307,7 @@
         <li><a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio（Google公式）</a> — Build modeの使い方・Import from GitHub・APIキーの自動設定</li>
         <li><a href="https://ai.google.dev/gemini-api/docs/workspace" target="_blank" rel="noopener">Access Google AI Studio with your Workspace account（Google公式）</a> — 学校のアカウントでの利用条件</li>
         <li><a href="https://aistudio.google.com" target="_blank" rel="noopener">Google AI Studio</a> — 今日使うサービス本体</li>
-        <li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages" target="_blank" rel="noopener">About GitHub Pages（GitHub公式）</a> — 次回の公開に使う仕組み</li>
+        <li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages" target="_blank" rel="noopener">What is GitHub Pages?（GitHub公式）</a> — 次回の公開に使う仕組み</li>
       </ul>
     </div>
 

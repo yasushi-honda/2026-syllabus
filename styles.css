@@ -3240,7 +3240,7 @@ main.theme-green {
   --c-amber-soft: var(--c-green-soft);
   --c-amber-border: var(--c-green-border);
 }
-/* AI活用プログラミング基礎Ⅱなど orange 基調のページ用 */
+/* AI活用プログラミング基礎Ⅱなど orange 基調のページ用（orange文字は淡い背景上でコントラスト約3.9:1のため、vz-* の文字色や丸点には使わない） */
 main.theme-orange {
   --c-amber: var(--c-orange);
   --c-amber-soft: var(--c-orange-soft);
