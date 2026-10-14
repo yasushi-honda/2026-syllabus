@@ -204,10 +204,10 @@
           <div class="timeline-body">
             <p><strong>スコアを保存するスクリプトを、エージェントに頼む</strong>（約25分）</p>
             <ul>
-              <li>例: <code>scoresテーブル（id・名前・スコア・作成日時）を作り、スコアを3件追加して、上位10件を表示するNode.jsのスクリプトscores.jsを書いてください。DBへの接続は、.envのDATABASE_URLを使い、pgパッケージで行ってください。必要なパッケージのインストールと、.envの読み込み方法（dotenvか、Nodeの--env-file）も含めてください</code></li>
+              <li>例: <code>scoresテーブル（id・名前・スコア・作成日時）を使うNode.jsのスクリプトscores.jsを書いてください。「node scores.js add 名前 スコア」でスコアを1件追加し、引数なしの「node scores.js」では何も追加せずに、上位10件を表示してください。テーブルがなければ作ってください。DBへの接続は、.envのDATABASE_URLを使い、pgパッケージで行ってください。必要なパッケージのインストールと、.envの読み込み方法（dotenvか、Nodeの--env-file）も含めてください</code>（<strong>追加する操作と、見る操作を分ける</strong>のがポイント。見るたびに追加されると、「残っている」ことの確認にならない）</li>
               <li>エージェントが書いたコードを<strong>読んでから</strong>実行する。接続文字列が<strong>コードの中に直接書かれていない</strong>か（<code>.env</code>から読み込んでいるか）を確認する（Nodeからの接続の公式例: <a href="https://neon.com/docs/connect/connect-from-any-app" target="_blank" rel="noopener">Connect from any application</a>）</li>
               <li>実行すると、pgの<strong>SSLに関する警告</strong>が出ることがある。警告が出たら、まず内容をエージェントに聞いて、動いているかを確かめる</li>
-              <li>スコアが表示されたら、<strong>新しいターミナルを開いて、もう一度実行しても</strong>スコアが残っていることを確かめる（時間があれば、Codespaceを一度止めて再開しても確かめる。スコアは手元ではなく<strong>クラウドのDB</strong>にあるため）</li>
+              <li>まず<code>node scores.js add たろう 120</code>のように数件追加し、<code>node scores.js</code>で一覧を見る。次に<strong>新しいターミナルを開いて、追加せずに</strong><code>node scores.js</code>だけを実行し、<strong>さっき追加した分がそのまま表示される</strong>ことを確かめる（時間があれば、Codespaceを一度止めて再開しても確かめる。スコアは手元ではなく<strong>クラウドのDB</strong>にあるため）</li>
             </ul>
             <p><strong>自然言語で、DBに質問する</strong>（約25分）</p>
             <figure class="vz-fig" aria-labelledby="cap-n6-ask">
