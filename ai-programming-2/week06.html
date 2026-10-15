@@ -8,8 +8,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-  <link rel="stylesheet" href="../styles.css?v=18">
+  <link rel="stylesheet" href="../styles.css?v=19">
   <!-- 公式情報確認: 2026-10-14 (ai.google.dev/gemini-api/docs/aistudio-build-mode・ai.google.dev/gemini-api/docs/workspace を生HTMLで確認: Import from GitHub は「Add files (+ icon) menu in the prompt input box」にある／Settings の GitHub タブで「create a new GitHub repository from your app or link to an existing one」／two-way sync／「Resolve conflicts」ダイアログ／Gemini APIキーは「automatically configures your Gemini API key as a secret in the app's server-side environment」／Workspace for Education は18歳未満は使えない、管理者がオン/オフを切り替えられる)。Import from GitHub の対応範囲（非公開リポジトリ、素のHTML/JSのままか作り替えられるか）は公式に記載がなく未確認——授業前に教員が学校アカウントで素のHTMLリポジトリを取り込んで確認する -->
+  <!-- 公式情報再確認: 2026-10-15 (生HTML/curlで確認。①ai.google.dev/gemini-api/docs/aistudio-build-mode（Last updated 2026-08-20）: 「The Antigravity Agent is the main AI functionality within Google Antigravity and now the core components of the agent harness is powering the Build mode experience in Google AI Studio.」／既定のwebアプリはReact＋Node.jsのサーバー／Codeタブ・annotation mode・AI Chips・音声入力／Settings→GitHubタブで双方向同期・Resolve conflicts／Cloud Run・ZIP／Secretsに GEMINI_API_KEY を自動設定。Plan mode・Skills・Rules・サブエージェント・effort調整は同ページに記載なし ⑤antigravity.google/docs/cli/commands/effort: /effort で low/medium/high（モデルにより xhigh/max） ②antigravity.google/docs/cli/modes: default（diff確認）/accept-edits/plan の3モード、Shift+Tabで循環、planは読み取り専用ツールで調べて実行計画の承認を求める ③antigravity.google/docs/skills/・/rules/・/subagents/・/mcp/・cli/features（plugins）: agyに存在 ④ai.google.dev/gemini-api/docs/workspace（Last updated 2026-04-28）: 18歳未満は不可・管理者が制御。注意: 2026-10-09頃にBuild modeへ「Plan」「Ultra」等のモードが追加されるとの報道が複数あるが、公式の発表・ドキュメントは確認できず、本ページには書かない（授業内で画面を見て確かめる題材にしている）) -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -52,7 +53,7 @@
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">Google AI Studio / Build mode / Import from GitHub / GitHubがハブ / Gemini APIキーの自動設定（シークレット）</div>
+          <div class="lesson-overview-value">Google AI Studio / Build mode / Antigravity Agent / agyとの対比表（Planモード・Skillsなど） / Import from GitHub / GitHubがハブ / Gemini APIキーの自動設定（シークレット）</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
@@ -64,14 +65,16 @@
     <div class="syllabus-section">
       <h2>この回のゴール</h2>
       <ul>
-        <li>Google AI Studioの<strong>Build mode</strong>が何をする道具か（自然言語で指示し、右側のプレビューで確かめる）を、agyと比べて説明できる</li>
+        <li>Google AI Studioの<strong>Build mode</strong>が何をする道具か（自然言語で指示し、右側のプレビューで確かめる）を、<strong>agyとの対比表</strong>を使って説明できる（中身は同じ系統のエージェントだが、画面とモード・拡張機能が違う）</li>
         <li>自分のGitHubリポジトリを<strong>Import from GitHub</strong>で取り込み、<strong>同じ成果物</strong>がブラウザの中で動くところまで進める</li>
         <li>agyのときと同じように、<strong>1回に1つずつ</strong>自然言語で指示を出して、成果物を改善する</li>
         <li>Gemini APIを使うアプリでは、<strong>APIキーが自動でシークレットとして設定される</strong>仕組みを確認する（キーを自分で書かない）</li>
+        <li>対比表で「公式の説明ページに書かれていない」とされた機能（Planモード・Skillsなど）が、<strong>実際のBuild modeの画面にあるか</strong>を自分の目で探す</li>
         <li>agyとBuild modeを使い比べて、気づいたことを<strong>自分の言葉で</strong>メモに残す</li>
       </ul>
       <div class="lesson-tip">
-        <strong>今日の優先順位:</strong> 上手に作ることより、<strong>「GitHubを真ん中に置くと、別の道具で同じものの続きを作れる」</strong>ことを体験するのが目的です。取り込んだ結果が元と少し違っても失敗ではありません。違いに気づくこと自体が、今日の学びです。
+        <strong>今日の優先順位:</strong> 上手に作ることより、<strong>「GitHubを真ん中に置くと、別の道具で同じものの続きを作れる」</strong>ことを体験するのが目的です。取り込んだ結果が元と少し違っても失敗ではありません。違いに気づくこと自体が、今日の学びです。<br>
+        <strong>Build modeを触ったことがある人へ:</strong> 第1回では教員のデモで見ており、すでに自分で試した人もいると思います。今日新しいのは、<strong>自分のGitHubリポジトリを持ち込んで続きを作る</strong>ところと、<strong>agyと並べて違いを説明する</strong>ところです。前に作ったものとの違い（リポジトリを持ち込める点など）も探してみてください。
       </div>
     </div>
 
@@ -86,7 +89,7 @@
             <span class="timeline-time">1限 前半</span>
             <span class="timeline-duration">約40分</span>
           </div>
-          <h3>Build modeとは何か——agyとの違いを知る</h3>
+          <h3>Build modeとは何か——agyとの違いを対比表で知る</h3>
           <div class="timeline-body">
             <p><strong>第5回のつづき——GitHubが「ハブ」になる</strong></p>
             <ul>
@@ -97,7 +100,7 @@
               <p class="vz-fig-title" id="cap-a6-hub">同じリポジトリを、別の道具で触る</p>
               <svg class="vz-svg" viewBox="0 0 360 304" role="img" aria-labelledby="a6-hub-t a6-hub-d">
                 <title id="a6-hub-t">同じリポジトリを、別の道具で触る</title>
-                <desc id="a6-hub-d">真ん中の上にGitHubのリポジトリがあり、第3〜5回で育てた自分のものである。そこから左右に矢印が伸びる。左はagyで、Codespaceの黒い画面に文字で指示する。右はAI StudioのBuild modeで、ブラウザの画面で指示し、右側のプレビューで確かめる。今日はじめて使うのは右側。</desc>
+                <desc id="a6-hub-d">真ん中の上にGitHubのリポジトリがあり、第3〜5回で育てた自分のものである。そこから左右に矢印が伸びる。左はagyで、Codespaceの黒い画面に文字で指示する。右はAI StudioのBuild modeで、ブラウザの画面で指示し、右側のプレビューで確かめる。今日、同じ作品の続きを作るのは右側。</desc>
                 <rect class="box-orange box-key" x="8" y="6" width="344" height="68" rx="10"/>
                 <text class="t-c t-b" x="180" y="32">GitHubのリポジトリ</text>
                 <text class="t-c t-sm" x="180" y="54">第3〜5回で育てた、自分のもの</text>
@@ -114,18 +117,164 @@
                 <text class="t-c t-sm" x="268" y="167">（AI Studio）</text>
                 <text class="t-c t-sm" x="268" y="187">ブラウザの画面で指示</text>
                 <text class="t-c t-sm" x="268" y="204">右でプレビュー</text>
-                <text class="t-c t-sm" x="268" y="224">今日はじめて使う</text>
+                <text class="t-c t-sm" x="268" y="224">今日、続きを作る</text>
                 <rect class="box-white box-key" x="8" y="254" width="344" height="42" rx="10"/>
                 <text class="t-c t-b" x="180" y="280">作品は同じ。道具だけが変わる</text>
               </svg>
               <figcaption>矢印は、リポジトリから「読み込む」向きと、あとで「書き戻す」向きです。書き戻すのは次回です。</figcaption>
             </figure>
+            <p><strong>第1回の軸にあてはめる——チャット型AI と AIエージェント</strong></p>
+            <ul>
+              <li>第1回で、聞けば答えてくれる<strong>チャット型AI</strong>と、指示を受けて自分でタスクを進める<strong>AIエージェント</strong>を区別した。今日の道具を、この軸に置いてみる</li>
+              <li>Google AI Studioには、会話しながら試す<strong>Chat</strong>の画面（チャット型）と、今日使う<strong>Build mode</strong>の画面がある（公式: <a href="https://ai.google.dev/gemini-api/docs/ai-studio-quickstart" target="_blank" rel="noopener">Google AI Studio quickstart</a>）。Build modeは、ファイルを作ってアプリとして動かすところまで進める<strong>エージェント側</strong>の画面</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-a6-axis">
+              <p class="vz-fig-title" id="cap-a6-axis">今日の道具を、第1回の軸に置く</p>
+              <svg class="vz-svg" viewBox="0 0 360 250" role="img" aria-labelledby="a6-axis-t a6-axis-d">
+                <title id="a6-axis-t">今日の道具を、第1回の軸に置く</title>
+                <desc id="a6-axis-d">上の段はチャット型AIで、AI StudioのChatの画面。聞くと答えてくれる、会話が中心。下の段はAIエージェントで、2つある。1つはAI StudioのBuild mode。指示するとファイルを作り、プレビューで動かす。今日使う。もう1つはagy（Antigravity CLI）。指示するとファイルを作り、コマンドも実行する。AIエージェントの2つは、どちらもAntigravity系のエージェントである。</desc>
+                <text class="t-sm t-b" x="12" y="20">チャット型AI</text>
+                <rect class="box-white" x="8" y="28" width="344" height="54" rx="10"/>
+                <text class="t-b" x="22" y="51">AI Studio の Chat</text>
+                <text class="t-sm" x="22" y="71">聞くと答えてくれる（会話が中心）</text>
+                <rect class="band" x="4" y="94" width="352" height="152" rx="12"/>
+                <text class="t-sm t-b" x="14" y="114">AIエージェント（Antigravity系）</text>
+                <rect class="box-orange box-key" x="12" y="122" width="336" height="54" rx="10"/>
+                <text class="t-b" x="24" y="145">AI Studio の Build mode</text>
+                <text class="t-sm" x="24" y="165">指示するとファイルを作り、プレビューで動く</text>
+                <rect class="box-white" x="12" y="184" width="336" height="54" rx="10"/>
+                <text class="t-b" x="24" y="207">agy（Antigravity CLI）</text>
+                <text class="t-sm" x="24" y="227">指示するとファイルを作り、コマンドも実行</text>
+              </svg>
+              <figcaption>太い枠が今日使うBuild mode。下の2つは、どちらもAntigravityのエージェントが動いている（次の説明を参照）。</figcaption>
+            </figure>
             <p><strong>Build modeとは</strong></p>
             <ul>
               <li>Google AI Studioの中の機能で、<strong>自然言語で指示を書くと、AIがコードを書き、アプリとして動く様子が右側のプレビューに出る</strong>（公式: <a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio</a>）</li>
-              <li>agyとの違いは、<strong>道具の形</strong>。agyは「黒い画面（CLI）に文字で指示」、Build modeは「ブラウザの画面で指示し、プレビューを見ながら進める」。どちらも<strong>自然言語で指示する</strong>点は同じ</li>
+              <li><strong>中身はagyと同じ系統のエージェント</strong>。公式原文: <em>"The Antigravity Agent is the main AI functionality within Google Antigravity and now the core components of the agent harness is powering the Build mode experience in Google AI Studio."</em>——Antigravityのエージェントの<strong>中核部分</strong>が、Build modeの裏で動いている。agyも同じAntigravityのエージェント。ただし公式に書かれているのは「中核部分」で、<strong>agyの機能がすべて同じ形で入っているとは書かれていない</strong>（次の対比表を参照）</li>
+              <li>つくられるもの: Webアプリが既定で、<strong>画面側（既定はReact）とサーバー側（Node.js）の両方</strong>を持つアプリになる。ほかにKotlinのAndroidアプリも選べる。生成されたコードは、右側の<strong>Codeタブ</strong>で見られる</li>
+              <li>続け方: チャット欄で指示を追加する／Codeタブで直接書き換える／<strong>annotation mode</strong>（アプリの画面の一部を選んで、変えたいことを言葉で伝える）</li>
               <li>どちらが優れているかを決める回ではない。<strong>同じ作品を両方で触って、違いを自分で感じる</strong>のが今日のねらい</li>
             </ul>
+            <p><strong>agyとBuild modeの対比表</strong>（公式ドキュメントで2026-10-15に確認）</p>
+            <figure class="vz-fig" aria-labelledby="cap-a6-screens">
+              <p class="vz-fig-title" id="cap-a6-screens">画面の見取り図——ブラウザと黒い画面</p>
+              <svg class="vz-svg" viewBox="0 0 360 336" role="img" aria-labelledby="a6-screens-t a6-screens-d">
+                <title id="a6-screens-t">画面の見取り図——ブラウザと黒い画面</title>
+                <desc id="a6-screens-d">上はBuild modeのブラウザ画面。左にチャット欄があり、ここに指示を書く。右にプレビューがあり、動くアプリが出る。右のCodeタブで中身も見られる。下はagyの黒い画面。入力欄に指示を書いてEnterを押す。ファイルを書き換える前に差分が表示され、yかnで答える。Shift+Tabでモードを切り替える。モードは default、accept-edits、plan の3つ。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="156" rx="10"/>
+                <text class="t-b" x="20" y="28">Build mode（ブラウザ）</text>
+                <rect class="box-orange" x="16" y="38" width="128" height="116" rx="8"/>
+                <text class="t-c t-b" x="80" y="78">チャット欄</text>
+                <text class="t-c t-sm" x="80" y="100">ここに指示を書く</text>
+                <text class="t-c t-sm" x="80" y="122">＋ でファイル追加</text>
+                <rect class="box-white box-key" x="152" y="38" width="192" height="116" rx="8"/>
+                <text class="t-c t-b" x="248" y="78">プレビュー</text>
+                <text class="t-c t-sm" x="248" y="100">動くアプリが出る</text>
+                <text class="t-c t-sm" x="248" y="122">Codeタブで中身も</text>
+                <rect class="box-white" x="8" y="174" width="344" height="156" rx="10"/>
+                <text class="t-b" x="20" y="196">agy（黒い画面）</text>
+                <rect class="box" x="16" y="206" width="328" height="116" rx="8"/>
+                <text class="t-sm" x="28" y="230">入力欄に指示を書いて Enter</text>
+                <text class="t-sm" x="28" y="252">書き換え前に差分が出る（y / n）</text>
+                <text class="t-sm" x="28" y="274">Shift+Tab でモードを切り替える</text>
+                <text class="t-sm" x="28" y="298">[default] [accept-edits] [plan]</text>
+              </svg>
+              <figcaption>Build modeは「左で指示、右で結果」、agyは「1本の画面で指示と確認」。agyの3つのモードは次の図で説明します。</figcaption>
+            </figure>
+            <figure class="vz-fig" aria-labelledby="cap-a6-modes">
+              <p class="vz-fig-title" id="cap-a6-modes">agyの3つのモード（Shift+Tabで切り替え）</p>
+              <svg class="vz-svg" viewBox="0 0 360 232" role="img" aria-labelledby="a6-modes-t a6-modes-d">
+                <title id="a6-modes-t">agyの3つのモード</title>
+                <desc id="a6-modes-d">agyの実行モードは3つあり、Shift+Tabを押すたびに、default、accept-edits、plan、そしてdefaultの順に切り替わる。default（既定）はファイルを書き換える前に差分を見せて聞く。accept-editsはファイルの書き換えを自動で承認する。planは読み取りだけで調べて、実行計画を見せ、承認を待つ。</desc>
+                <rect class="box-white" x="8" y="6" width="300" height="54" rx="10"/>
+                <text class="t-b" x="20" y="29">default（既定）</text>
+                <text class="t-sm" x="20" y="49">書き換え前に、差分を見せて聞く</text>
+                <line class="line" x1="40" y1="62" x2="40" y2="84" marker-end="url(#mk-s)"/>
+                <text class="t-sm" x="54" y="79">Shift+Tab</text>
+                <rect class="box-white" x="8" y="86" width="300" height="54" rx="10"/>
+                <text class="t-b" x="20" y="109">accept-edits</text>
+                <text class="t-sm" x="20" y="129">ファイルの書き換えは自動で承認</text>
+                <line class="line" x1="40" y1="142" x2="40" y2="164" marker-end="url(#mk-s)"/>
+                <text class="t-sm" x="54" y="159">Shift+Tab</text>
+                <rect class="box-orange box-key" x="8" y="166" width="300" height="54" rx="10"/>
+                <text class="t-b" x="20" y="189">plan</text>
+                <text class="t-sm" x="20" y="209">読むだけで調べ、計画を見せる</text>
+                <path class="line" d="M308,193 H336 V33 H312" marker-end="url(#mk-s)"/>
+              </svg>
+              <figcaption>planの次にもう一度Shift+Tabを押すと、defaultに戻ります。planでは、公式の説明でも「コードを書く前に実行計画を見せて、承認を求める」と書かれています。大きな変更の前に、まず計画だけ見たいときに使います。</figcaption>
+            </figure>
+            <div class="table-wrap">
+              <table class="schedule-table schedule-table--stack">
+                <thead>
+                  <tr>
+                    <th>観点</th>
+                    <th>agy（Antigravity CLI）</th>
+                    <th>Build mode（AI Studio）</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>画面・場所</td>
+                    <td data-label="agy（Antigravity CLI）">黒い画面（ターミナル）。この授業ではCodespaceの中</td>
+                    <td data-label="Build mode（AI Studio）">ブラウザ（aistudio.google.com）。左で指示、右でプレビュー</td>
+                  </tr>
+                  <tr>
+                    <td>指示の出し方</td>
+                    <td data-label="agy（Antigravity CLI）">自然言語に加えて、<code>/</code>で始まるスラッシュコマンド（<code>/plan</code>・<code>/agents</code>など）</td>
+                    <td data-label="Build mode（AI Studio）">入力欄に自然言語。音声入力、AI Chips、画面の一部を選ぶ annotation mode</td>
+                  </tr>
+                  <tr>
+                    <td>動かして確かめる</td>
+                    <td data-label="agy（Antigravity CLI）">この授業では自分でサーバーを起動し、ブラウザで開いて確かめた（第4回）</td>
+                    <td data-label="Build mode（AI Studio）">右側のライブプレビューに、生成のたびに出る</td>
+                  </tr>
+                  <tr>
+                    <td>変更の承認</td>
+                    <td data-label="agy（Antigravity CLI）">既定では、ファイルを書き換える前に差分を見せて聞く（<code>y</code> / <code>n</code>）。<code>accept-edits</code>で自動承認にもできる</td>
+                    <td data-label="Build mode（AI Studio）">公式の説明ページには書かれていない</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Planモード</strong></td>
+                    <td data-label="agy（Antigravity CLI）"><strong>ある</strong>。<code>Shift+Tab</code>で切り替え。読み取りだけで調べて実行計画を示し、承認を待つ</td>
+                    <td data-label="Build mode（AI Studio）">公式の説明ページには<strong>書かれていない</strong>。画面にあるか、2限で探す</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Skills</strong></td>
+                    <td data-label="agy（Antigravity CLI）"><strong>ある</strong>。<code>SKILL.md</code>を入れたフォルダ（<code>.agents/skills</code>）。エージェントが一覧を見て、関係がありそうなときだけ中身を読む</td>
+                    <td data-label="Build mode（AI Studio）">公式の説明ページには<strong>書かれていない</strong>。画面にあるか、2限で探す</td>
+                  </tr>
+                  <tr>
+                    <td><strong>考える深さ（effort）</strong></td>
+                    <td data-label="agy（Antigravity CLI）"><strong>調整できる</strong>。<code>/effort</code>で<code>low</code>・<code>medium</code>・<code>high</code>から選ぶ（モデルによっては<code>xhigh</code>・<code>max</code>も）。軽い修正は速く、難しい問題は深く考えさせる使い分けができる</td>
+                    <td data-label="Build mode（AI Studio）">公式の説明ページには<strong>書かれていない</strong>。調整の項目があるか、2限で探す</td>
+                  </tr>
+                  <tr>
+                    <td>そのほかの拡張</td>
+                    <td data-label="agy（Antigravity CLI）">Rules（守らせたい決まり）・並行して動くサブエージェント・MCP・プラグイン</td>
+                    <td data-label="Build mode（AI Studio）">どれも説明ページには書かれていない。代わりに、FirestoreやGoogle Workspace連携を自動で設定する</td>
+                  </tr>
+                  <tr>
+                    <td>作れるもの</td>
+                    <td data-label="agy（Antigravity CLI）">手元のプロジェクトのファイル全般。許可すればコマンドも実行する</td>
+                    <td data-label="Build mode（AI Studio）">Webアプリ（画面＋Node.jsのサーバー）または、Kotlinで作るAndroidアプリ</td>
+                  </tr>
+                  <tr>
+                    <td>GitHubとの付き合い方</td>
+                    <td data-label="agy（Antigravity CLI）">gitのコマンド、または自然言語でお願いする（第2〜5回）</td>
+                    <td data-label="Build mode（AI Studio）">Settingsの<strong>GitHubタブ</strong>で双方向に同期。pushにはAIが書いたコミットメッセージが付き、競合は <em>Resolve conflicts</em> の画面で選ぶ</td>
+                  </tr>
+                  <tr>
+                    <td>公開・持ち出し</td>
+                    <td data-label="agy（Antigravity CLI）">GitHubへpushして、GitHub Pagesなどで公開（次回）</td>
+                    <td data-label="Build mode（AI Studio）">共有URL、Cloud Runへデプロイ、ZIPで書き出し</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="lesson-tip">
+              <strong>表の読み方:</strong> 「公式の説明ページには書かれていない」は、<strong>「ない」とは違います</strong>。ページに載っていないだけで、画面にはある、あるいは近いうちに増える可能性があります（AI Studioは機能の追加が速い）。この欄は<strong>2限で、実際の画面を見て確かめる課題</strong>にします。出典: <a href="https://antigravity.google/docs/cli/modes" target="_blank" rel="noopener">Choose an execution mode（Antigravity公式）</a> / <a href="https://antigravity.google/docs/skills/" target="_blank" rel="noopener">Agent skills（Antigravity公式）</a> / <a href="https://antigravity.google/docs/cli/commands/effort" target="_blank" rel="noopener">Effort command (/effort)（Antigravity公式）</a> / <a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio（Google公式）</a>
+            </div>
             <p><strong>使うアカウントについて</strong></p>
             <ul>
               <li>Googleアカウントでログインする。<strong>学校用・個人用どちらでもよい</strong>（第3回のagyと同じ。本科目ではアカウントの種類は問わない）</li>
@@ -206,32 +355,35 @@
               <svg class="vz-svg" viewBox="0 0 360 206" role="img" aria-labelledby="a6-loop-t a6-loop-d">
                 <title id="a6-loop-t">指示を出して、確かめて、直す</title>
                 <desc id="a6-loop-d">1 指示を1つだけ書いて送る。2 右側のプレビューで、思ったとおりか確かめる。3 違うところを言葉にして、追加で指示する。そして1に戻って、これをくり返す。</desc>
-                <rect class="box-orange" x="8" y="6" width="344" height="54" rx="10"/>
+                <rect class="box-orange" x="8" y="6" width="316" height="54" rx="10"/>
                 <text class="t-b" x="22" y="28">1 指示を1つだけ書いて送る</text>
                 <text class="t-sm" x="22" y="48">例: スコアの表示を大きくして</text>
-                <line class="line" x1="180" y1="62" x2="180" y2="74" marker-end="url(#mk-s)"/>
-                <rect class="box-orange" x="8" y="76" width="344" height="54" rx="10"/>
+                <line class="line" x1="166" y1="62" x2="166" y2="74" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="76" width="316" height="54" rx="10"/>
                 <text class="t-b" x="22" y="98">2 プレビューで確かめる</text>
                 <text class="t-sm" x="22" y="118">思ったとおりに動くか、遊んで見る</text>
-                <line class="line" x1="180" y1="132" x2="180" y2="144" marker-end="url(#mk-s)"/>
-                <rect class="box-orange box-key" x="8" y="146" width="344" height="54" rx="10"/>
-                <text class="t-b" x="22" y="168">3 違うところを言葉にして、追加で指示</text>
+                <line class="line" x1="166" y1="132" x2="166" y2="144" marker-end="url(#mk-s)"/>
+                <rect class="box-orange box-key" x="8" y="146" width="316" height="54" rx="10"/>
+                <text class="t-b" x="22" y="168">3 違いを言葉にして、追加で指示</text>
                 <text class="t-sm" x="22" y="188">そして1に戻って、くり返す</text>
+                <path class="line" d="M324,173 H346 V33 H328" marker-end="url(#mk-s)"/>
               </svg>
-              <figcaption>第4回にagyで練習した「具体的に、1回に1つ」と同じ進め方です。</figcaption>
+              <figcaption>第4回にagyで練習した「具体的に、1回に1つ」と同じ進め方です。右の矢印が、1に戻ってくり返す流れです。</figcaption>
             </figure>
             <p><strong>やること</strong>（約35分）</p>
             <ul>
               <li>取り込んだゲームに、自然言語で<strong>改善を1つずつ</strong>頼む。例: スコアの表示を大きくする、ゲームオーバーの画面を作る、難しさを選べるようにする、色や見た目を変える</li>
               <li>第4回に学んだとおり、<strong>あいまいな指示より、具体的な指示</strong>のほうが思ったものに近づく。思い通りにならないときは、「何が違うか」を言葉にして追加で指示する</li>
               <li>1つ指示するたびに、<strong>プレビューで遊んで確かめる</strong>。確かめてから、次の指示に進む</li>
+              <li>余裕があれば、<strong>annotation mode</strong>（アプリの画面の一部を選んで、変えたいことを言葉で伝える）も試す。言葉だけでは伝えにくい「ここを」を、画面を指して伝えられる（公式: <em>"Annotation mode lets you highlight any part of your app's UI and describe the change you want."</em>）</li>
             </ul>
             <p><strong>agyのときとの違いを観察する</strong>（メモを取りながら、約15分）</p>
             <ul>
               <li>①<strong>指示を出してから、結果が見えるまで</strong>の流れはどう違うか（プレビューの有無）</li>
-              <li>②<strong>どのファイルが、どう変わったか</strong>は、どこで分かるか（ファイル一覧や変更の表示を探してみる）</li>
+              <li>②<strong>どのファイルが、どう変わったか</strong>は、どこで分かるか（Codeタブや、ファイル一覧を探してみる）</li>
               <li>③思い通りにならなかったとき、<strong>やり直しや直し方</strong>はどう違うか</li>
               <li>④取り込み直後に気づいた「元との違い」は、使っているうちに影響が出たか</li>
+              <li>⑤<strong>対比表の「書かれていない」欄を、実際の画面で探す</strong>（約5分）。agyにある<strong>Planモード</strong>（コードを書く前に計画だけ見せてもらう）や、<strong>Skills・Rules</strong>（決まりごとを前もって渡す）、<strong>考える深さ（effort）の調整</strong>にあたる切り替えや設定が、Build modeの画面にあるか。見つけたら、画面の名前をメモして講師に教える。<strong>見つからなくても、それが今日の結果</strong>。見つからないときは「計画を先に見せて。まだコードは書かないで」とチャット欄で頼むと、同じ使い方ができるか試せる</li>
             </ul>
           </div>
         </div>
@@ -243,6 +395,33 @@
           </div>
           <h3>Gemini APIの自動設定を確かめ、振り返りメモを書く</h3>
           <div class="timeline-body">
+            <figure class="vz-fig" aria-labelledby="cap-a6-key">
+              <p class="vz-fig-title" id="cap-a6-key">APIキーは、サーバー側に置かれる</p>
+              <svg class="vz-svg" viewBox="0 0 360 340" role="img" aria-labelledby="a6-key-t a6-key-d">
+                <title id="a6-key-t">APIキーは、サーバー側に置かれる</title>
+                <desc id="a6-key-d">上にブラウザ（アプリの画面）があり、ここにはキーを置かない。ブラウザからサーバー側にお願いが下りていき、結果が上に戻る。真ん中のサーバー側（Node.jsの部分）は、SecretsにあるGEMINI_API_KEYを使う。サーバー側からキー付きでGemini APIを呼ぶ。Gemini APIの呼び出しは自分の利用枠に数えられる。いちばん下は別の話で、GitHub Pagesは静的なファイルを置く仕組みなので、サーバー側の処理は動かない可能性がある。次回に確かめる。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="56" rx="10"/>
+                <text class="t-b" x="22" y="29">ブラウザ（アプリの画面）</text>
+                <text class="t-sm" x="22" y="50">ここには、キーを置かない</text>
+                <line class="line" x1="110" y1="64" x2="110" y2="96" marker-end="url(#mk-s)"/>
+                <text class="t-sm" x="122" y="86">お願い</text>
+                <line class="line" x1="250" y1="96" x2="250" y2="64" marker-end="url(#mk-s)"/>
+                <text class="t-sm" x="262" y="86">結果</text>
+                <rect class="box-orange box-key" x="8" y="98" width="344" height="62" rx="10"/>
+                <text class="t-b" x="22" y="121">サーバー側（Node.jsの部分）</text>
+                <text class="t-sm" x="22" y="143">Secretsの GEMINI_API_KEY を使う</text>
+                <line class="line" x1="180" y1="162" x2="180" y2="192" marker-end="url(#mk-s)"/>
+                <text class="t-sm" x="192" y="182">キー付きで呼ぶ</text>
+                <rect class="box-white" x="8" y="194" width="344" height="56" rx="10"/>
+                <text class="t-b" x="22" y="217">Gemini API</text>
+                <text class="t-sm" x="22" y="238">呼び出しは、自分の利用枠に数えられる</text>
+                <rect class="band" x="4" y="266" width="352" height="70" rx="12"/>
+                <text class="t-b" x="18" y="290">別の話: GitHub Pages（次回）</text>
+                <text class="t-sm" x="18" y="312">静的なファイルを置く仕組み。</text>
+                <text class="t-sm" x="18" y="328">サーバー側の処理は動かない可能性</text>
+              </svg>
+              <figcaption>キーが画面のコードに入らないので、ページを開いた人にも見えません。点線の枠は、公開するときの注意です。</figcaption>
+            </figure>
             <p><strong>Gemini APIを使う機能（任意、約15分）</strong></p>
             <ul>
               <li>公式の説明: Gemini APIを使う新しいアプリを作ると、AI Studioが<strong>Gemini APIキーを、アプリのサーバー側の環境のシークレットとして自動で設定する</strong>。キーは「Secrets」パネルで確認・管理できる（<a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio</a>の「API Key management」）。つまり、<strong>自分でAPIキーを書かなくてよい</strong></li>
@@ -252,11 +431,12 @@
             </ul>
             <p><strong>振り返りメモ（約15分）</strong></p>
             <ul>
-              <li>次の3行を、自分の言葉で書く（第7回の最後で見返す）
+              <li>次の4行を、自分の言葉で書く（第7回の最後で見返す）
                 <ul>
                   <li>①agyとBuild modeを使い比べて、<strong>違うと感じたところ</strong></li>
                   <li>②Build modeで<strong>良かったこと</strong>と<strong>困ったこと</strong></li>
-                  <li>③次回、<strong>自分の作品で試したいこと</strong>（例: 見た目、遊び方、新しい機能）</li>
+                  <li>③対比表の「書かれていない」欄（Planモード・Skills・effortなど）は、<strong>Build modeの画面で見つかったか</strong>（見つかった場所／見つからなかった）</li>
+                  <li>④次回、<strong>自分の作品で試したいこと</strong>（例: 見た目、遊び方、新しい機能）</li>
                 </ul>
               </li>
             </ul>
@@ -288,7 +468,7 @@
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
             <strong>使ったリポジトリ名とAI Studioのプロジェクト名をメモする</strong>
-            <p>次回、同じものの続きから始めるため。あわせて、今日の<strong>振り返りメモの3行</strong>が書けているか確かめておく。</p>
+            <p>次回、同じものの続きから始めるため。あわせて、今日の<strong>振り返りメモの4行</strong>が書けているか確かめておく。</p>
           </div>
         </div>
         <div class="lesson-task">
@@ -305,6 +485,10 @@
       <h2>参考リンク</h2>
       <ul>
         <li><a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio（Google公式）</a> — Build modeの使い方・Import from GitHub・APIキーの自動設定</li>
+        <li><a href="https://ai.google.dev/gemini-api/docs/ai-studio-quickstart" target="_blank" rel="noopener">Google AI Studio quickstart（Google公式）</a> — Chat（チャット型）の画面とBuild modeの位置づけ</li>
+        <li><a href="https://antigravity.google/docs/cli/modes" target="_blank" rel="noopener">Choose an execution mode（Antigravity公式）</a> — agyのdefault / accept-edits / planモード</li>
+        <li><a href="https://antigravity.google/docs/skills/" target="_blank" rel="noopener">Agent skills（Antigravity公式）</a> — agyのSkills（<code>SKILL.md</code>）</li>
+        <li><a href="https://antigravity.google/docs/cli/commands/effort" target="_blank" rel="noopener">Effort command (/effort)（Antigravity公式）</a> — agyで考える深さを調整する</li>
         <li><a href="https://ai.google.dev/gemini-api/docs/workspace" target="_blank" rel="noopener">Access Google AI Studio with your Workspace account（Google公式）</a> — 学校のアカウントでの利用条件</li>
         <li><a href="https://aistudio.google.com" target="_blank" rel="noopener">Google AI Studio</a> — 今日使うサービス本体</li>
         <li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages" target="_blank" rel="noopener">What is GitHub Pages?（GitHub公式）</a> — 次回の公開に使う仕組み</li>
