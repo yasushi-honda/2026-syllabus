@@ -10,7 +10,7 @@
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=19">
   <!-- 公式情報確認: 2026-10-14 (ai.google.dev/gemini-api/docs/aistudio-build-mode・ai.google.dev/gemini-api/docs/workspace を生HTMLで確認: Import from GitHub は「Add files (+ icon) menu in the prompt input box」にある／Settings の GitHub タブで「create a new GitHub repository from your app or link to an existing one」／two-way sync／「Resolve conflicts」ダイアログ／Gemini APIキーは「automatically configures your Gemini API key as a secret in the app's server-side environment」／Workspace for Education は18歳未満は使えない、管理者がオン/オフを切り替えられる)。Import from GitHub の対応範囲（非公開リポジトリ、素のHTML/JSのままか作り替えられるか）は公式に記載がなく未確認——授業前に教員が学校アカウントで素のHTMLリポジトリを取り込んで確認する -->
-  <!-- 公式情報再確認: 2026-10-15 (生HTML/curlで確認。①ai.google.dev/gemini-api/docs/aistudio-build-mode（Last updated 2026-08-20）: 「The Antigravity Agent is the main AI functionality within Google Antigravity and now the core components of the agent harness is powering the Build mode experience in Google AI Studio.」／既定のwebアプリはReact＋Node.jsのサーバー／Codeタブ・annotation mode・AI Chips・音声入力／Settings→GitHubタブで双方向同期・Resolve conflicts／Cloud Run・ZIP／Secretsに GEMINI_API_KEY を自動設定。Plan mode・Skills・Rules・サブエージェント・effort調整は同ページに記載なし ⑤antigravity.google/docs/cli/commands/effort: /effort で low/medium/high（モデルにより xhigh/max） ②antigravity.google/docs/cli/modes: default（diff確認）/accept-edits/plan の3モード、Shift+Tabで循環、planは読み取り専用ツールで調べて実行計画の承認を求める ③antigravity.google/docs/skills/・/rules/・/subagents/・/mcp/・cli/features（plugins）: agyに存在 ④ai.google.dev/gemini-api/docs/workspace（Last updated 2026-04-28）: 18歳未満は不可・管理者が制御。注意: 2026-10-09頃にBuild modeへ「Plan」「Ultra」等のモードが追加されるとの報道が複数あるが、公式の発表・ドキュメントは確認できず、本ページには書かない（授業内で画面を見て確かめる題材にしている）) -->
+  <!-- 公式情報再確認: 2026-10-15 (生HTML/curlで確認。①ai.google.dev/gemini-api/docs/aistudio-build-mode（Last updated 2026-08-20）: 「The Antigravity Agent is the main AI functionality within Google Antigravity and now the core components of the agent harness is powering the Build mode experience in Google AI Studio.」／既定のwebアプリはReact＋Node.jsのサーバー／Codeタブ・annotation mode・AI Chips・音声入力／Settings→GitHubタブで双方向同期・Resolve conflicts／Cloud Run・ZIP／Secretsに GEMINI_API_KEY を自動設定。Plan mode・Skills・Rules・サブエージェント・effort調整は同ページに記載なし ⑤antigravity.google/docs/cli/commands/effort: /effort で low/medium/high（モデルにより xhigh/max） ②antigravity.google/docs/cli/modes: default（diff確認）/accept-edits/plan の3モード、Shift+Tabで循環、planは読み取り専用ツールで調べて実行計画の承認を求める ③antigravity.google/docs/skills/・/rules/・/subagents/・/mcp/・cli/features（plugins）: agyに存在 ④ai.google.dev/gemini-api/docs/workspace（Last updated 2026-04-28）: 18歳未満は不可・管理者が制御。注意: 2026-10-09頃にBuild modeへ「Plan」「Ultra」等のモードが追加されるとの報道が複数あったが、公式の発表・ドキュメントは確認できていない。2026-10-15、教員の画面で Default／Plan／Max のスライダー（Defaultは「Make changes right away」）を確認（スクリーンショット提供）。Plan・Maxの説明文と動作は未確認のため、本文は「画面にはある」「何が変わるかは授業で確かめる」に留めている。公式の説明ページは2026-10-15時点でも Last updated 2026-08-20 のまま） -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -237,7 +237,7 @@
                   <tr>
                     <td><strong>Planモード</strong></td>
                     <td data-label="agy（Antigravity CLI）"><strong>ある</strong>。<code>Shift+Tab</code>で切り替え。読み取りだけで調べて実行計画を示し、承認を待つ</td>
-                    <td data-label="Build mode（AI Studio）">公式の説明ページには<strong>書かれていない</strong>。画面にあるか、2限で探す</td>
+                    <td data-label="Build mode（AI Studio）">公式の説明ページには<strong>書かれていない</strong>が、<strong>画面にはある</strong>。入力欄の近くのモード切り替えに <em>Default</em>・<em>Plan</em>・<em>Max</em> を選ぶスライダーがあり、Defaultは「Make changes right away」（すぐ変更を加える）。Planで何が変わるかは、2限で確かめる</td>
                   </tr>
                   <tr>
                     <td><strong>Skills</strong></td>
@@ -247,7 +247,7 @@
                   <tr>
                     <td><strong>考える深さ（effort）</strong></td>
                     <td data-label="agy（Antigravity CLI）"><strong>調整できる</strong>。<code>/effort</code>で<code>low</code>・<code>medium</code>・<code>high</code>から選ぶ（モデルによっては<code>xhigh</code>・<code>max</code>も）。軽い修正は速く、難しい問題は深く考えさせる使い分けができる</td>
-                    <td data-label="Build mode（AI Studio）">公式の説明ページには<strong>書かれていない</strong>。調整の項目があるか、2限で探す</td>
+                    <td data-label="Build mode（AI Studio）">公式の説明ページには<strong>書かれていない</strong>。調整の項目があるか、2限で探す。モード切り替えの <em>Max</em> が何を変えるのかは、まだ確認できていない</td>
                   </tr>
                   <tr>
                     <td>そのほかの拡張</td>
@@ -273,7 +273,7 @@
               </table>
             </div>
             <div class="lesson-tip">
-              <strong>表の読み方:</strong> 「公式の説明ページには書かれていない」は、<strong>「ない」とは違います</strong>。ページに載っていないだけで、画面にはある、あるいは近いうちに増える可能性があります（AI Studioは機能の追加が速い）。この欄は<strong>2限で、実際の画面を見て確かめる課題</strong>にします。出典: <a href="https://antigravity.google/docs/cli/modes" target="_blank" rel="noopener">Choose an execution mode（Antigravity公式）</a> / <a href="https://antigravity.google/docs/skills/" target="_blank" rel="noopener">Agent skills（Antigravity公式）</a> / <a href="https://antigravity.google/docs/cli/commands/effort" target="_blank" rel="noopener">Effort command (/effort)（Antigravity公式）</a> / <a href="https://antigravity.google/docs/rules/" target="_blank" rel="noopener">Rules（Antigravity公式）</a> / <a href="https://antigravity.google/docs/subagents/" target="_blank" rel="noopener">Custom subagents（Antigravity公式）</a> / <a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio（Google公式）</a>
+              <strong>表の読み方:</strong> 「公式の説明ページには書かれていない」は、<strong>「ない」とは違います</strong>。ページに載っていないだけで、画面にはある、あるいは近いうちに増える可能性があります（AI Studioは機能の追加が速い）。実際に、Planモードは、<strong>説明ページに載っていないのに画面には出ていました</strong>（2026-10-15、教員の画面で確認。アカウントや時期で表示が違う可能性があります）。この欄は<strong>2限で、実際の画面を見て確かめる課題</strong>にします。出典: <a href="https://antigravity.google/docs/cli/modes" target="_blank" rel="noopener">Choose an execution mode（Antigravity公式）</a> / <a href="https://antigravity.google/docs/skills/" target="_blank" rel="noopener">Agent skills（Antigravity公式）</a> / <a href="https://antigravity.google/docs/cli/commands/effort" target="_blank" rel="noopener">Effort command (/effort)（Antigravity公式）</a> / <a href="https://antigravity.google/docs/rules/" target="_blank" rel="noopener">Rules（Antigravity公式）</a> / <a href="https://antigravity.google/docs/subagents/" target="_blank" rel="noopener">Custom subagents（Antigravity公式）</a> / <a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio（Google公式）</a>
             </div>
             <p><strong>使うアカウントについて</strong></p>
             <ul>
@@ -383,7 +383,7 @@
               <li>②<strong>どのファイルが、どう変わったか</strong>は、どこで分かるか（Codeタブや、ファイル一覧を探してみる）</li>
               <li>③思い通りにならなかったとき、<strong>やり直しや直し方</strong>はどう違うか</li>
               <li>④取り込み直後に気づいた「元との違い」は、使っているうちに影響が出たか</li>
-              <li>⑤<strong>対比表の「書かれていない」欄を、実際の画面で探す</strong>（約5分）。agyにある<strong>Planモード</strong>（コードを書く前に計画だけ見せてもらう）や、<strong>Skills・Rules</strong>（決まりごとを前もって渡す）、<strong>考える深さ（effort）の調整</strong>にあたる切り替えや設定が、Build modeの画面にあるか。見つけたら、画面の名前をメモして講師に教える。<strong>見つからなくても、それが今日の結果</strong>。なお、AI Studioの別の画面（<a href="https://ai.google.dev/gemini-api/docs/aistudio-agents" target="_blank" rel="noopener">Agents in AI Studio</a>）にはSkills（<code>SKILL.md</code>）の説明があるが、Build modeとは別の機能なので、そちらは数えない。見つからないときは「計画を先に見せて。まだコードは書かないで」とチャット欄で頼むと、同じ使い方ができるか試せる</li>
+              <li>⑤<strong>対比表の「書かれていない」欄を、実際の画面で確かめる</strong>（約5分）。教員の画面では、入力欄の近くに<strong>モード切り替えのスライダー（Default／Plan／Max）</strong>がある。自分の画面にもあるか見つけ、<strong>Planに切り替えて、まだ試していない新しい改善を1つ頼み、Defaultのときの動き（指示するとすぐ変更が入った）とどう違うか</strong>を観察する。同じ指示のやり直しは、すでに変更が入った状態になるので比べられない。見るのは、先に計画が出るか、承認を求められるか、コードがすぐ変わるか、など（agyの<strong>planモード</strong>は、コードを書く前に計画だけ見せる使い方）。<strong>Max</strong>は何と説明されているかも読んで、メモする。あわせて、<strong>Skills・Rules</strong>（決まりごとを前もって渡す）や<strong>考える深さ（effort）の調整</strong>にあたる設定が画面にあるかも探す。見つけたら、画面の名前をメモして講師に教える。<strong>見つからなくても、それが今日の結果</strong>。なお、AI Studioの別の画面（<a href="https://ai.google.dev/gemini-api/docs/aistudio-agents" target="_blank" rel="noopener">Agents in AI Studio</a>）にはSkills（<code>SKILL.md</code>）の説明があるが、Build modeとは別の機能なので、そちらは数えない。</li>
             </ul>
           </div>
         </div>
@@ -435,7 +435,7 @@
                 <ul>
                   <li>①agyとBuild modeを使い比べて、<strong>違うと感じたところ</strong></li>
                   <li>②Build modeで<strong>良かったこと</strong>と<strong>困ったこと</strong></li>
-                  <li>③対比表の「書かれていない」欄（Planモード・Skills・effortなど）は、<strong>Build modeの画面で見つかったか</strong>（見つかった場所／見つからなかった）</li>
+                  <li>③Build modeの<strong>Planモード</strong>はDefaultとどう違ったか。Skills・effortにあたる設定は<strong>見つかったか</strong>（見つかった場所／見つからなかった）</li>
                   <li>④次回、<strong>自分の作品で試したいこと</strong>（例: 見た目、遊び方、新しい機能）</li>
                 </ul>
               </li>
