@@ -10,7 +10,7 @@
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=19">
   <!-- 公式情報確認: 2026-10-14 (ai.google.dev/gemini-api/docs/aistudio-build-mode・ai.google.dev/gemini-api/docs/workspace を生HTMLで確認: Import from GitHub は「Add files (+ icon) menu in the prompt input box」にある／Settings の GitHub タブで「create a new GitHub repository from your app or link to an existing one」／two-way sync／「Resolve conflicts」ダイアログ／Gemini APIキーは「automatically configures your Gemini API key as a secret in the app's server-side environment」／Workspace for Education は18歳未満は使えない、管理者がオン/オフを切り替えられる)。Import from GitHub の対応範囲（非公開リポジトリ、素のHTML/JSのままか作り替えられるか）は公式に記載がなく未確認——授業前に教員が学校アカウントで素のHTMLリポジトリを取り込んで確認する -->
-  <!-- 公式情報再確認: 2026-10-15 (生HTML/curlで確認。①ai.google.dev/gemini-api/docs/aistudio-build-mode（Last updated 2026-08-20）: 「The Antigravity Agent is the main AI functionality within Google Antigravity and now the core components of the agent harness is powering the Build mode experience in Google AI Studio.」／既定のwebアプリはReact＋Node.jsのサーバー／Codeタブ・annotation mode・AI Chips・音声入力／Settings→GitHubタブで双方向同期・Resolve conflicts／Cloud Run・ZIP／Secretsに GEMINI_API_KEY を自動設定。Plan mode・Skills・Rules・サブエージェント・effort調整は同ページに記載なし ⑤antigravity.google/docs/cli/commands/effort: /effort で low/medium/high（モデルにより xhigh/max） ②antigravity.google/docs/cli/modes: default（diff確認）/accept-edits/plan の3モード、Shift+Tabで循環、planは読み取り専用ツールで調べて実行計画の承認を求める ③antigravity.google/docs/skills/・/rules/・/subagents/・/mcp/・cli/features（plugins）: agyに存在 ④ai.google.dev/gemini-api/docs/workspace（Last updated 2026-04-28）: 18歳未満は不可・管理者が制御。注意: 2026-10-09頃にBuild modeへ「Plan」「Ultra」等のモードが追加されるとの報道が複数あったが、公式の発表・ドキュメントは確認できていない。2026-10-15、教員の画面で Default／Plan／Max のスライダー（Defaultは「Make changes right away」）を確認（スクリーンショット提供）。Plan・Maxの説明文と動作は未確認のため、本文は「画面にはある」「何が変わるかは授業で確かめる」に留めている。公式の説明ページは2026-10-15時点でも Last updated 2026-08-20 のまま。同日、教員の画面で 設定（歯車）→GitHubタブ に「Sync to a new repository」「Force push to <repo>（main branch will be replaced with this app's code.）」の2択、連携後は「Changes in Google AI Studio are ready to be pushed」「Commit message」「1 changed file」「Push changes to GitHub」を確認。設定のタブは Chat / Share / Publish / Versions / GitHub / Integ… の並び。取り込み直後のバナー「Your imported app is ready and contains a major rewrite. Gemini rewrote significant parts of the codebase to ensure compatibility with Google AI Studio.」と右端の「Sync to GitHub」ボタンを教員の画面（写真）で確認。gh api で yas-honda/Tetris の main の最新コミットが2026-10-04のままであることを確認（取り込みだけでは増えていない。自動で送られないことの証明ではない）。2026-10-15（教員の決定）: GitHubへのpushを第6回に含める。送る前に backup-before-ai-studio ブランチを作り、Force push後に git push --force origin origin/backup-before-ai-studio:main で元に戻せることを、一時リポジトリ（オフライン）で検証済み。ブランチ作成手順は docs.github.com の Creating and deleting branches within your repository を確認。AI Studio側の「Force push」は、選択後に「Sync status / Commit message / N changed files（教員の画面では28）/ Push changes to GitHub」の画面へ進むことを確認（2026-10-15、スクリーンショット）。2026-10-15 実機検証（教員の画面＋GitHub API、使い捨てリポジトリ）: ①Push後は確認画面なしで処理中画面へ ②GitHubの更新種別は push（force_push ではない）で、親は元のコミットB＝履歴にコミットが1つ足されるだけ ③git revert で元のBと中身が完全一致 ④GitHubが先に進むと「ready to be pulled」でPullを案内、両方に変更があると Step 1 Pull → Step 2 Push（Pullが先、Pushはグレーアウト）⑤Pullで衝突すると Resolve conflicts（左AI Studio／右GitHub、Keep、Finish）、AI Studio側をKeepして送るとGitHub側のREADMEは残り、親は直前のコミット。未確認: 初回連携時にGitHub側が先行していた場合の動き／学生の画面／「新しいリポジトリ」の画面） -->
+  <!-- 公式情報再確認: 2026-10-15 (生HTML/curlで確認。①ai.google.dev/gemini-api/docs/aistudio-build-mode（Last updated 2026-08-20）: 「The Antigravity Agent is the main AI functionality within Google Antigravity and now the core components of the agent harness is powering the Build mode experience in Google AI Studio.」／既定のwebアプリはReact＋Node.jsのサーバー／Codeタブ・annotation mode・AI Chips・音声入力／Settings→GitHubタブで双方向同期・Resolve conflicts／Cloud Run・ZIP／Secretsに GEMINI_API_KEY を自動設定。Plan mode・Skills・Rules・サブエージェント・effort調整は同ページに記載なし ⑤antigravity.google/docs/cli/commands/effort: /effort で low/medium/high（モデルにより xhigh/max） ②antigravity.google/docs/cli/modes: default（diff確認）/accept-edits/plan の3モード、Shift+Tabで循環、planは読み取り専用ツールで調べて実行計画の承認を求める ③antigravity.google/docs/skills/・/rules/・/subagents/・/mcp/・cli/features（plugins）: agyに存在 ④ai.google.dev/gemini-api/docs/workspace（Last updated 2026-04-28）: 18歳未満は不可・管理者が制御。注意: 2026-10-09頃にBuild modeへ「Plan」「Ultra」等のモードが追加されるとの報道が複数あったが、公式の発表・ドキュメントは確認できていない。2026-10-15、教員の画面で Default／Plan／Max のスライダー（Defaultは「Make changes right away」）を確認（スクリーンショット提供）。Plan・Maxの説明文と動作は未確認のため、本文は「画面にはある」「何が変わるかは授業で確かめる」に留めている。公式の説明ページは2026-10-15時点でも Last updated 2026-08-20 のまま。同日、教員の画面で 設定（歯車）→GitHubタブ に「Sync to a new repository」「Force push to <repo>（main branch will be replaced with this app's code.）」の2択、連携後は「Changes in Google AI Studio are ready to be pushed」「Commit message」「1 changed file」「Push changes to GitHub」を確認。設定のタブは Chat / Share / Publish / Versions / GitHub / Integ… の並び。取り込み直後のバナー「Your imported app is ready and contains a major rewrite. Gemini rewrote significant parts of the codebase to ensure compatibility with Google AI Studio.」と右端の「Sync to GitHub」ボタンを教員の画面（写真）で確認。gh api で yas-honda/Tetris の main の最新コミットが2026-10-04のままであることを確認（取り込みだけでは増えていない。自動で送られないことの証明ではない）。2026-10-15（教員の決定）: GitHubへのpushを第6回に含める。送る前に backup-before-ai-studio ブランチを作り、Force push後に git push --force origin origin/backup-before-ai-studio:main で元に戻せることを、一時リポジトリ（オフライン）で検証済み。ブランチ作成手順は docs.github.com の Creating and deleting branches within your repository を確認。AI Studio側の「Force push」は、選択後に「Sync status / Commit message / N changed files（教員の画面では28）/ Push changes to GitHub」の画面へ進むことを確認（2026-10-15、スクリーンショット）。2026-10-15（教員の決定: 第6回では間に合わなかったため、GitHubへのpush・履歴確認・git revert・Pull先行と衝突の解決は第7回へ移した。原稿は PR #366 のコミット 7fd7375 の week06.html にある）。2026-10-15 実機検証（教員の画面＋GitHub API、使い捨てリポジトリ）: ①Push後は確認画面なしで処理中画面へ ②GitHubの更新種別は push（force_push ではない）で、親は元のコミットB＝履歴にコミットが1つ足されるだけ ③git revert で元のBと中身が完全一致 ④GitHubが先に進むと「ready to be pulled」でPullを案内、両方に変更があると Step 1 Pull → Step 2 Push（Pullが先、Pushはグレーアウト）⑤Pullで衝突すると Resolve conflicts（左AI Studio／右GitHub、Keep、Finish）、AI Studio側をKeepして送るとGitHub側のREADMEは残り、親は直前のコミット。未確認: 初回連携時にGitHub側が先行していた場合の動き／学生の画面／「新しいリポジトリ」の画面） -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -49,15 +49,15 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">第3〜4回でagyと育てた<strong>GitHubリポジトリ</strong>を、ブラウザだけで使うGoogle AI Studioの<strong>Build mode</strong>に「Import from GitHub」で取り込み、同じ成果物の続きを自然言語の指示で作り、最後にGitHubへpushする</div>
+          <div class="lesson-overview-value">第3〜4回でagyと育てた<strong>GitHubリポジトリ</strong>を、ブラウザだけで使うGoogle AI Studioの<strong>Build mode</strong>に「Import from GitHub」で取り込み、同じ成果物の続きを自然言語の指示で作る</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">Google AI Studio / Build mode / Antigravity Agent / agyとの対比表（Planモード・Skillsなど） / Import from GitHub / GitHubがハブ / GitHubへpush（履歴で確かめる・git revertで戻す・Pull／衝突の解決）</div>
+          <div class="lesson-overview-value">Google AI Studio / Build mode / Antigravity Agent / agyとの対比表（Planモード・Skillsなど） / Import from GitHub / GitHubがハブ / Gemini APIキーの自動設定（シークレット）</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
-          <div class="lesson-overview-value">自分のGitHubリポジトリの名前（第5回で控えたもの）／Googleアカウント（学校用・個人用どちらでもよい）で、ブラウザからaistudio.google.comを開けること。GitHubにログインしておく。今日のCodespaceは、教員の実演（元に戻す）で使う。学生は、自分のリポジトリでrevertしない。</div>
+          <div class="lesson-overview-value">自分のGitHubリポジトリの名前（第5回で控えたもの）／Googleアカウント（学校用・個人用どちらでもよい）で、ブラウザからaistudio.google.comを開けること。Codespaceは今日は使わない。</div>
         </div>
       </div>
     </div>
@@ -68,7 +68,7 @@
         <li>Google AI Studioの<strong>Build mode</strong>が何をする道具か（自然言語で指示し、右側のプレビューで確かめる）を、<strong>agyとの対比表</strong>を使って説明できる（中身は同じ系統のエージェントだが、画面とモード・拡張機能が違う）</li>
         <li>自分のGitHubリポジトリを<strong>Import from GitHub</strong>で取り込み、<strong>同じ成果物</strong>がブラウザの中で動くところまで進める</li>
         <li>agyのときと同じように、<strong>1回に1つずつ</strong>自然言語で指示を出して、成果物を改善する</li>
-        <li>AI Studioで直した版を、自分のGitHubへ<strong>push</strong>し、<strong>GitHubの履歴</strong>で確かめ、<strong>git revert</strong>で元に戻せることを、教員の実演で理解する。両方に変更があるときの<strong>Pull</strong>と<strong>衝突の解決</strong>も知る</li>
+        <li>Gemini APIを使うアプリでは、<strong>APIキーが自動でシークレットとして設定される</strong>仕組みを確認する（任意。キーを自分で書かない）</li>
         <li>対比表で「公式の説明ページに書かれていない」とされた機能（Planモード・Skillsなど）が、<strong>実際のBuild modeの画面にあるか</strong>を自分の目で探す</li>
         <li>agyとBuild modeを使い比べて、気づいたことを<strong>自分の言葉で</strong>メモに残す</li>
       </ul>
@@ -121,7 +121,7 @@
                 <rect class="box-white box-key" x="8" y="254" width="344" height="42" rx="10"/>
                 <text class="t-c t-b" x="180" y="280">作品は同じ。道具だけが変わる</text>
               </svg>
-              <figcaption>矢印は、リポジトリから「読み込む」向きと、あとで「書き戻す」向きです。書き戻すのは、2限の後半です。</figcaption>
+              <figcaption>矢印は、リポジトリから「読み込む」向きと、あとで「書き戻す」向きです。書き戻すのは、第7回です。</figcaption>
             </figure>
             <p><strong>第1回の軸にあてはめる——チャット型AI と AIエージェント</strong></p>
             <ul>
@@ -328,7 +328,7 @@
             <ul>
               <li>右側のプレビューで、<strong>元のゲームが動くか</strong>を確かめる。遊んでみて、第4〜5回に作った機能が残っているかを見る</li>
               <li>取り込んだコードは、<strong>書き直されたり、ファイルの構成が変わったり</strong>して、元のゲームと<strong>見た目や構成が変わる</strong>ことがある。教員の画面では、取り込み直後に警告のバナーが出た: <em>"Your imported app is ready and contains a major rewrite. Gemini rewrote significant parts of the codebase to ensure compatibility with Google AI Studio."</em>（取り込んだアプリは準備できたが、大きな書き直しを含む。AI Studioで動くように、Geminiがコードの重要な部分を書き直した）。公式の説明ページには、取り込んだコードの扱いは書かれていない（Build modeは、既定で画面とサーバーの両方を持つアプリを作る仕組みと説明されている）。変わっていたら、<strong>どこが違うかをメモする</strong>——失敗ではなく、2限の観察の材料になる</li>
-              <li>書き直されるのは、<strong>AI Studio側のコピー</strong>と考えられる。教員が取り込んだだけの時点では、元のGitHubのリポジトリにコミットは増えていなかった（教員のリポジトリの履歴で確認）。GitHubが変わるのは、<strong>自分で送る操作をしたとき</strong>のはず。ただし、自動で送られないと言い切れる確認ではないので、<strong>送る操作は、2限の後半に、備えをしてから行う</strong>。それまでは、GitHubタブも、バナーの「Sync to GitHub」も押さない</li>
+              <li>書き直されるのは、<strong>AI Studio側のコピー</strong>と考えられる。教員が取り込んだだけの時点では、元のGitHubのリポジトリにコミットは増えていなかった（教員のリポジトリの履歴で確認）。GitHubが変わるのは、<strong>自分で送る操作をしたとき</strong>のはず。ただし、自動で送られないと言い切れる確認ではないので、<strong>送る操作は、第7回に、備えをしてから、みんなで一緒に行う</strong>。今日は、GitHubタブも、バナーの「Sync to GitHub」も押さない</li>
               <li>動かない、読み込みが進まない、リポジトリが一覧に出ないときは、講師に声をかける。エラーが出たら、<strong>その全文をプロンプト欄に貼って「原因と直し方を教えて」</strong>と頼んでもよい</li>
             </ul>
             <figure class="vz-fig" aria-labelledby="cap-a6-files">
@@ -354,7 +354,7 @@
               <figcaption>教員のテスト用リポジトリの例です。変更の一覧は、送る前の画面でも見られます。ファイルの数や名前は、取り込むものによって違います。</figcaption>
             </figure>
             <div class="lesson-tip">
-              <strong>まだ押さない場所:</strong> AI Studioの<strong>設定（歯車）にあるGitHubタブ</strong>と、取り込み直後のバナーの<strong>「Sync to GitHub」ボタン</strong>は、同じ「GitHubへ送る」画面につながる。選択肢には「Force push」があり、説明は「main branch will be replaced with this app's code」（教員の画面で確認）。教員が試した範囲では、<strong>元の履歴にコミットが1つ足されるだけ</strong>だったが、条件によって動きが違うかもしれない。GitHubへ送る操作は、<strong>2限の後半に、先にbackupを作ってから、みんなで一緒に</strong>行う。
+              <strong>今日は押さない場所:</strong> AI Studioの<strong>設定（歯車）にあるGitHubタブ</strong>と、取り込み直後のバナーの<strong>「Sync to GitHub」ボタン</strong>は、同じ「GitHubへ送る」画面につながる。選択肢には「Force push」があり、説明は「main branch will be replaced with this app's code」（教員の画面で確認）。教員が試した範囲では、<strong>元の履歴にコミットが1つ足されるだけ</strong>だったが、条件によって動きが違うかもしれない。GitHubへ送る操作は、<strong>第7回に、先にbackupを作ってから、みんなで一緒に</strong>行う。今日は、押さない。
             </div>
           </div>
         </div>
@@ -416,209 +416,8 @@
             <span class="timeline-time">2限 後半</span>
             <span class="timeline-duration">約30分</span>
           </div>
-          <h3>AI StudioからGitHubへpushし、履歴で確かめ、戻し方を知る</h3>
+          <h3>Gemini APIの自動設定を確かめ、振り返りメモを書く</h3>
           <div class="timeline-body">
-            <figure class="vz-fig" aria-labelledby="cap-a6-push">
-              <p class="vz-fig-title" id="cap-a6-push">GitHubへ送る流れ（先に備えてから送る）</p>
-              <svg class="vz-svg" viewBox="0 0 360 396" role="img" aria-labelledby="a6-push-t a6-push-d">
-                <title id="a6-push-t">GitHubへ送る流れ（先に備えてから送る）</title>
-                <desc id="a6-push-d">0 備え。GitHubの画面で、mainからbackupブランチを作る。1 AI Studioの画面右上の歯車（設定）を開き、GitHubタブを選ぶ。2 つなぎ方は2つある。1つは新しいリポジトリで、元のリポジトリは変わらないが、GitHub Pagesの設定はやり直しになる。もう1つは既存のリポジトリへのForce pushで、教員が試した範囲では、履歴は足されるだけで、元のコミットは残る。3 送る前の画面で、Commit messageと、変更ファイルの一覧を確かめる。4 Push changes to GitHubのボタンを押すと、確認なしで、すぐ送られる。</desc>
-                <rect class="box-orange box-key" x="8" y="6" width="344" height="54" rx="10"/>
-                <text class="t-b" x="22" y="28">0 備え: backupブランチを作る</text>
-                <text class="t-sm" x="22" y="48">GitHubの画面で、mainから作る</text>
-                <line class="line" x1="180" y1="62" x2="180" y2="74" marker-end="url(#mk-s)"/>
-                <rect class="box-orange" x="8" y="76" width="344" height="54" rx="10"/>
-                <text class="t-b" x="22" y="98">1 歯車（設定）→ GitHubタブ</text>
-                <text class="t-sm" x="22" y="118">画面の右上。Share・Publish の右</text>
-                <line class="line" x1="180" y1="132" x2="180" y2="144" marker-end="url(#mk-s)"/>
-                <rect class="band" x="4" y="146" width="352" height="104" rx="12"/>
-                <text class="t-b" x="18" y="166">2 つなぎ方は2つ</text>
-                <rect class="box-white" x="10" y="176" width="166" height="66" rx="10"/>
-                <text class="t-b" x="20" y="198">新しいリポジトリ</text>
-                <text class="t-sm" x="20" y="218">元は変わらない</text>
-                <text class="t-sm" x="20" y="235">Pagesは設定し直し</text>
-                <rect class="box-orange box-key" x="184" y="176" width="166" height="66" rx="10"/>
-                <text class="t-b" x="194" y="198">既存へ Force push</text>
-                <text class="t-sm" x="194" y="218">履歴は足されるだけ</text>
-                <text class="t-sm" x="194" y="235">元のコミットは残る</text>
-                <line class="line" x1="180" y1="252" x2="180" y2="264" marker-end="url(#mk-s)"/>
-                <rect class="box-orange" x="8" y="266" width="344" height="54" rx="10"/>
-                <text class="t-b" x="22" y="288">3 送る前の画面で確かめる</text>
-                <text class="t-sm" x="22" y="308">Commit message と、ファイルの一覧</text>
-                <line class="line" x1="180" y1="322" x2="180" y2="334" marker-end="url(#mk-s)"/>
-                <rect class="box-white box-key" x="8" y="336" width="344" height="54" rx="10"/>
-                <text class="t-b" x="22" y="358">4 Push changes to GitHub</text>
-                <text class="t-sm" x="22" y="378">確認なしで、すぐ送られる</text>
-              </svg>
-              <figcaption>今日の本線は、右の「既存へ Force push」です。不安な人は、左の「新しいリポジトリ」を選んでもかまいません。画面の表示は、アカウントや時期で違うことがあります。</figcaption>
-            </figure>
-            <p><strong>① 送る前の備え（約3分）</strong></p>
-            <ul>
-              <li>理由: 画面には「Force push to ◯◯」「main branch will be replaced with this app's code.」と出る（教員の画面）。教員が試した範囲では、<strong>元の履歴にコミットが1つ足されるだけ</strong>で、元のコミットは残った。ただし、取り込んだあとにGitHub側のmainが先に進んでいた場合などは、確かめていない。だから念のため、<strong>今のmainの控え（backupブランチ）</strong>を作っておく（保険）</li>
-              <li>やること: GitHubで自分のリポジトリを開き、ブランチのメニューの「Find or create a branch...」に<code>backup-before-ai-studio</code>と入力して「Create branch」を押す。元になるブランチは<strong>main</strong>のままでよい（公式: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-and-deleting-branches-within-your-repository" target="_blank" rel="noopener">Managing branches within your repository</a>）</li>
-              <li>mainの<strong>最新のコミットのメッセージを1行メモ</strong>する（あとで、履歴のどこに新しいコミットが足されたかを探す目印）</li>
-              <li>mainが保護されていると、送る操作自体が通らないことがある。通らないときは、講師に声をかける</li>
-            </ul>
-            <p><strong>② AI StudioからGitHubへpush（約8分）</strong></p>
-            <ul>
-              <li>歯車（設定）→<strong>GitHubタブ</strong>。取り込み直後のバナーの「Sync to GitHub」からも、同じ画面に進む。つなぎ方は2つ: <em>Sync to a new repository</em>（新しいリポジトリへ）と、<em>Force push to 自分のリポジトリ</em>。<strong>本線はForce push</strong>（同じリポジトリで続けられる）。元のmainを変えたくない人は、新しいリポジトリでもよい（その場合、GitHub Pagesの設定は、新しいリポジトリで改めて行う。公開元の設定はリポジトリごと。公式: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site" target="_blank" rel="noopener">Configuring a publishing source for your GitHub Pages site</a>）。<strong>この節の英語の表示は、教員の画面で確認したもの</strong>で、公式の説明ページには書かれていない</li>
-              <li>つなぎ方を選ぶと、「送る前の画面」に進む。<em>Sync status</em>（「Changes in Google AI Studio are ready to be pushed」＝送る準備ができた）、<em>Commit message</em>（AIが書く。公式: <a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio</a>。<strong>読んでから</strong>送る）、<em>N changed files</em>（開くと、ファイルごとに<em>Modified</em>＝書き換え、<em>Added</em>＝追加が見える。教員の例では<code>index.html</code>がModified、ほかの11ファイルがAdded）</li>
-              <li><em>Push changes to GitHub</em>を押すと、<strong>確認の画面は出ず</strong>、すぐ「Linking repository and pushing changes」という処理中の画面になる（教員の画面）。押す前に、上の内容を読んでおく</li>
-              <li>初めて送るときは、AI StudioとGitHubをつなぐ<strong>許可の画面</strong>が出ることがある。許可する内容と、対象のリポジトリを<strong>読んでから</strong>許可する（教員が事前に試して確認する）。画面が違うときは、表示を読んで進める。迷ったら講師に声をかける</li>
-            </ul>
-            <p><strong>③ GitHubで履歴を確かめる（約4分）</strong></p>
-            <ul>
-              <li>GitHubで自分のリポジトリを開き、<strong>コミットの一覧（Commits）</strong>を見る。一番上に<strong>AI Studioのコミット</strong>が足され、その下に、メモした自分の元のコミットが<strong>そのまま残っている</strong>。mainのファイルが変わったこと（構成が作り替わったこと）も確かめる。<strong>backupブランチは、元のまま</strong></li>
-              <li>「新しいリポジトリ」を選んだ人は、<strong>元のリポジトリが変わっていないこと</strong>と、<strong>新しいリポジトリにアプリのファイルが入っていること</strong>を確かめる。④は見るだけ。第7回の送り先として、新しいリポジトリの名前をメモしておく</li>
-              <li>第5回でGitHub Pagesを公開した人は、<strong>公開したサイトの表示が変わる・壊れる</strong>ことがある（反映に数分かかる）。公開は次回の話題。今日は、「送ると、公開物にも影響しうる」と知っておけばよい</li>
-            </ul>
-            <figure class="vz-fig" aria-labelledby="cap-a6-history">
-              <p class="vz-fig-title" id="cap-a6-history">送ると「足される」。戻すときも「足す」</p>
-              <svg class="vz-svg" viewBox="0 0 360 258" role="img" aria-labelledby="a6-history-t a6-history-d">
-                <title id="a6-history-t">送ると「足される」。戻すときも「足す」</title>
-                <desc id="a6-history-d">コミットが上から下へ時間順に並ぶ。A は agy で作った初版。B は agy で機能を足したコミットで、backupブランチがここを指している。C は AI Studio が足したコミットで、React構成と12ファイルが増える。R は C を打ち消すRevertのコミットで、中身は B と同じに戻る。どのコミットも消えずに、新しいコミットが下に足されていく。</desc>
-                <line class="line" x1="30" y1="32" x2="30" y2="224"/>
-                <rect class="box-white" x="8" y="6" width="344" height="52" rx="10"/>
-                <circle class="dot" cx="30" cy="32" r="9"/>
-                <text class="t-b" x="52" y="30">A 初版（agy）</text>
-                <text class="t-sm" x="52" y="48">クリックゲーム</text>
-                <rect class="box-white" x="8" y="70" width="344" height="52" rx="10"/>
-                <circle class="dot" cx="30" cy="96" r="9"/>
-                <text class="t-b" x="52" y="94">B 機能を足した（agy）</text>
-                <text class="t-sm" x="52" y="112">10点でお知らせ</text>
-                <rect class="box-orange box-key" x="262" y="82" width="82" height="28" rx="8"/>
-                <text class="t-c t-sm" x="303" y="101">backup</text>
-                <rect class="box-orange box-key" x="8" y="134" width="344" height="52" rx="10"/>
-                <circle class="dot-orange" cx="30" cy="160" r="9"/>
-                <text class="t-b" x="52" y="158">C AI Studioが足したコミット</text>
-                <text class="t-sm" x="52" y="176">React構成・12ファイル</text>
-                <rect class="box-white box-key" x="8" y="198" width="344" height="52" rx="10"/>
-                <circle class="dot" cx="30" cy="224" r="9"/>
-                <text class="t-b" x="52" y="222">R Revert（Cを打ち消す）</text>
-                <text class="t-sm" x="52" y="240">中身はBと同じに戻る</text>
-              </svg>
-              <figcaption>どのコミットも消えません。Cを打ち消すR（Revert）も「新しいコミット」として足されるので、「戻した」記録が履歴に残ります。教員のテスト用リポジトリの例です。Cの直後にRevertしたので、中身はBと同じに戻りました（間に別のコミットがあれば、その分は残ります）。GitHubのコミット一覧は、新しいものが上に並びます（この図は古いものが上）。</figcaption>
-            </figure>
-            <p><strong>④ 元に戻す（教員が実演、約6分）</strong></p>
-            <ul>
-              <li>戻す基本は<strong>git revert</strong>。ある変更を<strong>打ち消す新しいコミット</strong>を足す（公式: <a href="https://git-scm.com/docs/git-revert" target="_blank" rel="noopener">git-revert Documentation</a>）。履歴は消えず、「戻した」記録も残る。教員の検証では、AI Studioが足したコミットCの<strong>直後に</strong>revertしたので、中身は元のコミットBと<strong>完全に同じ</strong>になった。間に別のコミットがあれば、その分は残る</li>
-              <li>実演は、教員が<strong>事前にCodespaceとagyを起動した画面</strong>で、<strong>教員自身のリポジトリ</strong>で行う。学生は見る。第5回で作ったブランチに居ることがあるので、<strong>必ずmainに切り替えてから</strong>始める。agyには、例えば<code>git switch main をして、git pull origin main をしてから、git log で AI Studioが足したコミットを探して、そのコミットだけを revert して、GitHubへ push してください</code>と頼む。agyが実行の許可を聞くので、<strong>何をするか</strong>を読んでから許可する（第4回と同じ）</li>
-              <li>コマンドで書くと、<code>git switch main</code>、<code>git pull origin main</code>、<code>git log --oneline</code>（AI Studioのコミットを探す。一番上とは限らない）、<code>git revert --no-edit コミットID</code>、<code>git push origin main</code>の順。agyも、これと同じ結果になる操作をするはずなので、<strong>実行前に内容を読んで確かめる</strong></li>
-              <li>戻ったら、GitHubのコミット一覧に<strong>「Revert ...」のコミットが足された</strong>こと、ファイルが元に戻ったことを確かめる。revertが通らないなど、どうしてもmainをBの状態に戻したいときの控えが<strong>backupブランチ</strong>。ただし、backupを使う戻し方は、あとから足されたコミットも巻き戻すので、<strong>講師と一緒に判断する</strong></li>
-              <li>戻すと、AI Studio側は<strong>GitHubより遅れた状態</strong>になり、次の⑤のとおりPullを案内される。Pullすると、AI Studio側のアプリも、revert後の内容になる。そのため、<strong>学生は自分のリポジトリでrevertしない</strong>（第7回で、今日pushしたアプリの続きを作るため）。revertは、「戻したいときのやり方」として見て、知っておく</li>
-            </ul>
-            <p><strong>⑤ 両方に変更があるとき（見るだけ、約4分）</strong></p>
-            <figure class="vz-fig" aria-labelledby="cap-a6-sync">
-              <p class="vz-fig-title" id="cap-a6-sync">AI Studioの同期の状態は4つ</p>
-              <svg class="vz-svg" viewBox="0 0 360 322" role="img" aria-labelledby="a6-sync-t a6-sync-d">
-                <title id="a6-sync-t">AI Studioの同期の状態は4つ</title>
-                <desc id="a6-sync-d">1 同期済み。どちらも変更がない。表示は in sync で、押すものはない。2 AI Studioだけ変更。表示は ready to be pushed で、Push changes to GitHub を押す。3 GitHubだけ変更。表示は ready to be pulled で、Pull changes を押す。4 両方に変更。表示は changes in both で、Step 1 の Pull を先に押し、そのあと Step 2 の Push を押す。同じファイルを両方で違うように変えていると、衝突の画面が出る。</desc>
-                <rect class="box-white" x="8" y="6" width="344" height="72" rx="10"/>
-                <text class="t-b" x="22" y="30">1 同期済み</text>
-                <text class="t-sm" x="22" y="50">表示: in sync（どちらも変更なし）</text>
-                <text class="t-sm" x="22" y="68">押すもの: なし</text>
-                <rect class="box-white" x="8" y="84" width="344" height="72" rx="10"/>
-                <text class="t-b" x="22" y="108">2 AI Studioだけ変更</text>
-                <text class="t-sm" x="22" y="128">表示: ready to be pushed</text>
-                <text class="t-sm" x="22" y="146">押すもの: Push changes to GitHub</text>
-                <rect class="box-white" x="8" y="162" width="344" height="72" rx="10"/>
-                <text class="t-b" x="22" y="186">3 GitHubだけ変更</text>
-                <text class="t-sm" x="22" y="206">表示: ready to be pulled</text>
-                <text class="t-sm" x="22" y="224">押すもの: Pull changes</text>
-                <rect class="box-orange box-key" x="8" y="240" width="344" height="72" rx="10"/>
-                <text class="t-b" x="22" y="264">4 両方に変更</text>
-                <text class="t-sm" x="22" y="284">表示: changes in both</text>
-                <text class="t-sm" x="22" y="302">Step 1 Pull → Step 2 Push（Pullが先）</text>
-              </svg>
-              <figcaption>画面の表示は、教員の画面の英語の文言の要点です。4は、Pullが済むまでPushのボタンは押せません。</figcaption>
-            </figure>
-            <ul>
-              <li>以下は、<strong>教員の画面で確認したこと</strong>。Pullが先であること、衝突の画面の左右の並び、Keep・Finishは、公式の説明ページには書かれていない（公式に書かれているのは、衝突のときにResolve conflictsのダイアログが出て、AI StudioとGitHubのどちらの版を残すかを選べること）</li>
-              <li>AI Studioは、GitHubとの違いを見て、表示とボタンを変える。<strong>GitHub側が先に進んでいたら、まずPullを案内</strong>し、両方に変更があるときも、<strong>Pull（取り込む）が先、Push（送る）が後</strong>。教員が画面で試した1回では、GitHubの変更を知らないまま送ることはできず、先にPullを求められた</li>
-              <li>同じファイルを両方で違うように変えていると、Pullのときに<strong>衝突</strong>として<em>Resolve conflicts</em>の画面が出る。左が<strong>AI Studio</strong>、右が<strong>GitHub</strong>。<em>Keep</em>で残す側を選び、<em>Finish</em>で確定する。教員の例は、<strong>AI Studioで編集したファイルが、GitHub側のrevertで削除されていた</strong>ので衝突になった</li>
-              <li>どちらを残すか迷ったら、<strong>両方の中身を読んでから</strong>選ぶ。迷ったら講師に聞く。そのファイルの内容は、選んだ側の版になる</li>
-            </ul>
-            <figure class="vz-fig" aria-labelledby="cap-a6-conflict">
-              <p class="vz-fig-title" id="cap-a6-conflict">衝突の画面：どちらを残すか選ぶ</p>
-              <svg class="vz-svg" viewBox="0 0 360 250" role="img" aria-labelledby="a6-conflict-t a6-conflict-d">
-                <title id="a6-conflict-t">衝突の画面：どちらを残すか選ぶ</title>
-                <desc id="a6-conflict-d">画面の上にResolve conflictsの題名とファイル名のsrc/App.tsxがある。左はGoogle AI Studioの版で、編集したコードが入っている。右はGitHubの版で、削除されていて中身は空である。それぞれにKeepのボタンがあり、残す側を選ぶ。選んだあと、右下のFinishで確定する。</desc>
-                <rect class="box-white" x="8" y="6" width="344" height="238" rx="10"/>
-                <text class="t-b" x="20" y="28">Resolve conflicts</text>
-                <text class="t-sm" x="20" y="48">src/App.tsx</text>
-                <rect class="box-orange" x="16" y="58" width="160" height="124" rx="8"/>
-                <text class="t-b" x="26" y="80">Google AI Studio</text>
-                <text class="t-sm" x="26" y="102">編集した版</text>
-                <text class="t-sm" x="26" y="120">（コードが入っている）</text>
-                <rect class="box-white" x="26" y="138" width="64" height="30" rx="8"/>
-                <text class="t-c t-b" x="58" y="159">Keep</text>
-                <rect class="box-white" x="184" y="58" width="160" height="124" rx="8"/>
-                <text class="t-b" x="194" y="80">GitHub</text>
-                <text class="t-sm" x="194" y="102">削除した版</text>
-                <text class="t-sm" x="194" y="120">（中身は空）</text>
-                <rect class="box-white" x="194" y="138" width="64" height="30" rx="8"/>
-                <text class="t-c t-b" x="226" y="159">Keep</text>
-                <text class="t-sm" x="150" y="219">Cancel</text>
-                <rect class="box-white box-key" x="240" y="196" width="100" height="36" rx="8"/>
-                <text class="t-c t-b" x="290" y="220">Finish</text>
-              </svg>
-              <figcaption>Keepで残す側を選び、Finishで確定します。選んだだけでは、まだ確定しません。</figcaption>
-            </figure>
-            <p><strong>振り返りメモ（約5分）</strong></p>
-            <ul>
-              <li>次の4行を、自分の言葉で書く（第7回の最後で見返す）
-                <ul>
-                  <li>①agyとBuild modeを使い比べて、<strong>違うと感じたところ</strong></li>
-                  <li>②Build modeで<strong>良かったこと</strong>と<strong>困ったこと</strong></li>
-                  <li>③Build modeの<strong>Planモード</strong>はDefaultとどう違ったか。Skills・effortにあたる設定は<strong>見つかったか</strong>（見つかった場所／見つからなかった）</li>
-                  <li>④GitHubへpushして気づいたこと（<strong>履歴に足されること</strong>、<strong>git revertで戻せること</strong>）と、次回<strong>自分の作品で試したいこと</strong></li>
-                </ul>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="timeline-block">
-          <div class="timeline-header">
-            <span class="timeline-time">まとめ</span>
-            <span class="timeline-duration">約10分</span>
-          </div>
-          <h3>次回予告＆振り返りメモ</h3>
-          <div class="timeline-body">
-            <ul>
-              <li>次回（第7回）：<strong>Google AI Studio Build modeで仕上げよう②</strong>——今日pushしたアプリを、自然言語の追加指示でさらに改善し、<strong>もう一度GitHubへプッシュ</strong>し、<strong>GitHub Pages</strong>で公開する。Build modeが作る形（画面とサーバー）は、Pagesでそのままは動かないことがあるので、公開できる形かも次回に確かめる。「指示したら形になった」という成功体験を、ひとことメモに残す</li>
-              <li>今日のうちに、<strong>AI Studioのプロジェクトも、GitHubのbackupブランチも削除しない</strong>。自分のリポジトリで<strong>revertもしない</strong>（第7回で、今日pushしたアプリの続きを作るため）。GitHubのリポジトリ名とあわせて、使ったプロジェクト名もメモしておく</li>
-              <li>「今日いちばん違うと感じたこと」を一言メモして退出</li>
-            </ul>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="syllabus-section">
-      <h2>課題・次回までにやること</h2>
-      <div class="lesson-tasks">
-        <div class="lesson-task">
-          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
-          <div>
-            <strong>使ったリポジトリ名・AI Studioのプロジェクト名・backupブランチ名をメモする</strong>
-            <p>次回、同じものの続きから始めるため。あわせて、今日の<strong>振り返りメモの4行</strong>が書けているか確かめておく。</p>
-          </div>
-        </div>
-        <div class="lesson-task">
-          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
-          <div>
-            <strong>もう1つ、改善を指示して試してみる</strong>
-            <p>空き時間に、AI Studioでもう1つ改善を頼んでみましょう。うまくいかなかったことも、次回の話題になります。</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="syllabus-section">
-      <h2>発展（任意・授業外）：Gemini APIキーのしくみ</h2>
-      <p class="lesson-note">授業時間には含みません。時間があるときに、読んで・試してみてください。</p>
             <figure class="vz-fig" aria-labelledby="cap-a6-key">
               <p class="vz-fig-title" id="cap-a6-key">APIキーは、サーバー側に置かれる</p>
               <svg class="vz-svg" viewBox="0 0 360 340" role="img" aria-labelledby="a6-key-t a6-key-d">
@@ -646,13 +445,63 @@
               </svg>
               <figcaption>キーが画面のコードに入らないので、ページを開いた人にも見えません。点線の枠は、公開するときの注意です。</figcaption>
             </figure>
-            <p><strong>Gemini APIを使う機能を足してみる</strong></p>
+            <p><strong>Gemini APIを使う機能（任意、約15分）</strong></p>
             <ul>
               <li>公式の説明: Gemini APIを使う新しいアプリを作ると、AI Studioが<strong>Gemini APIキーを、アプリのサーバー側の環境のシークレットとして自動で設定する</strong>。キーは「Secrets」パネルで確認・管理できる（<a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio</a>の「API Key management」）。つまり、<strong>自分でAPIキーを書かなくてよい</strong></li>
               <li>試す人は、例えば<code>ゲームオーバーのときに、Geminiがひとことコメントを出す機能を足してください</code>と頼む。出てきた画面の案内を読んで進める。公式の説明は「Gemini APIを使う<strong>新しいアプリ</strong>を作ると」という書き方なので、<strong>取り込んだアプリでも同じように設定されるかは公式に書かれていない</strong>。SettingsのSecretsパネルで、実際にキーが設定されているかを確かめる</li>
               <li><strong>APIキーは、コード・チャット・スクリーンショットのどこにも貼らない</strong>。公式には、キーはサーバー側で扱われると書かれている（ブラウザ側のコードに書いてしまうと、ページを開いた人に見えてしまう）</li>
               <li>公開について（次回）: GitHub Pagesは、HTML・CSS・JavaScriptのファイルを置いて公開する<strong>静的サイト向け</strong>の仕組み（公式: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages" target="_blank" rel="noopener">What is GitHub Pages?</a>）。サーバー側で動く処理に頼る機能は、<strong>そのままでは動かない可能性がある</strong>。また、Geminiのキーをブラウザ側のJavaScriptに直接書いて公開すると、誰にでも見えてしまう。公開できるかは、次回に確かめる</li>
             </ul>
+            <p><strong>振り返りメモ（約15分）</strong></p>
+            <ul>
+              <li>次の4行を、自分の言葉で書く（第7回の最後で見返す）
+                <ul>
+                  <li>①agyとBuild modeを使い比べて、<strong>違うと感じたところ</strong></li>
+                  <li>②Build modeで<strong>良かったこと</strong>と<strong>困ったこと</strong></li>
+                  <li>③Build modeの<strong>Planモード</strong>はDefaultとどう違ったか。Skills・effortにあたる設定は<strong>見つかったか</strong>（見つかった場所／見つからなかった）</li>
+                  <li>④次回、<strong>自分の作品で試したいこと</strong>（例: 見た目、遊び方、新しい機能）</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告＆振り返りメモ</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>次回（第7回）：<strong>Google AI Studio Build modeで仕上げよう②</strong>——今日取り込んだアプリを、自然言語の追加指示でさらに改善し、<strong>GitHubへプッシュ</strong>する（送る前の備え、GitHubの履歴での確認、元に戻し方、Pull・衝突の解決も、第7回で一緒に行う）。そして<strong>GitHub Pages</strong>で公開する。Build modeが作る形（画面とサーバー）は、Pagesでそのままは動かないことがあるので、公開できる形かも次回に確かめる。「指示したら形になった」という成功体験を、ひとことメモに残す</li>
+              <li>今日のうちに、<strong>AI Studioのプロジェクトを削除しない</strong>。GitHubのリポジトリ名とあわせて、使ったプロジェクト名もメモしておく。<strong>GitHubへ送る操作は、第7回まで、しない</strong></li>
+              <li>「今日いちばん違うと感じたこと」を一言メモして退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>使ったリポジトリ名とAI Studioのプロジェクト名をメモする</strong>
+            <p>次回、同じものの続きから始めるため。あわせて、今日の<strong>振り返りメモの4行</strong>が書けているか確かめておく。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>もう1つ、改善を指示して試してみる</strong>
+            <p>空き時間に、AI Studioでもう1つ改善を頼んでみましょう。うまくいかなかったことも、次回の話題になります。</p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="syllabus-section">
@@ -666,9 +515,6 @@
         <li><a href="https://antigravity.google/docs/rules/" target="_blank" rel="noopener">Rules（Antigravity公式）</a>・<a href="https://antigravity.google/docs/subagents/" target="_blank" rel="noopener">Custom subagents（Antigravity公式）</a> — agyのRulesとサブエージェント</li>
         <li><a href="https://ai.google.dev/gemini-api/docs/workspace" target="_blank" rel="noopener">Access Google AI Studio with your Workspace account（Google公式）</a> — 学校のアカウントでの利用条件</li>
         <li><a href="https://aistudio.google.com" target="_blank" rel="noopener">Google AI Studio</a> — 今日使うサービス本体</li>
-        <li><a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-and-deleting-branches-within-your-repository" target="_blank" rel="noopener">Managing branches within your repository（GitHub公式）</a> — backupブランチの作り方</li>
-        <li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site" target="_blank" rel="noopener">Configuring a publishing source for your GitHub Pages site（GitHub公式）</a> — Pagesの公開元はリポジトリごとの設定</li>
-        <li><a href="https://git-scm.com/docs/git-revert" target="_blank" rel="noopener">git-revert Documentation（Git公式）</a> — 変更を打ち消す新しいコミットを足す</li>
         <li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages" target="_blank" rel="noopener">What is GitHub Pages?（GitHub公式）</a> — 次回の公開に使う仕組み</li>
       </ul>
     </div>
