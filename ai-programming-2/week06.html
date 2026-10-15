@@ -400,7 +400,7 @@
               <p class="vz-fig-title" id="cap-a6-push">GitHubへ送る流れ（先に備えてから送る）</p>
               <svg class="vz-svg" viewBox="0 0 360 396" role="img" aria-labelledby="a6-push-t a6-push-d">
                 <title id="a6-push-t">GitHubへ送る流れ（先に備えてから送る）</title>
-                <desc id="a6-push-d">0 備え。GitHubの画面で、mainからbackupブランチを作る。1 AI Studioの画面右上の歯車（設定）を開き、GitHubタブを選ぶ。2 つなぎ方は2つある。1つは新しいリポジトリで、元のリポジトリは無傷のまま残るが、公開は作り直しになる。もう1つは既存のリポジトリへのForce pushで、mainがこのアプリのコードに置き換わるが、backupがあれば戻せる。3 送る内容を確かめる。Commit messageと、変更したファイルの数を見る。4 Push changes to GitHubのボタンを押すと、GitHubに送られる。</desc>
+                <desc id="a6-push-d">0 備え。GitHubの画面で、mainからbackupブランチを作る。1 AI Studioの画面右上の歯車（設定）を開き、GitHubタブを選ぶ。2 つなぎ方は2つある。1つは新しいリポジトリで、元のリポジトリは変わらないが、GitHub Pagesの設定はやり直しになる。もう1つは既存のリポジトリへのForce pushで、mainがこのアプリのコードに置き換わるが、backupがあれば戻せる。3 送る内容を確かめる。Commit messageと、変更したファイルの数を見る。4 Push changes to GitHubのボタンを押すと、GitHubに送られる。</desc>
                 <rect class="box-orange box-key" x="8" y="6" width="344" height="54" rx="10"/>
                 <text class="t-b" x="22" y="28">0 備え: backupブランチを作る</text>
                 <text class="t-sm" x="22" y="48">GitHubの画面で、mainから作る</text>
@@ -413,8 +413,8 @@
                 <text class="t-b" x="18" y="166">2 つなぎ方は2つ</text>
                 <rect class="box-white" x="10" y="176" width="166" height="66" rx="10"/>
                 <text class="t-b" x="20" y="198">新しいリポジトリ</text>
-                <text class="t-sm" x="20" y="218">元は無傷のまま</text>
-                <text class="t-sm" x="20" y="235">公開は作り直し</text>
+                <text class="t-sm" x="20" y="218">元は変わらない</text>
+                <text class="t-sm" x="20" y="235">Pagesは設定し直し</text>
                 <rect class="box-orange box-key" x="184" y="176" width="166" height="66" rx="10"/>
                 <text class="t-b" x="194" y="198">既存へ Force push</text>
                 <text class="t-sm" x="194" y="218">mainが置き換わる</text>
@@ -435,11 +435,13 @@
               <li>理由: AI Studioの<strong>Force push</strong>は、自分のリポジトリの<strong>mainを、AI Studioの版で置き換える</strong>（教員の画面の説明: <em>"main branch will be replaced with this app's code."</em>）。送る前に、<strong>今のmainの控えを、同じリポジトリの別のブランチに作っておく</strong>と、あとで戻せる</li>
               <li>やること: GitHubで自分のリポジトリを開き、ブランチのメニューの「Find or create a branch...」に<code>backup-before-ai-studio</code>と入力して「Create branch」を押す。元になるブランチは<strong>main</strong>のままでよい（公式: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-and-deleting-branches-within-your-repository" target="_blank" rel="noopener">Creating and deleting branches within your repository</a>）</li>
               <li>mainの<strong>最新のコミットのメッセージを1行メモ</strong>する（戻したあとに、元に戻ったかを確かめる目印）</li>
+              <li>この備えが効くのは、リポジトリが<strong>ふつうの設定のとき</strong>。mainが保護されていてForce pushが禁止されていると、送る操作自体が通らない。通らないときは、講師に声をかける</li>
             </ul>
             <p><strong>② AI StudioからGitHubへpush（約10分）</strong></p>
             <ul>
-              <li>歯車（設定）→<strong>GitHubタブ</strong>。つなぎ方は2つ: <em>Sync to a new repository</em>（新しいリポジトリへ）と、<em>Force push to 自分のリポジトリ</em>。<strong>本線はForce push</strong>（同じリポジトリで続けられる）。元を完全に残したい人は、新しいリポジトリでもよい</li>
+              <li>歯車（設定）→<strong>GitHubタブ</strong>。つなぎ方は2つ: <em>Sync to a new repository</em>（新しいリポジトリへ）と、<em>Force push to 自分のリポジトリ</em>。<strong>本線はForce push</strong>（同じリポジトリで続けられる）。元のmainを変えたくない人は、新しいリポジトリでもよい（その場合、GitHub Pagesの設定は、新しいリポジトリで改めて行う。公開元の設定はリポジトリごと。公式: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site" target="_blank" rel="noopener">Configuring a publishing source for your GitHub Pages site</a>）。<strong>ここと次の画面の英語の表示は、教員の画面で確認したもの</strong>で、公式の説明ページには書かれていない</li>
               <li>送る前の画面で、<em>Sync status</em>（「Changes in Google AI Studio are ready to be pushed」＝送る準備ができた）、<em>Commit message</em>、<em>1 changed file</em>（変更したファイルの数）を見て、<em>Push changes to GitHub</em>を押す。コミットメッセージはAIが書く（公式: <a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio</a>）。<strong>読んでから</strong>送る</li>
+              <li>初めて送るときは、AI StudioとGitHubをつなぐ<strong>許可の画面</strong>が出ることがある。許可する内容と、対象のリポジトリを<strong>読んでから</strong>許可する（教員が事前に試して確認する）</li>
               <li>取り込み直後のバナーの「Sync to GitHub」からも、送る画面に進めるかもしれない。どちらでもよい。画面が違うときは、表示を読んで進める。迷ったら講師に声をかける</li>
             </ul>
             <p><strong>③ GitHubで結果を確かめる（約5分）</strong></p>
@@ -468,13 +470,13 @@
               </svg>
               <figcaption>Force pushは「mainの向き先を付け替える」操作です。元のコミットはbackupが指しているので、消えません。</figcaption>
             </figure>
-            <p><strong>④ 元に戻す方法（教員が実演、約3分）</strong></p>
+            <p><strong>④ 元に戻す方法（教員が実演、約5分）</strong></p>
             <ul>
-              <li>Codespaceを再開し（第4回と同じ手順）、agyを起動して、例えば<code>mainを backup-before-ai-studio ブランチの内容に戻して、GitHubへ強制的にpushしてください</code>と頼む。agyが実行の許可を聞いてくるので、<strong>どのブランチをどこへ送るか</strong>を読んでから許可する（第4回と同じ）</li>
-              <li>コマンドで書くと、<code>git fetch origin</code>のあとに<code>git push --force origin origin/backup-before-ai-studio:main</code>。<code>--force</code>は、送り先を上書きする印。agyが同じことをしている</li>
-              <li>戻ったら、GitHubのmainの<strong>最新コミットのメッセージが、メモした元のものに戻った</strong>ことを確かめる。AI Studioのプロジェクトには、書き直された版が残っている。<strong>希望者は自分でも体験する</strong>（うまく送れなかった人も、ここで戻せる）</li>
+              <li>実演は、教員が<strong>事前にCodespaceとagyを起動した画面</strong>で行う（再開の待ち時間を省くため）。自分でやる人は、Codespaceを再開し（第4回と同じ手順）、agyを起動して、例えば<code>まず git fetch origin をして、origin/backup-before-ai-studio の内容で main を戻し、GitHubへ強制的に push してください</code>と頼む。agyが実行の許可を聞いてくるので、<strong>どのブランチをどこへ送るか</strong>を読んでから許可する（第4回と同じ）</li>
+              <li>コマンドで書くと、<code>git fetch origin</code>のあとに<code>git push --force origin origin/backup-before-ai-studio:main</code>。<code>--force</code>は、履歴が分かれていても、送り先のブランチを上書きして通す印。agyも、これと同じ結果になる操作をするはずなので、<strong>実行前に内容を読んで確かめる</strong></li>
+              <li>戻ったら、GitHubのmainの<strong>最新コミットのメッセージが、メモした元のものに戻った</strong>ことを確かめる。AI Studioのプロジェクトには、書き直された版が残っている。<strong>戻した人は、第7回の最初に、AI Studioからもう一度pushして</strong>（mainを置き換えて）続ける。<strong>希望者は自分でも体験する</strong>（送れた人が対象。送れなかった人は、先に講師に声をかける）</li>
             </ul>
-            <p><strong>振り返りメモ（約7分）</strong></p>
+            <p><strong>振り返りメモ（約5分）</strong></p>
             <ul>
               <li>次の4行を、自分の言葉で書く（第7回の最後で見返す）
                 <ul>
@@ -577,6 +579,7 @@
         <li><a href="https://ai.google.dev/gemini-api/docs/workspace" target="_blank" rel="noopener">Access Google AI Studio with your Workspace account（Google公式）</a> — 学校のアカウントでの利用条件</li>
         <li><a href="https://aistudio.google.com" target="_blank" rel="noopener">Google AI Studio</a> — 今日使うサービス本体</li>
         <li><a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-and-deleting-branches-within-your-repository" target="_blank" rel="noopener">Creating and deleting branches within your repository（GitHub公式）</a> — backupブランチの作り方</li>
+        <li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site" target="_blank" rel="noopener">Configuring a publishing source for your GitHub Pages site（GitHub公式）</a> — Pagesの公開元はリポジトリごとの設定</li>
         <li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages" target="_blank" rel="noopener">What is GitHub Pages?（GitHub公式）</a> — 次回の公開に使う仕組み</li>
       </ul>
     </div>
