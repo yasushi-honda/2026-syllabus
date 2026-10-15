@@ -57,7 +57,7 @@
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
-          <div class="lesson-overview-value">自分のGitHubリポジトリの名前（第5回で控えたもの）／Googleアカウント（学校用・個人用どちらでもよい）で、ブラウザからaistudio.google.comを開けること。GitHubにログインしておく。Codespaceは、2限後半の「元に戻す」を体験する人だけ使う（第4回と同じ手順で再開）。</div>
+          <div class="lesson-overview-value">自分のGitHubリポジトリの名前（第5回で控えたもの）／Googleアカウント（学校用・個人用どちらでもよい）で、ブラウザからaistudio.google.comを開けること。GitHubにログインしておく。今日のCodespaceは、教員の実演（元に戻す）で使う。学生は、自分のリポジトリでrevertしない。</div>
         </div>
       </div>
     </div>
@@ -68,7 +68,7 @@
         <li>Google AI Studioの<strong>Build mode</strong>が何をする道具か（自然言語で指示し、右側のプレビューで確かめる）を、<strong>agyとの対比表</strong>を使って説明できる（中身は同じ系統のエージェントだが、画面とモード・拡張機能が違う）</li>
         <li>自分のGitHubリポジトリを<strong>Import from GitHub</strong>で取り込み、<strong>同じ成果物</strong>がブラウザの中で動くところまで進める</li>
         <li>agyのときと同じように、<strong>1回に1つずつ</strong>自然言語で指示を出して、成果物を改善する</li>
-        <li>AI Studioで直した版を、自分のGitHubへ<strong>push</strong>し、<strong>GitHubの履歴</strong>で確かめ、<strong>git revert</strong>で元に戻せることを理解する。両方に変更があるときの<strong>Pull</strong>と<strong>衝突の解決</strong>も知る</li>
+        <li>AI Studioで直した版を、自分のGitHubへ<strong>push</strong>し、<strong>GitHubの履歴</strong>で確かめ、<strong>git revert</strong>で元に戻せることを、教員の実演で理解する。両方に変更があるときの<strong>Pull</strong>と<strong>衝突の解決</strong>も知る</li>
         <li>対比表で「公式の説明ページに書かれていない」とされた機能（Planモード・Skillsなど）が、<strong>実際のBuild modeの画面にあるか</strong>を自分の目で探す</li>
         <li>agyとBuild modeを使い比べて、気づいたことを<strong>自分の言葉で</strong>メモに残す</li>
       </ul>
@@ -262,7 +262,7 @@
                   <tr>
                     <td>GitHubとの付き合い方</td>
                     <td data-label="agy（Antigravity CLI）">gitのコマンド、または自然言語でお願いする（第2〜5回）</td>
-                    <td data-label="Build mode（AI Studio）">Settingsの<strong>GitHubタブ</strong>で双方向に同期。pushにはAIが書いたコミットメッセージが付き、競合は <em>Resolve conflicts</em> の画面で選ぶ。初回は、新しいリポジトリか、既存リポジトリへの <em>Force push</em> を選ぶ（教員の画面で確認。実際の動きは、元の履歴にコミットを足すだけだった）。連携後は、<strong>Pullが先、Pushが後</strong></td>
+                    <td data-label="Build mode（AI Studio）">Settingsの<strong>GitHubタブ</strong>で双方向に同期。pushにはAIが書いたコミットメッセージが付き、競合は <em>Resolve conflicts</em> の画面で選ぶ。初回は、新しいリポジトリか、既存リポジトリへの <em>Force push</em> を選ぶ（教員の画面で確認。実際の動きは、元の履歴にコミットを足すだけだった）。連携後は、<strong>Pullが先、Pushが後</strong>（教員の画面で確認）</td>
                   </tr>
                   <tr>
                     <td>公開・持ち出し</td>
@@ -455,7 +455,7 @@
             <p><strong>① 送る前の備え（約3分）</strong></p>
             <ul>
               <li>理由: 画面には「Force push to ◯◯」「main branch will be replaced with this app's code.」と出る（教員の画面）。教員が試した範囲では、<strong>元の履歴にコミットが1つ足されるだけ</strong>で、元のコミットは残った。ただし、取り込んだあとにGitHub側のmainが先に進んでいた場合などは、確かめていない。だから念のため、<strong>今のmainの控え（backupブランチ）</strong>を作っておく（保険）</li>
-              <li>やること: GitHubで自分のリポジトリを開き、ブランチのメニューの「Find or create a branch...」に<code>backup-before-ai-studio</code>と入力して「Create branch」を押す。元になるブランチは<strong>main</strong>のままでよい（公式: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-and-deleting-branches-within-your-repository" target="_blank" rel="noopener">Creating and deleting branches within your repository</a>）</li>
+              <li>やること: GitHubで自分のリポジトリを開き、ブランチのメニューの「Find or create a branch...」に<code>backup-before-ai-studio</code>と入力して「Create branch」を押す。元になるブランチは<strong>main</strong>のままでよい（公式: <a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-and-deleting-branches-within-your-repository" target="_blank" rel="noopener">Managing branches within your repository</a>）</li>
               <li>mainの<strong>最新のコミットのメッセージを1行メモ</strong>する（あとで、履歴のどこに新しいコミットが足されたかを探す目印）</li>
               <li>mainが保護されていると、送る操作自体が通らないことがある。通らないときは、講師に声をかける</li>
             </ul>
@@ -469,6 +469,7 @@
             <p><strong>③ GitHubで履歴を確かめる（約4分）</strong></p>
             <ul>
               <li>GitHubで自分のリポジトリを開き、<strong>コミットの一覧（Commits）</strong>を見る。一番上に<strong>AI Studioのコミット</strong>が足され、その下に、メモした自分の元のコミットが<strong>そのまま残っている</strong>。mainのファイルが変わったこと（構成が作り替わったこと）も確かめる。<strong>backupブランチは、元のまま</strong></li>
+              <li>「新しいリポジトリ」を選んだ人は、<strong>元のリポジトリが変わっていないこと</strong>と、<strong>新しいリポジトリにアプリのファイルが入っていること</strong>を確かめる。④は見るだけ。第7回の送り先として、新しいリポジトリの名前をメモしておく</li>
               <li>第5回でGitHub Pagesを公開した人は、<strong>公開したサイトの表示が変わる・壊れる</strong>ことがある（反映に数分かかる）。公開は次回の話題。今日は、「送ると、公開物にも影響しうる」と知っておけばよい</li>
             </ul>
             <figure class="vz-fig" aria-labelledby="cap-a6-history">
@@ -496,15 +497,15 @@
                 <text class="t-b" x="52" y="222">R Revert（Cを打ち消す）</text>
                 <text class="t-sm" x="52" y="240">中身はBと同じに戻る</text>
               </svg>
-              <figcaption>どのコミットも消えません。Cを打ち消すR（Revert）も「新しいコミット」として足されるので、「戻した」記録が履歴に残ります。</figcaption>
+              <figcaption>どのコミットも消えません。Cを打ち消すR（Revert）も「新しいコミット」として足されるので、「戻した」記録が履歴に残ります。教員のテスト用リポジトリの例です。Cの直後にRevertしたので、中身はBと同じに戻りました（間に別のコミットがあれば、その分は残ります）。GitHubのコミット一覧は、新しいものが上に並びます（この図は古いものが上）。</figcaption>
             </figure>
             <p><strong>④ 元に戻す（教員が実演、約6分）</strong></p>
             <ul>
-              <li>戻す基本は<strong>git revert</strong>。ある変更を<strong>打ち消す新しいコミット</strong>を足す（公式: <a href="https://git-scm.com/docs/git-revert" target="_blank" rel="noopener">git-revert Documentation</a>）。履歴は消えず、「戻した」記録も残る。教員の検証では、AI Studioが足したコミットをrevertすると、中身は元のコミットBと<strong>完全に同じ</strong>になった</li>
-              <li>実演は、教員が<strong>事前にCodespaceとagyを起動した画面</strong>で行う。自分でやる人は、Codespaceを再開し（第4回と同じ手順）、agyを起動して、例えば<code>まず git pull origin main をして、最新のコミット（AI Studioが足したもの）を revert して、GitHubへ push してください</code>と頼む。agyが実行の許可を聞くので、<strong>何をするか</strong>を読んでから許可する（第4回と同じ）</li>
-              <li>コマンドで書くと、<code>git pull origin main</code>、<code>git revert --no-edit HEAD</code>、<code>git push origin main</code>の順。agyも、これと同じ結果になる操作をするはずなので、<strong>実行前に内容を読んで確かめる</strong></li>
-              <li>戻ったら、GitHubのコミット一覧に<strong>「Revert ...」のコミットが足された</strong>こと、ファイルが元に戻ったことを確かめる。revertで戻せないときの<strong>保険が、backupブランチ</strong>（講師と一緒に使う）</li>
-              <li>戻した人は、AI Studio側が<strong>GitHubより遅れた状態</strong>になる。次の⑤のとおり、Pullを案内される。<strong>希望者は自分でも体験する</strong>（送れた人が対象。送れなかった人は、先に講師に声をかける）</li>
+              <li>戻す基本は<strong>git revert</strong>。ある変更を<strong>打ち消す新しいコミット</strong>を足す（公式: <a href="https://git-scm.com/docs/git-revert" target="_blank" rel="noopener">git-revert Documentation</a>）。履歴は消えず、「戻した」記録も残る。教員の検証では、AI Studioが足したコミットCの<strong>直後に</strong>revertしたので、中身は元のコミットBと<strong>完全に同じ</strong>になった。間に別のコミットがあれば、その分は残る</li>
+              <li>実演は、教員が<strong>事前にCodespaceとagyを起動した画面</strong>で、<strong>教員自身のリポジトリ</strong>で行う。学生は見る。第5回で作ったブランチに居ることがあるので、<strong>必ずmainに切り替えてから</strong>始める。agyには、例えば<code>git switch main をして、git pull origin main をしてから、git log で AI Studioが足したコミットを探して、そのコミットだけを revert して、GitHubへ push してください</code>と頼む。agyが実行の許可を聞くので、<strong>何をするか</strong>を読んでから許可する（第4回と同じ）</li>
+              <li>コマンドで書くと、<code>git switch main</code>、<code>git pull origin main</code>、<code>git log --oneline</code>（AI Studioのコミットを探す。一番上とは限らない）、<code>git revert --no-edit コミットID</code>、<code>git push origin main</code>の順。agyも、これと同じ結果になる操作をするはずなので、<strong>実行前に内容を読んで確かめる</strong></li>
+              <li>戻ったら、GitHubのコミット一覧に<strong>「Revert ...」のコミットが足された</strong>こと、ファイルが元に戻ったことを確かめる。revertが通らないなど、どうしてもmainをBの状態に戻したいときの控えが<strong>backupブランチ</strong>。ただし、backupを使う戻し方は、あとから足されたコミットも巻き戻すので、<strong>講師と一緒に判断する</strong></li>
+              <li>戻すと、AI Studio側は<strong>GitHubより遅れた状態</strong>になり、次の⑤のとおりPullを案内される。Pullすると、AI Studio側のアプリも、revert後の内容になる。そのため、<strong>学生は自分のリポジトリでrevertしない</strong>（第7回で、今日pushしたアプリの続きを作るため）。revertは、「戻したいときのやり方」として見て、知っておく</li>
             </ul>
             <p><strong>⑤ 両方に変更があるとき（見るだけ、約4分）</strong></p>
             <figure class="vz-fig" aria-labelledby="cap-a6-sync">
@@ -532,9 +533,10 @@
               <figcaption>画面の表示は、教員の画面の英語の文言の要点です。4は、Pullが済むまでPushのボタンは押せません。</figcaption>
             </figure>
             <ul>
-              <li>AI Studioは、GitHubとの違いを見て、表示とボタンを変える。<strong>GitHub側が先に進んでいたら、まずPullを案内</strong>し、両方に変更があるときも、<strong>Pull（取り込む）が先、Push（送る）が後</strong>。GitHubの変更を知らないまま、上書きして送ることは、教員が試した範囲ではできなかった</li>
+              <li>以下は、<strong>教員の画面で確認したこと</strong>。Pullが先であること、衝突の画面の左右の並び、Keep・Finishは、公式の説明ページには書かれていない（公式に書かれているのは、衝突のときにResolve conflictsのダイアログが出て、AI StudioとGitHubのどちらの版を残すかを選べること）</li>
+              <li>AI Studioは、GitHubとの違いを見て、表示とボタンを変える。<strong>GitHub側が先に進んでいたら、まずPullを案内</strong>し、両方に変更があるときも、<strong>Pull（取り込む）が先、Push（送る）が後</strong>。教員が画面で試した1回では、GitHubの変更を知らないまま送ることはできず、先にPullを求められた</li>
               <li>同じファイルを両方で違うように変えていると、Pullのときに<strong>衝突</strong>として<em>Resolve conflicts</em>の画面が出る。左が<strong>AI Studio</strong>、右が<strong>GitHub</strong>。<em>Keep</em>で残す側を選び、<em>Finish</em>で確定する。教員の例は、<strong>AI Studioで編集したファイルが、GitHub側のrevertで削除されていた</strong>ので衝突になった</li>
-              <li>どちらを残すか迷ったら、<strong>両方の中身を読んでから</strong>選ぶ。迷ったら講師に聞く。選んだ側が残り、選ばなかった側の内容は、そのファイルからは消える</li>
+              <li>どちらを残すか迷ったら、<strong>両方の中身を読んでから</strong>選ぶ。迷ったら講師に聞く。そのファイルの内容は、選んだ側の版になる</li>
             </ul>
             <figure class="vz-fig" aria-labelledby="cap-a6-conflict">
               <p class="vz-fig-title" id="cap-a6-conflict">衝突の画面：どちらを残すか選ぶ</p>
@@ -585,7 +587,7 @@
           <div class="timeline-body">
             <ul>
               <li>次回（第7回）：<strong>Google AI Studio Build modeで仕上げよう②</strong>——今日pushしたアプリを、自然言語の追加指示でさらに改善し、<strong>もう一度GitHubへプッシュ</strong>し、<strong>GitHub Pages</strong>で公開する。Build modeが作る形（画面とサーバー）は、Pagesでそのままは動かないことがあるので、公開できる形かも次回に確かめる。「指示したら形になった」という成功体験を、ひとことメモに残す</li>
-              <li>今日のうちに、<strong>AI Studioのプロジェクトも、GitHubのbackupブランチも削除しない</strong>。GitHubのリポジトリ名とあわせて、使ったプロジェクト名もメモしておく</li>
+              <li>今日のうちに、<strong>AI Studioのプロジェクトも、GitHubのbackupブランチも削除しない</strong>。自分のリポジトリで<strong>revertもしない</strong>（第7回で、今日pushしたアプリの続きを作るため）。GitHubのリポジトリ名とあわせて、使ったプロジェクト名もメモしておく</li>
               <li>「今日いちばん違うと感じたこと」を一言メモして退出</li>
             </ul>
           </div>
@@ -664,7 +666,7 @@
         <li><a href="https://antigravity.google/docs/rules/" target="_blank" rel="noopener">Rules（Antigravity公式）</a>・<a href="https://antigravity.google/docs/subagents/" target="_blank" rel="noopener">Custom subagents（Antigravity公式）</a> — agyのRulesとサブエージェント</li>
         <li><a href="https://ai.google.dev/gemini-api/docs/workspace" target="_blank" rel="noopener">Access Google AI Studio with your Workspace account（Google公式）</a> — 学校のアカウントでの利用条件</li>
         <li><a href="https://aistudio.google.com" target="_blank" rel="noopener">Google AI Studio</a> — 今日使うサービス本体</li>
-        <li><a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-and-deleting-branches-within-your-repository" target="_blank" rel="noopener">Creating and deleting branches within your repository（GitHub公式）</a> — backupブランチの作り方</li>
+        <li><a href="https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-and-deleting-branches-within-your-repository" target="_blank" rel="noopener">Managing branches within your repository（GitHub公式）</a> — backupブランチの作り方</li>
         <li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site" target="_blank" rel="noopener">Configuring a publishing source for your GitHub Pages site（GitHub公式）</a> — Pagesの公開元はリポジトリごとの設定</li>
         <li><a href="https://git-scm.com/docs/git-revert" target="_blank" rel="noopener">git-revert Documentation（Git公式）</a> — 変更を打ち消す新しいコミットを足す</li>
         <li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages" target="_blank" rel="noopener">What is GitHub Pages?（GitHub公式）</a> — 次回の公開に使う仕組み</li>
