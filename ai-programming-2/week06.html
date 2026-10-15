@@ -74,7 +74,7 @@
       </ul>
       <div class="lesson-tip">
         <strong>今日の優先順位:</strong> 上手に作ることより、<strong>「GitHubを真ん中に置くと、別の道具で同じものの続きを作れる」</strong>ことを体験するのが目的です。取り込んだ結果が元と少し違っても失敗ではありません。違いに気づくこと自体が、今日の学びです。<br>
-        <strong>Build modeを触ったことがある人へ:</strong> 第1回では教員のデモで見ており、すでに自分で試した人もいると思います。今日新しいのは、<strong>自分のGitHubリポジトリを持ち込んで続きを作る</strong>ところと、<strong>agyと並べて違いを説明する</strong>ところです。前に作ったものとの違い（リポジトリを持ち込める点など）も探してみてください。
+        <strong>Build modeを触ったことがある人へ:</strong> 第1回で紹介があり、すでに個人で試した人もいると思います。授業として自分の手で触るのは今日からです。今日新しいのは、<strong>自分のGitHubリポジトリを持ち込んで続きを作る</strong>ところと、<strong>agyと並べて違いを説明する</strong>ところです。前に作ったものとの違い（リポジトリを持ち込める点など）も探してみてください。
       </div>
     </div>
 
@@ -126,13 +126,13 @@
             <p><strong>第1回の軸にあてはめる——チャット型AI と AIエージェント</strong></p>
             <ul>
               <li>第1回で、聞けば答えてくれる<strong>チャット型AI</strong>と、指示を受けて自分でタスクを進める<strong>AIエージェント</strong>を区別した。今日の道具を、この軸に置いてみる</li>
-              <li>Google AI Studioには、会話しながら試す<strong>Chat</strong>の画面（チャット型）と、今日使う<strong>Build mode</strong>の画面がある（公式: <a href="https://ai.google.dev/gemini-api/docs/ai-studio-quickstart" target="_blank" rel="noopener">Google AI Studio quickstart</a>）。Build modeは、ファイルを作ってアプリとして動かすところまで進める<strong>エージェント側</strong>の画面</li>
+              <li>Google AI Studioには、会話しながら試す<strong>Chat</strong>の画面（チャット型。公式: <a href="https://ai.google.dev/gemini-api/docs/ai-studio-quickstart" target="_blank" rel="noopener">Google AI Studio quickstart</a>）と、今日使う<strong>Build mode</strong>の画面（公式: <a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio</a>）がある。Build modeは、ファイルを作ってアプリとして動かすところまで進める<strong>エージェント側</strong>の画面</li>
             </ul>
             <figure class="vz-fig" aria-labelledby="cap-a6-axis">
               <p class="vz-fig-title" id="cap-a6-axis">今日の道具を、第1回の軸に置く</p>
               <svg class="vz-svg" viewBox="0 0 360 250" role="img" aria-labelledby="a6-axis-t a6-axis-d">
                 <title id="a6-axis-t">今日の道具を、第1回の軸に置く</title>
-                <desc id="a6-axis-d">上の段はチャット型AIで、AI StudioのChatの画面。聞くと答えてくれる、会話が中心。下の段はAIエージェントで、2つある。1つはAI StudioのBuild mode。指示するとファイルを作り、プレビューで動かす。今日使う。もう1つはagy（Antigravity CLI）。指示するとファイルを作り、コマンドも実行する。AIエージェントの2つは、どちらもAntigravity系のエージェントである。</desc>
+                <desc id="a6-axis-d">上の段はチャット型AIで、AI StudioのChatの画面。聞くと答えてくれる、会話が中心。下の段はAIエージェントで、2つある。1つはAI StudioのBuild mode。指示するとファイルを作り、プレビューで動かす。今日使う。もう1つはagy（Antigravity CLI）。指示するとファイルを作り、コマンドも実行する。AIエージェントの2つは、どちらも同じ系統（Antigravity）の土台で動く。</desc>
                 <text class="t-sm t-b" x="12" y="20">チャット型AI</text>
                 <rect class="box-white" x="8" y="28" width="344" height="54" rx="10"/>
                 <text class="t-b" x="22" y="51">AI Studio の Chat</text>
@@ -146,12 +146,12 @@
                 <text class="t-b" x="24" y="207">agy（Antigravity CLI）</text>
                 <text class="t-sm" x="24" y="227">指示するとファイルを作り、コマンドも実行</text>
               </svg>
-              <figcaption>太い枠が今日使うBuild mode。下の2つは、どちらもAntigravityのエージェントが動いている（次の説明を参照）。</figcaption>
+              <figcaption>太い枠が今日使うBuild mode。下の2つは、どちらも同じ系統（Antigravity）の土台で動く（次の説明を参照）。</figcaption>
             </figure>
             <p><strong>Build modeとは</strong></p>
             <ul>
               <li>Google AI Studioの中の機能で、<strong>自然言語で指示を書くと、AIがコードを書き、アプリとして動く様子が右側のプレビューに出る</strong>（公式: <a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio</a>）</li>
-              <li><strong>中身はagyと同じ系統のエージェント</strong>。公式原文: <em>"The Antigravity Agent is the main AI functionality within Google Antigravity and now the core components of the agent harness is powering the Build mode experience in Google AI Studio."</em>——Antigravityのエージェントの<strong>中核部分</strong>が、Build modeの裏で動いている。agyも同じAntigravityのエージェント。ただし公式に書かれているのは「中核部分」で、<strong>agyの機能がすべて同じ形で入っているとは書かれていない</strong>（次の対比表を参照）</li>
+              <li><strong>中身はagyと同じ系統のエージェント</strong>。公式原文: <em>"The Antigravity Agent is the main AI functionality within Google Antigravity and now the core components of the agent harness is powering the Build mode experience in Google AI Studio."</em>——エージェントを動かす土台（<strong>エージェントハーネス</strong>）の<strong>中核部品</strong>が、Build modeの裏で動いている。agyも同じAntigravityの土台の上で動く（公式: <a href="https://antigravity.google/docs/cli/overview" target="_blank" rel="noopener">Antigravity CLI overview</a>の「Both environments run on the same agent core」は、AntigravityアプリとCLIの関係の説明で、AI Studioとの直接の記述ではない）。公式に書かれているのは「中核部品」までで、<strong>agyの機能がすべて同じ形で入っているとは書かれていない</strong>（次の対比表を参照）</li>
               <li>つくられるもの: Webアプリが既定で、<strong>画面側（既定はReact）とサーバー側（Node.js）の両方</strong>を持つアプリになる。ほかにKotlinのAndroidアプリも選べる。生成されたコードは、右側の<strong>Codeタブ</strong>で見られる</li>
               <li>続け方: チャット欄で指示を追加する／Codeタブで直接書き換える／<strong>annotation mode</strong>（アプリの画面の一部を選んで、変えたいことを言葉で伝える）</li>
               <li>どちらが優れているかを決める回ではない。<strong>同じ作品を両方で触って、違いを自分で感じる</strong>のが今日のねらい</li>
@@ -202,7 +202,7 @@
                 <text class="t-sm" x="20" y="209">読むだけで調べ、計画を見せる</text>
                 <path class="line" d="M308,193 H336 V33 H312" marker-end="url(#mk-s)"/>
               </svg>
-              <figcaption>planの次にもう一度Shift+Tabを押すと、defaultに戻ります。planでは、公式の説明でも「コードを書く前に実行計画を見せて、承認を求める」と書かれています。大きな変更の前に、まず計画だけ見たいときに使います。</figcaption>
+              <figcaption>planの次にもう一度Shift+Tabを押すと、defaultに戻ります。planでは、公式の説明（英語）に、コードを書く前に実行計画を見せて承認を求めるという趣旨が書かれています。大きな変更の前に、まず計画だけ見たいときに使います。</figcaption>
             </figure>
             <div class="table-wrap">
               <table class="schedule-table schedule-table--stack">
@@ -273,7 +273,7 @@
               </table>
             </div>
             <div class="lesson-tip">
-              <strong>表の読み方:</strong> 「公式の説明ページには書かれていない」は、<strong>「ない」とは違います</strong>。ページに載っていないだけで、画面にはある、あるいは近いうちに増える可能性があります（AI Studioは機能の追加が速い）。この欄は<strong>2限で、実際の画面を見て確かめる課題</strong>にします。出典: <a href="https://antigravity.google/docs/cli/modes" target="_blank" rel="noopener">Choose an execution mode（Antigravity公式）</a> / <a href="https://antigravity.google/docs/skills/" target="_blank" rel="noopener">Agent skills（Antigravity公式）</a> / <a href="https://antigravity.google/docs/cli/commands/effort" target="_blank" rel="noopener">Effort command (/effort)（Antigravity公式）</a> / <a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio（Google公式）</a>
+              <strong>表の読み方:</strong> 「公式の説明ページには書かれていない」は、<strong>「ない」とは違います</strong>。ページに載っていないだけで、画面にはある、あるいは近いうちに増える可能性があります（AI Studioは機能の追加が速い）。この欄は<strong>2限で、実際の画面を見て確かめる課題</strong>にします。出典: <a href="https://antigravity.google/docs/cli/modes" target="_blank" rel="noopener">Choose an execution mode（Antigravity公式）</a> / <a href="https://antigravity.google/docs/skills/" target="_blank" rel="noopener">Agent skills（Antigravity公式）</a> / <a href="https://antigravity.google/docs/cli/commands/effort" target="_blank" rel="noopener">Effort command (/effort)（Antigravity公式）</a> / <a href="https://antigravity.google/docs/rules/" target="_blank" rel="noopener">Rules（Antigravity公式）</a> / <a href="https://antigravity.google/docs/subagents/" target="_blank" rel="noopener">Custom subagents（Antigravity公式）</a> / <a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio（Google公式）</a>
             </div>
             <p><strong>使うアカウントについて</strong></p>
             <ul>
@@ -383,7 +383,7 @@
               <li>②<strong>どのファイルが、どう変わったか</strong>は、どこで分かるか（Codeタブや、ファイル一覧を探してみる）</li>
               <li>③思い通りにならなかったとき、<strong>やり直しや直し方</strong>はどう違うか</li>
               <li>④取り込み直後に気づいた「元との違い」は、使っているうちに影響が出たか</li>
-              <li>⑤<strong>対比表の「書かれていない」欄を、実際の画面で探す</strong>（約5分）。agyにある<strong>Planモード</strong>（コードを書く前に計画だけ見せてもらう）や、<strong>Skills・Rules</strong>（決まりごとを前もって渡す）、<strong>考える深さ（effort）の調整</strong>にあたる切り替えや設定が、Build modeの画面にあるか。見つけたら、画面の名前をメモして講師に教える。<strong>見つからなくても、それが今日の結果</strong>。見つからないときは「計画を先に見せて。まだコードは書かないで」とチャット欄で頼むと、同じ使い方ができるか試せる</li>
+              <li>⑤<strong>対比表の「書かれていない」欄を、実際の画面で探す</strong>（約5分）。agyにある<strong>Planモード</strong>（コードを書く前に計画だけ見せてもらう）や、<strong>Skills・Rules</strong>（決まりごとを前もって渡す）、<strong>考える深さ（effort）の調整</strong>にあたる切り替えや設定が、Build modeの画面にあるか。見つけたら、画面の名前をメモして講師に教える。<strong>見つからなくても、それが今日の結果</strong>。なお、AI Studioの別の画面（<a href="https://ai.google.dev/gemini-api/docs/aistudio-agents" target="_blank" rel="noopener">Agents in AI Studio</a>）にはSkills（<code>SKILL.md</code>）の説明があるが、Build modeとは別の機能なので、そちらは数えない。見つからないときは「計画を先に見せて。まだコードは書かないで」とチャット欄で頼むと、同じ使い方ができるか試せる</li>
             </ul>
           </div>
         </div>
@@ -485,10 +485,11 @@
       <h2>参考リンク</h2>
       <ul>
         <li><a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio（Google公式）</a> — Build modeの使い方・Import from GitHub・APIキーの自動設定</li>
-        <li><a href="https://ai.google.dev/gemini-api/docs/ai-studio-quickstart" target="_blank" rel="noopener">Google AI Studio quickstart（Google公式）</a> — Chat（チャット型）の画面とBuild modeの位置づけ</li>
+        <li><a href="https://ai.google.dev/gemini-api/docs/ai-studio-quickstart" target="_blank" rel="noopener">Google AI Studio quickstart（Google公式）</a> — Chat prompt（チャット型）の画面と使い方</li>
         <li><a href="https://antigravity.google/docs/cli/modes" target="_blank" rel="noopener">Choose an execution mode（Antigravity公式）</a> — agyのdefault / accept-edits / planモード</li>
         <li><a href="https://antigravity.google/docs/skills/" target="_blank" rel="noopener">Agent skills（Antigravity公式）</a> — agyのSkills（<code>SKILL.md</code>）</li>
         <li><a href="https://antigravity.google/docs/cli/commands/effort" target="_blank" rel="noopener">Effort command (/effort)（Antigravity公式）</a> — agyで考える深さを調整する</li>
+        <li><a href="https://antigravity.google/docs/rules/" target="_blank" rel="noopener">Rules（Antigravity公式）</a>・<a href="https://antigravity.google/docs/subagents/" target="_blank" rel="noopener">Custom subagents（Antigravity公式）</a> — agyのRulesとサブエージェント</li>
         <li><a href="https://ai.google.dev/gemini-api/docs/workspace" target="_blank" rel="noopener">Access Google AI Studio with your Workspace account（Google公式）</a> — 学校のアカウントでの利用条件</li>
         <li><a href="https://aistudio.google.com" target="_blank" rel="noopener">Google AI Studio</a> — 今日使うサービス本体</li>
         <li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages" target="_blank" rel="noopener">What is GitHub Pages?（GitHub公式）</a> — 次回の公開に使う仕組み</li>
