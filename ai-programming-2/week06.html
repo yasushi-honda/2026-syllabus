@@ -10,7 +10,7 @@
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=19">
   <!-- 公式情報確認: 2026-10-14 (ai.google.dev/gemini-api/docs/aistudio-build-mode・ai.google.dev/gemini-api/docs/workspace を生HTMLで確認: Import from GitHub は「Add files (+ icon) menu in the prompt input box」にある／Settings の GitHub タブで「create a new GitHub repository from your app or link to an existing one」／two-way sync／「Resolve conflicts」ダイアログ／Gemini APIキーは「automatically configures your Gemini API key as a secret in the app's server-side environment」／Workspace for Education は18歳未満は使えない、管理者がオン/オフを切り替えられる)。Import from GitHub の対応範囲（非公開リポジトリ、素のHTML/JSのままか作り替えられるか）は公式に記載がなく未確認——授業前に教員が学校アカウントで素のHTMLリポジトリを取り込んで確認する -->
-  <!-- 公式情報再確認: 2026-10-15 (生HTML/curlで確認。①ai.google.dev/gemini-api/docs/aistudio-build-mode（Last updated 2026-08-20）: 「The Antigravity Agent is the main AI functionality within Google Antigravity and now the core components of the agent harness is powering the Build mode experience in Google AI Studio.」／既定のwebアプリはReact＋Node.jsのサーバー／Codeタブ・annotation mode・AI Chips・音声入力／Settings→GitHubタブで双方向同期・Resolve conflicts／Cloud Run・ZIP／Secretsに GEMINI_API_KEY を自動設定。Plan mode・Skills・Rules・サブエージェント・effort調整は同ページに記載なし ⑤antigravity.google/docs/cli/commands/effort: /effort で low/medium/high（モデルにより xhigh/max） ②antigravity.google/docs/cli/modes: default（diff確認）/accept-edits/plan の3モード、Shift+Tabで循環、planは読み取り専用ツールで調べて実行計画の承認を求める ③antigravity.google/docs/skills/・/rules/・/subagents/・/mcp/・cli/features（plugins）: agyに存在 ④ai.google.dev/gemini-api/docs/workspace（Last updated 2026-04-28）: 18歳未満は不可・管理者が制御。注意: 2026-10-09頃にBuild modeへ「Plan」「Ultra」等のモードが追加されるとの報道が複数あったが、公式の発表・ドキュメントは確認できていない。2026-10-15、教員の画面で Default／Plan／Max のスライダー（Defaultは「Make changes right away」）を確認（スクリーンショット提供）。Plan・Maxの説明文と動作は未確認のため、本文は「画面にはある」「何が変わるかは授業で確かめる」に留めている。公式の説明ページは2026-10-15時点でも Last updated 2026-08-20 のまま） -->
+  <!-- 公式情報再確認: 2026-10-15 (生HTML/curlで確認。①ai.google.dev/gemini-api/docs/aistudio-build-mode（Last updated 2026-08-20）: 「The Antigravity Agent is the main AI functionality within Google Antigravity and now the core components of the agent harness is powering the Build mode experience in Google AI Studio.」／既定のwebアプリはReact＋Node.jsのサーバー／Codeタブ・annotation mode・AI Chips・音声入力／Settings→GitHubタブで双方向同期・Resolve conflicts／Cloud Run・ZIP／Secretsに GEMINI_API_KEY を自動設定。Plan mode・Skills・Rules・サブエージェント・effort調整は同ページに記載なし ⑤antigravity.google/docs/cli/commands/effort: /effort で low/medium/high（モデルにより xhigh/max） ②antigravity.google/docs/cli/modes: default（diff確認）/accept-edits/plan の3モード、Shift+Tabで循環、planは読み取り専用ツールで調べて実行計画の承認を求める ③antigravity.google/docs/skills/・/rules/・/subagents/・/mcp/・cli/features（plugins）: agyに存在 ④ai.google.dev/gemini-api/docs/workspace（Last updated 2026-04-28）: 18歳未満は不可・管理者が制御。注意: 2026-10-09頃にBuild modeへ「Plan」「Ultra」等のモードが追加されるとの報道が複数あったが、公式の発表・ドキュメントは確認できていない。2026-10-15、教員の画面で Default／Plan／Max のスライダー（Defaultは「Make changes right away」）を確認（スクリーンショット提供）。Plan・Maxの説明文と動作は未確認のため、本文は「画面にはある」「何が変わるかは授業で確かめる」に留めている。公式の説明ページは2026-10-15時点でも Last updated 2026-08-20 のまま。同日、教員の画面で 設定（歯車）→GitHubタブ に「Sync to a new repository」「Force push to <repo>（main branch will be replaced with this app's code.）」の2択、連携後は「Changes in Google AI Studio are ready to be pushed」「Commit message」「1 changed file」「Push changes to GitHub」を確認。設定のタブは Chat / Share / Publish / Versions / GitHub / Integ… の並び） -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -262,7 +262,7 @@
                   <tr>
                     <td>GitHubとの付き合い方</td>
                     <td data-label="agy（Antigravity CLI）">gitのコマンド、または自然言語でお願いする（第2〜5回）</td>
-                    <td data-label="Build mode（AI Studio）">Settingsの<strong>GitHubタブ</strong>で双方向に同期。pushにはAIが書いたコミットメッセージが付き、競合は <em>Resolve conflicts</em> の画面で選ぶ</td>
+                    <td data-label="Build mode（AI Studio）">Settingsの<strong>GitHubタブ</strong>で双方向に同期。pushにはAIが書いたコミットメッセージが付き、競合は <em>Resolve conflicts</em> の画面で選ぶ。既存リポジトリへの <em>Force push</em>（mainを置き換える）の選択肢もある（教員の画面で確認）</td>
                   </tr>
                   <tr>
                     <td>公開・持ち出し</td>
@@ -331,7 +331,7 @@
               <li>動かない、読み込みが進まない、リポジトリが一覧に出ないときは、講師に声をかける。エラーが出たら、<strong>その全文をプロンプト欄に貼って「原因と直し方を教えて」</strong>と頼んでもよい</li>
             </ul>
             <div class="lesson-tip">
-              <strong>今日はさわらない場所:</strong> AI Studioの<strong>Settings（設定）にあるGitHubタブ</strong>には、「アプリから新しいGitHubリポジトリを作る」操作がある（公式: Settingsの<strong>GitHubタブ</strong>で、新しいリポジトリを作るか、既存のリポジトリにリンクできる）。今日これを押すと、<strong>意図しない新しいリポジトリ</strong>が自分のGitHubに増えてしまう。GitHubへ書き戻す操作は<strong>次回（第7回）に一緒に行う</strong>ので、今日は触らない。
+              <strong>今日はさわらない場所:</strong> AI Studioの<strong>設定（歯車）にあるGitHubタブ</strong>には、「アプリから新しいGitHubリポジトリを作る」操作と、<strong>既存のリポジトリへ「Force push」する選択肢</strong>がある（教員の画面で確認。Force pushの説明は「main branch will be replaced with this app's code」）。今日これを押すと、<strong>意図しない新しいリポジトリ</strong>が増えたり、<strong>自分のリポジトリのmainが入れ替わったり</strong>する。GitHubへ書き戻す操作は<strong>次回（第7回）に一緒に行う</strong>ので、今日は触らない。画面の場所と意味は、2限の後半に<strong>見るだけ</strong>で確認する。
             </div>
           </div>
         </div>
@@ -381,7 +381,7 @@
             <ul>
               <li>①<strong>指示を出してから、結果が見えるまで</strong>の流れはどう違うか（プレビューの有無）</li>
               <li>②<strong>どのファイルが、どう変わったか</strong>は、どこで分かるか（Codeタブや、ファイル一覧を探してみる）</li>
-              <li>③思い通りにならなかったとき、<strong>やり直しや直し方</strong>はどう違うか</li>
+              <li>③思い通りにならなかったとき、<strong>やり直しや直し方</strong>はどう違うか（設定の画面に<strong>Versions</strong>というタブがある。何が見られるか、開いて確かめる）</li>
               <li>④取り込み直後に気づいた「元との違い」は、使っているうちに影響が出たか</li>
               <li>⑤<strong>対比表の「書かれていない」欄を、実際の画面で確かめる</strong>（約5分）。教員の画面では、入力欄の近くに<strong>モード切り替えのスライダー（Default／Plan／Max）</strong>がある。自分の画面にもあるか見つけ、<strong>Planに切り替えて、まだ試していない新しい改善を1つ頼み、Defaultのときの動き（指示するとすぐ変更が入った）とどう違うか</strong>を観察する。同じ指示のやり直しは、すでに変更が入った状態になるので比べられない。見るのは、先に計画が出るか、承認を求められるか、コードがすぐ変わるか、など（agyの<strong>planモード</strong>は、コードを書く前に計画だけ見せる使い方）。<strong>Max</strong>は何と説明されているかも読んで、メモする。あわせて、<strong>Skills・Rules</strong>（決まりごとを前もって渡す）や<strong>考える深さ（effort）の調整</strong>にあたる設定が画面にあるかも探す。見つけたら、画面の名前をメモして講師に教える。<strong>見つからなくても、それが今日の結果</strong>。なお、AI Studioの別の画面（<a href="https://ai.google.dev/gemini-api/docs/aistudio-agents" target="_blank" rel="noopener">Agents in AI Studio</a>）にはSkills（<code>SKILL.md</code>）の説明があるが、Build modeとは別の機能なので、そちらは数えない。</li>
             </ul>
@@ -422,12 +422,53 @@
               </svg>
               <figcaption>キーが画面のコードに入らないので、ページを開いた人にも見えません。点線の枠は、公開するときの注意です。</figcaption>
             </figure>
-            <p><strong>Gemini APIを使う機能（任意、約15分）</strong></p>
+            <p><strong>Gemini APIを使う機能（任意、約10分）</strong></p>
             <ul>
               <li>公式の説明: Gemini APIを使う新しいアプリを作ると、AI Studioが<strong>Gemini APIキーを、アプリのサーバー側の環境のシークレットとして自動で設定する</strong>。キーは「Secrets」パネルで確認・管理できる（<a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio</a>の「API Key management」）。つまり、<strong>自分でAPIキーを書かなくてよい</strong></li>
               <li>試す人は、例えば<code>ゲームオーバーのときに、Geminiがひとことコメントを出す機能を足してください</code>と頼む。出てきた画面の案内を読んで進める。公式の説明は「Gemini APIを使う<strong>新しいアプリ</strong>を作ると」という書き方なので、<strong>取り込んだアプリでも同じように設定されるかは公式に書かれていない</strong>。SettingsのSecretsパネルで、実際にキーが設定されているかを確かめる</li>
               <li><strong>APIキーは、コード・チャット・スクリーンショットのどこにも貼らない</strong>。公式には、キーはサーバー側で扱われると書かれている（ブラウザ側のコードに書いてしまうと、ページを開いた人に見えてしまう）</li>
               <li>次回の公開について: GitHub Pagesは、HTML・CSS・JavaScriptのファイルを置いて公開する<strong>静的サイト向け</strong>の仕組み（公式: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages" target="_blank" rel="noopener">What is GitHub Pages?</a>）。サーバー側で動く処理に頼る機能は、<strong>そのままでは動かない可能性がある</strong>。また、Geminiのキーをブラウザ側のJavaScriptに直接書いて公開すると、誰にでも見えてしまう。公開できるかは、次回に確かめる</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-a6-push">
+              <p class="vz-fig-title" id="cap-a6-push">次回に使う、GitHubへ書き戻す画面（今日は見るだけ）</p>
+              <svg class="vz-svg" viewBox="0 0 360 396" role="img" aria-labelledby="a6-push-t a6-push-d">
+                <title id="a6-push-t">次回に使う、GitHubへ書き戻す画面（今日は見るだけ）</title>
+                <desc id="a6-push-d">1 画面の右上の歯車（設定）を開く。ShareとPublishの右にある。2 GitHubタブを選ぶ。Chat、Share、Publish、Versionsと並ぶタブの1つ。3 つなぎ方は2つある。1つは新しいリポジトリで、新しく作って送るのでリポジトリが増える。もう1つは注意が必要なForce pushで、既存のリポジトリのmainがこのアプリのコードに置き換わる。今日は選ばない。4 送る内容を確かめる。Commit messageと、変更したファイルの数を見る。5 Push changes to GitHubのボタンを押すとGitHubに送られる。これは次回の操作。</desc>
+                <rect class="box-orange" x="8" y="6" width="344" height="54" rx="10"/>
+                <text class="t-b" x="22" y="28">1 歯車（設定）を開く</text>
+                <text class="t-sm" x="22" y="48">画面の右上。Share・Publish の右</text>
+                <line class="line" x1="180" y1="62" x2="180" y2="74" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="76" width="344" height="54" rx="10"/>
+                <text class="t-b" x="22" y="98">2 GitHubタブを選ぶ</text>
+                <text class="t-sm" x="22" y="118">Chat・Share・Publish・Versions と並ぶ</text>
+                <line class="line" x1="180" y1="132" x2="180" y2="144" marker-end="url(#mk-s)"/>
+                <rect class="band" x="4" y="146" width="352" height="104" rx="12"/>
+                <text class="t-b" x="18" y="166">3 つなぎ方は2つ</text>
+                <rect class="box-white" x="10" y="176" width="166" height="66" rx="10"/>
+                <text class="t-b" x="20" y="198">新しいリポジトリ</text>
+                <text class="t-sm" x="20" y="218">新しく作って送る</text>
+                <text class="t-sm" x="20" y="235">リポジトリが増える</text>
+                <rect class="box-orange box-key" x="184" y="176" width="166" height="66" rx="10"/>
+                <text class="t-b" x="194" y="198">注意: Force push</text>
+                <text class="t-sm" x="194" y="218">mainが置き換わる</text>
+                <text class="t-sm" x="194" y="235">今日は選ばない</text>
+                <line class="line" x1="180" y1="252" x2="180" y2="264" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="266" width="344" height="54" rx="10"/>
+                <text class="t-b" x="22" y="288">4 送る内容を確かめる</text>
+                <text class="t-sm" x="22" y="308">Commit message と、変更ファイルの数</text>
+                <line class="line" x1="180" y1="322" x2="180" y2="334" marker-end="url(#mk-s)"/>
+                <rect class="box-white box-key" x="8" y="336" width="344" height="54" rx="10"/>
+                <text class="t-b" x="22" y="358">5 Push changes to GitHub</text>
+                <text class="t-sm" x="22" y="378">押すとGitHubに送られる（次回）</text>
+              </svg>
+              <figcaption>1〜4は画面の場所と意味を見るだけです。5のボタンを押すのは次回です。画面の表示は、アカウントや時期で違うことがあります。</figcaption>
+            </figure>
+            <p><strong>次回に向けて：GitHubへ書き戻す画面を、見るだけ（約5分）</strong></p>
+            <ul>
+              <li>今日は<strong>押さない</strong>。場所と、押すとどうなるかだけ見ておく。操作は次回（第7回）に一緒に行う</li>
+              <li>公式の説明: SettingsのGitHubタブで、アプリから新しいGitHubリポジトリを作るか、既存のリポジトリにリンクできる。AI Studioでの変更は、AIが書いたコミットメッセージつきでリポジトリへ送れる（<a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio</a>）</li>
+              <li><strong>注意すること</strong>（教員の画面で確認。公式の説明ページには書かれていない）: つなぎ方の選択肢に<strong>Force push</strong>があり、説明は<em>"main branch will be replaced with this app's code."</em>。つまり、<strong>自分のリポジトリのmainが、このアプリのコードで置き換わる</strong>。agyで育てたファイルとAI Studioのアプリの中身が違うと、元のファイルが入れ替わって、元に戻しにくくなることがある。だから次回は、<strong>送る前に、自分のリポジトリの今の状態を確認してから</strong>操作する</li>
+              <li>送る前の画面には、<em>Sync status</em>（「Changes in Google AI Studio are ready to be pushed」＝送る準備ができた）、<em>Commit message</em>、<em>1 changed file</em>（変更したファイルの数）、<em>Push changes to GitHub</em>のボタンが並ぶ</li>
             </ul>
             <p><strong>振り返りメモ（約15分）</strong></p>
             <ul>

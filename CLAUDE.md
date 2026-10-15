@@ -115,7 +115,7 @@ ai-programming-2/       # AI活用プログラミング基礎Ⅱ の各回詳細
   week04.html           #   第4回 agyと一緒につくる①
   week05.html           #   第5回 GitHubでチーム開発をシミュレーションしよう
   github-team-sim.html  #     第5回 GitHubチーム開発シミュレーター（1 ファイル HTML、JS のみ・記録なし。コマンド／agy自然言語の2モード）
-  week06.html           #   第6回 Google AI Studio Build modeに触れてみよう①（agyとBuild modeの対比表・図解7点。Build modeの中身はAntigravity Agentの中核部分。Plan・Skills等はBuild mode側の公式説明に記載なしのため「書かれていない」と明記し、2限で実画面を探す課題にしている。Planは教員の画面にDefault／Plan／Maxのスライダーとして既にあると確認（2026-10-15、公式説明には未記載）。公式確認日 2026-10-15）
+  week06.html           #   第6回 Google AI Studio Build modeに触れてみよう①（agyとBuild modeの対比表・図解8点（GitHubへ書き戻す画面の見取り図を含む。Force pushはmainを置き換える点を警告し、今日は押さず見るだけ）。Build modeの中身はAntigravity Agentの中核部分。Plan・Skills等はBuild mode側の公式説明に記載なしのため「書かれていない」と明記し、2限で実画面を探す課題にしている。Planは教員の画面にDefault／Plan／Maxのスライダーとして既にあると確認（2026-10-15、公式説明には未記載）。公式確認日 2026-10-15）
 natural-language-dev-2.html   # 自然言語開発Ⅱ（木3・4限／後期。授業内容確定済み、週ページ順次作成中）
 natural-language-dev-2/       # 自然言語開発Ⅱ の各回詳細ページ
   week01.html           #   第1回 前期振り返り＆後期オリエンテーション
