@@ -358,6 +358,7 @@
               <li>GitHub Pagesは、HTML・CSS・JavaScriptのファイルを<strong>そのまま置いて公開する</strong>仕組み（公式: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages" target="_blank" rel="noopener">What is GitHub Pages?</a>）。Build modeが作る形（React／Vite）は、<code>index.html</code>が<code>/src/main.tsx</code>を読む形で、<strong>ブラウザがそのままでは読めない</strong>。公開用の形に<strong>変換（ビルド）</strong>が要る</li>
               <li>ビルドすると、<code>docs</code>フォルダに<strong>公開用のファイル</strong>ができる。このとき<code>base: './'</code>があると、読み込み先が<code>./assets/…</code>（今いる場所から）になり、<strong>途中にリポジトリ名が入るURLでも見つかる</strong>。ないと<code>/assets/…</code>（サイトの一番上から）になり、見つからない</li>
               <li>図は、教員が実際に3つの形を開いて確かめた結果。図の3つのうち、<strong>表示されるのはCだけ</strong></li>
+              <li><strong>第6回で、Gemini APIを使う機能を足した人へ</strong>: その機能は、APIキーをサーバー側に置く仕組みだった（第6回）。GitHub Pagesは、ファイルを置くだけの静的サイト向けの仕組みなので、<strong>サーバー側の処理は動かない可能性が高い</strong>。公開版では、その機能が動かないか、画面が出ても結果が返らないことがある。今日の公開では、<strong>その機能は外す</strong>か、動かなくてもよいと割り切る（講師に相談）。<strong>APIキーを、公開するコードに書き込んではいけない</strong>（ページを開いた人に見えてしまう）</li>
             </ul>
             <p><strong>② Codespaceを再開し、最新を取り込む（約7分）</strong></p>
             <ul>
@@ -385,7 +386,7 @@
             <p><strong>⑥ URLを開いて確かめる（約10分）</strong></p>
             <ul>
               <li>公開するURLは、<code>https://ユーザー名.github.io/リポジトリ名/</code>。Saveしたあと、反映には<strong>最大10分</strong>かかる（公式: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site" target="_blank" rel="noopener">Creating a GitHub Pages site</a>）。待つ間に、このURLをスマホで開く準備をしておく</li>
-              <li>開けたら、<strong>ボタンやゲームが動く</strong>ことまで確かめる。スマホでも開く</li>
+              <li>開けたら、<strong>ボタンやゲームが動く</strong>ことまで確かめる（Gemini APIを使う機能を足した人は、その機能を除く）。スマホでも開く</li>
               <li><strong>画面が真っ白</strong>のときは、順に確かめる: ①Pagesの設定が<strong>main</strong>の<strong>/docs</strong>か ②GitHubに<code>docs/index.html</code>があるか ③その中の読み込み先が<code>./assets/</code>で始まっているか ④反映の待ち時間（数分）。分からなければ、agyに<code>公開したページが真っ白です。原因を調べてください</code>と頼む</li>
             </ul>
           </div>
@@ -408,10 +409,10 @@
               <p class="vz-fig-title" id="cap-a7-cycle">公開した作品を更新するくり返し</p>
               <svg class="vz-svg" viewBox="0 0 360 274" role="img" aria-labelledby="a7-cycle-t a7-cycle-d">
                 <title id="a7-cycle-t">公開した作品を更新するくり返し</title>
-                <desc id="a7-cycle-d">1 AI Studioで、自然言語で1つ直す。2 GitHubへpushする。3 Codespaceでビルドし直して、docsをpushする。4 数分待って、URLを開き直す。反映には最大10分かかる。そして1に戻って、くり返す。</desc>
+                <desc id="a7-cycle-d">1 AI Studioで、GitHubの変更があれば先にPullして、自然言語で1つ直す。2 GitHubへpushする。3 Codespaceで、先にgit pullで最新を取り込み、ビルドし直して、docsをpushする。4 数分待って、URLを開き直す。反映には最大10分かかる。そして1に戻って、くり返す。</desc>
                 <rect class="box-orange" x="8" y="6" width="316" height="54" rx="10"/>
                 <text class="t-b" x="22" y="28">1 AI Studioで直す</text>
-                <text class="t-sm" x="22" y="48">自然言語で、1つだけ</text>
+                <text class="t-sm" x="22" y="48">先に、Pullがあれば取り込む</text>
                 <line class="line" x1="166" y1="62" x2="166" y2="72" marker-end="url(#mk-s)"/>
                 <rect class="box-orange" x="8" y="74" width="316" height="54" rx="10"/>
                 <text class="t-b" x="22" y="96">2 GitHubへpush</text>
@@ -419,7 +420,7 @@
                 <line class="line" x1="166" y1="130" x2="166" y2="140" marker-end="url(#mk-s)"/>
                 <rect class="box-white" x="8" y="142" width="316" height="54" rx="10"/>
                 <text class="t-b" x="22" y="164">3 ビルドし直して docs を push</text>
-                <text class="t-sm" x="22" y="184">Codespaceで（2限の③・④と同じ）</text>
+                <text class="t-sm" x="22" y="184">先に git pull → ビルド → docs</text>
                 <line class="line" x1="166" y1="198" x2="166" y2="208" marker-end="url(#mk-s)"/>
                 <rect class="box-orange box-key" x="8" y="210" width="316" height="54" rx="10"/>
                 <text class="t-b" x="22" y="232">4 数分待って、URLを開き直す</text>
@@ -430,6 +431,7 @@
             </figure>
             <ul>
               <li>公開した作品を直すには、<strong>ビルドし直して、docsを送り直す</strong>必要がある。AI Studioで直して、GitHubへpushしただけでは、<strong>公開されたサイトは変わらない</strong>（公開されているのは、<code>docs</code>の中身だから）</li>
+              <li>注意: 1周目のあと、GitHubには、Codespaceから送った<strong>docsのコミット</strong>がある。AI Studioはそれを持っていないので、次に送るときは<strong>先にPull</strong>になる（1限の「両方に変更があるとき」と同じ）。また、Codespaceでビルドし直す前に、<strong>必ず<code>git pull origin main</code></strong>で、AI Studioが送った最新のソースを取り込む（古いソースでビルドしてしまうのを防ぐ）</li>
               <li>時間がある人は、AI Studioで<strong>1つだけ</strong>直し、図の1→4を<strong>1周</strong>してみる。<strong>送るたびに、最大10分</strong>待つことがあるので、焦らない</li>
               <li>1周しなくてもよい。<strong>図で、どの順番か</strong>を説明できればよい</li>
             </ul>
