@@ -116,6 +116,7 @@ ai-programming-2/       # AI活用プログラミング基礎Ⅱ の各回詳細
   week05.html           #   第5回 GitHubでチーム開発をシミュレーションしよう
   github-team-sim.html  #     第5回 GitHubチーム開発シミュレーター（1 ファイル HTML、JS のみ・記録なし。コマンド／agy自然言語の2モード）
   week06.html           #   第6回 Google AI Studio Build modeに触れてみよう①（agyとBuild modeの対比表・図解8点。取り込み後の「major rewrite」・ファイル構成の変化と、「GitHubへ送る操作（Sync to GitHub／Force push）は第7回まで押さない」まで。**GitHubへのpush・履歴確認・`git revert`・Pull先行と衝突の解決は第7回へ移した**（教員の決定、2026-10-15。第6回で間に合わなかったため）。原稿（図5点・手順①〜⑤・参考リンク）は PR #366 のコミット `7fd7375` の week06.html と GOAL.md ⑪⑫⑬。実機検証（使い捨てリポジトリ＋GitHub API）で、AI Studioの「Force push」は履歴を付け替えず元の履歴にコミットを1つ足すだけ、`git revert`で元の中身に戻ることを確認済み。学生は自分のリポジトリでrevertしない（Pullで続きが消える）。Build modeの中身はAntigravity Agentの中核部分。Plan・Skills等はBuild mode側の公式説明に記載なしのため「書かれていない」と明記し、2限で実画面を探す課題にしている。Planは教員の画面にDefault／Plan／Maxのスライダーとして既にあると確認（2026-10-15、公式説明には未記載）。公式確認日 2026-10-15）
+  week07.html           #   第7回 Google AI Studio Build modeで仕上げよう②（追加指示で仕上げ、公開用の設定（vite.config.tsのbase './'・出力先docs）、GitHubへpush・履歴確認・git revert教員実演・Pull先行と衝突、公開用ビルドしてdocsをGitHub Pagesで公開、更新サイクル。図解8点。ビルドとサブパス表示は教員の環境で実機確認済み（2026-10-15）。実際のGitHub Pages上の表示と学生の画面（学校アカウント）は未確認）
 natural-language-dev-2.html   # 自然言語開発Ⅱ（木3・4限／後期。授業内容確定済み、週ページ順次作成中）
 natural-language-dev-2/       # 自然言語開発Ⅱ の各回詳細ページ
   week01.html           #   第1回 前期振り返り＆後期オリエンテーション
