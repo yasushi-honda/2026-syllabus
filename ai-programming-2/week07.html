@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=19">
-  <!-- 公式情報確認: 2026-10-15 (curl生HTMLで確認。①docs.github.com Configuring a publishing source for your GitHub Pages site: ブランチ公開では「source folder can either be the root / or a /docs folder」、Settings→Pages→Build and deployment→Source→Deploy from a branch→branchのドロップダウン→任意でfolderのドロップダウン→Save ②Creating a GitHub Pages site: 「It can take up to 10 minutes for changes to your site to publish after you push the changes to GitHub」③vite.dev/guide/build.html「Public Base Path」: 入れ子の公開パスにデプロイするときは base オプション（vite build --base=/my/public/path/ でも指定可）④docs.github.com Introduction to dev containers: 既定のLinuxイメージにPython・Nodeなどの実行環境が入っている ⑤docs.github.com What is GitHub Pages?: HTML・CSS・JavaScriptのファイルをリポジトリからそのまま公開する静的サイト向け ⑥ai.google.dev aistudio-build-mode（Last updated 2026-08-20）の GitHub 連携。実機検証（教員の画面＋GitHub API、使い捨てリポジトリ、2026-10-15）: AI Studioの「Force push」は履歴を付け替えず元の履歴にコミットを1つ足すだけ（activityはpush）、git revertで元の中身に完全一致、連携後はPullが先、衝突はResolve conflicts。ビルド検証（教員の環境、2026-10-15）: AI Studioが作ったReact/Vite構成（package.json・vite.config.ts・src/）を npm install（約30秒）→ npm run build すると、設定なしは /assets/…（絶対パス）、base './' と outDir 'docs' を vite.config.ts に書くと ./assets/…（相対パス）で docs/ に出力。サブパス（途中にリポジトリ名が入るURL）で開くと、ソースのまま・設定なしは画面が真っ白、base './' は表示されボタンも動く。AI Studioが作る構成には .gitignore が無かったため、git add . では node_modules まで入る（git add docs だけを使う）。未確認: 学生の画面（学校アカウント）／実際のGitHub Pages上での表示（ローカルのサブパスで代替確認）／AI Studio上で vite.config.ts を書き換える指示の通り方 -->
+  <!-- 公式情報確認: 2026-10-15 (curl生HTMLで確認。①docs.github.com Configuring a publishing source for your GitHub Pages site: ブランチ公開では「source folder can either be the root / or a /docs folder」、Settings→Pages→Build and deployment→Source→Deploy from a branch→branchのドロップダウン→任意でfolderのドロップダウン→Save ②Creating a GitHub Pages site: 「It can take up to 10 minutes for changes to your site to publish after you push the changes to GitHub」③vite.dev/guide/build.html「Public Base Path」: 入れ子の公開パスにデプロイするときは base オプション（vite build --base=/my/public/path/ でも指定可）④docs.github.com Introduction to dev containers: 既定のLinuxイメージにPython・Nodeなどの実行環境が入っている ⑤docs.github.com What is GitHub Pages?: HTML・CSS・JavaScriptのファイルをリポジトリからそのまま公開する静的サイト向け ⑥ai.google.dev aistudio-build-mode（Last updated 2026-08-20）の GitHub 連携。実機検証（教員の画面＋GitHub API、使い捨てリポジトリ、2026-10-15）: AI Studioの「Force push」は履歴を付け替えず元の履歴にコミットを1つ足すだけ（activityはpush）、git revertで元の中身に完全一致、連携後はPullが先、衝突はResolve conflicts。ビルド検証（教員の環境、2026-10-15）: AI Studioが作ったReact/Vite構成（package.json・vite.config.ts・src/）を npm install（約30秒）→ npm run build すると、設定なしは /assets/…（絶対パス）、base './' と outDir 'docs' を vite.config.ts に書くと ./assets/…（相対パス）で docs/ に出力。サブパス（途中にリポジトリ名が入るURL）で開くと、ソースのまま・設定なしは画面が真っ白、base './' は表示されボタンも動く。AI Studioが作る構成には .gitignore が無かったため、git add . では node_modules まで入る（git add docs だけを使う）。未確認: 2周目以降にAI Studioがdocsを取り込んだあとのpushでdocsが壊れないか／学生の画面（学校アカウント）／実際のGitHub Pages上での表示（ローカルのサブパスで代替確認）／AI Studio上で vite.config.ts を書き換える指示の通り方 -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -126,7 +126,7 @@
             <ul>
               <li>公開するURLは、<code>https://ユーザー名.github.io/リポジトリ名/</code>のように、<strong>途中にリポジトリ名が入る</strong>。Build modeが作る形は、そのままだと<strong>ファイルの場所の書き方</strong>が合わず、画面が真っ白になる（2限に、図で確かめる）</li>
               <li>そこで、AI Studioのチャット欄に頼む: <code>このアプリをGitHub Pagesで公開します。vite.config.ts に base: './' を設定し、ビルドの出力先を docs フォルダにしてください</code></li>
-              <li>Geminiが<code>vite.config.ts</code>を書き換える。<strong>Codeタブで、そのファイルを開いて</strong>、<code>base</code>と<code>outDir</code>（出力先）が入っているか確かめる。入っていなければ、もう一度頼む。（<code>base</code>は、入れ子の公開パスにデプロイするときに指定するVite（ブイト）の設定。公式: <a href="https://vite.dev/guide/build.html#public-base-path" target="_blank" rel="noopener">Building for Production の Public Base Path</a>）</li>
+              <li>Geminiが<code>vite.config.ts</code>を書き換える。<strong>Codeタブで、そのファイルを開いて</strong>、<code>base</code>と<code>outDir</code>（出力先）が入っているか確かめる。入っていなければ、もう一度頼む。（<code>base</code>は、入れ子の公開パスにデプロイするときに指定するVite（ブイト）の設定。<code>outDir</code>（出力先）を<code>docs</code>にする設定は、教員の環境で確かめた。公式: <a href="https://vite.dev/guide/build.html#public-base-path" target="_blank" rel="noopener">Building for Production の Public Base Path</a>）</li>
               <li>この設定は、<strong>次の「GitHubへ送る」で、一緒にGitHubへ届く</strong></li>
             </ul>
           </div>
@@ -185,7 +185,7 @@
               <li>歯車（設定）→<strong>GitHubタブ</strong>。取り込み直後のバナーの「Sync to GitHub」からも、同じ画面に進む。つなぎ方は2つ: <em>Sync to a new repository</em>（新しいリポジトリへ）と、<em>Force push to 自分のリポジトリ</em>。<strong>本線はForce push</strong>（同じリポジトリで続けられる）。元のmainを変えたくない人は、新しいリポジトリでもよい（その場合、GitHub Pagesの設定は、新しいリポジトリで改めて行う。公開元の設定はリポジトリごと。公式: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site" target="_blank" rel="noopener">Configuring a publishing source for your GitHub Pages site</a>）。<strong>この節の英語の表示は、教員の画面で確認したもの</strong>で、公式の説明ページには書かれていない</li>
               <li>つなぎ方を選ぶと、「送る前の画面」に進む。<em>Sync status</em>（「Changes in Google AI Studio are ready to be pushed」＝送る準備ができた）、<em>Commit message</em>（AIが書く。公式: <a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio</a>。<strong>読んでから</strong>送る）、<em>N changed files</em>（開くと、ファイルごとに<em>Modified</em>＝書き換え、<em>Added</em>＝追加が見える。教員の例では<code>index.html</code>がModified、ほかの11ファイルがAdded）</li>
               <li><em>Push changes to GitHub</em>を押すと、<strong>確認の画面は出ず</strong>、すぐ「Linking repository and pushing changes」という処理中の画面になる（教員の画面）。押す前に、上の内容を読んでおく</li>
-              <li>初めて送るときは、AI StudioとGitHubをつなぐ<strong>許可の画面</strong>が出ることがある。許可する内容と、対象のリポジトリを<strong>読んでから</strong>許可する（教員が事前に試して確認する）。画面が違うときは、表示を読んで進める。迷ったら講師に声をかける</li>
+              <li>初めて送るときは、AI StudioとGitHubをつなぐ<strong>許可の画面</strong>が出ることがある。許可する内容と、対象のリポジトリを<strong>読んでから</strong>許可する。画面が違うときは、表示を読んで進める。迷ったら講師に声をかける</li>
             </ul>
             <p><strong>③ GitHubで履歴を確かめる（約8分）</strong></p>
             <ul>
@@ -362,7 +362,7 @@
             </ul>
             <p><strong>② Codespaceを再開し、最新を取り込む（約7分）</strong></p>
             <ul>
-              <li>Codespaceを<strong>再開</strong>する（第4回と同じ手順）。<strong>agy</strong>を起動する。Codespaceの既定のイメージには、Nodeなどの実行環境が入っている（公式: <a href="https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/adding-a-dev-container-configuration/introduction-to-dev-containers" target="_blank" rel="noopener">Introduction to dev containers</a>）</li>
+              <li>Codespaceを<strong>再開</strong>する（第4回と同じ手順）。<strong>agy</strong>を起動する。再度ログインを求められる場合がある（Codespaceの停止・再開のあと）。そのときは、<strong>第3回と同じ手順</strong>でログインをやり直す。Codespaceの既定のイメージには、Nodeなどの実行環境が入っている（公式: <a href="https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/adding-a-dev-container-configuration/introduction-to-dev-containers" target="_blank" rel="noopener">Introduction to dev containers</a>）</li>
               <li>第5回で作ったブランチに居ることがあるので、<strong>必ずmainに切り替えてから</strong>最新を取り込む。agyに<code>git switch main をして、git pull origin main をしてください</code>と頼む（コマンドで書くと、<code>git switch main</code>と<code>git pull origin main</code>）</li>
               <li>取り込めたら、AI Studioが送った<code>package.json</code>・<code>vite.config.ts</code>・<code>src</code>フォルダなどが見える。<code>vite.config.ts</code>に<code>base</code>と<code>outDir</code>が入っているか、もう一度確かめる</li>
             </ul>
@@ -385,7 +385,7 @@
             </ul>
             <p><strong>⑥ URLを開いて確かめる（約10分）</strong></p>
             <ul>
-              <li>公開するURLは、<code>https://ユーザー名.github.io/リポジトリ名/</code>。Saveしたあと、反映には<strong>最大10分</strong>かかる（公式: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site" target="_blank" rel="noopener">Creating a GitHub Pages site</a>）。待つ間に、このURLをスマホで開く準備をしておく</li>
+              <li>公開するURLは、<code>https://ユーザー名.github.io/リポジトリ名/</code>。Saveやpushのあと、反映には<strong>最大10分</strong>かかることがある（公式: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/creating-a-github-pages-site" target="_blank" rel="noopener">Creating a GitHub Pages site</a>）。待つ間に、このURLをスマホで開く準備をしておく</li>
               <li>開けたら、<strong>ボタンやゲームが動く</strong>ことまで確かめる（Gemini APIを使う機能を足した人は、その機能を除く）。スマホでも開く</li>
               <li><strong>画面が真っ白</strong>のときは、順に確かめる: ①Pagesの設定が<strong>main</strong>の<strong>/docs</strong>か ②GitHubに<code>docs/index.html</code>があるか ③その中の読み込み先が<code>./assets/</code>で始まっているか ④反映の待ち時間（数分）。分からなければ、agyに<code>公開したページが真っ白です。原因を調べてください</code>と頼む</li>
             </ul>
