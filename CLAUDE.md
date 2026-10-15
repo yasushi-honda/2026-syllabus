@@ -115,7 +115,7 @@ ai-programming-2/       # AI活用プログラミング基礎Ⅱ の各回詳細
   week04.html           #   第4回 agyと一緒につくる①
   week05.html           #   第5回 GitHubでチーム開発をシミュレーションしよう
   github-team-sim.html  #     第5回 GitHubチーム開発シミュレーター（1 ファイル HTML、JS のみ・記録なし。コマンド／agy自然言語の2モード）
-  week06.html           #   第6回 Google AI Studio Build modeに触れてみよう①
+  week06.html           #   第6回 Google AI Studio Build modeに触れてみよう①（agyとBuild modeの対比表・図解7点。Build modeの中身はAntigravity Agentの中核部分。Plan・Skills等はBuild mode側の公式説明に記載なしのため「書かれていない」と明記し、2限で実画面を探す課題にしている。公式確認日 2026-10-15）
 natural-language-dev-2.html   # 自然言語開発Ⅱ（木3・4限／後期。授業内容確定済み、週ページ順次作成中）
 natural-language-dev-2/       # 自然言語開発Ⅱ の各回詳細ページ
   week01.html           #   第1回 前期振り返り＆後期オリエンテーション
@@ -250,7 +250,7 @@ content/                # Markdownソース（コピーボタン用。全HTMLペ
 
 - **共通ルール**: ①SVGは `role="img"` + `<title>` + `<desc>`、画像は `alt` を必ず付ける ②色だけで意味を伝えない（文字ラベルを併記する）③375〜390px幅で横スクロールが出ないこと、375px幅で補足文字が実寸約11px・本文が約11.7px以上あることを、Playwrightで実測して確認する（360px幅の小さいスマホでは補足文字が約10.4pxまで下がる。それより小さくしない）（viewBox幅360のSVGは幅が縮むと文字も縮むため、`main.theme-blue` / `main.theme-purple` ではスマホ幅だけ余白を詰めて文字を大きくしている） ④図の内容（回の番号・テーマ名・機能名）は親ページ・他の週ページと突き合わせ、comment-analyzerに依頼する
 - **テーマ色**: `vz-*` は amber 基調。`main.theme-slate`（秋の集中講座）／`main.theme-blue`（プログラム基礎Ⅱ）／`main.theme-purple`（AIコミュニケーション基礎Ⅱ）のように、`<main>` にクラスを付けて読み替える。**新しい色の科目で使うときは `styles.css` に読み替え（`main.theme-xxx`）を追加する**。丸点の色は `.dot` / `.dot-blue` / `.dot-orange`（白い数字を載せるので、コントラスト4.5:1以上の色だけ使う。`--c-green` は4.36:1で不足）。**`main.theme-slate` 専用のセレクタ（`.vz-field ul` など）もあるため、blue基調のページで SVG（`.vz-svg`）・`vz-fig`・`vz-flow` 以外の `vz-*` 部品を使うときは表示を確認する**
-- **CSSを触ったとき**: 週ページ側の `styles.css?v=N` を上げると、古いキャッシュを待たずに反映できる（`styles.css` を変えるたびに連番を上げる。現在の最新は `?v=18`（AI活用プログラミング基礎Ⅱ week06・自然言語開発Ⅱ week06 が使用。`main.theme-orange` の追加で orange 基調のページでも `vz-*` を使える。他のページは古い連番のままで、影響する変更は入っていない））
+- **CSSを触ったとき**: 週ページ側の `styles.css?v=N` を上げると、古いキャッシュを待たずに反映できる（`styles.css` を変えるたびに連番を上げる。現在の最新は `?v=19`（AI活用プログラミング基礎Ⅱ week06 が使用。比較表の `.schedule-table--stack`（スマホ幅で観点ごとのカードに積む。各 `td` に `data-label` を付ける）を追加。自然言語開発Ⅱ week06 は `?v=18`。`main.theme-orange` の追加で orange 基調のページでも `vz-*` を使える。他のページは古い連番のままで、影響する変更は入っていない））
 
 ### 時間配分（固定・絶対厳守）
 
