@@ -100,6 +100,7 @@ ai-communication-2/     # AIコミュニケーション基礎Ⅱ の各回詳細
   week03.html           #   第3回 agyをもっと使いこなす
   week04.html           #   第4回 良い指示・悪い指示を見分ける
   week05.html           #   第5回 AIエージェントに指示する①
+  week06.html           #   第6回 AIエージェントに指示する②（指示を重ねて作品を育てる。まとめて/1つずつの比較、指示ログ）
 it-passport-technology.html   # ITパスポート テクノロジー系（水1・2限／後期。授業内容確定済み、週ページ順次作成中）
 it-passport-technology/       # ITパスポート テクノロジー系 の各回詳細ページ
   week01.html           #   第1回 3分野の地図を手に入れる
