@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第6回 CSS発展：レイアウトを整える | プログラム基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=19">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <!-- 公式情報確認: 2026-10-19（参考リンクのMDN 5ページの生存とタイトルを確認。外部サービスの操作手順は扱わない。教材のコードは375px幅を含めて実機で表示確認済み） -->
+  <header class="page-header page-header--blue">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../program-basics-2.html">プログラム基礎 II</a>
+        <span>/</span>
+        <span>第6回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">CSS発展：<wbr>レイアウトを整える</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 6</span>
+            <span class="page-badge">火曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-blue">
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value"><strong>CSS Grid/Flexbox</strong>で、ゲーム画面や商品一覧など複雑なレイアウトを組む。第5回の企画シートに書いた画面構成を、実際に画面として組んでみる</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">Flexbox / <code>display: flex</code> / <code>justify-content</code> / <code>align-items</code> / <code>flex-wrap</code> / Grid / <code>grid-template-columns</code> / <code>repeat</code> / <code>fr</code> / <code>gap</code></div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">前期から使っているGitHubリポジトリとCodespaces。第5回で作った<strong><code>plan.md</code>の「2. 画面構成」</strong>を、いつでも開ける状態にしておく</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li><strong>Flexbox</strong>で要素を横一列に並べ、<code>justify-content</code>と<code>align-items</code>で並べ方を変えられる</li>
+        <li><strong>Grid</strong>で要素を格子状に並べ、<code>repeat</code>で列の数を変えられる</li>
+        <li>「<strong>一列に並べるならFlexbox、格子に並べるならGrid</strong>」と、使い分けを自分の言葉で言える</li>
+        <li>自分の作品の画面構成（<code>plan.md</code>）を、<code>layout.html</code>として組み、commit・pushできる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>何も指定しないと縦に積まれることを確認し、<code>display: flex</code>で横に並べる</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返りと、今日の目標（10分）</strong></p>
+            <ul>
+              <li>第5回で、<code>plan.md</code>の「2. 画面構成」に、画面ごとに「何を表示するか」「何を押せるか」を書いたことを思い出す。その中の<strong>「並べ方」で悩みそうな場所</strong>（横に並べたい、格子に並べたい）に印をつける</li>
+              <li>今日は、その並べ方を作る道具として<strong>FlexboxとGrid</strong>の2つを学び、最後に自分の画面の試作<code>layout.html</code>を作る</li>
+              <li><code>python3 -m http.server 8000</code>を起動し、第1回（前期）と同じ手順で「ポート」タブ→「エディターでプレビュー」→ Simple Browserを開いておく</li>
+            </ul>
+            <p><strong>何も指定しないと、縦に積まれることを確認する（10分）</strong></p>
+            <ul>
+              <li>
+                <p>Codespacesで新規ファイル<code>layout-demo.html</code>を作り、下のコードを貼り付けて保存する</p>
+                <button class="copy-md-btn" data-md-source="layout-demo-template">
+                  <span class="btn-icon"></span> layout-demo.htmlの雛形をコピー
+                </button>
+<pre id="layout-demo-template" class="md-preview">&lt;!DOCTYPE html&gt;
+&lt;html lang="ja"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;レイアウトの練習&lt;/title&gt;
+  &lt;style&gt;
+    body { font-family: sans-serif; margin: 0; padding: 16px; }
+    .card { padding: 16px; background: #e8f0fe; border: 2px solid #3d5a73; border-radius: 8px; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h2&gt;カードを並べる&lt;/h2&gt;
+  &lt;div class="cards"&gt;
+    &lt;div class="card"&gt;1&lt;/div&gt;
+    &lt;div class="card"&gt;2&lt;/div&gt;
+    &lt;div class="card"&gt;3&lt;/div&gt;
+    &lt;div class="card"&gt;4&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+              </li>
+              <li>Simple Browserのアドレスバーの末尾だけを<code>/layout-demo.html</code>に書き換えてEnter。4枚のカードが<strong>縦に積まれて</strong>表示されることを確認する</li>
+              <li>これは<code>div</code>が「横いっぱいに広がって、下へ積まれる」性質を持つため。今日は、この並び方を自分で決める方法を学ぶ</li>
+            </ul>
+            <p><strong><code>display: flex</code>で横一列に並べる（20分）</strong></p>
+            <ul>
+              <li><code>&lt;style&gt;</code>の中、<code>.card</code>の下に、次の1行を追加して保存・更新する：
+              <pre><code>.cards { display: flex; gap: 12px; }</code></pre>
+              </li>
+              <li>4枚のカードが<strong>横一列に並ぶ</strong>。カードの幅は中身の大きさになる</li>
+              <li>ここが最重要のポイント：<code>display: flex</code>は<strong>並べたいものの「親」</strong>（<code>.cards</code>）に書く。<code>.card</code>（子）には書かない。親に書くと、その<strong>直下の子</strong>が横に並ぶ</li>
+              <li><code>gap</code>は、子と子の<strong>すき間</strong>。<code>12px</code>を<code>40px</code>に変えて、すき間が変わることを確かめて、元に戻す</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-w6-flex">
+              <p class="vz-fig-title" id="cap-w6-flex">Flexboxの親と子、主軸と交差軸</p>
+              <svg class="vz-svg" viewBox="0 0 360 236" role="img" aria-labelledby="w6-flex-t w6-flex-d">
+                <title id="w6-flex-t">Flexboxの親と子、主軸と交差軸</title>
+                <desc id="w6-flex-d">display: flexを書いた親の箱の中に、子のカードが3枚、横一列に並んでいる。子のあいだのすき間がgap。子が並ぶ横向きが主軸、それと直角の縦向きが交差軸。</desc>
+                <text class="t-sm" x="12" y="20">親（display: flex を書く）</text>
+                <rect class="box-white box-key" x="8" y="28" width="344" height="100" rx="10"/>
+                <rect class="box-blue" x="24" y="52" width="88" height="52" rx="8"/>
+                <text class="t-c t-b" x="68" y="84">子 1</text>
+                <rect class="box-blue" x="136" y="52" width="88" height="52" rx="8"/>
+                <text class="t-c t-b" x="180" y="84">子 2</text>
+                <rect class="box-blue" x="248" y="52" width="88" height="52" rx="8"/>
+                <text class="t-c t-b" x="292" y="84">子 3</text>
+                <text class="t-c t-sm" x="124" y="46">gap</text>
+                <text class="t-c t-sm" x="236" y="46">gap</text>
+                <line class="line" x1="24" y1="154" x2="336" y2="154" marker-end="url(#mk-s)"/>
+                <text class="t-c" x="180" y="176">主軸（横）：子が並ぶ向き</text>
+                <line class="line" x1="30" y1="190" x2="30" y2="226" marker-end="url(#mk-s)"/>
+                <text x="46" y="214">交差軸（縦）：主軸と直角の向き</text>
+              </svg>
+              <figcaption>子が並ぶ向きが「主軸」、それと直角の向きが「交差軸」です。次のプロパティは、この2つの軸を基準にしています。</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>Flexboxの並べ方を変え、スコアバーを作る</h3>
+          <div class="timeline-body">
+            <p><strong>主軸の並べ方を変える：<code>justify-content</code>（15分）</strong></p>
+            <ul>
+              <li><code>.cards</code>の1行を次のように書き換え、値を順に変えて、カードの位置がどう変わるかを見る：
+              <pre><code>.cards { display: flex; gap: 12px; justify-content: space-between; }</code></pre>
+              </li>
+              <li>試す値は3つ：<code>flex-start</code>（左づめ。何も書かないときの初期値）／<code>center</code>（中央）／<code>space-between</code>（両端に寄せて、間を均等に空ける）</li>
+              <li><code>justify-content</code>は<strong>主軸（横）</strong>の並べ方を決める</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-w6-just">
+              <p class="vz-fig-title" id="cap-w6-just">justify-contentの3つの値</p>
+              <svg class="vz-svg" viewBox="0 0 360 236" role="img" aria-labelledby="w6-just-t w6-just-d">
+                <title id="w6-just-t">justify-contentの3つの値</title>
+                <desc id="w6-just-d">3枚の子を、flex-startでは左にそろえ、centerでは中央にそろえ、space-betweenでは両端に寄せて間を均等に空ける。</desc>
+                <text class="t-sm" x="12" y="18">flex-start（左づめ・初期値）</text>
+                <rect class="box-white" x="8" y="24" width="344" height="44" rx="8"/>
+                <rect class="box-blue" x="16" y="30" width="60" height="32" rx="6"/><text class="t-c" x="46" y="51">1</text>
+                <rect class="box-blue" x="84" y="30" width="60" height="32" rx="6"/><text class="t-c" x="114" y="51">2</text>
+                <rect class="box-blue" x="152" y="30" width="60" height="32" rx="6"/><text class="t-c" x="182" y="51">3</text>
+                <text class="t-sm" x="12" y="96">center（中央）</text>
+                <rect class="box-white" x="8" y="102" width="344" height="44" rx="8"/>
+                <rect class="box-blue" x="82" y="108" width="60" height="32" rx="6"/><text class="t-c" x="112" y="129">1</text>
+                <rect class="box-blue" x="150" y="108" width="60" height="32" rx="6"/><text class="t-c" x="180" y="129">2</text>
+                <rect class="box-blue" x="218" y="108" width="60" height="32" rx="6"/><text class="t-c" x="248" y="129">3</text>
+                <text class="t-sm" x="12" y="174">space-between（両端に寄せて、間を均等に）</text>
+                <rect class="box-white" x="8" y="180" width="344" height="44" rx="8"/>
+                <rect class="box-blue" x="16" y="186" width="60" height="32" rx="6"/><text class="t-c" x="46" y="207">1</text>
+                <rect class="box-blue" x="150" y="186" width="60" height="32" rx="6"/><text class="t-c" x="180" y="207">2</text>
+                <rect class="box-blue" x="284" y="186" width="60" height="32" rx="6"/><text class="t-c" x="314" y="207">3</text>
+              </svg>
+              <figcaption>左右に離したいとき（左にタイトル・右にスコア）は、<code>space-between</code>が便利です。</figcaption>
+            </figure>
+            <p><strong>交差軸の並べ方を変える：<code>align-items</code>（10分）</strong></p>
+            <ul>
+              <li><code>.cards</code>に、高さと<code>align-items</code>を足す：
+              <pre><code>.cards { display: flex; gap: 12px; height: 120px; align-items: center; }</code></pre>
+              </li>
+              <li>試す値は3つ：<code>stretch</code>（縦に伸びて高さをそろえる。何も書かないときの初期値）／<code>flex-start</code>（上づめ）／<code>center</code>（縦の中央）</li>
+              <li><code>align-items</code>は<strong>交差軸（縦）</strong>の並べ方を決める。<code>justify-content</code>と<code>align-items</code>は、<strong>横と縦</strong>の組で覚える</li>
+              <li>確認ができたら、<code>height: 120px;</code>と<code>align-items: center;</code>を消して、前の状態に戻す</li>
+            </ul>
+            <p><strong>入りきらないときに折り返す：<code>flex-wrap</code>（10分）</strong></p>
+            <ul>
+              <li>
+                <p><code>&lt;/body&gt;</code>の直前に、タグが7つ並ぶ部分を追加し、<code>&lt;style&gt;</code>に2つのルールを足す</p>
+                <button class="copy-md-btn" data-md-source="tags-code">
+                  <span class="btn-icon"></span> 追加するコードをコピー
+                </button>
+<pre id="tags-code" class="md-preview">【&lt;/body&gt;の直前に追加するHTML】
+  &lt;h2&gt;タグを並べる&lt;/h2&gt;
+  &lt;div class="tags"&gt;
+    &lt;span class="tag"&gt;マグ&lt;/span&gt;
+    &lt;span class="tag"&gt;ノート&lt;/span&gt;
+    &lt;span class="tag"&gt;ペン&lt;/span&gt;
+    &lt;span class="tag"&gt;ふせん&lt;/span&gt;
+    &lt;span class="tag"&gt;ハサミ&lt;/span&gt;
+    &lt;span class="tag"&gt;定規&lt;/span&gt;
+    &lt;span class="tag"&gt;消しゴム&lt;/span&gt;
+  &lt;/div&gt;
+
+【&lt;style&gt;の中に追加するCSS】
+    .tags { display: flex; gap: 8px; }
+    .tag { padding: 4px 12px; background: #fde8d0; border-radius: 16px; }</pre>
+              </li>
+              <li>Simple Browserの幅を狭くしたり、タグを増やしたりして、<strong>1行に入りきらない</strong>状態にする。初期のままだと、タグが1行に押し込まれて窮屈になる</li>
+              <li><code>.tags</code>に<code>flex-wrap: wrap;</code>を足すと、入りきらない分が<strong>次の行へ折り返す</strong>ことを確認する</li>
+            </ul>
+            <p><strong>演習：画面の「帯」（スコアバー）を作る（15分）</strong></p>
+            <ul>
+              <li>ゲームのスコア表示や、ECサイトの上の帯（店名とカートの点数）のように、<strong>左と右に離して置く帯</strong>を作る。<code>&lt;/body&gt;</code>の直前に、次のHTMLを追加する：
+              <pre><code>&lt;div class="bar"&gt;
+  &lt;span&gt;もぐらたたき&lt;/span&gt;
+  &lt;span&gt;スコア: 3&lt;/span&gt;
+&lt;/div&gt;</code></pre>
+              </li>
+              <li>次の条件を満たす<code>.bar</code>のCSSを、<strong>自分で書く</strong>（先に手で書き、困ったら上の3つの説明を見返す）
+                <ul>
+                  <li>横一列に並ぶ</li>
+                  <li>左に「もぐらたたき」、右に「スコア: 3」が離れて置かれる</li>
+                  <li>縦方向は中央にそろう（<code>padding: 12px 16px;</code>と、背景色<code>background: #3d5a73;</code>・文字色<code>color: white;</code>を足すと帯らしくなる）</li>
+                </ul>
+              </li>
+              <li>自分の作品に合わせて、文字を書き換えてよい（ECサイトなら「ミニ雑貨店」と「カート: 2点」など）</li>
+              <li>
+                <details>
+                  <summary>答えを見る</summary>
+                  <pre><code>.bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #3d5a73;
+  color: white;
+}</code></pre>
+                </details>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>Gridで格子状に並べ、FlexboxとGridを使い分ける</h3>
+          <div class="timeline-body">
+            <p><strong>Flexboxでは足りない場面を知る（10分）</strong></p>
+            <ul>
+              <li>第5回の画面構成を思い出す——もぐらたたきの<strong>6つの穴（3列×2行）</strong>、雑貨店の<strong>商品カードの並び</strong>。これは「一列」ではなく、<strong>縦にも横にも並ぶ格子</strong></li>
+              <li>Flexboxは基本的に<strong>一列</strong>（主軸の向き）に並べる道具。折り返しを使えば格子に近い形にもできるが、各行の列が揃うよう幅を自分で計算する必要が出てくる</li>
+              <li>格子に並べるために作られたのが<strong>Grid</strong>。今から、同じ<code>layout-demo.html</code>に追加して試す</li>
+            </ul>
+            <p><strong>Gridの基本：<code>grid-template-columns</code>と<code>repeat</code>（20分）</strong></p>
+            <ul>
+              <li>
+                <p><code>&lt;/body&gt;</code>の直前に6つの穴を追加し、<code>&lt;style&gt;</code>にGridのルールを足す</p>
+                <button class="copy-md-btn" data-md-source="holes-code">
+                  <span class="btn-icon"></span> 追加するコードをコピー
+                </button>
+<pre id="holes-code" class="md-preview">【&lt;/body&gt;の直前に追加するHTML】
+  &lt;h2&gt;穴を格子に並べる&lt;/h2&gt;
+  &lt;div class="holes"&gt;
+    &lt;div class="hole"&gt;&lt;/div&gt;
+    &lt;div class="hole"&gt;&lt;/div&gt;
+    &lt;div class="hole"&gt;&lt;/div&gt;
+    &lt;div class="hole"&gt;&lt;/div&gt;
+    &lt;div class="hole"&gt;&lt;/div&gt;
+    &lt;div class="hole"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+
+【&lt;style&gt;の中に追加するCSS】
+    .holes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .hole { aspect-ratio: 1 / 1; border-radius: 50%; background: #ddd; }</pre>
+              </li>
+              <li>6つの円が<strong>3列×2行</strong>の格子に並ぶ。Flexboxと同じく、<code>display: grid</code>は<strong>親</strong>（<code>.holes</code>）に書く</li>
+              <li><code>grid-template-columns: repeat(3, 1fr)</code>——<strong>同じ幅の列を3本</strong>作る、という意味
+                <ul>
+                  <li><code>repeat(3, 1fr)</code>は、<code>1fr 1fr 1fr</code>と同じ意味の短い書き方</li>
+                  <li><code>fr</code>は「余っている幅を何等分したうちの何個分か」を表す単位。<code>1fr</code>の3列は、幅を3等分した列になる</li>
+                </ul>
+              </li>
+              <li>数字を変えて試す：<code>repeat(3, 1fr)</code>を<code>repeat(2, 1fr)</code>や<code>repeat(6, 1fr)</code>にすると、列の数が変わる。<code>1fr 2fr 1fr</code>と書くと、真ん中の列だけ2倍の幅になる。確認できたら<code>repeat(3, 1fr)</code>に戻す</li>
+              <li>子が6個で3列なら、行は自動で2行になる。<strong>行の数は書かなくてよい</strong>（子の数に合わせて増える）</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-w6-grid">
+              <p class="vz-fig-title" id="cap-w6-grid">Gridの親と子、列と gap</p>
+              <svg class="vz-svg" viewBox="0 0 360 236" role="img" aria-labelledby="w6-grid-t w6-grid-d">
+                <title id="w6-grid-t">Gridの親と子、列と gap</title>
+                <desc id="w6-grid-d">display: gridを書いた親の箱の中に、子の穴が6つ、3列2行の格子で並んでいる。列は repeat(3, 1fr) で3本作り、子と子のすき間は gap で決める。</desc>
+                <text class="t-sm" x="12" y="20">親（display: grid を書く）</text>
+                <rect class="box-white box-key" x="8" y="28" width="344" height="144" rx="10"/>
+                <rect class="box-orange" x="18" y="40" width="100" height="56" rx="8"/><text class="t-c" x="68" y="73">穴 1</text>
+                <rect class="box-orange" x="130" y="40" width="100" height="56" rx="8"/><text class="t-c" x="180" y="73">穴 2</text>
+                <rect class="box-orange" x="242" y="40" width="100" height="56" rx="8"/><text class="t-c" x="292" y="73">穴 3</text>
+                <rect class="box-orange" x="18" y="108" width="100" height="56" rx="8"/><text class="t-c" x="68" y="141">穴 4</text>
+                <rect class="box-orange" x="130" y="108" width="100" height="56" rx="8"/><text class="t-c" x="180" y="141">穴 5</text>
+                <rect class="box-orange" x="242" y="108" width="100" height="56" rx="8"/><text class="t-c" x="292" y="141">穴 6</text>
+                <text class="t-c t-sm" x="180" y="196">列は repeat(3, 1fr) で3本、すき間は gap で決める</text>
+                <text class="t-c t-sm" x="180" y="216">1fr ＝ 余っている幅を等分した、1つ分</text>
+              </svg>
+              <figcaption>行の数は、子の数と列の数から自動で決まります。</figcaption>
+            </figure>
+            <p><strong>ECサイトの商品一覧：画面の幅に合わせて列の数を変える（10分）</strong></p>
+            <ul>
+              <li>
+                <p>商品カードを並べる部分を追加する。ゲームを選んだ人も、一度試してよい</p>
+                <button class="copy-md-btn" data-md-source="shop-code">
+                  <span class="btn-icon"></span> 追加するコードをコピー
+                </button>
+<pre id="shop-code" class="md-preview">【&lt;/body&gt;の直前に追加するHTML】
+  &lt;h2&gt;商品を並べる&lt;/h2&gt;
+  &lt;div class="shop"&gt;
+    &lt;div class="card"&gt;マグ&lt;/div&gt;
+    &lt;div class="card"&gt;ノート&lt;/div&gt;
+    &lt;div class="card"&gt;ペン&lt;/div&gt;
+    &lt;div class="card"&gt;ふせん&lt;/div&gt;
+    &lt;div class="card"&gt;ハサミ&lt;/div&gt;
+  &lt;/div&gt;
+
+【&lt;style&gt;の中に追加するCSS】
+    .shop { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }</pre>
+              </li>
+              <li><code>repeat(auto-fill, minmax(140px, 1fr))</code>は、「<strong>幅が140px以上のカードを、入るだけ並べる</strong>」という書き方。Simple Browserの幅を広げたり狭めたりして、<strong>列の数が自動で変わる</strong>ことを確認する</li>
+              <li>前期第5回の<code>@media</code>（メディアクエリ）を書かなくても、列の数が画面の幅に合わせて変わる。DevToolsのレスポンシブモード（前期第5回）で、スマホの幅も確かめる</li>
+              <li>今は「こう書くと、画面に合わせて列が変わる」と覚えておけばよい。自分の作品で使いたい人は、第8回以降で使う</li>
+            </ul>
+            <p><strong>FlexboxとGridの使い分けを整理する（10分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-w6-both">
+              <p class="vz-fig-title" id="cap-w6-both">もぐらたたきの画面を2つの道具で分ける</p>
+              <svg class="vz-svg" viewBox="0 0 360 276" role="img" aria-labelledby="w6-both-t w6-both-d">
+                <title id="w6-both-t">もぐらたたきの画面を、FlexboxとGridで分ける</title>
+                <desc id="w6-both-d">上の帯（もぐらたたきの文字とスコア）は、左右に離して一列に置くのでFlexbox。6つの穴は、3列2行の格子なのでGrid。全体は、上から下へ積まれる。</desc>
+                <rect class="box-white" x="8" y="8" width="344" height="262" rx="10"/>
+                <rect class="box-blue" x="20" y="20" width="320" height="40" rx="8"/>
+                <text class="t-b" x="32" y="45">もぐらたたき</text>
+                <text class="t-b" x="328" y="45" text-anchor="end">スコア: 3</text>
+                <text class="t-c t-sm" x="180" y="80">この帯 → Flexbox（一列・左右に離す）</text>
+                <circle class="box-orange" cx="100" cy="124" r="24"/>
+                <circle class="box-orange" cx="180" cy="124" r="24"/>
+                <circle class="box-orange" cx="260" cy="124" r="24"/>
+                <circle class="box-orange" cx="100" cy="180" r="24"/>
+                <circle class="box-orange" cx="180" cy="180" r="24"/>
+                <circle class="box-orange" cx="260" cy="180" r="24"/>
+                <text class="t-c t-sm" x="180" y="226">この6つの穴 → Grid（3列×2行の格子）</text>
+                <text class="t-c t-sm" x="180" y="254">全体は、上から下へ積み重なる</text>
+              </svg>
+              <figcaption>1つの画面の中で、部分ごとに道具を使い分けます。</figcaption>
+            </figure>
+            <ul>
+              <li><strong>一列に並べる</strong>（ヘッダー、ボタンの横並び、タグの並び）→ <strong>Flexbox</strong></li>
+              <li><strong>格子に並べる</strong>（盤面、商品一覧）→ <strong>Grid</strong></li>
+              <li>どちらでも作れる場面はある。迷ったら「<strong>縦と横の両方で揃えたいか</strong>」で決める。両方なら Grid、片方なら Flexbox</li>
+              <li>組み合わせてよい：Gridで並べた商品カードの<strong>中身</strong>（名前と価格を左右に離す）を、Flexboxで作る、という使い方もできる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>自分の作品の画面構成を<code>layout.html</code>として組む</h3>
+          <div class="timeline-body">
+            <p><strong><code>layout.html</code>を作る（5分）</strong></p>
+            <ul>
+              <li>
+                <p>リポジトリの一番上のフォルダに、新規ファイル<code>layout.html</code>を作り、下の雛形を貼り付けて保存する</p>
+                <button class="copy-md-btn" data-md-source="layout-html-template">
+                  <span class="btn-icon"></span> layout.htmlの雛形をコピー
+                </button>
+<pre id="layout-html-template" class="md-preview">&lt;!DOCTYPE html&gt;
+&lt;html lang="ja"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;後期作品のレイアウト&lt;/title&gt;
+  &lt;style&gt;
+    body { font-family: sans-serif; margin: 0; padding: 16px; }
+    /* ここにCSSを書く */
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- ここにHTMLを書く --&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+              </li>
+            </ul>
+            <p><strong><code>plan.md</code>の画面構成を見ながら組む（20分）</strong></p>
+            <ul>
+              <li>第5回の<code>plan.md</code>の「2. 画面構成」の<strong>画面1</strong>を見ながら、画面の形だけを組む。<strong>動く機能は作らない</strong>（ボタンを押しても何も起きなくてよい）。文字や絵文字をダミーで入れてよい</li>
+              <li>ゲームを選んだ人の例
+                <ul>
+                  <li>上の帯: タイトルとスコアを左右に離す（Flexbox）</li>
+                  <li>盤面: 穴やマスを格子に並べる（Grid）</li>
+                  <li>「はじめる」ボタンを、盤面の下に置く</li>
+                </ul>
+              </li>
+              <li>ECサイトを選んだ人の例
+                <ul>
+                  <li>上の帯: 店名とカートの点数を左右に離す（Flexbox）</li>
+                  <li>検索欄を、帯の下に置く</li>
+                  <li>商品カード: 格子に並べる（Grid）。カードの中の名前と価格は、必要なら左右に離す（Flexbox）</li>
+                </ul>
+              </li>
+              <li>画面が複数ある人は、まず1画面だけ組めばよい。残りは次の課題にする</li>
+              <li>使うのは今日学んだ<code>display: flex</code>／<code>display: grid</code>／<code>justify-content</code>／<code>align-items</code>／<code>gap</code>／<code>repeat</code>／<code>fr</code>の範囲で足りる。分からない書き方が出たら、先に自分で調べるか、講師に聞く</li>
+              <li>AIに聞いてもよいが、<strong>出てきたコードの意味を、自分の言葉で説明できる</strong>ところまで読んでから使う（前期からの約束）</li>
+            </ul>
+            <p><strong>commit・pushする（5分）</strong></p>
+            <ul>
+              <li>前期第4回と同じ手順で、<code>layout-demo.html</code>と<code>layout.html</code>を<code>commit</code>・<code>push</code>する（コミットメッセージ例：<code>レイアウトの練習と試作を追加</code>）</li>
+              <li><code>layout.html</code>は、第8回の「基礎機能」（ゲームなら盤面・キャラクター表示、ECサイトなら商品一覧表示）で土台に使える</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ program-basics-2.html Week 7 「🔧バグ修正ワーク④」と同期 -->
+              <li>次回（第7回）: <strong>🔧バグ修正ワーク④</strong>——AIに複雑なバグ入りコードを生成させ、読み解いて修正する演習（前期からの伝統を継承）</li>
+              <li>今日のキーワード「<strong><code>display: flex</code></strong>」「<strong><code>display: grid</code></strong>」「<strong><code>gap</code></strong>」を口に出して言えるか確認して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>layout.html</code>を仕上げて、pushする</strong>
+            <p>授業内で組みきれなかった部分は家で仕上げる。<code>plan.md</code>の画面1が、FlexboxとGridを使って「形として」組めている状態にして、push後にGitHub上で<code>layout.html</code>が見えることを確認する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>画面の幅を変えて、崩れ方を観察する</strong>
+            <p>DevToolsのレスポンシブモードで、<code>layout.html</code>をスマホの幅にして表示する。横にはみ出す部分や、窮屈になる部分があれば、メモしておく（第12回の「公開＆スマホ確認」で役に立つ）。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://developer.mozilla.org/ja/docs/Learn_web_development/Core/CSS_layout/Flexbox" target="_blank" rel="noopener">MDN — フレックスボックス</a> — 今日の<code>display: flex</code>と主軸・交差軸の解説</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Learn_web_development/Core/CSS_layout/Grids" target="_blank" rel="noopener">MDN — CSS グリッドレイアウト</a> — 今日の<code>display: grid</code>と<code>fr</code>の解説</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/CSS/justify-content" target="_blank" rel="noopener">MDN — justify-content</a> — 主軸の並べ方の値の一覧</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/CSS/gap" target="_blank" rel="noopener">MDN — CSS gap プロパティ</a> — 子と子のすき間の指定</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/CSS/repeat" target="_blank" rel="noopener">MDN — repeat() 関数 (CSS)</a> — <code>repeat(3, 1fr)</code>や<code>auto-fill</code>の書き方</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week05.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第5回 後期テーマ選択＆企画</span>
+      </a>
+      <a href="../program-basics-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">プログラム基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第7回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
