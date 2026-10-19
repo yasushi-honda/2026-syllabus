@@ -166,7 +166,11 @@
             <p><strong>主軸の並べ方を変える：<code>justify-content</code>（15分）</strong></p>
             <ul>
               <li><code>.cards</code>の1行を次のように書き換え、値を順に変えて、カードの位置がどう変わるかを見る：
-              <pre><code>.cards { display: flex; gap: 12px; justify-content: space-between; }</code></pre>
+              <pre><code>.cards {
+  display: flex;
+  gap: 12px;
+  justify-content: space-between;
+}</code></pre>
               </li>
               <li>試す値は3つ：<code>flex-start</code>（左づめ。何も書かないときは、これと同じ動き）／<code>center</code>（中央）／<code>space-between</code>（両端に寄せて、間を均等に空ける）</li>
               <li><code>justify-content</code>は<strong>主軸（横）</strong>の並べ方を決める</li>
@@ -197,7 +201,12 @@
             <p><strong>交差軸の並べ方を変える：<code>align-items</code>（10分）</strong></p>
             <ul>
               <li><code>.cards</code>に、高さと<code>align-items</code>を足す：
-              <pre><code>.cards { display: flex; gap: 12px; height: 120px; align-items: center; }</code></pre>
+              <pre><code>.cards {
+  display: flex;
+  gap: 12px;
+  height: 120px;
+  align-items: center;
+}</code></pre>
               </li>
               <li>試す値は3つ：<code>stretch</code>（縦に伸びて高さをそろえる。何も書かないときは、これと同じ動き）／<code>flex-start</code>（上づめ）／<code>center</code>（縦の中央）</li>
               <li><code>align-items</code>は<strong>交差軸（縦）</strong>の並べ方を決める。<code>justify-content</code>と<code>align-items</code>は、<strong>横と縦</strong>の組で覚える</li>
