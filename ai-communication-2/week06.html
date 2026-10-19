@@ -93,12 +93,14 @@
             <ul>
               <li>前回までに使用したリポジトリを開き、<strong>停止していたCodespaceを再開（resume）</strong>する——「Create codespace」で新規作成しない</li>
               <li>これまでと同じ手順で<code>python3 -m http.server 8000</code>を実行し、「ポート」タブ→<strong>「エディターでプレビュー」</strong>でSimple Browserを開いておく</li>
+              <li>agyを起動したとき、認証セッションが切れていて再ログインを求められる場合がある。その場合は、第2回と同じ手順で再認証する（表示される認可URLをブラウザで開き、Googleアカウントで認証する）</li>
+              <li>Codespaceを再開した直後は、会話が新しくなっていて、前回の内容を覚えていないことがある。今日の最初の指示は、前回の続きを前提にせず、作品のファイル名と目的を書き添えて送る</li>
               <li>第5回の作品のファイルを開いて、今の状態を確認しておく</li>
             </ul>
             <p><strong>「指示を重ねる」とは何か（25分）</strong></p>
             <ul>
-              <li>ここまでは、1回の指示で小さな修正を試してきた。ものづくりでは、<strong>1回で完成させようとせず、結果を見ながら少しずつ足していく</strong>やり方が使われる。これが「指示を重ねる」</li>
-              <li>agyは、第3回で学んだ<code>/clear</code>で新しい会話を始めない限り、<strong>同じ会話の続き</strong>として次の指示を受け取る（公式: Using AGY CLI — Quick Tips「Use <code>/clear</code> to clear the prompt and start a new conversation session」）。そのため、前の指示と結果を踏まえた続きの指示を送れる</li>
+              <li>ここまでは、1回の指示で小さな修正を試してきた。ものづくりでは、<strong>1回で完成させようとせず、結果を見ながら少しずつ足していく</strong>やり方がよく使われる。これが「指示を重ねる」</li>
+              <li>agyは、第3回で学んだ<code>/clear</code>で新しい会話を始めない限り、<strong>同じ会話の続き</strong>として次の指示を受け取る（公式: Using AGY CLI — Quick Tips「Use <code>/clear</code> to clear the prompt and start a new conversation session」）。公式の説明からは、同じ会話が続くと読める。実際に前の内容を踏まえて動くかどうかは、今日の授業で観察して確かめる</li>
               <li>重ねるときの3つのコツ
                 <ul>
                   <li>① <strong>1回に変えるのは1つ</strong>にする</li>
@@ -147,11 +149,15 @@
             <p><strong>比べる準備をする（5分）</strong></p>
             <ul>
               <li>第5回の作品をもとに、<strong>5つの変更</strong>を自分で考えてメモする（例: 背景を薄い青にする／見出しを大きくする／好きなものを3つ箇条書きで足す／押すとメッセージが出るボタンを足す／全体を中央にそろえる）。作品に合わせて自由に決めてよい</li>
-              <li>作品が1つのHTMLファイルなら、ターミナルで元のファイルを2つコピーする（<code>元のファイル.html</code>は自分のファイル名に置き換える）
+              <li>ターミナルで<code>ls</code>を実行し、作品が<strong>HTMLファイル1つ</strong>か、CSSやJavaScriptなど<strong>複数のファイル</strong>かを確認する</li>
+              <li>HTMLファイル1つの人は、元のファイルを2つコピーする（<code>元のファイル.html</code>は自分のファイル名に置き換える）
                 <pre><code>cp 元のファイル.html try-a.html
 cp 元のファイル.html try-b.html</code></pre>
-              </li>
-              <li><code>try-a.html</code>を「まとめて」用、<code>try-b.html</code>を「1つずつ」用に使う。元のファイルは触らない（作品が複数のファイルでできていてコピーがうまくいかない人は、担当教員に相談する）</li>
+                <code>try-a.html</code>を「まとめて」用、<code>try-b.html</code>を「1つずつ」用に使う。元のファイルは触らない</li>
+              <li>複数のファイルがある人は、作品のファイルを入れたフォルダごと2つコピーする（<code>作品フォルダ</code>は自分のフォルダ名に置き換える。作品がリポジトリの一番上にある場合は、担当教員に相談する）
+                <pre><code>cp -r 作品フォルダ try-a
+cp -r 作品フォルダ try-b</code></pre>
+                この場合、以下の<code>try-a.html</code>・<code>try-b.html</code>は、<code>try-a/</code>・<code>try-b/</code>の中のHTMLファイルに読み替える</li>
             </ul>
             <figure class="vz-fig" aria-labelledby="cap-a6-ab">
               <p class="vz-fig-title" id="cap-a6-ab">同じ5つの変更を、2通りの伝え方で頼む</p>
@@ -188,7 +194,7 @@ cp 元のファイル.html try-b.html</code></pre>
             </figure>
             <p><strong>A：まとめて1回で頼む（15分）</strong></p>
             <ul>
-              <li>agyに、<strong><code>try-a.html</code>だけを対象に</strong>、5つの変更を<strong>1回の指示</strong>で頼む。ほかのファイルは変えないことも、指示に書き添える</li>
+              <li>agyに、<strong><code>try-a.html</code>だけを対象に</strong>、5つの変更を<strong>1回の指示</strong>で頼む。ほかのファイルは変えないことも、指示に書き添える（フォルダごとコピーした人は、<code>try-a</code>フォルダの中だけを対象にする）</li>
               <li>完了したらSimple Browserのアドレスバーの末尾だけを<code>/try-a.html</code>に書き換えて確認する（第4回と同じ手順）</li>
               <li>次の3点を、Googleドキュメント（第5回のメモと同じドキュメントでよい）にメモする
                 <ul>
@@ -200,7 +206,8 @@ cp 元のファイル.html try-b.html</code></pre>
             </ul>
             <p><strong>B：1つずつ重ねて頼む（20分）</strong></p>
             <ul>
-              <li>同じ5つの変更を、今度は<strong><code>try-b.html</code>だけを対象に</strong>、<strong>1回に1つずつ</strong>頼む。1つ頼むたびにSimple Browserで<code>/try-b.html</code>を確認してから、次の指示を送る</li>
+              <li>Aのあと、agyで<code>/clear</code>と打って<strong>新しい会話を始める</strong>（Aの内容を引きずらず、公平に比べるため）。<code>try-b.html</code>は、コピーしたままの元の状態にしておく</li>
+              <li>同じ5つの変更を、<strong><code>try-b.html</code>だけを対象に</strong>、<strong>1回に1つずつ</strong>頼む。1つ頼むたびにSimple Browserで<code>/try-b.html</code>を確認してから、次の指示を送る</li>
               <li>2つ目以降は、<strong>前の結果を土台にする言い方</strong>で送る（例:「いまの背景色はそのままにして、見出しだけ大きくして」）</li>
               <li>Aと同じ3点をメモする</li>
               <li>5つとも終わらなくてもよい。時間になったら、できたところまででまとめる</li>
@@ -241,9 +248,9 @@ cp 元のファイル.html try-b.html</code></pre>
                 </ul>
               </li>
               <li>この表が「<strong>指示ログ</strong>」。送った指示は、<strong>そのまま貼り付けて</strong>残す</li>
-              <li>今日は、元の作品のファイルに直接育てる。元の状態に戻したくなったときのために、授業の最初に<code>cp</code>でコピーを取っておいてもよい</li>
+              <li>今日は、元の作品のファイルに直接育てる。元の状態に戻したくなったときのために、ここで<code>cp</code>でコピーを取っておいてもよい</li>
             </ul>
-            <p><strong>3回、指示を重ねる（30分、1回あたり約10分）</strong></p>
+            <p><strong>3回、指示を重ねる（35分、1回あたり約12分）</strong></p>
             <ul>
               <li>1回ごとに、次の流れをくり返す
                 <ul>
@@ -255,7 +262,7 @@ cp 元のファイル.html try-b.html</code></pre>
               </li>
               <li>2回目以降は、前の結果を土台にした言い方を使う（例:「いまの○○はそのままで、△△だけ変えて」）</li>
               <li>3回分が早く終わった人は、4回目・5回目を重ねてよい。逆に、1回に時間がかかった人は、3回に届かなくてもよい</li>
-              <li><code>plan</code>モード（<code>Shift+Tab</code>で切り替え）を使うと、まとまった変更の前に計画を見せてもらえる。使うかどうかは任意</li>
+              <li><code>plan</code>モード（<code>Shift+Tab</code>で切り替え）を使うと、コードを書く前に分析して手順をまとめてもらえる（公式の説明は第3回のとおり）。使うかどうかは任意</li>
             </ul>
             <p><strong>思った結果と違ったときの3つの手（10分）</strong></p>
             <figure class="vz-fig" aria-labelledby="cap-a6-stuck">
@@ -344,7 +351,7 @@ cp 元のファイル.html try-b.html</code></pre>
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
             <strong>家でもう1回、指示を重ねてみる</strong>
-            <p>今日育てた作品に、もう1つ変更を重ねる。ログの4行目として「送った指示・起きたこと・次の一手」を書いておく。</p>
+            <p>今日育てた作品に、もう1つ変更を重ねる。ログに4回目の分として「送った指示・起きたこと・次の一手」を書いておく。</p>
           </div>
         </div>
       </div>
