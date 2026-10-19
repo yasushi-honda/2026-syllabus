@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第6回 AIエージェントに指示する② | AIコミュニケーション基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=19">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <!-- 公式情報確認: 2026-10-19（参考リンクのAntigravity CLI公式ドキュメント3ページの生存を確認。/rewind・/clear・実行モードの記述は第3回で公式Quick Tipsから裏取り済みの内容を再掲） -->
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication-2.html">AIコミュニケーション基礎 II</a>
+        <span>/</span>
+        <span>第6回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">AIエージェントに<wbr>指示する②</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 6</span>
+            <span class="page-badge">火曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-purple">
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">指示を<strong>重ねて</strong>作品を育てていく。「伝え方」でAIの動きが変わることを体感する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">指示を重ねる / 1回に1つ / 結果を見てから次の一手 / 指示ログ / 伝え方で動きが変わる</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第1〜5回で使用したリポジトリ・Codespaces環境にアクセスできる状態。第5回で作った作品と、第5回の「言ったこと・起きたこと・結果」のメモ（見当たらない場合は担当教員に確認）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>1回で全部を頼むやり方と、<strong>1つずつ指示を重ねる</strong>やり方を試し、結果の違いを自分の言葉で説明できる</li>
+        <li>前の結果を土台にして、<strong>「ここはそのまま、ここだけ変えて」</strong>と伝えられる</li>
+        <li>3回の指示を重ねて作品を育て、<strong>送った指示・起きたこと・次の一手</strong>を「指示ログ」に残せる</li>
+        <li>思った結果と違ったときに、<strong>ズレを1つに絞って伝える</strong>・<code>/rewind</code>で会話を戻す・言い方を変える、の中から選べる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回を振り返り、「指示を重ねる」考え方を知る</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返り（10分）</strong></p>
+            <ul>
+              <li>第5回で書いた「言ったこと・起きたこと・結果」のメモを開き、<strong>ズレがあった場所</strong>と、その理由（対象・変化・基準のどれが曖昧だったか）を、ペアで1つずつ確認する</li>
+              <li>第5回の最後に、追加の指示を1つ送ったことを思い出す。今日は、その「追加の指示」を<strong>何度も重ねて</strong>作品を育てる</li>
+            </ul>
+            <p><strong>環境を整える（5分）</strong></p>
+            <ul>
+              <li>前回までに使用したリポジトリを開き、<strong>停止していたCodespaceを再開（resume）</strong>する——「Create codespace」で新規作成しない</li>
+              <li>これまでと同じ手順で<code>python3 -m http.server 8000</code>を実行し、「ポート」タブ→<strong>「エディターでプレビュー」</strong>でSimple Browserを開いておく</li>
+              <li>第5回の作品のファイルを開いて、今の状態を確認しておく</li>
+            </ul>
+            <p><strong>「指示を重ねる」とは何か（25分）</strong></p>
+            <ul>
+              <li>ここまでは、1回の指示で小さな修正を試してきた。ものづくりでは、<strong>1回で完成させようとせず、結果を見ながら少しずつ足していく</strong>やり方が使われる。これが「指示を重ねる」</li>
+              <li>agyは、第3回で学んだ<code>/clear</code>で新しい会話を始めない限り、<strong>同じ会話の続き</strong>として次の指示を受け取る（公式: Using AGY CLI — Quick Tips「Use <code>/clear</code> to clear the prompt and start a new conversation session」）。そのため、前の指示と結果を踏まえた続きの指示を送れる</li>
+              <li>重ねるときの3つのコツ
+                <ul>
+                  <li>① <strong>1回に変えるのは1つ</strong>にする</li>
+                  <li>② <strong>結果を見てから</strong>次の指示を考える</li>
+                  <li>③ <strong>前の結果を土台にする</strong>——「いまの○○はそのままで、△△だけ変えて」のように、残したい部分も伝える</li>
+                </ul>
+              </li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-a6-cycle">
+              <p class="vz-fig-title" id="cap-a6-cycle">指示を重ねるサイクル</p>
+              <svg class="vz-svg" viewBox="0 0 360 330" role="img" aria-labelledby="a6-cycle-t a6-cycle-d">
+                <title id="a6-cycle-t">指示を重ねるサイクル</title>
+                <desc id="a6-cycle-d">1 指示を送る、2 agyの作業を観察する、3 結果を確認する、4 次の一手を決める、の順に進み、4のあとは1に戻ってくり返す。このくり返しが、指示を重ねるということ。</desc>
+                <rect class="box-purple" x="8" y="8" width="242" height="52" rx="10"/>
+                <text class="t-b" x="22" y="30">① 指示を送る</text>
+                <text class="t-sm" x="22" y="50">1回に変えるのは1つ</text>
+                <line class="line" x1="129" y1="62" x2="129" y2="78" marker-end="url(#mk-s)"/>
+                <rect class="box-purple" x="8" y="80" width="242" height="52" rx="10"/>
+                <text class="t-b" x="22" y="102">② agyの作業を観察する</text>
+                <text class="t-sm" x="22" y="122">順番・質問・変わったファイル</text>
+                <line class="line" x1="129" y1="134" x2="129" y2="150" marker-end="url(#mk-s)"/>
+                <rect class="box-purple" x="8" y="152" width="242" height="52" rx="10"/>
+                <text class="t-b" x="22" y="174">③ 結果を確認する</text>
+                <text class="t-sm" x="22" y="194">Simple Browserで見る</text>
+                <line class="line" x1="129" y1="206" x2="129" y2="222" marker-end="url(#mk-s)"/>
+                <rect class="box-white box-key" x="8" y="224" width="242" height="52" rx="10"/>
+                <text class="t-b" x="22" y="246">④ 次の一手を決める</text>
+                <text class="t-sm" x="22" y="266">残す所と変える所を分ける</text>
+                <polyline class="line" points="250,250 330,250 330,34 250,34" marker-end="url(#mk-s)"/>
+                <text class="t-sm t-halo" x="322" y="146" text-anchor="end">くり返す</text>
+                <rect class="band" x="8" y="290" width="344" height="34" rx="10"/>
+                <text class="t-c" x="180" y="312">このくり返しが「指示を重ねる」</text>
+              </svg>
+              <figcaption>④で決めた次の一手が、次の①の指示になります。</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>同じ変更を「まとめて」と「1つずつ」で頼み、結果を比べる</h3>
+          <div class="timeline-body">
+            <p><strong>比べる準備をする（5分）</strong></p>
+            <ul>
+              <li>第5回の作品をもとに、<strong>5つの変更</strong>を自分で考えてメモする（例: 背景を薄い青にする／見出しを大きくする／好きなものを3つ箇条書きで足す／押すとメッセージが出るボタンを足す／全体を中央にそろえる）。作品に合わせて自由に決めてよい</li>
+              <li>作品が1つのHTMLファイルなら、ターミナルで元のファイルを2つコピーする（<code>元のファイル.html</code>は自分のファイル名に置き換える）
+                <pre><code>cp 元のファイル.html try-a.html
+cp 元のファイル.html try-b.html</code></pre>
+              </li>
+              <li><code>try-a.html</code>を「まとめて」用、<code>try-b.html</code>を「1つずつ」用に使う。元のファイルは触らない（作品が複数のファイルでできていてコピーがうまくいかない人は、担当教員に相談する）</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-a6-ab">
+              <p class="vz-fig-title" id="cap-a6-ab">同じ5つの変更を、2通りの伝え方で頼む</p>
+              <svg class="vz-svg" viewBox="0 0 360 300" role="img" aria-labelledby="a6-ab-t a6-ab-d">
+                <title id="a6-ab-t">同じ5つの変更を、2通りの伝え方で頼む</title>
+                <desc id="a6-ab-d">Aは5つの変更を1回の指示でまとめて頼む。Bは5つの変更を1つずつ、頼んで確認することをくり返す。どちらも、取りこぼしや頼んでいない変更が起きたか、1つずつ確認できたかを観察して比べる。どちらが正解かではなく、ズレの見つけやすさを比べる。</desc>
+                <rect class="box-white" x="8" y="6" width="166" height="40" rx="10"/>
+                <text class="t-c t-b" x="91" y="31">A まとめて1回</text>
+                <rect class="box-purple" x="186" y="6" width="166" height="40" rx="10"/>
+                <text class="t-c t-b" x="269" y="31">B 1つずつ重ねる</text>
+                <rect class="box-white" x="8" y="62" width="166" height="108" rx="10"/>
+                <text class="t-c" x="91" y="92">5つの変更を</text>
+                <text class="t-c" x="91" y="112">1回で頼む</text>
+                <text class="t-c t-sm" x="91" y="144">① ② ③ ④ ⑤</text>
+                <rect class="box-purple" x="186" y="62" width="166" height="30" rx="8"/>
+                <text class="t-c" x="269" y="82">① 頼む → 確認</text>
+                <rect class="box-purple" x="186" y="100" width="166" height="30" rx="8"/>
+                <text class="t-c" x="269" y="120">② 頼む → 確認</text>
+                <rect class="box-purple" x="186" y="138" width="166" height="30" rx="8"/>
+                <text class="t-c" x="269" y="158">③ 頼む → 確認 …</text>
+                <line class="line" x1="91" y1="172" x2="91" y2="190" marker-end="url(#mk-s)"/>
+                <line class="line" x1="269" y1="172" x2="269" y2="190" marker-end="url(#mk-s)"/>
+                <rect class="box-white box-key" x="8" y="194" width="166" height="64" rx="10"/>
+                <text class="t-c t-sm" x="91" y="216">観察する</text>
+                <text class="t-c" x="91" y="236">取りこぼし・</text>
+                <text class="t-c" x="91" y="252">頼んでいない変更</text>
+                <rect class="box-white box-key" x="186" y="194" width="166" height="64" rx="10"/>
+                <text class="t-c t-sm" x="269" y="216">観察する</text>
+                <text class="t-c" x="269" y="236">1つずつ確認</text>
+                <text class="t-c" x="269" y="252">できたか</text>
+                <text class="t-c t-sm" x="180" y="284">正解を決めるのではなく、ズレの見つけやすさを比べる</text>
+              </svg>
+              <figcaption>どちらが良いかは、作品や変更の内容によって変わります。今日は「違いを観察する」ことが目的です。</figcaption>
+            </figure>
+            <p><strong>A：まとめて1回で頼む（15分）</strong></p>
+            <ul>
+              <li>agyに、<strong><code>try-a.html</code>だけを対象に</strong>、5つの変更を<strong>1回の指示</strong>で頼む。ほかのファイルは変えないことも、指示に書き添える</li>
+              <li>完了したらSimple Browserのアドレスバーの末尾だけを<code>/try-a.html</code>に書き換えて確認する（第4回と同じ手順）</li>
+              <li>次の3点を、Googleドキュメント（第5回のメモと同じドキュメントでよい）にメモする
+                <ul>
+                  <li>①頼んだ5つのうち、実現されなかったもの・思ったのと違うもの</li>
+                  <li>②頼んでいないのに変わったところ</li>
+                  <li>③ズレがあったとき、<strong>どの指示のどこが原因か</strong>が分かりやすかったか</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>B：1つずつ重ねて頼む（20分）</strong></p>
+            <ul>
+              <li>同じ5つの変更を、今度は<strong><code>try-b.html</code>だけを対象に</strong>、<strong>1回に1つずつ</strong>頼む。1つ頼むたびにSimple Browserで<code>/try-b.html</code>を確認してから、次の指示を送る</li>
+              <li>2つ目以降は、<strong>前の結果を土台にする言い方</strong>で送る（例:「いまの背景色はそのままにして、見出しだけ大きくして」）</li>
+              <li>Aと同じ3点をメモする</li>
+              <li>5つとも終わらなくてもよい。時間になったら、できたところまででまとめる</li>
+            </ul>
+            <p><strong>2つを並べて比べる（10分）</strong></p>
+            <ul>
+              <li><code>try-a.html</code>と<code>try-b.html</code>を、Simple Browserで見比べる</li>
+              <li>ペアで、メモした3点を比べて話し合う——<strong>どちらがズレに気づきやすかったか</strong>、どちらが思った通りに近かったか</li>
+              <li>結果は人や作品によって違ってよい。「Aのほうが速かった」「Bのほうが直しやすかった」など、<strong>自分の体験として</strong>1行にまとめる</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「伝え方」でAIの動きが変わる:</strong> 同じ内容でも、<strong>一度に頼む量</strong>や<strong>残したい所を伝えるかどうか</strong>で、agyの動きと結果は変わります。「どう伝えたら、どう動いたか」を、今日はよく見てください。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>指示を3回重ねて作品を育て、「指示ログ」に残す</h3>
+          <div class="timeline-body">
+            <p><strong>ゴールと3回分の道筋を決める（5分）</strong></p>
+            <ul>
+              <li>第5回の作品を土台に、「<strong>今日ここまで育てる</strong>」というゴールを1行で書く（例:「自己紹介ページに、好きなもののコーナーと切り替えボタンを付ける」）</li>
+              <li>ゴールまでを<strong>3回の指示</strong>に分けて、1行ずつ先にメモする。途中で結果を見て変えてよい</li>
+              <li>Googleドキュメントに、次の4列の表を作る（1行目は見出し、その下に3行）
+                <ul>
+                  <li>回／送った指示／起きたこと／次の一手</li>
+                </ul>
+              </li>
+              <li>この表が「<strong>指示ログ</strong>」。送った指示は、<strong>そのまま貼り付けて</strong>残す</li>
+              <li>今日は、元の作品のファイルに直接育てる。元の状態に戻したくなったときのために、授業の最初に<code>cp</code>でコピーを取っておいてもよい</li>
+            </ul>
+            <p><strong>3回、指示を重ねる（30分、1回あたり約10分）</strong></p>
+            <ul>
+              <li>1回ごとに、次の流れをくり返す
+                <ul>
+                  <li>① 指示を送る（1回に変えるのは1つ）</li>
+                  <li>② agyの作業を観察する（順番・質問・変わったファイル）</li>
+                  <li>③ Simple Browserで結果を確認する</li>
+                  <li>④ 指示ログに「起きたこと」と「次の一手」を書く</li>
+                </ul>
+              </li>
+              <li>2回目以降は、前の結果を土台にした言い方を使う（例:「いまの○○はそのままで、△△だけ変えて」）</li>
+              <li>3回分が早く終わった人は、4回目・5回目を重ねてよい。逆に、1回に時間がかかった人は、3回に届かなくてもよい</li>
+              <li><code>plan</code>モード（<code>Shift+Tab</code>で切り替え）を使うと、まとまった変更の前に計画を見せてもらえる。使うかどうかは任意</li>
+            </ul>
+            <p><strong>思った結果と違ったときの3つの手（10分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-a6-stuck">
+              <p class="vz-fig-title" id="cap-a6-stuck">思った結果と違ったときの3つの手</p>
+              <svg class="vz-svg" viewBox="0 0 360 300" role="img" aria-labelledby="a6-stuck-t a6-stuck-d">
+                <title id="a6-stuck-t">思った結果と違ったときの3つの手</title>
+                <desc id="a6-stuck-d">思った結果と違ったら、まず1 ズレを1つに絞って伝える。それでも直らなければ、2 /rewindで会話を戻す（ファイルの状態は自分の目で確認する）。それでもうまくいかなければ、3 言い方を変えて送り直す（対象・変化・基準を見直す）。</desc>
+                <rect class="box-white" x="40" y="6" width="280" height="40" rx="10"/>
+                <text class="t-c t-b" x="180" y="31">思った結果と違う</text>
+                <line class="line" x1="180" y1="48" x2="180" y2="64" marker-end="url(#mk-s)"/>
+                <rect class="box-purple" x="8" y="66" width="344" height="54" rx="10"/>
+                <text class="t-b" x="22" y="88">① ズレを1つに絞って伝える</text>
+                <text class="t-sm" x="22" y="108">「ここだけ○○に直して」</text>
+                <line class="line" x1="180" y1="122" x2="180" y2="146" marker-end="url(#mk-s)"/>
+                <text class="t-sm t-halo" x="192" y="139">直らないとき</text>
+                <rect class="box-purple" x="8" y="148" width="344" height="54" rx="10"/>
+                <text class="t-b" x="22" y="170">② /rewind で会話を戻す</text>
+                <text class="t-sm" x="22" y="190">ファイルの状態は自分の目で確認</text>
+                <line class="line" x1="180" y1="204" x2="180" y2="228" marker-end="url(#mk-s)"/>
+                <text class="t-sm t-halo" x="192" y="221">それでも難しいとき</text>
+                <rect class="box-purple" x="8" y="230" width="344" height="54" rx="10"/>
+                <text class="t-b" x="22" y="252">③ 言い方を変えて送り直す</text>
+                <text class="t-sm" x="22" y="272">対象・変化・基準を見直す</text>
+              </svg>
+              <figcaption>上から順に試します。②の<code>/rewind</code>は、公式の説明では「会話履歴」を戻す機能です（第3回）。</figcaption>
+            </figure>
+            <ul>
+              <li><strong>① ズレを1つに絞って伝える</strong>——「全部違う」と伝えず、「見出しの色だけ違う。青にして」のように<strong>1か所</strong>を指す</li>
+              <li><strong>② <code>/rewind</code>で会話を戻す</strong>——第3回で学んだとおり、公式の説明は<strong>会話履歴</strong>を戻すとしており、ファイルの変更まで戻るとは明記されていない。使ったあとは、<strong>ファイルがどうなったかを自分の目で確認する</strong></li>
+              <li><strong>③ 言い方を変えて送り直す</strong>——第4回の「対象・変化・基準」のどれが曖昧だったかを見直して、指示を書き直す</li>
+              <li>3回分の途中で実際にズレが起きた人は、どの手を使ったかも指示ログの「次の一手」に書く</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>指示ログを見せ合い、「効いた伝え方」をまとめる</h3>
+          <div class="timeline-body">
+            <p><strong>ペアで見せ合う（15分）</strong></p>
+            <ul>
+              <li>お互いの作品と指示ログを見せ合う。「どの指示で、どう変わったか」を、<strong>一番効いた指示を1つ選んで</strong>説明する</li>
+              <li>相手の指示ログの中から、<strong>自分も使ってみたい言い方</strong>を1つ見つけて伝える</li>
+            </ul>
+            <p><strong>「効いた伝え方」を指示メモに書き足す（15分）</strong></p>
+            <ul>
+              <li>「agyへの指示メモ」（第2回から育ててきたGoogleドキュメント）に、<strong>指示を重ねるときのコツ</strong>を、自分の言葉で1〜3個書き足す（例:「直したい所を1か所だけ指す」「残したい所も一緒に伝える」）</li>
+              <li>1限後半の「まとめて」と「1つずつ」の比べ方から分かったことも、1行入れておく</li>
+              <li>ここに書いたコツは、次回の「すれ違いワーク」で使う</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ ai-communication-2.html Week 7 「🔧すれ違いワーク」と同期 -->
+              <li>次回（第7回）: <strong>🔧すれ違いワーク</strong>——曖昧な指示でAIが誤解する様子を観察し、伝え方を改善する練習</li>
+              <li>今日のキーワード「<strong>指示を重ねる</strong>」「<strong>1回に1つ</strong>」「<strong>指示ログ</strong>」を口に出して言えるか確認して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>指示ログ（3回分）と、指示メモへの書き足しを完成させる</strong>
+            <p>授業内で書ききれなかった人は家で仕上げる。次回の「すれ違いワーク」で見返す。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>家でもう1回、指示を重ねてみる</strong>
+            <p>今日育てた作品に、もう1つ変更を重ねる。ログの4行目として「送った指示・起きたこと・次の一手」を書いておく。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://antigravity.google/docs/cli/using/" target="_blank" rel="noopener">Antigravity CLI — Using AGY CLI（公式）</a> — <code>/clear</code>・<code>/rewind</code>を含むQuick Tipsの公式解説（振り返り用）</li>
+        <li><a href="https://antigravity.google/docs/cli/best-practices/" target="_blank" rel="noopener">Antigravity CLI — Best Practices（公式）</a> — 「探索→計画→実行」の公式解説（振り返り用）</li>
+        <li><a href="https://antigravity.google/docs/cli/modes/" target="_blank" rel="noopener">Antigravity CLI — Choose an execution mode（公式）</a> — <code>Shift+Tab</code>での実行モード切替の公式解説（振り返り用）</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week05.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第5回 AIエージェントに指示する①</span>
+      </a>
+      <a href="../ai-communication-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AIコミュニケーション基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第7回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
