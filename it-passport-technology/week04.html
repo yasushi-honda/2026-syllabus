@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-  <link rel="stylesheet" href="../styles.css?v=20">
+  <link rel="stylesheet" href="../styles.css?v=21">
   <!-- 公式情報確認: 2026-10-21 (総務省「国民のためのサイバーセキュリティサイト」用語集 https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ ja_02 共通鍵暗号方式・公開鍵暗号方式・公開鍵 / ja_03 生体認証 / ja_04 電子署名・多要素認証 / ja_05 認証局・二段階認証 / ja_06 秘密鍵 / 令和7年度ITパスポート試験 公開問題 問87・問89・問90 と解答例（PDFは画像のため目視で原文を転記）。「デジタル署名」は試験・教科書の呼び名。総務省の用語集には「電子署名」「サーバ証明書」「電子商取引（BtoB/BtoC）」の項目があり、公開鍵暗号方式を使って作る署名の説明がある。「電子証明書」自体の定義文は総務省用語集で確認できなかったため、認証局の定義文（電子証明書の登録・発行・失効などを行う第三者認証機関）と問87の解答から、やさしく言い換えた。「e-ビジネス」はネットワークを使った取引という一般的な説明で、公式の定義文は未突合（経産省サイトは機械取得が403のため、市場規模などの数字は載せていない）。教科書 p.371-380・p.102-105 は親ページの記載に従う（教科書本文は未突合）) -->
   <!-- 挿絵7枚（images/week04-story-1〜4.jpg、week04-keys.jpg、week04-signature.jpg、week04-factors.jpg）は、画像生成AI（Gemini 3.1 Flash Image）で作った架空の場面のイラスト（2026-10-21）。画像内に文字・実在の人物や企業のロゴは含めない。Aさん=第2〜3回と同じ画風の架空の人物 -->
   <!-- 用語カードの7語は、フォーム「ITパスポート 第4回 今回覚えた用語」の選択肢と一致 -->
@@ -614,7 +614,8 @@
       <p class="lesson-note">授業時間には含めない、読むだけのコラム。成績にも含まれない。今日の言葉を、面接で使う練習。</p>
       <h3>面接で「情報セキュリティ」について聞かれたら</h3>
       <p>面接官から、こう聞かれることがある。答えは、<strong>3つの順番</strong>で話すと、短く、分かりやすくなる（一つの考え方）。下の吹き出しが、順に現れる。</p>
-      <div class="tip-chat" role="group" aria-label="面接の会話の例。面接官の質問のあと、結論、理由、まとめの順に答える">
+      <div><button type="button" class="tip-ctl" data-target="tip-chat-1" aria-pressed="false">動きを止めて、全部を表示する</button></div>
+      <div class="tip-chat" id="tip-chat-1" role="group" aria-label="面接の会話の例。面接官の質問のあと、結論、理由、まとめの順に答える">
         <div class="tip-b tip-b--q"><span class="tip-tag">面接官</span>情報セキュリティについて、気をつけていることはありますか。</div>
         <div class="tip-b"><span class="tip-tag">① 結論</span>パスワードの使い回しをせず、<span translate="no">多要素認証</span>を使っています。</div>
         <div class="tip-b"><span class="tip-tag">② 理由</span>パスワードだけだと、漏れたときに、他の人にログインされるからです。</div>
@@ -692,6 +693,6 @@
     </div>
   </footer>
 
-  <script src="../app.js?v=3"></script>
+  <script src="../app.js?v=4"></script>
 </body>
 </html>

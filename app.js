@@ -86,6 +86,19 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // ========================================
+// 就活ワンポイントの「止める／もう一度動かす」ボタン（.tip-ctl が data-target の .tip-chat を切り替える。記録なし）
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.tip-ctl').forEach(function (btn) {
+    const chat = document.getElementById(btn.getAttribute('data-target'));
+    if (!chat) return;
+    btn.addEventListener('click', function () {
+      const on = chat.classList.toggle('tip-chat--static');
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      btn.textContent = on ? 'もう一度、動かす' : '動きを止めて、全部を表示する';
+    });
+  });
+});
+
 // ふりがなトグル（<body data-furigana="辞書のJSON"> があるページだけ）
 // 辞書は tools/furigana/build_dict.py が作る。オンにしたときだけ読み込み、オフの間はDOMを変えない
 // （Chromeの翻訳とも競合しない）。選んだ状態は端末に覚えさせる（保存できない環境では毎回オフ）。
