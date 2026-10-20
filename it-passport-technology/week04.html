@@ -10,6 +10,7 @@
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=19">
   <!-- 公式情報確認: 2026-10-21 (総務省「国民のためのサイバーセキュリティサイト」用語集 https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ ja_02 共通鍵暗号方式・公開鍵暗号方式・公開鍵 / ja_03 生体認証 / ja_04 電子署名・多要素認証 / ja_05 認証局・二段階認証 / ja_06 秘密鍵 / 令和7年度ITパスポート試験 公開問題 問87・問89・問90 と解答例（PDFは画像のため目視で原文を転記）。「デジタル署名」は試験・教科書の呼び名。総務省の用語集には「電子署名」「サーバ証明書」「電子商取引（BtoB/BtoC）」の項目があり、公開鍵暗号方式を使って作る署名の説明がある。「電子証明書」自体の定義文は総務省用語集で確認できなかったため、認証局の定義文（電子証明書の登録・発行・失効などを行う第三者認証機関）と問87の解答から、やさしく言い換えた。「e-ビジネス」はネットワークを使った取引という一般的な説明で、公式の定義文は未突合（経産省サイトは機械取得が403のため、市場規模などの数字は載せていない）。教科書 p.371-380・p.102-105 は親ページの記載に従う（教科書本文は未突合）) -->
+  <!-- 挿絵7枚（images/week04-story-1〜4.jpg、week04-keys.jpg、week04-signature.jpg、week04-factors.jpg）は、画像生成AI（Gemini 3.1 Flash Image）で作った架空の場面のイラスト（2026-10-21）。画像内に文字・実在の人物や企業のロゴは含めない。Aさん=第2〜3回と同じ画風の架空の人物 -->
   <!-- 用語カードの7語は、フォーム「ITパスポート 第4回 今回覚えた用語」の選択肢と一致 -->
 </head>
 <body data-furigana="furigana/week04.json">
@@ -126,10 +127,10 @@
             <p><strong>今日のストーリー：ネットで買い物をする（約10分）</strong></p>
             <p>Aさんが、ネットショップで、靴を買う。カードの番号と、住所を入力して、「注文する」を押す。この画面とお店の間で、どんな<strong>不安</strong>があるか。順番に読む。</p>
             <ol class="vz-steps">
-              <li class="vz-step"><b>1. 途中で、盗み見られるかもしれない</b>カードの番号や住所は、ネットワークを通って、お店に届く。途中で、<strong>他の人に見られる</strong>と困る。</li>
-              <li class="vz-step"><b>2. 偽物のお店かもしれない</b>本物そっくりの、<strong>偽のお店</strong>だったら。お店に届いた注文が、<strong>送った人本人のもの</strong>かも、確かめたい。</li>
-              <li class="vz-step"><b>3. 途中で、書き換えられるかもしれない</b>注文の中身（数や送り先）が、届くまでに<strong>書き換えられる</strong>と困る。</li>
-              <li class="vz-step"><b>4. 本当に本人が注文したのか</b>お店の側も、注文してきた人が<strong>本人</strong>か確かめたい。<span translate="no">ID</span>とパスワードだけで、足りるのか。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week04-story-1.jpg" alt="ノートパソコンで靴を買っているAさんが、カードを持っている。画面から出たケーブルの先の暗がりで、影のような人物が、虫めがねでのぞいている。" width="800" height="597" loading="lazy"><b>1. 途中で、盗み見られるかもしれない</b>カードの番号や住所は、ネットワークを通って、お店に届く。途中で、<strong>他の人に見られる</strong>と困る。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week04-story-2.jpg" alt="Aさんが、スマートフォンを持って、2軒の同じようなお店の間に立ち、首をかしげている。右のお店の扉の陰から、キツネのお面をつけた人が顔を出している。" width="800" height="597" loading="lazy"><b>2. 偽物のお店かもしれない</b>本物そっくりの、<strong>偽のお店</strong>だったら。お店に届いた注文が、<strong>送った人本人のもの</strong>かも、確かめたい。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week04-story-3.jpg" alt="Aさんが送った注文書が、透明な管を通って、お店に向かっている。管の途中で、黒い手袋の手がペンで注文書に書き込んでいる。お店の人が、書き換えられた注文書を見て、困っている。" width="800" height="597" loading="lazy"><b>3. 途中で、書き換えられるかもしれない</b>注文の中身（数や送り先）が、届くまでに<strong>書き換えられる</strong>と困る。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week04-story-4.jpg" alt="お店のカウンターで、Aさんがスマートフォンを見せ、指を示している。店員が笑顔で見ている。上には、パスワード、スマートフォン、指紋の3つの絵が、ふきだしに入っている。" width="800" height="597" loading="lazy"><b>4. 本当に本人が注文したのか</b>お店の側も、注文してきた人が<strong>本人</strong>か確かめたい。<span translate="no">ID</span>とパスワードだけで、足りるのか。</li>
             </ol>
             <p class="lesson-note">1は「暗号」、2と3は「<span translate="no">デジタル署名</span>」と「<span translate="no">認証局</span>」、4は「認証」で守る。順番に学ぶ。</p>
 
@@ -188,6 +189,7 @@
             <p>暗号化は、データを、第三者が読めない形に変えること。元に戻すことを<strong><span translate="no">復号</span></strong>という。暗号化と<span translate="no">復号</span>には「<strong>鍵</strong>」を使う。鍵の使い方で、2つの方式に分かれる。</p>
             <figure class="vz-fig" aria-labelledby="cap-w4-two">
               <p class="vz-fig-title" id="cap-w4-two"><span translate="no">共通鍵暗号</span>と<span translate="no">公開鍵暗号</span>の違い</p>
+              <img class="vz-fig-img" src="images/week04-keys.jpg" alt="3つの場面。左: Aさんが、開いた南京錠（公開鍵）をたくさんの人に配り、みんなが自分の箱に錠をつけている。中: 錠のかかった宝箱が道を運ばれ、黒い影の人物が錠のついた箱を開けられずにいる。右: Aさんが、1本だけ持っている金色の鍵（秘密鍵）で、箱を開けようとしている。" width="1000" height="558" loading="lazy">
               <div class="vz-fields vz-fields--2">
                 <section class="vz-field vz-f-tc">
                   <h4><span translate="no">共通鍵暗号</span></h4>
@@ -302,6 +304,7 @@
             </ul>
             <figure class="vz-fig" aria-labelledby="cap-w4-sig">
               <p class="vz-fig-title" id="cap-w4-sig"><span translate="no">デジタル署名</span>：BさんからAさんへ</p>
+              <img class="vz-fig-img" src="images/week04-signature.jpg" alt="2つの場面。左: 手紙に印鑑を押して、署名をしている。右: 受け取った人が、虫めがねで印鑑を見て、見本と見比べ、大きなチェック印がついている。手紙を書き換えようとする黒い手には、バツ印がついている。" width="1000" height="558" loading="lazy">
               <svg class="vz-svg" viewBox="0 0 360 236" role="img" aria-labelledby="w4-sig-t w4-sig-d">
                 <title id="w4-sig-t">デジタル署名：BさんからAさんへ</title>
                 <desc id="w4-sig-d">上から順に、1 Bさんが、メッセージに、自分の秘密鍵で署名をつける。2 メッセージと署名が、Aさんに届く。3 Aさんが、Bさんの公開鍵で署名を検証する。4 検証できれば、Bさんが作ったこと、書き換えられていないことが分かる。</desc>
@@ -374,6 +377,7 @@
             </ul>
             <figure class="vz-fig" aria-labelledby="cap-w4-auth">
               <p class="vz-fig-title" id="cap-w4-auth">認証の3つの要素</p>
+              <img class="vz-fig-img" src="images/week04-factors.jpg" alt="3つの場面。左: 頭の中で、パスワードの点々を思い浮かべている（知っているもの）。中: 盾の印のついたスマートフォンを持っている（持っているもの）。右: 指紋のセンサーに指を当て、横に顔の枠の絵がある（本人自身に関するもの）。下に、チェック印。" width="1000" height="558" loading="lazy">
               <svg class="vz-svg" viewBox="0 0 360 262" role="img" aria-labelledby="w4-auth-t w4-auth-d">
                 <title id="w4-auth-t">認証の3つの要素</title>
                 <desc id="w4-auth-d">1 知っているもの：パスワード、暗証番号。2 持っているもの：スマートフォン、ICカード。3 本人自身に関するもの：指紋、顔などの生体情報。この中から、異なる2つ以上を組み合わせると、多要素認証。</desc>
