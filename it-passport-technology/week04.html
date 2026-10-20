@@ -9,8 +9,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=19">
-  <!-- 公式情報確認: 2026-10-21 (総務省「国民のためのサイバーセキュリティサイト」用語集 https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ ja_02 共通鍵暗号方式・公開鍵暗号方式・公開鍵 / ja_03 生体認証 / ja_04 電子署名・多要素認証 / ja_05 認証局・二段階認証 / ja_06 秘密鍵 / 令和7年度ITパスポート試験 公開問題 問87・問89・問92 と解答例（PDFは画像のため目視で原文を転記）。「デジタル署名」は試験・教科書の呼び名。総務省の用語集には「電子署名」の項目があり、公開鍵暗号方式を使って作る署名の説明がある。「電子証明書」自体の定義文は総務省用語集で確認できなかったため、認証局の定義文（電子証明書の登録・発行・失効などを行う第三者認証機関）と問87の解答から、やさしく言い換えた。「e-ビジネス」はネットワークを使った取引という一般的な説明で、公式の定義文は未突合（経産省サイトは機械取得が403のため、市場規模などの数字は載せていない）。教科書 p.371-380・p.102-105 は親ページの記載に従う（教科書本文は未突合）) -->
-  <!-- 用語カードの7語は、フォーム「ITパスポート 第4回 今回覚えた用語」（forms-gas/addition_w04.gs の定義）と一致 -->
+  <!-- 公式情報確認: 2026-10-21 (総務省「国民のためのサイバーセキュリティサイト」用語集 https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ ja_02 共通鍵暗号方式・公開鍵暗号方式・公開鍵 / ja_03 生体認証 / ja_04 電子署名・多要素認証 / ja_05 認証局・二段階認証 / ja_06 秘密鍵 / 令和7年度ITパスポート試験 公開問題 問87・問89・問90 と解答例（PDFは画像のため目視で原文を転記）。「デジタル署名」は試験・教科書の呼び名。総務省の用語集には「電子署名」「サーバ証明書」「電子商取引（BtoB/BtoC）」の項目があり、公開鍵暗号方式を使って作る署名の説明がある。「電子証明書」自体の定義文は総務省用語集で確認できなかったため、認証局の定義文（電子証明書の登録・発行・失効などを行う第三者認証機関）と問87の解答から、やさしく言い換えた。「e-ビジネス」はネットワークを使った取引という一般的な説明で、公式の定義文は未突合（経産省サイトは機械取得が403のため、市場規模などの数字は載せていない）。教科書 p.371-380・p.102-105 は親ページの記載に従う（教科書本文は未突合）) -->
+  <!-- 用語カードの7語は、フォーム「ITパスポート 第4回 今回覚えた用語」の選択肢と一致 -->
 </head>
 <body data-furigana="furigana/week04.json">
   <div class="grain-overlay"></div>
@@ -117,7 +117,7 @@
           <h3>前回の復習テスト → ネットで買い物をするときの3つの不安</h3>
           <div class="timeline-body">
 
-            <p><strong>前回の復習テスト（約10分）</strong></p>
+            <p><strong>前回の復習テスト（約10分：テスト約5分＋解説の確認約5分）</strong></p>
             <p>前回（第3回）の内容を、1週間たって、どれだけ覚えているかを確かめる5問（約5分）。<strong>点数を競うものではない</strong>。覚えていることと、忘れていることを、自分で知るためのテスト。送信すると、点数と、正解・解説が表示される。そのあと、間違えた問題の解説を読む。分からないところは、隣の人か先生に聞く。</p>
             <div class="vz-cta">
               <a class="vz-btn vz-btn--ext" href="https://docs.google.com/forms/d/e/1FAIpQLSf90L_MgIjP8NFCR5joyJc2RrcYJtUv1524pp7mbUAzmmYgFA/viewform" target="_blank" rel="noopener">第4回 復習テスト（前回分）を受ける（Googleフォーム）</a>
@@ -129,14 +129,14 @@
               <li class="vz-step"><b>1. 途中で、盗み見られるかもしれない</b>カードの番号や住所は、ネットワークを通って、お店に届く。途中で、<strong>他の人に見られる</strong>と困る。</li>
               <li class="vz-step"><b>2. 偽物のお店かもしれない</b>本物そっくりの、<strong>偽のお店</strong>だったら。お店に届いた注文が、<strong>送った人本人のもの</strong>かも、確かめたい。</li>
               <li class="vz-step"><b>3. 途中で、書き換えられるかもしれない</b>注文の中身（数や送り先）が、届くまでに<strong>書き換えられる</strong>と困る。</li>
-              <li class="vz-step"><b>4. 本当に本人が注文したのか</b>お店の側も、注文してきた人が<strong>本人</strong>か確かめたい。IDとパスワードだけで、足りるのか。</li>
+              <li class="vz-step"><b>4. 本当に本人が注文したのか</b>お店の側も、注文してきた人が<strong>本人</strong>か確かめたい。<span translate="no">ID</span>とパスワードだけで、足りるのか。</li>
             </ol>
             <p class="lesson-note">1は「暗号」、2と3は「<span translate="no">デジタル署名</span>」と「<span translate="no">認証局</span>」、4は「認証」で守る。順番に学ぶ。</p>
 
             <p><strong><span translate="no">e-ビジネス</span>：なぜ「信頼」が必要か（約10分）</strong></p>
             <p><span translate="no">e-ビジネス</span>は、インターネットなどのネットワークを使って行う、商売や取引のこと（教科書 p.102-105 の用語。ここでは、やさしい説明にした）。買う人と売る人が、<strong>顔を合わせない</strong>ので、お互いに「相手は本物か」「情報は安全か」が心配になる。</p>
             <ul>
-              <li>取引の相手の分け方：<strong>企業が消費者に売る</strong>もの（<span translate="no">BtoC</span>。ネットショップなど）と、<strong>企業と企業</strong>の間のもの（<span translate="no">BtoB</span>）がある（経済産業省の電子商取引の調査も、この2つに分けている）</li>
+              <li>取引の相手の分け方：<strong>企業が消費者に売る</strong>もの（<span translate="no">BtoC</span>。ネットショップなど）と、<strong>企業と企業</strong>の間のもの（<span translate="no">BtoB</span>）がある（総務省の用語集の「電子商取引」の説明も、この2つに分けている）</li>
               <li>顔が見えない取引で信頼を作る技術が、今日の暗号・署名・認証。ストーリーの1〜4は、そのまま、<span translate="no">e-ビジネス</span>で信頼が必要な理由になる</li>
             </ul>
 
@@ -185,18 +185,18 @@
           <div class="timeline-body">
 
             <p><strong>① 暗号化と、2つの方式（約15分）</strong></p>
-            <p>暗号化は、データを、第三者が読めない形に変えること。元に戻すことを<strong>復号</strong>という。暗号化と復号には「<strong>鍵</strong>」を使う。鍵の使い方で、2つの方式に分かれる。</p>
+            <p>暗号化は、データを、第三者が読めない形に変えること。元に戻すことを<strong><span translate="no">復号</span></strong>という。暗号化と<span translate="no">復号</span>には「<strong>鍵</strong>」を使う。鍵の使い方で、2つの方式に分かれる。</p>
             <figure class="vz-fig" aria-labelledby="cap-w4-two">
               <p class="vz-fig-title" id="cap-w4-two"><span translate="no">共通鍵暗号</span>と<span translate="no">公開鍵暗号</span>の違い</p>
               <div class="vz-fields vz-fields--2">
                 <section class="vz-field vz-f-tc">
                   <h4><span translate="no">共通鍵暗号</span></h4>
-                  <p>暗号化と復号で、<strong>同じ鍵</strong>を使う。</p>
+                  <p>暗号化と<span translate="no">復号</span>で、<strong>同じ鍵</strong>を使う。</p>
                   <ul class="vz-tags"><li>速い</li><li>相手ごとに別の鍵を作って、管理する</li></ul>
                 </section>
                 <section class="vz-field vz-f-tc">
                   <h4><span translate="no">公開鍵暗号</span></h4>
-                  <p>暗号化と復号で、<strong>異なる鍵</strong>を使う。一方が<span translate="no">公開鍵</span>、もう一方が<span translate="no">秘密鍵</span>。</p>
+                  <p>暗号化と<span translate="no">復号</span>で、<strong>異なる鍵</strong>を使う。一方が<span translate="no">公開鍵</span>、もう一方が<span translate="no">秘密鍵</span>。</p>
                   <ul class="vz-tags"><li>多くの人とやり取りしやすい</li><li>署名にも使われる</li></ul>
                 </section>
               </div>
@@ -205,15 +205,15 @@
             <ul class="vz-points">
               <li class="vz-point">
                 <b><span translate="no">共通鍵暗号</span>方式（総務省）</b>
-                <p>暗号化と復号で同じ鍵を使用する暗号方式。処理速度が速い半面、<strong>相手先ごとに固有の鍵を作成し、管理しなければならない</strong>。大きなサイズのデータの暗号化や、限られた特定の相手とのやり取りに使われる。</p>
+                <p>暗号化と<span translate="no">復号</span>で同じ鍵を使用する暗号方式。処理速度が速い半面、<strong>相手先ごとに固有の鍵を作成し、管理しなければならない</strong>。大きなサイズのデータの暗号化や、限られた特定の相手とのやり取りに使われる。</p>
               </li>
               <li class="vz-point">
                 <b><span translate="no">公開鍵暗号</span>方式（総務省）</b>
-                <p>暗号化と復号とで異なる鍵を使用する暗号方式。一方の鍵を<strong><span translate="no">公開鍵</span></strong>、もう一方を<strong><span translate="no">秘密鍵</span></strong>とする。多くの人と暗号化して情報のやり取りをするときに有効で、<span translate="no">電子証明書</span>や<span translate="no">デジタル署名</span>等で使用される。</p>
+                <p>暗号化と<span translate="no">復号</span>とで異なる鍵を使用する暗号方式。一方の鍵を<strong><span translate="no">公開鍵</span></strong>、もう一方を<strong><span translate="no">秘密鍵</span></strong>とする。多くの人と暗号化して情報のやり取りをするときに有効で、<span translate="no">電子証明書</span>や<span translate="no">デジタル署名</span>等で使用される。</p>
               </li>
               <li class="vz-point">
                 <b><span translate="no">公開鍵</span>と<span translate="no">秘密鍵</span></b>
-                <p><strong><span translate="no">公開鍵</span></strong>：<span translate="no">公開鍵暗号</span>方式による暗号化で、相手に渡す鍵。多くの場合、不特定多数に公開する。<strong><span translate="no">秘密鍵</span></strong>：他人に見せることなく、自分だけが持つ鍵（総務省）。</p>
+                <p><strong><span translate="no">公開鍵</span></strong>：<span translate="no">公開鍵暗号</span>方式による暗号化で、相手に渡す鍵。多くの場合、不特定多数に公開する。<strong><span translate="no">秘密鍵</span></strong>：他人に見せることなく所有する鍵（総務省）。つまり、自分だけが持つ鍵。</p>
               </li>
             </ul>
 
@@ -246,14 +246,14 @@
                 <text class="t-b" x="44" y="197">Aさんが、自分の秘密鍵で復号</text>
                 <text class="t-sm" x="44" y="215">秘密鍵を持つAさんだけが読める</text>
               </svg>
-              <figcaption>太い枠が、秘密にしておく鍵を使う場面。覚え方：「<strong>相手の<span translate="no">公開鍵</span>で暗号化、相手の<span translate="no">秘密鍵</span>で復号</strong>」。</figcaption>
+              <figcaption>太い枠が、秘密にしておく鍵を使う場面。覚え方：「<strong>相手の<span translate="no">公開鍵</span>で暗号化、相手の<span translate="no">秘密鍵</span>で<span translate="no">復号</span></strong>」。</figcaption>
             </figure>
             <p class="lesson-note"><span translate="no">共通鍵暗号</span>は、速いが、相手ごとに鍵が必要。<span translate="no">公開鍵暗号</span>は、<span translate="no">公開鍵</span>を配るだけで多くの相手とやり取りできる。実際のネットでは、2つを組み合わせて使うこともあるが、ITパスポートでは、それぞれの特徴を区別できれば足りる。</p>
 
             <p><strong>③ 過去問を解く：どのメッセージが読めるか（約15分）</strong></p>
-            <p>過去問の問89は、4種類の暗号化メッセージを受け取ったAさんが、「どれを復号して読めるか」を聞く。まず、ペアで考える。そのあと答えを見る。</p>
+            <p>過去問の問89は、4種類の暗号化メッセージを受け取ったAさんが、「どれを<span translate="no">復号</span>して読めるか」を聞く。まず、ペアで考える。そのあと答えを見る。</p>
             <div class="exam-q">
-              <p class="exam-q-text">【例題①】問89　Aさんは，Bさんから次の4種類のメッセージを受け取った。Aさんが，受け取ったメッセージを復号して読むことができるものだけを全て挙げたものはどれか。</p>
+              <p class="exam-q-text">【例題①】問89　Aさんは，Bさんから次の4種類のメッセージを受け取った。Aさんが，受け取ったメッセージを<span translate="no">復号</span>して読むことができるものだけを全て挙げたものはどれか。</p>
               <p>a　AさんとBさんとの<span translate="no">共通鍵</span>で暗号化したメッセージ<br>b　Aさんの<span translate="no">公開鍵</span>で暗号化したメッセージ<br>c　Bさんの<span translate="no">公開鍵</span>で暗号化したメッセージ<br>d　Bさんの<span translate="no">秘密鍵</span>で暗号化したメッセージ</p>
               <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>a, b, d</span></div>
               <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>a, c, d</span></div>
@@ -262,7 +262,7 @@
               <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問89（<span translate="no">テクノロジ系</span>。問題文・選択肢は原文のまま）</p>
               <details class="exam-q-answer">
                 <summary>自分で選んだあとに、答えと解説を見る</summary>
-                <p><strong>正解：ア</strong>（型：当てはまるものを全て選ぶ）。aは、AさんもBさんも同じ<span translate="no">共通鍵</span>を持っているので、読める。bは、Aさんの<span translate="no">公開鍵</span>で暗号化したものは、Aさんの<span translate="no">秘密鍵</span>で復号できるので、読める。cは、Bさんの<span translate="no">公開鍵</span>で暗号化したものは、Bさんの<span translate="no">秘密鍵</span>でしか復号できず、Aさんは持っていないので、読めない。dは、Bさんの<span translate="no">秘密鍵</span>で暗号化したもの。これは、Bさんの<span translate="no">公開鍵</span>（誰でも手に入る）で元に戻せるので、Aさんは読める。dのように、<span translate="no">秘密鍵</span>で暗号化する使い方が、次の「<span translate="no">デジタル署名</span>」につながる。</p>
+                <p><strong>正解：ア</strong>（型：当てはまるものを全て選ぶ）。aは、AさんもBさんも同じ<span translate="no">共通鍵</span>を持っているので、読める。bは、Aさんの<span translate="no">公開鍵</span>で暗号化したものは、Aさんの<span translate="no">秘密鍵</span>で<span translate="no">復号</span>できるので、読める。cは、Bさんの<span translate="no">公開鍵</span>で暗号化したものは、Bさんの<span translate="no">秘密鍵</span>でしか<span translate="no">復号</span>できず、Aさんは持っていないので、読めない。dは、Bさんの<span translate="no">秘密鍵</span>で暗号化したもの。これは、Bさんの<span translate="no">公開鍵</span>（誰でも手に入る）で元に戻せるので、Aさんは読める。dのように、<span translate="no">秘密鍵</span>で暗号化する使い方が、次の「<span translate="no">デジタル署名</span>」につながる。</p>
               </details>
             </div>
           </div>
@@ -288,7 +288,7 @@
             <p>暗号は「中身を隠す」。でも、ストーリーの2と3（偽物・書き換え）には、別の仕組みが必要。それが<strong><span translate="no">デジタル署名</span></strong>。</p>
             <ul class="vz-points">
               <li class="vz-point">
-                <b>作り方と確かめ方（総務省「電子署名」の説明）</b>
+                <b>作り方と確かめ方（総務省「<span translate="no">電子署名</span>」の説明）</b>
                 <p>メッセージの作成者が、自分の<strong><span translate="no">秘密鍵</span></strong>を使って作る。受信した人は、作成者の<strong><span translate="no">公開鍵</span></strong>を使って、受信したメッセージを検証する。</p>
               </li>
               <li class="vz-point">
@@ -327,7 +327,7 @@
                 <text class="t-b" x="44" y="197">検証できれば、安心</text>
                 <text class="t-sm" x="44" y="215">Bさんが作った・書き換えなし</text>
               </svg>
-              <figcaption>暗号と、鍵の使い方が逆になる。暗号は「相手の<span translate="no">公開鍵</span>で暗号化」、署名は「自分の<span translate="no">秘密鍵</span>で署名」。出典：総務省「国民のためのサイバーセキュリティサイト」用語集（電子署名）。確認日：2026-10-21。</figcaption>
+              <figcaption>暗号と、鍵の使い方が逆になる。暗号は「相手の<span translate="no">公開鍵</span>で暗号化」、署名は「自分の<span translate="no">秘密鍵</span>で署名」。出典：総務省「国民のためのサイバーセキュリティサイト」用語集（<span translate="no">電子署名</span>）。確認日：2026-10-21。</figcaption>
             </figure>
 
             <p><strong>② <span translate="no">認証局</span>と<span translate="no">電子証明書</span>（約10分）</strong></p>
@@ -339,7 +339,7 @@
               </li>
               <li class="vz-point">
                 <b><span translate="no">電子証明書</span>（デジタル証明書）</b>
-                <p><span translate="no">公開鍵</span>の持ち主が本物だと、<span translate="no">認証局</span>が保証する、電子的な証明書。やさしい言い換え（総務省の用語集には、この語の定義文がないため、<span translate="no">認証局</span>の定義と、問87の内容から整理した）。ネットのお店のサイトが本物かを確かめるときも、使われる。</p>
+                <p><span translate="no">公開鍵</span>の持ち主が本物だと、<span translate="no">認証局</span>が保証する、電子的な証明書。やさしい言い換え。ネットのお店のサイトが本物かを確かめる証明書（総務省の用語集の「サーバ証明書」）も、認証局が発行する。</p>
               </li>
               <li class="vz-point">
                 <b>有効期間と、失効</b>
@@ -361,11 +361,11 @@
             <p class="lesson-note"><span translate="no">PKI</span>は、<span translate="no">公開鍵暗号</span>を使って、署名や暗号を安全に使えるようにする、<span translate="no">認証局</span>などを含む仕組み全体のこと（この教材では、教科書の用語として紹介し、詳しい定義は扱わない）。</p>
 
             <p><strong>③ 認証：本人かどうかを確かめる（約25分）</strong></p>
-            <p>ストーリーの4。IDとパスワードだけで、本人と言えるか。パスワードは、漏れたり、推測されたりする。そこで、<strong>複数の要素を組み合わせる</strong>。</p>
+            <p>ストーリーの4。<span translate="no">ID</span>とパスワードだけで、本人と言えるか。パスワードは、漏れたり、推測されたりする。そこで、<strong>複数の要素を組み合わせる</strong>。</p>
             <ul class="vz-points">
               <li class="vz-point">
                 <b><span translate="no">多要素認証</span>（総務省）</b>
-                <p>サービス利用時に行う利用者認証を、次の3つの要素のうち、<strong>2つ以上</strong>の要素を用いて行うもの。2つの要素を使うものは、「二要素認証」とも言う。</p>
+                <p>サービス利用時に行う利用者認証を、下の図の3つの要素のうち、<strong>2つ以上</strong>の要素を用いて行うもの。2つの要素を使うものは、「<span translate="no">二要素認証</span>」とも言う。</p>
               </li>
               <li class="vz-point">
                 <b><span translate="no">生体認証</span>（総務省）</b>
@@ -404,10 +404,10 @@
             <details class="vz-more">
               <summary>答えの例を見る</summary>
               <ul>
-                <li>1. 「知っているもの」＋「持っているもの」。<strong>異なる2つ</strong>なので、<span translate="no">多要素認証</span>（二要素認証）。</li>
+                <li>1. 「知っているもの」＋「持っているもの」。<strong>異なる2つ</strong>なので、<span translate="no">多要素認証</span>（<span translate="no">二要素認証</span>）。</li>
                 <li>2. どちらも「知っているもの」。要素は<strong>1種類だけ</strong>なので、<span translate="no">多要素認証</span>ではない。</li>
                 <li>3. どちらも「本人自身に関するもの」。要素は<strong>1種類だけ</strong>なので、<span translate="no">多要素認証</span>ではない。</li>
-                <li>参考：総務省の用語集では、同じ要素で2回に分けて認証するものは「二段階認証」と呼ばれる。異なる要素を組み合わせる方が、セキュリティレベルは高くなる。</li>
+                <li>参考：総務省の用語集では、認証を2回に分けて行うものを「<span translate="no">二段階認証</span>」と呼ぶ。同じ要素を2回使う場合もある。異なる要素を組み合わせて2回認証する場合は、<span translate="no">二要素認証</span>とも言う。同じ要素2回よりも、異なる要素2回の方が、セキュリティレベルは高くなる。</li>
               </ul>
             </details>
           </div>
@@ -419,20 +419,20 @@
             <span class="timeline-time">2限 後半</span>
             <span class="timeline-duration">約30分</span>
           </div>
-          <h3>過去問を1問 → 買い物の流れに、技術を当てはめる → 確認テスト（1回目）</h3>
+          <h3>暗号化の過去問を1問 → 買い物の流れに、技術を当てはめる → 確認テスト（1回目）</h3>
           <div class="timeline-body">
 
-            <p><strong>過去問演習（約5分）</strong>：問い方の型を使って、解く。</p>
+            <p><strong>過去問演習（約5分）</strong>：今日の「暗号化」とつながる問題を、問い方の型を使って解く。</p>
             <div class="exam-q">
-              <p class="exam-q-text">【例題③】問92　従業員が使用する<span translate="no">PC</span>がランサムウェアに感染した場合の損害を軽減する対策例として，適切なものはどれか。</p>
-              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span><span translate="no">PC</span>が接続するファイルサーバの<span translate="no">HDD</span>のバックアップデータを定期的に取得し，ネットワークから切り離して保管する。</span></div>
-              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span><span translate="no">PC</span>に<span translate="no">多要素認証</span>の仕組みを導入する。</span></div>
-              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span><span translate="no">PC</span>の<span translate="no">HDD</span>を暗号化する。</span></div>
-              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span><span translate="no">PC</span>へのログイン時に，パスワードを複数回間違えたら，当該<span translate="no">ID</span>をロックする。</span></div>
-              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問92（<span translate="no">テクノロジ系</span>。問題文・選択肢は原文のまま）</p>
+              <p class="exam-q-text">【例題③】問90　無線LANのセキュリティ対策に関する記述として，適切なものはどれか。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>API は，複数のアクセスポイントをグループ化して管理する <span translate="no">ID</span> である。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>SSH は，アクセスポイントをステルス化することで無線 LAN ネットワークを隠蔽する機能である。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>VPN は，アクセスポイントに登録した MAC アドレスをもつ機器以外からの接続を拒否する機能である。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>WPA2は，WEP よりも高い信頼性をもつ，無線通信の暗号化技術である。</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問90（<span translate="no">テクノロジ系</span>。問題文・選択肢は原文のまま）</p>
               <details class="exam-q-answer">
                 <summary>自分で選んだあとに、答えと解説を見る</summary>
-                <p><strong>正解：ア</strong>（型：目的に合う対策を選ぶ）。問われているのは、「<strong>感染した場合の損害を軽減する</strong>」対策。ランサムウェアは、データを使えなくして、お金を要求する攻撃（第2回の復習）。データのバックアップを、ネットワークから切り離して持っておけば、感染しても、元に戻せる。イ（<span translate="no">多要素認証</span>）は、ログインで本人を確かめる対策、エ（IDのロック）は、ログインの不正な試行を防ぐ対策で、感染した後の損害を減らすものではない。ウ（HDDの暗号化）は、盗まれたときに中身を読まれないための対策で、感染してデータが使えなくなる損害を減らすものではない。<strong>「何を守る対策か」</strong>を、先に考える。</p>
+                <p><strong>正解：エ</strong>（型：用語と説明の組み合わせを選ぶ）。今日の「暗号化」とつながる問題。<span translate="no">WPA2</span>は、無線通信を暗号化する技術で、古い<span translate="no">WEP</span>より信頼性が高い。ア・イ・ウは、<strong>用語と説明の組み合わせが合っていない</strong>。例えば、イの「アクセスポイントをステルス化して隠す」、ウの「登録した<span translate="no">MAC</span>アドレスの機器以外を拒否する」は、<span translate="no">SSH</span>や<span translate="no">VPN</span>の説明としては選べない（<span translate="no">SSH</span>・<span translate="no">VPN</span>の意味は、この回では扱わない）。用語の意味を知らなくても、<strong>知っている用語（<span translate="no">WPA2</span>＝暗号化）に合う選択肢</strong>から確かめると、選びやすい。</p>
               </details>
             </div>
 
@@ -493,8 +493,8 @@
         <table class="schedule-table">
           <thead><tr><th>用語</th><th>意味</th></tr></thead>
           <tbody>
-            <tr><td><span translate="no">共通鍵暗号</span></td><td>暗号化と復号で、同じ鍵を使う方式。速いが、相手ごとに鍵を作って管理する</td></tr>
-            <tr><td><span translate="no">公開鍵暗号</span></td><td>暗号化と復号で、異なる鍵（<span translate="no">公開鍵</span>と<span translate="no">秘密鍵</span>）を使う方式。相手の<span translate="no">公開鍵</span>で暗号化し、相手の<span translate="no">秘密鍵</span>で復号する</td></tr>
+            <tr><td><span translate="no">共通鍵暗号</span></td><td>暗号化と<span translate="no">復号</span>で、同じ鍵を使う方式。速いが、相手ごとに鍵を作って管理する</td></tr>
+            <tr><td><span translate="no">公開鍵暗号</span></td><td>暗号化と<span translate="no">復号</span>で、異なる鍵（<span translate="no">公開鍵</span>と<span translate="no">秘密鍵</span>）を使う方式。相手の<span translate="no">公開鍵</span>で暗号化し、相手の<span translate="no">秘密鍵</span>で<span translate="no">復号</span>する</td></tr>
             <tr><td><span translate="no">デジタル署名</span></td><td>作成者の<span translate="no">秘密鍵</span>で作り、<span translate="no">公開鍵</span>で検証する。作成元の確認と、改ざんがないことの確認ができる</td></tr>
             <tr><td><span translate="no">認証局</span></td><td><span translate="no">電子証明書</span>の登録、発行、失効などを行う、第三者認証機関</td></tr>
             <tr><td><span translate="no">多要素認証</span></td><td>知っているもの・持っているもの・本人自身に関するもの、の3つのうち、2つ以上を使って本人を確かめる</td></tr>
@@ -514,14 +514,14 @@
         <div class="quiz" aria-live="polite" data-answer="イ">
           <p class="quiz-q"><span class="quiz-q-num">Q1</span><span translate="no">共通鍵暗号</span>の説明として，適切なものはどれか。</p>
           <div class="quiz-choices">
-            <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span>暗号化と復号で，異なる鍵を使う。</span></button>
-            <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span>暗号化と復号で，同じ鍵を使う。</span></button>
+            <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span>暗号化と<span translate="no">復号</span>で，異なる鍵を使う。</span></button>
+            <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span>暗号化と<span translate="no">復号</span>で，同じ鍵を使う。</span></button>
             <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span>鍵を，不特定多数の人に公開する。</span></button>
             <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span>本人だけが持つ鍵で，メッセージに署名する。</span></button>
           </div>
           <div class="quiz-feedback" hidden>
             <p class="quiz-result"></p>
-            <p><span translate="no">共通鍵暗号</span>は、暗号化と復号で同じ鍵を使う方式（総務省）。処理は速いが、相手先ごとに固有の鍵を作って管理する必要がある。アは<span translate="no">公開鍵暗号</span>、ウは<span translate="no">公開鍵</span>、エは<span translate="no">デジタル署名</span>の説明。</p>
+            <p><span translate="no">共通鍵暗号</span>は、暗号化と<span translate="no">復号</span>で同じ鍵を使う方式（総務省）。処理は速いが、相手先ごとに固有の鍵を作って管理する必要がある。アは<span translate="no">公開鍵暗号</span>、ウは<span translate="no">公開鍵</span>、エは<span translate="no">デジタル署名</span>の説明。</p>
             <button type="button" class="quiz-retry">もう一度</button>
           </div>
         </div>
@@ -536,7 +536,7 @@
           </div>
           <div class="quiz-feedback" hidden>
             <p class="quiz-result"></p>
-            <p>「相手の<span translate="no">公開鍵</span>で暗号化し、相手の<span translate="no">秘密鍵</span>で復号する」。Aさんの<span translate="no">公開鍵</span>で暗号化すれば、Aさんの<span translate="no">秘密鍵</span>を持つAさんだけが読める。Aさんの<span translate="no">秘密鍵</span>は、Aさんだけが持つので、Bさんは使えない。</p>
+            <p>「相手の<span translate="no">公開鍵</span>で暗号化し、相手の<span translate="no">秘密鍵</span>で<span translate="no">復号</span>する」。Aさんの<span translate="no">公開鍵</span>で暗号化すれば、Aさんの<span translate="no">秘密鍵</span>を持つAさんだけが読める。Aさんの<span translate="no">秘密鍵</span>は、Aさんだけが持つので、Bさんは使えない。</p>
             <button type="button" class="quiz-retry">もう一度</button>
           </div>
         </div>
@@ -551,7 +551,7 @@
           </div>
           <div class="quiz-feedback" hidden>
             <p class="quiz-result"></p>
-            <p><span translate="no">デジタル署名</span>では、作成元の確認と、なりすましや改ざんが行われていないことの検証ができる（総務省「電子署名」）。盗み見を防ぐのは、暗号化の役割。署名だけでは、中身は隠れない。</p>
+            <p><span translate="no">デジタル署名</span>では、作成元の確認と、なりすましや改ざんが行われていないことの検証ができる（総務省「<span translate="no">電子署名</span>」）。盗み見を防ぐのは、暗号化の役割。署名だけでは、中身は隠れない。</p>
             <button type="button" class="quiz-retry">もう一度</button>
           </div>
         </div>
@@ -576,12 +576,12 @@
           <div class="quiz-choices">
             <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span>システム監査人</span></button>
             <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span><span translate="no">認証局</span></span></button>
-            <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span>ISMS</span></button>
+            <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span><span translate="no">ISMS</span></span></button>
             <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span><span translate="no">秘密鍵</span></span></button>
           </div>
           <div class="quiz-feedback" hidden>
             <p class="quiz-result"></p>
-            <p><span translate="no">認証局</span>は、<span translate="no">電子証明書</span>の登録、発行および失効などを行う第三者認証機関（総務省）。システム監査人は、システムを点検する人。ISMSは、情報セキュリティを管理する仕組み。<span translate="no">秘密鍵</span>は、本人だけが持つ鍵で、機関ではない。</p>
+            <p><span translate="no">認証局</span>は、<span translate="no">電子証明書</span>の登録、発行および失効などを行う第三者認証機関（総務省）。システム監査人は、システムを点検する人。<span translate="no">ISMS</span>は、情報セキュリティを管理する仕組み。<span translate="no">秘密鍵</span>は、本人だけが持つ鍵で、機関ではない。</p>
             <button type="button" class="quiz-retry">もう一度</button>
           </div>
         </div>
@@ -636,11 +636,11 @@
       <ul class="vz-links">
         <li><a class="vz-link" href="https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ja_02/" target="_blank" rel="noopener"><b>用語集（か行）：<span translate="no">共通鍵暗号</span>方式・<span translate="no">公開鍵暗号</span>方式・<span translate="no">公開鍵</span></b><span>総務省「国民のためのサイバーセキュリティサイト」</span></a></li>
         <li><a class="vz-link" href="https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ja_03/" target="_blank" rel="noopener"><b>用語集（さ行）：<span translate="no">生体認証</span></b><span>総務省「国民のためのサイバーセキュリティサイト」</span></a></li>
-        <li><a class="vz-link" href="https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ja_04/" target="_blank" rel="noopener"><b>用語集（た行）：電子署名・<span translate="no">多要素認証</span></b><span>総務省「国民のためのサイバーセキュリティサイト」</span></a></li>
-        <li><a class="vz-link" href="https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ja_05/" target="_blank" rel="noopener"><b>用語集（な行）：<span translate="no">認証局</span>・二段階認証</b><span>総務省「国民のためのサイバーセキュリティサイト」</span></a></li>
+        <li><a class="vz-link" href="https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ja_04/" target="_blank" rel="noopener"><b>用語集（た行）：<span translate="no">電子署名</span>・<span translate="no">多要素認証</span></b><span>総務省「国民のためのサイバーセキュリティサイト」</span></a></li>
+        <li><a class="vz-link" href="https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ja_05/" target="_blank" rel="noopener"><b>用語集（な行）：<span translate="no">認証局</span>・<span translate="no">二段階認証</span></b><span>総務省「国民のためのサイバーセキュリティサイト」</span></a></li>
         <li><a class="vz-link" href="https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ja_06/" target="_blank" rel="noopener"><b>用語集（は行）：<span translate="no">秘密鍵</span></b><span>総務省「国民のためのサイバーセキュリティサイト」</span></a></li>
         <li><a class="vz-link" href="https://www.ipa.go.jp/shiken/mondai-kaiotu/index.html" target="_blank" rel="noopener"><b>過去問題 | 試験情報 | IPA</b><span>公開問題と解答例の一覧。法令に特別の定めがある場合を除き、許諾・使用料は不要（IPA公式）。この授業では、年度と問番号を出典として書く</span></a></li>
-        <li><a class="vz-link" href="https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2025r07_ip_qs.pdf" target="_blank" rel="noopener"><b>令和7年度 ITパスポート試験 公開問題（PDF）</b><span>例題の出典（問87・問89・問92）</span></a></li>
+        <li><a class="vz-link" href="https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2025r07_ip_qs.pdf" target="_blank" rel="noopener"><b>令和7年度 ITパスポート試験 公開問題（PDF）</b><span>例題の出典（問87・問89・問90）</span></a></li>
         <li><a class="vz-link" href="https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2025r07_ip_ans.pdf" target="_blank" rel="noopener"><b>令和7年度 ITパスポート試験 公開問題 解答例（PDF）</b><span>例題の正答の確認</span></a></li>
       </ul>
     </div>
