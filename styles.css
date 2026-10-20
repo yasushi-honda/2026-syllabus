@@ -3511,3 +3511,24 @@ html.furigana-on .vz-step { line-height: 2.1; }
 @media print {
   .furigana-toggle { display: none; }
 }
+
+/* 就活ワンポイント（ITパスポートの任意コラム）: 吹き出しが順に現れるアニメーション。動きを減らす設定では全部を静止表示 */
+main .tip-chat { display: grid; gap: var(--sp-3); margin: var(--sp-3) 0; }
+main .tip-b { position: relative; padding: var(--sp-3) var(--sp-4); border: 1px solid var(--c-border); border-radius: var(--r-md); background: var(--c-surface); line-height: 1.8; animation-duration: 14s; animation-iteration-count: infinite; animation-timing-function: ease; animation-fill-mode: both; }
+main .tip-b--q { background: var(--c-orange-soft); border-color: var(--c-orange-border); margin-right: 12%; }
+main .tip-b:not(.tip-b--q) { margin-left: 12%; }
+main .tip-tag { display: inline-block; margin-right: var(--sp-2); padding: 0 var(--sp-2); border-radius: 999px; font-size: 0.8em; font-weight: 700; background: var(--c-slate); color: #fff; }
+main .tip-b:nth-child(1) { animation-name: tip-in-1; }
+main .tip-b:nth-child(2) { animation-name: tip-in-2; }
+main .tip-b:nth-child(3) { animation-name: tip-in-3; }
+main .tip-b:nth-child(4) { animation-name: tip-in-4; }
+@keyframes tip-in-1 { 0%, 3% { opacity: 0; transform: translateY(8px); } 8%, 94% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes tip-in-2 { 0%, 22% { opacity: 0; transform: translateY(8px); } 27%, 94% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes tip-in-3 { 0%, 41% { opacity: 0; transform: translateY(8px); } 46%, 94% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes tip-in-4 { 0%, 60% { opacity: 0; transform: translateY(8px); } 65%, 94% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  main .tip-b { animation: none; opacity: 1; transform: none; }
+}
+@media print {
+  main .tip-b { animation: none; opacity: 1; transform: none; }
+}

@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-  <link rel="stylesheet" href="../styles.css?v=19">
+  <link rel="stylesheet" href="../styles.css?v=20">
   <!-- 公式情報確認: 2026-10-21 (総務省「国民のためのサイバーセキュリティサイト」用語集 https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ ja_02 共通鍵暗号方式・公開鍵暗号方式・公開鍵 / ja_03 生体認証 / ja_04 電子署名・多要素認証 / ja_05 認証局・二段階認証 / ja_06 秘密鍵 / 令和7年度ITパスポート試験 公開問題 問87・問89・問90 と解答例（PDFは画像のため目視で原文を転記）。「デジタル署名」は試験・教科書の呼び名。総務省の用語集には「電子署名」「サーバ証明書」「電子商取引（BtoB/BtoC）」の項目があり、公開鍵暗号方式を使って作る署名の説明がある。「電子証明書」自体の定義文は総務省用語集で確認できなかったため、認証局の定義文（電子証明書の登録・発行・失効などを行う第三者認証機関）と問87の解答から、やさしく言い換えた。「e-ビジネス」はネットワークを使った取引という一般的な説明で、公式の定義文は未突合（経産省サイトは機械取得が403のため、市場規模などの数字は載せていない）。教科書 p.371-380・p.102-105 は親ページの記載に従う（教科書本文は未突合）) -->
   <!-- 挿絵7枚（images/week04-story-1〜4.jpg、week04-keys.jpg、week04-signature.jpg、week04-factors.jpg）は、画像生成AI（Gemini 3.1 Flash Image）で作った架空の場面のイラスト（2026-10-21）。画像内に文字・実在の人物や企業のロゴは含めない。Aさん=第2〜3回と同じ画風の架空の人物 -->
   <!-- 用語カードの7語は、フォーム「ITパスポート 第4回 今回覚えた用語」の選択肢と一致 -->
@@ -71,6 +71,7 @@
         <li><a class="vz-chip" href="#sec-terms">用語カード</a></li>
         <li><a class="vz-chip" href="#sec-quiz">練習クイズ</a></li>
         <li><a class="vz-chip" href="#sec-optional">任意の取り組み</a></li>
+        <li><a class="vz-chip" href="#sec-tip">就活ワンポイント</a></li>
         <li><a class="vz-chip" href="#sec-tasks">課題</a></li>
         <li><a class="vz-chip" href="#sec-refs">参考リンク</a></li>
         <li><a class="vz-chip vz-chip--cta" href="https://docs.google.com/forms/d/e/1FAIpQLSeblKgDsVicOAgLC2r6_4qM97aznx7YT9hEnifZC4ekaKcCCA/viewform" target="_blank" rel="noopener">第4回 今回覚えた用語を提出する ↗</a></li>
@@ -478,7 +479,7 @@
               <li><strong>振り返り</strong>（約3分）：1回目の結果の画面で、<strong>点数を覚えて</strong>、<strong>間違えた問題の解説</strong>を読む。分からないところは、隣の人に聞く、または、このページの<a href="#sec-terms">用語カード</a>・<a href="#sec-quiz">練習クイズ</a>で確かめる</li>
               <li><strong>確認テスト（2回目）は任意</strong>：時間がある人、確かめたい人は、<a href="#sec-optional">下の「任意の取り組み」</a>から受ける</li>
               <li><strong>用語カード</strong>：今回覚えた用語にチェックを入れて、フォームで提出する（約3分）</li>
-              <li>質問と、次回までの課題の確認（約1分）。自分の点数の推移は、<a href="#sec-optional">「任意の取り組み」</a>の「自分の成績を見る」から、いつでも見られる</li>
+              <li>質問と、次回までの課題の確認（約1分）。読むだけの<a href="#sec-tip">「就活ワンポイント」</a>もある。自分の点数の推移は、<a href="#sec-optional">「任意の取り組み」</a>の「自分の成績を見る」から、いつでも見られる</li>
               <li>次回（第5回）：<strong>つながる仕組み：LANから世界へ</strong>——<span translate="no">LAN</span>／<span translate="no">WAN</span>とネットワークの構成（<span translate="no">テクノロジ系</span> p.320-328）</li>
             </ul>
             <div class="vz-cta">
@@ -606,6 +607,25 @@
       <div class="vz-cta">
         <a class="vz-btn vz-btn--ext" href="https://script.google.com/a/macros/i-seifu.jp/s/AKfycbwquVX4xkXNy47RkGjCUz6Xmc4GFaPLpPkSVuW6z--m5Yth88yilipCYUSanlTpQF9P/exec" target="_blank" rel="noopener">自分の成績を見る（学校のGoogleアカウント）</a>
       </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-tip">
+      <h2>就活ワンポイント（任意）</h2>
+      <p class="lesson-note">授業時間には含めない、読むだけのコラム。成績にも含まれない。今日の言葉を、面接で使う練習。</p>
+      <h3>面接で「情報セキュリティ」について聞かれたら</h3>
+      <p>面接官から、こう聞かれることがある。答えは、<strong>3つの順番</strong>で話すと、短く、分かりやすくなる（一つの考え方）。下の吹き出しが、順に現れる。</p>
+      <div class="tip-chat" role="group" aria-label="面接の会話の例。面接官の質問のあと、結論、理由、まとめの順に答える">
+        <div class="tip-b tip-b--q"><span class="tip-tag">面接官</span>情報セキュリティについて、気をつけていることはありますか。</div>
+        <div class="tip-b"><span class="tip-tag">① 結論</span>パスワードの使い回しをせず、<span translate="no">多要素認証</span>を使っています。</div>
+        <div class="tip-b"><span class="tip-tag">② 理由</span>パスワードだけだと、漏れたときに、他の人にログインされるからです。</div>
+        <div class="tip-b"><span class="tip-tag">③ まとめ</span>仕事でも、会社の決まりを守って、情報を大切に扱います。</div>
+      </div>
+      <ul>
+        <li><strong>例文は一例</strong>。自分が実際にしていることを話す。していないことは、言わない。</li>
+        <li>今日の言葉（<span translate="no">多要素認証</span>・<span translate="no">デジタル署名</span>・<span translate="no">公開鍵暗号</span>）を、日本語のまま使えると、<span translate="no">IT</span>を学んでいることが伝わる。</li>
+        <li><span translate="no">IT</span>パスポートは、<span translate="no">IPA</span>が「あなたの<span translate="no">IT</span>力を証明する国家試験」と紹介している試験。まだ合格していなくても、「今、勉強しています」と、正直に言えばよい。</li>
+      </ul>
+      <p class="lesson-note">出典：<span translate="no">IPA</span><a href="https://www.ipa.go.jp/shiken/kubun/ip.html" target="_blank" rel="noopener">「<span translate="no">IT</span>パスポート試験」の紹介ページ</a>。確認日：2026-10-21。答え方の順番（結論・理由・まとめ）は、この教材の一つの考え方で、公式のルールではない。</p>
     </div>
 
     <div class="syllabus-section" id="sec-tasks">
