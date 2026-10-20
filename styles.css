@@ -3532,3 +3532,11 @@ main .tip-b:nth-child(4) { animation-name: tip-in-4; }
 @media print {
   main .tip-b { animation: none; opacity: 1; transform: none; }
 }
+
+/* 就活ワンポイント: 止めるボタン／ふりがなオン時の札の表示 */
+main .tip-chat--static .tip-b { animation: none; opacity: 1; transform: none; }
+main .tip-ctl { margin: var(--sp-2) 0; padding: var(--sp-2) var(--sp-4); border: 1px solid var(--c-border); border-radius: 999px; background: var(--c-surface); font: inherit; font-weight: 600; cursor: pointer; }
+main .tip-ctl:hover, main .tip-ctl:focus-visible { border-color: var(--c-slate); }
+main .tip-ctl[aria-pressed="true"] { background: var(--c-orange-soft); border-color: var(--c-orange-border); }
+html.furigana-on main .tip-tag { padding-top: 1em; line-height: 1.6; }
+html.furigana-on main .tip-tag rt { color: #fff; }
