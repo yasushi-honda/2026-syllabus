@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=21">
+  <!-- PKI・CRLの説明の出典: JIPDEC「電子署名活用ポイントガイド Ver.1.2」https://www.jipdec.or.jp/archives/publications/J0004317.pdf の「5. PKIとデジタル署名 (1)公開鍵基盤」「B) 証明書失効リスト（CRL）」（確認日 2026-10-21、curl+pdftotextで原文照合。古い版。総務省用語集にPKIの項目はなかった） -->
   <!-- 公式情報確認: 2026-10-21 (総務省「国民のためのサイバーセキュリティサイト」用語集 https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ ja_02 共通鍵暗号方式・公開鍵暗号方式・公開鍵 / ja_03 生体認証 / ja_04 電子署名・多要素認証 / ja_05 認証局・二段階認証 / ja_06 秘密鍵 / 令和7年度ITパスポート試験 公開問題 問87・問89・問90 と解答例（PDFは画像のため目視で原文を転記）。「デジタル署名」は試験・教科書の呼び名。総務省の用語集には「電子署名」「サーバ証明書」「電子商取引（BtoB/BtoC）」の項目があり、公開鍵暗号方式を使って作る署名の説明がある。「電子証明書」自体の定義文は総務省用語集で確認できなかったため、認証局の定義文（電子証明書の登録・発行・失効などを行う第三者認証機関）と問87の解答から、やさしく言い換えた。「e-ビジネス」はネットワークを使った取引という一般的な説明で、公式の定義文は未突合（経産省サイトは機械取得が403のため、市場規模などの数字は載せていない）。教科書 p.371-380・p.102-105 は親ページの記載に従う（教科書本文は未突合）) -->
   <!-- 挿絵7枚（images/week04-story-1〜4.jpg、week04-keys.jpg、week04-signature.jpg、week04-factors.jpg）は、画像生成AI（Gemini 3.1 Flash Image）で作った架空の場面のイラスト（2026-10-21）。画像内に文字・実在の人物や企業のロゴは含めない。Aさん=第2〜3回と同じ画風の架空の人物 -->
   <!-- 用語カードの7語は、フォーム「ITパスポート 第4回 今回覚えた用語」の選択肢と一致 -->
@@ -334,7 +335,7 @@
               <figcaption>暗号と、鍵の使い方が逆になる。暗号は「相手の<span translate="no">公開鍵</span>で暗号化」、署名は「自分の<span translate="no">秘密鍵</span>で署名」。出典：総務省「国民のためのサイバーセキュリティサイト」用語集（<span translate="no">電子署名</span>）。確認日：2026-10-21。</figcaption>
             </figure>
 
-            <p><strong>② <span translate="no">認証局</span>と<span translate="no">電子証明書</span>（約10分）</strong></p>
+            <p><strong>② <span translate="no">認証局</span>・<span translate="no">電子証明書</span>・<span translate="no">PKI</span>（約10分）</strong></p>
             <p>署名の検証に使う「Bさんの<span translate="no">公開鍵</span>」は、本当にBさんのものか。偽物が、Bさんになりすまして、自分の<span translate="no">公開鍵</span>を配っていたら、意味がない。そこで、信頼できる<strong>第三者</strong>が保証する。</p>
             <ul class="vz-points">
               <li class="vz-point">
@@ -346,10 +347,43 @@
                 <p><span translate="no">公開鍵</span>の持ち主が本物だと、<span translate="no">認証局</span>が保証する、電子的な証明書。やさしい言い換え。ネットのお店のサイトが本物かを確かめる証明書（総務省の用語集の「サーバ証明書」）も、認証局が発行する。</p>
               </li>
               <li class="vz-point">
+                <b><span translate="no">PKI</span>（公開鍵基盤：<span translate="no">Public Key Infrastructure</span>）</b>
+                <p><span translate="no">公開鍵暗号</span>を用いて、<strong>電子署名や電子認証（本人確認）を実現するための基盤</strong>（<span translate="no">JIPDEC</span>「電子署名活用ポイントガイド」）。<span translate="no">公開鍵</span>が本物かを確かめる仕組みを、<span translate="no">認証局</span>などを含めて、まとめて<span translate="no">PKI</span>と呼ぶ。今日の<span translate="no">公開鍵暗号</span>・<span translate="no">デジタル署名</span>・<span translate="no">認証局</span>・<span translate="no">電子証明書</span>は、全部この<span translate="no">PKI</span>の部品。</p>
+              </li>
+              <li class="vz-point">
                 <b>有効期間と、失効</b>
-                <p><span translate="no">電子証明書</span>には、有効期間がある。期間の途中でも、鍵が漏れたときなどは、<strong>失効</strong>させる。失効した証明書の一覧が<span translate="no">CRL</span>（証明書失効リスト）。次の問87は、このリストに載るのは、どんな証明書かを聞く。</p>
+                <p><span translate="no">電子証明書</span>には、有効期間がある。有効期間の途中でも、<span translate="no">秘密鍵</span>が漏れたときなどは、証明書そのものを無効にする。これを<strong>失効</strong>という。失効した証明書に関する情報のリストが<span translate="no">CRL</span>（証明書失効リスト。単に失効リストとも言う）（<span translate="no">JIPDEC</span>）。次の問87は、このリストに載るのは、どんな証明書かを聞く。</p>
               </li>
             </ul>
+            <figure class="vz-fig" aria-labelledby="cap-w4-pki">
+              <p class="vz-fig-title" id="cap-w4-pki"><span translate="no">PKI</span>で、署名の<span translate="no">公開鍵</span>が本物になるまで</p>
+              <svg class="vz-svg" viewBox="0 0 360 236" role="img" aria-labelledby="w4-pki-t w4-pki-d">
+                <title id="w4-pki-t">PKIで、署名の公開鍵が本物になるまで</title>
+                <desc id="w4-pki-d">上から順に、1 署名する人が、公開鍵と秘密鍵のペアを作る。2 登録局で、本人確認を受ける。3 認証局が、公開鍵の証明書（電子証明書）を発行する。4 検証する人が、認証局から、証明書と失効リスト（CRL）を受け取って、確かめる。</desc>
+                <line class="line" x1="22" y1="30" x2="22" y2="206"/>
+                <rect class="box-white" x="2" y="8" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="32" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="37">1</text>
+                <text class="t-b" x="44" y="29">署名する人が、鍵のペアを作る</text>
+                <text class="t-sm" x="44" y="47">公開鍵と秘密鍵</text>
+                <rect class="box-white" x="2" y="64" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="88" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="93">2</text>
+                <text class="t-b" x="44" y="85">登録局で、本人確認を受ける</text>
+                <text class="t-sm" x="44" y="103">この鍵ペアは、この人のもの</text>
+                <rect class="box-white box-key" x="2" y="120" width="356" height="48" rx="8"/>
+                <circle class="dot-orange" cx="22" cy="144" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="149">3</text>
+                <text class="t-b" x="44" y="141">認証局が、電子証明書を発行する</text>
+                <text class="t-sm" x="44" y="159">公開鍵の持ち主を保証する</text>
+                <rect class="box-white" x="2" y="176" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="200" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="205">4</text>
+                <text class="t-b" x="44" y="197">検証する人が、認証局から受け取る</text>
+                <text class="t-sm" x="44" y="215">電子証明書と、失効リスト（CRL）</text>
+              </svg>
+              <figcaption>出典：<span translate="no">JIPDEC</span>（旧・日本情報処理開発協会）「電子署名活用ポイントガイド Ver.1.2」の「公開鍵基盤」の説明をもとに、やさしく書き直した（確認日：2026-10-21）。このガイドは古い版なので、基本の考え方として読む。同ガイドによると、<span translate="no">登録局</span>などの構成要素は、通常、ひとまとめにして<span translate="no">認証局</span>と呼ばれる。</figcaption>
+            </figure>
             <div class="exam-q">
               <p class="exam-q-text">【例題②】問87　<span translate="no">PKI</span>において，ある条件に当てはまるデジタル証明書の情報が公開されているリストとして<span translate="no">CRL</span>がある。このリストに掲載される条件として，適切なものはどれか。</p>
               <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>有効期間が満了している。</span></div>
@@ -362,7 +396,7 @@
                 <p><strong>正解：ウ</strong>（型：条件に合うものを選ぶ）。<span translate="no">CRL</span>は、失効した<span translate="no">電子証明書</span>の一覧。ポイントは「<strong>有効期間内に</strong>失効している」こと。期間が過ぎれば、もう使えないので、リストに載せる必要がない（アは、期間が満了しただけ）。イとエは、失効とは関係がない。</p>
               </details>
             </div>
-            <p class="lesson-note"><span translate="no">PKI</span>は、<span translate="no">公開鍵暗号</span>を使って、署名や暗号を安全に使えるようにする、<span translate="no">認証局</span>などを含む仕組み全体のこと（この教材では、教科書の用語として紹介し、詳しい定義は扱わない）。</p>
+            <p class="lesson-note"><span translate="no">PKI</span>は、試験の問87のように、<span translate="no">CRL</span>や<span translate="no">電子証明書</span>と一緒に出る。「<span translate="no">PKI</span>＝<span translate="no">公開鍵</span>が本物だと確かめる仕組み全体」と覚えておけばよい。</p>
 
             <p><strong>③ 認証：本人かどうかを確かめる（約25分）</strong></p>
             <p>ストーリーの4。<span translate="no">ID</span>とパスワードだけで、本人と言えるか。パスワードは、漏れたり、推測されたりする。そこで、<strong>複数の要素を組み合わせる</strong>。</p>
@@ -664,6 +698,7 @@
         <li><a class="vz-link" href="https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ja_04/" target="_blank" rel="noopener"><b>用語集（た行）：<span translate="no">電子署名</span>・<span translate="no">多要素認証</span></b><span>総務省「国民のためのサイバーセキュリティサイト」</span></a></li>
         <li><a class="vz-link" href="https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ja_05/" target="_blank" rel="noopener"><b>用語集（な行）：<span translate="no">認証局</span>・<span translate="no">二段階認証</span></b><span>総務省「国民のためのサイバーセキュリティサイト」</span></a></li>
         <li><a class="vz-link" href="https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ja_06/" target="_blank" rel="noopener"><b>用語集（は行）：<span translate="no">秘密鍵</span></b><span>総務省「国民のためのサイバーセキュリティサイト」</span></a></li>
+        <li><a class="vz-link" href="https://www.jipdec.or.jp/archives/publications/J0004317.pdf" target="_blank" rel="noopener"><b>電子署名活用ポイントガイド Ver.1.2（PDF）</b><span><span translate="no">JIPDEC</span>（旧・日本情報処理開発協会）。<span translate="no">PKI</span>（公開鍵基盤）と<span translate="no">CRL</span>（証明書失効リスト）の説明。古い版なので、基本の考え方を確かめる用</span></a></li>
         <li><a class="vz-link" href="https://www.ipa.go.jp/shiken/mondai-kaiotu/index.html" target="_blank" rel="noopener"><b>過去問題 | 試験情報 | IPA</b><span>公開問題と解答例の一覧。法令に特別の定めがある場合を除き、許諾・使用料は不要（IPA公式）。この授業では、年度と問番号を出典として書く</span></a></li>
         <li><a class="vz-link" href="https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2025r07_ip_qs.pdf" target="_blank" rel="noopener"><b>令和7年度 ITパスポート試験 公開問題（PDF）</b><span>例題の出典（問87・問89・問90）</span></a></li>
         <li><a class="vz-link" href="https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2025r07_ip_ans.pdf" target="_blank" rel="noopener"><b>令和7年度 ITパスポート試験 公開問題 解答例（PDF）</b><span>例題の正答の確認</span></a></li>
