@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第7回 話題のAI製ゲームを、自然言語で再現しよう | 自然言語開発 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=18">
+  <!-- 公式情報確認: 2026-10-21 (生HTMLで確認。①1in8b.life/ja/（80億分の1 公式）: 「v0.7.96 ベータ版・無料の人生シミュレーション・172か国の実際の統計にもとづく・15歳以上」「運営者が AI（Claude）と一緒につくっている人生シミュレーションで、数字は国連・世界銀行などの公開統計」「生まれる世界・生まれる国の決め方（いま生まれる赤ちゃん／いま生きている80億人）・ひとつの人生の長さ（約30分／約1時間／約1時間30分）」「生きているあいだも、一時停止や倍速ができます」「5歳、15歳、30歳、50歳、70歳で時間が止まり、ひとつの問いが投げかけられます」「状態 0–100: 健康・幸福・知識・人間関係」「記録はこのブラウザにだけ残ります」「死や暴力、自殺のような重い出来事も、実際の統計どおりに起こります。場面は描かず、相談できる場所も一緒にお知らせします」「怖い場面を除く」の設定、最初の画面の下に「先生ですか？授業では 授業用モードで開く をお使いください。重い内容を控えめにし、投稿と支払いを切った画面です。」 ②1in8b.life/ja/terms/: 「予定している変更（2026年10月19日から）」授業用モード（12歳以上におすすめという目安に合わせて内容を控えめにし、個人情報を残す機能と支払いをすべてオフ。先生が一緒に見ながら指導してください）、「予定している変更（2026年10月23日から）」著作権と新しい作品（80億分の1のプログラム、文章、絵の著作権は運営者にあり、許可なくそのまま写したり、手を加えて配布したり販売したりすることはできません。実際の統計で生まれ、一つの人生を生きてみるといったアイデアは誰のものでもないので、そのアイデアから自分だけの新しい作品をつくるのは自由です） ③Game Spark（Yahoo!ニュース配信、2026-10-19）: 『80億分の1』は10月5日公開、Jin Hwi-eus氏がAIを活用して開発、SNSで流行しフォロワー作品が多数登場 ④cloud.google.com/run/docs/overview/what-is-cloud-run: 「Cloud Run is a fully managed application platform for running your code, function, or container on top of Google's highly scalable infrastructure.」 ⑤Neon関連は第6回（2026-10-14確認）と同じ。未確認（授業前に教員が確認）: 授業用モードの実際の表示と中身、10/23以降の規約の実際の文言（予定の変更のため）、Neon一時プロジェクトの作り直しが学校のネットワークで通るか、フォロワー作品のURL（記事に出た題名のみ確認で、リンクは付けない）) -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev-2.html">自然言語開発 II</a>
+        <span>/</span>
+        <span>第7回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">話題のAI製ゲームを、<wbr>自然言語で再現しよう</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 7</span>
+            <span class="page-badge">木曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-green">
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">2026年10月に話題のAI製ゲーム<strong>『80億分の1』</strong>を遊んで<strong>仕組みに分解</strong>し、その<strong>アイデアだけを借りて</strong>、自分の題材を<strong>仕様（自然言語）</strong>で書いてAIエージェントに作らせる。結果は第6回の<strong>Neon</strong>に残し、自然言語で集計する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">『80億分の1』 / 授業用モード / 仕組みを6つの箱に分ける（入力・状態・ルール・データ・出力・保存） / 仕様を1ページで書く / アイデアは自由・コードは写さない / Neonに結果を残す / 間にサーバーを置く理由 / Cloud Run（見るだけ）</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">自分が使うAIエージェント（Claude Code／Codex CLI／Antigravity CLI）が使える状態のCodespace。ノートPCで<code>1in8b.life</code>を開けること。第6回の作業フォルダ（<code>score-db</code>など）。<strong>今日は、Google Cloudの登録や操作はしません</strong>。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>話題のAI製ゲームを遊び、その仕組みを<strong>6つの箱（入力・状態・ルール・データ・出力・保存）</strong>に分けて、自分の言葉で説明できる</li>
+        <li><strong>アイデアだけを借りて</strong>、自分の題材を決め、<strong>仕様を1ページ</strong>で書ける（データには<strong>出典</strong>を書く）</li>
+        <li>仕様をAIエージェントに渡して<strong>動く最小版</strong>を作り、<strong>書かれたコードを読んで</strong>確かめる</li>
+        <li>結果を<strong>Neon</strong>に残し、<strong>自然言語で集計</strong>して、書かれたSQLを読んで確かめる</li>
+        <li>ブラウザから直接DBへ送らず、<strong>間にサーバーを置く</strong>理由と、<strong>Cloud Run</strong>がその置き場所の一つであることを説明できる</li>
+      </ul>
+      <div class="lesson-tip">
+        <strong>今日の進め方:</strong> 遊ぶ時間より、<strong>仕様を書いて作る時間</strong>を長くします。他の人が作ったゲームの<strong>プログラム・文章・絵は、そのまま写しません</strong>（理由は2限後半で、公式の規約を読んで確かめます）。壊してよいのは、今日作る<strong>自分の使い捨てのDB</strong>だけです。本物の個人情報には触れないでください。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>話題のAI製ゲームを遊び、仕組みを6つの箱に分ける</h3>
+          <div class="timeline-body">
+            <p><strong>今日の地図と、前回の振り返り</strong>（約8分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-n7-map">
+              <p class="vz-fig-title" id="cap-n7-map">今日の地図：遊ぶ→作る→残す→サーバーを知る</p>
+              <svg class="vz-svg" viewBox="0 0 360 252" role="img" aria-labelledby="n7-map-t n7-map-d">
+                <title id="n7-map-t">今日の地図：遊ぶ→作る→残す→サーバーを知る</title>
+                <desc id="n7-map-d">1 遊んで、仕組みを6つの箱に分ける。1限の前半。2 自分の題材で仕様を書き、AIエージェントに最小版を作らせる。1限の後半。3 Neonに結果を残し、自然言語で集計する。2限の前半。4 ブラウザとDBの間にサーバーを置く理由を知り、再現の作法を確かめる。2限の後半。</desc>
+                <rect class="box-green" x="8" y="6" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="28">1 遊んで、仕組みに分ける</text>
+                <text class="t-sm" x="22" y="47">6つの箱に書き出す</text>
+                <text class="t-sm" x="342" y="28" text-anchor="end">1限前半</text>
+                <line class="line" x1="180" y1="58" x2="180" y2="68" marker-end="url(#mk-s)"/>
+                <rect class="box-green" x="8" y="70" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="92">2 仕様を書いて、作らせる</text>
+                <text class="t-sm" x="22" y="111">自分の題材。アイデアだけを借りる</text>
+                <text class="t-sm" x="342" y="92" text-anchor="end">1限後半</text>
+                <line class="line" x1="180" y1="122" x2="180" y2="132" marker-end="url(#mk-s)"/>
+                <rect class="box-green" x="8" y="134" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="156">3 Neonに残して、集計する</text>
+                <text class="t-sm" x="22" y="175">自然言語で聞く。SQLを読む</text>
+                <text class="t-sm" x="342" y="156" text-anchor="end">2限前半</text>
+                <line class="line" x1="180" y1="186" x2="180" y2="196" marker-end="url(#mk-s)"/>
+                <rect class="box-green box-key" x="8" y="198" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="220">4 間のサーバーと、再現の作法</text>
+                <text class="t-sm" x="22" y="239">Cloud Runは見るだけ</text>
+                <text class="t-sm" x="342" y="220" text-anchor="end">2限後半</text>
+              </svg>
+              <figcaption>今日は、Google Cloudの登録や操作はしません。Cloud Runは、図と教員の説明で見るだけです。</figcaption>
+            </figure>
+            <ul>
+              <li>第6回では、<strong>Neon</strong>に一時的なDBを作り、スコアを保存して、自然言語で質問した。今日は、<strong>その題材そのもの</strong>を、話題のAI製ゲームから考える</li>
+              <li>第6回で作った一時DBは<strong>72時間で期限切れ</strong>になる（第6回のページ）。そのため、2限前半で<strong>作り直す</strong></li>
+            </ul>
+            <p><strong>『80億分の1』を遊ぶ</strong>（約12分、授業用モード）</p>
+            <ul>
+              <li><strong>『80億分の1』</strong>は、公式サイトによると、<strong>172か国の実際の統計</strong>にもとづく<strong>無料の人生シミュレーション</strong>（15歳以上、ベータ版）。運営者が<strong>AI（Claude）と一緒につくっている</strong>と書かれ、数字は国連・世界銀行などの公開統計（<a href="https://1in8b.life/ja/" target="_blank" rel="noopener">80億分の1 公式</a>、2026-10-21確認）。2026年10月5日に公開され、SNSで流行し、<strong>フォロワー作品</strong>が多数登場している（<a href="https://news.yahoo.co.jp/articles/fe9ae5c03c27845d4f3e3338eb53eb4e5aa0fd87" target="_blank" rel="noopener">Game Spark（Yahoo!ニュース配信）</a>、2026-10-19）</li>
+              <li><strong>授業用モード</strong>で開く。最初の画面の下に、「先生ですか？授業では<strong>授業用モードで開く</strong>をお使いください。重い内容を控えめにし、投稿と支払いを切った画面です。」と書かれている（公式）。規約には、授業用モードは「先生が一緒に見ながら指導してください」と書かれている（2026年10月19日からの予定の変更として掲載。<a href="https://1in8b.life/ja/terms/" target="_blank" rel="noopener">規約</a>）。<strong>名前や連絡先は入力しない</strong></li>
+              <li>重い出来事（死・暴力・自殺など）も、<strong>実際の統計どおりに起こる</strong>と公式に書かれている。場面は描かれず、相談できる場所も案内される。画面に<strong>「怖い場面を除く」</strong>の設定がある。つらくなったら、<strong>やめてよい</strong></li>
+              <li>1回の人生は、設定で<strong>約30分〜</strong>。<strong>一時停止や倍速</strong>ができる（公式）。最後まで遊ばなくてよい。<strong>5歳の「ひと息」</strong>（時間が止まって問いが出る場面）まで見て、画面に何が出ているかを観察する</li>
+            </ul>
+            <p><strong>何でできているか、6つの箱に書き出す</strong>（約20分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-n7-boxes">
+              <p class="vz-fig-title" id="cap-n7-boxes">ゲームを、6つの箱に分ける（例）</p>
+              <svg class="vz-svg" viewBox="0 0 360 264" role="img" aria-labelledby="n7-boxes-t n7-boxes-d">
+                <title id="n7-boxes-t">ゲームを、6つの箱に分ける（例）</title>
+                <desc id="n7-boxes-d">『80億分の1』を6つの箱に分けた例。1 入力。選べるのは設定だけで、生まれは選べない。2 状態。健康・幸福・知識・人間関係が0から100の数字で動く。3 ルール。生まれる国は統計の割合で決まる。4 データ。172か国の公開統計。5 出力。5歳・15歳・30歳・50歳・70歳の「ひと息」の問いと、最期の記録。6 保存。記録はそのブラウザにだけ残る。</desc>
+                <rect class="box-white" x="8" y="6" width="168" height="78" rx="10"/>
+                <text class="t-c t-b" x="92" y="30">1 入力</text>
+                <text class="t-c t-sm" x="92" y="50">選べるのは設定だけ</text>
+                <text class="t-c t-sm" x="92" y="68">（生まれは選べない）</text>
+                <rect class="box-green" x="184" y="6" width="168" height="78" rx="10"/>
+                <text class="t-c t-b" x="268" y="30">2 状態</text>
+                <text class="t-c t-sm" x="268" y="50">健康・幸福・知識</text>
+                <text class="t-c t-sm" x="268" y="68">人間関係（0〜100）</text>
+                <rect class="box-green" x="8" y="92" width="168" height="78" rx="10"/>
+                <text class="t-c t-b" x="92" y="116">3 ルール</text>
+                <text class="t-c t-sm" x="92" y="136">生まれる国は</text>
+                <text class="t-c t-sm" x="92" y="154">統計の割合で決まる</text>
+                <rect class="box-white" x="184" y="92" width="168" height="78" rx="10"/>
+                <text class="t-c t-b" x="268" y="116">4 データ</text>
+                <text class="t-c t-sm" x="268" y="136">172か国の公開統計</text>
+                <text class="t-c t-sm" x="268" y="154">（国連・世界銀行など）</text>
+                <rect class="box-white" x="8" y="178" width="168" height="78" rx="10"/>
+                <text class="t-c t-b" x="92" y="202">5 出力</text>
+                <text class="t-c t-sm" x="92" y="222">「ひと息」の問い</text>
+                <text class="t-c t-sm" x="92" y="240">最期の記録</text>
+                <rect class="box-green box-key" x="184" y="178" width="168" height="78" rx="10"/>
+                <text class="t-c t-b" x="268" y="202">6 保存</text>
+                <text class="t-c t-sm" x="268" y="222">記録は、そのブラウザ</text>
+                <text class="t-c t-sm" x="268" y="240">にだけ残る（公式）</text>
+              </svg>
+              <figcaption>図は、公式サイトの表示から読み取った例です。内部のしくみの正解は公開されていません。自分の推測でかまいません。</figcaption>
+            </figure>
+            <ul>
+              <li>遊んだ画面を見て、<strong>6つの箱</strong>を、自分の言葉でノート（メモ）に書き出す。<strong>入力</strong>（人が選ぶもの）／<strong>状態</strong>（時間とともに変わる数字）／<strong>ルール</strong>（何が起きるかを決めるきまり）／<strong>データ</strong>（元になる数字）／<strong>出力</strong>（画面に出るもの）／<strong>保存</strong>（残るもの）</li>
+              <li>分からない箱は、<strong>推測</strong>で埋めてよい。「たぶん、○○の数字を使って、○○で決めている」と書く（正解を確かめる必要はない）</li>
+              <li>ページの<strong>ソースや、ブラウザの開発者ツールで中身を見て、写すことはしない</strong>。見えるのは、あくまで<strong>画面に出ているもの</strong>から、仕組みを考える練習</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>自分の題材で、仕様を1ページ書き、最小版を作らせる</h3>
+          <div class="timeline-body">
+            <p><strong>① 自分の題材を決める</strong>（約10分）</p>
+            <ul>
+              <li><strong>借りるのは、アイデアだけ</strong>。『80億分の1』のアイデアは、「<strong>統計やデータの割合で決まる、ランダムな体験</strong>」。題材・名前・文章・絵は、<strong>自分のものにする</strong>。例: 自作の表（10〜20行）から1つ引く「今日の学食ガチャ」／公開統計（<strong>出典を書く</strong>）の割合で、ランダムに1つの都道府県を選ぶ</li>
+              <li>データは、<strong>自作の小さな表</strong>か、<strong>出典つきの公開統計</strong>にする。本物の個人情報や、特定の人を扱う題材は選ばない。<strong>死・事件・病気など、重い題材は選ばない</strong></li>
+              <li>フォロワー作品（<strong>『80億分の1』の題材を、別の対象に置き換えただけのもの</strong>）と同じにならないように、<strong>自分にしか出せない題材</strong>を1つ決める</li>
+            </ul>
+            <p><strong>② 仕様を1ページで書く</strong>（約15分）</p>
+            <ul>
+              <li>前期の<a href="../natural-language-dev/week06.html">第6回（Spec-Driven Development入門）</a>と同じ考え方で、<strong>AIに渡す前に、自分で言葉にする</strong>。次の項目を、1項目1〜3行で書く</li>
+              <li><strong>目的</strong>（何を体験できるゲームか）／<strong>入力</strong>（人が選ぶもの）／<strong>ルール</strong>（何がどんな割合で起きるか）／<strong>データ</strong>（元の表。<strong>出典</strong>を書く）／<strong>出力</strong>（画面に出るもの）／<strong>保存</strong>（結果としてDBに残すもの）／<strong>やらないこと</strong>（今日は作らないもの）</li>
+              <li>「<strong>やらないこと</strong>」は大事。最小版に絞るために、<strong>ユーザー登録・画像・音・ランキング</strong>などを、あえて外す</li>
+            </ul>
+            <p><strong>③ AIエージェントに渡して、最小版を作らせる</strong>（約25分）</p>
+            <ul>
+              <li>Codespaceを再開し（第4回と同じ手順）、<strong>新しい作業フォルダ</strong>（例: <code>my-game</code>）を作って、そこでエージェントを起動する。<strong>最初に</strong>、<code>.gitignore</code>に<code>.env</code>・<code>.env.local</code>・<code>node_modules</code>を書き、空の<code>.env</code>を作っておく（第6回と同じ。書き方が分からなければ、エージェントに頼んでよい）</li>
+              <li>エージェントに、<strong>仕様を貼って</strong>頼む（例）: <code>次の仕様で、Node.jsのコマンドで動く最小のゲームgame.jsを書いてください。画面やブラウザは不要です。「node game.js」で1回遊び、結果を文章で表示してください。データは、同じフォルダのdata.jsonに置いてください。（ここに、自分の仕様を貼る）</code></li>
+              <li>最小版は、<strong>コマンドで動く形</strong>にする（ブラウザの画面やポート転送は、今日は使わない。第6回のスコア保存と同じ形）</li>
+              <li>エージェントが書いたコードを、<strong>読んでから</strong>実行する。<strong>ランダムに決める部分</strong>と、<strong>データを読む部分</strong>を探して、自分の仕様と合っているかを確かめる。<strong>2回実行して</strong>、結果が変わることも確かめる</li>
+              <li>仕様と違う動きがあれば、<strong>何が違うか</strong>を言葉にして、追加で指示する（コードを自分で直すより、<strong>仕様の言葉を直す</strong>）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>結果をNeonに残し、自然言語で集計して聞く</h3>
+          <div class="timeline-body">
+            <p><strong>① Neonを作り直す</strong>（約10分）</p>
+            <ul>
+              <li>エージェントに頼む: <code>Neonの公式CLI（neon）をインストールして、neon claim create --env-pull を実行して、アカウントなしの一時的なDBを作ってください。.envの中身は表示しないでください</code>（手順の詳しい説明と、うまくいかないときの切り替えは、<a href="week06.html">第6回のページ</a>と同じ）</li>
+              <li>第6回のDBが<strong>まだ残っている</strong>人は、それを使ってよい（期限は72時間）。<strong>.envに値が書かれたこと</strong>は、<strong>変数名だけ</strong>で確かめる（例: <code>grep -o '^[A-Z_]*=' .env</code>）。値（鍵そのもの）は表示しない</li>
+              <li><strong>.gitignoreに.envが入っているか</strong>を、必ず自分で確認する（<code>--env-pull</code>は、<code>.env</code>を入れてくれないことがある。第6回のページ）</li>
+            </ul>
+            <p><strong>② 結果を保存する</strong>（約20分）</p>
+            <ul>
+              <li>エージェントに頼む（例）: <code>game.jsを、遊んだ結果をNeonに保存するように直してください。resultsテーブル（id・結果の名前・遊んだ日時）を作り、「node game.js」で1回遊んで結果を1件追加してください。「node game.js list」では、何も追加せずに、最近の10件を表示してください。接続は、.envのDATABASE_URLとpgパッケージを使ってください</code>（<strong>追加する操作と、見る操作を分ける</strong>のは、第6回と同じ理由）</li>
+              <li>10回ほど遊んで、結果を貯める。<strong>新しいターミナルを開いて</strong><code>node game.js list</code>を実行し、<strong>さっきの結果が残っている</strong>ことを確かめる</li>
+              <li>保存するのは、<strong>ゲームの結果だけ</strong>。名前・メールアドレスなどの個人情報は<strong>入れない</strong>（誰が遊んだかを残したいときは、ニックネームで十分）</li>
+            </ul>
+            <p><strong>③ 自然言語で集計して聞く</strong>（約20分）</p>
+            <ul>
+              <li>エージェントに頼む（例）: <code>resultsテーブルから、結果ごとの回数と割合を数えて、日本語で答えてください。使ったSQLも見せてください</code></li>
+              <li>返ってきた<strong>SQLを読む</strong>（何を選び（<code>SELECT</code>）、どの表から（<code>FROM</code>）、どうまとめるか（<code>GROUP BY</code>））。読み方は、第6回と同じで、分からない行は、エージェントに聞く</li>
+              <li>確かめる問い: <strong>自分が仕様に書いた割合と、実際に出た割合は、近いか？</strong>10回では、ずれて当たり前。<strong>回数を増やすと近づくか</strong>を、エージェントに頼んで、100回まわして確かめてもよい（<strong>自分の目で、結果と仕様を見比べる</strong>）</li>
+              <li><strong>データを変える（追加・消す）依頼は、実行の前に、何を変えるのかを確かめる</strong>（第6回と同じ）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>ブラウザからDBへ送る道すじと、再現の作法</h3>
+          <div class="timeline-body">
+            <p><strong>① 間にサーバーを置く理由と、Cloud Run</strong>（約15分、図と教員の説明）</p>
+            <figure class="vz-fig" aria-labelledby="cap-n7-route">
+              <p class="vz-fig-title" id="cap-n7-route">鍵（接続文字列）を持つのは、サーバーだけ</p>
+              <svg class="vz-svg" viewBox="0 0 360 262" role="img" aria-labelledby="n7-route-t n7-route-d">
+                <title id="n7-route-t">鍵（接続文字列）を持つのは、サーバーだけ</title>
+                <desc id="n7-route-d">1 ブラウザ。ゲームの画面。ページを開いた人は、コードを読める。ここに鍵を書いてはいけない。結果だけをサーバーに送る。2 サーバー。ブラウザとDBの間に置く。接続文字列（鍵）はここだけが持つ。Cloud Runは、サーバーを置く場所の一つ。3 Neon。クラウド上のDB。サーバーが鍵を使ってつなぐ。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="58" rx="10"/>
+                <text class="t-b" x="22" y="28">1 ブラウザ（ゲームの画面）</text>
+                <text class="t-sm" x="22" y="48">ページを開いた人は、コードを読める</text>
+                <line class="line" x1="30" y1="66" x2="30" y2="92" marker-end="url(#mk-s)"/>
+                <text class="t-sm" x="44" y="84">結果だけを送る</text>
+                <rect class="box-green box-key" x="8" y="94" width="344" height="76" rx="10"/>
+                <text class="t-b" x="22" y="116">2 サーバー（間に置く）</text>
+                <text class="t-sm" x="22" y="136">接続文字列（鍵）は、ここだけが持つ</text>
+                <text class="t-sm" x="22" y="156">置き場所の一つが Cloud Run</text>
+                <line class="line" x1="30" y1="172" x2="30" y2="198" marker-end="url(#mk-s)"/>
+                <text class="t-sm" x="44" y="190">鍵を使ってつなぐ</text>
+                <rect class="box-green" x="8" y="200" width="344" height="54" rx="10"/>
+                <text class="t-b" x="22" y="222">3 Neon（クラウド上のDB）</text>
+                <text class="t-sm" x="22" y="242">結果が、ここに残る</text>
+              </svg>
+              <figcaption>第6回で、「ブラウザのコードに接続文字列を直接書くと、誰でも読める」ことを考えました。その答えが、間のサーバーです。</figcaption>
+            </figure>
+            <ul>
+              <li>今日作ったものは、<strong>自分のCodespaceから</strong>Neonへつないでいる。これを、<strong>ブラウザのゲーム</strong>にするなら、ブラウザは鍵を持てないので、<strong>間にサーバーを置いて</strong>、サーバーだけが鍵を持つ形にする</li>
+              <li><strong>Cloud Run</strong>は、そのサーバーを置く場所の一つ。公式の説明では、「Cloud Run is a fully managed application platform for running your code, function, or container on top of Google's highly scalable infrastructure.」（コード・関数・コンテナを動かすための、フルマネージドのアプリケーション基盤）とされ、リクエストがないときは、インスタンスが<strong>ゼロまで減る</strong>（scale to zero）（<a href="https://cloud.google.com/run/docs/overview/what-is-cloud-run" target="_blank" rel="noopener">What is Cloud Run（Google Cloud公式）</a>、2026-10-21確認）</li>
+              <li>教員が、小さなサーバーをCloud Runに置く様子を<strong>見せる</strong>（実施できない場合は、図の説明のみ）。<strong>学生は、今日はGoogle Cloudの登録も操作もしない</strong>。見て、<strong>何をどこに置くのか</strong>を理解すればよい</li>
+              <li>自分の題材を、ブラウザのゲームにするなら、<strong>どんなデータを、サーバーに送るか</strong>を、1行で書く（個人情報は入れない前提）</li>
+            </ul>
+            <p><strong>② 再現の作法</strong>（約8分）</p>
+            <ul>
+              <li><strong>『80億分の1』の規約</strong>には、次のように書かれている（<strong>2026年10月23日から</strong>の予定として掲載。<a href="https://1in8b.life/ja/terms/" target="_blank" rel="noopener">規約</a>、2026-10-21確認）。「80億分の1のプログラム、文章、絵の著作権は運営者にあり、許可なくそのまま写したり、手を加えて配布したり販売したりすることはできません。」「実際の統計で生まれ、一つの人生を生きてみるといったアイデアは誰のものでもないので、そのアイデアから自分だけの新しい作品をつくるのは自由です。」</li>
+              <li>つまり、<strong>アイデアは借りてよい</strong>。ただし、<strong>プログラム・文章・絵は、そのまま写さない</strong>。今日の進め方（画面から推測して、自分の仕様を書く）は、これに沿っている</li>
+              <li>ほかの作品を元にするときの<strong>3つの確認</strong>: ①<strong>規約や権利</strong>を読む ②<strong>データの出典</strong>を書く ③<strong>個人情報と、重い題材</strong>を扱わない</li>
+              <li>話題のゲームには、<strong>似た作品がすぐ多数出る</strong>（Game Sparkの記事）。そのなかで、<strong>自分にしか出せない題材と仕様</strong>を決めることが、今日のねらい</li>
+            </ul>
+            <p><strong>③ 見せ合う</strong>（約7分）</p>
+            <ul>
+              <li>隣の人に、<strong>自分の仕様の1ページ</strong>と、<strong>動いた結果</strong>を見せる。「仕様のどこが、そのまま動きになったか」と、「仕様と違った部分と、直し方」を、1つずつ話す</li>
+              <li>接続文字列（<code>.env</code>の中身）は、見せない・送らない（<strong>隣の人とDBを共有しない</strong>）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告＆今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>次回（第8回）は<strong>🎤 中間共有会</strong>。ここまでの学び（Google Cloud、AIエージェント、Neon、今日の再現ワーク）から、うまくいったこと・つまずいたことを言葉にして共有する（<a href="../natural-language-dev-2.html">授業計画一覧</a>）。<strong>今日の仕様の1ページと、動いた結果</strong>は、共有の材料になる</li>
+              <li>「今日、<strong>自然言語だけでできたこと</strong>」と「<strong>自分の目で確かめないと危なかったこと</strong>」を、一言ずつメモして退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>接続文字列（<code>.env</code>）が、GitHubにpushされていないことを確認する</strong>
+            <p>今日作った作業フォルダをGitHubに上げている人は、自分のリポジトリを開き、<code>.env</code>が見えないことを確かめる。もし見えてしまっていたら、すぐに講師に伝えて、パスワードを変える（作り直して捨ててもよい）。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>仕様の1ページと動いた結果を、次回の中間共有会で話せるように整える</strong>
+            <p>「何を借りて（アイデア）」「何を自分で決めて（題材・データ・ルール）」「どこを自分の目で確かめたか」を、1つずつ書いておきましょう。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://1in8b.life/ja/" target="_blank" rel="noopener">80億分の1（1in8b 公式）</a> — 今日遊ぶゲーム（授業用モードは、最初の画面の下）</li>
+        <li><a href="https://1in8b.life/ja/terms/" target="_blank" rel="noopener">80億分の1 規約</a> — 授業用モードと、著作権・新しい作品の記載（予定の変更を含む）</li>
+        <li><a href="https://news.yahoo.co.jp/articles/fe9ae5c03c27845d4f3e3338eb53eb4e5aa0fd87" target="_blank" rel="noopener">『80億分の1』フォロワー作品が次々と登場し話題に（Game Spark）</a> — 流行の様子（Yahoo!ニュース配信）</li>
+        <li><a href="https://cloud.google.com/run/docs/overview/what-is-cloud-run" target="_blank" rel="noopener">What is Cloud Run（Google Cloud公式）</a> — Cloud Runとは</li>
+        <li><a href="https://neon.com/docs/reference/claimable-postgres" target="_blank" rel="noopener">Claimable Neon（Neon公式）</a> — アカウントなしの一時プロジェクト（第6回と同じ）</li>
+        <li><a href="week06.html">第6回 自然言語でデータを残そう（本サイト）</a> — Neonの作り方、接続文字列の守り方、SQLの読み方</li>
+        <li><a href="../natural-language-dev/week06.html">前期 第6回 Spec-Driven Development入門（本サイト）</a> — 仕様を先に書く考え方</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week06.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第6回 自然言語でデータを残そう：カード不要のNeon実習</span>
+      </a>
+      <a href="../natural-language-dev-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">自然言語開発 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第8回 中間共有会（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
