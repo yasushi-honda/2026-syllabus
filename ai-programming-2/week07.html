@@ -123,6 +123,7 @@
               <li>第6回と同じ進め方: <strong>1回に1つ</strong>、具体的に指示 → <strong>プレビューで確かめる</strong> → 違うところを言葉にして追加で指示。例: スコアの表示を大きくする、ゲームオーバーの画面を作る、難しさを選べるようにする、色や見た目を変える</li>
               <li>今日は<strong>人に見せる</strong>ので、「初めて見る人に分かる」ものを1つ入れる。例: <code>ゲームのタイトルと、遊び方を2行で、画面の上に出してください</code></li>
               <li>思い通りにならないときは、<strong>何が違うか</strong>を言葉にして追加で指示する。エラーが出たら、<strong>その全文をプロンプト欄に貼って「原因と直し方を教えて」</strong>と頼んでもよい</li>
+              <li>取り込んだアプリは、AI Studioの仕様に<strong>書き直されている</strong>（第6回の「major rewrite」）。<strong>AI Studioの外でも使える形</strong>を保つために、追加指示に次を入れてみる。例: <code>このアプリがAI Studioの外でも動くようにしてください。APIキーは環境変数から読み、コードに書かないでください。Gemini APIを呼ぶ処理は1つのファイルにまとめてください。.gitignore も作ってください</code>。<strong>これで書き直しが減るか、外で動くかは、まだ確かめていない</strong>（試す価値のある一例）。確かめるには、あとで<strong>Codespaceで<code>npm run build</code>が通るか</strong>を見る（2限前半の任意の手順と同じ）</li>
             </ul>
           </div>
         </div>
@@ -534,6 +535,7 @@
             <ul>
               <li>次回（第8回）：<strong>🎤 中間共有会</strong>——自分が作った成果物と、AIエージェントとのやり取りを、<strong>5分程度で共有</strong>し、質疑応答をする。完璧さより、「やってみた」経験の共有を大切にする。今日共有した<strong>URL</strong>と、AIに出した指示で<strong>印象に残ったもの</strong>を1つ、用意しておく</li>
               <li>今日のうちに、<strong>AI Studioのプロジェクトも、GitHubのbackupブランチも削除しない</strong>（GitHub Pagesに進んだ人は、docsフォルダも）。<strong>共有をやめる（Unshare）のも、中間共有会のあとにする</strong>。共有したURLをメモして退出する</li>
+              <li><strong>進級制作のリポジトリは、AI Studioに直接取り込まない。</strong>取り込むと、AI Studio向けに書き直されたコピーができ、GitHubへ送り返す（Force push）と、mainがその形に置き換わる。取り込む前に、<strong>コピー（別のリポジトリか別のブランチ）を取って</strong>、そのコピーを使う。送るときも、元のリポジトリではなく<strong>新しいリポジトリ（Sync to a new repository）</strong>にすれば、元は変わらない（教員が確認）</li>
               <li>「今日いちばん、形になったと感じたこと」を一言メモして退出</li>
             </ul>
           </div>
