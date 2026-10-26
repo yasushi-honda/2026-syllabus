@@ -56,7 +56,7 @@
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
-          <div class="lesson-overview-value">前期から使っているGitHubリポジトリとCodespaces。前期のバグ修正ワークの記録に使った<strong><code>NOTES.md</code></strong>（または<code>README.md</code>。見当たらなければ今日、新しく作る）。AIは<strong>Copilot Chat</strong>（使える人）か<strong>Gemini</strong>（ブラウザの別タブ）のどちらか</div>
+          <div class="lesson-overview-value">前期から使っているGitHubリポジトリとCodespaces。前期のバグ修正ワークの記録に使った<strong><code>NOTES.md</code></strong>（または<code>README.md</code>。今のリポジトリに見当たらなければ今日、新しく作る）。AIは<strong>Copilot Chat</strong>（使える人）か<strong>Gemini</strong>（ブラウザの別タブ）のどちらか</div>
         </div>
       </div>
     </div>
@@ -251,7 +251,7 @@
 &lt;/html&gt;</pre>
               </li>
               <li>Simple Browserのアドレスバーの末尾だけを<code>/cart-bug.html</code>に書き換えてEnter。商品を選んで個数を入れ、「カートに入れる」を押してみる</li>
-              <li>この練習は、<strong>1つ直すと、次のバグが見える</strong>ようにできている。ほかのバグが後ろに隠れているので、1つずつ順に進める</li>
+              <li>1つ目のバグ（構文エラー）が残っているあいだは、スクリプト全体が動かず、ほかのバグが見えない。1つ目を直したら、番号順に1つずつ進める</li>
             </ul>
             <figure class="vz-fig" aria-labelledby="cap-w7-cart">
               <p class="vz-fig-title" id="cap-w7-cart">cart-bug.html のデータの流れと、バグの場所</p>
@@ -334,7 +334,7 @@
                       <summary>答えを見る</summary>
                       <p><code>.value</code>で取り出した値は、数字を入れても文字列になる。<code>.value</code>の部分を<code>Number()</code>で包んで、数に変換する：</p>
                       <pre><code>const qty = Number(document.getElementById("qty").value);</code></pre>
-                      <p><strong>直したあとは、前の失敗した操作で保存されたデータが残っている</strong>ので、<code>Console</code>に<code>localStorage.removeItem("cart")</code>と打って消し、ページを更新してから、もう一度試す。</p>
+                      <p>確認するときは、足し算が合うかを試す（1個のあとに2個を足して、3個になるか）。この時点では4つ目のバグが残っていて、ページを更新するとカートが空に戻る。それは次のバグなので、先に進んでよい。</p>
                     </details>
                   </li>
                 </ul>
@@ -350,7 +350,8 @@
                   <li>
                     <details>
                       <summary>答えを見る</summary>
-                      <p>保存は<code>localStorage.setItem("cart", ...)</code>、読み込みは<code>localStorage.getItem("carts")</code>になっている。保存と読み込みで<strong>キー名が違う</strong>ので、読み込みが空になる。<code>getItem("cart")</code>に直す。直したあと、更新してもカートが残ることを確かめる。</p>
+                      <p>保存は<code>localStorage.setItem("cart", ...)</code>、読み込みは<code>localStorage.getItem("carts")</code>になっている。保存と読み込みで<strong>キー名が違う</strong>ので、読み込みが空になる。<code>getItem("cart")</code>に直す。</p>
+                      <p>直したあと、<code>Console</code>に<code>localStorage.getItem("cart")</code>と打って、保存されている値を見る。3つ目のバグが起きていたあいだに保存された古いデータ（個数が文字列のまま）が残っていると、読み込まれて足し算が「12」のようにまたつながり、<strong>3つ目が直っていないように見える</strong>。その場合は<code>localStorage.removeItem("cart")</code>で消し、ページを更新してから、もう一度試す。更新してもカートが残ることを確かめる。</p>
                     </details>
                   </li>
                 </ul>
@@ -361,7 +362,7 @@
             <ul>
               <li>隣の人と、「<strong>一番見つけにくかったバグはどれか。なぜか</strong>」を話し合う</li>
               <li>見つけるのに役立った道具（<code>Console</code>の赤い文字／<code>console.log</code>／<code>Application</code>）を、バグごとに1つずつ言ってみる</li>
-              <li>3つ目と4つ目では、<strong>直したあとも、古いデータが残って症状が続くことがある</strong>。バグを直したのに直っていないように見えたら、保存されているデータも疑う</li>
+              <li>4つ目を直した直後は、<strong>3つ目のバグのあいだに保存した古いデータが読み込まれて、症状が続いて見えることがある</strong>。バグを直したのに直っていないように見えたら、保存されているデータも疑う</li>
             </ul>
             <div class="lesson-tip">
               <strong>「エラーが出ない」は、いちばん困るバグ:</strong> 前期第10回でも書いたとおり、赤い文字が出るバグは、場所を教えてくれる親切なバグです。今日の2つ目〜4つ目のように、動くのに結果がおかしいバグは、<strong>自分から値を見に行く</strong>必要があります。見に行く道具が<code>console.log</code>です。
@@ -505,7 +506,7 @@
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
             <strong>自分の作品に、見つけにくいバグが隠れていないか見直す</strong>
-            <p>第4回の<code>list.html</code>などに、今日の道具（<code>console.log</code>・<code>Application</code>）を使って、リロードで消える・数がつながる・<code>NaN</code>が出る、といった動きがないかを確かめる。見つけたら、<code>NOTES.md</code>に1行メモしておく。</p>
+            <p>後期第4回で<code>localStorage</code>を付けた<code>list.html</code>などに、今日の道具（<code>console.log</code>・<code>Application</code>）を使って、リロードで消える・数がつながる・<code>NaN</code>が出る、といった動きがないかを確かめる。見つけたら、<code>NOTES.md</code>に1行メモしておく。</p>
           </div>
         </div>
       </div>
