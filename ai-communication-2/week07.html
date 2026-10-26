@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第7回 🔧すれ違いワーク | AIコミュニケーション基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=21">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <!-- 公式情報確認: 2026-10-26（参考リンクのAntigravity CLI公式ドキュメント3ページの生存を確認。Antigravity CLI（agy）の改名・停止の報道が無いことをWebSearchで確認。defaultモード・planモード・/clear・/rewindの記述は第3回で公式から裏取り済みの内容を再掲し、この回で新しいagyの機能は扱わない） -->
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication-2.html">AIコミュニケーション基礎 II</a>
+        <span>/</span>
+        <span>第7回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">🔧すれ違いワーク</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 7</span>
+            <span class="page-badge">火曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-purple">
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">曖昧な指示でAIが誤解する様子を観察し、伝え方を改善する。すれ違いの<strong>「型」</strong>を見分け、<strong>送る前に</strong>すれ違いを見つける</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">すれ違い / 4つの型（言葉の幅・前提の省略・範囲のずれ・やりすぎ） / すれ違いログ / 送る前に解釈を確かめる / 触らない所を伝える</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第1〜6回で使用したリポジトリ・Codespaces環境にアクセスできる状態。第6回で育てた作品と、第6回の「指示ログ」、「agyへの指示メモ」（Googleドキュメント）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>指示がすれ違った場面を、<strong>4つの型</strong>（言葉の幅・前提の省略・範囲のずれ・やりすぎ）のどれに近いかで言える</li>
+        <li>曖昧な指示を送る前に、<strong>agyの動きを予想</strong>し、結果と比べて「どこがすれ違ったか」を説明できる</li>
+        <li>型に合わせて指示を書き直し、結果がどう変わったかを説明できる</li>
+        <li>送る前にagyへ<strong>「どう理解したか」を説明させ</strong>、ズレを実行する前に見つける手順を使える</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>人どうしのすれ違いを体験し、すれ違いの4つの型を知る</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返りと、環境を整える（10分）</strong></p>
+            <ul>
+              <li>第6回の「指示ログ」と、指示メモに書き足した「指示を重ねるときのコツ」を見返し、ペアで<strong>1つずつ</strong>紹介する</li>
+              <li>前回までに使用したリポジトリを開き、<strong>停止していたCodespaceを再開（resume）</strong>する——「Create codespace」で新規作成しない</li>
+              <li>これまでと同じ手順で<code>python3 -m http.server 8000</code>を実行し、「ポート」タブ→<strong>「エディターでプレビュー」</strong>でSimple Browserを開いておく</li>
+              <li>agyを起動したとき、認証セッションが切れていて再ログインを求められる場合がある。その場合は、第2回と同じ手順で再認証する</li>
+              <li>Codespaceを再開した直後は、会話が新しくなっていて、前回の内容を覚えていないことがある。今日は毎回<code>/clear</code>して始めるので、気にしなくてよい</li>
+            </ul>
+            <p><strong>人どうしのすれ違いを体験する（15分）</strong></p>
+            <ul>
+              <li>2人1組になり、<strong>説明役</strong>と<strong>聞き役</strong>を決める。お題の図は、<strong>説明役だけ</strong>が見る。聞き役は、下の折りたたみを<strong>開かない</strong></li>
+              <li>ラウンド1（約7分）: 説明役は、お題Aの図を<strong>言葉だけ</strong>で伝える（図を見せない・指ささない。画面を相手に向けない）。聞き役は<strong>質問せずに</strong>聞き、Googleドキュメントに「どんな画面か」を箇条書きで書く。書けたら、聞き役も折りたたみを開いて、図と見比べて、<strong>ずれた所を1つ</strong>言う
+                <ul>
+                  <li>
+                    <details class="vz-more">
+                      <summary>お題Aを見る（説明役だけ）</summary>
+                      <figure class="vz-fig" aria-labelledby="cap-a7-qa">
+                        <p class="vz-fig-title" id="cap-a7-qa">お題A</p>
+                        <svg class="vz-svg" viewBox="0 0 360 214" role="img" aria-labelledby="a7-qa-t a7-qa-d">
+                          <title id="a7-qa-t">お題A：画面の配置</title>
+                          <desc id="a7-qa-d">上に横長の帯が1本。その下の左側に、小さな四角が縦に3つ並ぶ。右側に大きな四角が1つあり、その中央に円が1つ。右下に、横長のボタンのような四角が1つ。</desc>
+                          <rect class="box-blue" x="8" y="8" width="344" height="32" rx="6"/>
+                          <rect class="box-white" x="8" y="52" width="80" height="30" rx="6"/>
+                          <rect class="box-white" x="8" y="90" width="80" height="30" rx="6"/>
+                          <rect class="box-white" x="8" y="128" width="80" height="30" rx="6"/>
+                          <rect class="box-orange" x="100" y="52" width="252" height="110" rx="8"/>
+                          <circle class="box-blue" cx="226" cy="107" r="30"/>
+                          <rect class="box-purple" x="232" y="172" width="120" height="34" rx="8"/>
+                        </svg>
+                      </figure>
+                    </details>
+                  </li>
+                </ul>
+              </li>
+              <li>ラウンド2（約7分）: 役を交代して、お題Bで同じことをする。今度は、聞き役が<strong>質問してよい</strong>（「それは右ですか」など）。書けたら、聞き役も折りたたみを開いて、図と見比べる
+                <ul>
+                  <li>
+                    <details class="vz-more">
+                      <summary>お題Bを見る（説明役だけ）</summary>
+                      <figure class="vz-fig" aria-labelledby="cap-a7-qb">
+                        <p class="vz-fig-title" id="cap-a7-qb">お題B</p>
+                        <svg class="vz-svg" viewBox="0 0 360 214" role="img" aria-labelledby="a7-qb-t a7-qb-d">
+                          <title id="a7-qb-t">お題B：画面の配置</title>
+                          <desc id="a7-qb-d">左上に円が1つ。その下に、同じ大きさの四角が横に3つ並ぶ。いちばん下に、画面の幅いっぱいの横長の帯が1本。</desc>
+                          <circle class="box-orange" cx="36" cy="32" r="18"/>
+                          <rect class="box-blue" x="8" y="60" width="104" height="90" rx="8"/>
+                          <rect class="box-blue" x="128" y="60" width="104" height="90" rx="8"/>
+                          <rect class="box-blue" x="248" y="60" width="104" height="90" rx="8"/>
+                          <rect class="box-white" x="8" y="166" width="344" height="36" rx="6"/>
+                        </svg>
+                      </figure>
+                    </details>
+                  </li>
+                </ul>
+              </li>
+              <li>最後に1分で、「質問できたとき、何が変わったか」を一言ずつ言う。agyも、途中で質問してくることもあれば、そのまま進めることもある（第5回では、質問や確認が入るかを観察の視点にした）</li>
+            </ul>
+            <p><strong>すれ違いの4つの型を知る（15分）</strong></p>
+            <ul>
+              <li>今の体験や、第5回・第6回で起きたズレを思い出すと、すれ違いにはいくつかの<strong>型</strong>がある。型が分かると、「どこを直せばよいか」が見つけやすくなる</li>
+              <li>これは公式の分類ではなく、この授業で<strong>理解を助けるために作った整理</strong>。1つのすれ違いが、複数の型に当てはまってもよい</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-a7-types">
+              <p class="vz-fig-title" id="cap-a7-types">すれ違いの4つの型</p>
+              <svg class="vz-svg" viewBox="0 0 360 330" role="img" aria-labelledby="a7-types-t a7-types-d">
+                <title id="a7-types-t">すれ違いの4つの型</title>
+                <desc id="a7-types-d">1 言葉の幅：目立たせてのような言葉が、色なのか大きさなのか位置なのかで人によって違う。2 前提の省略：どのファイルか、誰向けかを書いていない。3 範囲のずれ：ここだけのつもりが、全体に及ぶ。4 やりすぎ：頼んでいない所まで変わる。型は1つに決めなくてもよく、重なることもある。</desc>
+                <rect class="box-purple" x="8" y="8" width="344" height="62" rx="10"/>
+                <text class="t-b" x="22" y="34">① 言葉の幅</text>
+                <text class="t-sm" x="22" y="56">「目立たせて」は、色？大きさ？位置？</text>
+                <rect class="box-purple" x="8" y="78" width="344" height="62" rx="10"/>
+                <text class="t-b" x="22" y="104">② 前提の省略</text>
+                <text class="t-sm" x="22" y="126">どのファイルか、誰向けかを書いていない</text>
+                <rect class="box-purple" x="8" y="148" width="344" height="62" rx="10"/>
+                <text class="t-b" x="22" y="174">③ 範囲のずれ</text>
+                <text class="t-sm" x="22" y="196">ここだけのつもりが、全体に及ぶ</text>
+                <rect class="box-purple" x="8" y="218" width="344" height="62" rx="10"/>
+                <text class="t-b" x="22" y="244">④ やりすぎ</text>
+                <text class="t-sm" x="22" y="266">頼んでいない所まで変わる</text>
+                <rect class="band" x="8" y="290" width="344" height="34" rx="10"/>
+                <text class="t-c" x="180" y="312">型は1つに決めなくてよい</text>
+              </svg>
+              <figcaption>1つのすれ違いが、2つの型にまたがることもあります。</figcaption>
+            </figure>
+            <ul>
+              <li><strong>① 言葉の幅</strong>: 同じ言葉でも、人によって思い浮かべる中身が違う。「大きく」「目立たせて」「見やすく」など。第4回の「<strong>基準</strong>（どのくらい・何色）」が足りない状態に近い</li>
+              <li><strong>② 前提の省略</strong>: 自分の頭の中では当たり前のことを、言っていない。どのファイルか、誰が見るのか、今どんな状態か。第4回の「<strong>対象</strong>（何を）」が足りない状態に近い</li>
+              <li><strong>③ 範囲のずれ</strong>: 「ここだけ」のつもりが全体に、「全体」のつもりが一部に伝わる。「どこからどこまで」を書いていない</li>
+              <li><strong>④ やりすぎ</strong>: 頼んだ所は直ったのに、頼んでいない所まで変わっている。第6回の「ここはそのまま、ここだけ変えて」の、<strong>「そのまま」を伝えていない</strong>状態に近い</li>
+              <li>ペアで、ラウンド1・2のすれ違いと、第5回・第6回で起きたズレを、型で言ってみる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>曖昧な指示を送り、agyのすれ違いを観察して型で記録する</h3>
+          <div class="timeline-body">
+            <p><strong>お題カードと「すれ違いログ」を準備する（5分）</strong></p>
+            <ul>
+              <li>次の「お題カード」から<strong>2〜3枚</strong>選ぶ。どれも、わざと曖昧に書いてある
+                <ul>
+                  <li>「ボタンを目立たせて」</li>
+                  <li>「スマホでも見やすくして」</li>
+                  <li>「ページを1つ追加して」</li>
+                  <li>「文章をもっと短くして」</li>
+                  <li>「全体的に整えて」</li>
+                </ul>
+              </li>
+              <li>Googleドキュメント（指示メモと同じドキュメントでよい）に、次の4列の表を作る（1行目は見出し）
+                <ul>
+                  <li>送った指示／送る前の予想／起きたこと／型</li>
+                </ul>
+              </li>
+              <li>この表が「<strong>すれ違いログ</strong>」。第6回の指示ログとは別の表にする</li>
+              <li>ターミナルで<code>ls</code>を実行し、作品が<strong>HTMLファイル1つ</strong>か、<strong>複数のファイル</strong>かを確認する。元の作品は<strong>触らない</strong>。毎回、<strong>新しいコピー</strong>を作って、そのコピーで試す（コピーの名前は、1枚目が<code>sure-1</code>、2枚目が<code>sure-2</code>と、番号を進める。前のコピーは消さない）</li>
+              <li>モードは<code>default</code>のまま進める。第3回のとおり、ファイルを変更する前に差分が出て、承認待ちになることがある。止まって見えても失敗ではない。<strong>承認する前に、差分を読む</strong></li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-a7-flow">
+              <p class="vz-fig-title" id="cap-a7-flow">お題カード1枚ぶんの流れ</p>
+              <svg class="vz-svg" viewBox="0 0 360 326" role="img" aria-labelledby="a7-flow-t a7-flow-d">
+                <title id="a7-flow-t">お題カード1枚ぶんの流れ</title>
+                <desc id="a7-flow-d">1 元に戻す（コピーを作り直し、会話を新しくする）、2 予想を書く、3 曖昧なまま送る、4 差分と画面を観察する、5 型を決めて記録する、の順に進み、5のあとは次のお題カードで1に戻ってくり返す。</desc>
+                <rect class="box-purple" x="8" y="8" width="242" height="44" rx="10"/>
+                <text class="t-b" x="22" y="28">① 元に戻す</text>
+                <text class="t-sm" x="22" y="45">新しいコピーを作る・/clear</text>
+                <line class="line" x1="129" y1="54" x2="129" y2="62" marker-end="url(#mk-s)"/>
+                <rect class="box-purple" x="8" y="64" width="242" height="44" rx="10"/>
+                <text class="t-b" x="22" y="84">② 予想を書く</text>
+                <text class="t-sm" x="22" y="101">どこを、どう変えそうか</text>
+                <line class="line" x1="129" y1="110" x2="129" y2="118" marker-end="url(#mk-s)"/>
+                <rect class="box-purple" x="8" y="120" width="242" height="44" rx="10"/>
+                <text class="t-b" x="22" y="140">③ 曖昧なまま送る</text>
+                <text class="t-sm" x="22" y="157">お題カードの文をそのまま</text>
+                <line class="line" x1="129" y1="166" x2="129" y2="174" marker-end="url(#mk-s)"/>
+                <rect class="box-purple" x="8" y="176" width="242" height="44" rx="10"/>
+                <text class="t-b" x="22" y="196">④ 観察する</text>
+                <text class="t-sm" x="22" y="213">差分と、Simple Browserの画面</text>
+                <line class="line" x1="129" y1="222" x2="129" y2="230" marker-end="url(#mk-s)"/>
+                <rect class="box-white box-key" x="8" y="232" width="242" height="44" rx="10"/>
+                <text class="t-b" x="22" y="252">⑤ 型を決めて記録する</text>
+                <text class="t-sm" x="22" y="269">予想と結果のずれを、型で言う</text>
+                <polyline class="line" points="250,254 330,254 330,30 250,30" marker-end="url(#mk-s)"/>
+                <text class="t-sm t-halo" x="322" y="146" text-anchor="end">次のカードへ</text>
+                <rect class="band" x="8" y="286" width="344" height="34" rx="10"/>
+                <text class="t-c" x="180" y="308">これを2〜3枚くり返す</text>
+              </svg>
+              <figcaption>②の「予想」を、送る前に書くのが大切です。結果とのずれが、すれ違いの手がかりになります。</figcaption>
+            </figure>
+            <p><strong>お題カードを送って、観察する（3枚×約12分）</strong></p>
+            <ul>
+              <li>1枚ごとに、次の流れで進める
+                <ul>
+                  <li>① <strong>元に戻す</strong>——元の作品から、新しいコピーを作り、agyで<code>/clear</code>と打って新しい会話を始める（前のお題の影響を引きずらないため。第6回と同じ考え方）。HTMLファイル1つの人は、次のようにコピーする（<code>元のファイル.html</code>は自分のファイル名に置き換える。2枚目以降は番号を進める）
+                    <pre><code>cp 元のファイル.html sure-1.html</code></pre>
+                    複数のファイルがある人は、作品のファイルを入れたフォルダごとコピーする（<code>作品フォルダ</code>は自分のフォルダ名に置き換える。作品がリポジトリの一番上にある場合は、担当教員に相談する）
+                    <pre><code>cp -r 作品フォルダ sure-1</code></pre>
+                    この場合、以下の<code>sure-1.html</code>は、<code>sure-1/</code>の中のHTMLファイルに読み替える。2枚目以降は、<code>sure-2</code>、<code>sure-3</code>と番号を進める</li>
+                  <li>② <strong>予想を書く</strong>——送る前に、「agyは、どのファイルの、どこを、どう変えそうか」を、すれ違いログの「送る前の予想」に1〜2行で書く</li>
+                  <li>③ <strong>曖昧なまま送る</strong>——お題カードの文に、「<code>sure-1.html</code>について」とだけ添えて送る（元の作品を守るためのもので、ほかは曖昧なままにする）</li>
+                  <li>④ <strong>観察する</strong>——差分が出たら、承認する前に読む。<strong><code>sure-1.html</code>（またはsure-1フォルダ）以外のファイルを変えようとしていたら、承認しない</strong>。それ自体が「やりすぎ」「範囲のずれ」の例なので、「起きたこと」に書く。変更されてしまったときは、そのコピーは使わず、新しいコピー（番号を進める）を作り直す。完了したら、Simple Browserのアドレスバーの末尾だけを<code>/sure-1.html</code>に書き換えて確認する（第4回と同じ手順）</li>
+                  <li>⑤ <strong>型を決めて記録する</strong>——「起きたこと」を書き、予想とのずれを、4つの型のどれに近いかで「型」の列に書く。型が決められないときは「分からない」でよい</li>
+                </ul>
+              </li>
+              <li>1枚が早く終わったら、次のお題カードへ。時間が足りなければ、2枚で終えてよい</li>
+              <li>agyの動きは、同じ指示でも毎回同じとは限らない。隣の人と結果が違ってよい</li>
+            </ul>
+            <p><strong>ペアで見せ合う（約9分）</strong></p>
+            <ul>
+              <li>すれ違いログを見せ合い、<strong>一番意外だった1枚</strong>を選んで、「予想と何が違ったか」「どの型か」を説明する</li>
+              <li>同じお題カードを選んでいたら、結果の違いも比べる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>型に合わせて伝え方を直し、送る前に解釈を確かめる</h3>
+          <div class="timeline-body">
+            <p><strong>型ごとの直し方を知る（5分）</strong></p>
+            <ul>
+              <li><strong>① 言葉の幅</strong> → 数字・色・具体例を足す（「赤い背景で、文字を2倍の大きさに」）</li>
+              <li><strong>② 前提の省略</strong> → 対象と、目的（誰が見るか・何のためか）を書く</li>
+              <li><strong>③ 範囲のずれ</strong> → 「どこからどこまで」を書く（「トップのボタンだけ」）</li>
+              <li><strong>④ やりすぎ</strong> → 「ほかは変えないで」と、触らない所を書く（第6回の「そのまま」）</li>
+            </ul>
+            <p><strong>型に合わせて書き直して、送り直す（15分）</strong></p>
+            <ul>
+              <li>すれ違いログから、<strong>意外だった2枚</strong>を選ぶ。1枚ごとに、型に合わせて<strong>指示を書き直す</strong></li>
+              <li>1限後半と同じ手順で、新しいコピー（番号を進める）を作り、<code>/clear</code>してから、書き直した指示を送る。このときも、「<code>sure-3.html</code>について」のように、対象のコピーの名前を添える</li>
+              <li>前の結果と比べて、すれ違いが<strong>減ったか、別のすれ違いが出たか</strong>を見る。すれ違いログの表の下に、「直した指示」と「起きたこと」の行を足して書く</li>
+              <li>直したのに、まだズレる場合もある。それは失敗ではなく、「別の型が残っている」手がかりになる</li>
+            </ul>
+            <p><strong>送る前に、agyに「どう理解したか」を説明させる（20分）</strong></p>
+            <ul>
+              <li>ここまでは、送ったあとにすれ違いに気づいた。今度は、<strong>実行する前に</strong>気づく方法を試す</li>
+              <li>1限後半でまだ使っていないお題カードを1枚選び、新しいコピー（番号を進める）を作り、<code>/clear</code>してから、次の<strong>確認の一文</strong>を送る（「sure-4.html」は、いま作ったコピーの名前に、「ここにお題カードの文」は、選んだ指示に置き換える）
+                <button class="copy-md-btn" data-md-source="confirm-prompt">
+                  <span class="btn-icon"></span> 確認の一文をコピー
+                </button>
+<pre id="confirm-prompt" class="md-preview">まだ実行しないでください。ファイルは変更しないでください。
+対象は sure-4.html だけです。ほかのファイルは対象にしないでください。
+次の指示を、どう理解したかを3行で説明してください。
+1行目: どのファイルの、どこを変えるか
+2行目: どう変えるか
+3行目: 変えない所は何か
+指示: （ここにお題カードの文）</pre>
+              </li>
+              <li>返ってきた説明を、<strong>自分の意図と比べる</strong>。ズレている所があれば、指示を直して送り直す。説明のとおりでよければ、「その理解でよいので、実行してください」と送る</li>
+              <li>確認の一文を送ったのに、ファイルを変更しようとして差分が出たら、<strong>承認しない</strong>。「ファイルは変更しないで」という指示を守らなかったことも、すれ違いのひとつなので、ログに書く。変更されてしまったときは、そのコピーは使わず、新しいコピー（番号を進める）を作り直す。agyが説明だけで止まるかどうかは、今日確かめる</li>
+              <li>第3回の<code>plan</code>モード（<code>Shift+Tab</code>で切り替え。公式の説明は「コードを書く前に分析して手順をまとめる」）も、似た目的に使える。確認の一文の代わりに試してみてもよい（出てくる内容は、確認の一文のときと少し違うことがある）</li>
+              <li>結果を、すれ違いログに書く。「確認の一文で、どんなズレが見つかったか」「見つからなかったか」も書く</li>
+            </ul>
+            <p><strong>「そのまま送る」と「確かめてから送る」を比べる（10分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-a7-check">
+              <p class="vz-fig-title" id="cap-a7-check">そのまま送る／確かめてから送る</p>
+              <svg class="vz-svg" viewBox="0 0 360 300" role="img" aria-labelledby="a7-check-t a7-check-d">
+                <title id="a7-check-t">そのまま送るのと、確かめてから送るのの比較</title>
+                <desc id="a7-check-d">そのまま送る場合は、1 指示を送る、2 agyが実行する、3 結果で気づく、の順で、ズレに気づくのは実行したあと。確かめてから送る場合は、1 確認の一文を送る、2 agyが3行で説明する、3 ズレなら直す、4 実行する、の順で、ズレに気づくのは実行する前。どちらが正解かではなく、気づく時の違いを比べる。</desc>
+                <rect class="box-white" x="8" y="6" width="166" height="40" rx="10"/>
+                <text class="t-c t-b" x="91" y="31">そのまま送る</text>
+                <rect class="box-purple" x="186" y="6" width="166" height="40" rx="10"/>
+                <text class="t-c t-b" x="269" y="31">確かめてから送る</text>
+                <rect class="box-white" x="8" y="62" width="166" height="32" rx="8"/>
+                <text class="t-c" x="91" y="83">① 指示を送る</text>
+                <rect class="box-white" x="8" y="102" width="166" height="32" rx="8"/>
+                <text class="t-c" x="91" y="123">② agyが実行する</text>
+                <rect class="box-white" x="8" y="142" width="166" height="32" rx="8"/>
+                <text class="t-c" x="91" y="163">③ 結果で気づく</text>
+                <rect class="box-purple" x="186" y="62" width="166" height="32" rx="8"/>
+                <text class="t-c" x="269" y="83">① 確認の一文を送る</text>
+                <rect class="box-purple" x="186" y="102" width="166" height="32" rx="8"/>
+                <text class="t-c" x="269" y="123">② 3行で説明させる</text>
+                <rect class="box-purple" x="186" y="142" width="166" height="32" rx="8"/>
+                <text class="t-c" x="269" y="163">③ ズレなら直す</text>
+                <rect class="box-purple" x="186" y="182" width="166" height="32" rx="8"/>
+                <text class="t-c" x="269" y="203">④ 実行する</text>
+                <line class="line" x1="91" y1="176" x2="91" y2="226" marker-end="url(#mk-s)"/>
+                <line class="line" x1="269" y1="216" x2="269" y2="226" marker-end="url(#mk-s)"/>
+                <rect class="box-white box-key" x="8" y="230" width="166" height="40" rx="10"/>
+                <text class="t-c" x="91" y="255">気づくのは、実行したあと</text>
+                <rect class="box-white box-key" x="186" y="230" width="166" height="40" rx="10"/>
+                <text class="t-c" x="269" y="255">気づくのは、実行する前</text>
+                <text class="t-c t-sm" x="180" y="290">正解を決めるのではなく、気づく時の違いを比べる</text>
+              </svg>
+              <figcaption>確かめるぶん、1回ごとに手間は増えます。どちらが良いかは、作品や変更の内容によって変わります。</figcaption>
+            </figure>
+            <ul>
+              <li>ペアで、すれ違いログを見比べる——<strong>どの型のすれ違いが、確認の一文で見つかりそうか</strong>、見つけにくそうか</li>
+              <li>確認の一文で見つからなかったすれ違いがあれば、その理由も話し合う（たとえば、説明を読んでも、自分の意図とのずれに気づけなかった、など）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>すれ違いを防ぐチェックを、指示メモに書き足す</h3>
+          <div class="timeline-body">
+            <p><strong>ペアで見せ合う（15分）</strong></p>
+            <ul>
+              <li>お互いのすれ違いログを見せ合い、<strong>一番大きくすれ違った例</strong>と、<strong>効いた直し方</strong>を、型の言葉で説明する</li>
+              <li>相手のログの中から、<strong>自分も使ってみたい直し方</strong>を1つ見つけて伝える</li>
+            </ul>
+            <p><strong>「すれ違いを防ぐチェック」を指示メモに書き足す（15分）</strong></p>
+            <ul>
+              <li>「agyへの指示メモ」（第2回から育ててきたGoogleドキュメント）に、<strong>送る前のチェック</strong>を、自分の言葉で1〜3個書き足す（例:「どの範囲か書いたか」「ほかは変えないでと書いたか」「送る前に、3行で説明させたか」）</li>
+              <li>第6回に書いた「指示を重ねるときのコツ」と並べて、<strong>1つの「送る前のチェック」</strong>として読めるように整える</li>
+              <li>ここに書いたチェックは、次回以降のagyの作業で使える</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ ai-communication-2.html Week 8 「チャット型AIとエージェント型AIの違い」と同期 -->
+              <li>次回（第8回）: <strong>チャット型AIとエージェント型AIの違い</strong>——AI Studio Build（前期の続き）とagyでの体験を比較し、関わり方の違いを言語化</li>
+              <li>今日のキーワード「<strong>すれ違い</strong>」「<strong>4つの型</strong>」「<strong>送る前に確かめる</strong>」を口に出して言えるか確認して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>すれ違いログと、指示メモへの書き足しを完成させる</strong>
+            <p>授業内で書ききれなかった人は家で仕上げる。すれ違いログは、「型」の列まで埋める。指示メモには、「送る前のチェック」が1つ以上入っている状態にする。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>身の回りのすれ違いを1つ見つけて、型で言う</strong>
+            <p>家族や友人、アルバイト先などで起きた「言ったのに伝わらなかった」場面を1つ思い出し、どの型に近いか、どう言えば防げたかを1〜2行で書く。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://antigravity.google/docs/cli/using/" target="_blank" rel="noopener">Antigravity CLI — Using AGY CLI（公式）</a> — <code>/clear</code>・<code>/rewind</code>を含むQuick Tipsの公式解説（振り返り用）</li>
+        <li><a href="https://antigravity.google/docs/cli/best-practices/" target="_blank" rel="noopener">Antigravity CLI — Best Practices（公式）</a> — 「探索→計画→実行」の公式解説（振り返り用）</li>
+        <li><a href="https://antigravity.google/docs/cli/modes/" target="_blank" rel="noopener">Antigravity CLI — Choose an execution mode（公式）</a> — <code>default</code>と<code>plan</code>を含む、<code>Shift+Tab</code>での実行モード切替の公式解説（振り返り用）</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week06.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第6回 AIエージェントに指示する②</span>
+      </a>
+      <a href="../ai-communication-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AIコミュニケーション基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第8回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
