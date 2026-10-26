@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第7回 🔧バグ修正ワーク④ | プログラム基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=21">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <!-- 公式情報確認: 2026-10-26（参考リンクのMDN 5ページとChrome DevToolsの1ページの生存とタイトルを確認。外部サービスの操作手順は扱わない。AIはCopilot ChatまたはGeminiで、前期第10回と同じ使い方。練習問題cart-bug.htmlは、バグ入り版と修正版の両方をブラウザで実行し、本文に書いた症状のとおりに出ることを確認済み） -->
+  <header class="page-header page-header--blue">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../program-basics-2.html">プログラム基礎 II</a>
+        <span>/</span>
+        <span>第7回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">🔧バグ修正ワーク④</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 7</span>
+            <span class="page-badge">火曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-blue">
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">AIに<strong>複雑なバグ入りコード</strong>を生成させ、読み解いて修正する。今回のコードは、後期に学んだ「オブジェクトの配列」「フォーム入力」「<code>localStorage</code>」が組み合わさっている</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">バグ修正ワーク / エラーが出るバグ・出ないバグ / <code>console.log</code> / <code>typeof</code> / <code>NaN</code> / <code>Number()</code> / DevToolsの Console と Application</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">前期から使っているGitHubリポジトリとCodespaces。前期のバグ修正ワークの記録に使った<strong><code>NOTES.md</code></strong>（または<code>README.md</code>。今のリポジトリに見当たらなければ今日、新しく作る）。AIは<strong>Copilot Chat</strong>（使える人）か<strong>Gemini</strong>（ブラウザの別タブ）のどちらか</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>「<strong>エラーが出るバグ</strong>」と「<strong>エラーが出ないのに動きがおかしいバグ</strong>」を見分け、後者は<code>console.log</code>で値を見て探せる</li>
+        <li><code>NaN</code>・数字の連結・リロードで消えるデータ、という3つの症状から、原因の見当をつけられる</li>
+        <li>AIが書いたバグ入りコードを、<strong>症状 → 予想 → 確かめる → 直す</strong>の順で直せる</li>
+        <li>AIの「答え合わせ」を鵜呑みにせず、<strong>直したコードを自分で動かして確かめる</strong>ことができる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前期のバグ修正ワークを思い出し、「エラーが出ないバグ」の探し方を知る</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返りと、環境を整える（10分）</strong></p>
+            <ul>
+              <li>第6回の<code>layout.html</code>が<code>push</code>できているかをGitHub上で確認する。終わっていない人は、今日の最後の時間で<code>push</code>する</li>
+              <li><code>python3 -m http.server 8000</code>を起動し、第1回（前期）と同じ手順で「ポート」タブ→「エディターでプレビュー」→ Simple Browserを開いておく</li>
+              <li>DevTools（開発者ツール）を開く方法は、前期第5回・第10回と同じ手順。<code>Console</code>タブにエラーが出ると、赤い文字で表示される</li>
+            </ul>
+            <p><strong>バグ修正ワークのやり方を思い出す（10分）</strong></p>
+            <ul>
+              <li>前期は、AIにわざとバグを入れたコードを書かせ、自分で読んで直した——①スマホ対応のCSS、②<code>if</code>文、③関数。どれも「<strong>AIのコードは、いつも正しいとは限らない</strong>」ことを体験する練習だった</li>
+              <li>記録は<code>NOTES.md</code>に、<strong>①プロンプト全文 ／ ②AIが出した間違い ／ ③自分が見つけた理由</strong>の3項目で残してきた。今日も同じ形式で続ける</li>
+              <li>今日のコードは、これまでより<strong>長く、部品が多い</strong>。後期に学んだ「オブジェクトの配列」（第2回）「フォーム入力」（第3回）「<code>localStorage</code>」（第4回）が1つのコードに入っている。部品が増えると、どこがおかしいのかが見つけにくくなる</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-w7-kinds">
+              <p class="vz-fig-title" id="cap-w7-kinds">バグには2種類ある</p>
+              <svg class="vz-svg" viewBox="0 0 360 250" role="img" aria-labelledby="w7-kinds-t w7-kinds-d">
+                <title id="w7-kinds-t">エラーが出るバグと、エラーが出ないバグ</title>
+                <desc id="w7-kinds-d">エラーが出るバグは、Consoleに赤い文字が出て、行番号が手がかりになる。エラーが出ないバグは、動くのに結果がおかしく、値を見て探す。今日の本題は、見つけにくい後者。</desc>
+                <rect class="box-orange" x="8" y="8" width="344" height="92" rx="10"/>
+                <text class="t-b" x="22" y="34">エラーが出るバグ</text>
+                <text x="22" y="58">Consoleに赤い文字が出る</text>
+                <text class="t-sm" x="22" y="82">例: カッコの閉じ忘れ。行番号が手がかり</text>
+                <line class="line" x1="180" y1="102" x2="180" y2="118" marker-end="url(#mk-s)"/>
+                <rect class="box-white box-key" x="8" y="120" width="344" height="92" rx="10"/>
+                <text class="t-b" x="22" y="146">エラーが出ないバグ</text>
+                <text x="22" y="170">動くのに、結果がおかしい</text>
+                <text class="t-sm" x="22" y="194">例: NaN・数字がつながる・リロードで消える</text>
+                <text class="t-c t-sm" x="180" y="236">赤い文字が出ない分、値を自分で見て探す</text>
+              </svg>
+              <figcaption>前者は、エラーメッセージが場所を教えてくれます。後者は、<code>console.log</code>などで中身を見て、自分で探します。</figcaption>
+            </figure>
+            <p><strong>調べる4つのステップと、3つの道具（20分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-w7-steps">
+              <p class="vz-fig-title" id="cap-w7-steps">バグを調べる4つのステップ</p>
+              <svg class="vz-svg" viewBox="0 0 360 330" role="img" aria-labelledby="w7-steps-t w7-steps-d">
+                <title id="w7-steps-t">バグを調べる4つのステップ</title>
+                <desc id="w7-steps-d">1 症状を言葉にする、2 原因を予想する、3 確かめる、4 直して、もう一度試す、の順に進む。予想がはずれたら、2に戻る。</desc>
+                <rect class="box-blue" x="8" y="8" width="242" height="52" rx="10"/>
+                <text class="t-b" x="22" y="30">① 症状を言葉にする</text>
+                <text class="t-sm" x="22" y="50">何をしたら、何が起きたか</text>
+                <line class="line" x1="129" y1="62" x2="129" y2="78" marker-end="url(#mk-s)"/>
+                <rect class="box-blue" x="8" y="80" width="242" height="52" rx="10"/>
+                <text class="t-b" x="22" y="102">② 原因を予想する</text>
+                <text class="t-sm" x="22" y="122">「ここだと思う」を1行で書く</text>
+                <line class="line" x1="129" y1="134" x2="129" y2="150" marker-end="url(#mk-s)"/>
+                <rect class="box-white box-key" x="8" y="152" width="242" height="52" rx="10"/>
+                <text class="t-b" x="22" y="174">③ 確かめる</text>
+                <text class="t-sm" x="22" y="194">console.log・Console・Application</text>
+                <line class="line" x1="129" y1="206" x2="129" y2="222" marker-end="url(#mk-s)"/>
+                <rect class="box-blue" x="8" y="224" width="242" height="52" rx="10"/>
+                <text class="t-b" x="22" y="246">④ 直して、もう一度試す</text>
+                <text class="t-sm" x="22" y="266">同じ操作で、症状が消えたか</text>
+                <polyline class="line" points="250,178 330,178 330,106 250,106" marker-end="url(#mk-s)"/>
+                <text class="t-sm t-halo" x="322" y="146" text-anchor="end">はずれたら</text>
+                <rect class="band" x="8" y="290" width="344" height="34" rx="10"/>
+                <text class="t-c" x="180" y="312">予想を書いてから確かめる</text>
+              </svg>
+              <figcaption>③の「確かめる」で予想がはずれたら、②に戻って予想を立て直します。</figcaption>
+            </figure>
+            <ul>
+              <li><strong>道具1: <code>Console</code>の赤い文字</strong>——ファイル名と<strong>行番号</strong>が出る。まず、そこから見る</li>
+              <li><strong>道具2: <code>console.log</code></strong>——コードの途中に書いて、その時点の値を<code>Console</code>に出す。たとえば、<code>console.log("qty:", qty, typeof qty);</code>と書くと、<code>qty</code>の中身と<strong>型</strong>（数か文字列か）が分かる</li>
+              <li><strong>道具3: DevToolsの<code>Application</code>タブ</strong>——<code>Local Storage</code>を開くと、<code>localStorage</code>に保存されているキー名と値が見える。見当たらないときは、<code>Console</code>に<code>localStorage.getItem("cart")</code>と打てば、保存されている値が返ってくるので確かめられる</li>
+              <li>エラーが出ないバグは、「予想 → <code>console.log</code>で確かめる」をくり返して絞り込む。<strong>予想を先に書いてから確かめる</strong>と、はずれたときも「何が分かったか」が残る</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>練習問題 <code>cart-bug.html</code> の4つのバグを、順に直す</h3>
+          <div class="timeline-body">
+            <p><strong><code>cart-bug.html</code>を作る（5分）</strong></p>
+            <ul>
+              <li>
+                <p>リポジトリの一番上のフォルダに、新規ファイル<code>cart-bug.html</code>を作り、下のコードを貼り付けて保存する。これは「ミニ雑貨店のカート」で、<strong>バグが4つ入っている</strong>。ここでは、まだ直さない</p>
+                <button class="copy-md-btn" data-md-source="cart-bug-template">
+                  <span class="btn-icon"></span> cart-bug.htmlのコードをコピー
+                </button>
+<pre id="cart-bug-template" class="md-preview">&lt;!DOCTYPE html&gt;
+&lt;html lang="ja"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;ミニ雑貨店のカート&lt;/title&gt;
+  &lt;style&gt;
+    body { font-family: sans-serif; margin: 0; padding: 16px; }
+    li { margin-bottom: 4px; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;ミニ雑貨店&lt;/h1&gt;
+  &lt;form id="add-form"&gt;
+    &lt;select id="product"&gt;
+      &lt;option value="0"&gt;マグ（800円）&lt;/option&gt;
+      &lt;option value="1"&gt;ノート（300円）&lt;/option&gt;
+      &lt;option value="2"&gt;ペン（150円）&lt;/option&gt;
+    &lt;/select&gt;
+    &lt;input type="number" id="qty" value="1" min="1"&gt;
+    &lt;button type="submit"&gt;カートに入れる&lt;/button&gt;
+  &lt;/form&gt;
+  &lt;h2&gt;カート&lt;/h2&gt;
+  &lt;ul id="cart-list"&gt;&lt;/ul&gt;
+  &lt;p&gt;合計: &lt;span id="total"&gt;0&lt;/span&gt;円&lt;/p&gt;
+
+  &lt;script&gt;
+    const products = [
+      { name: "マグ", price: 800 },
+      { name: "ノート", price: 300 },
+      { name: "ペン", price: 150 }
+    ];
+
+    function loadCart() {
+      const saved = localStorage.getItem("carts");
+      if (saved === null) {
+        return [];
+      }
+      return JSON.parse(saved);
+    }
+
+    function saveCart() {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+
+    const cart = loadCart();
+
+    function render() {
+      const ul = document.getElementById("cart-list");
+      ul.innerHTML = "";
+      let total = 0;
+      for (let i = 0; i &lt; cart.length; i++) {
+        const item = cart[i];
+        const li = document.createElement("li");
+        li.textContent = item.name + " × " + item.qty + "（" + item.price * item.qty + "円）";
+        ul.appendChild(li);
+        total = total + item.prise * item.qty;
+      }
+      document.getElementById("total").textContent = total;
+    }
+
+    document.getElementById("add-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const product = products[document.getElementById("product").value];
+      const qty = document.getElementById("qty").value;
+      let found = null;
+      for (let i = 0; i &lt; cart.length; i++) {
+        if (cart[i].name === product.name) {
+          found = cart[i];
+        }
+      }
+      if (found) {
+        found.qty = found.qty + qty;
+      } else {
+        cart.push({ name: product.name, price: product.price, qty: qty });
+      }
+      saveCart();
+      render();
+    };
+
+    render();
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+              </li>
+              <li>Simple Browserのアドレスバーの末尾だけを<code>/cart-bug.html</code>に書き換えてEnter。商品を選んで個数を入れ、「カートに入れる」を押してみる</li>
+              <li>1つ目のバグ（構文エラー）が残っているあいだは、スクリプト全体が動かず、ほかのバグが見えない。1つ目を直したら、番号順に1つずつ進める</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-w7-cart">
+              <p class="vz-fig-title" id="cap-w7-cart">cart-bug.html のデータの流れと、バグの場所</p>
+              <svg class="vz-svg" viewBox="0 0 360 410" role="img" aria-labelledby="w7-cart-t w7-cart-d">
+                <title id="w7-cart-t">cart-bug.htmlのデータの流れと、4つのバグの場所</title>
+                <desc id="w7-cart-d">フォームから個数が文字列で届く（個数の足し算のバグ）。cart配列に商品を入れる。render関数で合計を計算する（item.priseの打ち間違い）。saveCartでlocalStorageに保存する（保存と読み込みでキー名が違う）。loadCartで読み込む。コード全体では、最後のカッコの閉じ忘れがある。</desc>
+                <rect class="box-white" x="40" y="8" width="312" height="56" rx="10"/>
+                <text class="t-b" x="52" y="30">フォームの入力</text>
+                <text class="t-sm" x="52" y="52">個数は「文字列」で届く</text>
+                <circle class="dot-orange" cx="20" cy="36" r="12"/><text class="t-c t-w t-b" x="20" y="41">③</text>
+                <line class="line" x1="196" y1="66" x2="196" y2="80" marker-end="url(#mk-s)"/>
+                <rect class="box-blue" x="40" y="82" width="312" height="56" rx="10"/>
+                <text class="t-b" x="52" y="104">cart 配列</text>
+                <text class="t-sm" x="52" y="126">{ name, price, qty } のオブジェクトが並ぶ</text>
+                <line class="line" x1="196" y1="140" x2="196" y2="154" marker-end="url(#mk-s)"/>
+                <rect class="box-blue" x="40" y="156" width="312" height="56" rx="10"/>
+                <text class="t-b" x="52" y="178">render()：一覧と合計</text>
+                <text class="t-sm" x="52" y="200">price と qty から合計を出す</text>
+                <circle class="dot-orange" cx="20" cy="184" r="12"/><text class="t-c t-w t-b" x="20" y="189">②</text>
+                <line class="line" x1="196" y1="214" x2="196" y2="228" marker-end="url(#mk-s)"/>
+                <rect class="box-blue" x="40" y="230" width="312" height="56" rx="10"/>
+                <text class="t-b" x="52" y="252">saveCart()：保存する</text>
+                <text class="t-sm" x="52" y="274">localStorage のキー名を指定</text>
+                <circle class="dot-orange" cx="20" cy="258" r="12"/><text class="t-c t-w t-b" x="20" y="263">④</text>
+                <line class="line" x1="196" y1="288" x2="196" y2="302" marker-end="url(#mk-s)"/>
+                <rect class="box-blue" x="40" y="304" width="312" height="56" rx="10"/>
+                <text class="t-b" x="52" y="326">loadCart()：読み込む</text>
+                <text class="t-sm" x="52" y="348">保存したときと同じキー名で探す</text>
+                <circle class="dot-orange" cx="20" cy="332" r="12"/><text class="t-c t-w t-b" x="20" y="337">④</text>
+                <rect class="band" x="8" y="372" width="344" height="32" rx="10"/>
+                <text class="t-c t-sm" x="180" y="393">コード全体：最後のカッコの閉じ忘れ（①）</text>
+              </svg>
+              <figcaption>丸の数字は、下の「症状」の番号に対応します。どの部品で起きたバグかを、図で見当をつけましょう。</figcaption>
+            </figure>
+            <p><strong>症状を見て、順に直す（35分）</strong></p>
+            <ul>
+              <li>各バグは、次の順で進める: <strong>症状を読む → 原因を1行で予想する → 確かめる → 直す</strong>。ヒントと答えは<strong>折りたたみ</strong>に入っている。先に自分で考えてから、開く</li>
+              <li><strong>1つ目の症状</strong>: 「カートに入れる」を押しても何も起きない（ページが読み込み直されることがある）。<code>Console</code>に赤い文字が出る
+                <ul>
+                  <li>
+                    <details>
+                      <summary>ヒントを見る</summary>
+                      <p>赤い文字に書かれた行番号とメッセージを読む。メッセージは<code>missing ) after argument list</code>のような形で、<strong>カッコの数が合っていない</strong>ことを教えている。<code>addEventListener(...)</code>の最後を見る。</p>
+                    </details>
+                  </li>
+                  <li>
+                    <details>
+                      <summary>答えを見る</summary>
+                      <p><code>document.getElementById("add-form").addEventListener("submit", function (e) { ... };</code>の最後が<code>};</code>になっている。<code>addEventListener(</code>で開いたカッコを閉じる<code>)</code>が足りないので、<code>});</code>に直す。</p>
+                    </details>
+                  </li>
+                </ul>
+              </li>
+              <li><strong>2つ目の症状</strong>: 商品を入れると、一覧には「マグ × 1（800円）」と出るのに、<strong>合計が<code>NaN</code></strong>になる
+                <ul>
+                  <li>
+                    <details>
+                      <summary>ヒントを見る</summary>
+                      <p><code>NaN</code>は「数として計算できない」という意味の値（Not a Number）。一覧の金額は合っているのに、合計だけがおかしい。一覧の行と合計の行で、<strong>書き方が違うところ</strong>を探す。<code>render()</code>の中の<code>for</code>文に<code>console.log(item);</code>を足して、<code>item</code>の中身（プロパティ名）を見る。</p>
+                    </details>
+                  </li>
+                  <li>
+                    <details>
+                      <summary>答えを見る</summary>
+                      <p>合計の行が<code>item.prise</code>になっている（<code>price</code>の打ち間違い）。JavaScriptは、存在しないプロパティを読んでもエラーにせず<code>undefined</code>を返す。<code>undefined * 1</code>は<code>NaN</code>になる。<code>item.price</code>に直す。確認できたら、足した<code>console.log</code>は消す。</p>
+                    </details>
+                  </li>
+                </ul>
+              </li>
+              <li><strong>3つ目の症状</strong>: マグを「1個」入れたあと、続けて「2個」入れると、3個ではなく<strong>「12個」（9600円）</strong>になる
+                <ul>
+                  <li>
+                    <details>
+                      <summary>ヒントを見る</summary>
+                      <p>入力欄から取り出した値は、数字に見えても<strong>文字列</strong>のことがある。<code>"1" + "2"</code>は<code>"12"</code>になる。フォームから値を取る行に<code>console.log("qty:", qty, typeof qty);</code>を足して、<code>typeof</code>の結果を見る。</p>
+                    </details>
+                  </li>
+                  <li>
+                    <details>
+                      <summary>答えを見る</summary>
+                      <p><code>.value</code>で取り出した値は、数字を入れても文字列になる。<code>.value</code>の部分を<code>Number()</code>で包んで、数に変換する：</p>
+                      <pre><code>const qty = Number(document.getElementById("qty").value);</code></pre>
+                      <p>確認するときは、足し算が合うかを試す（1個のあとに2個を足して、3個になるか）。この時点では4つ目のバグが残っていて、ページを更新するとカートが空に戻る。それは次のバグなので、先に進んでよい。</p>
+                    </details>
+                  </li>
+                </ul>
+              </li>
+              <li><strong>4つ目の症状</strong>: カートに入れて合計も合っているのに、<strong>ページを更新（リロード）すると、カートが空に戻る</strong>
+                <ul>
+                  <li>
+                    <details>
+                      <summary>ヒントを見る</summary>
+                      <p>DevToolsの<code>Application</code>タブ→<code>Local Storage</code>を見る。データは<strong>保存されているか</strong>、保存されているなら<strong>キー名は何か</strong>。そのキー名と、<code>loadCart()</code>が探しているキー名を見比べる。</p>
+                    </details>
+                  </li>
+                  <li>
+                    <details>
+                      <summary>答えを見る</summary>
+                      <p>保存は<code>localStorage.setItem("cart", ...)</code>、読み込みは<code>localStorage.getItem("carts")</code>になっている。保存と読み込みで<strong>キー名が違う</strong>ので、読み込みが空になる。<code>getItem("cart")</code>に直す。</p>
+                      <p>直したあと、<code>Console</code>に<code>localStorage.getItem("cart")</code>と打って、保存されている値を見る。3つ目のバグが起きていたあいだに保存された古いデータ（個数が文字列のまま）が残っていると、読み込まれて足し算が「12」のようにまたつながり、<strong>3つ目が直っていないように見える</strong>。その場合は<code>localStorage.removeItem("cart")</code>で消し、ページを更新してから、もう一度試す。更新してもカートが残ることを確かめる。</p>
+                    </details>
+                  </li>
+                </ul>
+              </li>
+              <li>直せたら、4つの症状ごとに「<strong>エラーが出た／出なかった</strong>」を数える。エラーが出なかったバグが何個あったかを確認する（答え: 3つ）</li>
+            </ul>
+            <p><strong>ペアで振り返る（10分）</strong></p>
+            <ul>
+              <li>隣の人と、「<strong>一番見つけにくかったバグはどれか。なぜか</strong>」を話し合う</li>
+              <li>見つけるのに役立った道具（<code>Console</code>の赤い文字／<code>console.log</code>／<code>Application</code>）を、バグごとに1つずつ言ってみる</li>
+              <li>4つ目を直した直後は、<strong>3つ目のバグのあいだに保存した古いデータが読み込まれて、症状が続いて見えることがある</strong>。バグを直したのに直っていないように見えたら、保存されているデータも疑う</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>「エラーが出ない」は、いちばん困るバグ:</strong> 前期第10回でも書いたとおり、赤い文字が出るバグは、場所を教えてくれる親切なバグです。今日の2つ目〜4つ目のように、動くのに結果がおかしいバグは、<strong>自分から値を見に行く</strong>必要があります。見に行く道具が<code>console.log</code>です。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>AIにバグ入りコードを生成させ、読み解いて直す</h3>
+          <div class="timeline-body">
+            <p><strong>AIに頼むプロンプトを選んで送る（10分）</strong></p>
+            <ul>
+              <li>Codespacesの<strong>Copilot Chat</strong>（使える人）か、ブラウザの別タブで開いた<strong>Gemini</strong>（<a href="https://gemini.google.com/" target="_blank" rel="noopener">gemini.google.com</a>）に、自分が選んだジャンルのプロンプトを貼り付けて送る。Copilotが使えない人は、Geminiだけで進めてよい</li>
+              <li>
+                <p><strong>ゲームを選んだ人</strong>のプロンプト</p>
+                <button class="copy-md-btn" data-md-source="prompt-game">
+                  <span class="btn-icon"></span> ゲーム班のプロンプトをコピー
+                </button>
+<pre id="prompt-game" class="md-preview">JavaScriptの学習者向けの練習問題として、わざとバグを3つ入れたHTMLファイルを書いてください。
+- &lt;!DOCTYPE html&gt; から &lt;/html&gt; までの1ファイルで、40〜60行
+- 題材は「ゲームのスコア記録」。名前とスコアを入力するフォームがある
+- 記録は「オブジェクトの配列」で持ち、スコアの高い順に一覧で表示する
+- localStorageに保存して、ページを更新しても記録が残る
+- バグは3つ。そのうち2つ以上は「エラーが出ないのに、動きがおかしい」ものにする
+- バグの場所と原因は、私が「答えを見せて」と言うまで教えないでください</pre>
+              </li>
+              <li>
+                <p><strong>ECサイトを選んだ人</strong>のプロンプト</p>
+                <button class="copy-md-btn" data-md-source="prompt-ec">
+                  <span class="btn-icon"></span> EC班のプロンプトをコピー
+                </button>
+<pre id="prompt-ec" class="md-preview">JavaScriptの学習者向けの練習問題として、わざとバグを3つ入れたHTMLファイルを書いてください。
+- &lt;!DOCTYPE html&gt; から &lt;/html&gt; までの1ファイルで、40〜60行
+- 題材は「ショップの在庫管理」。商品名・値段・在庫数を入力するフォームがある
+- 商品は「オブジェクトの配列」で持ち、一覧で表示する。在庫が0の商品には「売り切れ」と出す。全商品の値段の合計も出す
+- localStorageに保存して、ページを更新しても商品が残る
+- バグは3つ。そのうち2つ以上は「エラーが出ないのに、動きがおかしい」ものにする
+- バグの場所と原因は、私が「答えを見せて」と言うまで教えないでください</pre>
+              </li>
+              <li>AIが出したコードを、<strong>新規ファイル<code>bug-ai.html</code></strong>に貼り付けて保存する。AIが出した<code>&lt;!DOCTYPE html&gt;</code>から<code>&lt;/html&gt;</code>までを、そのまま全部貼る</li>
+              <li>貼ったら、直す前にコピーを取っておく（ペアで交換するとき、バグ入りの元の状態が必要になる）：
+                <pre><code>cp bug-ai.html bug-ai-original.html</code></pre>
+              </li>
+              <li>同じプロンプトでも、AIの答えは毎回違う。隣の人と内容が違っていてよい。それぞれが自分の問題に取り組む</li>
+            </ul>
+            <p><strong>動かして、症状を探す（15分）</strong></p>
+            <ul>
+              <li>Simple Browserのアドレスバーの末尾だけを<code>/bug-ai.html</code>に書き換えてEnter。実際に、入力して、追加して、更新して、動きを確かめる</li>
+              <li><code>Console</code>に赤い文字が出ていないかを見る。出ていれば、行番号を手がかりにする</li>
+              <li>見つけた症状を、次の形でメモする: 「<strong>何をしたら ／ 何が起きたか ／ 本当はどうなるはずか</strong>」。症状は、バグの数（3つ）より少なく見えたり、多く見えたりしてよい</li>
+            </ul>
+            <p><strong>読み解いて、直す（20分）</strong></p>
+            <ul>
+              <li>症状ごとに、1限後半と同じ<strong>4つのステップ</strong>（症状 → 予想 → 確かめる → 直す）で進める。<strong>予想は、確かめる前に1行で書く</strong></li>
+              <li>確かめるときに使う道具: <code>console.log(値, typeof 値)</code>／<code>Console</code>の赤い文字／<code>Application</code>の<code>Local Storage</code></li>
+              <li>1つ直すたびに、同じ操作でもう一度試す。<strong>直したつもりで、ほかの動きを壊していないか</strong>も確認する</li>
+              <li>直せなかった症状は、メモに「分かったこと」だけ残しておく。直せなくても、探した跡は記録になる</li>
+            </ul>
+            <p><strong>答え合わせをする（5分）</strong></p>
+            <ul>
+              <li>自分で直せるところまで進んだら、AIに「<strong>答えを見せて</strong>」と送る。AIが言ったバグの場所と原因を、自分が見つけたものと照らし合わせる</li>
+              <li><strong>AIの答えも間違うことがある</strong>。たとえば、「バグは3つ」と言いながら実際には2つしかない、別の場所を指している、直し方が不十分、などが起こりうる。AIの答えを見たら、<strong>直したコードを実際に動かして</strong>、症状が消えたかを自分で確かめる</li>
+              <li>自分の予想とAIの答えが<strong>ずれた箇所</strong>が、いちばんの学びになる。メモしておく</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>ペアで問題を交換して解き、<code>NOTES.md</code>に記録して<code>push</code>する</h3>
+          <div class="timeline-body">
+            <p><strong>ペアで問題を交換する（15分）</strong></p>
+            <ul>
+              <li>ペアの相手の<code>bug-ai-original.html</code>（バグ入りの元の状態）の中身を、コピーして受け取る。渡し方は、授業で使っている共有の方法（Googleドキュメントや学校で使っているチャットなど。講師の指示に従う）</li>
+              <li>受け取ったコードを、新規ファイル<code>bug-swap.html</code>に貼り付けて保存し、1限後半と同じ4つのステップで、<strong>バグを1つ</strong>見つけて直す。相手のAIの「答え」は、見ない</li>
+              <li>直せたら、相手に「どの症状から、どう予想して、何で確かめたか」を伝える。相手が見つけたものと同じかどうかも、確かめる</li>
+              <li>これは、第10回の「中間相互レビュー」の予行練習にもなる。<strong>他の人のコードを読んで、原因を言葉にする</strong>経験を積む</li>
+            </ul>
+            <p><strong><code>NOTES.md</code>に記録する（10分）</strong></p>
+            <ul>
+              <li><code>NOTES.md</code>（見当たらなければ新規作成）に、「<strong>バグ修正ワーク④</strong>」という見出しを作り、前期と同じ<strong>3項目</strong>を書く：
+                <ul>
+                  <li>① プロンプト全文</li>
+                  <li>② AIが出した間違い（バグの場所と、症状）</li>
+                  <li>③ 自分が見つけた理由（どの道具で、どう予想して、何で確かめたか）</li>
+                </ul>
+              </li>
+              <li>今日はもう1項目、<strong>④「エラーが出なかったバグを、どうやって見つけたか」</strong>を足す。<code>console.log</code>で何を見て、何が分かったかを1〜2行で書く</li>
+            </ul>
+            <p><strong><code>commit</code>・<code>push</code>する（5分）</strong></p>
+            <ul>
+              <li>前期第4回と同じ手順で、<code>cart-bug.html</code>・<code>bug-ai.html</code>・<code>bug-ai-original.html</code>・<code>bug-swap.html</code>・<code>NOTES.md</code>を<code>commit</code>・<code>push</code>する（コミットメッセージ例：<code>バグ修正ワーク④の練習と記録を追加</code>）</li>
+              <li>第6回の<code>layout.html</code>を<code>push</code>できていなかった人は、ここで一緒に<code>push</code>する</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ program-basics-2.html Week 8 「個人制作① 基礎機能」と同期 -->
+              <li>次回（第8回）: <strong>個人制作① 基礎機能</strong>——選んだジャンルの土台部分を制作（ゲーム班は盤面・キャラクター表示、EC班は商品一覧表示）。第5回の<code>plan.md</code>と第6回の<code>layout.html</code>を見返しておく</li>
+              <li>今日のキーワード「<strong><code>console.log</code></strong>」「<strong><code>typeof</code></strong>」「<strong><code>NaN</code></strong>」を口に出して言えるか確認して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>NOTES.md</code>の「バグ修正ワーク④」の記録を仕上げて、<code>push</code>する</strong>
+            <p>授業内で書ききれなかった項目は家で仕上げる。①〜④の項目が埋まっている状態にして、<code>push</code>後にGitHub上で<code>NOTES.md</code>が見えることを確認する。直せなかったバグがある場合は、「分かったこと」を書いておけばよい。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>自分の作品に、見つけにくいバグが隠れていないか見直す</strong>
+            <p>後期第4回で<code>localStorage</code>を付けた<code>list.html</code>などに、今日の道具（<code>console.log</code>・<code>Application</code>）を使って、リロードで消える・数がつながる・<code>NaN</code>が出る、といった動きがないかを確かめる。見つけたら、<code>NOTES.md</code>に1行メモしておく。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/console/log_static" target="_blank" rel="noopener">MDN — console: log() 静的メソッド</a> — 今日の<code>console.log</code>の解説</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/NaN" target="_blank" rel="noopener">MDN — NaN</a> — 「数として計算できない」値の解説</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/typeof" target="_blank" rel="noopener">MDN — typeof</a> — 値の型（数・文字列など）を調べる</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Number" target="_blank" rel="noopener">MDN — Number</a> — <code>Number()</code>で文字列を数に変換する</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/Window/localStorage" target="_blank" rel="noopener">MDN — Window: localStorage プロパティ</a> — 保存と読み込みのキー名の扱い</li>
+        <li><a href="https://developer.chrome.com/docs/devtools/storage/localstorage" target="_blank" rel="noopener">View and edit local storage（Chrome DevTools、英語）</a> — <code>Application</code>タブで<code>Local Storage</code>を見る方法</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week06.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第6回 CSS発展：レイアウトを整える</span>
+      </a>
+      <a href="../program-basics-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">プログラム基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第8回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js"></script>
+</body>
+</html>
