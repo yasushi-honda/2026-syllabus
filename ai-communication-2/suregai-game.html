@@ -148,11 +148,11 @@
   <main class="container syllabus-content theme-purple">
 
     <div class="sg-note">
-      これは<strong>練習用のゲーム</strong>です。相手は、決まったルールで動く練習用AI「<strong>ミミ</strong>」🤖です。<strong>本物のagyやAI Studio Buildではありません</strong>。本物は、聞き返してきたり、ミミとは違う動き方をしたりします。入力した内容は<strong>どこにも送信・保存されません</strong>（ページを再読み込みすると最初からになります）。<br>
+      これは<strong>練習用のゲーム</strong>です。相手は、決まったルールで動く練習用AI「<strong>ミミ</strong>」🤖です。<strong>本物のagyやAI Studio Buildではありません</strong>。本物は、聞き返してくることもあれば、ミミとは違う動き方をすることもあります。入力した内容は<strong>どこにも送信・保存されません</strong>（ページを再読み込みすると最初からになります）。<br>
       「すれ違いの4つの型」（言葉の幅・前提の省略・範囲のずれ・やりすぎ）は、<a href="week07.html">第7回</a>で使う<strong>授業用の整理</strong>で、公式の分類ではありません。
     </div>
 
-    <div class="sg-bar" role="status">
+    <div class="sg-bar">
       <span>得点 <strong id="sgScore">0</strong></span>
       <span class="sg-combo" id="sgCombo"></span>
       <span><button class="sg-btn sg-btn--sub" type="button" id="sgHomeBtn">ステージを選ぶ</button></span>
@@ -184,7 +184,8 @@
   };
   var TYPE_KEYS = ['haba', 'zentei', 'hani', 'yarisugi'];
 
-  var S = { score: 0, combo: 0, stars: {}, log: [] };
+  var S = { score: 0, combo: 0, stars: {}, log: [], done: {} };
+  var nextFresh = true;
 
   function $(id) { return document.getElementById(id); }
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -211,7 +212,26 @@
   function addLog(stage, instr, pred, happened, types) { S.log.push({ stage: stage, instr: instr, pred: pred, happened: happened, types: types }); }
   function mimi(html, cls) { return '<div class="sg-mimi ' + (cls || '') + '"><span class="sg-mimi-face" aria-hidden="true">🤖</span><div class="sg-bubble"><strong>ミミ:</strong> ' + html + '</div></div>'; }
   function you(html) { return '<div class="sg-mimi"><span class="sg-mimi-face" aria-hidden="true">🧑</span><div class="sg-bubble sg-bubble--you"><strong>あなた:</strong> ' + html + '</div></div>'; }
-  function view(html) { var v = $('sgView'); v.innerHTML = html; v.querySelectorAll('.sg-autofocus').forEach(function (el) { el.focus(); }); }
+  // 押したボタンの位置を覚えておき、画面を描き直したあとに同じボタンへフォーカスを戻す（キーボード操作の人が迷子にならないように）
+  function selFor(el) {
+    if (!el || el === document.body || !$('sgView').contains(el)) return null;
+    if (el.id) return '#' + el.id;
+    var ks = Object.keys(el.dataset || {});
+    if (!ks.length) return null;
+    return ks.map(function (k) { return '[data-' + k.replace(/[A-Z]/g, function (c) { return '-' + c.toLowerCase(); }) + '="' + String(el.dataset[k]).replace(/"/g, '\\"') + '"]'; }).join('');
+  }
+  function view(html) {
+    var v = $('sgView');
+    var prev = nextFresh ? null : selFor(document.activeElement);
+    v.innerHTML = html;
+    var target = null;
+    if (prev) { try { target = v.querySelector(prev); } catch (e) { target = null; } }
+    if (!target) { target = v.querySelector('h2'); if (target) target.setAttribute('tabindex', '-1'); }
+    if (target) target.focus({ preventScroll: !nextFresh });
+    nextFresh = false;
+  }
+  // 点は、1つの問題につき最初の1回だけ（やり直しは練習。点は増えない）
+  function firstTime(key) { if (S.done[key]) return false; S.done[key] = 1; return true; }
   function scrollTopOfView() { var v = $('sgView'); if (v.getBoundingClientRect().top < 0) v.scrollIntoView({ block: 'start' }); }
 
   // ============================================================
@@ -340,7 +360,7 @@
     if (l.color) parts.push(l.color);
     parts.push(l.shape || '（形は書いていない）');
     if (l.arrange) parts.push('を' + l.arrange);
-    return parts.join('').replace('つの', 'つ、') + (l.arrange ? '' : '');
+    return parts.join('').replace('つの', 'つ、');
   }
   // お題と描いたものを比べる（行どうしを、いちばん合う組み合わせで対応させる）
   function lineMatch(t, p) {
@@ -349,34 +369,34 @@
       if (f === 'arrange' && (parseInt(t.count, 10) || 1) < 2) return;
       total++;
       var tv = t[f] || DEFAULTS[f];
-      if (rp.v[f] === tv) score++;
+      if (rp.src[f] === 'vague') diffs.push({ f: f, want: tv, got: rp.v[f], src: 'vague', said: p[f], lucky: rp.v[f] === tv });
+      else if (rp.v[f] === tv) score++;
       else diffs.push({ f: f, want: tv, got: rp.v[f], src: rp.src[f], said: p[f] });
     });
     return { score: score, total: total, diffs: diffs };
   }
   function judge(target, lines) {
-    var used = [], results = [], got = 0, total = 0;
-    target.lines.forEach(function (t) {
-      var best = null, bi = -1;
-      lines.forEach(function (p, i) {
-        if (used.indexOf(i) !== -1) return;
-        var m = lineMatch(t, p);
-        if (!best || m.score > best.score) { best = m; bi = i; }
-      });
-      if (best && best.score >= 2) { used.push(bi); results.push({ t: t, m: best, idx: bi }); got += best.score; total += best.total; }
+    var pairs = [];
+    target.lines.forEach(function (t, ti) { lines.forEach(function (p, pi) { var m = lineMatch(t, p); if (m.score >= 2) pairs.push({ ti: ti, pi: pi, m: m }); }); });
+    pairs.sort(function (a, b) { return b.m.score - a.m.score; });
+    var usedT = {}, usedP = {}, matched = {};
+    pairs.forEach(function (x) { if (usedT[x.ti] || usedP[x.pi]) return; usedT[x.ti] = 1; usedP[x.pi] = 1; matched[x.ti] = x; });
+    var results = [], got = 0, total = 0;
+    target.lines.forEach(function (t, ti) {
+      var x = matched[ti];
+      if (x) { results.push({ t: t, m: x.m, idx: x.pi }); got += x.m.score; total += x.m.total; }
       else { results.push({ t: t, m: null }); total += lineMatch(t, {}).total; }
     });
     var extras = [];
-    lines.forEach(function (p, i) { if (used.indexOf(i) === -1) extras.push(i); });
-    var penalty = extras.length * 2;
-    var rate = Math.max(0, (got - penalty)) / total;
+    lines.forEach(function (p, i) { if (!usedP[i]) extras.push(i); });
+    var rate = Math.max(0, got - extras.length * 2) / total;
     return { rate: rate, results: results, extras: extras };
   }
 
-  var S1 = { t: 0, lines: [], draft: {}, askMode: false, asked: false };
+  var S1 = { t: 0, lines: [], draft: {}, askMode: false, asked: false, sent: false, best: {} };
 
   function stage1(tIndex) {
-    if (typeof tIndex === 'number') { S1.t = tIndex; S1.lines = []; S1.draft = {}; S1.asked = false; }
+    if (typeof tIndex === 'number') { S1.t = tIndex; S1.lines = []; S1.draft = {}; S1.asked = false; S1.sent = false; nextFresh = true; }
     var T = TARGETS[S1.t];
     var h = '<div class="sg-card sg-pop"><h2>ステージ1　伝えてみよう</h2>';
     h += '<p style="margin:.2rem 0 .5rem;font-size:.92rem;line-height:1.7">あなたは<strong>説明役</strong>です。ミミには、お題の図が<strong>見えていません</strong>。言葉を選んで文を作り、ミミに描いてもらいましょう。<strong>書かなかった所は、ミミが思い込みで決めます</strong>。点線の札（「大きめの」など）は、あいまいな言葉です。</p>';
@@ -395,7 +415,7 @@
     h += '<h3>ミミに伝える文（' + S1.lines.length + ' / 8）</h3>';
     h += S1.lines.length ? '<ol class="sg-lines">' + S1.lines.map(function (l, i) { return '<li><span>' + (i + 1) + '. ' + esc(lineText(l)) + '</span><button type="button" class="sg-btn sg-btn--sub" data-s1del="' + i + '" aria-label="' + (i + 1) + '行目を消す">消す</button></li>'; }).join('') + '</ol>' : '<p style="font-size:.88rem;color:#5a5470">まだ文がありません。</p>';
     h += '<div class="sg-row"><button type="button" class="sg-chip" id="s1ask" aria-pressed="' + S1.askMode + '">ミミが聞き返す（授業のラウンド2のように、質問ありで練習）</button></div>';
-    h += '<div class="sg-row"><button type="button" class="sg-btn" id="s1go"' + (S1.lines.length ? '' : ' disabled') + '>ミミに伝える</button></div>';
+    h += '<div class="sg-row"><button type="button" class="sg-btn" id="s1go"' + (S1.lines.length && !S1.sent ? '' : ' disabled') + '>ミミに伝える</button></div>';
     h += '<div id="s1out"></div></div>';
     view(h);
     bindStage1();
@@ -412,11 +432,11 @@
     });
     $('s1add').onclick = function () {
       if (!Object.keys(S1.draft).length) { say('札を1つ以上選んでください'); $('s1prev').classList.add('sg-shake'); setTimeout(function () { var p = $('s1prev'); if (p) p.classList.remove('sg-shake'); }, 450); return; }
-      S1.lines.push(S1.draft); S1.draft = {}; S1.asked = false; stage1(); say('文を足しました');
+      S1.lines.push(S1.draft); S1.draft = {}; S1.asked = false; S1.sent = false; stage1(); say('文を足しました');
     };
     $('s1clr').onclick = function () { S1.draft = {}; stage1(); };
-    document.querySelectorAll('[data-s1del]').forEach(function (b) { b.onclick = function () { S1.lines.splice(+b.dataset.s1del, 1); S1.asked = false; stage1(); }; });
-    $('s1ask').onclick = function () { S1.askMode = !S1.askMode; S1.asked = false; stage1(); };
+    document.querySelectorAll('[data-s1del]').forEach(function (b) { b.onclick = function () { S1.lines.splice(+b.dataset.s1del, 1); S1.asked = false; S1.sent = false; stage1(); }; });
+    $('s1ask').onclick = function () { S1.askMode = !S1.askMode; S1.asked = false; S1.sent = false; stage1(); };
     $('s1go').onclick = s1Send;
   }
   function s1Send() {
@@ -439,7 +459,11 @@
     var pct = Math.round(r.rate * 100);
     var stars = pct >= 90 ? 3 : pct >= 70 ? 2 : pct >= 40 ? 1 : 0;
     var pts = Math.round(r.rate * 200);
-    if (stars === 3) hit(pts); else { addScore(pts); }
+    var gain = Math.max(0, pts - (S1.best[T.id] || 0));   // 同じお題は、いちばん良かった点だけを数える
+    S1.best[T.id] = Math.max(S1.best[T.id] || 0, pts);
+    if (stars === 3 && gain > 0) hit(gain); else addScore(gain);
+    S1.sent = true;
+    $('s1go').disabled = true;
     setStars('1' + T.id, stars);
     var diffs = [], typesSeen = {};
     r.results.forEach(function (x, ti) {
@@ -447,14 +471,14 @@
       x.m.diffs.forEach(function (d) {
         var tk = d.src === 'default' ? 'zentei' : d.src === 'vague' ? 'haba' : null;
         if (tk) typesSeen[tk] = 1;
-        var why = d.src === 'default' ? FIELD_NAMES[d.f] + 'を書かなかったので、ミミは「' + d.got + '」と思い込みました' : d.src === 'vague' ? '「' + d.said + '」を、ミミは「' + d.got + '」だと受け取りました' : FIELD_NAMES[d.f] + 'は「' + d.want + '」でした（あなたは「' + d.got + '」と伝えました）';
+        var why = d.lucky ? '「' + d.said + '」は、人によって受け取り方が違います。ミミは「' + d.got + '」と受け取り、たまたま合いました' : d.src === 'default' ? FIELD_NAMES[d.f] + 'を書かなかったので、ミミは「' + d.got + '」と思い込みました' : d.src === 'vague' ? '「' + d.said + '」を、ミミは「' + d.got + '」だと受け取りました' : FIELD_NAMES[d.f] + 'は「' + d.want + '」でした（あなたは「' + d.got + '」と伝えました）';
         diffs.push('<li><span class="sg-ng">✕</span> ' + (x.idx + 1) + '行目: ' + esc(why) + (tk ? ' <span class="sg-typetag">' + TYPES[tk].name + '</span>' : '') + '</li>');
       });
     });
     r.extras.forEach(function (i) { diffs.push('<li><span class="sg-ng">✕</span> ' + (i + 1) + '行目は、お題にない図形です <span class="sg-typetag">やりすぎ</span></li>'); typesSeen.yarisugi = 1; });
     var cls = stars === 3 ? 'good' : stars >= 1 ? 'mid' : 'bad';
     var h = '<div class="sg-two sg-pop" style="margin-top:.8rem"><figure class="sg-fig"><figcaption>お題</figcaption>' + svg(T.lines, T.name) + '</figure><figure class="sg-fig"><figcaption>ミミが描いた図</figcaption>' + svg(S1.lines, 'ミミが描いた図') + '</figure></div>';
-    h += '<div class="sg-feedback sg-feedback--' + cls + '"><strong class="sg-verdict">一致度 ' + pct + '%　' + starText(stars) + '　+' + pts + '点</strong>';
+    h += '<div class="sg-feedback sg-feedback--' + cls + '"><strong class="sg-verdict">一致度 ' + pct + '%　' + starText(stars) + '　+' + gain + '点' + (gain < pts ? '（同じお題は、いちばん良かった点だけ数えます）' : '') + '</strong>';
     h += diffs.length ? '<ul class="sg-diff">' + diffs.join('') + '</ul>' : '<p style="margin:.2rem 0">ぴったりです！ ミミは、あなたの言葉だけで同じ図を描けました。</p>';
     if (diffs.length) h += '<p style="margin:.4rem 0 0">ヒント: 書かなかった所はミミの思い込みになります（<strong>前提の省略</strong>）。点線の札は人によって受け取り方が違います（<strong>言葉の幅</strong>）。</p>';
     h += '</div><div class="sg-row"><button type="button" class="sg-btn" id="s1retry">文を直して、もう一度</button>' + (S1.t < TARGETS.length - 1 ? '<button type="button" class="sg-btn sg-btn--ghost" id="s1next">次のお題へ</button>' : '<button type="button" class="sg-btn sg-btn--ghost" id="s1home">ステージを選ぶ</button>') + '</div>';
@@ -462,7 +486,7 @@
     var tks = TYPE_KEYS.filter(function (k) { return typesSeen[k]; });
     addLog('1', T.name + 'を言葉で説明（' + S1.lines.map(lineText).join('／') + '）', '同じ図を描いてくれる', 'ミミの図は一致度' + pct + '%', tks.length ? tks.map(function (k) { return TYPES[k].name; }).join('・') : 'ずれなし');
     say('一致度' + pct + 'パーセント');
-    $('s1retry').onclick = function () { S1.asked = false; $('s1out').innerHTML = ''; };
+    $('s1retry').onclick = function () { S1.asked = false; $('s1out').innerHTML = ''; var f = $('s1add'); if (f) f.focus(); };
     if ($('s1next')) $('s1next').onclick = function () { stage1(S1.t + 1); scrollTopOfView(); };
     if ($('s1home')) $('s1home').onclick = home;
   }
@@ -494,7 +518,7 @@
     { instr: 'この色、もう少し明るくして',
       opts: [{ cap: 'ボタンの色を明るくした', p: { 'btn.color': 'yellow' } }, { cap: '背景の色を明るい水色にした', p: { bg: 'light' } }, { cap: '見出しの色を明るい青にした', p: { 'title.color': 'blue' } }],
       actual: 1, need: ['zentei'], ok: ['hani'],
-      why: '「この色」が、どこの色かを書いていません。あなたの画面では指さしていても、ミミには伝わりません（前提の省略）。' },
+      why: '「この色」が、どこの色かを書いていません。頭の中ではどの色か決まっていても、ミミには伝わりません（前提の省略）。' },
     { instr: '見出しを大きくして',
       opts: [{ cap: '見出しを少し（1.2倍くらい）大きくした', p: { 'title.size': 'ml' } }, { cap: '見出しを、画面からはみ出すほど大きくした', p: { 'title.size': 'xl' } }, { cap: '見出しもボタンも大きくした', p: { 'title.size': 'l', 'btn.size': 'l' } }],
       actual: 1, need: ['haba'], ok: [],
@@ -504,10 +528,10 @@
       actual: 1, need: ['haba'], ok: ['zentei'],
       why: '「文字を変える」は、言葉を変えるのか、文字の色や形を変えるのかで分かれます（言葉の幅）。何に変えるか（前提）も書いていません。' }
   ];
-  var S2 = { i: 0, phase: 'predict', pred: -1, picked: [], done: 0, hits: 0 };
+  var S2 = { i: 0, phase: 'predict', pred: -1, picked: [], done: 0, hits: 0, full: 0 };
 
   function stage2(i) {
-    if (typeof i === 'number') { S2.i = i; S2.phase = 'predict'; S2.pred = -1; S2.picked = []; }
+    if (typeof i === 'number') { S2.i = i; S2.phase = 'predict'; S2.pred = -1; S2.picked = []; nextFresh = true; }
     var C = CARDS[S2.i];
     var h = '<div class="sg-card sg-pop"><h2>ステージ2　型を見抜け</h2>';
     h += '<div>お題カード ' + (S2.i + 1) + ' / ' + CARDS.length + '</div><div class="sg-progress"><div style="width:' + Math.round(S2.i / CARDS.length * 100) + '%"></div></div>';
@@ -545,9 +569,10 @@
     if ($('s2pred')) $('s2pred').onclick = function () {
       S2.phase = 'type';
       var hitPred = S2.pred === C.actual;
-      if (hitPred) { S2.hits++; addScore(50, true); }
+      var first = firstTime('s2p' + S2.i);
+      if (hitPred) { S2.hits++; if (first) addScore(50, true); }
       stage2();
-      say(hitPred ? '予想が当たりました。50点' : '予想とは違いました。ミミは' + 'ABC'[C.actual] + 'を選びました');
+      say(hitPred ? '予想が当たりました' + (first ? '。50点' : '') : '予想とは違いました。ミミは' + 'ABC'[C.actual] + 'を選びました');
     };
     document.querySelectorAll('[data-s2t]').forEach(function (b) {
       b.onclick = function () {
@@ -576,22 +601,24 @@
     var C = CARDS[S2.i];
     var g = gradeTypes(S2.picked, C.need, C.ok);
     var pts = 0, bonus = 0;
-    if (g === 'full') { bonus = hit(100); pts = 100 + bonus; } else if (g === 'part') { addScore(60); pts = 60; } else miss();
+    var first = firstTime('s2t' + S2.i);
+    if (g === 'full') S2.full++;
+    if (first) { if (g === 'full') { bonus = hit(100); pts = 100 + bonus; } else if (g === 'part') { addScore(60); pts = 60; } else miss(); }
     S2.phase = 'done';
     S2.done = Math.max(S2.done, S2.i + 1);
-    addLog('2', C.instr, C.opts[S2.pred].cap, C.opts[C.actual].cap, C.need.map(function (k) { return TYPES[k].name; }).join('・'));
+    if (first) addLog('2', C.instr, C.opts[S2.pred].cap, C.opts[C.actual].cap, C.need.map(function (k) { return TYPES[k].name; }).join('・'));
     stage2();
     var cls = g === 'full' ? 'good' : g === 'part' ? 'mid' : 'bad';
-    var verdict = g === 'full' ? '正解！ +' + pts + '点' + (bonus ? '（連続ボーナス +' + bonus + '）' : '') : g === 'part' ? 'おしい！ +60点' : '今回は違いました';
+    var verdict = (g === 'full' ? '正解！' + (first ? ' +' + pts + '点' + (bonus ? '（連続ボーナス +' + bonus + '）' : '') : '') : g === 'part' ? 'おしい！' + (first ? ' +60点' : '') : '今回は違いました') + (first ? '' : '（やり直しなので、得点は増えません）');
     var h = '<div class="sg-feedback sg-feedback--' + cls + ' sg-pop"><strong class="sg-verdict">' + esc(verdict) + '</strong>';
-    h += '<div>主な型: ' + typeTags(C.need) + (C.ok.length ? '　（' + C.ok.map(function (k) { return TYPES[k].name; }).join('・') + ' を選んでも正解）' : '') + '</div>';
+    h += '<div>主な型: ' + typeTags(C.need) + (C.ok.length ? '　（' + C.ok.map(function (k) { return TYPES[k].name; }).join('・') + ' は、主な型と一緒に選んでも減点なし）' : '') + '</div>';
     h += '<p style="margin:.4rem 0 0">' + esc(C.why) + '</p></div>';
     h += '<div class="sg-row">' + (S2.i < CARDS.length - 1 ? '<button type="button" class="sg-btn" id="s2next">次のお題カードへ</button>' : '<button type="button" class="sg-btn" id="s2fin">ステージ2を終える</button>') + '</div>';
     $('s2out').innerHTML = h;
     say(verdict);
     if ($('s2next')) $('s2next').onclick = function () { stage2(S2.i + 1); scrollTopOfView(); };
     if ($('s2fin')) $('s2fin').onclick = function () {
-      setStars('2', S2.hits >= 6 ? 3 : S2.hits >= 4 ? 2 : 1);
+      setStars('2', S2.full >= 6 ? 3 : S2.full >= 4 ? 2 : S2.full >= 1 ? 1 : 0);
       home();
     };
   }
@@ -601,7 +628,7 @@
   // ============================================================
   // ルール: 結果 = いまの画面 ＋（札で決めていない項目は）ミミの思い込み ＋（「ほかは変えないで」がなければ）ついでの変更 ＋ 札で決めた変更
   var PUZZLES = [
-    { start: 'ボタンを目立たせて', goalText: '「もっと見る」ボタンだけを、赤くて大きいボタンにする（場所や見出しは、そのまま）',
+    { start: 'ボタンを目立たせて', goalText: '「もっと見る」ボタンだけを、赤くて大きい（1.5倍）ボタンにする（場所や見出しは、そのまま）',
       goal: { 'btn.color': 'red', 'btn.size': 'l' },
       check: ['btn.color', 'btn.size', 'btn.pos', 'title.color'],
       tags: { 'btn.color': 'haba', 'btn.size': 'haba' },
@@ -610,7 +637,7 @@
       chips: [
         { id: 'c1', slot: '基準（色）', group: 'color', label: '色を赤に', set: { 'btn.color': 'red' }, text: '色を赤にして' },
         { id: 'c2', slot: '基準（色）', group: 'color', label: '色を青に', set: { 'btn.color': 'blue' }, text: '色を青にして' },
-        { id: 'c3', slot: '基準（大きさ）', group: 'size', label: '大きさを2倍に', set: { 'btn.size': 'l' }, text: '大きさを2倍にして' },
+        { id: 'c3', slot: '基準（大きさ）', group: 'size', label: '大きさを1.5倍に', set: { 'btn.size': 'l' }, text: '大きさを1.5倍にして' },
         { id: 'c4', slot: '変化（位置）', group: 'pos', label: '画面の中央に動かす', set: { 'btn.pos': 'center' }, text: '画面の中央に動かして' },
         { id: 'k', slot: '触らない所', group: 'keep', label: 'ほかは変えないで', keep: true, text: 'ほかは変えないで' },
         { id: 'p', slot: '目的（任意）', group: 'purpose', label: '初めての人が押す場所に気づけるように', set: {}, text: '初めての人が押す場所に気づけるように' }
@@ -669,8 +696,15 @@
     Object.keys(setBy).forEach(function (k) { setPath(s, k, setBy[k]); src[k] = 'chip'; });
     var want = clone(BASE);
     Object.keys(P.goal).forEach(function (k) { setPath(want, k, P.goal[k]); });
-    var bad = P.check.filter(function (k) { return getPath(s, k) !== getPath(want, k); }).map(function (k) { return { k: k, src: src[k] || 'base' }; });
+    var bad = checkKeys(P).filter(function (k) { return getPath(s, k) !== getPath(want, k); }).map(function (k) { return { k: k, src: src[k] || 'base' }; });
     return { state: s, ok: !bad.length, bad: bad, keep: keep, setBy: setBy, src: src };
+  }
+  function checkKeys(P) {
+    var ks = P.check.slice();
+    function add(k) { if (ks.indexOf(k) === -1) ks.push(k); }
+    P.chips.forEach(function (c) { Object.keys(c.set || {}).forEach(add); });
+    Object.keys(P.defaults).forEach(add); Object.keys(P.side).forEach(add);
+    return ks;
   }
   function puzzleInstr(P, sel) {
     var parts = P.chips.filter(function (c) { return sel.indexOf(c.id) !== -1; }).map(function (c) { return c.text; });
@@ -678,26 +712,32 @@
   }
   var PROP_NAMES = { 'btn.color': 'ボタンの色', 'btn.size': 'ボタンの大きさ', 'btn.pos': 'ボタンの位置', 'title.color': '見出しの色', 'text.size': '文章の文字の大きさ', 'cards.layout': 'カードの並び', 'text.len': 'はじめの文章の長さ', 'title.size': '見出しの大きさ', pages: '追加したファイル', aboutContent: '追加したページの中身', nav: 'index.html からのリンク', footer: 'フッター', 'cards.text': 'カードの説明', 'title.text': '見出しの文字' };
 
-  var S3 = { i: 0, sel: [], tries: 0, solved: {}, hint: false };
+  var S3 = { i: 0, sel: [], tries: {}, solved: {}, hints: {} };
+  function s3Locked(i) { return S3.solved[i] === 'done' || (S3.tries[i] || 0) >= 3; }
   function stage3(i) {
-    if (typeof i === 'number') { S3.i = i; S3.sel = []; S3.tries = 0; S3.hint = false; }
+    if (typeof i === 'number') { S3.i = i; S3.sel = []; nextFresh = true; }
     var P = PUZZLES[S3.i];
     var want = clone(BASE); Object.keys(P.goal).forEach(function (k) { setPath(want, k, P.goal[k]); });
     var h = '<div class="sg-card sg-pop"><h2>ステージ3　直して送ろう</h2>';
     h += '<div class="sg-row" role="group" aria-label="パズルを選ぶ">' + PUZZLES.map(function (p, k) { return '<button type="button" class="sg-chip" data-s3p="' + k + '" aria-pressed="' + (k === S3.i) + '">パズル' + (k + 1) + (S3.solved[k] ? ' ✓' : '') + '</button>'; }).join('') + '</div>';
-    h += '<p style="font-size:.92rem;line-height:1.7"><strong>ゴール</strong>: ' + esc(P.goalText) + '<br>最初の指示「<strong>' + esc(P.start) + '</strong>」に<strong>札を足して</strong>、ミミがゴールの画面を作れるように直しましょう。送れるのは<strong>3回まで</strong>です（あと ' + (3 - S3.tries) + ' 回）。</p>';
+    h += '<p style="font-size:.92rem;line-height:1.7"><strong>ゴール</strong>: ' + esc(P.goalText) + '<br>最初の指示「<strong>' + esc(P.start) + '</strong>」に<strong>札を足して</strong>、ミミがゴールの画面を作れるように直しましょう。送れるのは<strong>3回まで</strong>です（あと ' + Math.max(0, 3 - (S3.tries[S3.i] || 0)) + ' 回）。</p>';
     h += '<div class="sg-two"><figure class="sg-fig"><figcaption>いまの画面</figcaption>' + renderMini(BASE, 'いまの画面') + '</figure><figure class="sg-fig"><figcaption>ゴールの画面</figcaption>' + renderMini(want, 'ゴールの画面') + '</figure></div>';
     var slots = [];
     P.chips.forEach(function (c) { if (slots.indexOf(c.slot) === -1) slots.push(c.slot); });
     h += '<h3>札を選ぶ（同じ仲間の札は、どちらか1つ）</h3>';
     slots.forEach(function (sl) {
-      h += '<div class="sg-label">' + esc(sl) + '</div><div class="sg-chips">' + P.chips.filter(function (c) { return c.slot === sl; }).map(function (c) { return '<button type="button" class="sg-chip" data-s3c="' + c.id + '" aria-pressed="' + (S3.sel.indexOf(c.id) !== -1) + '"' + (S3.solved[S3.i] === 'done' || S3.tries >= 3 ? ' disabled' : '') + '>' + esc(c.label) + '</button>'; }).join('') + '</div>';
+      h += '<div class="sg-label">' + esc(sl) + '</div><div class="sg-chips">' + P.chips.filter(function (c) { return c.slot === sl; }).map(function (c) { return '<button type="button" class="sg-chip" data-s3c="' + c.id + '" aria-pressed="' + (S3.sel.indexOf(c.id) !== -1) + '"' + (s3Locked(S3.i) ? ' disabled' : '') + '>' + esc(c.label) + '</button>'; }).join('') + '</div>';
     });
     h += '<div class="sg-label">送る指示</div><div class="sg-instr" id="s3instr">' + esc(puzzleInstr(P, S3.sel)) + '</div>';
-    h += '<div class="sg-row"><button type="button" class="sg-btn" id="s3send"' + (S3.solved[S3.i] === 'done' || S3.tries >= 3 ? ' disabled' : '') + '>ミミに送る</button><button type="button" class="sg-btn sg-btn--sub" id="s3hint"' + (S3.hint ? ' disabled' : '') + '>ヒント（-30点）</button></div><div id="s3hintbox">' + (S3.hint ? s3HintHtml(P) : '') + '</div>';
-    h += '<div id="s3out"></div></div>';
+    h += '<div class="sg-row"><button type="button" class="sg-btn" id="s3send"' + (s3Locked(S3.i) ? ' disabled' : '') + '>ミミに送る</button><button type="button" class="sg-btn sg-btn--sub" id="s3hint"' + (S3.hints[S3.i] || s3Locked(S3.i) ? ' disabled' : '') + '>ヒント（-30点）</button></div><div id="s3hintbox">' + (S3.hints[S3.i] ? s3HintHtml(P) : '') + '</div>';
+    h += '<div id="s3out">' + (s3Locked(S3.i) ? s3DoneHtml(P) : '') + '</div></div>';
     view(h);
     bindStage3();
+  }
+  function s3DoneHtml(P) {
+    var h = '<div class="sg-feedback ' + (S3.solved[S3.i] === 'done' ? 'sg-feedback--good' : 'sg-feedback--mid') + '"><strong class="sg-verdict">' + (S3.solved[S3.i] === 'done' ? 'このパズルは、ゴール済みです' : 'このパズルは、3回送りました') + '</strong>答えの一例: 「' + esc(puzzleInstr(P, solutionOf(P))) + '」</div>';
+    h += '<div class="sg-row">' + (S3.i < PUZZLES.length - 1 ? '<button type="button" class="sg-btn sg-btn--ghost" id="s3next">次のパズルへ</button>' : '<button type="button" class="sg-btn sg-btn--ghost" id="s3fin">ステージ3を終える</button>') + '</div>';
+    return h;
   }
   function s3HintHtml(P) {
     return '<div class="sg-feedback sg-feedback--mid">ゴールと「いまの画面」を見比べて、<strong>変える所</strong>（' + Object.keys(P.goal).map(function (k) { return PROP_NAMES[k]; }).join('・') + '）を札で決め、<strong>変えない所</strong>も伝えましょう。札を全部選べばよいわけではありません。具体的すぎる指示は、AIの提案の良さを消してしまうこともあります。</div>';
@@ -719,42 +759,48 @@
       };
     });
     $('s3send').onclick = s3Send;
-    $('s3hint').onclick = function () { S3.hint = true; addScore(-30, true); $('s3hintbox').innerHTML = s3HintHtml(P); $('s3hint').disabled = true; };
+    $('s3hint').onclick = function () { S3.hints[S3.i] = true; addScore(-30, true); $('s3hintbox').innerHTML = s3HintHtml(P); $('s3hint').disabled = true; };
+    bindS3Nav();
   }
   function s3Send() {
     var P = PUZZLES[S3.i];
-    S3.tries++;
+    S3.tries[S3.i] = (S3.tries[S3.i] || 0) + 1;
+    var tries = S3.tries[S3.i];
     var r = runPuzzle(P, S3.sel);
     var changes = Object.keys(r.src).filter(function (k) { return r.src[k] !== 'base' && P.check.indexOf(k) !== -1 || r.src[k] === 'chip'; });
     var line2 = changes.length ? changes.map(function (k) { return PROP_NAMES[k] || k; }).filter(function (v, i, a) { return a.indexOf(v) === i; }).join('・') + 'を変えます' + (Object.keys(r.src).some(function (k) { return r.src[k] === 'default'; }) ? '（書かれていない所は、わたしの考えで決めます）' : '') : '何も変えません';
     var line3 = r.keep ? 'ほかは変えません' : 'ついでに、気になった所も直しておきます';
     var h = mimi('わたしは、こう理解しました。<ol class="sg-explain"><li>index.html' + (P.goal.pages ? 'と新しいファイル' : '') + '</li><li>' + esc(line2) + '</li><li>' + esc(line3) + '</li></ol>', 'sg-pop');
-    h += '<div class="sg-two"><figure class="sg-fig"><figcaption>ミミが作った画面（' + S3.tries + '回目）</figcaption>' + renderMini(r.state, 'ミミが作った画面') + '</figure><div>';
+    h += '<div class="sg-two"><figure class="sg-fig"><figcaption>ミミが作った画面（' + tries + '回目）</figcaption>' + renderMini(r.state, 'ミミが作った画面') + '</figure><div>';
     var tk = [];
     if (r.ok) {
-      var pts = [300, 200, 120][S3.tries - 1] || 0;
-      var bonus = hit(pts);
-      if (S3.solved[S3.i] !== 'done') S3.solved[S3.i] = 'done';
-      h += '<div class="sg-feedback sg-feedback--good"><strong class="sg-verdict">ゴール！ ' + S3.tries + '回目で成功　+' + (pts + bonus) + '点</strong>使った札は ' + S3.sel.length + ' 枚。最初の「' + esc(P.start) + '」だけでは、ミミは思い込みと「ついで」で動いていました。</div>';
+      var pts = [300, 200, 120][tries - 1] || 0;
+      var bonus = firstTime('s3-' + S3.i) ? hit(pts) : 0;
+      S3.solved[S3.i] = 'done';
+      h += '<div class="sg-feedback sg-feedback--good"><strong class="sg-verdict">ゴール！ ' + tries + '回目で成功　+' + (pts + bonus) + '点</strong>使った札は ' + S3.sel.length + ' 枚。最初の「' + esc(P.start) + '」だけでは、ミミは思い込みと「ついで」で動いていました。</div>';
       say('ゴールしました');
     } else {
       miss();
       h += '<div class="sg-feedback sg-feedback--bad"><strong class="sg-verdict">ゴールの画面と、ずれています</strong><ul class="sg-diff">' + r.bad.map(function (b) {
         var t = b.src === 'side' ? 'yarisugi' : b.src === 'chip' ? null : (P.tags[b.k] || 'zentei');
         if (t && tk.indexOf(t) === -1) tk.push(t);
-        var why = b.src === 'side' ? '頼んでいないのに、ミミが「ついでに」変えた' : b.src === 'default' ? '書かなかったので、ミミが思い込みで決めた' : b.src === 'chip' ? '選んだ札が、ゴールと違う' : '書かなかったので、変わらなかった';
+        var why = b.src === 'side' ? '頼んでいないのに、ミミが「ついでに」変えた' : b.src === 'default' ? (t === 'haba' ? '「どのくらい」を書かなかったので、ミミが自分の考えで決めた' : t === 'hani' ? 'どこまでかを書かなかったので、ミミが自分の考えで決めた' : '書かなかったので、ミミが思い込みで決めた') : b.src === 'chip' ? '選んだ札が、ゴールと違う' : '書かなかったので、変わらなかった';
         return '<li><span class="sg-ng">✕</span> ' + esc(PROP_NAMES[b.k] || b.k) + ': ' + esc(why) + (t ? ' <span class="sg-typetag">' + TYPES[t].name + '</span>' : '') + '</li>';
-      }).join('') + '</ul>' + (S3.tries >= 3 ? '<p style="margin:.4rem 0 0">3回送りました。答えの一例: 「' + esc(puzzleInstr(P, solutionOf(P))) + '」</p>' : '<p style="margin:.4rem 0 0">札を直して、もう一度送りましょう。</p>') + '</div>';
-      if (S3.tries >= 3) S3.solved[S3.i] = S3.solved[S3.i] || 'tried';
+      }).join('') + '</ul>' + (tries >= 3 ? '<p style="margin:.4rem 0 0">3回送りました。答えの一例: 「' + esc(puzzleInstr(P, solutionOf(P))) + '」</p>' : '<p style="margin:.4rem 0 0">札を直して、もう一度送りましょう。</p>') + '</div>';
+      if (tries >= 3) S3.solved[S3.i] = S3.solved[S3.i] || 'tried';
       say('ゴールとずれています');
     }
     h += '</div></div>';
     h += '<div class="sg-row">' + (S3.i < PUZZLES.length - 1 ? '<button type="button" class="sg-btn sg-btn--ghost" id="s3next">次のパズルへ</button>' : '<button type="button" class="sg-btn sg-btn--ghost" id="s3fin">ステージ3を終える</button>') + '</div>';
     addLog('3', puzzleInstr(P, S3.sel), 'ゴール: ' + P.goalText, r.ok ? 'ゴールの画面になった' : r.bad.map(function (b) { return PROP_NAMES[b.k]; }).join('・') + 'がずれた', r.ok ? 'ずれなし' : tk.map(function (k) { return TYPES[k].name; }).join('・') || '札の選び方');
-    var locked = r.ok || S3.tries >= 3;
+    var locked = r.ok || tries >= 3;
     $('s3out').innerHTML = h;
     $('s3send').disabled = locked;
     document.querySelectorAll('[data-s3c]').forEach(function (b) { b.disabled = locked; });
+    $('s3hint').disabled = true;
+    bindS3Nav();
+  }
+  function bindS3Nav() {
     if ($('s3next')) $('s3next').onclick = function () { stage3(S3.i + 1); scrollTopOfView(); };
     if ($('s3fin')) $('s3fin').onclick = function () {
       var n = PUZZLES.filter(function (p, k) { return S3.solved[k] === 'done'; }).length;
@@ -786,22 +832,22 @@
   // ============================================================
   var CHECKS = [
     { intent: '「もっと見る」ボタンだけを赤くしたい。', instr: 'ボタンを赤くして。ほかは変えないで。',
-      lines: ['index.html の「もっと見る」ボタン', 'ボタンの色を赤にする', 'ほかは変えない'], answer: 'run', wrong: [],
+      lines: ['index.html の「もっと見る」ボタン', 'ボタンの色を赤にする', 'ほかは変えない'], answer: 'run', wrong: [], types: 'ずれなし',
       result: { 'btn.color': 'red' }, why: '3行とも、あなたの意図と合っています。このまま実行してよい場面です。確かめる手間をかけた分、安心して進められます。' },
     { intent: 'はじめのあいさつの文章だけを、2文くらいに短くしたい。', instr: '文章を短くして。',
-      lines: ['index.html の、はじめの文章とカードの説明', 'それぞれ1文にする', '見出しは変えない'], answer: 'fix', wrong: [1, 2],
+      lines: ['index.html の、はじめの文章とカードの説明', 'それぞれ1文にする', '見出しは変えない'], answer: 'fix', wrong: [1, 2], types: '範囲のずれ・言葉の幅',
       result: { 'text.len': 'one', 'cards.text': 'short' }, why: '1行目で、カードの説明まで入っています（範囲のずれ）。2行目の「1文に」も、あなたの「2文くらい」と違います（言葉の幅）。' },
     { intent: 'about.html に自己紹介を書き、index.html の上にリンクを付けたい。', instr: 'about.htmlという自己紹介のページを作って、index.htmlの上にリンクを付けて。ほかは変えないで。',
-      lines: ['about.html を新しく作る。index.html は上の部分だけ', '自己紹介を書き、index.html の上に about.html へのリンクを足す', 'index.html のほかの部分は変えない'], answer: 'run', wrong: [],
+      lines: ['about.html を新しく作る。index.html は上の部分だけ', '自己紹介を書き、index.html の上に about.html へのリンクを足す', 'index.html のほかの部分は変えない'], answer: 'run', wrong: [], types: 'ずれなし',
       result: { pages: 'index+about', aboutContent: 'profile', nav: true }, why: '対象・変え方・変えない所が、すべて意図どおりです。指示に必要なことが書けていると、説明もすっきりします。' },
     { intent: '見出しを、今の1.5倍くらいの大きさにしたい。', instr: '見出しを大きくして。ほかは変えないで。',
-      lines: ['index.html の見出し', '見出しの文字を、今の3倍の大きさにする', 'ほかは変えない'], answer: 'fix', wrong: [2],
+      lines: ['index.html の見出し', '見出しの文字を、今の3倍の大きさにする', 'ほかは変えない'], answer: 'fix', wrong: [2], types: '言葉の幅',
       result: { 'title.size': 'xl' }, why: '2行目の「3倍」が、あなたの「1.5倍くらい」と違います。指示に「どのくらい」を書いていなかったからです（言葉の幅）。' },
     { intent: 'スマホの画面のときだけ、カードを縦1列にしたい（パソコンでは横並びのまま）。', instr: 'スマホでも見やすいように、カードを縦1列に並べて。ほかは変えないで。',
-      lines: ['index.html のカードの部分', 'カードを縦1列に並べる', 'ほかは変えない'], answer: 'fix', wrong: [2],
-      result: { 'cards.layout': 'col' }, why: '気づきにくい問題です。2行目には「スマホのときだけ」が書かれていません。このまま実行すると、パソコンの画面でも縦1列になります。説明は短く見えても、<意図の条件>が入っているかを読みましょう。' },
+      lines: ['index.html のカードの部分', 'カードを縦1列に並べる', 'ほかは変えない'], answer: 'fix', wrong: [2], types: '前提の省略（または範囲のずれ）',
+      result: { 'cards.layout': 'col' }, why: '気づきにくい問題です。2行目には「スマホのときだけ」が書かれていません。このまま実行すると、パソコンの画面でも縦1列になります。説明は短く見えても、<意図の条件>が入っているかを読みましょう（型は、前提の省略、または範囲のずれ）。' },
     { intent: 'ボタンの色だけを青にしたい。', instr: 'ボタンの色を青にして。',
-      lines: ['index.html の「もっと見る」ボタン', 'ボタンの色を青にする', 'ついでに、見出しの色もボタンに合わせて青にする'], answer: 'fix', wrong: [3],
+      lines: ['index.html の「もっと見る」ボタン', 'ボタンの色を青にする', 'ついでに、見出しの色もボタンに合わせて青にする'], answer: 'fix', wrong: [3], types: 'やりすぎ',
       result: { 'btn.color': 'blue', 'title.color': 'blue' }, why: '3行目で、頼んでいない見出しまで変えようとしています（やりすぎ）。「ほかは変えないで」を足して送り直しましょう。' }
   ];
   var S4 = { i: 0, phase: 'read', choice: null, line: [], good: 0 };
@@ -811,7 +857,7 @@
     var h = '<div class="sg-card sg-pop"><h2>ステージ4　送る前に確かめよう</h2>';
     h += '<div>問題 ' + (S4.i + 1) + ' / ' + CHECKS.length + '</div><div class="sg-progress"><div style="width:' + Math.round(S4.i / CHECKS.length * 100) + '%"></div></div>';
     h += '<div class="sg-feedback sg-feedback--mid" style="margin-top:0"><strong>あなたの本当の意図</strong>: ' + esc(Q.intent) + '</div>';
-    h += you('まだ実行しないでください。次の指示を、どう理解したかを3行で説明してください。指示: 「' + esc(Q.instr) + '」');
+    h += '<p style="font-size:.82rem;color:#5a5470;margin:.2rem 0">授業の「確認の一文」を短くしたものです。</p>' + you('まだ実行しないでください。次の指示を、どう理解したかを3行で説明してください。指示: 「' + esc(Q.instr) + '」');
     h += mimi('こう理解しました。<ol class="sg-explain">' + Q.lines.map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ol>');
     if (S4.phase === 'read') {
       h += '<div class="sg-row"><button type="button" class="sg-btn" id="s4run">このまま実行してもらう</button><button type="button" class="sg-btn sg-btn--ghost" id="s4fix">直して送り直す</button></div>';
@@ -837,29 +883,30 @@
     var Q = CHECKS[S4.i];
     S4.phase = 'done';
     var pts = 0, verdict, cls, bonus = 0;
+    var first = firstTime('s4-' + S4.i);
     if (S4.choice === Q.answer) {
-      if (Q.answer === 'run') { bonus = hit(100); pts = 100 + bonus; verdict = '正解！ このまま実行してよい場面でした'; cls = 'good'; S4.good++; }
+      if (Q.answer === 'run') { bonus = first ? hit(100) : 0; pts = first ? 100 + bonus : 0; verdict = '正解！ このまま実行してよい場面でした'; cls = 'good'; S4.good++; }
       else {
         var exact = S4.line.length === Q.wrong.length && Q.wrong.every(function (n) { return S4.line.indexOf(n) !== -1; });
         var some = Q.wrong.some(function (n) { return S4.line.indexOf(n) !== -1; });
-        if (exact) { bonus = hit(150); pts = 150 + bonus; verdict = '正解！ 実行する前に、ずれを見つけました'; cls = 'good'; S4.good++; }
-        else if (some) { addScore(80); pts = 80; verdict = '止めたのは正解。ずれている行は ' + Q.wrong.join('・') + '行目でした'; cls = 'mid'; S4.good++; }
-        else { addScore(40); pts = 40; verdict = '止めたのは正解。ただ、ずれている行は ' + Q.wrong.join('・') + '行目でした'; cls = 'mid'; }
+        if (exact) { bonus = first ? hit(150) : 0; pts = first ? 150 + bonus : 0; verdict = '正解！ 実行する前に、ずれを見つけました'; cls = 'good'; S4.good++; }
+        else if (some) { if (first) addScore(80); pts = first ? 80 : 0; verdict = '止めたのは正解。ずれている行は ' + Q.wrong.join('・') + '行目でした'; cls = 'mid'; S4.good++; }
+        else { if (first) addScore(40); pts = first ? 40 : 0; verdict = '止めたのは正解。ただ、ずれている行は ' + Q.wrong.join('・') + '行目でした'; cls = 'mid'; }
       }
     } else {
-      miss();
+      if (first) miss();
       verdict = Q.answer === 'run' ? '今回は、そのまま実行してよい場面でした（確かめすぎて止めなくてよい）' : '実行してしまいました。結果はこうなります';
       cls = 'bad';
     }
-    var h = '<div class="sg-feedback sg-feedback--' + cls + ' sg-pop"><strong class="sg-verdict">' + esc(verdict) + (pts ? '　+' + pts + '点' : '') + '</strong>' + esc(Q.why).replace('&lt;意図の条件&gt;', '<strong>意図の条件</strong>') + '</div>';
-    h += '<figure class="sg-fig" style="max-width:340px"><figcaption>このまま実行した場合の画面</figcaption>' + renderMini(patch(Q.result), '実行した場合の画面') + (Q.answer === 'fix' && Q.lines[1].indexOf('縦1列') !== -1 ? '' : '') + '</figure>';
+    var h = '<div class="sg-feedback sg-feedback--' + cls + ' sg-pop"><strong class="sg-verdict">' + esc(verdict) + (pts ? '　+' + pts + '点' : '') + (first ? '' : '（やり直しなので、得点は増えません）') + '</strong>' + esc(Q.why).replace('&lt;意図の条件&gt;', '<strong>意図の条件</strong>') + '</div>';
+    h += '<figure class="sg-fig" style="max-width:340px"><figcaption>このまま実行した場合の画面</figcaption>' + renderMini(patch(Q.result), '実行した場合の画面') + '' + '</figure>';
     h += '<div class="sg-row">' + (S4.i < CHECKS.length - 1 ? '<button type="button" class="sg-btn" id="s4next">次の問題へ</button>' : '<button type="button" class="sg-btn" id="s4fin">結果を見る</button>') + '</div>';
     $('s4out').innerHTML = h;
     var b1 = $('s4run'), b2 = $('s4fix'), b3 = $('s4ok');
     [b1, b2, b3].forEach(function (b) { if (b) b.disabled = true; });
     document.querySelectorAll('[data-s4l]').forEach(function (b) { b.disabled = true; });
     if ($('s4back')) $('s4back').disabled = true;
-    addLog('4', Q.instr, '判断: ' + (S4.choice === 'run' ? 'このまま実行' : '直して送り直す（' + S4.line.join('・') + '行目）'), Q.answer === 'run' ? '説明は意図どおり' : 'ミミの説明の' + Q.wrong.join('・') + '行目が意図とずれていた', Q.answer === 'run' ? 'ずれなし' : (S4.i === 1 ? '範囲のずれ・言葉の幅' : S4.i === 3 ? '言葉の幅' : S4.i === 4 ? '前提の省略' : 'やりすぎ'));
+    if (first) addLog('4', Q.instr, '判断: ' + (S4.choice === 'run' ? 'このまま実行' : '直して送り直す（' + S4.line.join('・') + '行目）'), Q.answer === 'run' ? '説明は意図どおり' : 'ミミの説明の' + Q.wrong.join('・') + '行目が意図とずれていた', Q.answer === 'run' ? 'ずれなし' : Q.types);
     say(verdict);
     if ($('s4next')) $('s4next').onclick = function () { stage4(S4.i + 1); scrollTopOfView(); };
     if ($('s4fin')) $('s4fin').onclick = function () { setStars('4', S4.good >= 6 ? 3 : S4.good >= 4 ? 2 : 1); results(); };
@@ -869,10 +916,10 @@
   // ホームと結果
   // ============================================================
   var STAGES = [
-    { n: 1, title: '伝えてみよう', body: 'お題の図を、言葉だけでミミに描いてもらう。授業の「人どうしのすれ違い体験」の1人版。', go: function () { stage1(S1.t); } },
-    { n: 2, title: '型を見抜け', body: 'あいまいな指示で、ミミがどう動くかを予想し、すれ違いの型を見分ける（お題カード8枚）。', go: function () { stage2(0); } },
+    { n: 1, title: '伝えてみよう', body: 'お題の図を、言葉だけでミミに描いてもらう。授業の「人どうしのすれ違い体験」の1人版。', go: function () { nextFresh = true; stage1(S1.t); } },
+    { n: 2, title: '型を見抜け', body: 'あいまいな指示で、ミミがどう動くかを予想し、すれ違いの型を見分ける（お題カード8枚）。', go: function () { S2.hits = 0; S2.full = 0; stage2(0); } },
     { n: 3, title: '直して送ろう', body: '札を足して指示を直し、ゴールの画面を作ってもらう（パズル4問）。', go: function () { stage3(0); } },
-    { n: 4, title: '送る前に確かめよう', body: 'ミミの「3行の説明」を読んで、実行するか、直して送り直すかを判断する（6問）。', go: function () { stage4(0); } }
+    { n: 4, title: '送る前に確かめよう', body: 'ミミの「3行の説明」を読んで、実行するか、直して送り直すかを判断する（6問）。', go: function () { S4.good = 0; stage4(0); } }
   ];
   function stageStars(n) {
     if (n === 1) { var t = TARGETS.map(function (x) { return S.stars['1' + x.id] || 0; }); return t.some(function (v) { return v; }) ? Math.round(t.reduce(function (a, b) { return a + b; }, 0) / t.length) : 0; }
@@ -901,14 +948,14 @@
     var h = '<div class="sg-card sg-pop"><h2>結果</h2>';
     h += '<p>合計 <span class="sg-big">' + S.score + '</span> 点　<span class="sg-rank">' + esc(rankOf(S.score)) + '</span></p>';
     h += '<ul class="sg-diff">' + STAGES.map(function (st) { var s = stageStars(st.n); return '<li>ステージ' + st.n + '「' + esc(st.title) + '」 <span class="sg-stars">' + starText(s) + '</span></li>'; }).join('') + '</ul>';
-    h += '<h3>覚えておきたい3つのこと</h3><ol style="font-size:.92rem;line-height:1.8"><li>書かなかった所は、AIの思い込みになる（前提の省略）</li><li>「大きく」「見やすく」は人によって違う。どのくらいかを書く（言葉の幅）</li><li>送る前に「どう理解したか」を説明させると、実行する前にずれに気づける</li></ol>';
+    h += '<h3>覚えておきたい3つのこと</h3><ol style="font-size:.92rem;line-height:1.8"><li>書かなかった所は、AIの思い込みになる（前提の省略）</li><li>「大きく」「見やすく」は人によって違う。どのくらいかを書く（言葉の幅）</li><li>送る前に「どう理解したか」を説明させると、実行する前にずれに気づけることがある</li></ol>';
     h += '<h3>すれ違いログ（' + S.log.length + '件）</h3>';
     if (S.log.length) {
       h += '<p style="font-size:.88rem">授業の「すれ違いログ」と同じ4列です。コピーして、Googleドキュメントに貼り付けられます（ゲームの記録であることが分かるように、見出しを付けて貼るとよい）。</p>';
       h += '<div class="sg-row"><button type="button" class="sg-btn" id="sgCopy">ログをコピー</button><span id="sgCopyMsg" style="font-size:.88rem"></span></div>';
       h += '<div class="sg-logwrap">' + logTable() + '</div>';
     } else h += '<p style="font-size:.88rem">まだ記録がありません。ステージを遊ぶと、ここにたまります。</p>';
-    h += '<div class="sg-feedback sg-feedback--mid">ミミは練習用のAIです。<strong>本物のagyやAI Studio Buildで、お題カードを試してみましょう</strong>。本物は、聞き返したり、ミミとは違う動き方をしたりします。<a href="week07.html">第7回に戻る</a></div>';
+    h += '<div class="sg-feedback sg-feedback--mid">ミミは練習用のAIです。<strong>本物のagyやAI Studio Buildで、お題カードを試してみましょう</strong>。本物は、聞き返すことも、ミミとは違う動き方をすることもあります。<a href="week07.html">第7回に戻る</a></div>';
     h += '<div class="sg-row"><button type="button" class="sg-btn sg-btn--ghost" id="sgBack">ステージを選ぶ</button></div></div>';
     view(h);
     scrollTopOfView();
