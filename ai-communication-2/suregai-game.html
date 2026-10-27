@@ -351,7 +351,8 @@
     });
     return out;
   }
-  function svg(lines, label) { return '<svg class="sg-canvas" viewBox="0 0 ' + CW + ' ' + CH + '" role="img" aria-label="' + esc(label) + '">' + drawLines(lines) + '</svg>'; }
+  // 画面を見られない人のために、図の中身を文章でも持たせる（お題は、この文をもとに説明できる）
+  function svg(lines, label) { return '<svg class="sg-canvas" viewBox="0 0 ' + CW + ' ' + CH + '" role="img" aria-label="' + esc(label + '：' + lines.map(function (l) { return lineText(l); }).join('、')) + '">' + drawLines(lines) + '</svg>'; }
   function lineText(l) {
     var parts = [];
     if (l.place) parts.push(l.place + 'に');
@@ -800,7 +801,7 @@
     $('s3out').innerHTML = h;
     $('s3send').disabled = locked;
     document.querySelectorAll('[data-s3c]').forEach(function (b) { b.disabled = locked; });
-    $('s3hint').disabled = true;
+    $('s3hint').disabled = !!S3.hints[S3.i] || locked;
     bindS3Nav();
   }
   function bindS3Nav() {
