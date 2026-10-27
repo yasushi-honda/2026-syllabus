@@ -23,7 +23,7 @@ ROOT = Path(__file__).resolve().parents[2]
 COURSE_DIR = ROOT / 'it-passport-technology'
 DICT_DIR = COURSE_DIR / 'furigana'
 OVERRIDES = Path(__file__).with_name('overrides.tsv')
-DEFAULT_PAGES = ['it-passport-technology.html', 'it-passport-technology/week*.html']
+DEFAULT_PAGES = ['it-passport-technology.html', 'it-passport-technology/week*.html', 'it-passport-technology/term-shooter.html']
 
 KANJI_RE = re.compile(r'[㐀-䶿一-鿿々〆]')
 EXCLUDE_TAGS = {'script', 'style', 'code', 'pre', 'textarea', 'title', 'noscript', 'svg', 'ruby', 'head', 'option'}
@@ -311,6 +311,15 @@ class Analyzer:
         return result
 
 
+GAME_MEANING_RE = re.compile(r'meaning:\s*"((?:[^"\\]|\\.)*)"')
+
+
+def game_meanings(html_text):
+    """ゲームのページ（term-shooter.html）は、意味の文を JS が実行時に DOM へ作る。静的な HTML には現れないので、
+    問題データ（TERM_SETS の `meaning: "…"`）から取り出して、辞書に足す。"""
+    return [m.group(1).replace('\\"', '"') for m in GAME_MEANING_RE.finditer(html_text)]
+
+
 def build_page_dict(html_text, analyzer):
     blocks, all_nodes = collect_blocks(html_text)
     entries, conflicts = {}, []
@@ -321,7 +330,7 @@ def build_page_dict(html_text, analyzer):
                 conflicts.append(n)
                 continue
             entries.setdefault(k, spans)
-    for text in DYNAMIC_TEXTS:
+    for text in DYNAMIC_TEXTS + game_meanings(html_text):
         for n, spans in analyzer.analyze_block([text]).items():
             entries.setdefault(node_key(n), spans)
     return {'v': 1, 'n': entries}, all_nodes, conflicts

@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第5回 つながる仕組み：LANから世界へ | ITパスポート テクノロジー系</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=23">
+  <!-- 公式情報確認: 2026-10-28 (総務省「国民のためのサイバーセキュリティサイト」用語集 ja_01 アクセスポイント・ja_09 ルーター、同サイト「無線LAN（Wi-Fi）の仕組み」basic/service/08 にLAN・無線LAN・SSID（ネットワーク名）の説明。総務省 電気通信紛争処理用語集 https://www.soumu.go.jp/main_content/000062441.pdf にWAN「電話回線や専用線などを使って、本社と支社間など離れた場所にある LAN 同士を接続するためのネットワークのこと」（pdftotextで原文照合）。環境省「ステークホルダーエンゲージメント」https://www.env.go.jp/content/900497044.pdf に「株主、顧客、従業員、取引先、地域社会などを重要なステークホルダーとして特定することが多く」。IPAシラバス Ver.6.5「58. ネットワーク方式」に「LANとWANという分類を理解する」、用語例にハブ・ルーター・スイッチ・有線LAN・無線LAN・ESSID、別項目に AP（アクセスポイント）。試験の表記は「SSID」ではなくESSID、「スイッチングハブ」ではなくハブ・スイッチ。令和7年度ITパスポート試験 公開問題 問57・問90と解答例（PDFは画像のため目視で原文を転記、解答例はpdftotextで照合）。令和7年度の公開問題にはLAN/WANを直接問う問がなく（問56〜100を全頁目視）、問57（プロキシ）と第4回の問90の見直しを使用。【未確認として書かなかったこと】: WANが「通信会社の回線を使うことが多い」（総務省の記述は「電話回線や専用線など」まで）、スイッチングハブが「宛先の機器にだけ送る」（公的資料に説明なし、民間の説明のみ）、LANケーブルの「ツイストペア」。教科書 p.320-328・p.018-021 は親ページの記載に従う（教科書本文は未突合）。ステークホルダーの定義文そのもの（ISO 26000の引用など）は原文未照合のため使わず、例の列挙のみ環境省の記述で裏づけ） -->
+  <!-- 挿絵5枚（images/week05-story-1〜4.jpg、week05-lan-wan.jpg）は、画像生成AI（Gemini 3.1 Flash Image）で作った架空の場面のイラスト（2026-10-28）。画像内に文字・実在の人物や企業のロゴは含めない。Aさん=第2〜4回と同じ画風の架空の人物。カフェも架空 -->
+  <!-- 用語カードの9語は、フォーム「ITパスポート 第5回 今回覚えた用語」の選択肢と一致。ゲーム term-shooter.html の第5回データ（TERM_SETS[5]）の用語とも一致させる -->
+</head>
+<body data-furigana="furigana/week05.json">
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--amber">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../it-passport-technology.html">ITパスポート テクノロジー系</a>
+        <span>/</span>
+        <span>第5回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">つながる仕組み：<wbr>LANから世界へ</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 5</span>
+            <span class="page-badge">水曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-amber">
+
+    <div class="message-box">このページはブラウザの翻訳機能で母語に翻訳できます。ただし、試験に出る主な専門用語（例: <span translate="no">LAN</span>、<span translate="no">WAN</span>、<span translate="no">ルーター</span>）は翻訳されないように設定しています。<strong>本番のITパスポート試験は日本語で行われる</strong>ので、専門用語は日本語のまま覚えてください。</div>
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
+
+    <div class="demo-cta demo-cta--amber">
+      <p class="demo-cta__heading">🎮 用語シューティング（1人用のゲーム）</p>
+      <p class="demo-cta__body">画面に出る<strong>「意味」に合う用語</strong>の的を撃つゲームです。授業の中で2回（ステージ1・ステージ2）遊びます。点数は記録されません。試験の点数とも関係なく、用語を覚えるための練習です。ゲームの画面も、ブラウザの翻訳で意味を母語にできます（用語は日本語のまま表示されます）。音は初めは出ません。</p>
+      <a href="term-shooter.html?w=5" class="demo-cta__link">→ ゲームを開く</a>
+    </div>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">駅前に小さなカフェを開くAさん。お客さんの<span translate="no">Wi-Fi</span>、店のレジとパソコン、離れた2号店——ネットワークの構成と、お店に関わる人たち（<span translate="no">ステークホルダー</span>）を重ねて学ぶ</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value"><span translate="no">LAN</span> / <span translate="no">WAN</span> / <span translate="no">有線LAN</span> / <span translate="no">無線LAN</span> / <span translate="no">アクセスポイント</span> / <span translate="no">SSID</span> / <span translate="no">ルーター</span> / <span translate="no">スイッチングハブ</span> / <span translate="no">ステークホルダー</span></div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">教科書（学研「ITパスポートをひとつひとつわかりやすく。」）の p.320-328 と p.018-021 を読んでおく。授業の最初に復習テスト、最後に確認テスト（1回目と、任意の2回目）と用語カードのフォームを使う（学校のGoogleアカウント）。ゲームは、スマートフォンでもパソコンでも遊べる</div>
+        </div>
+      </div>
+    </div>
+
+    <nav aria-label="このページの目次">
+      <ul class="vz-jump">
+        <li><a class="vz-chip" href="#sec-flow">授業の流れ</a></li>
+        <li><a class="vz-chip" href="#sec-terms">用語カード</a></li>
+        <li><a class="vz-chip" href="#sec-quiz">練習クイズ</a></li>
+        <li><a class="vz-chip" href="#sec-optional">任意の取り組み</a></li>
+        <li><a class="vz-chip" href="#sec-tip">就活ワンポイント</a></li>
+        <li><a class="vz-chip" href="#sec-tasks">課題</a></li>
+        <li><a class="vz-chip" href="#sec-refs">参考リンク</a></li>
+        <li><a class="vz-chip vz-chip--cta" href="https://docs.google.com/forms/d/e/1FAIpQLSfwtqw-yMEIu9TYEhdi90OBo8OJpG5JH7T_pCZsX6ZEkxb47A/viewform" target="_blank" rel="noopener">第5回 今回覚えた用語を提出する ↗</a></li>
+        <li><a class="vz-chip vz-chip--cta" href="https://script.google.com/a/macros/i-seifu.jp/s/AKfycbwquVX4xkXNy47RkGjCUz6Xmc4GFaPLpPkSVuW6z--m5Yth88yilipCYUSanlTpQF9P/exec" target="_blank" rel="noopener">自分の成績を見る ↗</a></li>
+      </ul>
+    </nav>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li><span translate="no">LAN</span>と<span translate="no">WAN</span>の違い（つなぐ範囲）を、例を使って説明できる</li>
+        <li><span translate="no">有線LAN</span>と<span translate="no">無線LAN</span>の違いを言え、<span translate="no">アクセスポイント</span>と<span translate="no">SSID</span>の役割を説明できる</li>
+        <li><span translate="no">ルーター</span>と<span translate="no">スイッチングハブ</span>の役割の違いを説明できる</li>
+        <li>お店（または自分の家）のネットワークの構成を、機器の名前を使って図にできる</li>
+        <li><span translate="no">ステークホルダー</span>の意味を言い、ネットワークにつながる人と組織を例に挙げられる</li>
+        <li>過去問（令和7年度）を、問い方の型を使って解く</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section" id="sec-flow">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。休憩10分は授業時間に含めません。🎮のブロックは、ゲームで遊ぶ時間です。</p>
+
+      <div class="vz-timebar">
+        <p class="vz-fig-title">180分の流れ（ブロックを押すと、その内容へ移動）</p>
+        <ol class="vz-timebar-track">
+          <li style="--w:40"><a class="vz-seg" href="#blk-1"><span class="vz-seg-time">40分</span><span class="vz-seg-name">復習テスト<br>カフェを開く</span></a></li>
+          <li style="--w:50"><a class="vz-seg" href="#blk-2"><span class="vz-seg-time">50分</span><span class="vz-seg-name">LANとWAN<br>🎮ゲーム①</span></a></li>
+          <li style="--w:10"><a class="vz-seg vz-seg--break"><span class="vz-seg-time">休憩</span><span class="vz-seg-name">10分</span></a></li>
+          <li style="--w:50"><a class="vz-seg" href="#blk-3"><span class="vz-seg-time">50分</span><span class="vz-seg-name">ネットワーク機器<br>🎮ゲーム②</span></a></li>
+          <li style="--w:30"><a class="vz-seg" href="#blk-4"><span class="vz-seg-time">30分</span><span class="vz-seg-name">過去問<br>確認テスト1回目</span></a></li>
+          <li style="--w:10"><a class="vz-seg" href="#blk-5"><span class="vz-seg-time">10分</span><span class="vz-seg-name">まとめ</span></a></li>
+        </ol>
+        <p class="vz-timebar-note">授業時間の合計は 40 + 50 + 50 + 30 + 10 = 180分（休憩を除く）</p>
+      </div>
+
+      <div class="timeline">
+
+        <!-- ================= 1限 前半 ================= -->
+        <div class="timeline-block" id="blk-1">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の復習テスト → カフェを開くAさんと、お店に関わる人たち</h3>
+          <div class="timeline-body">
+
+            <p><strong>前回の復習テスト（約10分：テスト約5分＋解説の確認約5分）</strong></p>
+            <p>前回（第4回）の内容を、1週間たって、どれだけ覚えているかを確かめる5問（約5分）。<strong>点数を競うものではない</strong>。覚えていることと、忘れていることを、自分で知るためのテスト。送信すると、点数と、正解・解説が表示される。そのあと、間違えた問題の解説を読む。分からないところは、隣の人か先生に聞く。</p>
+            <div class="vz-cta">
+              <a class="vz-btn vz-btn--ext" href="https://docs.google.com/forms/d/e/1FAIpQLScwmi5DlHhOy1t9YMSEO4DL3YKqLjq1ZBBz_RiPJav0LiYm2w/viewform" target="_blank" rel="noopener">第5回 復習テスト（前回分）を受ける（Googleフォーム）</a>
+            </div>
+
+            <p><strong>今日のストーリー：駅前にカフェを開く（約10分）</strong></p>
+            <p>Aさんが、駅前に、小さなカフェを開く（架空の話）。お店で、ネットワークが必要になる場面を、順番に読む。</p>
+            <ol class="vz-steps">
+              <li class="vz-step"><img class="vz-step-img" src="images/week05-story-1.jpg" alt="カフェの店内。Aさんがカウンターで笑っている。天井の白い箱から電波のマークが出て、スマートフォンを使うお客さんと、タブレットを使うお客さんに、点線で届いている。" width="800" height="597" loading="lazy"><b>1. お客さんに、<span translate="no">Wi-Fi</span>を使ってほしい</b>お客さんのスマートフォンやタブレットを、<strong>電波</strong>でネットワークにつなぎたい。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week05-story-2.jpg" alt="カフェの奥の部屋。レジ、パソコン、プリンターが、色のついたケーブルで、棚の上の小さな平たい箱につながっている。箱の先には白いルーターがある。Aさんが、整ったケーブルを指さしている。" width="800" height="597" loading="lazy"><b>2. 店の中の機械を、つなぎたい</b>レジ、パソコン、プリンター。店の中の機械を、<strong>ケーブル</strong>でつないで、いっしょに使いたい。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week05-story-3.jpg" alt="町を上から見た絵。左に本店のカフェ、右の遠くに2号店のカフェがある。丘と川の向こうの2軒を、空を通る太い線が、雲の形をはさんでつないでいる。Aさんが本店の窓から手を振っている。" width="800" height="597" loading="lazy"><b>3. 離れた2号店と、つなぎたい</b>歩いては行けない場所にある2号店と、売上のデータを共有したい。店の外の、<strong>広い範囲</strong>の接続が必要。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week05-story-4.jpg" alt="カフェの前。入口の中央でAさんが手を広げて迎えている。まわりに、近所のお年寄り、コーヒー豆の袋を運ぶ配達の人、コーヒーカップを持つお客さん、エプロンの店員が立っていて、それぞれ細い線でお店とつながっている。" width="800" height="597" loading="lazy"><b>4. お店に関わる人たちがいる</b>お客さん、働く人、豆を届けてくれる会社、近所の人……。お店は、<strong>たくさんの人と組織</strong>に関わっている。</li>
+            </ol>
+            <p class="lesson-note">1は<span translate="no">無線LAN</span>、2は<span translate="no">有線LAN</span>、3は<span translate="no">WAN</span>の話。4は<span translate="no">ステークホルダー</span>。順番に学ぶ。</p>
+
+            <p><strong><span translate="no">ステークホルダー</span>：お店に関わる人たち（約10分、教科書 p.018-021）</strong></p>
+            <p><span translate="no">ステークホルダー</span>は、<strong>企業に関わる人や組織</strong>のこと（利害関係者ともいう）。顧客（お客さん）、従業員、株主、取引先、地域社会などが例（環境省の資料も、この5つを重要なステークホルダーの例に挙げている。確認日：2026-10-28）。企業は、これらの人たちと関わりながら活動している。</p>
+            <p>ネットワークは、この「関わり」を支える道具になる。下の図で、人ごとに、どのネットワークでつながるかを見る。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w5-sh">
+              <p class="vz-fig-title" id="cap-w5-sh">お店に関わる人と、つながるネットワーク</p>
+              <svg class="vz-svg" viewBox="0 0 360 200" role="img" aria-labelledby="w5-sh-t w5-sh-d">
+                <title id="w5-sh-t">お店に関わる人と、つながるネットワーク</title>
+                <desc id="w5-sh-d">お客さんは、無線LAN（Wi-Fi）でつながる。従業員は、店の中の有線LANでつながる。取引先（豆の仕入れ先）は、インターネット（WAN）を通して注文を受ける。</desc>
+                <rect class="box-white" x="2" y="4" width="146" height="56" rx="8"/>
+                <text class="t-b" x="12" y="28">お客さん</text>
+                <text class="t-sm" x="12" y="48">（顧客）</text>
+                <line class="line-orange" x1="150" y1="32" x2="194" y2="32" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="196" y="4" width="162" height="56" rx="8"/>
+                <text class="t-b" x="206" y="28" translate="no">無線LAN</text>
+                <text class="t-sm" x="206" y="48" translate="no">Wi-Fiで接続</text>
+                <rect class="box-white" x="2" y="72" width="146" height="56" rx="8"/>
+                <text class="t-b" x="12" y="96">従業員</text>
+                <text class="t-sm" x="12" y="116">レジ・パソコンを使う</text>
+                <line class="line-orange" x1="150" y1="100" x2="194" y2="100" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="196" y="72" width="162" height="56" rx="8"/>
+                <text class="t-b" x="206" y="96" translate="no">有線LAN</text>
+                <text class="t-sm" x="206" y="116">店の中のケーブル</text>
+                <rect class="box-white" x="2" y="140" width="146" height="56" rx="8"/>
+                <text class="t-b" x="12" y="164">取引先</text>
+                <text class="t-sm" x="12" y="184">豆の仕入れ先</text>
+                <line class="line-orange" x1="150" y1="168" x2="194" y2="168" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="196" y="140" width="162" height="56" rx="8"/>
+                <text class="t-b" x="206" y="164" translate="no">WAN</text>
+                <text class="t-sm" x="206" y="184">店の外へ（インターネット）</text>
+              </svg>
+              <figcaption>株主や地域社会も<span translate="no">ステークホルダー</span>。こちらは、ネットワークで直接つながるとは限らない。</figcaption>
+            </figure>
+
+            <p><strong>ペアで話す（約5分）</strong>：自分が、スマートフォンで<span translate="no">Wi-Fi</span>を使うのは、どんな場所か（学校・家・お店・駅など）。その<span translate="no">Wi-Fi</span>を用意している人は、誰か。日本語で話す。</p>
+
+            <p><strong>今日の地図（約5分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-w5-map">
+              <p class="vz-fig-title" id="cap-w5-map">カフェのネットワークを作る4つの場面</p>
+              <svg class="vz-svg" viewBox="0 0 360 232" role="img" aria-labelledby="w5-map-t w5-map-d">
+                <title id="w5-map-t">カフェのネットワークを作る4つの場面</title>
+                <desc id="w5-map-d">上から順に、1 お客さんを電波でつなぐ（無線LAN・アクセスポイント）、2 店の中をケーブルでつなぐ（有線LAN・スイッチングハブ）、3 離れた店や世界とつなぐ（WAN・ルーター）、4 お店に関わる人たち（ステークホルダー）。</desc>
+                <line class="line" x1="22" y1="30" x2="22" y2="202"/>
+                <rect class="box-white" x="2" y="6" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="30" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="35">1</text>
+                <text class="t-b" x="44" y="27">お客さんを、電波でつなぐ</text>
+                <text class="t-sm" x="44" y="45" translate="no">無線LAN・アクセスポイント・SSID</text>
+                <rect class="box-white" x="2" y="62" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="86" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="91">2</text>
+                <text class="t-b" x="44" y="83">店の中を、ケーブルでつなぐ</text>
+                <text class="t-sm" x="44" y="101" translate="no">LAN・有線LAN・スイッチングハブ</text>
+                <rect class="box-white" x="2" y="118" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="142" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="147">3</text>
+                <text class="t-b" x="44" y="139">離れた店や、世界とつなぐ</text>
+                <text class="t-sm" x="44" y="157" translate="no">WAN・ルーター</text>
+                <rect class="box-white" x="2" y="174" width="356" height="48" rx="8"/>
+                <circle class="dot-orange" cx="22" cy="198" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="203">4</text>
+                <text class="t-b" x="44" y="195">お店に関わる人たち</text>
+                <text class="t-sm" x="44" y="213" translate="no">ステークホルダー</text>
+              </svg>
+              <figcaption>1と3は1限後半、2は2限前半で学ぶ。4は、いま学んだ。</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <!-- ================= 1限 後半 ================= -->
+        <div class="timeline-block" id="blk-2">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>LANとWAN → 有線と無線 → 🎮ゲーム①（テクノロジ系：ネットワーク 教科書 p.320-324）</h3>
+          <div class="timeline-body">
+
+            <p><strong>① <span translate="no">LAN</span>と<span translate="no">WAN</span>：つなぐ範囲の違い（約15分）</strong></p>
+            <p>ネットワークは、つなぐ<strong>範囲</strong>で、2つに分けて呼ぶ。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w5-lw">
+              <p class="vz-fig-title" id="cap-w5-lw"><span translate="no">LAN</span>と<span translate="no">WAN</span>の違い</p>
+              <img class="vz-fig-img" src="images/week05-lan-wan.jpg" alt="2つの場面。左: 建物の中の短い廊下で、机の上の数台のパソコンが、小さな箱とケーブルでつながっている。右: 丘や川をこえる広い高速道路が、遠くの町どうしをつなぎ、空には地球のマークが浮かんでいる。" width="1000" height="558" loading="lazy">
+              <div class="vz-fields vz-fields--2">
+                <section class="vz-field vz-f-tc">
+                  <h4><span translate="no">LAN</span></h4>
+                  <p>同じ建物や敷地の中など、<strong>せまい範囲</strong>のネットワーク。</p>
+                  <ul class="vz-tags"><li>例：店の中・学校の教室・家</li><li>自分たちで作って、管理する</li></ul>
+                </section>
+                <section class="vz-field vz-f-tc">
+                  <h4><span translate="no">WAN</span></h4>
+                  <p>離れた場所どうしをつなぐ、<strong>広い範囲</strong>のネットワーク。</p>
+                  <ul class="vz-tags"><li>例：本店と2号店・本社と支社</li><li>電話回線や専用線などを使う</li></ul>
+                </section>
+              </div>
+              <figcaption>覚え方：<span translate="no">LAN</span>は「ローカル（近い場所）」、<span translate="no">WAN</span>は「ワイド（広い範囲）」。インターネットも、世界中の<span translate="no">LAN</span>をつないだ、大きなネットワークと考えられる。</figcaption>
+            </figure>
+            <p class="lesson-note">総務省の用語集は、<span translate="no">WAN</span>を「電話回線や専用線などを使って、本社と支社間など離れた場所にある <span translate="no">LAN</span> 同士を接続するためのネットワーク」と説明している（確認日：2026-10-28）。カフェでは、店の中が<span translate="no">LAN</span>、店の外とつなぐ部分が<span translate="no">WAN</span>。</p>
+
+            <p><strong>② <span translate="no">有線LAN</span>と<span translate="no">無線LAN</span>（約15分）</strong></p>
+            <p><span translate="no">LAN</span>は、つなぎ方でも、2つに分けられる。</p>
+            <div class="vz-fields vz-fields--2">
+              <section class="vz-field vz-f-tc">
+                <h4><span translate="no">有線LAN</span></h4>
+                <p><span translate="no">LANケーブル</span>で、機器をつなぐ。</p>
+                <ul class="vz-tags"><li>通信が安定しやすい</li><li>ケーブルが届く場所だけ</li></ul>
+              </section>
+              <section class="vz-field vz-f-tc">
+                <h4><span translate="no">無線LAN</span></h4>
+                <p><strong>電波</strong>で、機器をつなぐ。<span translate="no">Wi-Fi</span>とも呼ばれる。</p>
+                <ul class="vz-tags"><li>ケーブルがいらない</li><li>スマートフォンなどで使いやすい</li></ul>
+              </section>
+            </div>
+            <ul class="vz-points">
+              <li class="vz-point">
+                <b><span translate="no">アクセスポイント</span></b>
+                <p><span translate="no">無線LAN</span>の機器（スマートフォン、パソコンなど）を、<strong>電波でネットワークにつなぐ</strong>役の機器。店の天井などに置かれることが多い。試験のシラバスでは「<span translate="no">AP</span>（アクセスポイント）」と書かれる。</p>
+              </li>
+              <li class="vz-point">
+                <b><span translate="no">SSID</span></b>
+                <p><span translate="no">無線LAN</span>の<strong>ネットワークの名前</strong>。スマートフォンの<span translate="no">Wi-Fi</span>の一覧に出る名前が、これ。近くに複数の<span translate="no">無線LAN</span>があるとき、どれにつなぐかを選ぶのに使う。試験のシラバスでは「<span translate="no">ESSID</span>」と書かれる。</p>
+              </li>
+            </ul>
+            <p class="lesson-note">電波は、壁の外にも届く。だから<span translate="no">無線LAN</span>は、<strong>誰がつなげるか</strong>の管理が大切になる。第4回で学んだ、暗号化（<span translate="no">WPA2</span>など）がここで使われる。</p>
+
+            <div class="demo-cta demo-cta--amber">
+              <p class="demo-cta__heading">🎮 ゲーム①：用語シューティング ステージ1（約15分）</p>
+              <p class="demo-cta__body">ここまでに出た用語（<span translate="no">LAN</span>・<span translate="no">WAN</span>・<span translate="no">有線LAN</span>・<span translate="no">無線LAN</span>・<span translate="no">アクセスポイント</span>・<span translate="no">SSID</span>・<span translate="no">ステークホルダー</span>）を、ゲームで確かめる。画面の「意味」を読んで、合う用語の的を撃つ。点数は記録されない。最初は音が出ない。間違えた用語は、最後の画面に一覧が出る。</p>
+              <a href="term-shooter.html?w=5&amp;stage=1" class="demo-cta__link">→ ステージ1を始める</a>
+            </div>
+
+            <p><strong>ペアで確かめる（約5分）</strong>：ゲームで間違えた用語を、1つ選ぶ。もう1人に、やさしい日本語で意味を説明する。説明できたら、反対にする。</p>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <!-- ================= 2限 前半 ================= -->
+        <div class="timeline-block" id="blk-3">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>ネットワーク機器の役割 → 構成を図にする → 🎮ゲーム②（テクノロジ系：ネットワーク 教科書 p.325-328）</h3>
+          <div class="timeline-body">
+
+            <p><strong>③ ネットワークをつくる機器（約20分）</strong></p>
+            <p>カフェのネットワークは、次の機器でできている。それぞれの<strong>役割</strong>を、図と合わせて見る。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w5-cafe">
+              <p class="vz-fig-title" id="cap-w5-cafe">カフェのネットワークの構成</p>
+              <svg class="vz-svg" viewBox="0 0 360 334" role="img" aria-labelledby="w5-cafe-t w5-cafe-d">
+                <title id="w5-cafe-t">カフェのネットワークの構成</title>
+                <desc id="w5-cafe-d">上から順に、インターネット、ルーター、スイッチングハブ。スイッチングハブから、ケーブルで、レジ、パソコン、プリンターにつながる。スイッチングハブの右には、アクセスポイントがあり、電波（点線）で、お客さんのスマートフォンにつながる。ルーターから上は、店の外へ出る、WAN。ハブから下は、店の中のLAN。</desc>
+                <rect class="box-blue" x="80" y="6" width="200" height="40" rx="20"/>
+                <text class="t-b t-c" x="180" y="31" translate="no">インターネット</text>
+                <line class="line" x1="180" y1="46" x2="180" y2="76"/>
+                <text class="t-sm" x="192" y="66" translate="no">WAN（店の外へ）</text>
+                <rect class="box-key box-orange" x="110" y="76" width="140" height="40" rx="8"/>
+                <text class="t-b t-c" x="180" y="101" translate="no">ルーター</text>
+                <line class="line" x1="180" y1="116" x2="180" y2="146"/>
+                <rect class="box-orange" x="112" y="146" width="136" height="40" rx="8"/>
+                <text class="t-b t-c" x="180" y="171" translate="no">スイッチングハブ</text>
+                <line class="line" x1="248" y1="166" x2="266" y2="166"/>
+                <rect class="box-orange" x="266" y="140" width="92" height="52" rx="8"/>
+                <text class="t-b t-c" x="312" y="162" translate="no">アクセス</text>
+                <text class="t-b t-c" x="312" y="180" translate="no">ポイント</text>
+                <line class="line" x1="150" y1="186" x2="44" y2="232"/>
+                <line class="line" x1="180" y1="186" x2="134" y2="232"/>
+                <line class="line" x1="210" y1="186" x2="224" y2="232"/>
+                <line class="life" x1="312" y1="192" x2="318" y2="232"/>
+                <rect class="box-white" x="4" y="232" width="80" height="40" rx="8"/>
+                <text class="t-b t-c" x="44" y="257">レジ</text>
+                <rect class="box-white" x="94" y="232" width="80" height="40" rx="8"/>
+                <text class="t-b t-c" x="134" y="257">パソコン</text>
+                <rect class="box-white" x="184" y="232" width="80" height="40" rx="8"/>
+                <text class="t-b t-c" x="224" y="257">プリンター</text>
+                <rect class="box-white" x="274" y="232" width="82" height="44" rx="8"/>
+                <text class="t-b t-c" x="315" y="251">お客さんの</text>
+                <text class="t-b t-c" x="315" y="268">スマホ</text>
+                <rect class="band" x="2" y="126" width="356" height="156" rx="10"/>
+                <text class="t-sm" x="8" y="298" translate="no">点線の枠の中が、店の中のネットワーク（LAN）</text>
+                <text class="t-sm" x="8" y="318">実線＝ケーブル（有線）　点線＝電波（無線）</text>
+              </svg>
+              <figcaption>太い枠が、店の外（<span translate="no">WAN</span>）への出入口。家庭では、<span translate="no">ルーター</span>・<span translate="no">スイッチングハブ</span>・<span translate="no">アクセスポイント</span>の機能が、1つの箱にまとまっていることも多い（一例）。</figcaption>
+            </figure>
+            <ul class="vz-points">
+              <li class="vz-point">
+                <b><span translate="no">ルーター</span></b>
+                <p><strong>ネットワークとネットワークをつなぐ</strong>機器。データを送る<strong>道すじ（行き先）を決める</strong>。店の<span translate="no">LAN</span>を、店の外の<span translate="no">WAN</span>・インターネットにつなぐ出入口になる。</p>
+              </li>
+              <li class="vz-point">
+                <b><span translate="no">スイッチングハブ</span></b>
+                <p>同じ<span translate="no">LAN</span>の中で、<strong>機器どうしをつなぐ</strong>機器。<span translate="no">LANケーブル</span>の差し込み口がたくさんある。試験のシラバスでは「<span translate="no">ハブ</span>」「<span translate="no">スイッチ</span>」と書かれる。</p>
+              </li>
+              <li class="vz-point">
+                <b><span translate="no">LANケーブル</span></b>
+                <p><span translate="no">有線LAN</span>で、機器と機器（または機器と<span translate="no">スイッチングハブ</span>）をつなぐ、ケーブル。</p>
+              </li>
+            </ul>
+            <p class="lesson-note">区別のしかた：<span translate="no">ルーター</span>は「<strong>ネットワークの間</strong>をつなぐ」、<span translate="no">スイッチングハブ</span>は「<strong>同じネットワークの中</strong>で機器をつなぐ」、<span translate="no">アクセスポイント</span>は「<strong>電波で</strong>機器をつなぐ」。</p>
+
+            <p><strong>④ ワーク：自分の家（または寮）のネットワークを図にする（約20分）</strong></p>
+            <p>自分の家（または寮・アパート）のネットワークを、ノートや、描画ツールで図にする。ペアで、見せ合って話す。</p>
+            <ol>
+              <li>インターネットに出る、<strong>出入口の機器</strong>は何か（<span translate="no">ルーター</span>など）。名前や形を思い出して、図に描く</li>
+              <li>そこに、何がつながっているか（スマートフォン、パソコン、ゲーム機、テレビなど）。<strong>有線</strong>か<strong>無線</strong>かを、線の種類で区別する</li>
+              <li>図の中で、<span translate="no">LAN</span>の部分と、<span translate="no">WAN</span>の部分に、印をつける</li>
+              <li>分からない機器があれば、ペアか先生に聞く。「<span translate="no">SSID</span>」は、自分のスマートフォンの<span translate="no">Wi-Fi</span>画面で見られる</li>
+            </ol>
+            <details class="vz-more">
+              <summary>答えの例を見る</summary>
+              <ul>
+                <li>出入口の機器：回線につながる、<span translate="no">ルーター</span>（会社から借りた機器と、自分のルーターが、別のことも多い）。</li>
+                <li>家庭では、<span translate="no">ルーター</span>・<span translate="no">スイッチングハブ</span>・<span translate="no">アクセスポイント</span>の機能が、<strong>1つの箱</strong>にまとまっていることが多い（一例。機器によって違う）。</li>
+                <li>スマートフォンやパソコンは<strong><span translate="no">無線LAN</span></strong>、デスクトップのパソコンやテレビは<strong><span translate="no">有線LAN</span></strong>、というように、混ざっていてよい。</li>
+                <li>箱から家の中が<span translate="no">LAN</span>、箱から外の回線が<span translate="no">WAN</span>。</li>
+              </ul>
+            </details>
+
+            <div class="demo-cta demo-cta--amber">
+              <p class="demo-cta__heading">🎮 ゲーム②：用語シューティング ステージ2（約10分）</p>
+              <p class="demo-cta__body">今日の用語（<span translate="no">ルーター</span>・<span translate="no">スイッチングハブ</span>も追加）と、第4回までの用語が混ざる。的が降りてくる速さも上がる。ライフは3つ。最後の画面に、間違えた用語の一覧が出る。ここでも、点数は記録されない。</p>
+              <a href="term-shooter.html?w=5&amp;stage=2" class="demo-cta__link">→ ステージ2を始める</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= 2限 後半 ================= -->
+        <div class="timeline-block" id="blk-4">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>過去問演習 → 用語を説明し合う → 確認テスト（1回目）</h3>
+          <div class="timeline-body">
+
+            <p><strong>過去問演習（約15分）</strong>：今日の「ネットワークの構成」とつながる問題を、問い方の型を使って解く。</p>
+            <p class="lesson-note">令和7年度の公開問題（問1〜100）には、<span translate="no">LAN</span>と<span translate="no">WAN</span>の違いを直接聞く問題が見つからなかった（確認日：2026-10-28）。そこで、今日の範囲に近い問57と、第4回で解いた問90を、今日の言葉で読み直す。</p>
+
+            <div class="exam-q">
+              <p class="exam-q-text">【例題①】問57　HTTP プロキシサーバの機能に関する記述として，適切なものはどれか。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>IP アドレス割当て要求を PC から受け付けて，割り当てるグローバル IP アドレスを返す。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>PC から，インターネット上の Web サーバへの接続要求を中継役として受けて，PC に代わって当該の Web サーバに接続し，送受信データを中継する。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>Web サーバの URL に対応する IP アドレスを求める要求を PC から受け付けて，その IP アドレスを返す。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>Web サーバのコンテンツが検索結果の上位に表示されるように，その Web サーバが管理するコンテンツを書き換える。</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問57（<span translate="no">テクノロジ系</span>。問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：イ</strong>（型：説明文から、用語の役割を選ぶ）。<span translate="no">プロキシサーバ</span>は、パソコンの代わりに、インターネット上の<span translate="no">Web</span>サーバへつなぐ「代理人」。パソコンと<span translate="no">Web</span>サーバの間に入って、データを<strong>中継</strong>する。<span translate="no">LAN</span>の中のパソコンが、<span translate="no">LAN</span>の外（インターネット）とつながるときに、間に置かれることがある。<span translate="no">プロキシ</span>は、試験のシラバスの用語例に出てくるが、今日の用語カードには入れていない。ア・ウ・エは、<strong>別の役割の説明</strong>。アは<span translate="no">IP</span>アドレスを配る仕組み、ウは<span translate="no">URL</span>から<span translate="no">IP</span>アドレスを調べる仕組み（<span translate="no">DNS</span>。第6回で学ぶ）、エは検索結果の順位に関わる話。選択肢の「何をするか」の部分を、1つずつ確かめて選ぶ。</p>
+              </details>
+            </div>
+
+            <div class="exam-q">
+              <p class="exam-q-text">【例題②・第4回の見直し】問90　無線LANのセキュリティ対策に関する記述として，適切なものはどれか。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>API は，複数のアクセスポイントをグループ化して管理する <span translate="no">ID</span> である。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>SSH は，アクセスポイントをステルス化することで無線 LAN ネットワークを隠蔽する機能である。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>VPN は，アクセスポイントに登録した MAC アドレスをもつ機器以外からの接続を拒否する機能である。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>WPA2は，WEP よりも高い信頼性をもつ，無線通信の暗号化技術である。</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問90（<span translate="no">テクノロジ系</span>。問題文・選択肢は原文のまま。第4回と同じ問題）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：エ</strong>（型：用語と説明の組み合わせを選ぶ）。第4回は、<span translate="no">WPA2</span>（暗号化）に合う選択肢から選んだ。今日は、ほかの選択肢も、今日の言葉で読み直す。ア・イ・ウは、<strong>用語の名前と説明が合っていない</strong>。アの「複数の<span translate="no">アクセスポイント</span>をグループ化して管理する<span translate="no">ID</span>」は、<span translate="no">SSID</span>（試験のシラバスでは<span translate="no">ESSID</span>）の説明に当たる。つまり、アは、<span translate="no">ESSID</span>の説明に、別の用語の名前（<span translate="no">API</span>）をつけた選択肢。イは「ステルス機能」、ウは「<span translate="no">MAC</span>アドレスで接続を制限する機能」の説明に、別の名前（<span translate="no">SSH</span>・<span translate="no">VPN</span>）をつけた選択肢。<span translate="no">アクセスポイント</span>と<span translate="no">SSID</span>の意味を知っていると、アが「<span translate="no">SSID</span>の説明」だと気づける。</p>
+              </details>
+            </div>
+
+            <p><strong>用語を、ペアで説明し合う（約5分）</strong>：下の「用語カード」の9つから、3つずつ選び、1人が、やさしい日本語で意味を説明する。もう1人は、どの用語かを当てる。</p>
+
+            <p><strong>確認テスト（1回目）（約5分）</strong></p>
+            <p>今日の内容の5問。<strong>点数を競うものではない</strong>。今、どこまで分かっているかを、自分で知るためのテスト。分からない問題は、思い出せる範囲で答える。送信すると、点数と、正解・解説が表示される。</p>
+            <div class="vz-cta">
+              <a class="vz-btn vz-btn--ext" href="https://docs.google.com/forms/d/e/1FAIpQLSdo0GV9JKwhSEjrJUG8895VHAD4MVIj1zMGTazJn2-kqs_YIg/viewform" target="_blank" rel="noopener">第5回 確認テスト（1回目）を受ける（Googleフォーム）</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= まとめ ================= -->
+        <div class="timeline-block" id="blk-5">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り → 用語カードの提出・次回予告</h3>
+          <div class="timeline-body">
+            <ul>
+              <li><strong>振り返り</strong>（約3分）：1回目の結果の画面で、<strong>点数を覚えて</strong>、<strong>間違えた問題の解説</strong>を読む。分からないところは、隣の人に聞く、または、このページの<a href="#sec-terms">用語カード</a>・<a href="#sec-quiz">練習クイズ</a>・<a href="term-shooter.html?w=5">ゲーム</a>で確かめる</li>
+              <li><strong>確認テスト（2回目）は任意</strong>：時間がある人、確かめたい人は、<a href="#sec-optional">下の「任意の取り組み」</a>から受ける</li>
+              <li><strong>用語カード</strong>：今回覚えた用語にチェックを入れて、フォームで提出する（約3分）</li>
+              <li>質問と、次回までの課題の確認（約1分）。読むだけの<a href="#sec-tip">「就活ワンポイント」</a>もある。自分の点数の推移は、<a href="#sec-optional">「任意の取り組み」</a>の「自分の成績を見る」から、いつでも見られる</li>
+              <li>次回（第6回）：<strong>インターネットが動く原理とその先</strong>——<span translate="no">TCP/IP</span>・<span translate="no">IPアドレス</span>・<span translate="no">DNS</span>、<span translate="no">AI</span>・<span translate="no">IoT</span>（<span translate="no">テクノロジ系</span> p.329-345）</li>
+            </ul>
+            <div class="vz-cta">
+              <a class="vz-btn vz-btn--ext" href="https://docs.google.com/forms/d/e/1FAIpQLSfwtqw-yMEIu9TYEhdi90OBo8OJpG5JH7T_pCZsX6ZEkxb47A/viewform" target="_blank" rel="noopener">第5回 今回覚えた用語を提出する（Googleフォーム）</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-terms">
+      <h2>用語カード（今日の用語）</h2>
+      <p class="lesson-note">用語カードは、今日の授業で出る用語と、その意味のリスト。授業の最後に、フォームで<strong>今回覚えた用語</strong>にチェックを入れて提出する。用語は日本語のまま覚える。試験は日本語で行われる。</p>
+      <div class="table-wrap">
+        <table class="schedule-table">
+          <thead><tr><th>用語</th><th>意味</th></tr></thead>
+          <tbody>
+            <tr><td><span translate="no">LAN</span></td><td>同じ建物や敷地の中など、せまい範囲のネットワーク</td></tr>
+            <tr><td><span translate="no">WAN</span></td><td>離れた場所にある<span translate="no">LAN</span>どうし（本店と2号店など）をつなぐ、広い範囲のネットワーク。電話回線や専用線などを使う</td></tr>
+            <tr><td><span translate="no">有線LAN</span></td><td><span translate="no">LANケーブル</span>で機器をつなぐ<span translate="no">LAN</span></td></tr>
+            <tr><td><span translate="no">無線LAN</span></td><td>電波で機器をつなぐ<span translate="no">LAN</span>。<span translate="no">Wi-Fi</span>とも呼ばれる</td></tr>
+            <tr><td><span translate="no">アクセスポイント</span></td><td><span translate="no">無線LAN</span>の機器を、電波でネットワークにつなぐ機器。試験のシラバスでは「<span translate="no">AP</span>」とも書かれる</td></tr>
+            <tr><td><span translate="no">SSID</span></td><td><span translate="no">無線LAN</span>のネットワークの名前。試験のシラバスでは「<span translate="no">ESSID</span>」と書かれる</td></tr>
+            <tr><td><span translate="no">ルーター</span></td><td>ネットワークとネットワークをつなぎ、データを送る道すじを決める機器</td></tr>
+            <tr><td><span translate="no">スイッチングハブ</span></td><td>同じ<span translate="no">LAN</span>の中で、機器どうしをつなぐ機器。<span translate="no">LANケーブル</span>をたくさんさせる。試験のシラバスでは「<span translate="no">ハブ</span>」「<span translate="no">スイッチ</span>」と書かれる</td></tr>
+            <tr><td><span translate="no">ステークホルダー</span></td><td>企業に関わる人や組織（顧客・従業員・株主・取引先・地域社会など）。利害関係者</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-quiz">
+      <h2>練習クイズ（サイト内・記録なし）</h2>
+      <p class="lesson-note">確認テストの内容を、自分のペースで練習するためのクイズ（確認テストと同じ内容）。回答はこのページの中で判定されるだけで、どこにも送信・保存されず、成績にも含まれない。何度でも試せる。</p>
+
+      <div class="quiz-set">
+        <div class="quiz" aria-live="polite" data-answer="ア">
+          <p class="quiz-q"><span class="quiz-q-num">Q1</span><span translate="no">LAN</span>の説明として，最も適切なものはどれか。</p>
+          <div class="quiz-choices">
+            <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span>同じ建物や敷地の中など，せまい範囲のネットワーク。</span></button>
+            <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span>離れた拠点どうしをつなぐ，広い範囲のネットワーク。</span></button>
+            <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span><span translate="no">無線LAN</span>で，ネットワークを見分けるための名前。</span></button>
+            <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span>ネットワークとネットワークをつなぎ，データを送る道すじを決める機器。</span></button>
+          </div>
+          <div class="quiz-feedback" hidden>
+            <p class="quiz-result"></p>
+            <p><span translate="no">LAN</span>は、同じ建物や敷地の中など、せまい範囲のネットワーク。イは<span translate="no">WAN</span>、ウは<span translate="no">SSID</span>、エは<span translate="no">ルーター</span>の説明。</p>
+            <button type="button" class="quiz-retry">もう一度</button>
+          </div>
+        </div>
+
+        <div class="quiz" aria-live="polite" data-answer="ウ">
+          <p class="quiz-q"><span class="quiz-q-num">Q2</span>本店と，離れた場所にある2号店のように，離れた拠点どうしをつなぐ，広い範囲のネットワークはどれか。</p>
+          <div class="quiz-choices">
+            <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span><span translate="no">LAN</span></span></button>
+            <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span><span translate="no">有線LAN</span></span></button>
+            <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span><span translate="no">WAN</span></span></button>
+            <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span><span translate="no">アクセスポイント</span></span></button>
+          </div>
+          <div class="quiz-feedback" hidden>
+            <p class="quiz-result"></p>
+            <p>離れた場所どうしをつなぐ、広い範囲のネットワークは、<span translate="no">WAN</span>。<span translate="no">LAN</span>は、同じ建物の中などの、せまい範囲。<span translate="no">有線LAN</span>は、<span translate="no">LAN</span>のつなぎ方（ケーブル）の1つ。<span translate="no">アクセスポイント</span>は、<span translate="no">無線LAN</span>の機器をつなぐ機器。</p>
+            <button type="button" class="quiz-retry">もう一度</button>
+          </div>
+        </div>
+
+        <div class="quiz" aria-live="polite" data-answer="エ">
+          <p class="quiz-q"><span class="quiz-q-num">Q3</span><span translate="no">無線LAN</span>で，スマートフォンやパソコンを，電波でネットワークにつなぐ役をする機器はどれか。</p>
+          <div class="quiz-choices">
+            <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span><span translate="no">スイッチングハブ</span></span></button>
+            <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span><span translate="no">LANケーブル</span></span></button>
+            <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span><span translate="no">SSID</span></span></button>
+            <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span><span translate="no">アクセスポイント</span></span></button>
+          </div>
+          <div class="quiz-feedback" hidden>
+            <p class="quiz-result"></p>
+            <p><span translate="no">アクセスポイント</span>は、<span translate="no">無線LAN</span>の機器を、電波でネットワークにつなぐ機器。<span translate="no">スイッチングハブ</span>は、<span translate="no">有線LAN</span>で機器どうしをつなぐ機器。<span translate="no">LANケーブル</span>は、<span translate="no">有線LAN</span>のケーブル。<span translate="no">SSID</span>は、<span translate="no">無線LAN</span>のネットワークの名前で、機器ではない。</p>
+            <button type="button" class="quiz-retry">もう一度</button>
+          </div>
+        </div>
+
+        <div class="quiz" aria-live="polite" data-answer="イ">
+          <p class="quiz-q"><span class="quiz-q-num">Q4</span>ネットワークとネットワークをつなぎ，データを送る道すじを決める機器はどれか。</p>
+          <div class="quiz-choices">
+            <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span><span translate="no">スイッチングハブ</span></span></button>
+            <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span><span translate="no">ルーター</span></span></button>
+            <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span><span translate="no">アクセスポイント</span></span></button>
+            <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span><span translate="no">LANケーブル</span></span></button>
+          </div>
+          <div class="quiz-feedback" hidden>
+            <p class="quiz-result"></p>
+            <p><span translate="no">ルーター</span>は、ネットワークとネットワークをつなぎ、データを送る道すじを決める機器。<span translate="no">スイッチングハブ</span>は、同じ<span translate="no">LAN</span>の中で、機器どうしをつなぐ機器。<span translate="no">アクセスポイント</span>は、電波で機器をつなぐ機器。<span translate="no">LANケーブル</span>は、ケーブル。</p>
+            <button type="button" class="quiz-retry">もう一度</button>
+          </div>
+        </div>
+
+        <div class="quiz" aria-live="polite" data-answer="ウ">
+          <p class="quiz-q"><span class="quiz-q-num">Q5</span><span translate="no">ステークホルダー</span>に当たるものとして，最も適切なものはどれか。</p>
+          <div class="quiz-choices">
+            <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span>企業の中で，機器どうしをつなぐ，<span translate="no">LAN</span>。</span></button>
+            <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span>企業が，店の外とつながるときに使う，通信会社の回線。</span></button>
+            <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span>企業の顧客，従業員，株主，取引先など，企業に関わる人や組織。</span></button>
+            <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span>企業が使う，<span translate="no">無線LAN</span>のネットワークの名前。</span></button>
+          </div>
+          <div class="quiz-feedback" hidden>
+            <p class="quiz-result"></p>
+            <p><span translate="no">ステークホルダー</span>（利害関係者）は、企業に関わる人や組織。顧客・従業員・株主・取引先・地域社会などが例。アは<span translate="no">LAN</span>、イは<span translate="no">WAN</span>で使う回線、エは<span translate="no">SSID</span>の話で、人や組織ではない。</p>
+            <button type="button" class="quiz-retry">もう一度</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-optional">
+      <h2>任意の取り組み</h2>
+      <p class="lesson-note">必須ではありません。時間があるとき、確かめたいときに使います。</p>
+      <h3>用語シューティング（ゲーム）</h3>
+      <p>授業で遊んだゲームを、何度でも遊べます。間違えた用語の一覧を見て、用語カードで確かめると、覚えやすくなります。</p>
+      <div class="vz-cta">
+        <a class="vz-btn" href="term-shooter.html?w=5">用語シューティングを遊ぶ</a>
+      </div>
+      <h3>確認テスト（2回目）</h3>
+      <p>1回目と同じ5問です（問題の順番は違います）。受けたら、結果の画面の点数を、1回目の点数と自分で比べます。1回目の点数を、覚えておきます。</p>
+      <div class="vz-cta">
+        <a class="vz-btn vz-btn--ext" href="https://docs.google.com/forms/d/e/1FAIpQLSfiOL34bPVRSoGH323CskDllYgOsYNZEXt0vPgE23h9NJCIwA/viewform" target="_blank" rel="noopener">第5回 確認テスト（2回目・任意）を受ける（Googleフォーム）</a>
+      </div>
+      <h3>自分の成績を見る</h3>
+      <p>診断テスト・復習テスト・確認テストの点数の推移と、次に復習するとよい用語を見られます。学校のGoogleアカウントでログインすると、自分の分だけが表示されます。</p>
+      <div class="vz-cta">
+        <a class="vz-btn vz-btn--ext" href="https://script.google.com/a/macros/i-seifu.jp/s/AKfycbwquVX4xkXNy47RkGjCUz6Xmc4GFaPLpPkSVuW6z--m5Yth88yilipCYUSanlTpQF9P/exec" target="_blank" rel="noopener">自分の成績を見る（学校のGoogleアカウント）</a>
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-tip">
+      <h2>就活ワンポイント（任意）</h2>
+      <p class="lesson-note">授業時間には含めない、読むだけのコラム。成績にも含まれない。今日の言葉を、面接で使う練習。</p>
+      <h3>面接で「学校で学んだこと」を聞かれたら</h3>
+      <p>面接官から、こう聞かれることがある。答えは、<strong>3つの順番</strong>で話すと、短く、分かりやすくなる（一つの考え方）。下の吹き出しが、順に現れる。</p>
+      <div><button type="button" class="tip-ctl" data-target="tip-chat-1" aria-pressed="false">動きを止めて、全部を表示する</button></div>
+      <div class="tip-chat" id="tip-chat-1" role="group" aria-label="面接の会話の例。面接官の質問のあと、結論、理由、まとめの順に答える">
+        <div class="tip-b tip-b--q"><span class="tip-tag">面接官</span>学校で、<span translate="no">IT</span>について、どんなことを学びましたか。</div>
+        <div class="tip-b"><span class="tip-tag">① 結論</span>ネットワークの基本を学びました。<span translate="no">LAN</span>と<span translate="no">WAN</span>の違いや、<span translate="no">ルーター</span>の役割を説明できます。</div>
+        <div class="tip-b"><span class="tip-tag">② 理由</span>自分の家のネットワークを図にして、どの機器が何をしているか、考えたからです。</div>
+        <div class="tip-b"><span class="tip-tag">③ まとめ</span>仕事でも、ネットワークの仕組みを理解して、困ったときに、原因を考えられるようになりたいです。</div>
+      </div>
+      <ul>
+        <li><strong>例文は一例</strong>。自分が実際にしたことを話す。していないことは、言わない。</li>
+        <li>今日の言葉（<span translate="no">LAN</span>・<span translate="no">WAN</span>・<span translate="no">ルーター</span>）を、日本語のまま使えると、<span translate="no">IT</span>を学んでいることが伝わる。</li>
+        <li>「自分で図にした」「ゲームで確かめた」のように、<strong>自分がしたこと</strong>を一言入れると、話に説得力が出る。</li>
+      </ul>
+      <p class="lesson-note">答え方の順番（結論・理由・まとめ）は、この教材の一つの考え方で、公式のルールではない。<span translate="no">IPA</span>は、ITパスポート試験の合格について、「就職活動において、自らの知識を証明し、自己アピールに役立ちます」と紹介している（<span translate="no">IPA</span><a href="https://www3.jitec.ipa.go.jp/JitesCbt/html/about/merit.html" target="_blank" rel="noopener">「合格のメリット」</a>、確認日：2026-10-28。留学生向けに書かれた説明ではない）。</p>
+    </div>
+
+    <div class="syllabus-section" id="sec-tasks">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>第6回の予習：教科書を読む</strong>
+            <p>教科書 p.329-345 を読み、<span translate="no">IPアドレス</span>と<span translate="no">DNS</span>が、それぞれ何をするものか、確認しておく。第6回の授業の最後に、覚えた用語をフォームで提出する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>練習クイズとゲームで、間違えた用語を確かめる</strong>
+            <p>練習クイズは、全問正解になるまで繰り返す。ゲームは、最後の画面の「間違えた用語」の一覧を見て、用語カードで確かめる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>家や学校の<span translate="no">Wi-Fi</span>の<span translate="no">SSID</span>を、1つ探す</strong>
+            <p>スマートフォンの<span translate="no">Wi-Fi</span>の画面で、近くにある<span translate="no">SSID</span>（ネットワークの名前）を見る。自分が使っているのは、どれか。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-refs">
+      <h2>参考リンク</h2>
+      <ul class="vz-links">
+        <li><a class="vz-link" href="https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/basic/service/08/" target="_blank" rel="noopener"><b>無線LAN（Wi-Fi）の仕組み</b><span>総務省「国民のためのサイバーセキュリティサイト」。<span translate="no">LAN</span>・<span translate="no">無線LAN</span>・<span translate="no">SSID</span>の説明</span></a></li>
+        <li><a class="vz-link" href="https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ja_01/" target="_blank" rel="noopener"><b>用語集（あ行）：<span translate="no">アクセスポイント</span></b><span>総務省「国民のためのサイバーセキュリティサイト」</span></a></li>
+        <li><a class="vz-link" href="https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ja_09/" target="_blank" rel="noopener"><b>用語集（ら行）：<span translate="no">ルーター</span></b><span>総務省「国民のためのサイバーセキュリティサイト」</span></a></li>
+        <li><a class="vz-link" href="https://www.soumu.go.jp/main_content/000062441.pdf" target="_blank" rel="noopener"><b>電気通信紛争処理用語集（PDF）</b><span>総務省。<span translate="no">WAN</span>の説明（「電話回線や専用線などを使って……」）を確かめた資料</span></a></li>
+        <li><a class="vz-link" href="https://www.env.go.jp/content/900497044.pdf" target="_blank" rel="noopener"><b>ステークホルダーエンゲージメント（PDF）</b><span>環境省。「株主、顧客、従業員、取引先、地域社会などを重要なステークホルダーとして特定することが多く」の記述がある</span></a></li>
+        <li><a class="vz-link" href="https://www.ipa.go.jp/shiken/syllabus/omgdg50000005kn1-att/syllabus_ip_ver6_5.pdf" target="_blank" rel="noopener"><b>ITパスポート試験シラバス（PDF）</b><span><span translate="no">IPA</span>。「ネットワーク方式」の用語例（<span translate="no">ハブ</span>・<span translate="no">スイッチ</span>・<span translate="no">ルーター</span>・<span translate="no">有線LAN</span>・<span translate="no">無線LAN</span>・<span translate="no">ESSID</span>）で、試験での用語の書き方を確かめる</span></a></li>
+        <li><a class="vz-link" href="https://www3.jitec.ipa.go.jp/JitesCbt/html/about/merit.html" target="_blank" rel="noopener"><b>【ITパスポート試験】合格のメリット</b><span><span translate="no">IPA</span>。就活ワンポイントで紹介した記述の出典</span></a></li>
+        <li><a class="vz-link" href="https://www.ipa.go.jp/shiken/mondai-kaiotu/index.html" target="_blank" rel="noopener"><b>過去問題 | 試験情報 | IPA</b><span>公開問題と解答例の一覧。法令に特別の定めがある場合を除き、許諾・使用料は不要（IPA公式）。この授業では、年度と問番号を出典として書く</span></a></li>
+        <li><a class="vz-link" href="https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2025r07_ip_qs.pdf" target="_blank" rel="noopener"><b>令和7年度 ITパスポート試験 公開問題（PDF）</b><span>例題の出典</span></a></li>
+        <li><a class="vz-link" href="https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2025r07_ip_ans.pdf" target="_blank" rel="noopener"><b>令和7年度 ITパスポート試験 公開問題 解答例（PDF）</b><span>例題の正答の確認</span></a></li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week04.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第4回 秘密を守る・本人を確かめる</span>
+      </a>
+      <a href="../it-passport-technology.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">ITパスポート テクノロジー系</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第6回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js?v=4"></script>
+</body>
+</html>
