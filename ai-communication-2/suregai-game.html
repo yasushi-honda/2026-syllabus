@@ -92,7 +92,7 @@
     .sg-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
     /* ミニページ（ミミが変更する練習用の画面） */
     .sg-mini { border: 1px solid #c9c2d9; border-radius: 8px; overflow: hidden; background: #fff; font-size: 13px; line-height: 1.55; max-width: 100%; }
-    .sg-mini-tabs { display: flex; flex-wrap: wrap; gap: 2px; background: #e9e5f1; padding: 3px 4px 0; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; }
+    .sg-mini-tabs { display: flex; flex-wrap: wrap; gap: 2px; background: #e9e5f1; padding: 3px 4px 0; font-family: 'JetBrains Mono', monospace; font-size: 11px; }
     .sg-mini-tabs span { background: #f6f3fb; border-radius: 4px 4px 0 0; padding: 1px 6px; color: #5a5470; }
     .sg-mini-tabs span.on { background: #fff; color: #2e2447; font-weight: 700; }
     .sg-mini-page { padding: 8px 10px 10px; overflow: hidden; }
@@ -112,9 +112,9 @@
     .sg-mini-btn.sz-l { font-size: 18px; padding: 6px 16px; }
     .sg-mini-btn.fg-yellow { color: #ffe36e; }
     .sg-mini-btnrow.center { text-align: center; }
-    .sg-mini-foot { margin-top: 6px; font-size: 10px; color: #777; border-top: 1px solid #eee; padding-top: 3px; }
+    .sg-mini-foot { margin-top: 6px; font-size: 11px; color: #777; border-top: 1px solid #eee; padding-top: 3px; }
     .sg-mini-sub { border-top: 1px dashed #c9c2d9; padding: 6px 10px; background: #fbfaff; font-size: 11.5px; }
-    .sg-mini-sub b { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; }
+    .sg-mini-sub b { font-family: 'JetBrains Mono', monospace; font-size: 11px; }
     @media (prefers-reduced-motion: reduce) { .sg-pop, .sg-shake { animation: none; } .sg-progress > div { transition: none; } }
     @media (max-width: 480px) { .sg-card { padding: .85rem .8rem; } .sg-opts { grid-template-columns: minmax(0, 1fr); } }
   </style>
@@ -509,7 +509,7 @@
       why: 'どんなページか、ファイル名、リンクの要否を書いていません（前提の省略）。ミミは「とりあえず空のページを1つ」作りました。' },
     { instr: '文章をもっと短くして',
       opts: [{ cap: 'はじめの文章だけ、2文にした', p: { 'text.len': 'short' } }, { cap: 'はじめの文章も、カードの説明も、見出しも短くした', p: { 'text.len': 'short', 'cards.text': 'short', 'title.text': 'short' } }, { cap: 'はじめの文章を1文にした', p: { 'text.len': 'one' } }],
-      actual: 1, need: ['hani'], ok: ['yarisugi'],
+      actual: 1, need: ['hani'], ok: ['yarisugi', 'haba'],
       why: '「文章」がどこまでかを書いていません。はじめの文章だけのつもりが、カードや見出しにまで及びました（範囲のずれ）。' },
     { instr: '全体的に整えて',
       opts: [{ cap: 'カードの余白をそろえた', p: { 'cards.tidy': true } }, { cap: '色も文字の大きさも並びも、全部変えた', p: { 'cards.tidy': true, 'title.color': 'purple', 'title.size': 'l', 'btn.color': 'purple', 'cards.layout': 'col', bg: 'light' } }, { cap: '何も変えずに「整っています」と答えた', p: {} }],
@@ -517,17 +517,19 @@
       why: '少し整えてほしかっただけなのに、色も大きさも並びも変わりました（やりすぎ）。「整える」の中身（言葉の幅）、「全体」の範囲（範囲のずれ）も関係します。' },
     { instr: 'この色、もう少し明るくして',
       opts: [{ cap: 'ボタンの色を明るくした', p: { 'btn.color': 'yellow' } }, { cap: '背景の色を明るい水色にした', p: { bg: 'light' } }, { cap: '見出しの色を明るい青にした', p: { 'title.color': 'blue' } }],
-      actual: 1, need: ['zentei'], ok: ['hani'],
+      actual: 1, need: ['zentei'], ok: ['hani', 'haba'],
       why: '「この色」が、どこの色かを書いていません。頭の中ではどの色か決まっていても、ミミには伝わりません（前提の省略）。' },
     { instr: '見出しを大きくして',
       opts: [{ cap: '見出しを少し（1.2倍くらい）大きくした', p: { 'title.size': 'ml' } }, { cap: '見出しを、画面からはみ出すほど大きくした', p: { 'title.size': 'xl' } }, { cap: '見出しもボタンも大きくした', p: { 'title.size': 'l', 'btn.size': 'l' } }],
       actual: 1, need: ['haba'], ok: [],
-      why: '「大きく」が、どのくらいかを書いていません（言葉の幅）。「1.5倍に」のように基準を書くと、ずれにくくなります。' },
+      why: '「大きく」が、どのくらいかを書いていません（言葉の幅）。画面からはみ出すほど大きくなったのは、頼んでいない所まで変わった「やりすぎ」ではなく、基準（どのくらい）がなかったためです。「1.5倍に」のように基準を書くと、ずれにくくなります。' },
     { instr: 'ボタンの文字を変えて',
       opts: [{ cap: '「もっと見る」を「詳しく見る」に変えた', p: { 'btn.label': 'detail' } }, { cap: 'ボタンの文字の色を黄色に変えた', p: { 'btn.fg': 'yellow' } }, { cap: 'ボタンの文字を英語の「MORE」にした', p: { 'btn.label': 'en' } }],
       actual: 1, need: ['haba'], ok: ['zentei'],
       why: '「文字を変える」は、言葉を変えるのか、文字の色や形を変えるのかで分かれます（言葉の幅）。何に変えるか（前提）も書いていません。' }
   ];
+  // ミミの実際の動きがA〜Cのどれかに偏らないように、並びを入れ替える
+  [2, 0, 1, 2, 0, 1, 2, 0].forEach(function (p, i) { var c = CARDS[i], tmp = c.opts[p]; c.opts[p] = c.opts[c.actual]; c.opts[c.actual] = tmp; c.actual = p; });
   var S2 = { i: 0, phase: 'predict', pred: -1, picked: [], done: 0, hits: 0, full: 0 };
 
   function stage2(i) {
@@ -549,7 +551,7 @@
     if (S2.phase === 'type' || S2.phase === 'done') {
       var hitPred = S2.pred === C.actual;
       h += mimi(hitPred ? '予想どおりに動きました。' : '予想とは違う動きをしました。<strong>予想とのずれ</strong>が、すれ違いの手がかりです。');
-      h += '<div class="sg-chips" role="group" aria-label="型を選ぶ">' + TYPE_KEYS.map(function (k) { return '<button type="button" class="sg-chip" data-s2t="' + k + '" aria-pressed="' + (S2.picked.indexOf(k) !== -1) + '"' + (S2.phase === 'done' ? ' disabled' : '') + ' title="' + esc(TYPES[k].hint) + '">' + esc(TYPES[k].name) + '</button>'; }).join('') + '</div>';
+      h += '<div class="sg-chips" role="group" aria-label="型を選ぶ">' + TYPE_KEYS.map(function (k) { return '<button type="button" class="sg-chip" data-s2t="' + k + '" aria-pressed="' + (S2.picked.indexOf(k) !== -1) + '"' + (S2.phase === 'done' ? ' disabled' : '') + '>' + esc(TYPES[k].name) + '</button>'; }).join('') + '</div>';
       if (S2.phase === 'type') h += '<div class="sg-row"><button type="button" class="sg-btn" id="s2judge"' + (S2.picked.length ? '' : ' disabled') + '>判定する</button><button type="button" class="sg-btn sg-btn--sub" id="s2hint">型の説明を見る（-10点）</button></div><div id="s2hintbox"></div>';
     }
     h += '<div id="s2out"></div></div>';
@@ -594,6 +596,7 @@
     var wrong = picked.filter(function (k) { return allowed.indexOf(k) === -1; });
     var gotNeed = need.filter(function (k) { return picked.indexOf(k) !== -1; });
     if (!wrong.length && gotNeed.length === need.length) return 'full';
+    if (!wrong.length && picked.length) return 'part';
     if (gotNeed.length && wrong.length <= 1) return 'part';
     return 'none';
   }
@@ -646,7 +649,7 @@
       goal: { 'text.size': 'l', 'cards.layout': 'col' },
       check: ['text.size', 'cards.layout', 'text.len', 'title.size'],
       tags: { 'text.size': 'haba', 'cards.layout': 'haba', 'text.len': 'hani' },
-      defaults: { 'text.len': 'short', 'cards.layout': 'col' },
+      defaults: { 'text.len': 'short' },
       side: { 'title.size': 's' },
       chips: [
         { id: 'c1', slot: '変化', group: 'tsize', label: '文章の文字を大きく', set: { 'text.size': 'l' }, text: '文章の文字を大きくして' },
@@ -792,7 +795,7 @@
     }
     h += '</div></div>';
     h += '<div class="sg-row">' + (S3.i < PUZZLES.length - 1 ? '<button type="button" class="sg-btn sg-btn--ghost" id="s3next">次のパズルへ</button>' : '<button type="button" class="sg-btn sg-btn--ghost" id="s3fin">ステージ3を終える</button>') + '</div>';
-    addLog('3', puzzleInstr(P, S3.sel), 'ゴール: ' + P.goalText, r.ok ? 'ゴールの画面になった' : r.bad.map(function (b) { return PROP_NAMES[b.k]; }).join('・') + 'がずれた', r.ok ? 'ずれなし' : tk.map(function (k) { return TYPES[k].name; }).join('・') || '札の選び方');
+    addLog('3', puzzleInstr(P, S3.sel), '目指した画面: ' + P.goalText, r.ok ? 'ゴールの画面になった' : r.bad.map(function (b) { return PROP_NAMES[b.k]; }).join('・') + 'がずれた', r.ok ? 'ずれなし' : tk.map(function (k) { return TYPES[k].name; }).join('・') || '札の選び方');
     var locked = r.ok || tries >= 3;
     $('s3out').innerHTML = h;
     $('s3send').disabled = locked;
@@ -935,9 +938,9 @@
     $('sgRes').onclick = results;
   }
   function rankOf(sc) {
-    if (sc >= 3400) return 'すれ違い名探偵';
-    if (sc >= 2300) return 'ベテランハンター';
-    if (sc >= 1100) return 'すれ違いハンター';
+    if (sc >= 4800) return 'すれ違い名探偵';
+    if (sc >= 3400) return 'ベテランハンター';
+    if (sc >= 1800) return 'すれ違いハンター';
     return 'ハンター見習い';
   }
   function logTable() {
@@ -951,7 +954,7 @@
     h += '<h3>覚えておきたい3つのこと</h3><ol style="font-size:.92rem;line-height:1.8"><li>書かなかった所は、AIの思い込みになる（前提の省略）</li><li>「大きく」「見やすく」は人によって違う。どのくらいかを書く（言葉の幅）</li><li>送る前に「どう理解したか」を説明させると、実行する前にずれに気づけることがある</li></ol>';
     h += '<h3>すれ違いログ（' + S.log.length + '件）</h3>';
     if (S.log.length) {
-      h += '<p style="font-size:.88rem">授業の「すれ違いログ」と同じ4列です。コピーして、Googleドキュメントに貼り付けられます（ゲームの記録であることが分かるように、見出しを付けて貼るとよい）。</p>';
+      h += '<p style="font-size:.88rem">授業の「すれ違いログ」の4列（送った指示／送る前の予想／起きたこと／型）に、先頭の番号の列を足した表です。コピーして、Googleドキュメントに貼り付けられます（ゲームの記録であることが分かるように、見出しを付けて貼るとよい）。</p>';
       h += '<div class="sg-row"><button type="button" class="sg-btn" id="sgCopy">ログをコピー</button><span id="sgCopyMsg" style="font-size:.88rem"></span></div>';
       h += '<div class="sg-logwrap">' + logTable() + '</div>';
     } else h += '<p style="font-size:.88rem">まだ記録がありません。ステージを遊ぶと、ここにたまります。</p>';
