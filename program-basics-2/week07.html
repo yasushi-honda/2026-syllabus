@@ -87,6 +87,83 @@
             <p><strong>前回の振り返りと、環境を整える（10分）</strong></p>
             <ul>
               <li>第6回の<code>layout.html</code>が<code>push</code>できているかをGitHub上で確認する。終わっていない人は、今日の最後の時間で<code>push</code>する</li>
+              <li>
+                <details class="vz-more">
+                  <summary><code>layout.html</code>が無い・途中の人は、ここからコピーする</summary>
+                  <p>第6回で作った<code>layout.html</code>が無い、または途中の人は、下の見本をコピーして、リポジトリの一番上のフォルダに<code>layout.html</code>として保存する。第8回の土台（ゲームなら盤面、ECサイトなら商品一覧）に、そのまま使える。第6回の<code>plan.md</code>の画面構成に合わせて、文字や数を書き換えてよい。すでに自分の<code>layout.html</code>がある人は、使わなくてよい</p>
+                  <p><strong>ゲームを選んだ人の見本</strong>（上の帯をFlexbox、6つの穴をGridで並べる）</p>
+                  <button class="copy-md-btn" data-md-source="layout-game-sample">
+                    <span class="btn-icon"></span> ゲーム班の layout.html をコピー
+                  </button>
+<pre id="layout-game-sample" class="md-preview">&lt;!DOCTYPE html&gt;
+&lt;html lang="ja"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;後期作品のレイアウト（ゲーム）&lt;/title&gt;
+  &lt;style&gt;
+    body { font-family: sans-serif; margin: 0; padding: 16px; }
+    .bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #3d5a73; color: white; }
+    .holes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0; }
+    .hole { aspect-ratio: 1 / 1; border-radius: 50%; background: #ddd; }
+    .start { display: block; margin: 0 auto; padding: 12px 24px; font-size: 1rem; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class="bar"&gt;
+    &lt;span&gt;もぐらたたき&lt;/span&gt;
+    &lt;span&gt;スコア: 0&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="holes"&gt;
+    &lt;div class="hole"&gt;&lt;/div&gt;
+    &lt;div class="hole"&gt;&lt;/div&gt;
+    &lt;div class="hole"&gt;&lt;/div&gt;
+    &lt;div class="hole"&gt;&lt;/div&gt;
+    &lt;div class="hole"&gt;&lt;/div&gt;
+    &lt;div class="hole"&gt;&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;button class="start"&gt;はじめる&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+                  <p><strong>ECサイトを選んだ人の見本</strong>（上の帯をFlexbox、商品カードをGridで並べ、カードの中をFlexboxで左右に離す）</p>
+                  <button class="copy-md-btn" data-md-source="layout-ec-sample">
+                    <span class="btn-icon"></span> EC班の layout.html をコピー
+                  </button>
+<pre id="layout-ec-sample" class="md-preview">&lt;!DOCTYPE html&gt;
+&lt;html lang="ja"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;後期作品のレイアウト（ECサイト）&lt;/title&gt;
+  &lt;style&gt;
+    body { font-family: sans-serif; margin: 0; padding: 16px; }
+    .bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: #3d5a73; color: white; }
+    .search { margin: 16px 0; }
+    .search input { width: 100%; padding: 8px; font-size: 1rem; box-sizing: border-box; }
+    .shop { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+    .item { padding: 12px; background: #e8f0fe; border: 2px solid #3d5a73; border-radius: 8px; }
+    .item .row { display: flex; justify-content: space-between; }
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class="bar"&gt;
+    &lt;span&gt;ミニ雑貨店&lt;/span&gt;
+    &lt;span&gt;カート: 0点&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="search"&gt;
+    &lt;input type="text" placeholder="商品を探す"&gt;
+  &lt;/div&gt;
+  &lt;div class="shop"&gt;
+    &lt;div class="item"&gt;&lt;div class="row"&gt;&lt;span&gt;マグ&lt;/span&gt;&lt;span&gt;800円&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;div class="item"&gt;&lt;div class="row"&gt;&lt;span&gt;ノート&lt;/span&gt;&lt;span&gt;300円&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;div class="item"&gt;&lt;div class="row"&gt;&lt;span&gt;ペン&lt;/span&gt;&lt;span&gt;150円&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;div class="item"&gt;&lt;div class="row"&gt;&lt;span&gt;ふせん&lt;/span&gt;&lt;span&gt;200円&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;div class="item"&gt;&lt;div class="row"&gt;&lt;span&gt;ハサミ&lt;/span&gt;&lt;span&gt;500円&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+                </details>
+              </li>
               <li><code>python3 -m http.server 8000</code>を起動し、第1回（前期）と同じ手順で「ポート」タブ→「エディターでプレビュー」→ Simple Browserを開いておく</li>
               <li>DevTools（開発者ツール）を開く方法は、前期第5回・第10回と同じ手順。<code>Console</code>タブにエラーが出ると、赤い文字で表示される</li>
             </ul>
@@ -333,7 +410,7 @@
                     <details>
                       <summary>答えを見る</summary>
                       <p><code>.value</code>で取り出した値は、数字を入れても文字列になる。<code>.value</code>の部分を<code>Number()</code>で包んで、数に変換する：</p>
-                      <pre><code>const qty = Number(document.getElementById("qty").value);</code></pre>
+                      <pre style="overflow-x:auto"><code>const qty = Number(document.getElementById("qty").value);</code></pre>
                       <p>確認するときは、足し算が合うかを試す（1個のあとに2個を足して、3個になるか）。この時点では4つ目のバグが残っていて、ページを更新するとカートが空に戻る。それは次のバグなので、先に進んでよい。</p>
                     </details>
                   </li>
