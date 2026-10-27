@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-  <link rel="stylesheet" href="../styles.css?v=22">
+  <link rel="stylesheet" href="../styles.css?v=23">
   <!-- 用語を覚えるための1人用ゲーム。入力・得点はどこにも送信・保存しない（再読み込みで最初から）。外部ライブラリなし。
        翻訳対応: 意味の文は読み込み時に全問ぶんをDOMへ書き出し、出題時は hidden の切り替えだけで見せる（textContentを書き換えない）。
        用語（的の文字）は translate="no" で日本語のまま。問題データは下の TERM_SETS だけを差し替えれば週を増やせる（?w=5 など）。
@@ -191,7 +191,7 @@
           <button type="button" class="ts-btn ts-btn--sub" id="btn-quit">ステージ選択にもどる</button>
         </div>
         <div class="ts-pause" id="pause" hidden>
-          <p>ポーズ中</p>
+          <p id="pause-msg">ポーズ中</p>
           <button type="button" class="ts-btn" id="btn-resume">再開する</button>
         </div>
       </section>
@@ -239,7 +239,7 @@
     5: {
       /* 第5回 ステージ1: 1限後半のゲーム①までに出る用語（7語）。週ページ week05.html の用語カードの要約版 */
       stage1: [
-        { term: "LAN", meaning: "同じ建物や敷地の中など、せまい範囲のネットワーク。" },
+        { term: "LAN", meaning: "同じ建物や敷地の中など、せまい範囲のネットワーク。", decoys: ["WAN", "SSID", "ステークホルダー"] },
         { term: "WAN", meaning: "離れた場所どうし（本店と2号店など）をつなぐ、広い範囲のネットワーク。" },
         { term: "有線LAN", meaning: "ケーブルで、機器をつなぐLAN。" },
         { term: "無線LAN", meaning: "電波で、機器をつなぐLAN。Wi-Fiとも呼ばれる。" },
@@ -464,10 +464,17 @@
         /* 先に空の要素を画面へ置き、あとから文字を入れる。app.js のふりがなは「あとから追加された文字」に付くので、
            オン/オフに追従する（意味の文の要素を cloneNode すると、ルビまで複製されて、オフにしても消えない） */
         var item = DATA[STAGES[g.stage].key][idx];
-        var li = document.createElement("li"), b = document.createElement("b"), m = document.createElement("p");
+        var li = document.createElement("li"), b = document.createElement("b");
         b.setAttribute("translate", "no");
+        /* 意味の文は bank の複製を使う（ブラウザ翻訳で訳された文をそのまま持ってこられる）。ただし、ふりがなのルビは複製しない:
+           複製したルビは app.js の管理外で、オフにしても消えない。ルビを外して文字を1つにまとめ、画面へ置いたあとで入れ直す
+           （app.js のふりがなは「あとから追加された文字」に付くので、オン/オフに追従する） */
+        var m = bank[g.stage][idx].cloneNode(true); m.hidden = false; m.removeAttribute("class"); m.style.cssText = "";
+        Array.prototype.slice.call(m.querySelectorAll("ruby")).forEach(function (r) { r.parentNode.replaceChild(document.createTextNode(r.firstChild ? r.firstChild.nodeValue : ""), r); });
+        m.normalize();
         li.appendChild(b); li.appendChild(m); ol.appendChild(li);
-        b.textContent = item.term; m.textContent = item.meaning;
+        b.textContent = item.term;
+        Array.prototype.slice.call(m.childNodes).forEach(function (n) { if (n.nodeType === 3) m.replaceChild(document.createTextNode(n.nodeValue), n); });
       });
       $("res-none").hidden = g.wrong.length > 0;
       show("result"); sfx("end");
@@ -493,7 +500,7 @@
     document.addEventListener("visibilitychange", function () { if (document.hidden && g.screen === "play" && !g.paused) setPause(true); });
     Array.prototype.forEach.call(document.querySelectorAll(".ts-stage"), function (b) { b.addEventListener("click", function () { startStage(parseInt(b.dataset.stage, 10)); }); });
     $("btn-pause").addEventListener("click", function () { setPause(!g.paused); });
-    $("btn-resume").addEventListener("click", function () { setPause(false); $("btn-pause").focus(); });
+    $("btn-resume").addEventListener("click", function () { setPause(false); $("pause-msg").textContent = "ポーズ中"; $("btn-resume").textContent = "再開する"; $("btn-pause").focus(); });
     $("btn-quit").addEventListener("click", function () { g.paused = false; g.state = "idle"; $("pause").hidden = true; show("start"); });
     $("btn-again").addEventListener("click", function () { startStage(g.stage); });
     $("btn-select").addEventListener("click", function () { show("start"); });
@@ -521,7 +528,13 @@
 
     /* ?stage=1 / ?stage=2 で直接開始 */
     var qs = parseInt(params.get("stage"), 10);
-    if (qs === 1 || qs === 2) startStage(qs - 1);
+    if (qs === 1 || qs === 2) {
+      /* 授業のリンクから開いたときは、スマホだとゲームが画面の下にある。見える位置へ出して、「スタート」を押すまで時間を止める */
+      startStage(qs - 1); setPause(true);
+      $("pause-msg").textContent = "準備はいいですか？「スタート」を押すと、始まります。";
+      $("btn-resume").textContent = "スタート";
+      game.scrollIntoView({ block: "start" });
+    }
   })();
   </script>
   <script src="../app.js?v=4"></script>

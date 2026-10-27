@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=23">
-  <!-- 公式情報確認: 2026-10-28 (総務省「国民のためのサイバーセキュリティサイト」用語集 ja_01 アクセスポイント・ja_09 ルーター、同サイト「無線LAN（Wi-Fi）の仕組み」basic/service/08 にLAN・無線LAN・SSID（ネットワーク名）の説明。総務省 電気通信紛争処理用語集 https://www.soumu.go.jp/main_content/000062441.pdf にWAN「電話回線や専用線などを使って、本社と支社間など離れた場所にある LAN 同士を接続するためのネットワークのこと」（pdftotextで原文照合）。環境省「ステークホルダーエンゲージメント」https://www.env.go.jp/content/900497044.pdf に「株主、顧客、従業員、取引先、地域社会などを重要なステークホルダーとして特定することが多く」。IPAシラバス Ver.6.5「58. ネットワーク方式」に「LANとWANという分類を理解する」、用語例にハブ・ルーター・スイッチ・有線LAN・無線LAN・ESSID、別項目に AP（アクセスポイント）。試験の表記は「SSID」ではなくESSID、「スイッチングハブ」ではなくハブ・スイッチ。令和7年度ITパスポート試験 公開問題 問57・問90と解答例（PDFは画像のため目視で原文を転記、解答例はpdftotextで照合）。令和7年度の公開問題にはLAN/WANを直接問う問がなく（問56〜100を全頁目視）、問57（プロキシ）と第4回の問90の見直しを使用。【未確認として書かなかったこと】: WANが「通信会社の回線を使うことが多い」（総務省の記述は「電話回線や専用線など」まで）、スイッチングハブが「宛先の機器にだけ送る」（公的資料に説明なし、民間の説明のみ）、LANケーブルの「ツイストペア」。教科書 p.320-328・p.018-021 は親ページの記載に従う（教科書本文は未突合）。ステークホルダーの定義文そのもの（ISO 26000の引用など）は原文未照合のため使わず、例の列挙のみ環境省の記述で裏づけ） -->
+  <!-- 公式情報確認: 2026-10-28 (総務省「国民のためのサイバーセキュリティサイト」用語集 ja_01 アクセスポイント・ja_09 ルーター、同サイト「無線LAN（Wi-Fi）の仕組み」basic/service/08 にLAN・無線LAN・SSID（ネットワーク名）の説明。総務省 電気通信紛争処理用語集 https://www.soumu.go.jp/main_content/000062441.pdf にWAN「電話回線や専用線などを使って、本社と支社間など離れた場所にある LAN 同士を接続するためのネットワークのこと」（pdftotextで原文照合）。環境省「ステークホルダーエンゲージメント」https://www.env.go.jp/content/900497044.pdf に「株主、顧客、従業員、取引先、地域社会などを重要なステークホルダーとして特定することが多く」。IPAシラバス Ver.6.5「58. ネットワーク方式」に「LANとWANという分類を理解する」、用語例にハブ・ルーター・スイッチ・有線LAN・無線LAN・ESSID、別項目に AP（アクセスポイント）。試験の表記は「SSID」ではなくESSID、「スイッチングハブ」ではなくハブ・スイッチ。令和7年度ITパスポート試験 公開問題 問57・問90と解答例（PDFは画像のため目視で原文を転記、解答例はpdftotextで照合）。令和7年度の公開問題にはLAN/WANを直接問う問がなく（問56〜100を全頁目視）、問57（プロキシ）と第4回の問90の見直しを使用。【未確認として書かなかったこと】: WANが「通信会社の回線を使うことが多い」（総務省の記述は「電話回線や専用線など」まで）、スイッチングハブが「宛先の機器にだけ送る」（公的資料に説明なし、民間の説明のみ）、LANケーブルの「ツイストペア」。教科書 p.320-328・p.018-021 は親ページの記載に従う（教科書本文は未突合）。ステークホルダーの定義文（ISO 26000の引用など）は原文未照合のため使わず、本文の「企業に関わる人や組織」は、環境省の例の列挙とIPAシラバスの「利害関係者」の語から作ったやさしい言い換え） -->
   <!-- 挿絵5枚（images/week05-story-1〜4.jpg、week05-lan-wan.jpg）は、画像生成AI（Gemini 3.1 Flash Image）で作った架空の場面のイラスト（2026-10-28）。画像内に文字・実在の人物や企業のロゴは含めない。Aさん=第2〜4回と同じ画風の架空の人物。カフェも架空 -->
   <!-- 用語カードの9語は、フォーム「ITパスポート 第5回 今回覚えた用語」の選択肢と一致。ゲーム term-shooter.html の第5回データ（TERM_SETS[5]）の用語とも一致させる -->
 </head>
@@ -239,13 +239,13 @@
             </figure>
             <p class="lesson-note">総務省の用語集は、<span translate="no">WAN</span>を「電話回線や専用線などを使って、本社と支社間など離れた場所にある <span translate="no">LAN</span> 同士を接続するためのネットワーク」と説明している（確認日：2026-10-28）。カフェでは、店の中が<span translate="no">LAN</span>、店の外とつなぐ部分が<span translate="no">WAN</span>。</p>
 
-            <p><strong>② <span translate="no">有線LAN</span>と<span translate="no">無線LAN</span>（約15分）</strong></p>
+            <p><strong>② <span translate="no">有線LAN</span>と<span translate="no">無線LAN</span>（約20分）</strong></p>
             <p><span translate="no">LAN</span>は、つなぎ方でも、2つに分けられる。</p>
             <div class="vz-fields vz-fields--2">
               <section class="vz-field vz-f-tc">
                 <h4><span translate="no">有線LAN</span></h4>
                 <p><span translate="no">LANケーブル</span>で、機器をつなぐ。</p>
-                <ul class="vz-tags"><li>通信が安定しやすい</li><li>ケーブルが届く場所だけ</li></ul>
+                <ul class="vz-tags"><li>ケーブルを差し込んでつなぐ</li><li>ケーブルが届く場所だけ</li></ul>
               </section>
               <section class="vz-field vz-f-tc">
                 <h4><span translate="no">無線LAN</span></h4>
@@ -265,9 +265,17 @@
             </ul>
             <p class="lesson-note">電波は、壁の外にも届くことがある。だから<span translate="no">無線LAN</span>は、<strong>誰がつなげるか</strong>の管理が大切になる。第4回で学んだ、暗号化（<span translate="no">WPA2</span>など）がここで使われる。</p>
 
+            <p><strong>手を動かす：自分のスマートフォンで、<span translate="no">SSID</span>を見る（約5分）</strong></p>
+            <ol>
+              <li>スマートフォンの<span translate="no">Wi-Fi</span>の設定画面を開く。近くにある<span translate="no">SSID</span>（ネットワークの名前）の一覧が出る</li>
+              <li>自分が今つないでいる<span translate="no">SSID</span>は、どれか。名前の数は、いくつあるか</li>
+              <li>隣の人と、見えている<span translate="no">SSID</span>を、比べて話す（つなぐ前に、誰が用意したネットワークか確かめる。知らない<span translate="no">SSID</span>には、つながない）</li>
+            </ol>
+
             <div class="demo-cta demo-cta--amber">
-              <p class="demo-cta__heading">🎮 ゲーム①：用語シューティング ステージ1（約15分）</p>
+              <p class="demo-cta__heading">🎮 ゲーム①：用語シューティング ステージ1（約10分）</p>
               <p class="demo-cta__body">ここまでに出た用語（<span translate="no">LAN</span>・<span translate="no">WAN</span>・<span translate="no">有線LAN</span>・<span translate="no">無線LAN</span>・<span translate="no">アクセスポイント</span>・<span translate="no">SSID</span>・<span translate="no">ステークホルダー</span>）を、ゲームで確かめる。画面の「意味」を読んで、合う用語の的を撃つ。点数は記録されない。最初は音が出ない。間違えた用語は、最後の画面に一覧が出る。</p>
+              <p class="demo-cta__body"><strong>進め方：</strong>1回は約2分。<strong>目標は「ランク<span translate="no">A</span>以上」（7問中6問以上）</strong>。終わったら、間違えた用語の一覧を、下の<a href="#sec-terms">用語カード</a>で確かめて、もう一度遊ぶ。ランク<span translate="no">A</span>が出たら、隣の人に、間違えやすかった用語を説明する。ページを開くと、「スタート」ボタンが出る。翻訳を使う人は、翻訳してから押す。</p>
               <a href="term-shooter.html?w=5&amp;stage=1" class="demo-cta__link">→ ステージ1を始める</a>
             </div>
 
@@ -367,6 +375,7 @@
             <div class="demo-cta demo-cta--amber">
               <p class="demo-cta__heading">🎮 ゲーム②：用語シューティング ステージ2（約10分）</p>
               <p class="demo-cta__body">今日の用語（<span translate="no">ルーター</span>・<span translate="no">スイッチングハブ</span>も追加）と、第4回までの用語が混ざる。的が降りてくる速さも上がる。ライフは3つ。最後の画面に、間違えた用語の一覧が出る。ここでも、点数は記録されない。</p>
+              <p class="demo-cta__body"><strong>進め方：</strong>1回は約2分。<strong>目標は「ランク<span translate="no">A</span>以上」（10問中8問以上）</strong>。何度でも挑戦してよい。終わったら、間違えた用語の一覧を<a href="#sec-terms">用語カード</a>で確かめる。「スタート」ボタンを押すまで、時間は進まない。</p>
               <a href="term-shooter.html?w=5&amp;stage=2" class="demo-cta__link">→ ステージ2を始める</a>
             </div>
           </div>
@@ -534,13 +543,13 @@
           <p class="quiz-q"><span class="quiz-q-num">Q5</span><span translate="no">ステークホルダー</span>に当たるものとして，最も適切なものはどれか。</p>
           <div class="quiz-choices">
             <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span>企業の中で，機器どうしをつなぐ，<span translate="no">LAN</span>。</span></button>
-            <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span>企業が，店の外とつながるときに使う，通信会社の回線。</span></button>
+            <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span>企業が，店の外とつながるときに使う，電話回線や専用線。</span></button>
             <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span>企業の顧客，従業員，株主，取引先など，企業に関わる人や組織。</span></button>
             <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span>企業が使う，<span translate="no">無線LAN</span>のネットワークの名前。</span></button>
           </div>
           <div class="quiz-feedback" hidden>
             <p class="quiz-result"></p>
-            <p><span translate="no">ステークホルダー</span>（利害関係者）は、企業に関わる人や組織。顧客・従業員・株主・取引先・地域社会などが例。アは<span translate="no">LAN</span>、イは<span translate="no">WAN</span>で使う回線、エは<span translate="no">SSID</span>の話で、人や組織ではない。</p>
+            <p><span translate="no">ステークホルダー</span>（利害関係者）は、企業に関わる人や組織。顧客・従業員・株主・取引先・地域社会などが例。アは<span translate="no">LAN</span>、イは店の外とつながる回線、エは<span translate="no">SSID</span>の話で、どれも人や組織ではない。</p>
             <button type="button" class="quiz-retry">もう一度</button>
           </div>
         </div>
