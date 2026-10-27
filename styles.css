@@ -413,6 +413,14 @@ img { max-width: 100%; display: block; }
 .demo-cta--orange .demo-cta__heading { color: #7a3006; }
 .demo-cta--orange .demo-cta__link { background: #9a3f08; }
 .demo-cta--orange .demo-cta__link:hover { background: #7a3006; }
+/* 紫科目（AIコミュニケーション基礎系）用 */
+.demo-cta--purple {
+  background: var(--c-purple-soft);
+  border-color: var(--c-purple-border);
+}
+.demo-cta--purple .demo-cta__heading { color: #46307a; }
+.demo-cta--purple .demo-cta__link { background: #5b3d9a; }
+.demo-cta--purple .demo-cta__link:hover { background: #46307a; }
 
 /* ========================================
    Timetable Grid — weekly matrix

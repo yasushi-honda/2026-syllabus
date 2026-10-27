@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>すれ違いハンター（1人用の練習ゲーム） | AIコミュニケーション基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=22">
+  <!-- 第7回「すれ違いワーク」を1人で練習するためのゲーム。ルールで動く練習用AI「ミミ」が相手で、本物のagyには接続しない。入力内容はどこにも送信・保存しない（再読み込みで最初から）。「4つの型」は授業用の整理で、公式の分類ではない -->
+  <style>
+    .sg-note { background: #fff8e6; border: 1px solid #e8c766; border-radius: 6px; padding: .7rem 1rem; margin: 0 0 1.2rem; font-size: .9rem; line-height: 1.7; }
+    .sg-bar { display: flex; flex-wrap: wrap; gap: .4rem .8rem; align-items: center; justify-content: space-between; background: #2e2447; color: #fff; border-radius: 8px; padding: .6rem .9rem; margin-bottom: 1rem; position: sticky; top: 0; z-index: 5; }
+    .sg-bar strong { font-size: 1.05rem; }
+    .sg-bar .sg-combo { color: #ffd479; font-weight: 700; }
+    .sg-btn { display: inline-block; padding: .5rem .95rem; border: 0; border-radius: 6px; background: #5b3d9a; color: #fff; font-weight: 600; font-size: .92rem; cursor: pointer; font-family: inherit; line-height: 1.4; }
+    .sg-btn:hover:not(:disabled) { background: #46307a; }
+    .sg-btn:disabled { background: #b9b3c8; cursor: not-allowed; }
+    .sg-btn--sub { background: #4a4a5e; }
+    .sg-btn--sub:hover:not(:disabled) { background: #33333f; }
+    .sg-btn--ghost { background: #fff; color: #46307a; border: 2px solid #5b3d9a; }
+    .sg-btn--ghost:hover:not(:disabled) { background: #f1ecfa; }
+    .sg-btn:focus-visible, .sg-chip:focus-visible, .sg-opt:focus-visible, .sg-stage:focus-visible { outline: 3px solid #ffb000; outline-offset: 2px; }
+    .sg-row { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: .6rem 0; }
+    .sg-card { background: #fff; border: 1px solid #d9d4c7; border-radius: 10px; padding: 1rem 1.1rem; margin-bottom: 1rem; }
+    .sg-card h2 { font-size: 1.1rem; margin: 0 0 .5rem; border: 0; padding: 0; }
+    .sg-card h3 { font-size: 1rem; margin: .8rem 0 .4rem; }
+    .sg-stages { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: .8rem; margin: .8rem 0 1rem; }
+    .sg-stage { text-align: left; background: #fff; border: 2px solid #d6cbee; border-radius: 10px; padding: .9rem 1rem; cursor: pointer; font-family: inherit; font-size: .9rem; line-height: 1.6; color: inherit; }
+    .sg-stage:hover { border-color: #5b3d9a; background: #faf7ff; }
+    .sg-stage-num { display: inline-block; background: #5b3d9a; color: #fff; border-radius: 999px; padding: 0 .6rem; font-size: .8rem; font-weight: 700; }
+    .sg-stage-title { display: block; font-size: 1.05rem; font-weight: 700; margin: .3rem 0 .2rem; }
+    .sg-stars { color: #b07800; font-weight: 700; letter-spacing: .1em; }
+    .sg-mimi { display: flex; gap: .6rem; align-items: flex-start; margin: .6rem 0; }
+    .sg-mimi-face { flex: 0 0 auto; font-size: 1.8rem; line-height: 1; }
+    .sg-bubble { position: relative; background: #f1ecfa; border: 1px solid #d6cbee; border-radius: 10px; padding: .55rem .8rem; font-size: .92rem; line-height: 1.7; min-width: 0; }
+    .sg-bubble--you { background: #eef6ff; border-color: #b9d3f0; }
+    .sg-pop { animation: sgPop .35s ease-out; }
+    @keyframes sgPop { from { transform: scale(.96); opacity: .3; } to { transform: scale(1); opacity: 1; } }
+    .sg-shake { animation: sgShake .4s; }
+    @keyframes sgShake { 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+    .sg-chips { display: flex; flex-wrap: wrap; gap: .35rem; margin: .3rem 0 .6rem; }
+    .sg-chip { border: 1.5px solid #b9add6; background: #fff; color: #2e2447; border-radius: 999px; padding: .3rem .75rem; font-size: .86rem; cursor: pointer; font-family: inherit; line-height: 1.5; }
+    .sg-chip[aria-pressed="true"] { background: #5b3d9a; border-color: #5b3d9a; color: #fff; }
+    .sg-chip[aria-pressed="true"]::before { content: "✓ "; }
+    .sg-chip--vague { border-style: dashed; }
+    .sg-label { font-size: .82rem; font-weight: 700; color: #5a5470; margin-top: .4rem; }
+    .sg-opts { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: .7rem; margin: .6rem 0; }
+    .sg-opt { text-align: left; background: #fff; border: 2px solid #d9d4c7; border-radius: 10px; padding: .6rem; cursor: pointer; font-family: inherit; font-size: .86rem; color: inherit; line-height: 1.55; }
+    .sg-opt:hover:not(:disabled) { border-color: #5b3d9a; }
+    .sg-opt[aria-pressed="true"] { border-color: #2f6db5; box-shadow: 0 0 0 3px #b9d3f0; }
+    .sg-opt.is-actual { border-color: #5b3d9a; box-shadow: 0 0 0 3px #d6cbee; }
+    .sg-opt:disabled { cursor: default; }
+    .sg-opt-head { font-weight: 700; margin-bottom: .3rem; }
+    .sg-tag { display: inline-block; border-radius: 4px; padding: 0 .4rem; font-size: .76rem; font-weight: 700; margin-right: .25rem; }
+    .sg-tag--you { background: #dbe9f8; color: #1d4f86; }
+    .sg-tag--mimi { background: #e6dcf7; color: #46307a; }
+    .sg-feedback { border-radius: 8px; padding: .7rem .9rem; margin: .6rem 0; font-size: .92rem; line-height: 1.75; }
+    .sg-feedback--good { background: #eaf7ee; border: 1.5px solid #1a7f37; }
+    .sg-feedback--mid { background: #fff8e6; border: 1.5px solid #c99700; }
+    .sg-feedback--bad { background: #ffefed; border: 1.5px solid #c4382c; }
+    .sg-feedback strong.sg-verdict { display: block; font-size: 1rem; margin-bottom: .2rem; }
+    .sg-types { display: flex; flex-wrap: wrap; gap: .35rem; }
+    .sg-typetag { display: inline-block; background: #2e2447; color: #fff; border-radius: 4px; padding: .05rem .5rem; font-size: .8rem; font-weight: 600; }
+    .sg-progress { height: 8px; background: #ece7f4; border-radius: 6px; overflow: hidden; margin: .3rem 0 .6rem; }
+    .sg-progress > div { height: 100%; background: #5b3d9a; transition: width .3s; }
+    .sg-two { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: .8rem; align-items: start; }
+    .sg-fig { margin: 0; }
+    .sg-fig figcaption { font-size: .82rem; font-weight: 700; color: #5a5470; margin-bottom: .2rem; }
+    .sg-canvas { display: block; width: 100%; height: auto; background: #fff; border: 1px solid #d9d4c7; border-radius: 8px; }
+    .sg-lines { list-style: none; padding: 0; margin: .4rem 0; }
+    .sg-lines li { display: flex; gap: .5rem; align-items: center; justify-content: space-between; background: #faf7ff; border: 1px solid #e6dcf7; border-radius: 6px; padding: .35rem .6rem; margin-bottom: .3rem; font-size: .88rem; }
+    .sg-lines li button { flex: 0 0 auto; }
+    .sg-preview { background: #eef6ff; border: 1px dashed #7ea8d8; border-radius: 6px; padding: .4rem .6rem; font-size: .9rem; margin: .3rem 0; min-height: 2rem; }
+    .sg-instr { font-size: .95rem; background: #eef6ff; border: 1px solid #b9d3f0; border-radius: 8px; padding: .55rem .8rem; line-height: 1.7; }
+    .sg-explain { list-style: none; padding: 0; margin: .4rem 0; counter-reset: sgl; }
+    .sg-explain li { counter-increment: sgl; background: #faf7ff; border: 1px solid #e6dcf7; border-radius: 6px; padding: .4rem .6rem .4rem 2rem; margin-bottom: .3rem; position: relative; font-size: .9rem; line-height: 1.6; }
+    .sg-explain li::before { content: counter(sgl) "行目"; position: absolute; left: .45rem; top: .45rem; font-size: .66rem; font-weight: 700; color: #46307a; width: 1.4rem; line-height: 1.2; }
+    .sg-diff { list-style: none; padding: 0; margin: .4rem 0; }
+    .sg-diff li { padding: .3rem 0; border-bottom: 1px dotted #d9d4c7; font-size: .88rem; line-height: 1.6; }
+    .sg-ok { color: #1a7f37; font-weight: 700; }
+    .sg-ng { color: #b42318; font-weight: 700; }
+    .sg-log { width: 100%; border-collapse: collapse; font-size: .84rem; }
+    .sg-log th, .sg-log td { border: 1px solid #d6cbee; padding: .35rem .45rem; text-align: left; vertical-align: top; line-height: 1.55; }
+    .sg-log th { background: #f1ecfa; }
+    .sg-logwrap { overflow-x: auto; }
+    .sg-big { font-size: 1.6rem; font-weight: 800; color: #46307a; }
+    .sg-rank { display: inline-block; background: #2e2447; color: #ffd479; border-radius: 8px; padding: .3rem .8rem; font-weight: 800; font-size: 1.1rem; }
+    .sg-hidden { display: none !important; }
+    .sg-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    /* ミニページ（ミミが変更する練習用の画面） */
+    .sg-mini { border: 1px solid #c9c2d9; border-radius: 8px; overflow: hidden; background: #fff; font-size: 13px; line-height: 1.55; max-width: 100%; }
+    .sg-mini-tabs { display: flex; flex-wrap: wrap; gap: 2px; background: #e9e5f1; padding: 3px 4px 0; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; }
+    .sg-mini-tabs span { background: #f6f3fb; border-radius: 4px 4px 0 0; padding: 1px 6px; color: #5a5470; }
+    .sg-mini-tabs span.on { background: #fff; color: #2e2447; font-weight: 700; }
+    .sg-mini-page { padding: 8px 10px 10px; overflow: hidden; }
+    .sg-mini-page.bg-light { background: #e3f0ff; }
+    .sg-mini-nav { font-size: 11px; text-align: right; color: #1d4f86; text-decoration: underline; margin-bottom: 2px; }
+    .sg-mini h4 { margin: 0 0 4px; font-size: 15px; line-height: 1.3; white-space: nowrap; }
+    .sg-mini h4.sz-s { font-size: 11px; } .sg-mini h4.sz-ml { font-size: 18px; } .sg-mini h4.sz-l { font-size: 22px; } .sg-mini h4.sz-xl { font-size: 46px; }
+    .sg-mini h4.c-red { color: #c4382c; } .sg-mini h4.c-blue { color: #1d5fb0; } .sg-mini h4.c-purple { color: #6a3fb5; }
+    .sg-mini p { margin: 0 0 6px; font-size: 12px; }
+    .sg-mini p.sz-l { font-size: 15px; }
+    .sg-mini-cards { display: flex; gap: 4px; margin-bottom: 6px; }
+    .sg-mini-cards.col { flex-direction: column; }
+    .sg-mini-cards div { flex: 1; background: #f4f1fa; border: 1px solid #ddd5ee; border-radius: 4px; padding: 3px 5px; font-size: 11px; }
+    .sg-mini-cards.tidy div { padding: 6px; }
+    .sg-mini-btn { display: inline-block; border-radius: 4px; padding: 3px 9px; font-size: 12px; background: #8a8a96; color: #fff; }
+    .sg-mini-btn.c-red { background: #c4382c; } .sg-mini-btn.c-yellow { background: #e6b400; color: #2a2200; } .sg-mini-btn.c-blue { background: #1d5fb0; } .sg-mini-btn.c-purple { background: #6a3fb5; }
+    .sg-mini-btn.sz-l { font-size: 18px; padding: 6px 16px; }
+    .sg-mini-btn.fg-yellow { color: #ffe36e; }
+    .sg-mini-btnrow.center { text-align: center; }
+    .sg-mini-foot { margin-top: 6px; font-size: 10px; color: #777; border-top: 1px solid #eee; padding-top: 3px; }
+    .sg-mini-sub { border-top: 1px dashed #c9c2d9; padding: 6px 10px; background: #fbfaff; font-size: 11.5px; }
+    .sg-mini-sub b { font-family: 'JetBrains Mono', monospace; font-size: 10.5px; }
+    @media (prefers-reduced-motion: reduce) { .sg-pop, .sg-shake { animation: none; } .sg-progress > div { transition: none; } }
+    @media (max-width: 480px) { .sg-card { padding: .85rem .8rem; } .sg-opts { grid-template-columns: minmax(0, 1fr); } }
+  </style>
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication-2.html">AIコミュニケーション基礎 II</a>
+        <span>/</span>
+        <a href="week07.html">第7回</a>
+        <span>/</span>
+        <span>すれ違いハンター</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">すれ違いハンター</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">1人用の練習ゲーム</span>
+            <span class="page-badge">第7回 すれ違いワーク</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-purple">
+
+    <div class="sg-note">
+      これは<strong>練習用のゲーム</strong>です。相手は、決まったルールで動く練習用AI「<strong>ミミ</strong>」🤖です。<strong>本物のagyやAI Studio Buildではありません</strong>。本物は、聞き返してきたり、ミミとは違う動き方をしたりします。入力した内容は<strong>どこにも送信・保存されません</strong>（ページを再読み込みすると最初からになります）。<br>
+      「すれ違いの4つの型」（言葉の幅・前提の省略・範囲のずれ・やりすぎ）は、<a href="week07.html">第7回</a>で使う<strong>授業用の整理</strong>で、公式の分類ではありません。
+    </div>
+
+    <div class="sg-bar" role="status">
+      <span>得点 <strong id="sgScore">0</strong></span>
+      <span class="sg-combo" id="sgCombo"></span>
+      <span><button class="sg-btn sg-btn--sub" type="button" id="sgHomeBtn">ステージを選ぶ</button></span>
+    </div>
+    <div class="sg-sr" aria-live="polite" id="sgLive"></div>
+
+    <section id="sgView"></section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // ============================================================
+  // 共通
+  // ============================================================
+  var TYPES = {
+    haba: { name: '言葉の幅', hint: '同じ言葉でも、人によって思い浮かべる中身が違う（「大きく」「目立たせて」「見やすく」）' },
+    zentei: { name: '前提の省略', hint: '自分の頭の中では当たり前のことを、言っていない（どれを・どのファイル・誰向け）' },
+    hani: { name: '範囲のずれ', hint: '「ここだけ」のつもりが全体に、「全体」のつもりが一部に伝わる' },
+    yarisugi: { name: 'やりすぎ', hint: '頼んだ所は直ったのに、頼んでいない所まで変わる' }
+  };
+  var TYPE_KEYS = ['haba', 'zentei', 'hani', 'yarisugi'];
+
+  var S = { score: 0, combo: 0, stars: {}, log: [] };
+
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function clone(o) { return JSON.parse(JSON.stringify(o)); }
+  function getPath(o, p) { return p.split('.').reduce(function (a, k) { return a == null ? undefined : a[k]; }, o); }
+  function setPath(o, p, v) { var ks = p.split('.'); var last = ks.pop(); var t = ks.reduce(function (a, k) { return a[k]; }, o); t[last] = v; }
+  function typeTags(keys) { return keys.map(function (k) { return '<span class="sg-typetag">' + esc(TYPES[k].name) + '</span>'; }).join(' '); }
+  function say(msg) { var l = $('sgLive'); l.textContent = ''; setTimeout(function () { l.textContent = msg; }, 30); }
+  function addScore(n, keepCombo) {
+    S.score += n;
+    if (!keepCombo) S.combo = 0;
+    $('sgScore').textContent = S.score;
+    $('sgCombo').textContent = S.combo >= 2 ? '🔥 ' + S.combo + '連続' : '';
+  }
+  function hit(base) {
+    S.combo += 1;
+    var bonus = S.combo >= 2 ? Math.min(S.combo - 1, 5) * 20 : 0;
+    addScore(base + bonus, true);
+    return bonus;
+  }
+  function miss() { S.combo = 0; addScore(0); }
+  function starText(n) { return '★★★'.slice(0, n) + '☆☆☆'.slice(0, 3 - n); }
+  function setStars(stage, n) { if (!S.stars[stage] || S.stars[stage] < n) S.stars[stage] = n; }
+  function addLog(stage, instr, pred, happened, types) { S.log.push({ stage: stage, instr: instr, pred: pred, happened: happened, types: types }); }
+  function mimi(html, cls) { return '<div class="sg-mimi ' + (cls || '') + '"><span class="sg-mimi-face" aria-hidden="true">🤖</span><div class="sg-bubble"><strong>ミミ:</strong> ' + html + '</div></div>'; }
+  function you(html) { return '<div class="sg-mimi"><span class="sg-mimi-face" aria-hidden="true">🧑</span><div class="sg-bubble sg-bubble--you"><strong>あなた:</strong> ' + html + '</div></div>'; }
+  function view(html) { var v = $('sgView'); v.innerHTML = html; v.querySelectorAll('.sg-autofocus').forEach(function (el) { el.focus(); }); }
+  function scrollTopOfView() { var v = $('sgView'); if (v.getBoundingClientRect().top < 0) v.scrollIntoView({ block: 'start' }); }
+
+  // ============================================================
+  // ミニページ（ステージ2〜4で、ミミが変更する練習用の画面）
+  // ============================================================
+  var BASE = {
+    title: { size: 'm', color: 'ink', text: 'full' },
+    text: { len: 'long', size: 'm' },
+    cards: { layout: 'row', text: 'long', tidy: false },
+    btn: { color: 'gray', size: 'm', pos: 'left', fg: 'white', label: 'more' },
+    bg: 'white', pages: 'index', aboutContent: 'none', nav: false, footer: false, phoneOnly: false
+  };
+  var TEXTS = {
+    long: 'はじめまして。わたしは本を読むのが好きです。休みの日は、図書館で一日すごすこともあります。おすすめの本を3つ紹介します。',
+    short: '本を読むのが好きです。おすすめの本を3つ紹介します。',
+    one: '本が好きです。'
+  };
+  var CARD_TEXTS = { long: ['ねこの本：ねこと旅をする話', '星の本：星座の見つけ方', '料理の本：かんたんなおやつ'], short: ['ねこの本', '星の本', '料理の本'] };
+  var BTN_LABELS = { more: 'もっと見る', detail: '詳しく見る', en: 'MORE' };
+  var PAGE_NAMES = { index: [], 'index+new': ['new.html'], 'index+about': ['about.html'], 'index+page2': ['page2.html'] };
+
+  function patch(p) { var s = clone(BASE); Object.keys(p || {}).forEach(function (k) { setPath(s, k, p[k]); }); return s; }
+
+  function renderMini(s, label) {
+    var extra = PAGE_NAMES[s.pages] || [];
+    var tabs = '<span class="on">index.html</span>' + extra.map(function (n) { return '<span>' + esc(n) + '</span>'; }).join('');
+    var h = '<div class="sg-mini" role="img" aria-label="' + esc(label || '練習用の画面') + '">';
+    h += '<div class="sg-mini-tabs">' + tabs + '</div>';
+    h += '<div class="sg-mini-page' + (s.bg === 'light' ? ' bg-light' : '') + '">';
+    if (s.nav) h += '<div class="sg-mini-nav">' + esc(extra[0] || 'about.html') + ' へ</div>';
+    h += '<h4 class="sz-' + s.title.size + ' c-' + s.title.color + '">' + (s.title.text === 'full' ? 'わたしの好きな本' : '好きな本') + '</h4>';
+    h += '<p class="sz-' + s.text.size + '">' + esc(TEXTS[s.text.len]) + '</p>';
+    h += '<div class="sg-mini-cards' + (s.cards.layout === 'col' ? ' col' : '') + (s.cards.tidy ? ' tidy' : '') + '">' + CARD_TEXTS[s.cards.text].map(function (t) { return '<div>' + esc(t) + '</div>'; }).join('') + '</div>';
+    h += '<div class="sg-mini-btnrow' + (s.btn.pos === 'center' ? ' center' : '') + '"><span class="sg-mini-btn c-' + s.btn.color + ' sz-' + s.btn.size + ' fg-' + s.btn.fg + '">' + esc(BTN_LABELS[s.btn.label]) + '</span></div>';
+    if (s.footer) h += '<div class="sg-mini-foot">© ミミが足したフッター</div>';
+    h += '</div>';
+    if (extra.length) {
+      var c = s.aboutContent === 'profile' ? '自己紹介（名前・好きなこと・おすすめの本）' : '（中身は空っぽ）';
+      h += '<div class="sg-mini-sub"><b>' + esc(extra[0]) + '</b>: ' + c + '</div>';
+    }
+    if (s.phoneOnly) h += '<div class="sg-mini-sub">パソコンの幅では、カードは横並びのまま</div>';
+    h += '</div>';
+    return h;
+  }
+
+  // ============================================================
+  // ステージ1「伝えてみよう」: お題の図を言葉だけでミミに描かせる
+  // ============================================================
+  var W = { count: ['1つ', '2つ', '3つ'], size: ['小さい', '中くらいの', '大きい', '画面の幅いっぱいの', '大きめの'], color: ['青い', 'オレンジの', '紫の', '白い', 'いい感じの色の'], shape: ['四角', '円', '横長の帯'], place: ['上', '下', '左', '右', '中央', '左上', '右上', '左下', '右下', '上のほう'], arrange: ['横に並べて', '縦に並べて'] };
+  var VAGUE = { size: { '大きめの': '中くらいの' }, color: { 'いい感じの色の': '灰色の' }, place: { '上のほう': '右上' } };
+  var DEFAULTS = { count: '1つ', size: '中くらいの', color: '灰色の', shape: '四角', place: '中央', arrange: '横に並べて' };
+  var FIELD_NAMES = { count: '数', size: '大きさ', color: '色', shape: '形', place: '場所', arrange: '並べ方' };
+  var FIELDS = ['count', 'size', 'color', 'shape', 'place', 'arrange'];
+  var COLORS = { '青い': ['#dbe8fb', '#5b86c5'], 'オレンジの': ['#fde3cc', '#d9822b'], '紫の': ['#e9def8', '#7d5bc0'], '白い': ['#ffffff', '#8c8aa0'], '灰色の': ['#d6d6db', '#7b7b86'] };
+
+  var TARGETS = [
+    { id: 'A', name: 'お題A', lines: [
+      { count: '1つ', size: '画面の幅いっぱいの', color: '青い', shape: '横長の帯', place: '上' },
+      { count: '3つ', size: '小さい', color: '白い', shape: '四角', place: '左', arrange: '縦に並べて' },
+      { count: '1つ', size: '大きい', color: 'オレンジの', shape: '四角', place: '右' },
+      { count: '1つ', size: '中くらいの', color: '青い', shape: '円', place: '中央' },
+      { count: '1つ', size: '小さい', color: '紫の', shape: '四角', place: '右下' }
+    ] },
+    { id: 'B', name: 'お題B', lines: [
+      { count: '1つ', size: '小さい', color: 'オレンジの', shape: '円', place: '左上' },
+      { count: '3つ', size: '中くらいの', color: '青い', shape: '四角', place: '中央', arrange: '横に並べて' },
+      { count: '1つ', size: '画面の幅いっぱいの', color: '白い', shape: '横長の帯', place: '下' }
+    ] },
+    { id: 'C', name: 'お題C', lines: [
+      { count: '1つ', size: '画面の幅いっぱいの', color: '紫の', shape: '横長の帯', place: '上' },
+      { count: '2つ', size: '中くらいの', color: 'オレンジの', shape: '円', place: '中央', arrange: '横に並べて' },
+      { count: '1つ', size: '小さい', color: '青い', shape: '四角', place: '右下' }
+    ] }
+  ];
+
+  // 書かれた1行を、ミミが「描ける形」に決める（書いていない所は思い込み、あいまいな言葉は自分の解釈）
+  function resolveLine(line) {
+    var r = {}, src = {};
+    FIELDS.forEach(function (f) {
+      var v = line[f];
+      if (!v) { r[f] = DEFAULTS[f]; src[f] = 'default'; }
+      else if (VAGUE[f] && VAGUE[f][v]) { r[f] = VAGUE[f][v]; src[f] = 'vague'; }
+      else { r[f] = v; src[f] = 'given'; }
+    });
+    return { v: r, src: src };
+  }
+  function dims(shape, size) {
+    if (shape === '円') return { r: { '小さい': 15, '中くらいの': 28, '大きい': 46, '画面の幅いっぱいの': 60 }[size] };
+    if (shape === '横長の帯') return { w: { '小さい': 120, '中くらいの': 200, '大きい': 290, '画面の幅いっぱいの': 344 }[size], h: 30 };
+    return { w: { '小さい': 76, '中くらいの': 96, '大きい': 236, '画面の幅いっぱいの': 344 }[size], h: { '小さい': 30, '中くらいの': 80, '大きい': 108, '画面の幅いっぱいの': 40 }[size] };
+  }
+  var CW = 360, CH = 214, PAD = 8;
+  function anchor(place, w, h) {
+    var x = { '左': PAD + w / 2, '左上': PAD + w / 2, '左下': PAD + w / 2, '右': CW - PAD - w / 2, '右上': CW - PAD - w / 2, '右下': CW - PAD - w / 2 }[place];
+    var y = { '上': PAD + h / 2, '左上': PAD + h / 2, '右上': PAD + h / 2, '下': CH - PAD - h / 2, '左下': CH - PAD - h / 2, '右下': CH - PAD - h / 2 }[place];
+    return { x: x === undefined ? CW / 2 : x, y: y === undefined ? CH / 2 : y };
+  }
+  function drawLines(lines) {
+    var out = '';
+    lines.forEach(function (raw) {
+      var v = resolveLine(raw).v;
+      var n = parseInt(v.count, 10) || 1;
+      var d = dims(v.shape, v.size);
+      var w = d.r ? d.r * 2 : d.w, h = d.r ? d.r * 2 : d.h;
+      var gap = 10, vert = v.arrange === '縦に並べて' && n > 1;
+      var gw = vert ? w : w * n + gap * (n - 1), gh = vert ? h * n + gap * (n - 1) : h;
+      var scale = Math.min(1, (CW - PAD * 2) / gw, (CH - PAD * 2) / gh);
+      w *= scale; h *= scale; gw *= scale; gh *= scale; gap *= scale;
+      var a = anchor(v.place, gw, gh);
+      var col = COLORS[v.color] || COLORS['灰色の'];
+      for (var i = 0; i < n; i++) {
+        var cx = vert ? a.x : a.x - gw / 2 + w / 2 + i * (w + gap);
+        var cy = vert ? a.y - gh / 2 + h / 2 + i * (h + gap) : a.y;
+        if (v.shape === '円') out += '<circle cx="' + cx.toFixed(1) + '" cy="' + cy.toFixed(1) + '" r="' + (w / 2).toFixed(1) + '" fill="' + col[0] + '" stroke="' + col[1] + '" stroke-width="1.5"/>';
+        else out += '<rect x="' + (cx - w / 2).toFixed(1) + '" y="' + (cy - h / 2).toFixed(1) + '" width="' + w.toFixed(1) + '" height="' + h.toFixed(1) + '" rx="6" fill="' + col[0] + '" stroke="' + col[1] + '" stroke-width="1.5"/>';
+      }
+    });
+    return out;
+  }
+  function svg(lines, label) { return '<svg class="sg-canvas" viewBox="0 0 ' + CW + ' ' + CH + '" role="img" aria-label="' + esc(label) + '">' + drawLines(lines) + '</svg>'; }
+  function lineText(l) {
+    var parts = [];
+    if (l.place) parts.push(l.place + 'に');
+    if (l.count) parts.push(l.count + 'の');
+    if (l.size) parts.push(l.size);
+    if (l.color) parts.push(l.color);
+    parts.push(l.shape || '（形は書いていない）');
+    if (l.arrange) parts.push('を' + l.arrange);
+    return parts.join('').replace('つの', 'つ、') + (l.arrange ? '' : '');
+  }
+  // お題と描いたものを比べる（行どうしを、いちばん合う組み合わせで対応させる）
+  function lineMatch(t, p) {
+    var rp = resolveLine(p), score = 0, total = 0, diffs = [];
+    FIELDS.forEach(function (f) {
+      if (f === 'arrange' && (parseInt(t.count, 10) || 1) < 2) return;
+      total++;
+      var tv = t[f] || DEFAULTS[f];
+      if (rp.v[f] === tv) score++;
+      else diffs.push({ f: f, want: tv, got: rp.v[f], src: rp.src[f], said: p[f] });
+    });
+    return { score: score, total: total, diffs: diffs };
+  }
+  function judge(target, lines) {
+    var used = [], results = [], got = 0, total = 0;
+    target.lines.forEach(function (t) {
+      var best = null, bi = -1;
+      lines.forEach(function (p, i) {
+        if (used.indexOf(i) !== -1) return;
+        var m = lineMatch(t, p);
+        if (!best || m.score > best.score) { best = m; bi = i; }
+      });
+      if (best && best.score >= 2) { used.push(bi); results.push({ t: t, m: best, idx: bi }); got += best.score; total += best.total; }
+      else { results.push({ t: t, m: null }); total += lineMatch(t, {}).total; }
+    });
+    var extras = [];
+    lines.forEach(function (p, i) { if (used.indexOf(i) === -1) extras.push(i); });
+    var penalty = extras.length * 2;
+    var rate = Math.max(0, (got - penalty)) / total;
+    return { rate: rate, results: results, extras: extras };
+  }
+
+  var S1 = { t: 0, lines: [], draft: {}, askMode: false, asked: false };
+
+  function stage1(tIndex) {
+    if (typeof tIndex === 'number') { S1.t = tIndex; S1.lines = []; S1.draft = {}; S1.asked = false; }
+    var T = TARGETS[S1.t];
+    var h = '<div class="sg-card sg-pop"><h2>ステージ1　伝えてみよう</h2>';
+    h += '<p style="margin:.2rem 0 .5rem;font-size:.92rem;line-height:1.7">あなたは<strong>説明役</strong>です。ミミには、お題の図が<strong>見えていません</strong>。言葉を選んで文を作り、ミミに描いてもらいましょう。<strong>書かなかった所は、ミミが思い込みで決めます</strong>。点線の札（「大きめの」など）は、あいまいな言葉です。</p>';
+    h += '<div class="sg-row" role="group" aria-label="お題を選ぶ">' + TARGETS.map(function (t, i) { return '<button type="button" class="sg-chip" data-s1t="' + i + '" aria-pressed="' + (i === S1.t) + '">' + esc(t.name) + (S.stars['1' + t.id] ? ' ' + starText(S.stars['1' + t.id]) : '') + '</button>'; }).join('') + '</div>';
+    h += '<div class="sg-two"><figure class="sg-fig"><figcaption>' + esc(T.name) + '（あなただけが見ている）</figcaption>' + svg(T.lines, T.name + 'の図') + '</figure>';
+    h += '<div><div class="sg-label">文をつくる（選ばなくてもよい項目は、空けたままでよい）</div>';
+    FIELDS.forEach(function (f) {
+      h += '<div class="sg-label">' + FIELD_NAMES[f] + '</div><div class="sg-chips" role="group" aria-label="' + FIELD_NAMES[f] + '">' + W[f].map(function (w) {
+        var vague = VAGUE[f] && VAGUE[f][w];
+        return '<button type="button" class="sg-chip' + (vague ? ' sg-chip--vague' : '') + '" data-f="' + f + '" data-w="' + esc(w) + '" aria-pressed="' + (S1.draft[f] === w) + '">' + esc(w) + '</button>';
+      }).join('') + '</div>';
+    });
+    h += '<div class="sg-preview" id="s1prev">' + (Object.keys(S1.draft).length ? esc(lineText(S1.draft)) : '（札を選ぶと、ここに文ができます）') + '</div>';
+    h += '<div class="sg-row"><button type="button" class="sg-btn" id="s1add"' + (S1.lines.length >= 8 ? ' disabled' : '') + '>この文を足す</button><button type="button" class="sg-btn sg-btn--sub" id="s1clr">札を消す</button></div>';
+    h += '</div></div>';
+    h += '<h3>ミミに伝える文（' + S1.lines.length + ' / 8）</h3>';
+    h += S1.lines.length ? '<ol class="sg-lines">' + S1.lines.map(function (l, i) { return '<li><span>' + (i + 1) + '. ' + esc(lineText(l)) + '</span><button type="button" class="sg-btn sg-btn--sub" data-s1del="' + i + '" aria-label="' + (i + 1) + '行目を消す">消す</button></li>'; }).join('') + '</ol>' : '<p style="font-size:.88rem;color:#5a5470">まだ文がありません。</p>';
+    h += '<div class="sg-row"><button type="button" class="sg-chip" id="s1ask" aria-pressed="' + S1.askMode + '">ミミが聞き返す（授業のラウンド2のように、質問ありで練習）</button></div>';
+    h += '<div class="sg-row"><button type="button" class="sg-btn" id="s1go"' + (S1.lines.length ? '' : ' disabled') + '>ミミに伝える</button></div>';
+    h += '<div id="s1out"></div></div>';
+    view(h);
+    bindStage1();
+  }
+  function bindStage1() {
+    document.querySelectorAll('[data-s1t]').forEach(function (b) { b.onclick = function () { stage1(+b.dataset.s1t); }; });
+    document.querySelectorAll('[data-f]').forEach(function (b) {
+      b.onclick = function () {
+        var f = b.dataset.f, w = b.dataset.w;
+        if (S1.draft[f] === w) delete S1.draft[f]; else S1.draft[f] = w;
+        document.querySelectorAll('[data-f="' + f + '"]').forEach(function (o) { o.setAttribute('aria-pressed', String(S1.draft[f] === o.dataset.w)); });
+        $('s1prev').textContent = Object.keys(S1.draft).length ? lineText(S1.draft) : '（札を選ぶと、ここに文ができます）';
+      };
+    });
+    $('s1add').onclick = function () {
+      if (!Object.keys(S1.draft).length) { say('札を1つ以上選んでください'); $('s1prev').classList.add('sg-shake'); setTimeout(function () { var p = $('s1prev'); if (p) p.classList.remove('sg-shake'); }, 450); return; }
+      S1.lines.push(S1.draft); S1.draft = {}; S1.asked = false; stage1(); say('文を足しました');
+    };
+    $('s1clr').onclick = function () { S1.draft = {}; stage1(); };
+    document.querySelectorAll('[data-s1del]').forEach(function (b) { b.onclick = function () { S1.lines.splice(+b.dataset.s1del, 1); S1.asked = false; stage1(); }; });
+    $('s1ask').onclick = function () { S1.askMode = !S1.askMode; S1.asked = false; stage1(); };
+    $('s1go').onclick = s1Send;
+  }
+  function s1Send() {
+    var T = TARGETS[S1.t];
+    if (S1.askMode && !S1.asked) {
+      var qs = [];
+      S1.lines.forEach(function (l, i) {
+        var miss = FIELDS.filter(function (f) { return !l[f] && !(f === 'arrange' && (parseInt(l.count, 10) || 1) < 2); }).map(function (f) { return FIELD_NAMES[f]; });
+        var vg = FIELDS.filter(function (f) { return l[f] && VAGUE[f] && VAGUE[f][l[f]]; }).map(function (f) { return '「' + l[f] + '」'; });
+        if (miss.length || vg.length) qs.push((i + 1) + '行目: ' + (miss.length ? miss.join('・') + 'が書かれていません。' : '') + (vg.length ? vg.join('・') + 'は、どのくらいですか？' : ''));
+      });
+      S1.asked = true;
+      if (qs.length) {
+        $('s1out').innerHTML = mimi('描く前に聞かせてください。<ul style="margin:.3rem 0 0;padding-left:1.2rem">' + qs.map(function (q) { return '<li>' + esc(q) + '</li>'; }).join('') + '</ul>文を直してから、もう一度「ミミに伝える」を押してください。そのまま押すと、聞いたことは思い込みで描きます。', 'sg-pop');
+        say('ミミが聞き返しました');
+        return;
+      }
+    }
+    var r = judge(T, S1.lines);
+    var pct = Math.round(r.rate * 100);
+    var stars = pct >= 90 ? 3 : pct >= 70 ? 2 : pct >= 40 ? 1 : 0;
+    var pts = Math.round(r.rate * 200);
+    if (stars === 3) hit(pts); else { addScore(pts); }
+    setStars('1' + T.id, stars);
+    var diffs = [], typesSeen = {};
+    r.results.forEach(function (x, ti) {
+      if (!x.m) { diffs.push('<li><span class="sg-ng">✕</span> お題の「' + esc(lineText(x.t)) + '」が描かれていません <span class="sg-typetag">前提の省略</span></li>'); typesSeen.zentei = 1; return; }
+      x.m.diffs.forEach(function (d) {
+        var tk = d.src === 'default' ? 'zentei' : d.src === 'vague' ? 'haba' : null;
+        if (tk) typesSeen[tk] = 1;
+        var why = d.src === 'default' ? FIELD_NAMES[d.f] + 'を書かなかったので、ミミは「' + d.got + '」と思い込みました' : d.src === 'vague' ? '「' + d.said + '」を、ミミは「' + d.got + '」だと受け取りました' : FIELD_NAMES[d.f] + 'は「' + d.want + '」でした（あなたは「' + d.got + '」と伝えました）';
+        diffs.push('<li><span class="sg-ng">✕</span> ' + (x.idx + 1) + '行目: ' + esc(why) + (tk ? ' <span class="sg-typetag">' + TYPES[tk].name + '</span>' : '') + '</li>');
+      });
+    });
+    r.extras.forEach(function (i) { diffs.push('<li><span class="sg-ng">✕</span> ' + (i + 1) + '行目は、お題にない図形です <span class="sg-typetag">やりすぎ</span></li>'); typesSeen.yarisugi = 1; });
+    var cls = stars === 3 ? 'good' : stars >= 1 ? 'mid' : 'bad';
+    var h = '<div class="sg-two sg-pop" style="margin-top:.8rem"><figure class="sg-fig"><figcaption>お題</figcaption>' + svg(T.lines, T.name) + '</figure><figure class="sg-fig"><figcaption>ミミが描いた図</figcaption>' + svg(S1.lines, 'ミミが描いた図') + '</figure></div>';
+    h += '<div class="sg-feedback sg-feedback--' + cls + '"><strong class="sg-verdict">一致度 ' + pct + '%　' + starText(stars) + '　+' + pts + '点</strong>';
+    h += diffs.length ? '<ul class="sg-diff">' + diffs.join('') + '</ul>' : '<p style="margin:.2rem 0">ぴったりです！ ミミは、あなたの言葉だけで同じ図を描けました。</p>';
+    if (diffs.length) h += '<p style="margin:.4rem 0 0">ヒント: 書かなかった所はミミの思い込みになります（<strong>前提の省略</strong>）。点線の札は人によって受け取り方が違います（<strong>言葉の幅</strong>）。</p>';
+    h += '</div><div class="sg-row"><button type="button" class="sg-btn" id="s1retry">文を直して、もう一度</button>' + (S1.t < TARGETS.length - 1 ? '<button type="button" class="sg-btn sg-btn--ghost" id="s1next">次のお題へ</button>' : '<button type="button" class="sg-btn sg-btn--ghost" id="s1home">ステージを選ぶ</button>') + '</div>';
+    $('s1out').innerHTML = h;
+    var tks = TYPE_KEYS.filter(function (k) { return typesSeen[k]; });
+    addLog('1', T.name + 'を言葉で説明（' + S1.lines.map(lineText).join('／') + '）', '同じ図を描いてくれる', 'ミミの図は一致度' + pct + '%', tks.length ? tks.map(function (k) { return TYPES[k].name; }).join('・') : 'ずれなし');
+    say('一致度' + pct + 'パーセント');
+    $('s1retry').onclick = function () { S1.asked = false; $('s1out').innerHTML = ''; };
+    if ($('s1next')) $('s1next').onclick = function () { stage1(S1.t + 1); scrollTopOfView(); };
+    if ($('s1home')) $('s1home').onclick = home;
+  }
+
+  // ============================================================
+  // ステージ2「型を見抜け」: 予想 → ミミの結果 → 型
+  // ============================================================
+  var CARDS = [
+    { instr: 'ボタンを目立たせて',
+      opts: [{ cap: 'ボタンを赤にした', p: { 'btn.color': 'red' } }, { cap: 'ボタンを大きくした', p: { 'btn.size': 'l' } }, { cap: 'ボタンを黄色にして中央に動かし、ついでに見出しも赤にした', p: { 'btn.color': 'yellow', 'btn.pos': 'center', 'title.color': 'red' } }],
+      actual: 2, need: ['haba', 'yarisugi'], ok: [],
+      why: '「目立たせて」は、色？大きさ？位置？と受け取り方が分かれます（言葉の幅）。さらに、頼んでいない見出しまで変わりました（やりすぎ）。' },
+    { instr: 'スマホでも見やすくして',
+      opts: [{ cap: '文字を大きくした', p: { 'text.size': 'l' } }, { cap: 'カードを縦1列に並べた', p: { 'cards.layout': 'col' } }, { cap: 'カードを縦1列にして、文章も短く切った', p: { 'cards.layout': 'col', 'text.len': 'short' } }],
+      actual: 1, need: ['haba'], ok: ['zentei'],
+      why: '「見やすい」の中身（文字の大きさ？並び？）を書いていません（言葉の幅）。あなたが文字を大きくしてほしかったなら、ずれています。' },
+    { instr: 'ページを1つ追加して',
+      opts: [{ cap: 'new.html を作ったが、中身は空っぽで、どこからもリンクしていない', p: { pages: 'index+new', aboutContent: 'blank' } }, { cap: 'index.html の下に内容を足した（ページは増えていない）', p: { 'text.len': 'long', footer: true } }, { cap: 'about.html に自己紹介を書き、上にリンクを付けた', p: { pages: 'index+about', aboutContent: 'profile', nav: true } }],
+      actual: 0, need: ['zentei'], ok: [],
+      why: 'どんなページか、ファイル名、リンクの要否を書いていません（前提の省略）。ミミは「とりあえず空のページを1つ」作りました。' },
+    { instr: '文章をもっと短くして',
+      opts: [{ cap: 'はじめの文章だけ、2文にした', p: { 'text.len': 'short' } }, { cap: 'はじめの文章も、カードの説明も、見出しも短くした', p: { 'text.len': 'short', 'cards.text': 'short', 'title.text': 'short' } }, { cap: 'はじめの文章を1文にした', p: { 'text.len': 'one' } }],
+      actual: 1, need: ['hani'], ok: ['yarisugi'],
+      why: '「文章」がどこまでかを書いていません。はじめの文章だけのつもりが、カードや見出しにまで及びました（範囲のずれ）。' },
+    { instr: '全体的に整えて',
+      opts: [{ cap: 'カードの余白をそろえた', p: { 'cards.tidy': true } }, { cap: '色も文字の大きさも並びも、全部変えた', p: { 'cards.tidy': true, 'title.color': 'purple', 'title.size': 'l', 'btn.color': 'purple', 'cards.layout': 'col', bg: 'light' } }, { cap: '何も変えずに「整っています」と答えた', p: {} }],
+      actual: 1, need: ['yarisugi'], ok: ['haba', 'hani'],
+      why: '少し整えてほしかっただけなのに、色も大きさも並びも変わりました（やりすぎ）。「整える」の中身（言葉の幅）、「全体」の範囲（範囲のずれ）も関係します。' },
+    { instr: 'この色、もう少し明るくして',
+      opts: [{ cap: 'ボタンの色を明るくした', p: { 'btn.color': 'yellow' } }, { cap: '背景の色を明るい水色にした', p: { bg: 'light' } }, { cap: '見出しの色を明るい青にした', p: { 'title.color': 'blue' } }],
+      actual: 1, need: ['zentei'], ok: ['hani'],
+      why: '「この色」が、どこの色かを書いていません。あなたの画面では指さしていても、ミミには伝わりません（前提の省略）。' },
+    { instr: '見出しを大きくして',
+      opts: [{ cap: '見出しを少し（1.2倍くらい）大きくした', p: { 'title.size': 'ml' } }, { cap: '見出しを、画面からはみ出すほど大きくした', p: { 'title.size': 'xl' } }, { cap: '見出しもボタンも大きくした', p: { 'title.size': 'l', 'btn.size': 'l' } }],
+      actual: 1, need: ['haba'], ok: [],
+      why: '「大きく」が、どのくらいかを書いていません（言葉の幅）。「1.5倍に」のように基準を書くと、ずれにくくなります。' },
+    { instr: 'ボタンの文字を変えて',
+      opts: [{ cap: '「もっと見る」を「詳しく見る」に変えた', p: { 'btn.label': 'detail' } }, { cap: 'ボタンの文字の色を黄色に変えた', p: { 'btn.fg': 'yellow' } }, { cap: 'ボタンの文字を英語の「MORE」にした', p: { 'btn.label': 'en' } }],
+      actual: 1, need: ['haba'], ok: ['zentei'],
+      why: '「文字を変える」は、言葉を変えるのか、文字の色や形を変えるのかで分かれます（言葉の幅）。何に変えるか（前提）も書いていません。' }
+  ];
+  var S2 = { i: 0, phase: 'predict', pred: -1, picked: [], done: 0, hits: 0 };
+
+  function stage2(i) {
+    if (typeof i === 'number') { S2.i = i; S2.phase = 'predict'; S2.pred = -1; S2.picked = []; }
+    var C = CARDS[S2.i];
+    var h = '<div class="sg-card sg-pop"><h2>ステージ2　型を見抜け</h2>';
+    h += '<div>お題カード ' + (S2.i + 1) + ' / ' + CARDS.length + '</div><div class="sg-progress"><div style="width:' + Math.round(S2.i / CARDS.length * 100) + '%"></div></div>';
+    h += you('「<strong>' + esc(C.instr) + '</strong>」');
+    h += '<div class="sg-two"><figure class="sg-fig"><figcaption>いまの画面</figcaption>' + renderMini(BASE, '変更前の画面') + '</figure><div>';
+    if (S2.phase === 'predict') h += '<p style="font-size:.92rem;line-height:1.7"><strong>① 予想しよう</strong>: ミミは、どう動くと思いますか？ 下のA〜Cから1つ選んでください。</p>';
+    else h += '<p style="font-size:.92rem;line-height:1.7"><strong>② ミミの結果</strong>: 紫の枠が、ミミが実際にしたことです。<br><strong>③ 型を選ぼう</strong>: このすれ違いは、どの型に近い？（重なることもあるので、複数選べます）</p>';
+    h += '</div></div>';
+    h += '<div class="sg-opts">' + C.opts.map(function (o, k) {
+      var lab = 'ABC'[k];
+      var mark = (S2.pred === k ? '<span class="sg-tag sg-tag--you">あなたの予想</span>' : '') + (S2.phase !== 'predict' && C.actual === k ? '<span class="sg-tag sg-tag--mimi">ミミの結果</span>' : '');
+      return '<button type="button" class="sg-opt' + (S2.phase !== 'predict' && C.actual === k ? ' is-actual' : '') + '" data-s2o="' + k + '" aria-pressed="' + (S2.pred === k) + '"' + (S2.phase !== 'predict' ? ' disabled' : '') + '><div class="sg-opt-head">' + lab + '　' + mark + '</div><div style="margin-bottom:.35rem">' + esc(o.cap) + '</div>' + renderMini(patch(o.p), lab + 'の画面') + '</button>';
+    }).join('') + '</div>';
+    if (S2.phase === 'predict') h += '<div class="sg-row"><button type="button" class="sg-btn" id="s2pred" disabled>この予想で、ミミに送る</button></div>';
+    if (S2.phase === 'type' || S2.phase === 'done') {
+      var hitPred = S2.pred === C.actual;
+      h += mimi(hitPred ? '予想どおりに動きました。' : '予想とは違う動きをしました。<strong>予想とのずれ</strong>が、すれ違いの手がかりです。');
+      h += '<div class="sg-chips" role="group" aria-label="型を選ぶ">' + TYPE_KEYS.map(function (k) { return '<button type="button" class="sg-chip" data-s2t="' + k + '" aria-pressed="' + (S2.picked.indexOf(k) !== -1) + '"' + (S2.phase === 'done' ? ' disabled' : '') + ' title="' + esc(TYPES[k].hint) + '">' + esc(TYPES[k].name) + '</button>'; }).join('') + '</div>';
+      if (S2.phase === 'type') h += '<div class="sg-row"><button type="button" class="sg-btn" id="s2judge"' + (S2.picked.length ? '' : ' disabled') + '>判定する</button><button type="button" class="sg-btn sg-btn--sub" id="s2hint">型の説明を見る（-10点）</button></div><div id="s2hintbox"></div>';
+    }
+    h += '<div id="s2out"></div></div>';
+    view(h);
+    bindStage2();
+  }
+  function bindStage2() {
+    var C = CARDS[S2.i];
+    document.querySelectorAll('[data-s2o]').forEach(function (b) {
+      b.onclick = function () {
+        if (S2.phase !== 'predict') return;
+        S2.pred = +b.dataset.s2o;
+        document.querySelectorAll('[data-s2o]').forEach(function (o) { o.setAttribute('aria-pressed', String(+o.dataset.s2o === S2.pred)); });
+        $('s2pred').disabled = false;
+      };
+    });
+    if ($('s2pred')) $('s2pred').onclick = function () {
+      S2.phase = 'type';
+      var hitPred = S2.pred === C.actual;
+      if (hitPred) { S2.hits++; addScore(50, true); }
+      stage2();
+      say(hitPred ? '予想が当たりました。50点' : '予想とは違いました。ミミは' + 'ABC'[C.actual] + 'を選びました');
+    };
+    document.querySelectorAll('[data-s2t]').forEach(function (b) {
+      b.onclick = function () {
+        var k = b.dataset.s2t, at = S2.picked.indexOf(k);
+        if (at === -1) S2.picked.push(k); else S2.picked.splice(at, 1);
+        b.setAttribute('aria-pressed', String(at === -1));
+        $('s2judge').disabled = !S2.picked.length;
+      };
+    });
+    if ($('s2hint')) $('s2hint').onclick = function () {
+      addScore(-10, true);
+      $('s2hintbox').innerHTML = '<ul class="sg-diff">' + TYPE_KEYS.map(function (k) { return '<li><strong>' + esc(TYPES[k].name) + '</strong>: ' + esc(TYPES[k].hint) + '</li>'; }).join('') + '</ul>';
+      $('s2hint').disabled = true;
+    };
+    if ($('s2judge')) $('s2judge').onclick = s2Judge;
+  }
+  function gradeTypes(picked, need, ok) {
+    var allowed = need.concat(ok);
+    var wrong = picked.filter(function (k) { return allowed.indexOf(k) === -1; });
+    var gotNeed = need.filter(function (k) { return picked.indexOf(k) !== -1; });
+    if (!wrong.length && gotNeed.length === need.length) return 'full';
+    if (gotNeed.length && wrong.length <= 1) return 'part';
+    return 'none';
+  }
+  function s2Judge() {
+    var C = CARDS[S2.i];
+    var g = gradeTypes(S2.picked, C.need, C.ok);
+    var pts = 0, bonus = 0;
+    if (g === 'full') { bonus = hit(100); pts = 100 + bonus; } else if (g === 'part') { addScore(60); pts = 60; } else miss();
+    S2.phase = 'done';
+    S2.done = Math.max(S2.done, S2.i + 1);
+    addLog('2', C.instr, C.opts[S2.pred].cap, C.opts[C.actual].cap, C.need.map(function (k) { return TYPES[k].name; }).join('・'));
+    stage2();
+    var cls = g === 'full' ? 'good' : g === 'part' ? 'mid' : 'bad';
+    var verdict = g === 'full' ? '正解！ +' + pts + '点' + (bonus ? '（連続ボーナス +' + bonus + '）' : '') : g === 'part' ? 'おしい！ +60点' : '今回は違いました';
+    var h = '<div class="sg-feedback sg-feedback--' + cls + ' sg-pop"><strong class="sg-verdict">' + esc(verdict) + '</strong>';
+    h += '<div>主な型: ' + typeTags(C.need) + (C.ok.length ? '　（' + C.ok.map(function (k) { return TYPES[k].name; }).join('・') + ' を選んでも正解）' : '') + '</div>';
+    h += '<p style="margin:.4rem 0 0">' + esc(C.why) + '</p></div>';
+    h += '<div class="sg-row">' + (S2.i < CARDS.length - 1 ? '<button type="button" class="sg-btn" id="s2next">次のお題カードへ</button>' : '<button type="button" class="sg-btn" id="s2fin">ステージ2を終える</button>') + '</div>';
+    $('s2out').innerHTML = h;
+    say(verdict);
+    if ($('s2next')) $('s2next').onclick = function () { stage2(S2.i + 1); scrollTopOfView(); };
+    if ($('s2fin')) $('s2fin').onclick = function () {
+      setStars('2', S2.hits >= 6 ? 3 : S2.hits >= 4 ? 2 : 1);
+      home();
+    };
+  }
+
+  // ============================================================
+  // ステージ3「直して送ろう」: 札で指示を直し、ゴールの画面にする
+  // ============================================================
+  // ルール: 結果 = いまの画面 ＋（札で決めていない項目は）ミミの思い込み ＋（「ほかは変えないで」がなければ）ついでの変更 ＋ 札で決めた変更
+  var PUZZLES = [
+    { start: 'ボタンを目立たせて', goalText: '「もっと見る」ボタンだけを、赤くて大きいボタンにする（場所や見出しは、そのまま）',
+      goal: { 'btn.color': 'red', 'btn.size': 'l' },
+      check: ['btn.color', 'btn.size', 'btn.pos', 'title.color'],
+      tags: { 'btn.color': 'haba', 'btn.size': 'haba' },
+      defaults: { 'btn.color': 'yellow' },
+      side: { 'btn.pos': 'center', 'title.color': 'red' },
+      chips: [
+        { id: 'c1', slot: '基準（色）', group: 'color', label: '色を赤に', set: { 'btn.color': 'red' }, text: '色を赤にして' },
+        { id: 'c2', slot: '基準（色）', group: 'color', label: '色を青に', set: { 'btn.color': 'blue' }, text: '色を青にして' },
+        { id: 'c3', slot: '基準（大きさ）', group: 'size', label: '大きさを2倍に', set: { 'btn.size': 'l' }, text: '大きさを2倍にして' },
+        { id: 'c4', slot: '変化（位置）', group: 'pos', label: '画面の中央に動かす', set: { 'btn.pos': 'center' }, text: '画面の中央に動かして' },
+        { id: 'k', slot: '触らない所', group: 'keep', label: 'ほかは変えないで', keep: true, text: 'ほかは変えないで' },
+        { id: 'p', slot: '目的（任意）', group: 'purpose', label: '初めての人が押す場所に気づけるように', set: {}, text: '初めての人が押す場所に気づけるように' }
+      ] },
+    { start: 'スマホでも見やすくして', goalText: 'スマホで読みやすいように、文章の文字を大きくし、カードを縦1列にする（文章の中身と見出しは、そのまま）',
+      goal: { 'text.size': 'l', 'cards.layout': 'col' },
+      check: ['text.size', 'cards.layout', 'text.len', 'title.size'],
+      tags: { 'text.size': 'haba', 'cards.layout': 'haba', 'text.len': 'hani' },
+      defaults: { 'text.len': 'short', 'cards.layout': 'col' },
+      side: { 'title.size': 's' },
+      chips: [
+        { id: 'c1', slot: '変化', group: 'tsize', label: '文章の文字を大きく', set: { 'text.size': 'l' }, text: '文章の文字を大きくして' },
+        { id: 'c2', slot: '変化', group: 'layout', label: 'カードを縦1列に', set: { 'cards.layout': 'col' }, text: 'カードを縦1列に並べて' },
+        { id: 'c3', slot: '変化', group: 'len', label: '文章を短く', set: { 'text.len': 'short' }, text: '文章を短くして' },
+        { id: 'c4', slot: '範囲', group: 'len', label: '文章の中身はそのまま', set: { 'text.len': 'long' }, text: '文章の中身はそのままで' },
+        { id: 'c5', slot: '変化', group: 'bsize', label: 'ボタンを大きく', set: { 'btn.size': 'l' }, text: 'ボタンを大きくして' },
+        { id: 'k', slot: '触らない所', group: 'keep', label: 'ほかは変えないで', keep: true, text: 'ほかは変えないで' }
+      ] },
+    { start: 'ページを1つ追加して', goalText: 'about.html という自己紹介のページを作り、index.html の上にリンクを付ける（index.html のほかの部分は、そのまま）',
+      goal: { pages: 'index+about', aboutContent: 'profile', nav: true },
+      check: ['pages', 'aboutContent', 'nav', 'footer'],
+      tags: { pages: 'zentei', aboutContent: 'zentei', nav: 'zentei' },
+      defaults: { pages: 'index+new', aboutContent: 'blank' },
+      side: { footer: true },
+      chips: [
+        { id: 'c1', slot: '対象（ファイル名）', group: 'name', label: 'about.html という名前で', set: { pages: 'index+about' }, text: 'about.htmlという名前で' },
+        { id: 'c2', slot: '対象（ファイル名）', group: 'name', label: 'page2.html という名前で', set: { pages: 'index+page2' }, text: 'page2.htmlという名前で' },
+        { id: 'c3', slot: '変化（中身）', group: 'content', label: '自己紹介を書いて', set: { aboutContent: 'profile' }, text: '自己紹介を書いて' },
+        { id: 'c4', slot: '変化（つなぎ）', group: 'nav', label: 'index.html の上にリンクを付けて', set: { nav: true }, text: 'index.htmlの上にリンクを付けて' },
+        { id: 'k', slot: '触らない所', group: 'keep', label: 'index.html のほかの部分は変えないで', keep: true, text: 'index.htmlのほかの部分は変えないで' },
+        { id: 'p', slot: '目的（任意）', group: 'purpose', label: '初めて見る人に自分を知ってもらうため', set: {}, text: '初めて見る人に自分を知ってもらうため' }
+      ] },
+    { start: '文章をもっと短くして', goalText: 'はじめのあいさつの文章だけを2文にする（カードの説明と見出しは、そのまま）',
+      goal: { 'text.len': 'short' },
+      check: ['text.len', 'cards.text', 'title.text'],
+      tags: { 'text.len': 'haba', 'cards.text': 'hani' },
+      defaults: { 'text.len': 'one', 'cards.text': 'short' },
+      side: { 'title.text': 'short' },
+      chips: [
+        { id: 'c1', slot: '範囲', group: 'scope', label: 'はじめのあいさつの文章だけ', set: { 'cards.text': 'long' }, text: 'はじめのあいさつの文章だけ' },
+        { id: 'c2', slot: '基準', group: 'len', label: '2文くらいに', set: { 'text.len': 'short' }, text: '2文くらいに' },
+        { id: 'c3', slot: '基準', group: 'len', label: '1文に', set: { 'text.len': 'one' }, text: '1文に' },
+        { id: 'c4', slot: '範囲', group: 'scope', label: '全部の文章を', set: { 'cards.text': 'short' }, text: '全部の文章を' },
+        { id: 'k', slot: '触らない所', group: 'keep', label: '見出しは変えないで', keep: true, text: '見出しは変えないで' }
+      ] }
+  ];
+
+  function runPuzzle(P, sel) {
+    var chips = P.chips.filter(function (c) { return sel.indexOf(c.id) !== -1; });
+    var keep = chips.some(function (c) { return c.keep; });
+    var setBy = {};
+    chips.forEach(function (c) { Object.keys(c.set || {}).forEach(function (k) { setBy[k] = c.set[k]; }); });
+    var s = clone(BASE), src = {};
+    Object.keys(P.defaults).forEach(function (k) { if (!(k in setBy)) { setPath(s, k, P.defaults[k]); src[k] = 'default'; } });
+    if (!keep) Object.keys(P.side).forEach(function (k) { if (!(k in setBy)) { setPath(s, k, P.side[k]); src[k] = 'side'; } });
+    Object.keys(setBy).forEach(function (k) { setPath(s, k, setBy[k]); src[k] = 'chip'; });
+    var want = clone(BASE);
+    Object.keys(P.goal).forEach(function (k) { setPath(want, k, P.goal[k]); });
+    var bad = P.check.filter(function (k) { return getPath(s, k) !== getPath(want, k); }).map(function (k) { return { k: k, src: src[k] || 'base' }; });
+    return { state: s, ok: !bad.length, bad: bad, keep: keep, setBy: setBy, src: src };
+  }
+  function puzzleInstr(P, sel) {
+    var parts = P.chips.filter(function (c) { return sel.indexOf(c.id) !== -1; }).map(function (c) { return c.text; });
+    return parts.length ? P.start + '。' + parts.join('。') + '。' : P.start + '。';
+  }
+  var PROP_NAMES = { 'btn.color': 'ボタンの色', 'btn.size': 'ボタンの大きさ', 'btn.pos': 'ボタンの位置', 'title.color': '見出しの色', 'text.size': '文章の文字の大きさ', 'cards.layout': 'カードの並び', 'text.len': 'はじめの文章の長さ', 'title.size': '見出しの大きさ', pages: '追加したファイル', aboutContent: '追加したページの中身', nav: 'index.html からのリンク', footer: 'フッター', 'cards.text': 'カードの説明', 'title.text': '見出しの文字' };
+
+  var S3 = { i: 0, sel: [], tries: 0, solved: {}, hint: false };
+  function stage3(i) {
+    if (typeof i === 'number') { S3.i = i; S3.sel = []; S3.tries = 0; S3.hint = false; }
+    var P = PUZZLES[S3.i];
+    var want = clone(BASE); Object.keys(P.goal).forEach(function (k) { setPath(want, k, P.goal[k]); });
+    var h = '<div class="sg-card sg-pop"><h2>ステージ3　直して送ろう</h2>';
+    h += '<div class="sg-row" role="group" aria-label="パズルを選ぶ">' + PUZZLES.map(function (p, k) { return '<button type="button" class="sg-chip" data-s3p="' + k + '" aria-pressed="' + (k === S3.i) + '">パズル' + (k + 1) + (S3.solved[k] ? ' ✓' : '') + '</button>'; }).join('') + '</div>';
+    h += '<p style="font-size:.92rem;line-height:1.7"><strong>ゴール</strong>: ' + esc(P.goalText) + '<br>最初の指示「<strong>' + esc(P.start) + '</strong>」に<strong>札を足して</strong>、ミミがゴールの画面を作れるように直しましょう。送れるのは<strong>3回まで</strong>です（あと ' + (3 - S3.tries) + ' 回）。</p>';
+    h += '<div class="sg-two"><figure class="sg-fig"><figcaption>いまの画面</figcaption>' + renderMini(BASE, 'いまの画面') + '</figure><figure class="sg-fig"><figcaption>ゴールの画面</figcaption>' + renderMini(want, 'ゴールの画面') + '</figure></div>';
+    var slots = [];
+    P.chips.forEach(function (c) { if (slots.indexOf(c.slot) === -1) slots.push(c.slot); });
+    h += '<h3>札を選ぶ（同じ仲間の札は、どちらか1つ）</h3>';
+    slots.forEach(function (sl) {
+      h += '<div class="sg-label">' + esc(sl) + '</div><div class="sg-chips">' + P.chips.filter(function (c) { return c.slot === sl; }).map(function (c) { return '<button type="button" class="sg-chip" data-s3c="' + c.id + '" aria-pressed="' + (S3.sel.indexOf(c.id) !== -1) + '"' + (S3.solved[S3.i] === 'done' || S3.tries >= 3 ? ' disabled' : '') + '>' + esc(c.label) + '</button>'; }).join('') + '</div>';
+    });
+    h += '<div class="sg-label">送る指示</div><div class="sg-instr" id="s3instr">' + esc(puzzleInstr(P, S3.sel)) + '</div>';
+    h += '<div class="sg-row"><button type="button" class="sg-btn" id="s3send"' + (S3.solved[S3.i] === 'done' || S3.tries >= 3 ? ' disabled' : '') + '>ミミに送る</button><button type="button" class="sg-btn sg-btn--sub" id="s3hint"' + (S3.hint ? ' disabled' : '') + '>ヒント（-30点）</button></div><div id="s3hintbox">' + (S3.hint ? s3HintHtml(P) : '') + '</div>';
+    h += '<div id="s3out"></div></div>';
+    view(h);
+    bindStage3();
+  }
+  function s3HintHtml(P) {
+    return '<div class="sg-feedback sg-feedback--mid">ゴールと「いまの画面」を見比べて、<strong>変える所</strong>（' + Object.keys(P.goal).map(function (k) { return PROP_NAMES[k]; }).join('・') + '）を札で決め、<strong>変えない所</strong>も伝えましょう。札を全部選べばよいわけではありません。具体的すぎる指示は、AIの提案の良さを消してしまうこともあります。</div>';
+  }
+  function bindStage3() {
+    var P = PUZZLES[S3.i];
+    document.querySelectorAll('[data-s3p]').forEach(function (b) { b.onclick = function () { stage3(+b.dataset.s3p); }; });
+    document.querySelectorAll('[data-s3c]').forEach(function (b) {
+      b.onclick = function () {
+        var c = P.chips.filter(function (x) { return x.id === b.dataset.s3c; })[0];
+        var at = S3.sel.indexOf(c.id);
+        if (at !== -1) S3.sel.splice(at, 1);
+        else {
+          S3.sel = S3.sel.filter(function (id) { var o = P.chips.filter(function (x) { return x.id === id; })[0]; return o.group !== c.group; });
+          S3.sel.push(c.id);
+        }
+        document.querySelectorAll('[data-s3c]').forEach(function (o) { o.setAttribute('aria-pressed', String(S3.sel.indexOf(o.dataset.s3c) !== -1)); });
+        $('s3instr').textContent = puzzleInstr(P, S3.sel);
+      };
+    });
+    $('s3send').onclick = s3Send;
+    $('s3hint').onclick = function () { S3.hint = true; addScore(-30, true); $('s3hintbox').innerHTML = s3HintHtml(P); $('s3hint').disabled = true; };
+  }
+  function s3Send() {
+    var P = PUZZLES[S3.i];
+    S3.tries++;
+    var r = runPuzzle(P, S3.sel);
+    var changes = Object.keys(r.src).filter(function (k) { return r.src[k] !== 'base' && P.check.indexOf(k) !== -1 || r.src[k] === 'chip'; });
+    var line2 = changes.length ? changes.map(function (k) { return PROP_NAMES[k] || k; }).filter(function (v, i, a) { return a.indexOf(v) === i; }).join('・') + 'を変えます' + (Object.keys(r.src).some(function (k) { return r.src[k] === 'default'; }) ? '（書かれていない所は、わたしの考えで決めます）' : '') : '何も変えません';
+    var line3 = r.keep ? 'ほかは変えません' : 'ついでに、気になった所も直しておきます';
+    var h = mimi('わたしは、こう理解しました。<ol class="sg-explain"><li>index.html' + (P.goal.pages ? 'と新しいファイル' : '') + '</li><li>' + esc(line2) + '</li><li>' + esc(line3) + '</li></ol>', 'sg-pop');
+    h += '<div class="sg-two"><figure class="sg-fig"><figcaption>ミミが作った画面（' + S3.tries + '回目）</figcaption>' + renderMini(r.state, 'ミミが作った画面') + '</figure><div>';
+    var tk = [];
+    if (r.ok) {
+      var pts = [300, 200, 120][S3.tries - 1] || 0;
+      var bonus = hit(pts);
+      if (S3.solved[S3.i] !== 'done') S3.solved[S3.i] = 'done';
+      h += '<div class="sg-feedback sg-feedback--good"><strong class="sg-verdict">ゴール！ ' + S3.tries + '回目で成功　+' + (pts + bonus) + '点</strong>使った札は ' + S3.sel.length + ' 枚。最初の「' + esc(P.start) + '」だけでは、ミミは思い込みと「ついで」で動いていました。</div>';
+      say('ゴールしました');
+    } else {
+      miss();
+      h += '<div class="sg-feedback sg-feedback--bad"><strong class="sg-verdict">ゴールの画面と、ずれています</strong><ul class="sg-diff">' + r.bad.map(function (b) {
+        var t = b.src === 'side' ? 'yarisugi' : b.src === 'chip' ? null : (P.tags[b.k] || 'zentei');
+        if (t && tk.indexOf(t) === -1) tk.push(t);
+        var why = b.src === 'side' ? '頼んでいないのに、ミミが「ついでに」変えた' : b.src === 'default' ? '書かなかったので、ミミが思い込みで決めた' : b.src === 'chip' ? '選んだ札が、ゴールと違う' : '書かなかったので、変わらなかった';
+        return '<li><span class="sg-ng">✕</span> ' + esc(PROP_NAMES[b.k] || b.k) + ': ' + esc(why) + (t ? ' <span class="sg-typetag">' + TYPES[t].name + '</span>' : '') + '</li>';
+      }).join('') + '</ul>' + (S3.tries >= 3 ? '<p style="margin:.4rem 0 0">3回送りました。答えの一例: 「' + esc(puzzleInstr(P, solutionOf(P))) + '」</p>' : '<p style="margin:.4rem 0 0">札を直して、もう一度送りましょう。</p>') + '</div>';
+      if (S3.tries >= 3) S3.solved[S3.i] = S3.solved[S3.i] || 'tried';
+      say('ゴールとずれています');
+    }
+    h += '</div></div>';
+    h += '<div class="sg-row">' + (S3.i < PUZZLES.length - 1 ? '<button type="button" class="sg-btn sg-btn--ghost" id="s3next">次のパズルへ</button>' : '<button type="button" class="sg-btn sg-btn--ghost" id="s3fin">ステージ3を終える</button>') + '</div>';
+    addLog('3', puzzleInstr(P, S3.sel), 'ゴール: ' + P.goalText, r.ok ? 'ゴールの画面になった' : r.bad.map(function (b) { return PROP_NAMES[b.k]; }).join('・') + 'がずれた', r.ok ? 'ずれなし' : tk.map(function (k) { return TYPES[k].name; }).join('・') || '札の選び方');
+    var locked = r.ok || S3.tries >= 3;
+    $('s3out').innerHTML = h;
+    $('s3send').disabled = locked;
+    document.querySelectorAll('[data-s3c]').forEach(function (b) { b.disabled = locked; });
+    if ($('s3next')) $('s3next').onclick = function () { stage3(S3.i + 1); scrollTopOfView(); };
+    if ($('s3fin')) $('s3fin').onclick = function () {
+      var n = PUZZLES.filter(function (p, k) { return S3.solved[k] === 'done'; }).length;
+      setStars('3', n >= 4 ? 3 : n >= 2 ? 2 : n >= 1 ? 1 : 0);
+      home();
+    };
+  }
+  // 札の全組み合わせを試して、ゴールになる最も枚数の少ない組み合わせを探す（答えの例と、成立の検査に使う）
+  function allSelections(P) {
+    var groups = [];
+    P.chips.forEach(function (c) { if (groups.indexOf(c.group) === -1) groups.push(c.group); });
+    var out = [[]];
+    groups.forEach(function (g) {
+      var opts = [null].concat(P.chips.filter(function (c) { return c.group === g; }).map(function (c) { return c.id; }));
+      var next = [];
+      out.forEach(function (sel) { opts.forEach(function (o) { next.push(o ? sel.concat([o]) : sel.slice()); }); });
+      out = next;
+    });
+    return out;
+  }
+  function solutionOf(P) {
+    var best = null;
+    allSelections(P).forEach(function (sel) { if (runPuzzle(P, sel).ok && (!best || sel.length < best.length)) best = sel; });
+    return best || [];
+  }
+
+  // ============================================================
+  // ステージ4「送る前に確かめよう」: ミミの3行の説明を読んで判断する
+  // ============================================================
+  var CHECKS = [
+    { intent: '「もっと見る」ボタンだけを赤くしたい。', instr: 'ボタンを赤くして。ほかは変えないで。',
+      lines: ['index.html の「もっと見る」ボタン', 'ボタンの色を赤にする', 'ほかは変えない'], answer: 'run', wrong: [],
+      result: { 'btn.color': 'red' }, why: '3行とも、あなたの意図と合っています。このまま実行してよい場面です。確かめる手間をかけた分、安心して進められます。' },
+    { intent: 'はじめのあいさつの文章だけを、2文くらいに短くしたい。', instr: '文章を短くして。',
+      lines: ['index.html の、はじめの文章とカードの説明', 'それぞれ1文にする', '見出しは変えない'], answer: 'fix', wrong: [1, 2],
+      result: { 'text.len': 'one', 'cards.text': 'short' }, why: '1行目で、カードの説明まで入っています（範囲のずれ）。2行目の「1文に」も、あなたの「2文くらい」と違います（言葉の幅）。' },
+    { intent: 'about.html に自己紹介を書き、index.html の上にリンクを付けたい。', instr: 'about.htmlという自己紹介のページを作って、index.htmlの上にリンクを付けて。ほかは変えないで。',
+      lines: ['about.html を新しく作る。index.html は上の部分だけ', '自己紹介を書き、index.html の上に about.html へのリンクを足す', 'index.html のほかの部分は変えない'], answer: 'run', wrong: [],
+      result: { pages: 'index+about', aboutContent: 'profile', nav: true }, why: '対象・変え方・変えない所が、すべて意図どおりです。指示に必要なことが書けていると、説明もすっきりします。' },
+    { intent: '見出しを、今の1.5倍くらいの大きさにしたい。', instr: '見出しを大きくして。ほかは変えないで。',
+      lines: ['index.html の見出し', '見出しの文字を、今の3倍の大きさにする', 'ほかは変えない'], answer: 'fix', wrong: [2],
+      result: { 'title.size': 'xl' }, why: '2行目の「3倍」が、あなたの「1.5倍くらい」と違います。指示に「どのくらい」を書いていなかったからです（言葉の幅）。' },
+    { intent: 'スマホの画面のときだけ、カードを縦1列にしたい（パソコンでは横並びのまま）。', instr: 'スマホでも見やすいように、カードを縦1列に並べて。ほかは変えないで。',
+      lines: ['index.html のカードの部分', 'カードを縦1列に並べる', 'ほかは変えない'], answer: 'fix', wrong: [2],
+      result: { 'cards.layout': 'col' }, why: '気づきにくい問題です。2行目には「スマホのときだけ」が書かれていません。このまま実行すると、パソコンの画面でも縦1列になります。説明は短く見えても、<意図の条件>が入っているかを読みましょう。' },
+    { intent: 'ボタンの色だけを青にしたい。', instr: 'ボタンの色を青にして。',
+      lines: ['index.html の「もっと見る」ボタン', 'ボタンの色を青にする', 'ついでに、見出しの色もボタンに合わせて青にする'], answer: 'fix', wrong: [3],
+      result: { 'btn.color': 'blue', 'title.color': 'blue' }, why: '3行目で、頼んでいない見出しまで変えようとしています（やりすぎ）。「ほかは変えないで」を足して送り直しましょう。' }
+  ];
+  var S4 = { i: 0, phase: 'read', choice: null, line: [], good: 0 };
+  function stage4(i) {
+    if (typeof i === 'number') { S4.i = i; S4.phase = 'read'; S4.choice = null; S4.line = []; }
+    var Q = CHECKS[S4.i];
+    var h = '<div class="sg-card sg-pop"><h2>ステージ4　送る前に確かめよう</h2>';
+    h += '<div>問題 ' + (S4.i + 1) + ' / ' + CHECKS.length + '</div><div class="sg-progress"><div style="width:' + Math.round(S4.i / CHECKS.length * 100) + '%"></div></div>';
+    h += '<div class="sg-feedback sg-feedback--mid" style="margin-top:0"><strong>あなたの本当の意図</strong>: ' + esc(Q.intent) + '</div>';
+    h += you('まだ実行しないでください。次の指示を、どう理解したかを3行で説明してください。指示: 「' + esc(Q.instr) + '」');
+    h += mimi('こう理解しました。<ol class="sg-explain">' + Q.lines.map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ol>');
+    if (S4.phase === 'read') {
+      h += '<div class="sg-row"><button type="button" class="sg-btn" id="s4run">このまま実行してもらう</button><button type="button" class="sg-btn sg-btn--ghost" id="s4fix">直して送り直す</button></div>';
+    } else if (S4.phase === 'line') {
+      h += '<p style="font-size:.92rem">どの行が、あなたの意図とずれていますか？（複数選べます）</p><div class="sg-chips">' + [1, 2, 3].map(function (n) { return '<button type="button" class="sg-chip" data-s4l="' + n + '" aria-pressed="' + (S4.line.indexOf(n) !== -1) + '">' + n + '行目</button>'; }).join('') + '</div><div class="sg-row"><button type="button" class="sg-btn" id="s4ok" disabled>これで決める</button><button type="button" class="sg-btn sg-btn--sub" id="s4back">戻る</button></div>';
+    }
+    h += '<div id="s4out"></div></div>';
+    view(h);
+    if ($('s4run')) $('s4run').onclick = function () { S4.choice = 'run'; s4Judge(); };
+    if ($('s4fix')) $('s4fix').onclick = function () { S4.phase = 'line'; stage4(); };
+    if ($('s4back')) $('s4back').onclick = function () { S4.phase = 'read'; S4.line = []; stage4(); };
+    document.querySelectorAll('[data-s4l]').forEach(function (b) {
+      b.onclick = function () {
+        var n = +b.dataset.s4l, at = S4.line.indexOf(n);
+        if (at === -1) S4.line.push(n); else S4.line.splice(at, 1);
+        b.setAttribute('aria-pressed', String(at === -1));
+        $('s4ok').disabled = !S4.line.length;
+      };
+    });
+    if ($('s4ok')) $('s4ok').onclick = function () { S4.choice = 'fix'; s4Judge(); };
+  }
+  function s4Judge() {
+    var Q = CHECKS[S4.i];
+    S4.phase = 'done';
+    var pts = 0, verdict, cls, bonus = 0;
+    if (S4.choice === Q.answer) {
+      if (Q.answer === 'run') { bonus = hit(100); pts = 100 + bonus; verdict = '正解！ このまま実行してよい場面でした'; cls = 'good'; S4.good++; }
+      else {
+        var exact = S4.line.length === Q.wrong.length && Q.wrong.every(function (n) { return S4.line.indexOf(n) !== -1; });
+        var some = Q.wrong.some(function (n) { return S4.line.indexOf(n) !== -1; });
+        if (exact) { bonus = hit(150); pts = 150 + bonus; verdict = '正解！ 実行する前に、ずれを見つけました'; cls = 'good'; S4.good++; }
+        else if (some) { addScore(80); pts = 80; verdict = '止めたのは正解。ずれている行は ' + Q.wrong.join('・') + '行目でした'; cls = 'mid'; S4.good++; }
+        else { addScore(40); pts = 40; verdict = '止めたのは正解。ただ、ずれている行は ' + Q.wrong.join('・') + '行目でした'; cls = 'mid'; }
+      }
+    } else {
+      miss();
+      verdict = Q.answer === 'run' ? '今回は、そのまま実行してよい場面でした（確かめすぎて止めなくてよい）' : '実行してしまいました。結果はこうなります';
+      cls = 'bad';
+    }
+    var h = '<div class="sg-feedback sg-feedback--' + cls + ' sg-pop"><strong class="sg-verdict">' + esc(verdict) + (pts ? '　+' + pts + '点' : '') + '</strong>' + esc(Q.why).replace('&lt;意図の条件&gt;', '<strong>意図の条件</strong>') + '</div>';
+    h += '<figure class="sg-fig" style="max-width:340px"><figcaption>このまま実行した場合の画面</figcaption>' + renderMini(patch(Q.result), '実行した場合の画面') + (Q.answer === 'fix' && Q.lines[1].indexOf('縦1列') !== -1 ? '' : '') + '</figure>';
+    h += '<div class="sg-row">' + (S4.i < CHECKS.length - 1 ? '<button type="button" class="sg-btn" id="s4next">次の問題へ</button>' : '<button type="button" class="sg-btn" id="s4fin">結果を見る</button>') + '</div>';
+    $('s4out').innerHTML = h;
+    var b1 = $('s4run'), b2 = $('s4fix'), b3 = $('s4ok');
+    [b1, b2, b3].forEach(function (b) { if (b) b.disabled = true; });
+    document.querySelectorAll('[data-s4l]').forEach(function (b) { b.disabled = true; });
+    if ($('s4back')) $('s4back').disabled = true;
+    addLog('4', Q.instr, '判断: ' + (S4.choice === 'run' ? 'このまま実行' : '直して送り直す（' + S4.line.join('・') + '行目）'), Q.answer === 'run' ? '説明は意図どおり' : 'ミミの説明の' + Q.wrong.join('・') + '行目が意図とずれていた', Q.answer === 'run' ? 'ずれなし' : (S4.i === 1 ? '範囲のずれ・言葉の幅' : S4.i === 3 ? '言葉の幅' : S4.i === 4 ? '前提の省略' : 'やりすぎ'));
+    say(verdict);
+    if ($('s4next')) $('s4next').onclick = function () { stage4(S4.i + 1); scrollTopOfView(); };
+    if ($('s4fin')) $('s4fin').onclick = function () { setStars('4', S4.good >= 6 ? 3 : S4.good >= 4 ? 2 : 1); results(); };
+  }
+
+  // ============================================================
+  // ホームと結果
+  // ============================================================
+  var STAGES = [
+    { n: 1, title: '伝えてみよう', body: 'お題の図を、言葉だけでミミに描いてもらう。授業の「人どうしのすれ違い体験」の1人版。', go: function () { stage1(S1.t); } },
+    { n: 2, title: '型を見抜け', body: 'あいまいな指示で、ミミがどう動くかを予想し、すれ違いの型を見分ける（お題カード8枚）。', go: function () { stage2(0); } },
+    { n: 3, title: '直して送ろう', body: '札を足して指示を直し、ゴールの画面を作ってもらう（パズル4問）。', go: function () { stage3(0); } },
+    { n: 4, title: '送る前に確かめよう', body: 'ミミの「3行の説明」を読んで、実行するか、直して送り直すかを判断する（6問）。', go: function () { stage4(0); } }
+  ];
+  function stageStars(n) {
+    if (n === 1) { var t = TARGETS.map(function (x) { return S.stars['1' + x.id] || 0; }); return t.some(function (v) { return v; }) ? Math.round(t.reduce(function (a, b) { return a + b; }, 0) / t.length) : 0; }
+    return S.stars[String(n)] || 0;
+  }
+  function home() {
+    var h = '<div class="sg-card sg-pop"><h2>ステージを選ぶ</h2>';
+    h += mimi('こんにちは、ミミです。わたしは、<strong>書かれていないことを思い込みで決めたり、ついでに余計なことをしたり</strong>する練習用AIです。うまく伝えて、すれ違いを見つけてください。どのステージからでも遊べます。');
+    h += '<div class="sg-stages">' + STAGES.map(function (st) { var s = stageStars(st.n); return '<button type="button" class="sg-stage" data-st="' + st.n + '"><span class="sg-stage-num">ステージ' + st.n + '</span> <span class="sg-stars">' + (s ? starText(s) : '') + '</span><span class="sg-stage-title">' + esc(st.title) + '</span>' + esc(st.body) + '</button>'; }).join('') + '</div>';
+    h += '<div class="sg-row"><button type="button" class="sg-btn sg-btn--ghost" id="sgRes">結果とすれ違いログを見る（' + S.log.length + '件）</button></div></div>';
+    view(h);
+    document.querySelectorAll('[data-st]').forEach(function (b) { b.onclick = function () { STAGES[+b.dataset.st - 1].go(); scrollTopOfView(); }; });
+    $('sgRes').onclick = results;
+  }
+  function rankOf(sc) {
+    if (sc >= 3400) return 'すれ違い名探偵';
+    if (sc >= 2300) return 'ベテランハンター';
+    if (sc >= 1100) return 'すれ違いハンター';
+    return 'ハンター見習い';
+  }
+  function logTable() {
+    var rows = S.log.map(function (r, i) { return '<tr><td>' + (i + 1) + '</td><td>' + esc(r.instr) + '</td><td>' + esc(r.pred) + '</td><td>' + esc(r.happened) + '</td><td>' + esc(r.types) + '</td></tr>'; }).join('');
+    return '<table class="sg-log" id="sgLogTable"><thead><tr><th>#</th><th>送った指示</th><th>送る前の予想</th><th>起きたこと</th><th>型</th></tr></thead><tbody>' + rows + '</tbody></table>';
+  }
+  function results() {
+    var h = '<div class="sg-card sg-pop"><h2>結果</h2>';
+    h += '<p>合計 <span class="sg-big">' + S.score + '</span> 点　<span class="sg-rank">' + esc(rankOf(S.score)) + '</span></p>';
+    h += '<ul class="sg-diff">' + STAGES.map(function (st) { var s = stageStars(st.n); return '<li>ステージ' + st.n + '「' + esc(st.title) + '」 <span class="sg-stars">' + starText(s) + '</span></li>'; }).join('') + '</ul>';
+    h += '<h3>覚えておきたい3つのこと</h3><ol style="font-size:.92rem;line-height:1.8"><li>書かなかった所は、AIの思い込みになる（前提の省略）</li><li>「大きく」「見やすく」は人によって違う。どのくらいかを書く（言葉の幅）</li><li>送る前に「どう理解したか」を説明させると、実行する前にずれに気づける</li></ol>';
+    h += '<h3>すれ違いログ（' + S.log.length + '件）</h3>';
+    if (S.log.length) {
+      h += '<p style="font-size:.88rem">授業の「すれ違いログ」と同じ4列です。コピーして、Googleドキュメントに貼り付けられます（ゲームの記録であることが分かるように、見出しを付けて貼るとよい）。</p>';
+      h += '<div class="sg-row"><button type="button" class="sg-btn" id="sgCopy">ログをコピー</button><span id="sgCopyMsg" style="font-size:.88rem"></span></div>';
+      h += '<div class="sg-logwrap">' + logTable() + '</div>';
+    } else h += '<p style="font-size:.88rem">まだ記録がありません。ステージを遊ぶと、ここにたまります。</p>';
+    h += '<div class="sg-feedback sg-feedback--mid">ミミは練習用のAIです。<strong>本物のagyやAI Studio Buildで、お題カードを試してみましょう</strong>。本物は、聞き返したり、ミミとは違う動き方をしたりします。<a href="week07.html">第7回に戻る</a></div>';
+    h += '<div class="sg-row"><button type="button" class="sg-btn sg-btn--ghost" id="sgBack">ステージを選ぶ</button></div></div>';
+    view(h);
+    scrollTopOfView();
+    $('sgBack').onclick = home;
+    if ($('sgCopy')) $('sgCopy').onclick = copyLog;
+    say('合計' + S.score + '点。' + rankOf(S.score));
+  }
+  function copyLog() {
+    var header = ['#', '送った指示', '送る前の予想', '起きたこと', '型'];
+    var tsv = [header.join('\t')].concat(S.log.map(function (r, i) { return [i + 1, r.instr, r.pred, r.happened, r.types].join('\t'); })).join('\n');
+    var html = '<table border="1">' + $('sgLogTable').innerHTML + '</table>';
+    var done = function (ok) { $('sgCopyMsg').textContent = ok ? 'コピーしました' : 'コピーできませんでした。表を選択してコピーしてください'; };
+    try {
+      if (window.ClipboardItem && navigator.clipboard && navigator.clipboard.write) {
+        navigator.clipboard.write([new ClipboardItem({ 'text/html': new Blob([html], { type: 'text/html' }), 'text/plain': new Blob([tsv], { type: 'text/plain' }) })]).then(function () { done(true); }, function () { fallback(); });
+      } else fallback();
+    } catch (e) { fallback(); }
+    function fallback() {
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = tsv; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        var ok = document.execCommand('copy');
+        document.body.removeChild(ta); done(ok);
+      } catch (e2) { done(false); }
+    }
+  }
+
+  $('sgHomeBtn').onclick = home;
+  // 検査用（ページの動作には使わない）: パズルの成立を確かめるための関数
+  window.__suregai = { PUZZLES: PUZZLES, runPuzzle: runPuzzle, allSelections: allSelections, solutionOf: solutionOf, CARDS: CARDS, CHECKS: CHECKS, TARGETS: TARGETS, judge: judge, state: S };
+  home();
+})();
+</script>
+</body>
+</html>
