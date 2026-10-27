@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-  <link rel="stylesheet" href="../styles.css?v=23">
+  <link rel="stylesheet" href="../styles.css?v=24">
   <!-- 公式情報確認: 2026-10-28 (総務省「国民のためのサイバーセキュリティサイト」用語集 ja_01 アクセスポイント・ja_09 ルーター、同サイト「無線LAN（Wi-Fi）の仕組み」basic/service/08 にLAN・無線LAN・SSID（ネットワーク名）の説明。総務省 電気通信紛争処理用語集 https://www.soumu.go.jp/main_content/000062441.pdf にWAN「電話回線や専用線などを使って、本社と支社間など離れた場所にある LAN 同士を接続するためのネットワークのこと」（pdftotextで原文照合）。環境省「ステークホルダーエンゲージメント」https://www.env.go.jp/content/900497044.pdf に「株主、顧客、従業員、取引先、地域社会などを重要なステークホルダーとして特定することが多く」。IPAシラバス Ver.6.5「58. ネットワーク方式」に「LANとWANという分類を理解する」、用語例にハブ・ルーター・スイッチ・有線LAN・無線LAN・ESSID、別項目に AP（アクセスポイント）。試験の表記は「SSID」ではなくESSID、「スイッチングハブ」ではなくハブ・スイッチ。令和7年度ITパスポート試験 公開問題 問57・問90と解答例（PDFは画像のため目視で原文を転記、解答例はpdftotextで照合）。令和7年度の公開問題にはLAN/WANを直接問う問がなく（問56〜100を全頁目視）、問57（プロキシ）と第4回の問90の見直しを使用。【未確認として書かなかったこと】: WANが「通信会社の回線を使うことが多い」（総務省の記述は「電話回線や専用線など」まで）、スイッチングハブが「宛先の機器にだけ送る」（公的資料に説明なし、民間の説明のみ）、LANケーブルの「ツイストペア」。教科書 p.320-328・p.018-021 は親ページの記載に従う（教科書本文は未突合）。ステークホルダーの定義文（ISO 26000の引用など）は原文未照合のため使わず、本文の「企業に関わる人や組織」は、環境省の例の列挙とIPAシラバスの「利害関係者」の語から作ったやさしい言い換え） -->
   <!-- 挿絵5枚（images/week05-story-1〜4.jpg、week05-lan-wan.jpg）は、画像生成AI（Gemini 3.1 Flash Image）で作った架空の場面のイラスト（2026-10-28）。画像内に文字・実在の人物や企業のロゴは含めない。Aさん=第2〜4回と同じ画風の架空の人物。カフェも架空 -->
   <!-- 用語カードの9語は、フォーム「ITパスポート 第5回 今回覚えた用語」の選択肢と一致。ゲーム term-shooter.html の第5回データ（TERM_SETS[5]）の用語とも一致させる -->
@@ -47,6 +47,15 @@
         <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
       </defs>
     </svg>
+
+    <div class="qr-box qr-box--pc">
+      <img class="qr-box__img" src="qr/week05-page.svg" alt="この第5回のページを開くQRコード。スマートフォンのカメラで読み取ると、このページが開く。" width="180" height="180">
+      <div class="qr-box__body">
+        <p class="qr-box__heading">📱 スマホで開く</p>
+        <p class="qr-box__text">教室の画面を見ながら、自分のスマートフォンで、このページを開けます。スマートフォンの<strong>カメラ</strong>で、このQRコードを読み取ってください。</p>
+        <p class="qr-box__text">スマートフォンでも、ブラウザの翻訳が使えます。ゲームも、スマートフォンで遊べます。</p>
+      </div>
+    </div>
 
     <div class="demo-cta demo-cta--amber">
       <p class="demo-cta__heading">🎮 用語シューティング（1人用のゲーム）</p>
@@ -277,6 +286,13 @@
               <p class="demo-cta__body">ここまでに出た用語（<span translate="no">LAN</span>・<span translate="no">WAN</span>・<span translate="no">有線LAN</span>・<span translate="no">無線LAN</span>・<span translate="no">アクセスポイント</span>・<span translate="no">SSID</span>・<span translate="no">ステークホルダー</span>）を、ゲームで確かめる。画面の「意味」を読んで、合う用語の的を撃つ。点数は記録されない。最初は音が出ない。間違えた用語は、最後の画面に一覧が出る。</p>
               <p class="demo-cta__body"><strong>進め方：</strong>1回は約2分。<strong>目標は「ランク<span translate="no">A</span>以上」（7問中6問以上）</strong>。終わったら、間違えた用語の一覧を、下の<a href="#sec-terms">用語カード</a>で確かめて、もう一度遊ぶ。ランク<span translate="no">A</span>が出たら、隣の人に、間違えやすかった用語を説明する。ページを開くと、「スタート」ボタンが出る。翻訳を使う人は、翻訳してから押す。</p>
               <a href="term-shooter.html?w=5&amp;stage=1" class="demo-cta__link">→ ステージ1を始める</a>
+              <div class="qr-box qr-box--inline qr-box--pc">
+                <img class="qr-box__img" src="qr/week05-game-stage1.svg" alt="ゲーム ステージ1を開くQRコード。スマートフォンのカメラで読み取ると、ゲームが開く。" width="150" height="150">
+                <div class="qr-box__body">
+                  <p class="qr-box__heading">📱 スマホで遊ぶ</p>
+                  <p class="qr-box__text">スマートフォンのカメラで、このQRコードを読み取ると、ステージ1が開く。</p>
+                </div>
+              </div>
             </div>
 
             <p><strong>ペアで確かめる（約5分）</strong>：ゲームで間違えた用語を、1つ選ぶ。もう1人に、やさしい日本語で意味を説明する。説明できたら、反対にする。</p>
@@ -377,6 +393,13 @@
               <p class="demo-cta__body">今日の用語（<span translate="no">ルーター</span>・<span translate="no">スイッチングハブ</span>も追加）と、第4回までの用語が混ざる。的が降りてくる速さも上がる。ライフは3つ。最後の画面に、間違えた用語の一覧が出る。ここでも、点数は記録されない。</p>
               <p class="demo-cta__body"><strong>進め方：</strong>1回は約2分。<strong>目標は「ランク<span translate="no">A</span>以上」（10問中8問以上）</strong>。何度でも挑戦してよい。終わったら、間違えた用語の一覧を<a href="#sec-terms">用語カード</a>で確かめる。「スタート」ボタンを押すまで、時間は進まない。</p>
               <a href="term-shooter.html?w=5&amp;stage=2" class="demo-cta__link">→ ステージ2を始める</a>
+              <div class="qr-box qr-box--inline qr-box--pc">
+                <img class="qr-box__img" src="qr/week05-game-stage2.svg" alt="ゲーム ステージ2を開くQRコード。スマートフォンのカメラで読み取ると、ゲームが開く。" width="150" height="150">
+                <div class="qr-box__body">
+                  <p class="qr-box__heading">📱 スマホで遊ぶ</p>
+                  <p class="qr-box__text">スマートフォンのカメラで、このQRコードを読み取ると、ステージ2が開く。</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>

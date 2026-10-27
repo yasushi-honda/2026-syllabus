@@ -1,0 +1,5 @@
+# QRコードの一覧（出力パス<TAB>URL）。URL は公開サイトの中だけ。# の行は無視される
+# 週ページの「スマホで開く」と、ゲームの案内ブロックに使う
+it-passport-technology/qr/week05-page.svg	https://yasushi-honda.github.io/2026-syllabus/it-passport-technology/week05.html
+it-passport-technology/qr/week05-game-stage1.svg	https://yasushi-honda.github.io/2026-syllabus/it-passport-technology/term-shooter.html?w=5&stage=1
+it-passport-technology/qr/week05-game-stage2.svg	https://yasushi-honda.github.io/2026-syllabus/it-passport-technology/term-shooter.html?w=5&stage=2

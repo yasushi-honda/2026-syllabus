@@ -429,6 +429,42 @@ img { max-width: 100%; display: block; }
 .demo-cta--amber .demo-cta__heading { color: #5c3f00; }
 .demo-cta--amber .demo-cta__link { background: #7a5200; }
 .demo-cta--amber .demo-cta__link:hover { background: #5c3f00; }
+/* .demo-cta を .syllabus-section の中（授業の流れの途中など）に置くと、「.syllabus-section a[href]」の緑の下線リンクが優先されて、
+   ボタンの文字が読みにくくなる。ボタンの文字は、どの色の科目でも白・下線なしにそろえる */
+.syllabus-section a.demo-cta__link[href] { color: #fff; text-decoration: none; } /* [href] を足して、後ろにある「.syllabus-section a[href]」より強くする */
+
+/* QRコード（教室の大きな画面から、自分のスマートフォンで開くための表示）。
+   QR は事前に作った静的なSVG（tools/qr/make_qr.py）。余白（白い枠）はSVGの中に含まれる。
+   すでにスマホ幅で見ている人には不要なので、狭い画面では隠す。 */
+.qr-box {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem 1.2rem;
+  margin: 0 0 1.4rem;
+  padding: 0.9rem 1.1rem;
+  background: var(--c-surface, #fff);
+  border: 1px solid var(--c-amber-border);
+  border-left: 4px solid var(--c-amber);
+  border-radius: 6px;
+}
+.qr-box__img {
+  flex: 0 0 auto;
+  width: 180px;
+  height: 180px;
+  background: #fff;
+  border: 1px solid var(--c-amber-border);
+  border-radius: 4px;
+}
+.qr-box__body { min-width: 0; }
+.qr-box__heading { margin: 0 0 0.3rem; font-weight: 700; color: #5c3f00; font-size: 1.02rem; }
+.qr-box__text { margin: 0 0 0.3rem; font-size: 0.93rem; line-height: 1.65; }
+.qr-box__text:last-child { margin-bottom: 0; }
+/* ゲームの案内ブロックの中に置く小さい版 */
+.qr-box--inline { margin: 0.8rem 0 0; padding: 0.7rem 0.9rem; background: rgba(255, 255, 255, 0.7); border-left-width: 1px; }
+.qr-box--inline .qr-box__img { width: 150px; height: 150px; }
+@media (max-width: 700px) {
+  .qr-box--pc { display: none; }
+}
 
 /* ========================================
    Timetable Grid — weekly matrix
