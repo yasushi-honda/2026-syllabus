@@ -305,3 +305,52 @@ document.addEventListener('DOMContentLoaded', function () {
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();
+
+/* ===== QRコードの拡大表示（2026-10-28） =====
+   <a class="qr-box__zoom" href="QRのSVG"><img …></a> を押すと、画面の中央に大きく表示する（教室の画面から読み取りやすいように）。
+   JS が動かないとき、または <dialog> が使えないときは、リンクのとおり SVG が新しいタブで開く。
+   閉じる: 外側のクリック・Esc・「閉じる」ボタン（Esc と、閉じたあとに押した場所へフォーカスが戻る動きは <dialog> の標準）。
+   ダイアログの文字は、翻訳・ふりがなが効くよう、読み込み時にあらかじめ DOM に置いておく（押したときに書き換えない）。
+   ふりがなの辞書には、tools/furigana/build_dict.py の DYNAMIC_TEXTS で同じ文字を足してある。 */
+(function () {
+  'use strict';
+
+  function init() {
+    const links = document.querySelectorAll('a.qr-box__zoom');
+    if (!links.length || typeof HTMLDialogElement === 'undefined') return;
+
+    const dlg = document.createElement('dialog');
+    dlg.className = 'qr-dialog';
+    dlg.setAttribute('aria-label', 'QRコードの拡大表示');
+    const inner = document.createElement('div');
+    inner.className = 'qr-dialog__inner';
+    const img = document.createElement('img');
+    img.className = 'qr-dialog__img';
+    img.alt = '';
+    const cap = document.createElement('p');
+    cap.className = 'qr-dialog__cap';
+    cap.textContent = 'スマートフォンのカメラで読み取ってください。外側をクリックするか、Esc キーを押すと閉じます。';
+    const close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'qr-dialog__close';
+    close.textContent = '閉じる';
+    inner.append(img, cap, close);
+    dlg.appendChild(inner);
+    document.body.appendChild(dlg);
+
+    links.forEach(function (a) {
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        const small = a.querySelector('img');
+        img.src = a.getAttribute('href');
+        img.alt = small ? small.alt : '';
+        dlg.showModal();
+      });
+    });
+    // 外側（背景）・画像・「閉じる」のどれを押しても閉じる。ダイアログの外側を押すと、イベントの対象は dialog 自身になる
+    dlg.addEventListener('click', function () { dlg.close(); });
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
+})();

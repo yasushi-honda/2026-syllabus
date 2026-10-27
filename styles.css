@@ -462,6 +462,40 @@ img { max-width: 100%; display: block; }
 /* ゲームの案内ブロックの中に置く小さい版 */
 .qr-box--inline { margin: 0.8rem 0 0; padding: 0.7rem 0.9rem; background: rgba(255, 255, 255, 0.7); border-left-width: 1px; }
 .qr-box--inline .qr-box__img { width: 150px; height: 150px; }
+/* QRを押すと拡大する（app.js）。JSが動かないときは、リンクのとおりSVGが新しいタブで開く */
+.qr-box__zoom { display: block; flex: 0 0 auto; line-height: 0; border-radius: 4px; cursor: zoom-in; }
+.syllabus-section a.qr-box__zoom[href] { text-decoration: none; color: inherit; } /* 「.syllabus-section a[href]」の緑の下線より強く */
+.qr-box__zoom:focus-visible { outline: 3px solid #ffb000; outline-offset: 3px; }
+.qr-box__zoom:hover .qr-box__img { border-color: var(--c-amber); }
+/* margin: auto と inset: 0 は、サイト全体の margin リセットで <dialog> の中央寄せが効かなくなるのを防ぐ */
+dialog.qr-dialog { position: fixed; inset: 0; margin: auto; border: 0; padding: 0; background: transparent; max-width: 100vw; max-height: 100vh; width: fit-content; height: fit-content; overflow: visible; }
+dialog.qr-dialog::backdrop { background: rgba(26, 17, 0, 0.74); }
+.qr-dialog__inner {
+  box-sizing: border-box;
+  max-width: min(92vw, 780px);
+  padding: 1rem 1.2rem 1.2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+  text-align: center;
+  cursor: pointer;
+}
+/* 画像の大きさ: 高さの余裕（上下の余白・説明・ボタンぶんの約230px）と幅を見て、最大720px。小さい画面でもはみ出さない */
+.qr-dialog__img { display: block; width: min(720px, calc(100vh - 230px), 88vw); height: min(720px, calc(100vh - 230px), 88vw); margin: 0 auto; background: #fff; }
+.qr-dialog__cap { margin: 0.7rem 0 0.9rem; font-size: 0.95rem; line-height: 1.7; }
+.qr-dialog__close {
+  min-height: 44px;
+  padding: 0.55rem 1.6rem;
+  border: 2px solid var(--c-amber);
+  border-radius: 6px;
+  background: var(--c-amber);
+  color: #fff;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+.qr-dialog__close:hover { background: #6f4c00; }
+.qr-dialog__close:focus-visible { outline: 3px solid #ffb000; outline-offset: 2px; }
 @media (max-width: 700px) {
   .qr-box--pc { display: none; }
 }

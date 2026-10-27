@@ -30,6 +30,8 @@ EXCLUDE_TAGS = {'script', 'style', 'code', 'pre', 'textarea', 'title', 'noscript
 
 # ページのJSが操作のあとに作る文字（app.js のクイズの結果、親ページの「すべて開く/閉じる」）。ふりがなを付けられるよう全ページの辞書に入れる
 DYNAMIC_TEXTS = ['正解です'] + ['不正解です（正解: %s）' % c for c in 'アイウエ'] + ['すべて開く', 'すべて閉じる']
+# QRコードの拡大表示（app.js が読み込み時に作るダイアログの文字）
+DYNAMIC_TEXTS += ['スマートフォンのカメラで読み取ってください。外側をクリックするか、Esc キーを押すと閉じます。', '閉じる']
 VOID_TAGS = {'br', 'wbr', 'img', 'input', 'meta', 'link', 'hr', 'source', 'area', 'col', 'embed', 'base', 'track'}
 BLOCK_TAGS = {'p', 'li', 'ul', 'ol', 'td', 'th', 'tr', 'table', 'thead', 'tbody', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
               'div', 'section', 'header', 'footer', 'main', 'nav', 'summary', 'details', 'figure', 'figcaption',

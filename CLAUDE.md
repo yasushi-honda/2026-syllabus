@@ -146,7 +146,7 @@ autumn-intensive/       # 秋の集中講座 の日別詳細ページ（週ペ�
 tools/furigana/        # ふりがな辞書の生成（build_dict.py・overrides.tsv・テスト・requirements.txt。仮想環境 .venv は管理対象外）
 tools/qr/              # QRコードの生成（make_qr.py・qr_list.tsv=出力パスとURLの一覧・テスト・requirements.txt。仮想環境 .venv は管理対象外。実行時のライブラリ・CDNは使わず、事前に静的なSVGにして埋め込む）
 styles.css              # 共通スタイル（Editorial Paper Edition ライトテーマ）
-app.js                  # Markdownコピー、サイト内クイズ、ふりがなトグル（<body data-furigana> があるページだけ）
+app.js                  # Markdownコピー、サイト内クイズ、ふりがなトグル（<body data-furigana> があるページだけ）、QRコードの拡大表示（`a.qr-box__zoom` を押すと <dialog> で大きく出す。week05 が `?v=5`、他ページは古い連番のままで影響なし）
 favicon.svg             # ファビコン
 content/                # Markdownソース（コピーボタン用。全HTMLページに1対1で対応）
 .github/workflows/      # GitHub Pagesデプロイ設定
@@ -303,7 +303,7 @@ content/                # Markdownソース（コピーボタン用。全HTMLペ
 □ 12a. **（ITパスポート）挿絵を入れる**（GOAL.md「毎回の型」Ⓔ。nano-bananaで、1限前半のストーリー場面ごとに1枚＋たとえ絵。第2〜4回で実施。省略しない。文字・ロゴなし・altを付ける。看板などに文字風の落書きが出たら「無地」と指定して作り直す）
 □ 12c. **（ITパスポート）就活ワンポイントを書く**（共通ルール8。その回の言葉＋面接の質問例。一次資料の確認日つき）
 □ 12b. **図解を入れる**: 上記「図解を基本とする」に従い、その回の「流れ」「関係」「画面の形」を図にする。375px幅で確認
-□ 12d. **QRコードを入れる**（2026-10-28、先生の提案。第5回から全科目の新しい週ページで。教室の大きな画面を見ながら、自分のスマホでそのページを開けるようにする）: ①`tools/qr/qr_list.tsv` に「出力パス<TAB>公開URL」の行を足す（週ページ=`{dir}/qr/week{NN}-page.svg`。ゲームや別ページへ直行させたいときは、それも）②`tools/qr/.venv/bin/python tools/qr/make_qr.py`（初回は `python3 -m venv tools/qr/.venv && tools/qr/.venv/bin/pip install -r tools/qr/requirements.txt`）③ページ上部（翻訳の案内の次）に `<div class="qr-box qr-box--pc">`、ゲーム等の案内の中に `qr-box--inline` を置く（第5回 `it-passport-technology/week05.html` が見本。`<img>` は `alt` つき、SVGは `qr/` の中）。**`qr-box--pc` はスマホ幅では隠れる**（すでにスマホで見ている人に不要）④`tools/qr/.venv/bin/python tools/qr/test_make_qr.py` と `make_qr.py --check` が OK ⑤ブラウザで描画したQRを撮影し、デコードして、URLが意図どおりか確かめる（第5回は OpenCV の `QRCodeDetector` で全件一致）。**URLは公開サイトの中だけ**（`make_qr.py` が検査）。色は今は琥珀（ITパスポート）だけで、他の科目で使うときは `.qr-box--{色}` の読み替えを `styles.css` に足す（`.demo-cta--{色}` と同じ要領）。第1〜4回など、すでにある週ページには入れていない（今回から）
+□ 12d. **QRコードを入れる**（2026-10-28、先生の提案。第5回から全科目の新しい週ページで。教室の大きな画面を見ながら、自分のスマホでそのページを開けるようにする）: ①`tools/qr/qr_list.tsv` に「出力パス<TAB>公開URL」の行を足す（週ページ=`{dir}/qr/week{NN}-page.svg`。ゲームや別ページへ直行させたいときは、それも）②`tools/qr/.venv/bin/python tools/qr/make_qr.py`（初回は `python3 -m venv tools/qr/.venv && tools/qr/.venv/bin/pip install -r tools/qr/requirements.txt`）③ページ上部（翻訳の案内の次）に `<div class="qr-box qr-box--pc">`、ゲーム等の案内の中に `qr-box--inline` を置く（第5回 `it-passport-technology/week05.html` が見本。`<img>` は `alt` つき、SVGは `qr/` の中）。**`<img>` は `<a class="qr-box__zoom" href="qr/….svg" target="_blank" rel="noopener" aria-label="QRコードを大きく表示する">` で包む**: 押すと、app.js（`?v=5` 以上を読み込む）が `<dialog>` で大きく表示する（外側のクリック・Esc・「閉じる」で閉じる。JSが動かないときは、リンクのとおりSVGが新しいタブで開く）。ダイアログの文字は読み込み時にDOMへ置き、ふりがなの辞書には `build_dict.py` の `DYNAMIC_TEXTS` で足してある。**`qr-box--pc` はスマホ幅では隠れる**（すでにスマホで見ている人に不要）④`tools/qr/.venv/bin/python tools/qr/test_make_qr.py` と `make_qr.py --check` が OK ⑤ブラウザで描画したQRを撮影し、デコードして、URLが意図どおりか確かめる（第5回は OpenCV の `QRCodeDetector` で全件一致。拡大表示の画像も、1024×600の小さい画面を含めて読めることを確認）。**URLは公開サイトの中だけ**（`make_qr.py` が検査）。色は今は琥珀（ITパスポート）だけで、他の科目で使うときは `.qr-box--{色}` の読み替えを `styles.css` に足す（`.demo-cta--{色}` と同じ要領）。第1〜4回など、すでにある週ページには入れていない（今回から）
 □ 13. **整合性検証**: ステップ4のメモの全項目が週ページに登場するか grep で確認
        例: `grep -F "【学習データ①】" {dir}/week{NN}.html`
 □ 13b. **Markdown 残留チェック**: `grep -nE '\*\*[^*]+\*\*' {dir}/week{NN}.html` を実行し、Markdown 記法の強調が HTML に混入していないか確認。HTML 内では `<strong>…</strong>` で統一する（PR #53 教訓: `**使い分け**` が1箇所残留して code-reviewer に Important で指摘された）
