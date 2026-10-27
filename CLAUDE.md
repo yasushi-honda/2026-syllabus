@@ -113,6 +113,7 @@ it-passport-technology/       # ITパスポート テクノロジー系 の各�
   week04.html           #   第4回 秘密を守る・本人を確かめる（共通鍵暗号・公開鍵暗号・デジタル署名・認証局・多要素認証・生体認証・e-ビジネス。令和7年度の過去問3問（問87・問89・問90）、図解6点（うちSVG5点。PKIの図を含む）、挿絵7枚（images/week04-*.jpg）、就活ワンポイント（任意コラム、CSSアニメ）、サイト内クイズ。確認テストの2回目は任意。一次資料の確認日は2026-10-21。e-ビジネスの過去問は見つからず未掲載）
   week05.html           #   第5回 つながる仕組み：LANから世界へ（LAN/WAN・有線/無線LAN・アクセスポイント・SSID・ルーター・スイッチングハブ・ステークホルダー。駅前のカフェを開くAさんのストーリー。図解SVG3点＋挿絵5枚（images/week05-*.jpg）、練習クイズ5問、用語カード9語、就活ワンポイント。**授業の中にゲーム「用語シューティング」を2回入れた初めての回**（ゲーム①=1限後半・ステージ1、ゲーム②=2限前半・ステージ2。座学で集中が切れる時間帯の刺激として、先生の提案、2026-10-28）。令和7年度の公開問題にはLAN/WANを直接問う問がなく、問57（HTTPプロキシサーバ）と第4回の問90の見直しを使用）
   term-shooter.html     #     用語シューティング（1人用のゲーム。1ファイルHTML、JSのみ・記録なし・外部送信なし。画面の「意味」に合う用語の的を撃つ。問題データは `TERM_SETS[週]` の定数に分離してあり、`?w=5&stage=1|2` で開く。意味の文は読み込み時に全問をDOMへ書き出して hidden で切り替える＝ブラウザ翻訳で訳された文をJSが日本語に戻さないため。用語の的は translate="no"。スマホ幅は的を2×2に並べる。ふりがなトグル対応）
+  qr/                   #   QRコードのSVG（week05-page.svg=このページ、week05-game-stage1/2.svg=ゲームのステージ直行。tools/qr/make_qr.py で生成。コミットする）
   furigana/             #   ふりがなの辞書（ページごとのJSON。tools/furigana/build_dict.py で生成し、レビュー済みの状態でコミット）
 system-dev-practice-a2.html   # システム開発実習AⅡ（水3・4限／後期。授業内容確定済み、週ページ未作成）
 ai-programming-2.html   # AI活用プログラミング基礎Ⅱ（木1・2限／後期。授業内容確定済み、週ページ順次作成中）
@@ -143,8 +144,9 @@ autumn-intensive/       # 秋の集中講座 の日別詳細ページ（週ペ�
   day05.html            #   Day5 先輩が訪問する／先輩の話を聞く／交流する／ふりかえる（上級生が1年生の教室を訪問、先輩のプレゼン・インタビュー40分（質問を事前に伝える）、自由交流35分、アンケート・クロージング15分。時間配分は固定ルールの例外）
   images/               #   Day2 の説明用スクリーンショット（battle-baseの画面。day02-*.png。/screenshot skill で撮影）
 tools/furigana/        # ふりがな辞書の生成（build_dict.py・overrides.tsv・テスト・requirements.txt。仮想環境 .venv は管理対象外）
+tools/qr/              # QRコードの生成（make_qr.py・qr_list.tsv=出力パスとURLの一覧・テスト・requirements.txt。仮想環境 .venv は管理対象外。実行時のライブラリ・CDNは使わず、事前に静的なSVGにして埋め込む）
 styles.css              # 共通スタイル（Editorial Paper Edition ライトテーマ）
-app.js                  # Markdownコピー、サイト内クイズ、ふりがなトグル（<body data-furigana> があるページだけ）
+app.js                  # Markdownコピー、サイト内クイズ、ふりがなトグル（<body data-furigana> があるページだけ）、QRコードの拡大表示（`a.qr-box__zoom` を押すと <dialog> で大きく出す。week05 が `?v=5`、他ページは古い連番のままで影響なし）
 favicon.svg             # ファビコン
 content/                # Markdownソース（コピーボタン用。全HTMLページに1対1で対応）
 .github/workflows/      # GitHub Pagesデプロイ設定
@@ -261,7 +263,7 @@ content/                # Markdownソース（コピーボタン用。全HTMLペ
 
 - **共通ルール**: ①SVGは `role="img"` + `<title>` + `<desc>`、画像は `alt` を必ず付ける ②色だけで意味を伝えない（文字ラベルを併記する）③375〜390px幅で横スクロールが出ないこと、375px幅で補足文字が実寸約11px・本文が約11.7px以上あることを、Playwrightで実測して確認する（360px幅の小さいスマホでは補足文字が約10.4pxまで下がる。それより小さくしない）（viewBox幅360のSVGは幅が縮むと文字も縮むため、`main.theme-blue` / `main.theme-purple` ではスマホ幅だけ余白を詰めて文字を大きくしている） ④図の内容（回の番号・テーマ名・機能名）は親ページ・他の週ページと突き合わせ、comment-analyzerに依頼する
 - **テーマ色**: `vz-*` は amber 基調。`main.theme-slate`（秋の集中講座）／`main.theme-blue`（プログラム基礎Ⅱ）／`main.theme-purple`（AIコミュニケーション基礎Ⅱ）のように、`<main>` にクラスを付けて読み替える。**新しい色の科目で使うときは `styles.css` に読み替え（`main.theme-xxx`）を追加する**。丸点の色は `.dot` / `.dot-blue` / `.dot-orange`（白い数字を載せるので、コントラスト4.5:1以上の色だけ使う。`--c-green` は4.36:1で不足）。**`main.theme-slate` 専用のセレクタ（`.vz-field ul` など）もあるため、blue基調のページで SVG（`.vz-svg`）・`vz-fig`・`vz-flow` 以外の `vz-*` 部品を使うときは表示を確認する**
-- **CSSを触ったとき**: 週ページ側の `styles.css?v=N` を上げると、古いキャッシュを待たずに反映できる（`styles.css` を変えるたびに連番を上げる。現在の最新は `?v=23`（ITパスポート week05・term-shooter.html が使用。琥珀の案内ブロック `.demo-cta--amber` を追加）。その前は `?v=22`（AIコミュニケーション基礎Ⅱ week07・suregai-game.html が使用。紫の案内ブロック `.demo-cta--purple` を追加）。その前は `?v=21`（ITパスポート week04 が使用。就活ワンポイントの `.tip-*`・止めるボタン `.tip-ctl` を追加。`app.js` は `?v=4`）。その前は `?v=19`（AI活用プログラミング基礎Ⅱ week06 が使用。比較表の `.schedule-table--stack`（スマホ幅で観点ごとのカードに積む。各 `td` に `data-label` を付ける）を追加。自然言語開発Ⅱ week06 は `?v=18`。`main.theme-orange` の追加で orange 基調のページでも `vz-*` を使える。他のページは古い連番のままで、影響する変更は入っていない））
+- **CSSを触ったとき**: 週ページ側の `styles.css?v=N` を上げると、古いキャッシュを待たずに反映できる（`styles.css` を変えるたびに連番を上げる。現在の最新は `?v=24`（ITパスポート week05 が使用。QRコードの `.qr-box`、`.syllabus-section` の中に置いた `.demo-cta` のボタンの文字を白・下線なしにそろえる指定を追加）。その前は `?v=23`（ITパスポート week05・term-shooter.html が使用。琥珀の案内ブロック `.demo-cta--amber` を追加）。その前は `?v=22`（AIコミュニケーション基礎Ⅱ week07・suregai-game.html が使用。紫の案内ブロック `.demo-cta--purple` を追加）。その前は `?v=21`（ITパスポート week04 が使用。就活ワンポイントの `.tip-*`・止めるボタン `.tip-ctl` を追加。`app.js` は `?v=4`）。その前は `?v=19`（AI活用プログラミング基礎Ⅱ week06 が使用。比較表の `.schedule-table--stack`（スマホ幅で観点ごとのカードに積む。各 `td` に `data-label` を付ける）を追加。自然言語開発Ⅱ week06 は `?v=18`。`main.theme-orange` の追加で orange 基調のページでも `vz-*` を使える。他のページは古い連番のままで、影響する変更は入っていない））
 
 ### 時間配分（固定・絶対厳守）
 
@@ -301,6 +303,7 @@ content/                # Markdownソース（コピーボタン用。全HTMLペ
 □ 12a. **（ITパスポート）挿絵を入れる**（GOAL.md「毎回の型」Ⓔ。nano-bananaで、1限前半のストーリー場面ごとに1枚＋たとえ絵。第2〜4回で実施。省略しない。文字・ロゴなし・altを付ける。看板などに文字風の落書きが出たら「無地」と指定して作り直す）
 □ 12c. **（ITパスポート）就活ワンポイントを書く**（共通ルール8。その回の言葉＋面接の質問例。一次資料の確認日つき）
 □ 12b. **図解を入れる**: 上記「図解を基本とする」に従い、その回の「流れ」「関係」「画面の形」を図にする。375px幅で確認
+□ 12d. **QRコードを入れる**（2026-10-28、先生の提案。第5回から全科目の新しい週ページで。教室の大きな画面を見ながら、自分のスマホでそのページを開けるようにする）: ①`tools/qr/qr_list.tsv` に「出力パス<TAB>公開URL」の行を足す（週ページ=`{dir}/qr/week{NN}-page.svg`。ゲームや別ページへ直行させたいときは、それも）②`tools/qr/.venv/bin/python tools/qr/make_qr.py`（初回は `python3 -m venv tools/qr/.venv && tools/qr/.venv/bin/pip install -r tools/qr/requirements.txt`）③ページ上部（翻訳の案内の次）に `<div class="qr-box qr-box--pc">`、ゲーム等の案内の中に `qr-box--inline` を置く（第5回 `it-passport-technology/week05.html` が見本。`<img>` は `alt` つき、SVGは `qr/` の中）。**`<img>` は `<a class="qr-box__zoom" href="qr/….svg" target="_blank" rel="noopener" aria-label="QRコードを大きく表示する">` で包む**: 押すと、app.js（`?v=5` 以上を読み込む）が `<dialog>` で大きく表示する（外側のクリック・Esc・「閉じる」で閉じる。JSが動かないときは、リンクのとおりSVGが新しいタブで開く）。ダイアログの文字は読み込み時にDOMへ置き、ふりがなの辞書には `build_dict.py` の `DYNAMIC_TEXTS` で足してある。**`qr-box--pc` はスマホ幅では隠れる**（すでにスマホで見ている人に不要）④`tools/qr/.venv/bin/python tools/qr/test_make_qr.py` と `make_qr.py --check` が OK ⑤ブラウザで描画したQRを撮影し、デコードして、URLが意図どおりか確かめる（第5回は OpenCV の `QRCodeDetector` で全件一致。拡大表示の画像も、1024×600の小さい画面を含めて読めることを確認）。**URLは公開サイトの中だけ**（`make_qr.py` が検査）。色は今は琥珀（ITパスポート）だけで、他の科目で使うときは `.qr-box--{色}` の読み替えを `styles.css` に足す（`.demo-cta--{色}` と同じ要領）。第1〜4回など、すでにある週ページには入れていない（今回から）
 □ 13. **整合性検証**: ステップ4のメモの全項目が週ページに登場するか grep で確認
        例: `grep -F "【学習データ①】" {dir}/week{NN}.html`
 □ 13b. **Markdown 残留チェック**: `grep -nE '\*\*[^*]+\*\*' {dir}/week{NN}.html` を実行し、Markdown 記法の強調が HTML に混入していないか確認。HTML 内では `<strong>…</strong>` で統一する（PR #53 教訓: `**使い分け**` が1箇所残留して code-reviewer に Important で指摘された）
