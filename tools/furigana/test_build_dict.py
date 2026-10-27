@@ -150,6 +150,21 @@ class AnalyzeTest(unittest.TestCase):
         self.assertEqual(conflicts, [])
 
 
+class GameMeaningTest(unittest.TestCase):
+    def test_texts_extracted_from_game_data(self):
+        html = '<script>const T = { 5: { stage1: [ { term: "LAN", meaning: "同じ建物の中の、せまい範囲のネットワーク。" }, { term: "WAN", meaning: "引用\\"符\\"つき。" } ] } };</script>'
+        self.assertEqual(bd.game_texts(html), ['LAN', '同じ建物の中の、せまい範囲のネットワーク。', 'WAN', '引用"符"つき。'])
+
+    def test_page_without_game_data_has_none(self):
+        self.assertEqual(bd.game_texts('<p>本文だけのページ</p>'), [])
+
+    def test_meanings_land_in_dictionary(self):
+        html = '<body><script>const T = { meaning: "電波で、機器をつなぐLAN。" };</script></body>'
+        d, _, _ = bd.build_page_dict(html, bd.Analyzer(overrides=[]))
+        self.assertTrue(any(True for _ in d['n']))
+        self.assertIn(bd.node_key('電波で、機器をつなぐLAN。'), d['n'])
+
+
 class CoverageTest(unittest.TestCase):
     def test_covered_has_zero_uncovered(self):
         a = bd.Analyzer(overrides=[])

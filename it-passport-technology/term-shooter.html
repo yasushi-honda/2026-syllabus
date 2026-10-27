@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用語シューティング（1人用の練習ゲーム） | ITパスポート テクノロジー系</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=23">
+  <!-- 用語を覚えるための1人用ゲーム。入力・得点はどこにも送信・保存しない（再読み込みで最初から）。外部ライブラリなし。
+       翻訳対応: 意味の文は読み込み時に全問ぶんをDOMへ書き出し、出題時は hidden の切り替えだけで見せる（textContentを書き換えない）。
+       用語（的の文字）は translate="no" で日本語のまま。問題データは下の TERM_SETS だけを差し替えれば週を増やせる（?w=5 など）。
+       効果音はWeb Audioで合成（既定オフ）。背景の星と粒子だけ canvas、文字はすべてDOM。 -->
+  <style>
+    [hidden] { display: none !important; }
+    .ts-game { --ts-amber: #ffb000; --ts-cyan: #3ee6ff; --ts-mag: #ff5fd8; --ts-lime: #8dff6b; --ts-ink: #f4f1ff; --ts-mute: #cfc8f2;
+      position: relative; max-width: 760px; margin: 1rem auto 1.4rem; border-radius: 16px; overflow: hidden; color: var(--ts-ink);
+      background: radial-gradient(120% 90% at 20% 0%, #2a1a5e 0%, #120d2e 55%, #07051a 100%);
+      border: 2px solid rgba(255,176,0,.65); box-shadow: 0 0 0 1px rgba(62,230,255,.35), 0 0 28px rgba(255,95,216,.35), 0 0 60px rgba(62,230,255,.18); }
+    .ts-game.is-shake { animation: tsShake .4s; }
+    @keyframes tsShake { 0%,100% { transform: translate(0,0); } 20% { transform: translate(-6px,2px); } 40% { transform: translate(5px,-3px); } 60% { transform: translate(-4px,-2px); } 80% { transform: translate(3px,3px); } }
+    .ts-cv { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; display: block; }
+    .ts-cv--bg { z-index: 0; }
+    .ts-cv--fx { z-index: 3; }
+    .ts-screen { position: relative; z-index: 1; padding: 1rem 1rem 1.1rem; }
+    .ts-title { font-family: 'Noto Serif JP', serif; font-weight: 900; font-size: clamp(1.5rem, 6vw, 2.2rem); margin: .2rem 0 .3rem; border: 0; padding: 0; line-height: 1.3;
+      background: linear-gradient(90deg, var(--ts-amber), var(--ts-mag), var(--ts-cyan)); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: none; }
+    .ts-lead { color: var(--ts-mute); font-size: .95rem; line-height: 1.8; margin: 0 0 .8rem; }
+    .ts-howto { list-style: none; margin: 0 0 1rem; padding: 0; display: grid; gap: .45rem; }
+    .ts-howto li { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.16); border-radius: 10px; padding: .5rem .75rem; font-size: .9rem; line-height: 1.7; color: var(--ts-ink); }
+    .ts-stages { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .8rem; margin: .4rem 0 1rem; }
+    .ts-stage { text-align: left; font-family: inherit; color: var(--ts-ink); cursor: pointer; border-radius: 12px; padding: .8rem .95rem; line-height: 1.6; font-size: .92rem;
+      background: linear-gradient(160deg, rgba(62,230,255,.16), rgba(255,95,216,.14)); border: 2px solid rgba(62,230,255,.7); box-shadow: 0 0 14px rgba(62,230,255,.3); min-height: 44px; }
+    .ts-stage:hover { box-shadow: 0 0 22px rgba(255,176,0,.6); border-color: var(--ts-amber); }
+    .ts-stage-no { display: inline-block; background: var(--ts-amber); color: #1b1200; border-radius: 999px; padding: 0 .65rem; font-weight: 800; font-size: .82rem; }
+    .ts-stage-name { display: block; font-size: 1.1rem; font-weight: 800; margin: .25rem 0 .1rem; }
+    .ts-btn { font-family: inherit; font-weight: 700; font-size: .92rem; line-height: 1.4; cursor: pointer; color: #1b1200; background: linear-gradient(180deg, #ffc940, #ffa200); border: 0; border-radius: 999px; padding: .55rem 1.1rem; min-height: 44px; box-shadow: 0 0 14px rgba(255,176,0,.5); }
+    .ts-btn:hover { filter: brightness(1.08); }
+    .ts-btn--sub { color: var(--ts-ink); background: rgba(255,255,255,.1); border: 1.5px solid rgba(255,255,255,.45); box-shadow: none; }
+    .ts-btn--sub[aria-pressed="true"] { border-color: var(--ts-lime); color: var(--ts-lime); }
+    .ts-btn:focus-visible, .ts-stage:focus-visible, .ts-target:focus-visible { outline: 3px solid #fff; outline-offset: 2px; box-shadow: 0 0 0 5px var(--ts-mag); }
+    .ts-row { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: .6rem 0 0; }
+    .ts-hud { display: flex; flex-wrap: wrap; gap: .3rem .9rem; align-items: center; justify-content: space-between; font-size: .88rem; background: rgba(0,0,0,.35); border: 1px solid rgba(255,255,255,.18); border-radius: 10px; padding: .4rem .7rem; margin-bottom: .6rem; }
+    .ts-hud b { color: var(--ts-amber); font-size: 1.05rem; font-variant-numeric: tabular-nums; }
+    .ts-heart { color: #ff4f7d; text-shadow: 0 0 8px #ff4f7d; font-size: 1.05rem; }
+    .ts-heart.is-lost { color: #5b5470; text-shadow: none; }
+    .ts-meaning-box { background: rgba(0,0,0,.45); border: 1.5px solid rgba(62,230,255,.6); border-radius: 12px; padding: .65rem .85rem .7rem; box-shadow: 0 0 16px rgba(62,230,255,.22) inset; }
+    .ts-meaning-cap { font-size: .8rem; font-weight: 700; color: var(--ts-cyan); margin: 0 0 .15rem; }
+    .ts-meaning { margin: 0; font-size: 1.05rem; line-height: 2; font-weight: 600; color: #fff; min-height: 3.2em; }
+    .ts-field { position: relative; height: clamp(330px, 56vh, 430px); margin: .6rem 0 .3rem; border-radius: 12px; overflow: hidden;
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,95,216,.12)); border: 1px dashed rgba(255,255,255,.3); }
+    .ts-field::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: linear-gradient(90deg, var(--ts-mag), var(--ts-amber), var(--ts-cyan)); box-shadow: 0 0 14px var(--ts-mag); }
+    .ts-target { position: absolute; top: 0; width: calc(25% - 6px); margin: 0 3px; min-height: 56px; padding: .5rem .2rem .35rem; text-align: center; font-family: inherit; font-weight: 800; font-size: .82rem; line-height: 1.7; color: #fff; cursor: pointer;
+      border-radius: 14px; background: linear-gradient(180deg, rgba(40,30,95,.95), rgba(15,10,50,.95)); border: 2px solid var(--c); box-shadow: 0 0 12px var(--c), 0 0 0 1px rgba(255,255,255,.12) inset; word-break: break-all; overflow-wrap: anywhere; will-change: transform; }
+    .ts-target:nth-child(1) { left: 0; --c: #3ee6ff; }
+    .ts-target:nth-child(2) { left: 25%; --c: #ff5fd8; }
+    .ts-target:nth-child(3) { left: 50%; --c: #ffb000; }
+    .ts-target:nth-child(4) { left: 75%; --c: #8dff6b; }
+    .ts-target:hover:not(:disabled) { filter: brightness(1.25); }
+    .ts-target:disabled { cursor: default; }
+    .ts-key { position: absolute; top: -9px; left: 6px; min-width: 20px; height: 20px; line-height: 20px; border-radius: 6px; background: var(--c); color: #0b0820; font-size: .75rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; }
+    .ts-target.is-hit { visibility: hidden; }
+    .ts-target.is-dim { opacity: .35; }
+    .ts-target.is-wrong { border-color: #ff4f4f; box-shadow: 0 0 16px #ff4f4f; background: #4a0f1c; }
+    .ts-target.is-answer { border-color: var(--ts-lime); box-shadow: 0 0 22px var(--ts-lime); background: #0f3a1c; opacity: 1; }
+    .ts-fb { min-height: 2.6em; margin: .3rem 0 0; font-size: .95rem; line-height: 1.7; font-weight: 700; }
+    .ts-fb .ok { color: var(--ts-lime); } .ts-fb .ng { color: #ff8a8a; }
+    .ts-fb b { color: #fff; background: rgba(255,255,255,.14); border-radius: 6px; padding: 0 .4rem; }
+    .ts-pause { position: absolute; inset: 0; z-index: 4; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: .8rem; background: rgba(7,5,26,.86); text-align: center; padding: 1rem; }
+    .ts-pause p { margin: 0; font-size: 1.2rem; font-weight: 800; }
+    .ts-result-head { font-size: 1.05rem; font-weight: 700; margin: 0 0 .6rem; line-height: 1.7; }
+    .ts-score-grid { display: flex; flex-wrap: wrap; gap: .6rem; align-items: stretch; margin-bottom: .8rem; }
+    .ts-score-card { flex: 1 1 120px; background: rgba(0,0,0,.4); border: 1px solid rgba(255,255,255,.22); border-radius: 12px; padding: .5rem .8rem; text-align: center; font-size: .85rem; color: var(--ts-mute); }
+    .ts-score-card strong { display: block; font-size: 1.6rem; color: var(--ts-amber); font-variant-numeric: tabular-nums; line-height: 1.4; }
+    .ts-rank { font-family: 'Noto Serif JP', serif; font-size: 3rem !important; color: var(--ts-mag) !important; text-shadow: 0 0 18px var(--ts-mag); }
+    .ts-wrong h3 { font-size: 1rem; margin: .6rem 0 .4rem; color: #fff; border: 0; padding: 0; }
+    .ts-wrong ol { list-style: none; margin: 0; padding: 0; display: grid; gap: .45rem; }
+    .ts-wrong li { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.2); border-radius: 10px; padding: .45rem .7rem; line-height: 1.9; font-size: .92rem; }
+    .ts-wrong li b { display: inline-block; background: var(--ts-lime); color: #07210d; border-radius: 6px; padding: 0 .5rem; margin-right: .4rem; }
+    .ts-wrong li p { margin: 0; display: inline; }
+    .ts-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .ts-game ruby rt { color: inherit; }
+    .ts-back { margin: .4rem auto 1.4rem; max-width: 760px; }
+    @media (prefers-reduced-motion: reduce) {
+      .ts-game.is-shake { animation: none; box-shadow: 0 0 0 4px #ff4f4f; }
+    }
+    @media (max-width: 480px) {
+      .ts-screen { padding: .8rem .65rem .9rem; }
+      .ts-hud { font-size: .84rem; gap: .25rem .6rem; }
+      .ts-meaning { font-size: 1rem; }
+      /* スマホ幅では的を2×2に並べて横幅を確保する（長い用語が折れないように）。2段目の位置ぶんは place() が落下距離から引く */
+      .ts-target { width: calc(50% - 6px); font-size: .95rem; }
+      .ts-target:nth-child(1) { left: 0; }
+      .ts-target:nth-child(2) { left: 50%; }
+      .ts-target:nth-child(3) { left: 0; top: 5.2rem; }
+      .ts-target:nth-child(4) { left: 50%; top: 5.2rem; }
+    }
+  </style>
+</head>
+<body data-furigana="furigana/term-shooter.json">
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--amber">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../it-passport-technology.html">ITパスポート テクノロジー系</a>
+        <span>/</span>
+        <a href="week05.html" id="crumb-week">第5回</a>
+        <span>/</span>
+        <span>用語シューティング</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">用語シューティング</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">1人用の練習ゲーム</span>
+            <span class="page-badge">用語を覚える</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-amber">
+
+    <div class="message-box">このゲームは、ITパスポート試験に出る用語を、遊びながら覚える練習です。<strong>得点は記録されません。試験の点数とは関係なく、用語を覚えるための練習です。</strong>ページはブラウザの翻訳機能で母語に訳せます。ただし、的（まと）に書かれた<span translate="no">用語</span>は翻訳されません。<strong>本番の試験は日本語なので、用語は日本語のまま覚えてください。</strong></div>
+
+    <div class="ts-game" id="game">
+      <canvas class="ts-cv ts-cv--bg" id="cv-bg" aria-hidden="true"></canvas>
+      <canvas class="ts-cv ts-cv--fx" id="cv-fx" aria-hidden="true"></canvas>
+
+      <!-- スタート画面 -->
+      <section class="ts-screen" id="screen-start" aria-labelledby="start-title">
+        <h2 class="ts-title" id="start-title">用語シューティング</h2>
+        <p class="ts-lead">画面に出る「意味」に合う用語の的（まと）を撃とう。的は上から落ちてきます。下に着く前に撃ってください。</p>
+        <ul class="ts-howto">
+          <li>1ステージは7〜10問です（ステージ1は7問、ステージ2は10問）。ライフは3つ。まちがえる、または時間切れになると、ライフが1つ減ります。</li>
+          <li>つづけて正解すると、コンボで得点が増えます。まちがえると、コンボは元にもどります。</li>
+          <li>操作は、的をクリック（タップ）、またはキーボードの <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>4</kbd> キーです（左の的から順に1〜4）。<kbd>P</kbd> キーでポーズできます。</li>
+        </ul>
+        <div class="ts-stages">
+          <button type="button" class="ts-stage" data-stage="0">
+            <span class="ts-stage-no">STAGE 1</span>
+            <span class="ts-stage-name">ゆっくり</span>
+            <span>的がゆっくり落ちます。まずは用語と意味を結びつけよう。</span>
+          </button>
+          <button type="button" class="ts-stage" data-stage="1">
+            <span class="ts-stage-no">STAGE 2</span>
+            <span class="ts-stage-name">スピードアップ</span>
+            <span>的が速く落ちます。前の回の用語も出ます。</span>
+          </button>
+        </div>
+        <div class="ts-row">
+          <button type="button" class="ts-btn ts-btn--sub" id="btn-sound-start" aria-pressed="false">効果音：<span class="snd-off">オフ</span><span class="snd-on" hidden>オン</span></button>
+          <span class="ts-lead" style="margin:0;font-size:.85rem">教室では、効果音はオフのままで遊べます。</span>
+        </div>
+      </section>
+
+      <!-- プレイ画面 -->
+      <section class="ts-screen" id="screen-play" aria-label="ゲーム画面" hidden>
+        <div class="ts-hud">
+          <span>STAGE <b id="hud-stage">1</b></span>
+          <span>問題 <b id="hud-q">1</b> / <b id="hud-total">10</b></span>
+          <span>ライフ <span aria-hidden="true"><span class="ts-heart">♥</span><span class="ts-heart">♥</span><span class="ts-heart">♥</span></span><span class="ts-sr" id="hud-lives">3</span></span>
+          <span>得点 <b id="hud-score">0</b></span>
+          <span>コンボ ×<b id="hud-mult">1</b></span>
+        </div>
+        <div class="ts-meaning-box">
+          <p class="ts-meaning-cap">この意味に合う用語は？</p>
+          <div id="meaning-bank"></div>
+        </div>
+        <div class="ts-field" id="field">
+          <button type="button" class="ts-target"><span class="ts-key" aria-hidden="true">1</span><span class="ts-term" translate="no"></span></button>
+          <button type="button" class="ts-target"><span class="ts-key" aria-hidden="true">2</span><span class="ts-term" translate="no"></span></button>
+          <button type="button" class="ts-target"><span class="ts-key" aria-hidden="true">3</span><span class="ts-term" translate="no"></span></button>
+          <button type="button" class="ts-target"><span class="ts-key" aria-hidden="true">4</span><span class="ts-term" translate="no"></span></button>
+        </div>
+        <p class="ts-fb" id="fb" role="status" aria-live="polite">
+          <span class="ok" id="fb-ok" hidden>せいかい！</span>
+          <span class="ng" id="fb-ng" hidden>ちがいます。</span>
+          <span class="ng" id="fb-to" hidden>時間切れです。</span>
+          <span id="fb-ans" hidden>正解は <b translate="no" id="fb-term"></b></span>
+        </p>
+        <div class="ts-row">
+          <button type="button" class="ts-btn ts-btn--sub" id="btn-pause">ポーズ</button>
+          <button type="button" class="ts-btn ts-btn--sub" id="btn-sound" aria-pressed="false">効果音：<span class="snd-off">オフ</span><span class="snd-on" hidden>オン</span></button>
+          <button type="button" class="ts-btn ts-btn--sub" id="btn-quit">ステージ選択にもどる</button>
+        </div>
+        <div class="ts-pause" id="pause" hidden>
+          <p id="pause-msg">ポーズ中</p>
+          <button type="button" class="ts-btn" id="btn-resume">再開する</button>
+        </div>
+      </section>
+
+      <!-- 結果画面 -->
+      <section class="ts-screen" id="screen-result" aria-labelledby="result-title" hidden>
+        <h2 class="ts-title" id="result-title">結果</h2>
+        <p class="ts-result-head">
+          <span id="res-clear" hidden>ステージクリア！</span>
+          <span id="res-over" hidden>ライフがなくなりました。</span>
+        </p>
+        <div class="ts-score-grid">
+          <div class="ts-score-card">ランク<strong class="ts-rank" id="res-rank">C</strong></div>
+          <div class="ts-score-card">正解<strong><span id="res-correct">0</span> / <span id="res-total">10</span></strong></div>
+          <div class="ts-score-card">得点<strong id="res-score">0</strong></div>
+        </div>
+        <div class="ts-wrong">
+          <h3>学び直し：まちがえた用語と意味</h3>
+          <p class="ts-lead" id="res-none" hidden>まちがえた用語はありません。すばらしい！</p>
+          <ol id="res-list"></ol>
+        </div>
+        <div class="ts-row">
+          <button type="button" class="ts-btn" id="btn-again">もう一度</button>
+          <button type="button" class="ts-btn ts-btn--sub" id="btn-select">ステージ選択へ</button>
+        </div>
+      </section>
+    </div>
+
+    <p class="ts-back"><a href="week05.html" id="back-week">← 第5回に戻る</a></p>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script>
+  /* ===== 問題データ（ここだけ差し替えれば第6回以降も使える。?w=5 で週を選ぶ） =====
+     TERM_SETS[週] = { stage1: [...], stage2: [...] }
+     各問: { term: 用語, meaning: 意味（やさしい日本語1〜2文、ふりがなは書かない）, decoys: [任意。まちがいの用語3つ。省略すると同じステージの他の用語から自動で選ぶ] }
+  ===== */
+  const TERM_SETS = {
+    5: {
+      /* 第5回 ステージ1: 1限後半のゲーム①までに出る用語（7語）。週ページ week05.html の用語カードの要約版 */
+      stage1: [
+        { term: "LAN", meaning: "同じ建物や敷地の中など、せまい範囲のネットワーク。", decoys: ["WAN", "SSID", "ステークホルダー"] },
+        { term: "WAN", meaning: "離れた場所どうし（本店と2号店など）をつなぐ、広い範囲のネットワーク。" },
+        { term: "有線LAN", meaning: "ケーブルで、機器をつなぐLAN。" },
+        { term: "無線LAN", meaning: "電波で、機器をつなぐLAN。Wi-Fiとも呼ばれる。" },
+        { term: "アクセスポイント", meaning: "無線LANの機器（スマホなど）を、電波でネットワークにつなぐ機器。" },
+        { term: "SSID", meaning: "無線LANのネットワークの名前。スマホのWi-Fiの一覧に出る名前。" },
+        { term: "ステークホルダー", meaning: "企業に関わる人や組織（お客さん・従業員・株主・取引先など）。利害関係者ともいう。" }
+      ],
+      /* 第5回 ステージ2: 2限前半のゲーム②。今日の用語（ルーター・スイッチングハブを追加）＋第4回までの用語（10語） */
+      stage2: [
+        { term: "ルーター", meaning: "ネットワークとネットワークをつなぎ、データを送る道すじを決める機器。" },
+        { term: "スイッチングハブ", meaning: "同じLANの中で、機器どうしをつなぐ機器。LANケーブルの差し込み口がたくさんある。" },
+        { term: "アクセスポイント", meaning: "無線LANの機器（スマホなど）を、電波でネットワークにつなぐ機器。" },
+        { term: "SSID", meaning: "無線LANのネットワークの名前。スマホのWi-Fiの一覧に出る名前。" },
+        { term: "WAN", meaning: "離れた場所どうし（本店と2号店など）をつなぐ、広い範囲のネットワーク。" },
+        { term: "有線LAN", meaning: "ケーブルで、機器をつなぐLAN。" },
+        { term: "共通鍵暗号", meaning: "暗号化と元に戻すときに、同じ鍵を使う方式。速いが、相手ごとに鍵が必要。" },
+        { term: "公開鍵暗号", meaning: "暗号化と元に戻すときに、別の鍵（公開鍵と秘密鍵）を使う方式。" },
+        { term: "デジタル署名", meaning: "作った人の確認と、書き換えられていないことの確認ができる仕組み。" },
+        { term: "認証局", meaning: "電子証明書の登録・発行・失効などを行う、第三者の機関。" }
+      ]
+    }
+  };
+  /* ステージ設定: 的が上から下に着くまでの時間（ミリ秒） */
+  const STAGES = [ { key: "stage1", fall: 13000 }, { key: "stage2", fall: 8500 } ];
+  </script>
+  <script>
+  (function () {
+    "use strict";
+    var $ = function (id) { return document.getElementById(id); };
+    var params = new URLSearchParams(location.search);
+    var week = parseInt(params.get("w"), 10);
+    if (!TERM_SETS[week]) { week = TERM_SETS[5] ? 5 : parseInt(Object.keys(TERM_SETS)[0], 10); }
+    var DATA = TERM_SETS[week];
+    var weekLabel = "week" + (week < 10 ? "0" : "") + week + ".html";
+    $("back-week").setAttribute("href", weekLabel);
+    $("crumb-week").setAttribute("href", weekLabel);
+    $("back-week").textContent = "← 第" + week + "回に戻る";
+    $("crumb-week").textContent = "第" + week + "回";
+
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var game = $("game"), field = $("field");
+    var targets = Array.prototype.slice.call(field.querySelectorAll(".ts-target"));
+    var termEls = targets.map(function (b) { return b.querySelector(".ts-term"); });
+    var screens = { start: $("screen-start"), play: $("screen-play"), result: $("screen-result") };
+
+    /* ---- 意味の文を全問ぶんDOMへ書き出す（出題時は hidden の切り替えだけ） ---- */
+    var bank = STAGES.map(function (st) {
+      var list = DATA[st.key] || [];
+      return list.map(function (it, i) {
+        var p = document.createElement("p");
+        p.className = "ts-meaning";
+        p.hidden = true;
+        p.textContent = it.meaning;
+        $("meaning-bank").appendChild(p);
+        return p;
+      });
+    });
+
+    /* ---- 状態 ---- */
+    var g = { screen: "start", stage: 0, order: [], qi: 0, lives: 3, score: 0, combo: 0, correct: 0, wrong: [], progress: 0, state: "idle", wait: 0, paused: false, curBank: null, cur: null, over: false };
+    function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+    function show(name) { g.screen = name; Object.keys(screens).forEach(function (k) { screens[k].hidden = (k !== name); }); }
+    function mult() { return 1 + Math.min(Math.floor(g.combo / 3), 4) * 0.5; }
+
+    /* ---- 効果音（Web Audio で合成、既定オフ） ---- */
+    var actx = null, soundOn = false;
+    function tone(f, d, type, vol, delay) {
+      if (!soundOn || !actx) return;
+      var t0 = actx.currentTime + (delay || 0), o = actx.createOscillator(), gn = actx.createGain();
+      o.type = type || "sine"; o.frequency.setValueAtTime(f, t0);
+      gn.gain.setValueAtTime(vol || 0.08, t0); gn.gain.exponentialRampToValueAtTime(0.0001, t0 + d);
+      o.connect(gn); gn.connect(actx.destination); o.start(t0); o.stop(t0 + d + 0.02);
+    }
+    function sfx(kind) {
+      if (kind === "ok") { tone(660, 0.12, "square", 0.05); tone(990, 0.18, "square", 0.05, 0.08); }
+      else if (kind === "ng") { tone(160, 0.3, "sawtooth", 0.07); }
+      else if (kind === "end") { tone(523, 0.15, "triangle", 0.08); tone(659, 0.15, "triangle", 0.08, 0.14); tone(784, 0.3, "triangle", 0.08, 0.28); }
+    }
+    function setSound(on) {
+      soundOn = on;
+      if (on && !actx) { try { actx = new (window.AudioContext || window.webkitAudioContext)(); } catch (e) { actx = null; soundOn = false; } }
+      if (on && actx && actx.state === "suspended") { actx.resume(); }
+      ["btn-sound", "btn-sound-start"].forEach(function (id) {
+        var b = $(id); b.setAttribute("aria-pressed", soundOn ? "true" : "false");
+        b.querySelector(".snd-off").hidden = soundOn; b.querySelector(".snd-on").hidden = !soundOn;
+      });
+      if (soundOn) tone(880, 0.1, "sine", 0.06);
+    }
+
+    /* ---- 背景 canvas（星のパララックス）と演出 canvas（粒子・ビーム） ---- */
+    var cvBg = $("cv-bg"), cvFx = $("cv-fx"), cb = cvBg.getContext("2d"), cf = cvFx.getContext("2d");
+    var W = 0, H = 0, dpr = 1, stars = [], parts = [], beams = [];
+    function sizeCanvas() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = game.clientWidth; H = game.clientHeight;
+      [cvBg, cvFx].forEach(function (c) { c.width = Math.round(W * dpr); c.height = Math.round(H * dpr); });
+      cb.setTransform(dpr, 0, 0, dpr, 0, 0); cf.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var n = Math.round(W * H / 4500);
+      stars = [];
+      for (var i = 0; i < n; i++) { var layer = i % 3; stars.push({ x: Math.random() * W, y: Math.random() * H, l: layer, r: 0.5 + layer * 0.6, tw: Math.random() * 6.28 }); }
+      drawBg(0);
+    }
+    var starColors = ["#9fb4ff", "#ffe9a8", "#ffffff"];
+    function drawBg(dt) {
+      cb.clearRect(0, 0, W, H);
+      for (var i = 0; i < stars.length; i++) {
+        var s = stars[i];
+        if (!reduce.matches) { s.y += (s.l + 1) * 0.012 * dt; if (s.y > H) { s.y -= H; s.x = Math.random() * W; } s.tw += dt * 0.003; }
+        cb.globalAlpha = 0.45 + 0.4 * Math.sin(s.tw) * (reduce.matches ? 0 : 1) + (reduce.matches ? 0.2 : 0);
+        cb.fillStyle = starColors[s.l]; cb.beginPath(); cb.arc(s.x, s.y, s.r, 0, 6.283); cb.fill();
+      }
+      cb.globalAlpha = 1;
+    }
+    function drawFx(dt) {
+      if (!parts.length && !beams.length) { if (drawFx.dirty) { cf.clearRect(0, 0, W, H); drawFx.dirty = false; } return; }
+      drawFx.dirty = true; cf.clearRect(0, 0, W, H);
+      var i;
+      for (i = beams.length - 1; i >= 0; i--) {
+        var b = beams[i]; b.life -= dt; if (b.life <= 0) { beams.splice(i, 1); continue; }
+        cf.globalAlpha = b.life / 140; cf.strokeStyle = b.c; cf.lineWidth = 4; cf.shadowColor = b.c; cf.shadowBlur = 14;
+        cf.beginPath(); cf.moveTo(b.x1, b.y1); cf.lineTo(b.x2, b.y2); cf.stroke();
+      }
+      cf.shadowBlur = 0;
+      for (i = parts.length - 1; i >= 0; i--) {
+        var p = parts[i]; p.life -= dt; if (p.life <= 0) { parts.splice(i, 1); continue; }
+        p.x += p.vx * dt; p.y += p.vy * dt; p.vy += 0.0006 * dt;
+        cf.globalAlpha = Math.max(0, p.life / p.max); cf.fillStyle = p.c; cf.beginPath(); cf.arc(p.x, p.y, p.r, 0, 6.283); cf.fill();
+      }
+      cf.globalAlpha = 1;
+    }
+    function burst(btn, color) {
+      if (reduce.matches) return;
+      var gr = game.getBoundingClientRect(), br = btn.getBoundingClientRect();
+      var x = br.left - gr.left + br.width / 2, y = br.top - gr.top + br.height / 2;
+      beams.push({ x1: W / 2, y1: H, x2: x, y2: y, c: color, life: 140 });
+      for (var i = 0; i < 30; i++) {
+        var a = Math.random() * 6.283, sp = 0.05 + Math.random() * 0.28;
+        parts.push({ x: x, y: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 0.05, r: 1.5 + Math.random() * 3, c: i % 3 === 0 ? "#ffffff" : color, life: 500 + Math.random() * 400, max: 900 });
+      }
+    }
+    function shake() {
+      game.classList.remove("is-shake"); void game.offsetWidth; game.classList.add("is-shake");
+      setTimeout(function () { game.classList.remove("is-shake"); }, 450);
+    }
+
+    /* ---- HUD ---- */
+    var hearts = Array.prototype.slice.call(document.querySelectorAll(".ts-heart"));
+    function hud() {
+      $("hud-stage").textContent = g.stage + 1;
+      $("hud-q").textContent = Math.min(g.qi + 1, g.order.length);
+      $("hud-total").textContent = g.order.length;
+      $("hud-score").textContent = g.score;
+      $("hud-mult").textContent = mult().toString();
+      $("hud-lives").textContent = g.lives;
+      hearts.forEach(function (h, i) { h.classList.toggle("is-lost", i >= g.lives); });
+    }
+    function fb(kind, term) {
+      $("fb-ok").hidden = kind !== "ok"; $("fb-ng").hidden = kind !== "ng"; $("fb-to").hidden = kind !== "to";
+      var showAns = kind === "ng" || kind === "to";
+      $("fb-ans").hidden = !showAns; if (showAns) $("fb-term").textContent = term;
+    }
+
+    /* ---- ゲームの流れ ---- */
+    function startStage(s) {
+      var list = DATA[STAGES[s].key] || [];
+      if (list.length < 4) return; /* 的は4つ。語が4つ未満だと、前の問題の的が残るので始めない */
+      g.stage = s; g.order = shuffle(list.map(function (_, i) { return i; })); g.qi = 0; g.lives = 3; g.score = 0; g.combo = 0; g.correct = 0; g.wrong = []; g.over = false; g.paused = false;
+      $("pause").hidden = true; setPauseLabel();
+      show("play"); nextQuestion();
+    }
+    function nextQuestion() {
+      if (g.lives <= 0) { g.over = true; return finish(); }
+      if (g.qi >= g.order.length) return finish();
+      var list = DATA[STAGES[g.stage].key], idx = g.order[g.qi], item = list[idx];
+      if (g.curBank) g.curBank.hidden = true;
+      g.curBank = bank[g.stage][idx]; g.curBank.hidden = false; g.cur = { idx: idx, item: item };
+      var decoys = (item.decoys && item.decoys.length >= 3) ? shuffle(item.decoys).slice(0, 3) :
+        shuffle(list.filter(function (x) { return x.term !== item.term; }).map(function (x) { return x.term; })).slice(0, 3);
+      var opts = shuffle([item.term].concat(decoys));
+      opts.forEach(function (t, i) {
+        termEls[i].textContent = t;
+        targets[i].className = "ts-target"; targets[i].disabled = false; targets[i].dataset.ok = (t === item.term) ? "1" : "0";
+        targets[i].style.transform = "translateY(0)";
+      });
+      g.progress = 0; g.state = "fall"; fb(""); hud(); place();
+    }
+    function place() {
+      var fh = field.clientHeight, th = targets[0].offsetHeight || 60, extra = parseFloat(getComputedStyle(targets[2]).top) || 0, y = g.progress * (fh - th - 6 - extra);
+      for (var i = 0; i < targets.length; i++) targets[i].style.transform = "translateY(" + y.toFixed(1) + "px)";
+    }
+    function answer(col) {
+      if (g.screen !== "play" || g.state !== "fall" || g.paused) return;
+      var btn = col >= 0 ? targets[col] : null, ok = !!btn && btn.dataset.ok === "1";
+      var okIdx = targets.findIndex(function (b) { return b.dataset.ok === "1"; });
+      targets.forEach(function (b) { b.disabled = true; });
+      g.state = "fb";
+      if (ok) {
+        g.combo++; g.correct++;
+        g.score += Math.round((100 + Math.round((1 - g.progress) * 50)) * mult());
+        burst(btn, getComputedStyle(btn).getPropertyValue("--c").trim() || "#ffb000");
+        btn.classList.add("is-hit");
+        targets.forEach(function (b) { if (b !== btn) b.classList.add("is-dim"); });
+        fb("ok"); sfx("ok"); g.wait = 600;
+      } else {
+        g.combo = 0; g.lives--;
+        if (g.wrong.indexOf(g.cur.idx) < 0) g.wrong.push(g.cur.idx);
+        if (btn) btn.classList.add("is-wrong");
+        targets[okIdx].classList.add("is-answer");
+        targets.forEach(function (b) { if (!b.classList.contains("is-answer") && !b.classList.contains("is-wrong")) b.classList.add("is-dim"); });
+        shake(); fb(col < 0 ? "to" : "ng", g.cur.item.term); sfx("ng"); g.wait = 2200;
+      }
+      g.qi++; hud();
+    }
+    function finish() {
+      g.state = "idle";
+      var total = g.order.length, rate = g.correct / total;
+      var rank = (g.correct === total) ? "S" : rate >= 0.8 ? "A" : rate >= 0.6 ? "B" : "C";
+      $("res-rank").textContent = rank; $("res-correct").textContent = g.correct; $("res-total").textContent = total; $("res-score").textContent = g.score;
+      $("res-clear").hidden = g.over; $("res-over").hidden = !g.over;
+      var ol = $("res-list"); while (ol.firstChild) ol.removeChild(ol.firstChild);
+      g.wrong.forEach(function (idx) {
+        /* 先に空の要素を画面へ置き、あとから文字を入れる。app.js のふりがなは「あとから追加された文字」に付くので、
+           オン/オフに追従する（意味の文の要素を cloneNode すると、ルビまで複製されて、オフにしても消えない） */
+        var item = DATA[STAGES[g.stage].key][idx];
+        var li = document.createElement("li"), b = document.createElement("b");
+        b.setAttribute("translate", "no");
+        /* 意味の文は bank の複製を使う（ブラウザ翻訳で訳された文をそのまま持ってこられる）。ただし、ふりがなのルビは複製しない:
+           複製したルビは app.js の管理外で、オフにしても消えない。ルビを外して文字を1つにまとめ、画面へ置いたあとで入れ直す
+           （app.js のふりがなは「あとから追加された文字」に付くので、オン/オフに追従する） */
+        var m = bank[g.stage][idx].cloneNode(true); m.hidden = false; m.removeAttribute("class"); m.style.cssText = "";
+        Array.prototype.slice.call(m.querySelectorAll("ruby")).forEach(function (r) { r.parentNode.replaceChild(document.createTextNode(r.firstChild ? r.firstChild.nodeValue : ""), r); });
+        m.normalize();
+        li.appendChild(b); li.appendChild(m); ol.appendChild(li);
+        b.textContent = item.term;
+        Array.prototype.slice.call(m.childNodes).forEach(function (n) { if (n.nodeType === 3) m.replaceChild(document.createTextNode(n.nodeValue), n); });
+      });
+      $("res-none").hidden = g.wrong.length > 0;
+      show("result"); sfx("end");
+      $("btn-again").focus();
+    }
+
+    /* ---- ポーズ ---- */
+    function setPauseLabel() { $("btn-pause").textContent = g.paused ? "再開" : "ポーズ"; }
+    function setPause(p) {
+      if (g.screen !== "play") return;
+      g.paused = p; $("pause").hidden = !p; setPauseLabel();
+      if (p) $("btn-resume").focus();
+    }
+
+    /* ---- 入力 ---- */
+    targets.forEach(function (b, i) { b.addEventListener("click", function () { answer(i); }); });
+    document.addEventListener("keydown", function (e) {
+      if (e.ctrlKey || e.metaKey || e.altKey) return;
+      if (g.screen !== "play") return;
+      if (e.key === "p" || e.key === "P") { e.preventDefault(); setPause(!g.paused); return; }
+      if (e.key >= "1" && e.key <= "4") { e.preventDefault(); answer(parseInt(e.key, 10) - 1); }
+    });
+    document.addEventListener("visibilitychange", function () { if (document.hidden && g.screen === "play" && !g.paused) setPause(true); });
+    Array.prototype.forEach.call(document.querySelectorAll(".ts-stage"), function (b) { b.addEventListener("click", function () { startStage(parseInt(b.dataset.stage, 10)); }); });
+    $("btn-pause").addEventListener("click", function () { setPause(!g.paused); });
+    $("btn-resume").addEventListener("click", function () { setPause(false); $("pause-msg").textContent = "ポーズ中"; $("btn-resume").textContent = "再開する"; $("btn-pause").focus(); });
+    $("btn-quit").addEventListener("click", function () { g.paused = false; g.state = "idle"; $("pause").hidden = true; show("start"); });
+    $("btn-again").addEventListener("click", function () { startStage(g.stage); });
+    $("btn-select").addEventListener("click", function () { show("start"); });
+    $("btn-sound").addEventListener("click", function () { setSound(!soundOn); });
+    $("btn-sound-start").addEventListener("click", function () { setSound(!soundOn); });
+
+    /* ---- メインループ ---- */
+    var last = performance.now();
+    function frame(t) {
+      var dt = Math.min(50, t - last); last = t;
+      drawBg(dt); drawFx(dt);
+      if (g.screen === "play" && !g.paused) {
+        if (g.state === "fall") {
+          g.progress += dt / STAGES[g.stage].fall;
+          if (g.progress >= 1) { g.progress = 1; place(); answer(-1); } else { place(); }
+        } else if (g.state === "fb") {
+          g.wait -= dt; if (g.wait <= 0) nextQuestion();
+        }
+      }
+      requestAnimationFrame(frame);
+    }
+    if (window.ResizeObserver) { new ResizeObserver(sizeCanvas).observe(game); } else { window.addEventListener("resize", sizeCanvas); }
+    sizeCanvas(); hud();
+    requestAnimationFrame(frame);
+
+    /* ?stage=1 / ?stage=2 で直接開始 */
+    var qs = parseInt(params.get("stage"), 10);
+    if (qs === 1 || qs === 2) {
+      /* 授業のリンクから開いたときは、スマホだとゲームが画面の下にある。見える位置へ出して、「スタート」を押すまで時間を止める */
+      startStage(qs - 1); setPause(true);
+      $("pause-msg").textContent = "準備はいいですか？「スタート」を押すと、始まります。";
+      $("btn-resume").textContent = "スタート";
+      game.scrollIntoView({ block: "start" });
+    }
+  })();
+  </script>
+  <script src="../app.js?v=4"></script>
+</body>
+</html>

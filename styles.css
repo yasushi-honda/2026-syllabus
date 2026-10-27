@@ -421,6 +421,14 @@ img { max-width: 100%; display: block; }
 .demo-cta--purple .demo-cta__heading { color: #46307a; }
 .demo-cta--purple .demo-cta__link { background: #5b3d9a; }
 .demo-cta--purple .demo-cta__link:hover { background: #46307a; }
+/* 琥珀科目（ITパスポート テクノロジー系）用 */
+.demo-cta--amber {
+  background: var(--c-amber-soft);
+  border-color: var(--c-amber-border);
+}
+.demo-cta--amber .demo-cta__heading { color: #5c3f00; }
+.demo-cta--amber .demo-cta__link { background: #7a5200; }
+.demo-cta--amber .demo-cta__link:hover { background: #5c3f00; }
 
 /* ========================================
    Timetable Grid — weekly matrix
