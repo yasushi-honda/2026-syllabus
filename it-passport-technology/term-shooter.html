@@ -405,7 +405,7 @@
     /* ---- ゲームの流れ ---- */
     function startStage(s) {
       var list = DATA[STAGES[s].key] || [];
-      if (!list.length) return;
+      if (list.length < 4) return; /* 的は4つ。語が4つ未満だと、前の問題の的が残るので始めない */
       g.stage = s; g.order = shuffle(list.map(function (_, i) { return i; })); g.qi = 0; g.lives = 3; g.score = 0; g.combo = 0; g.correct = 0; g.wrong = []; g.over = false; g.paused = false;
       $("pause").hidden = true; setPauseLabel();
       show("play"); nextQuestion();
@@ -461,10 +461,13 @@
       $("res-clear").hidden = g.over; $("res-over").hidden = !g.over;
       var ol = $("res-list"); while (ol.firstChild) ol.removeChild(ol.firstChild);
       g.wrong.forEach(function (idx) {
-        var li = document.createElement("li"), b = document.createElement("b");
-        b.setAttribute("translate", "no"); b.textContent = DATA[STAGES[g.stage].key][idx].term;
-        var m = bank[g.stage][idx].cloneNode(true); m.hidden = false; m.removeAttribute("class"); m.style.cssText = "";
+        /* 先に空の要素を画面へ置き、あとから文字を入れる。app.js のふりがなは「あとから追加された文字」に付くので、
+           オン/オフに追従する（意味の文の要素を cloneNode すると、ルビまで複製されて、オフにしても消えない） */
+        var item = DATA[STAGES[g.stage].key][idx];
+        var li = document.createElement("li"), b = document.createElement("b"), m = document.createElement("p");
+        b.setAttribute("translate", "no");
         li.appendChild(b); li.appendChild(m); ol.appendChild(li);
+        b.textContent = item.term; m.textContent = item.meaning;
       });
       $("res-none").hidden = g.wrong.length > 0;
       show("result"); sfx("end");

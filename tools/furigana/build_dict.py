@@ -311,13 +311,13 @@ class Analyzer:
         return result
 
 
-GAME_MEANING_RE = re.compile(r'meaning:\s*"((?:[^"\\]|\\.)*)"')
+GAME_TEXT_RE = re.compile(r'(?:meaning|term):\s*"((?:[^"\\]|\\.)*)"')
 
 
-def game_meanings(html_text):
-    """ゲームのページ（term-shooter.html）は、意味の文を JS が実行時に DOM へ作る。静的な HTML には現れないので、
-    問題データ（TERM_SETS の `meaning: "…"`）から取り出して、辞書に足す。"""
-    return [m.group(1).replace('\\"', '"') for m in GAME_MEANING_RE.finditer(html_text)]
+def game_texts(html_text):
+    """ゲームのページ（term-shooter.html）は、意味の文と用語（的の文字）を JS が実行時に DOM へ作る。静的な HTML には現れないので、
+    問題データ（TERM_SETS の `meaning: "…"` と `term: "…"`）から取り出して、辞書に足す。"""
+    return [m.group(1).replace('\\"', '"') for m in GAME_TEXT_RE.finditer(html_text)]
 
 
 def build_page_dict(html_text, analyzer):
@@ -330,7 +330,7 @@ def build_page_dict(html_text, analyzer):
                 conflicts.append(n)
                 continue
             entries.setdefault(k, spans)
-    for text in DYNAMIC_TEXTS + game_meanings(html_text):
+    for text in DYNAMIC_TEXTS + game_texts(html_text):
         for n, spans in analyzer.analyze_block([text]).items():
             entries.setdefault(node_key(n), spans)
     return {'v': 1, 'n': entries}, all_nodes, conflicts
