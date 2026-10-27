@@ -8,12 +8,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
-  <link rel="stylesheet" href="../styles.css?v=21">
+  <link rel="stylesheet" href="../styles.css?v=22">
 </head>
 <body>
   <div class="grain-overlay"></div>
 
-  <!-- 公式情報確認: 2026-10-26（参考リンクのAntigravity CLI公式ドキュメント3ページの生存を確認。Antigravity CLI（agy）の改名・停止の報道が無いことをWebSearchで確認。defaultモード・planモード・/clear・/rewindの記述は第3回で公式から裏取り済みの内容を再掲し、この回で新しいagyの機能は扱わない） -->
+  <!-- 公式情報確認: 2026-10-27（AI Studio Build modeは公式の説明ページ「Build apps in Google AI Studio」（2026-10-26更新）で、入力欄・右側のプレビュー・Codeタブ・Copy Appを確認。変更を元に戻す機能・Plan・変更の承認は説明ページに記載なし。Versionsタブ・Planのスライダーは、AI活用プログラミング基礎Ⅱ 第6回で教員の画面（2026-10-15）で確認した内容）。2026-10-26（参考リンクのAntigravity CLI公式ドキュメント3ページの生存を確認。Antigravity CLI（agy）の改名・停止の報道が無いことをWebSearchで確認。defaultモード・planモード・/clearの記述は第3回で公式から裏取り済みの内容を再掲。授業前に教員が確認する項目: BuildのVersionsタブで試す前の版に戻せるか、確認の一文でBuildが説明だけで止まるか、Planのスライダーの有無し、この回で新しいagyの機能は扱わない） -->
   <header class="page-header page-header--purple">
     <div class="container">
       <nav class="breadcrumb">
@@ -44,6 +44,12 @@
       </defs>
     </svg>
 
+    <div class="demo-cta demo-cta--purple">
+      <p class="demo-cta__heading">🎮 すれ違いハンター（1人用の練習ゲーム）</p>
+      <p class="demo-cta__body">ペアの相手がいない人、早く終わった人、欠席した人、家での復習に。ルールで動く練習用AI「ミミ」を相手に、<strong>①言葉で伝える ②すれ違いの型を見抜く ③指示を直す ④送る前に確かめる</strong>の4ステージを遊べます。遊んだ結果は「すれ違いログ」としてコピーできます。本物のagyやAI Studio Buildには接続せず、入力した内容はどこにも送信・保存されません。</p>
+      <a href="suregai-game.html" class="demo-cta__link">→ ゲームを開く</a>
+    </div>
+
     <div class="lesson-overview">
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
@@ -52,11 +58,11 @@
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">すれ違い / 4つの型（言葉の幅・前提の省略・範囲のずれ・やりすぎ） / すれ違いログ / 送る前に解釈を確かめる / 触らない所を伝える</div>
+          <div class="lesson-overview-value">すれ違い / 4つの型（言葉の幅・前提の省略・範囲のずれ・やりすぎ） / すれ違いログ / 送る前に解釈を確かめる / 触らない所を伝える / agyとAI Studio Build（どちらかを選ぶ）</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
-          <div class="lesson-overview-value">第1〜6回で使用したリポジトリ・Codespaces環境にアクセスできる状態。第6回で育てた作品と、第6回の「指示ログ」、「agyへの指示メモ」（Googleドキュメント）</div>
+          <div class="lesson-overview-value">今日使う道具を、<strong>agy</strong>か<strong>Google AI StudioのBuild mode</strong>のどちらか選ぶ（1人ずつ）。agyの人: 第1〜6回で使用したリポジトリ・Codespaces環境と、第6回で育てた作品。Buildの人: AI Studioにログインできる状態（作品は、前期に作ったものか、今日作る）。どちらも、第6回の「指示ログ」と「agyへの指示メモ」（Googleドキュメント）</div>
         </div>
       </div>
     </div>
@@ -65,9 +71,9 @@
       <h2>この回のゴール</h2>
       <ul>
         <li>指示がすれ違った場面を、<strong>4つの型</strong>（言葉の幅・前提の省略・範囲のずれ・やりすぎ）のどれに近いかで言える</li>
-        <li>曖昧な指示を送る前に、<strong>agyの動きを予想</strong>し、結果と比べて「どこがすれ違ったか」を説明できる</li>
+        <li>曖昧な指示を送る前に、<strong>AI（agyまたはBuild）の動きを予想</strong>し、結果と比べて「どこがすれ違ったか」を説明できる</li>
         <li>型に合わせて指示を書き直し、結果がどう変わったかを説明できる</li>
-        <li>送る前にagyへ<strong>「どう理解したか」を説明させ</strong>、ズレを実行する前に見つける手順を使える</li>
+        <li>送る前にAI（agyまたはBuild）へ<strong>「どう理解したか」を説明させ</strong>、ズレを実行する前に見つける手順を使える</li>
       </ul>
     </div>
 
@@ -86,14 +92,74 @@
           <div class="timeline-body">
             <p><strong>前回の振り返りと、環境を整える（10分）</strong></p>
             <ul>
-              <li>第6回の「指示ログ」と、指示メモに書き足した「指示を重ねるときのコツ」を見返し、ペアで<strong>1つずつ</strong>紹介する</li>
-              <li>前回までに使用したリポジトリを開き、<strong>停止していたCodespaceを再開（resume）</strong>する——「Create codespace」で新規作成しない</li>
-              <li>これまでと同じ手順で<code>python3 -m http.server 8000</code>を実行し、「ポート」タブ→<strong>「エディターでプレビュー」</strong>でSimple Browserを開いておく</li>
-              <li>agyを起動したとき、認証セッションが切れていて再ログインを求められる場合がある。その場合は、第2回と同じ手順で再認証する</li>
-              <li>Codespaceを再開した直後は、会話が新しくなっていて、前回の内容を覚えていないことがある。今日は毎回<code>/clear</code>して始めるので、気にしなくてよい</li>
+              <li>第6回の「指示ログ」と、指示メモに書き足した「指示を重ねるときのコツ」を見返し、ペアで<strong>1つずつ</strong>紹介する（相手がいない人は、自分のログを見返す）</li>
+              <li><strong>今日使う道具を選ぶ</strong>——<strong>agy</strong>（Codespaces）か、<strong>Google AI StudioのBuild mode</strong>（ブラウザ）。1人ずつ選んでよい。今日は途中で変えない。どちらでも、すれ違いの観察と型の見分けは同じようにできる。下の表で、違いを確かめる</li>
+              <li><strong>agyを選んだ人</strong>: 前回までに使用したリポジトリを開き、<strong>停止していたCodespaceを再開（resume）</strong>する——「Create codespace」で新規作成しない。<code>python3 -m http.server 8000</code>を実行し、「ポート」タブ→<strong>「エディターでプレビュー」</strong>でSimple Browserを開いておく。agyを起動したとき再ログインを求められたら、第2回と同じ手順で再認証する。Codespace再開直後は会話が新しくなっていることがあるが、今日は毎回<code>/clear</code>して始めるので、気にしなくてよい</li>
+              <li><strong>Buildを選んだ人</strong>: <a href="https://aistudio.google.com/" target="_blank" rel="noopener">Google AI Studio</a>（学校のアカウント）にログインし、Build modeで、前期に作った作品を開く。作品がない人、見当たらない人は、下の「練習用の作品」を作る（5分以内。時間がかかるときは講師に声をかける）</li>
+            </ul>
+            <div class="table-wrap">
+              <table class="schedule-table schedule-table--stack">
+                <thead>
+                  <tr>
+                    <th>観点</th>
+                    <th>agyを選んだ場合</th>
+                    <th>Buildを選んだ場合</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>作品の置き場所</td>
+                    <td data-label="agyを選んだ場合">第6回までの作品（Codespaceの中のファイル）</td>
+                    <td data-label="Buildを選んだ場合">AI Studioの中のアプリ（前期の作品、または今日作る練習用の作品）</td>
+                  </tr>
+                  <tr>
+                    <td>指示を送る所</td>
+                    <td data-label="agyを選んだ場合">ターミナルの入力欄</td>
+                    <td data-label="Buildを選んだ場合">Build modeの入力欄（チャット欄）</td>
+                  </tr>
+                  <tr>
+                    <td>結果を確かめる所</td>
+                    <td data-label="agyを選んだ場合">Simple Browser（<code>python3 -m http.server</code>を実行したまま）</td>
+                    <td data-label="Buildを選んだ場合">画面の右側のプレビュー。<code>Code</code>タブでコードも見られる</td>
+                  </tr>
+                  <tr>
+                    <td>試す前の状態に戻す</td>
+                    <td data-label="agyを選んだ場合"><code>cp</code>で毎回、新しいコピーを作る。<code>/clear</code>で会話を新しくする</td>
+                    <td data-label="Buildを選んだ場合">設定の<code>Versions</code>タブで、試す前の版に戻す（教員の画面にタブがあると確認した。戻し方は、今日確かめる）。戻せないときは、講師に声をかけて、練習用の作品を作り直す（5分）</td>
+                  </tr>
+                  <tr>
+                    <td>変更の確認</td>
+                    <td data-label="agyを選んだ場合"><code>default</code>モードでは、ファイルを変更する前に差分が出る（第3回）</td>
+                    <td data-label="Buildを選んだ場合">公式の説明ページには書かれていない。生成のたびに、プレビューに結果が出る</td>
+                  </tr>
+                  <tr>
+                    <td>計画だけ見せる</td>
+                    <td data-label="agyを選んだ場合"><code>plan</code>モード（<code>Shift+Tab</code>で切り替え）</td>
+                    <td data-label="Buildを選んだ場合">入力欄の近くに「Plan」のスライダーがあると、教員の画面で確認した（公式の説明ページには未記載）。ない人は、確認の一文だけで進める</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <ul>
+              <li>Buildの画面や機能は、アカウントや時期で表示が違うことがある。「ない」と思ったら、講師に声をかける（公式の説明ページに書かれていないことは、「ない」とは限らない）</li>
+              <li>
+                <p><strong>Buildの練習用の作品</strong>（前期の作品がない人だけ）: Build modeの入力欄に次の文を貼り付けて送る。できたアプリが、今日の元の作品になる</p>
+                <button class="copy-md-btn" data-md-source="build-starter">
+                  <span class="btn-icon"></span> 練習用の作品の指示をコピー
+                </button>
+<pre id="build-starter" class="md-preview">自己紹介のページを1つ作ってください。
+- 見出し「わたしの好きな本」
+- あいさつの文章（3〜4文）
+- おすすめの本を紹介するカードを3枚
+- 「もっと見る」ボタンを1つ
+デザインはシンプルにしてください。</pre>
+              </li>
+              <li>Buildを選んだ人は、<strong>戻し方を先に確かめておく</strong>。設定の<code>Versions</code>タブを開き、試す前の版があるかを見る。戻し方が分からない・戻せないときは、講師に声をかけて、練習用の作品を作り直す（5分）。これを、試す前の状態に戻す正式な代わりの手順とする</li>
+              <li>前期の作品がなくて練習用の作品を作る人は、授業の前に作っておいてもよい（10分の枠が足りなくなるため）</li>
             </ul>
             <p><strong>人どうしのすれ違いを体験する（15分）</strong></p>
             <ul>
+              <li>ペアの相手がいない人は、<a href="suregai-game.html">すれ違いハンター</a>の<strong>ステージ1「伝えてみよう」</strong>を1人で遊ぶ（ミミに、お題の図を言葉だけで描いてもらう）。人どうしの体験の代わりになる</li>
               <li>2人1組になり、<strong>説明役</strong>と<strong>聞き役</strong>を決める。お題の図は、<strong>説明役だけ</strong>が見る。聞き役は、下の折りたたみを<strong>開かない</strong></li>
               <li>ラウンド1（約7分）: 説明役は、お題Aの図を<strong>言葉だけ</strong>で伝える（図を見せない・指ささない。画面を相手に向けない）。聞き役は<strong>質問せずに</strong>聞き、Googleドキュメントに「どんな画面か」を箇条書きで書く。書けたら、聞き役も折りたたみを開いて、図と見比べて、<strong>ずれた所を1つ</strong>言う
                 <ul>
@@ -183,7 +249,7 @@
             <span class="timeline-time">1限 後半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>曖昧な指示を送り、agyのすれ違いを観察して型で記録する</h3>
+          <h3>曖昧な指示を送り、AIのすれ違いを観察して型で記録する</h3>
           <div class="timeline-body">
             <p><strong>お題カードと「すれ違いログ」を準備する（5分）</strong></p>
             <ul>
@@ -202,17 +268,18 @@
                 </ul>
               </li>
               <li>この表が「<strong>すれ違いログ</strong>」。第6回の指示ログとは別の表にする</li>
-              <li>ターミナルで<code>ls</code>を実行し、作品が<strong>HTMLファイル1つ</strong>か、<strong>複数のファイル</strong>かを確認する。元の作品は<strong>触らない</strong>。毎回、<strong>新しいコピー</strong>を作って、そのコピーで試す（コピーの名前は、1枚目が<code>sure-1</code>、2枚目が<code>sure-2</code>と、番号を進める。前のコピーは消さない）</li>
-              <li>モードは<code>default</code>のまま進める。第3回のとおり、ファイルを変更する前に差分が出て、承認待ちになることがある。止まって見えても失敗ではない。<strong>承認する前に、差分を読む</strong></li>
+              <li><strong>agyを選んだ人</strong>: ターミナルで<code>ls</code>を実行し、作品が<strong>HTMLファイル1つ</strong>か、<strong>複数のファイル</strong>かを確認する。元の作品は<strong>触らない</strong>。毎回、<strong>新しいコピー</strong>を作って、そのコピーで試す（コピーの名前は、1枚目が<code>sure-1</code>、2枚目が<code>sure-2</code>と、番号を進める。前のコピーは消さない）。モードは<code>default</code>のまま進める。第3回のとおり、ファイルを変更する前に差分が出て、承認待ちになることがある。止まって見えても失敗ではない。<strong>承認する前に、差分を読む</strong></li>
+              <li><strong>Buildを選んだ人</strong>: 1枚試すごとに、<strong>元の状態に戻してから</strong>次のお題カードを送る。このページでは、Buildでアプリを複製する操作は使わないので、お題カードを送るたびに、同じアプリが変わっていく。変更は、右側のプレビューと<code>Code</code>タブで確かめる</li>
+              <li>相手がいない人・早く終わった人は、<a href="suregai-game.html">すれ違いハンター</a>の<strong>ステージ2「型を見抜け」</strong>を遊ぶと、予想→型の見分けを、何度でも練習できる（本物のagyやBuildの代わりではなく、練習用）</li>
             </ul>
             <figure class="vz-fig" aria-labelledby="cap-a7-flow">
               <p class="vz-fig-title" id="cap-a7-flow">お題カード1枚ぶんの流れ</p>
               <svg class="vz-svg" viewBox="0 0 360 326" role="img" aria-labelledby="a7-flow-t a7-flow-d">
                 <title id="a7-flow-t">お題カード1枚ぶんの流れ</title>
-                <desc id="a7-flow-d">1 元に戻す（コピーを作り直し、会話を新しくする）、2 予想を書く、3 曖昧なまま送る、4 差分と画面を観察する、5 型を決めて記録する、の順に進み、5のあとは次のお題カードで1に戻ってくり返す。</desc>
+                <desc id="a7-flow-d">1 元に戻す（新しいコピーを作る、または前の版に戻す）、2 予想を書く、3 曖昧なまま送る、4 差分やプレビューを観察する、5 型を決めて記録する、の順に進み、5のあとは次のお題カードで1に戻ってくり返す。</desc>
                 <rect class="box-purple" x="8" y="8" width="242" height="44" rx="10"/>
                 <text class="t-b" x="22" y="28">① 元に戻す</text>
-                <text class="t-sm" x="22" y="45">新しいコピーを作る・/clear</text>
+                <text class="t-sm" x="22" y="45">新しいコピー／前の版に戻す</text>
                 <line class="line" x1="129" y1="54" x2="129" y2="62" marker-end="url(#mk-s)"/>
                 <rect class="box-purple" x="8" y="64" width="242" height="44" rx="10"/>
                 <text class="t-b" x="22" y="84">② 予想を書く</text>
@@ -224,7 +291,7 @@
                 <line class="line" x1="129" y1="166" x2="129" y2="174" marker-end="url(#mk-s)"/>
                 <rect class="box-purple" x="8" y="176" width="242" height="44" rx="10"/>
                 <text class="t-b" x="22" y="196">④ 観察する</text>
-                <text class="t-sm" x="22" y="213">差分と、Simple Browserの画面</text>
+                <text class="t-sm" x="22" y="213">差分やプレビューを見る</text>
                 <line class="line" x1="129" y1="222" x2="129" y2="230" marker-end="url(#mk-s)"/>
                 <rect class="box-white box-key" x="8" y="232" width="242" height="44" rx="10"/>
                 <text class="t-b" x="22" y="252">⑤ 型を決めて記録する</text>
@@ -240,19 +307,19 @@
             <ul>
               <li>1枚ごとに、次の流れで進める
                 <ul>
-                  <li>① <strong>元に戻す</strong>——元の作品から、新しいコピーを作り、agyで<code>/clear</code>と打って新しい会話を始める（前のお題の影響を引きずらないため。第6回と同じ考え方）。HTMLファイル1つの人は、次のようにコピーする（<code>元のファイル.html</code>は自分のファイル名に置き換える。2枚目以降は番号を進める）
+                  <li>① <strong>元に戻す</strong>——<strong>Buildの人</strong>は、前のお題の変更を、<code>Versions</code>タブで試す前の版に戻す。戻せないときは、講師に声をかけて、練習用の作品を作り直す（5分）。Buildの会話は続いたままなので、前のお題の影響が残ることがある。それも観察して、「起きたこと」に書く。<strong>agyの人</strong>は、元の作品から、新しいコピーを作り、agyで<code>/clear</code>と打って新しい会話を始める（前のお題の影響を引きずらないため。第6回と同じ考え方）。HTMLファイル1つの人は、次のようにコピーする（<code>元のファイル.html</code>は自分のファイル名に置き換える。2枚目以降は番号を進める）
                     <pre><code>cp 元のファイル.html sure-1.html</code></pre>
                     複数のファイルがある人は、作品のファイルを入れたフォルダごとコピーする（<code>作品フォルダ</code>は自分のフォルダ名に置き換える。作品がリポジトリの一番上にある場合は、担当教員に相談する）
                     <pre><code>cp -r 作品フォルダ sure-1</code></pre>
                     この場合、以下の<code>sure-1.html</code>は、<code>sure-1/</code>の中のHTMLファイルに読み替える。2枚目以降は、<code>sure-2</code>、<code>sure-3</code>と番号を進める</li>
-                  <li>② <strong>予想を書く</strong>——送る前に、「agyは、どのファイルの、どこを、どう変えそうか」を、すれ違いログの「送る前の予想」に1〜2行で書く</li>
-                  <li>③ <strong>曖昧なまま送る</strong>——お題カードの文に、「<code>sure-1.html</code>について」とだけ添えて送る（元の作品を守るためのもので、ほかは曖昧なままにする）</li>
-                  <li>④ <strong>観察する</strong>——差分が出たら、承認する前に読む。<strong><code>sure-1.html</code>（またはsure-1フォルダ）以外のファイルを変えようとしていたら、承認しない</strong>。それ自体が「やりすぎ」「範囲のずれ」の例なので、「起きたこと」に書く。変更されてしまったときは、そのコピーは使わず、新しいコピー（番号を進める）を作り直す。完了したら、Simple Browserのアドレスバーの末尾だけを<code>/sure-1.html</code>に書き換えて確認する（第4回と同じ手順）</li>
+                  <li>② <strong>予想を書く</strong>——送る前に、「AIは、どこを、どう変えそうか」を、すれ違いログの「送る前の予想」に1〜2行で書く</li>
+                  <li>③ <strong>曖昧なまま送る</strong>——<strong>agyの人</strong>は、お題カードの文に、「<code>sure-1.html</code>について」とだけ添えて送る（元の作品を守るためのもので、ほかは曖昧なままにする）。<strong>Buildの人</strong>は、お題カードの文を、そのまま入力欄に送る</li>
+                  <li>④ <strong>観察する</strong>——<strong>Buildの人</strong>は、右側のプレビューを見て、<code>Code</code>タブで変わった所を確かめる。頼んでいない所が変わっていたら、それも「起きたこと」に書く（やりすぎ・範囲のずれの例になる）。<strong>agyの人</strong>は、差分が出たら、承認する前に読む。<strong><code>sure-1.html</code>（またはsure-1フォルダ）以外のファイルを変えようとしていたら、承認しない</strong>。それ自体が「やりすぎ」「範囲のずれ」の例なので、「起きたこと」に書く。変更されてしまったときは、そのコピーは使わず、新しいコピー（番号を進める）を作り直す。完了したら、Simple Browserのアドレスバーの末尾だけを<code>/sure-1.html</code>に書き換えて確認する（第5回と同じ手順）</li>
                   <li>⑤ <strong>型を決めて記録する</strong>——「起きたこと」を書き、予想とのずれを、4つの型のどれに近いかで「型」の列に書く。型が決められないときは「分からない」でよい</li>
                 </ul>
               </li>
               <li>1枚が早く終わったら、次のお題カードへ。時間が足りなければ、2枚で終えてよい</li>
-              <li>agyの動きは、同じ指示でも毎回同じとは限らない。隣の人と結果が違ってよい</li>
+              <li>agyもBuildも、同じ指示でも毎回同じ動きとは限らない。隣の人と結果が違ってよい</li>
             </ul>
             <p><strong>ペアで見せ合う（約9分）</strong></p>
             <ul>
@@ -286,28 +353,41 @@
             <p><strong>型に合わせて書き直して、送り直す（15分）</strong></p>
             <ul>
               <li>すれ違いログから、<strong>意外だった2枚</strong>を選ぶ。1枚ごとに、型に合わせて<strong>指示を書き直す</strong></li>
-              <li>1限後半と同じ手順で、新しいコピー（番号を進める）を作り、<code>/clear</code>してから、書き直した指示を送る。このときも、「<code>sure-3.html</code>について」のように、対象のコピーの名前を添える</li>
+              <li>1限後半と同じ手順で、元に戻してから、書き直した指示を送る。<strong>agyの人</strong>は、新しいコピー（番号を進める）を作り、<code>/clear</code>してから送る。このときも、「<code>sure-N.html</code>について」のように、対象のコピーの名前を添える（Nは、まだ使っていない番号）。<strong>Buildの人</strong>は、<code>Versions</code>タブで試す前の版に戻してから、そのまま入力欄に送る</li>
               <li>前の結果と比べて、すれ違いが<strong>減ったか、別のすれ違いが出たか</strong>を見る。すれ違いログの表の下に、「直した指示」と「起きたこと」の行を足して書く</li>
               <li>直したのに、まだズレる場合もある。それは失敗ではなく、「別の型が残っている」手がかりになる</li>
             </ul>
-            <p><strong>送る前に、agyに「どう理解したか」を説明させる（20分）</strong></p>
+            <p><strong>送る前に、AIに「どう理解したか」を説明させる（20分）</strong></p>
             <ul>
               <li>ここまでは、送ったあとにすれ違いに気づいた。今度は、<strong>実行する前に</strong>気づく方法を試す</li>
-              <li>1限後半でまだ使っていないお題カードを1枚選び、新しいコピー（番号を進める）を作り、<code>/clear</code>してから、次の<strong>確認の一文</strong>を送る（「sure-4.html」は、いま作ったコピーの名前に、「ここにお題カードの文」は、選んだ指示に置き換える）
+              <li>1限後半でまだ使っていないお題カードを1枚選ぶ。<strong>agyの人</strong>は、新しいコピー（番号を進める）を作り、<code>/clear</code>してから、次の<strong>確認の一文</strong>を送る（「sure-N.html」は、いま作ったコピーの名前（Nは、まだ使っていない番号。フォルダのコピーの人は、<code>sure-N/</code>の中のHTMLファイル）に、「ここにお題カードの文」は、選んだ指示に置き換える）
                 <button class="copy-md-btn" data-md-source="confirm-prompt">
                   <span class="btn-icon"></span> 確認の一文をコピー
                 </button>
 <pre id="confirm-prompt" class="md-preview">まだ実行しないでください。ファイルは変更しないでください。
-対象は sure-4.html だけです。ほかのファイルは対象にしないでください。
+対象は sure-N.html だけです。ほかのファイルは対象にしないでください。
 次の指示を、どう理解したかを3行で説明してください。
 1行目: どのファイルの、どこを変えるか
 2行目: どう変えるか
 3行目: 変えない所は何か
 指示: （ここにお題カードの文）</pre>
               </li>
+              <li><strong>Buildの人</strong>は、元に戻してから、次の確認の一文を入力欄に送る（「ここにお題カードの文」は、選んだ指示に置き換える）。Planのスライダーがある人は、Planにして送ってもよい（Planで何が変わるかは、今日確かめる。agyの<code>plan</code>のように、計画だけで止まるとは限らない）。Buildの既定は「すぐ変更を加える」と、教員の画面で確認したので、「実行しないで」と頼んでも、変更し始めることがある
+                <button class="copy-md-btn" data-md-source="confirm-prompt-build">
+                  <span class="btn-icon"></span> 確認の一文（Build用）をコピー
+                </button>
+<pre id="confirm-prompt-build" class="md-preview">まだ実行しないでください。アプリは変更しないでください。
+次の指示を、どう理解したかを3行で説明してください。
+1行目: アプリのどの部分を変えるか
+2行目: どう変えるか
+3行目: 変えない所は何か
+指示: （ここにお題カードの文）</pre>
+              </li>
               <li>返ってきた説明を、<strong>自分の意図と比べる</strong>。ズレている所があれば、指示を直して送り直す。説明のとおりでよければ、「その理解でよいので、実行してください」と送る</li>
-              <li>確認の一文を送ったのに、ファイルを変更しようとして差分が出たら、<strong>承認しない</strong>。「ファイルは変更しないで」という指示を守らなかったことも、すれ違いのひとつなので、ログに書く。変更されてしまったときは、そのコピーは使わず、新しいコピー（番号を進める）を作り直す。agyが説明だけで止まるかどうかは、今日確かめる</li>
-              <li>第3回の<code>plan</code>モード（<code>Shift+Tab</code>で切り替え。公式の説明は「コードを書く前に分析して手順をまとめる」）も、似た目的に使える。確認の一文の代わりに試してみてもよい（出てくる内容は、確認の一文のときと少し違うことがある）</li>
+              <li><strong>agyの人</strong>: 確認の一文を送ったのに、ファイルを変更しようとして差分が出たら、<strong>承認しない</strong>。「ファイルは変更しないで」という指示を守らなかったことも、すれ違いのひとつなので、ログに書く。変更されてしまったときは、そのコピーは使わず、新しいコピー（番号を進める）を作り直す。agyが説明だけで止まるかどうかは、今日確かめる</li>
+              <li><strong>Buildの人</strong>: 確認の一文のあと、プレビューが変わってしまったときは、「アプリは変更しないで」を守らなかったことになる。すれ違いのひとつなので、ログに書く。<code>Versions</code>タブで試す前の版に戻してから、続ける。Buildが説明だけで止まるかどうかは、今日確かめる</li>
+              <li>agyの<code>plan</code>モード（<code>Shift+Tab</code>で切り替え。第3回。公式の説明は「コードを書く前に分析して手順をまとめる」）も、似た目的に使える。確認の一文の代わりに試してみてもよい（出てくる内容は、確認の一文のときと少し違うことがある）。Buildの人のPlanも試してよい（何が変わるかは、今日確かめる）</li>
+              <li>相手がいない人・早く終わった人は、<a href="suregai-game.html">すれ違いハンター</a>の<strong>ステージ3「直して送ろう」</strong>と<strong>ステージ4「送る前に確かめよう」</strong>で、書き直しと確認の一文を、練習用のミミを相手に何度でも試せる</li>
               <li>結果を、すれ違いログに書く。「確認の一文で、どんなズレが見つかったか」「見つからなかったか」も書く</li>
             </ul>
             <p><strong>「そのまま送る」と「確かめてから送る」を比べる（10分）</strong></p>
@@ -315,7 +395,7 @@
               <p class="vz-fig-title" id="cap-a7-check">そのまま送る／確かめてから送る</p>
               <svg class="vz-svg" viewBox="0 0 360 300" role="img" aria-labelledby="a7-check-t a7-check-d">
                 <title id="a7-check-t">そのまま送るのと、確かめてから送るのの比較</title>
-                <desc id="a7-check-d">そのまま送る場合は、1 指示を送る、2 agyが実行する、3 結果で気づく、の順で、ズレに気づくのは実行したあと。確かめてから送る場合は、1 確認の一文を送る、2 agyが3行で説明する、3 ズレなら直す、4 実行する、の順で、ズレに気づくのは実行する前。どちらが正解かではなく、気づく時の違いを比べる。</desc>
+                <desc id="a7-check-d">そのまま送る場合は、1 指示を送る、2 AIが実行する、3 結果で気づく、の順で、ズレに気づくのは実行したあと。確かめてから送る場合は、1 確認の一文を送る、2 AIが3行で説明する、3 ズレなら直す、4 実行する、の順で、ズレに気づくのは実行する前。どちらが正解かではなく、気づく時の違いを比べる。</desc>
                 <rect class="box-white" x="8" y="6" width="166" height="40" rx="10"/>
                 <text class="t-c t-b" x="91" y="31">そのまま送る</text>
                 <rect class="box-purple" x="186" y="6" width="166" height="40" rx="10"/>
@@ -323,7 +403,7 @@
                 <rect class="box-white" x="8" y="62" width="166" height="32" rx="8"/>
                 <text class="t-c" x="91" y="83">① 指示を送る</text>
                 <rect class="box-white" x="8" y="102" width="166" height="32" rx="8"/>
-                <text class="t-c" x="91" y="123">② agyが実行する</text>
+                <text class="t-c" x="91" y="123">② AIが実行する</text>
                 <rect class="box-white" x="8" y="142" width="166" height="32" rx="8"/>
                 <text class="t-c" x="91" y="163">③ 結果で気づく</text>
                 <rect class="box-purple" x="186" y="62" width="166" height="32" rx="8"/>
@@ -360,6 +440,7 @@
           <div class="timeline-body">
             <p><strong>ペアで見せ合う（15分）</strong></p>
             <ul>
+              <li>相手がいない人は、自分のすれ違いログを見返して、<strong>一番大きくすれ違った例</strong>と<strong>効いた直し方</strong>を、型の言葉で1〜2行にまとめる。すれ違いハンターの結果画面の「ログをコピー」で作ったログを、すれ違いログに足してもよい</li>
               <li>お互いのすれ違いログを見せ合い、<strong>一番大きくすれ違った例</strong>と、<strong>効いた直し方</strong>を、型の言葉で説明する</li>
               <li>相手のログの中から、<strong>自分も使ってみたい直し方</strong>を1つ見つけて伝える</li>
             </ul>
@@ -367,7 +448,7 @@
             <ul>
               <li>「agyへの指示メモ」（第2回から育ててきたGoogleドキュメント）に、<strong>送る前のチェック</strong>を、自分の言葉で1〜3個書き足す（例:「どの範囲か書いたか」「ほかは変えないでと書いたか」「送る前に、3行で説明させたか」）</li>
               <li>第6回に書いた「指示を重ねるときのコツ」と並べて、<strong>1つの「送る前のチェック」</strong>として読めるように整える</li>
-              <li>ここに書いたチェックは、次回以降のagyの作業で使える</li>
+              <li>ここに書いたチェックは、次回以降のagyやBuildでの作業で使える</li>
             </ul>
           </div>
         </div>
@@ -413,6 +494,8 @@
     <div class="syllabus-section">
       <h2>参考リンク</h2>
       <ul>
+        <li><a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio（公式）</a> — Build modeの入力欄・右側のプレビュー・<code>Code</code>タブの公式解説（Buildを選んだ人向け）</li>
+        <li><a href="suregai-game.html">すれ違いハンター（1人用の練習ゲーム）</a> — 相手がいない人・早く終わった人・復習用</li>
         <li><a href="https://antigravity.google/docs/cli/using/" target="_blank" rel="noopener">Antigravity CLI — Using AGY CLI（公式）</a> — <code>/clear</code>・<code>/rewind</code>を含むQuick Tipsの公式解説（振り返り用）</li>
         <li><a href="https://antigravity.google/docs/cli/best-practices/" target="_blank" rel="noopener">Antigravity CLI — Best Practices（公式）</a> — 「探索→計画→実行」の公式解説（振り返り用）</li>
         <li><a href="https://antigravity.google/docs/cli/modes/" target="_blank" rel="noopener">Antigravity CLI — Choose an execution mode（公式）</a> — <code>default</code>と<code>plan</code>を含む、<code>Shift+Tab</code>での実行モード切替の公式解説（振り返り用）</li>
