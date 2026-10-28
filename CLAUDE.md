@@ -157,6 +157,7 @@ docs/forms-gas/         # 学校フォーム作成（GAS+Playwright）の手順�
 - 全科目共通のデザイン・レイアウトを維持する
 - 科目ごとのテーマカラー: blue(プログラム基礎), purple(AIコミュ), green(自然言語開発), orange(AI活用プログラミング), red/pink(Java基礎I/II), teal/indigo(Javaプログラミング/システム開発B), amber(ITパスポート テクノロジー系), brown(システム開発実習AⅡ), slate(秋の集中講座)。Ⅱ系の継続科目は前期の対応科目と同じ色を引き継ぐ
 - HTML変更時は対応するcontent/*.mdも同期する
+- Googleフォーム・回答スプレッドシート・成績ページをApps Script（GAS）とPlaywright MCPで作る作業の前に、必ず `docs/forms-gas/gas-workflow.md` を読む（手順と落とし穴の正本）
 - `index.html` は前期/後期の2つの時間割グリッド（`.semester-panel[data-semester="first"|"second"]`）を持つ。初期表示は後期。科目を追加・変更する際は該当する学期のグリッドのみを更新し、もう一方の学期には影響させない
 
 ---
