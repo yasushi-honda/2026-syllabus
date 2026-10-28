@@ -150,6 +150,7 @@ app.js                  # Markdownコピー、サイト内クイズ、ふりが�
 favicon.svg             # ファビコン
 content/                # Markdownソース（コピーボタン用。全HTMLページに1対1で対応）
 .github/workflows/      # GitHub Pagesデプロイ設定
+docs/forms-gas/         # 学校フォーム作成（GAS+Playwright）の手順と落とし穴（gas-workflow.md。コード本体は公開リポジトリの外 ~/Projects/学校/forms-gas/）
 ```
 
 ## 運用ルール
