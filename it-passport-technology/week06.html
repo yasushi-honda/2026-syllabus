@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第6回 インターネットが動く原理とその先 | ITパスポート テクノロジー系</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=24">
+  <!-- 公式情報確認: 2026-11-03 (総務省「国民のためのサイバーセキュリティサイト」用語集 ja_06 に「プロトコル」「パケット」「5G」、ja_04 に「ドメイン名」、ja_02 に「グローバルIPアドレス」（プライベートIPアドレスとの違いとルータの変換に触れる）、ja_01 に「インターネットサービスプロバイダ」（以上は本文を生HTMLからテキスト化して原文照合）。JPRS「DNSのしくみと動作原理」https://jprs.jp/related-info/guide/010.pdf に「インターネットでは通信相手を『IP アドレス』という番号で指定・識別しています」「DNS（Domain Name System）は……人間が記憶しにくい IP アドレスに替え、より記憶しやすく使いやすい『名前』をインターネット上で使えるようにするために開発されたシステムです」（pdftotextで原文照合）。総務省 平成28年版 情報通信白書 用語解説 https://www.soumu.go.jp/johotsusintokei/whitepaper/ja/h28/pdf/28yohgo.pdf に AI=「Artificial Intelligence の略で、人工知能のこと」、IoT=「Internet of Things の略で、『モノのインターネット』と呼ばれる。自動車、家電、ロボット、施設などあらゆるモノがインターネットにつながり、情報のやり取りをすることで、モノのデータ化やそれに基づく自動化等が進展し、新たな付加価値を生み出す」（pdftotextで原文照合。2016年版の用語解説で、IPAの試験範囲の定義ではない）。IPAシラバス Ver.6.5（確認用にテキスト化）: 「59. 通信プロトコル」にTCP/IP階層モデル（4層: ネットワークインタフェース層・インターネット層・トランスポート層・アプリケーション層）と用語例（TCP/IP, UDP, HTTP, HTTPS, SMTP, POP, IMAP, FTP, NTP, DHCP, ポート番号）、「60. ネットワーク応用」にIPアドレス（IPv6, IPv4, グローバル, プライベート）・ドメイン名・DNS・URL、通信サービス（ISP, パケット通信, 基地局 ほか）、「17. IoT システム・組込みシステム」、AI利活用（教師あり学習による予測（売上予測など）、AIの出力に対する人間の関与の必要性）、AI技術（ディープラーニング）。令和7年度ITパスポート試験 公開問題 問56・問58・問60・問86と解答例（PDFは画像のためmacOSのVisionで文字起こしし、ページ画像を目視して原文を転記、解答例はpdftotextで照合）。【未確認として書かなかったこと】: TCP/IPの各層の働きの細かい説明・TCPとIPの役割分担（教科書本文は未突合）、IPv4が32ビット等の桁数、IrDA・NFC・PLCの説明、DHCPの役割の公的定義（問60の選択肢の文はIPAの原文だが、プロトコル名との対応はIPAシラバスの用語例の名前から読み取ったもの）。教科書 p.329-345・p.094-097・p.106-110 は親ページの記載に従う（教科書本文は未突合）。URL・組込みシステムの本文の定義は、IPAシラバスの用語例・説明に沿ったやさしい言い換え（公的資料の逐語引用ではない）。例に使うIPアドレス 192.0.2.10 と example.jp は説明用の例（実在のサイトではない） -->
+  <!-- 本文のやさしい言い換え（公的資料の逐語引用ではない）: AI＝「人工知能」（白書の定義）に「データから学習して予測や判断を行う使い方が多い」を添えた説明（IPAシラバスの活用例に基づく。ルールベースなどデータ学習によらないAIも範囲に含まれる）、ドメイン名＝「人が覚えやすい名前」（総務省「ドメイン」項とJPRSの説明から）。練習クイズ・確認テストのAIの説明（Q4の選択肢イ・Q5の解説）は、この言い換えをそのまま使っている。【追加で書かなかった/弱めたこと】IoT機器の多くが組込みシステムを持つこと、IoT機器が電池で長く動くことが多いこと、スマートフォンの通信がすべてパケットで行われること -->
+  <!-- 挿絵4枚（images/week06-story-1〜4.jpg）は、画像生成AI（Gemini 3.1 Flash Image）で作った架空の場面のイラスト（2026-11-03）。画像内に文字・実在の人物や企業のロゴは含めない。Aさん=第2〜5回と同じ画風の架空の人物。カフェも架空 -->
+  <!-- 用語カードの11語は、フォーム「ITパスポート 第6回 今回覚えた用語」の選択肢と一致 -->
+</head>
+<body data-furigana="furigana/week06.json">
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--amber">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../it-passport-technology.html">ITパスポート テクノロジー系</a>
+        <span>/</span>
+        <span>第6回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">インターネットが動く原理と<wbr>その先</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 6</span>
+            <span class="page-badge">水曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-amber">
+
+    <div class="message-box">このページはブラウザの翻訳機能で母語に翻訳できます。ただし、試験に出る主な専門用語（例: <span translate="no">IPアドレス</span>、<span translate="no">DNS</span>、<span translate="no">プロトコル</span>）は翻訳されないように設定しています。<strong>本番のITパスポート試験は日本語で行われる</strong>ので、専門用語は日本語のまま覚えてください。</div>
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
+
+    <div class="qr-box qr-box--pc">
+      <a class="qr-box__zoom" href="qr/week06-page.svg" target="_blank" rel="noopener" aria-label="QRコードを大きく表示する">
+        <img class="qr-box__img" src="qr/week06-page.svg" alt="この第6回のページを開くQRコード。スマートフォンのカメラで読み取ると、このページが開く。" width="180" height="180">
+      </a>
+      <div class="qr-box__body">
+        <p class="qr-box__heading">📱 スマホで開く</p>
+        <p class="qr-box__text">教室の画面を見ながら、自分のスマートフォンで、このページを開けます。スマートフォンの<strong>カメラ</strong>で、このQRコードを読み取ってください。QRコードを押すと、大きく表示されます。</p>
+        <p class="qr-box__text">スマートフォンでも、ブラウザの翻訳が使えます。</p>
+      </div>
+    </div>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">カフェのホームページを、お客さんのスマートフォンが開くまでに、インターネットの中で何が起きているか。約束（<span translate="no">プロトコル</span>）・住所（<span translate="no">IPアドレス</span>）・名前から住所を調べる仕組み（<span translate="no">DNS</span>）を学び、その上で動く<span translate="no">AI</span>と<span translate="no">IoT</span>を知る</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value"><span translate="no">プロトコル</span> / <span translate="no">TCP/IP</span> / <span translate="no">IPアドレス</span> / <span translate="no">ドメイン名</span> / <span translate="no">DNS</span> / <span translate="no">URL</span> / <span translate="no">パケット</span> / <span translate="no">ISP</span> / <span translate="no">AI</span> / <span translate="no">IoT</span> / <span translate="no">組込みシステム</span></div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">教科書（学研「ITパスポートをひとつひとつわかりやすく。」）の p.329-345、p.094-097、p.106-110 を読んでおく。授業の最初に復習テスト、最後に確認テスト（1回目と、任意の2回目）と用語カードのフォームを使う（学校のGoogleアカウント）</div>
+        </div>
+      </div>
+    </div>
+
+    <nav aria-label="このページの目次">
+      <ul class="vz-jump">
+        <li><a class="vz-chip" href="#sec-flow">授業の流れ</a></li>
+        <li><a class="vz-chip" href="#sec-terms">用語カード</a></li>
+        <li><a class="vz-chip" href="#sec-quiz">練習クイズ</a></li>
+        <li><a class="vz-chip" href="#sec-optional">任意の取り組み</a></li>
+        <li><a class="vz-chip" href="#sec-tip">就活ワンポイント</a></li>
+        <li><a class="vz-chip" href="#sec-tasks">課題</a></li>
+        <li><a class="vz-chip" href="#sec-refs">参考リンク</a></li>
+        <li><a class="vz-chip vz-chip--cta" href="https://docs.google.com/forms/d/e/1FAIpQLSc8NEYwjrX4r0lK9LgwfQw2RhAyYMzgdwOIdZawFRbDbYCuRg/viewform" target="_blank" rel="noopener">第6回 今回覚えた用語を提出する ↗</a></li>
+        <li><a class="vz-chip vz-chip--cta" href="https://script.google.com/a/macros/i-seifu.jp/s/AKfycbwquVX4xkXNy47RkGjCUz6Xmc4GFaPLpPkSVuW6z--m5Yth88yilipCYUSanlTpQF9P/exec" target="_blank" rel="noopener">自分の成績を見る ↗</a></li>
+      </ul>
+    </nav>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li><span translate="no">プロトコル</span>とは何か（通信の決まり）を、例を使って説明できる</li>
+        <li><span translate="no">IPアドレス</span>・<span translate="no">ドメイン名</span>・<span translate="no">DNS</span>の関係を、「番号」「名前」「名前から番号を調べる仕組み」で説明できる</li>
+        <li><span translate="no">パケット</span>（データを分けた単位）と<span translate="no">ISP</span>（インターネットに接続できるサービスを提供する事業者）の意味を言える</li>
+        <li><span translate="no">AI</span>と<span translate="no">IoT</span>の違いを、例を使って説明できる。<span translate="no">AI</span>の答えは、人が確かめる必要があることを言える</li>
+        <li>過去問（令和7年度）を、問い方の型を使って解く</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section" id="sec-flow">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。休憩10分は授業時間に含めません。</p>
+
+      <div class="vz-timebar">
+        <p class="vz-fig-title">180分の流れ（ブロックを押すと、その内容へ移動）</p>
+        <ol class="vz-timebar-track">
+          <li style="--w:40"><a class="vz-seg" href="#blk-1"><span class="vz-seg-time">40分</span><span class="vz-seg-name">復習テスト<br>プロトコル</span></a></li>
+          <li style="--w:50"><a class="vz-seg" href="#blk-2"><span class="vz-seg-time">50分</span><span class="vz-seg-name">IPアドレス<br>DNS</span></a></li>
+          <li style="--w:10"><a class="vz-seg vz-seg--break"><span class="vz-seg-time">休憩</span><span class="vz-seg-name">10分</span></a></li>
+          <li style="--w:50"><a class="vz-seg" href="#blk-3"><span class="vz-seg-time">50分</span><span class="vz-seg-name">パケット<br>AI・IoT</span></a></li>
+          <li style="--w:30"><a class="vz-seg" href="#blk-4"><span class="vz-seg-time">30分</span><span class="vz-seg-name">過去問<br>確認テスト1回目</span></a></li>
+          <li style="--w:10"><a class="vz-seg" href="#blk-5"><span class="vz-seg-time">10分</span><span class="vz-seg-name">まとめ</span></a></li>
+        </ol>
+        <p class="vz-timebar-note">授業時間の合計は 40 + 50 + 50 + 30 + 10 = 180分（休憩を除く）</p>
+      </div>
+
+      <div class="timeline">
+
+        <!-- ================= 1限 前半 ================= -->
+        <div class="timeline-block" id="blk-1">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の復習テスト → ホームページが開くまでのストーリー → 通信の約束（<span translate="no">プロトコル</span>）</h3>
+          <div class="timeline-body">
+
+            <p><strong>前回の復習テスト（約10分：テスト約5分＋解説の確認約5分）</strong></p>
+            <p>前回（第5回）の内容を、1週間たって、どれだけ覚えているかを確かめる5問（約5分）。<strong>点数を競うものではない</strong>。覚えていることと、忘れていることを、自分で知るためのテスト。送信すると、点数と、正解・解説が表示される。そのあと、間違えた問題の解説を読む。分からないところは、隣の人か先生に聞く。</p>
+            <div class="vz-cta">
+              <a class="vz-btn vz-btn--ext" href="https://docs.google.com/forms/d/e/1FAIpQLScEL5FqnyZXXQzrZszLYnKK7-MGZUuAnVDlnwFcIEeqoW0zvg/viewform" target="_blank" rel="noopener">第6回 復習テスト（前回分）を受ける（Googleフォーム）</a>
+            </div>
+
+            <p><strong>今日のストーリー：お客さんがカフェのホームページを開く（約10分）</strong></p>
+            <p>駅前のカフェを開いたAさん（架空の話）は、お店のホームページと、いろいろな道具を使い始めた。インターネットの中で何が起きているか、順番に読む。</p>
+            <ol class="vz-steps">
+              <li class="vz-step"><img class="vz-step-img" src="images/week06-story-1.jpg" alt="家のソファに座った人が、スマートフォンでカフェのホームページを見ている。スマートフォンから点線が窓の外へ伸び、町をこえて、丘の上のカフェの前で手を振るAさんまで届いている。" width="800" height="597" loading="lazy"><b>1. 家からお店のホームページを開く</b>お客さんが、自分のスマートフォンで、お店の名前を入力する。遠くのお店のホームページが、数秒で開く。<strong>どうして届くのか</strong>。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week06-story-2.jpg" alt="家とカフェの間の道を、トラックが運ぶ。道には、小さな箱がいくつも並んでいる。カフェでAさんが、届いた小さな箱を組み合わせて、1つのケーキの絵にしている。" width="800" height="597" loading="lazy"><b>2. データは、小さく分けて運ばれる</b>大きなデータは、小さな単位に分けて送られ、届いた先で組み立て直される。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week06-story-3.jpg" alt="カフェの店内で、Aさんがタブレットで右上がりのグラフを見ている。隣では、電球のマークを頭の上に出した小さなロボットが、売上の紙を読んでいる。窓の外にはお客さんの列が見える。" width="800" height="597" loading="lazy"><b>3. 売上のデータから、明日を予測したい</b>過去の売上のデータを学習して、明日のお客さんの数を予測する道具がある。これが<strong><span translate="no">AI</span></strong>。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week06-story-4.jpg" alt="店の奥で、コーヒーマシン、豆の入れ物、冷蔵庫に、小さなセンサーが付いている。センサーから電波のマークが出て、雲のマークとAさんのスマートフォンにつながっている。" width="800" height="597" loading="lazy"><b>4. 店の機械が、インターネットにつながる</b>コーヒーマシンや冷蔵庫の状態を、スマートフォンで見たい。モノがインターネットにつながる。これが<strong><span translate="no">IoT</span></strong>。</li>
+            </ol>
+            <p class="lesson-note">1は<span translate="no">プロトコル</span>・<span translate="no">IPアドレス</span>・<span translate="no">DNS</span>、2は<span translate="no">パケット</span>、3は<span translate="no">AI</span>、4は<span translate="no">IoT</span>の話。順番に学ぶ。</p>
+
+            <p><strong>ペアで話す（約5分）</strong>：自分のスマートフォンで、「知らないお店のホームページ」を開くとき、どうやってそのお店を見つけるか（お店の名前で検索する、地図から開く、友だちにもらったリンクを開く、など）。見つけたあとに、何を入力したり押したりしているか。日本語で話す。</p>
+
+            <p><strong>今日の地図（約5分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-w6-map">
+              <p class="vz-fig-title" id="cap-w6-map">お客さんのスマートフォンが、ホームページを開くまで</p>
+              <svg class="vz-svg" viewBox="0 0 360 288" role="img" aria-labelledby="w6-map-t w6-map-d">
+                <title id="w6-map-t">今日の地図：インターネットが動く原理と、その上で動くAIとIoT</title>
+                <desc id="w6-map-d">上から順に、1 通信の約束（プロトコル・TCP/IP）、2 機器の住所（IPアドレス）、3 名前から住所を調べる（ドメイン名・DNS・URL）、4 データを小さく分けて運ぶ（パケット・ISP）、5 その上で動く道具（AI・IoT・組込みシステム）。</desc>
+                <line class="line" x1="22" y1="30" x2="22" y2="258"/>
+                <rect class="box-white" x="2" y="6" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="30" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="35">1</text>
+                <text class="t-b" x="44" y="27">通信の約束をそろえる</text>
+                <text class="t-sm" x="44" y="45" translate="no">プロトコル・TCP/IP</text>
+                <rect class="box-white" x="2" y="62" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="86" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="91">2</text>
+                <text class="t-b" x="44" y="83">機器に、住所（番号）をつける</text>
+                <text class="t-sm" x="44" y="101" translate="no">IPアドレス</text>
+                <rect class="box-white" x="2" y="118" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="142" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="147">3</text>
+                <text class="t-b" x="44" y="139">名前から、住所を調べる</text>
+                <text class="t-sm" x="44" y="157" translate="no">ドメイン名・DNS・URL</text>
+                <rect class="box-white" x="2" y="174" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="198" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="203">4</text>
+                <text class="t-b" x="44" y="195">小さく分けて運ぶ・回線を用意する</text>
+                <text class="t-sm" x="44" y="213" translate="no">パケット・ISP</text>
+                <rect class="box-white" x="2" y="230" width="356" height="48" rx="8"/>
+                <circle class="dot-orange" cx="22" cy="254" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="259">5</text>
+                <text class="t-b" x="44" y="251">その上で動く道具</text>
+                <text class="t-sm" x="44" y="269" translate="no">AI・IoT・組込みシステム</text>
+              </svg>
+              <figcaption>1・2は1限前半と後半、3は1限後半、4と5は2限前半で学ぶ。</figcaption>
+            </figure>
+
+            <p><strong><span translate="no">プロトコル</span>と<span translate="no">TCP/IP</span>：通信の約束（約10分、教科書 p.329-345）</strong></p>
+            <p>国によって、使う言葉や、あいさつのしかたが違う。決まりがそろっていないと、話が通じない。コンピュータも同じ。<strong><span translate="no">プロトコル</span></strong>（通信プロトコル）は、ネットワークを介してコンピュータ同士がデータをやり取りするために定められた、データ形式や送受信の手順などの国際標準の<strong>規則</strong>のこと（総務省の用語集。確認日：2026-11-03）。メーカーや機種が違っても、同じ<span translate="no">プロトコル</span>に従っていれば、お互いに通信できる。</p>
+            <p><span translate="no">TCP/IP</span>は、インターネットなどで標準的に使われている、通信の約束。IPAのシラバスは、これを<strong>4つの層</strong>に分けて考える（<span translate="no">TCP/IP階層モデル</span>）と書いている。層の名前は、下の図のとおり。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w6-layers">
+              <p class="vz-fig-title" id="cap-w6-layers"><span translate="no">TCP/IP</span>の4つの層（IPAシラバスの用語）</p>
+              <svg class="vz-svg" viewBox="0 0 360 188" role="img" aria-labelledby="w6-layers-t w6-layers-d">
+                <title id="w6-layers-t">TCP/IP階層モデルの4つの層</title>
+                <desc id="w6-layers-d">上から順に、アプリケーション層、トランスポート層、インターネット層、ネットワークインタフェース層。</desc>
+                <rect class="box-orange" x="2" y="4" width="356" height="40" rx="8"/>
+                <text class="t-b" x="14" y="30" translate="no">アプリケーション層</text>
+                <rect class="box-white" x="2" y="50" width="356" height="40" rx="8"/>
+                <text class="t-b" x="14" y="76" translate="no">トランスポート層</text>
+                <rect class="box-white" x="2" y="96" width="356" height="40" rx="8"/>
+                <text class="t-b" x="14" y="122" translate="no">インターネット層</text>
+                <rect class="box-white" x="2" y="142" width="356" height="40" rx="8"/>
+                <text class="t-b" x="14" y="168" translate="no">ネットワークインタフェース層</text>
+              </svg>
+              <figcaption>層ごとの働きの細かい説明は、教科書 p.329-345 で確かめる。今日は、<span translate="no">TCP/IP</span>が「4つの層に分けた通信の約束」だと、知っていればよい。</figcaption>
+            </figure>
+            <p>Webやメールなど、使い道ごとに、別々の<span translate="no">プロトコル</span>がある。試験のシラバスの用語例には、<span translate="no">HTTP</span>、<span translate="no">HTTPS</span>（<span translate="no">HTTP over TLS</span>）、<span translate="no">SMTP</span>、<span translate="no">POP</span>、<span translate="no">IMAP</span>、<span translate="no">FTP</span>、<span translate="no">NTP</span>、<span translate="no">DHCP</span>などが出てくる。今日は、<strong>過去問（問60）</strong>で、いくつかの役割を確かめる。</p>
+          </div>
+        </div>
+
+        <!-- ================= 1限 後半 ================= -->
+        <div class="timeline-block" id="blk-2">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3><span translate="no">IPアドレス</span> → <span translate="no">ドメイン名</span>・<span translate="no">URL</span>・<span translate="no">DNS</span>（テクノロジ系：ネットワーク 教科書 p.329-345）</h3>
+          <div class="timeline-body">
+
+            <p><strong>① <span translate="no">IPアドレス</span>：機器の住所（約15分）</strong></p>
+            <p>インターネットでは、通信相手を「<span translate="no">IPアドレス</span>」という<strong>番号</strong>で指定・識別している。<span translate="no">IPアドレス</span>は、インターネットに接続しているすべての機器に割り当てられ、インターネット上では原則として、同じ番号が別の機器に重ねて割り当てられることはない（JPRSの解説。確認日：2026-11-03）。</p>
+            <p>荷物を送るとき、住所がないと届かない。データを送るときも、送り先の<span translate="no">IPアドレス</span>を指定して送る。受け取った側は、送ってきた相手の<span translate="no">IPアドレス</span>を調べて、誰から来たデータかを知る。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w6-ip">
+              <p class="vz-fig-title" id="cap-w6-ip"><span translate="no">プライベートIPアドレス</span>と<span translate="no">グローバルIPアドレス</span></p>
+              <svg class="vz-svg" viewBox="0 0 360 232" role="img" aria-labelledby="w6-ip-t w6-ip-d">
+                <title id="w6-ip-t">プライベートIPアドレスとグローバルIPアドレス</title>
+                <desc id="w6-ip-d">お店の中のLANでは、組織の中で自由に使えるプライベートIPアドレスを使う。ルーターが、プライベートIPアドレスとグローバルIPアドレスを変換する。インターネットでは、世界で固有のグローバルIPアドレスを使う。</desc>
+                <rect class="box-white" x="2" y="4" width="356" height="56" rx="8"/>
+                <text class="t-b" x="12" y="28">お店の中のLAN</text>
+                <text class="t-sm" x="12" y="48"><tspan translate="no">プライベートIPアドレス</tspan>（組織の中で自由に使える番号）</text>
+                <line class="line-orange" x1="180" y1="62" x2="180" y2="82" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="2" y="84" width="356" height="56" rx="8"/>
+                <text class="t-b" x="12" y="108" translate="no">ルーター</text>
+                <text class="t-sm" x="12" y="128">2種類の番号を、変換する</text>
+                <line class="line-orange" x1="180" y1="142" x2="180" y2="162" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="2" y="164" width="356" height="56" rx="8"/>
+                <text class="t-b" x="12" y="188">インターネット</text>
+                <text class="t-sm" x="12" y="208"><tspan translate="no">グローバルIPアドレス</tspan>（世界で固有の番号）</text>
+              </svg>
+              <figcaption>総務省の用語集は、<span translate="no">グローバルIPアドレス</span>を「インターネットにおいて、全世界で固有の番号を持つ<span translate="no">IPアドレス</span>」と説明している。企業や組織の中では、自由に使える<span translate="no">プライベートIPアドレス</span>を使い、<span translate="no">ルーター</span>が2つの変換をする。個人利用者は、プロバイダ（<span translate="no">ISP</span>）から、一時的に<span translate="no">グローバルIPアドレス</span>を割り当ててもらう（確認日：2026-11-03）。</figcaption>
+            </figure>
+            <p class="lesson-note">試験のシラバスの用語例には、<span translate="no">IPアドレス</span>の種類として「<span translate="no">IPv6</span>」「<span translate="no">IPv4</span>」「<span translate="no">グローバル</span>」「<span translate="no">プライベート</span>」が出てくる。今日は、<span translate="no">グローバル</span>と<span translate="no">プライベート</span>の違いまで。</p>
+
+            <p><strong>② <span translate="no">ドメイン名</span>・<span translate="no">URL</span>・<span translate="no">DNS</span>：名前から住所を調べる（約20分）</strong></p>
+            <p><span translate="no">IPアドレス</span>は、数字の並びで、人には覚えにくい。そこで、覚えやすい<strong>名前</strong>を使う。その名前が<strong><span translate="no">ドメイン名</span></strong>。総務省の用語集は、<span translate="no">IPアドレス</span>が人間には判別が困難なので、「soumu.go.jp」のように<span translate="no">ドメイン名</span>で書けるようになっている、と説明している（確認日：2026-11-03）。</p>
+            <p>そして、<strong><span translate="no">DNS</span></strong>（Domain Name System）は、人が覚えにくい<span translate="no">IPアドレス</span>の代わりに、覚えやすい「名前」をインターネットで使えるようにするために開発された仕組み（JPRSの解説。確認日：2026-11-03）。名前と番号を、結びつける。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w6-dns">
+              <p class="vz-fig-title" id="cap-w6-dns">名前を入力してから、ホームページが開くまで</p>
+              <svg class="vz-svg" viewBox="0 0 360 296" role="img" aria-labelledby="w6-dns-t w6-dns-d">
+                <title id="w6-dns-t">ドメイン名からIPアドレスを調べて、Webサイトにつなぐ流れ</title>
+                <desc id="w6-dns-d">1 スマートフォンに、ドメイン名（例: example.jp）を入力する。2 DNSに、そのドメイン名に対応するIPアドレスを聞く。3 DNSが、IPアドレス（例: 192.0.2.10）を返す。4 そのIPアドレスのWebサーバにつなぎ、ホームページが開く。</desc>
+                <rect class="box-white" x="2" y="4" width="356" height="56" rx="8"/>
+                <circle class="dot" cx="22" cy="32" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="37">1</text>
+                <text class="t-b" x="44" y="28">スマートフォンに、名前を入力する</text>
+                <text class="t-sm" x="44" y="48"><tspan translate="no">example.jp</tspan>（<tspan translate="no">ドメイン名</tspan>。説明用の例）</text>
+                <line class="line-orange" x1="180" y1="62" x2="180" y2="76" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="2" y="78" width="356" height="56" rx="8"/>
+                <circle class="dot-orange" cx="22" cy="106" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="111">2</text>
+                <text class="t-b" x="44" y="102"><tspan translate="no">DNS</tspan>に聞く</text>
+                <text class="t-sm" x="44" y="122">「この名前の、IPアドレスは？」</text>
+                <line class="line-orange" x1="180" y1="136" x2="180" y2="150" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="2" y="152" width="356" height="56" rx="8"/>
+                <circle class="dot-orange" cx="22" cy="180" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="185">3</text>
+                <text class="t-b" x="44" y="176"><tspan translate="no">DNS</tspan>が、<tspan translate="no">IPアドレス</tspan>を返す</text>
+                <text class="t-sm" x="44" y="196"><tspan translate="no">192.0.2.10</tspan>（説明用の例）</text>
+                <line class="line-orange" x1="180" y1="210" x2="180" y2="224" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="2" y="226" width="356" height="56" rx="8"/>
+                <circle class="dot" cx="22" cy="254" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="259">4</text>
+                <text class="t-b" x="44" y="250">その番号のWebサーバへつなぐ</text>
+                <text class="t-sm" x="44" y="270">ホームページが開く</text>
+              </svg>
+              <figcaption>覚え方：<span translate="no">DNS</span>は、<strong>電話帳</strong>のようなもの。「名前」を引くと、「番号」が分かる。例の番号と名前は、説明のために作ったもの（実在のサイトではない）。</figcaption>
+            </figure>
+            <p><strong><span translate="no">URL</span></strong>は、Webページの場所を示す文字列。<span translate="no">URL</span>の中には、ふつう、<span translate="no">ドメイン名</span>が入っている。下の図は、総務省のサイトの<span translate="no">URL</span>の例。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w6-url">
+              <p class="vz-fig-title" id="cap-w6-url"><span translate="no">URL</span>の中の<span translate="no">プロトコル</span>と<span translate="no">ドメイン名</span></p>
+              <svg class="vz-svg" viewBox="0 0 360 188" role="img" aria-labelledby="w6-url-t w6-url-d">
+                <title id="w6-url-t">URLの例：https://www.soumu.go.jp/</title>
+                <desc id="w6-url-d">URLの例「https://www.soumu.go.jp/」を2つに分ける。「https」は、Webの通信の約束（プロトコル）。「www.soumu.go.jp」は、ドメイン名。</desc>
+                <rect class="box-white" x="2" y="4" width="356" height="40" rx="8"/>
+                <text class="t-mono" x="14" y="30" translate="no">https://www.soumu.go.jp/</text>
+                <line class="line" x1="40" y1="46" x2="40" y2="70"/>
+                <line class="line" x1="200" y1="46" x2="200" y2="108"/>
+                <rect class="box-white" x="2" y="72" width="356" height="32" rx="8"/>
+                <text class="t-b" x="12" y="94"><tspan translate="no">https</tspan>：Webの通信の約束（<tspan translate="no">プロトコル</tspan>）</text>
+                <rect class="box-orange" x="2" y="110" width="356" height="32" rx="8"/>
+                <text class="t-b" x="12" y="132"><tspan translate="no">www.soumu.go.jp</tspan>：<tspan translate="no">ドメイン名</tspan></text>
+                <text class="t-sm" x="12" y="168">この名前から、<tspan translate="no">DNS</tspan>が<tspan translate="no">IPアドレス</tspan>を調べる</text>
+              </svg>
+              <figcaption><span translate="no">https</span>は、シラバスでは「<span translate="no">HTTP over TLS（HTTPS）</span>」と書かれる。<span translate="no">ドメイン名</span>の中の「<span translate="no">go.jp</span>」などの意味や並び方は、教科書で確かめる。</figcaption>
+            </figure>
+
+            <p><strong>手を動かす：自分のスマートフォンで、<span translate="no">ドメイン名</span>を見つける（約10分）</strong></p>
+            <ol>
+              <li>ブラウザで、<strong>このページ</strong>を開く。アドレスバーの<span translate="no">URL</span>を見る。「https://」のあと、最初の「/」までが、<span translate="no">ドメイン名</span>。これは、何と書いてあるか</li>
+              <li>ブラウザで、総務省のサイト（<span translate="no">https://www.soumu.go.jp/</span>）を開く。<span translate="no">ドメイン名</span>は、何か。このページの<span translate="no">ドメイン名</span>と、同じか、違うか</li>
+              <li>隣の人と、見つけた<span translate="no">ドメイン名</span>を比べる。<span translate="no">ドメイン名</span>は、誰が用意したページかを知る、手がかりの1つになる（<span translate="no">ドメイン名</span>だけで、安全かどうかが決まるわけではない。第2〜4回で学んだ、<span translate="no">標的型攻撃</span>やなりすましの話を、思い出す）</li>
+            </ol>
+
+            <p><strong>ペアで確かめる（約5分）</strong>：「<span translate="no">IPアドレス</span>」「<span translate="no">ドメイン名</span>」「<span translate="no">DNS</span>」を、カフェのAさんに、やさしい日本語で説明する。1人が説明して、もう1人が、分かりにくいところを聞く。説明できたら、反対にする。</p>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <!-- ================= 2限 前半 ================= -->
+        <div class="timeline-block" id="blk-3">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3><span translate="no">パケット</span>・<span translate="no">ISP</span> → <span translate="no">AI</span>の活用 → <span translate="no">IoT</span>・<span translate="no">組込みシステム</span>（教科書 p.329-345、p.094-097、p.106-110）</h3>
+          <div class="timeline-body">
+
+            <p><strong>① <span translate="no">パケット</span>と<span translate="no">ISP</span>：データの運ばれ方と、回線を用意する会社（約15分）</strong></p>
+            <p><span translate="no">パケット</span>は、ネットワークを通して送信されるデータを分割するときに使われる<strong>単位</strong>のこと（総務省の用語集。確認日：2026-11-03）。ファイルを送るとき、データをいくつかの<span translate="no">パケット</span>に分けて、それぞれに、<span translate="no">IPアドレス</span>などの相手を識別する情報と、組み立て直すための順番の情報をつける。</p>
+            <p>分けると、途中でエラーが起きても、データ全体ではなく、<span translate="no">パケット</span>単位で送り直すだけで済む。だから、データの転送の効率が良くなる（総務省の用語集の説明）。ストーリーの2の絵の、小さな箱が、<span translate="no">パケット</span>。</p>
+            <ul class="vz-points">
+              <li class="vz-point">
+                <b><span translate="no">ISP</span>（インターネットサービスプロバイダ）</b>
+                <p>インターネットに接続できるサービスを提供する<strong>事業者</strong>のこと。電子メールを送ったり、ホームページを見たりするには、通常、<span translate="no">ISP</span>との契約が必要（総務省の用語集。確認日：2026-11-03）。</p>
+              </li>
+              <li class="vz-point">
+                <b>モバイル通信と<span translate="no">5G</span></b>
+                <p>スマートフォンのインターネット通信にも、<span translate="no">パケット</span>通信が使われる。総務省の用語集は、<span translate="no">5G</span>（第5世代移動通信システム）を、「多数同時接続」「超低遅延」といった特徴を持つ、あらゆるモノ・人などがつながる<span translate="no">IoT</span>時代の新しい通信、と説明している（確認日：2026-11-03）。</p>
+              </li>
+            </ul>
+            <p class="lesson-note">試験のシラバスの「通信サービス」の用語例には、<span translate="no">ISP</span>のほか、<span translate="no">MVNO</span>、<span translate="no">基地局</span>、<span translate="no">テザリング</span>、<span translate="no">SIMカード</span>、<span translate="no">eSIM</span>なども出てくる。パケット通信は、使った量で課金される方式と、定額の方式がある、という使い分けの考え方も、シラバスにある。細かい用語は、教科書 p.329-345 で確かめる。</p>
+
+            <p><strong>② <span translate="no">AI</span>の活用（約15分、教科書 p.094-097）</strong></p>
+            <p><span translate="no">AI</span>は、Artificial Intelligenceの略で、人工知能のこと（総務省 情報通信白書の用語解説。確認日：2026-11-03）。ストーリーの3は、<span translate="no">AI</span>の使い方の例。IPAのシラバスは、<span translate="no">AI</span>の活用例として、次のようなものを挙げている。</p>
+            <ul class="vz-points">
+              <li class="vz-point">
+                <b>データを学習して、予測する</b>
+                <p>教師あり学習による予測。例：<strong>売上予測</strong>、り患予測、成約予測、離反予測。ストーリーの3は、これ。</p>
+              </li>
+              <li class="vz-point">
+                <b>似たものを、グループに分ける</b>
+                <p>教師なし学習によるグルーピング。例：顧客セグメンテーション、店舗クラスタリング。</p>
+              </li>
+              <li class="vz-point">
+                <b>文章や画像を、つくる・直す</b>
+                <p><span translate="no">生成AI</span>の活用。例：文章の添削・要約、アイディアの提案、プログラミング、画像生成など。</p>
+              </li>
+            </ul>
+            <p>画像から動物を見分けるようなAIの技術には、<strong><span translate="no">ディープラーニング</span></strong>がある（IPAシラバスのAI技術の用語例）。今日は、<strong>過去問（問86）</strong>で確かめる。</p>
+
+            <p><strong><span translate="no">AI</span>の答えは、人が確かめる（約5分）</strong></p>
+            <p>IPAのシラバスは、<span translate="no">AI</span>を使うときの注意として、<span translate="no">AI</span>の出力に、<strong>誤った情報、偏った情報、古い情報</strong>などが含まれる可能性があること、そして、<span translate="no">AI</span>の出力に対する<strong>人間の関与の必要性</strong>を挙げている。</p>
+            <div class="exam-q">
+              <p class="exam-q-text">【ペアで考える】次の文は、<span translate="no">AI</span>に「<span translate="no">DNS</span>とは何か」と聞いたときの答えの<strong>例</strong>（この教材のために作った文。実際の<span translate="no">AI</span>の答えではない）。</p>
+              <p class="exam-q-text">「<span translate="no">DNS</span>は、<span translate="no">IPアドレス</span>を暗号化して、通信を安全にする仕組みです。」</p>
+              <p class="exam-q-text">この答えは、合っているか。どの資料を見れば、確かめられるか。ペアで話す（約3分）。</p>
+              <details class="exam-q-answer">
+                <summary>答えの例を見る</summary>
+                <p>合っていない。<span translate="no">DNS</span>は、ドメイン名と<span translate="no">IPアドレス</span>を結びつける仕組み。「暗号化」の話ではない。確かめるには、<strong>JPRSの解説</strong>、<strong>総務省の用語集</strong>、<strong>教科書</strong>のように、出どころがはっきりした資料を見る。<span translate="no">AI</span>の答えは、読みやすくて自信のある書き方でも、間違っていることがある。<span translate="no">AI</span>は下書きに使い、内容が合っているかは、人が確かめる。</p>
+              </details>
+            </div>
+
+            <p><strong>③ <span translate="no">IoTシステム</span>・<span translate="no">組込みシステム</span>（約15分、教科書 p.106-110）</strong></p>
+            <p><span translate="no">IoT</span>は、Internet of Thingsの略で、「モノのインターネット」と呼ばれる。自動車、家電、ロボット、施設などあらゆるモノがインターネットにつながり、情報のやり取りをすることで、モノのデータ化やそれに基づく自動化などが進展し、新たな付加価値を生み出す（総務省 情報通信白書の用語解説。確認日：2026-11-03）。ストーリーの4は、店の機械の<span translate="no">IoT</span>。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w6-aiiot">
+              <p class="vz-fig-title" id="cap-w6-aiiot"><span translate="no">AI</span>と<span translate="no">IoT</span>の違い</p>
+              <div class="vz-fields vz-fields--2">
+                <section class="vz-field vz-f-tc">
+                  <h4><span translate="no">AI</span></h4>
+                  <p><strong>人工知能</strong>。データから<strong>学習</strong>して、予測や判断などを行う使い方が多い。</p>
+                  <ul class="vz-tags"><li>例：売上の予測</li><li>例：画像から動物を見分ける</li></ul>
+                </section>
+                <section class="vz-field vz-f-tc">
+                  <h4><span translate="no">IoT</span></h4>
+                  <p>モノが<strong>インターネットにつながり</strong>、情報をやり取りする<strong>仕組み</strong>。</p>
+                  <ul class="vz-tags"><li>例：コーヒーマシンの状態を、スマートフォンで見る</li><li>例：センサーで集めたデータを送る</li></ul>
+                </section>
+              </div>
+              <figcaption>2つは、組み合わせて使われる。<span translate="no">IoT</span>で集めたデータを、<span translate="no">AI</span>が学習する、というように。でも、意味は別。「予測する」のは<span translate="no">AI</span>、「モノがつながる」のは<span translate="no">IoT</span>。</figcaption>
+            </figure>
+            <p><strong><span translate="no">組込みシステム</span></strong>は、家電や機械などの中に組み込まれて、その機器を動かす、コンピュータのシステム。IPAのシラバスは、身近な例として、携帯電話や産業用ロボットなどを挙げている（用語例）。</p>
+            <p>試験のシラバスの<span translate="no">IoT</span>の用語例には、<span translate="no">スマートスピーカー</span>、<span translate="no">コネクテッドカー</span>、<span translate="no">スマートシティ</span>、<span translate="no">スマート農業</span>、<span translate="no">HEMS</span>などがある。<span translate="no">IoT</span>の<strong>通信方式</strong>には、通信距離・速度・消費電力などによって、使い分けがある（<span translate="no">BLE</span>、<span translate="no">LPWA</span>などが、シラバスの用語例）。今日は、<strong>過去問（問56）</strong>で<span translate="no">BLE</span>を確かめる。</p>
+            <p><strong>ペアで話す（約3分）</strong>：自分の家や学校にある、<span translate="no">IoT</span>だと思うものを1つ挙げる。それは、何と、何がつながっているか。</p>
+          </div>
+        </div>
+
+        <!-- ================= 2限 後半 ================= -->
+        <div class="timeline-block" id="blk-4">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>過去問演習 → 用語を説明し合う → 確認テスト（1回目）</h3>
+          <div class="timeline-body">
+
+            <p><strong>過去問演習（約15分）</strong>：今日の範囲の令和7年度の公開問題を、問い方の型を使って解く。4問ある。自分で選んでから、答えと解説を見る。</p>
+
+            <div class="exam-q">
+              <p class="exam-q-text">【例題①】問58　DNS の説明として，適切なものはどれか。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>IP ネットワークに接続しようとするコンピュータに，IP アドレスなどを自動的に割り当てるプロトコルである。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>ブラウザと Web サーバ間の通信を暗号化して，セキュリティを高めるために利用されるプロトコルである。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>ホスト名やドメイン名と，IP アドレスを対応付ける仕組みである。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>ホスト名やドメイン名と，MAC アドレスを対応付ける仕組みである。</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問58（<span translate="no">テクノロジ系</span>。問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：ウ</strong>（型：説明文から、用語の役割を選ぶ）。<span translate="no">DNS</span>は、名前（<span translate="no">ドメイン名</span>など）と<span translate="no">IPアドレス</span>を結びつける仕組み。選択肢のウが、そのまま当たる。ア・イ・エは、<strong>別のものの説明</strong>。アは「<span translate="no">IPアドレス</span>を自動的に割り当てる」話、イは「通信を暗号化する」話（第4回の暗号化に近い話）、エは名前と<span translate="no">MAC</span>アドレスを結びつける話で、結びつける相手が違う。「何と何を結びつけるか」の部分を、1つずつ確かめて選ぶ。第5回の問57の選択肢ウも、<span translate="no">DNS</span>の説明だった。</p>
+              </details>
+            </div>
+
+            <div class="exam-q">
+              <p class="exam-q-text">【例題②】問60　TCP/IP ネットワークで用いられるプロトコルである FTP の役割として，適切なものはどれか。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>正確な現在時刻を取得する。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>電子メールを転送する。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>ネットワーク接続に必要な IP アドレスなどの情報を自動的に割り当てる。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>ファイルを PC 間で転送する。</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問60（<span translate="no">テクノロジ系</span>。問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：エ</strong>（型：<span translate="no">プロトコル</span>の名前と、役割を結びつける）。<span translate="no">FTP</span>は、ファイルを送る（転送する）ための<span translate="no">プロトコル</span>。<span translate="no">プロトコル</span>は、使い道ごとに別々にある、というのが、この問題の考え方。ア・イ・ウは、ほかの<span translate="no">プロトコル</span>の役割。それぞれ、<span translate="no">NTP</span>（時刻）、<span translate="no">SMTP</span>（メールを送る）、<span translate="no">DHCP</span>（番号の自動割り当て）の名前が、シラバスの用語例にある。今日は、<span translate="no">FTP</span>だけ分かればよい。選択肢の「何をするか」の部分から、役割を選ぶ。</p>
+              </details>
+            </div>
+
+            <div class="exam-q">
+              <p class="exam-q-text">【例題③】問86　動物が写っている大量の画像から犬や猫などの特徴を自動的に抽出して，動物の種類を識別できるようにする AI の技術はどれか。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>e-ラーニング</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>アクティブラーニング</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>アダプティブラーニング</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>ディープラーニング</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問86（<span translate="no">テクノロジ系</span>。問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：エ</strong>（型：説明文から、用語を選ぶ）。大量のデータから、特徴を自動的に取り出して、見分けられるようにする<span translate="no">AI</span>の技術は、<span translate="no">ディープラーニング</span>。IPAのシラバスの、<span translate="no">AI</span>の技術の用語例にある。ア・イ・ウは、<strong>学習・教育の方法</strong>の名前で、問題文の「特徴を自動的に抽出する<span translate="no">AI</span>の技術」ではない。「<span translate="no">AI</span>の技術はどれか」と聞かれているので、<span translate="no">AI</span>の話ではない選択肢を、先に外せる。</p>
+              </details>
+            </div>
+
+            <div class="exam-q">
+              <p class="exam-q-text">【例題④】問56　Bluetooth に追加された仕様の一つであり，省電力性に優れているので，IoT システムを長期間運用でき，送受信デバイス間の距離を知ることにも使われているものはどれか。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>BLE</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>IrDA</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>NFC</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>PLC</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問56（<span translate="no">テクノロジ系</span>。問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：ア</strong>（型：特徴の説明から、用語を選ぶ）。<span translate="no">BLE</span>は、Bluetooth Low Energyの略で、シラバスの<span translate="no">IoT</span>ネットワークの用語例にある。問題文の「<span translate="no">Bluetooth</span>に追加された仕様」「省電力性に優れている」「<span translate="no">IoT</span>システムを長期間運用できる」の言葉が、<span translate="no">BLE</span>に当たる。<span translate="no">IoT</span>の機器には、電池で長く動かしたいものもあるので、省電力の通信方式が選ばれる、と考えると覚えやすい（シラバスは、通信距離・速度・消費電力などによる使い分けと書いている）。<span translate="no">IrDA</span>・<span translate="no">NFC</span>・<span translate="no">PLC</span>は、今日の用語カードには入れていない。この問題は、「<span translate="no">Bluetooth</span>に追加された仕様」という言葉から、<span translate="no">Bluetooth</span>の名前が入った<span translate="no">BLE</span>を選ぶ、というヒントの使い方もできる。</p>
+              </details>
+            </div>
+
+            <p><strong>用語を、ペアで説明し合う（約10分）</strong>：下の「用語カード」の11語から、3つずつ選び、1人が、やさしい日本語で意味を説明する。もう1人は、どの用語かを当てる。</p>
+
+            <p><strong>確認テスト（1回目）（約5分）</strong></p>
+            <p>今日の内容の5問。<strong>点数を競うものではない</strong>。今、どこまで分かっているかを、自分で知るためのテスト。分からない問題は、思い出せる範囲で答える。送信すると、点数と、正解・解説が表示される。</p>
+            <div class="vz-cta">
+              <a class="vz-btn vz-btn--ext" href="https://docs.google.com/forms/d/e/1FAIpQLScjraOtmIRf-6QWBbpF_dDO9RujMK_Yc2jxQ896xAxHiOYKAg/viewform" target="_blank" rel="noopener">第6回 確認テスト（1回目）を受ける（Googleフォーム）</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= まとめ ================= -->
+        <div class="timeline-block" id="blk-5">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り → 用語カードの提出・次回予告</h3>
+          <div class="timeline-body">
+            <ul>
+              <li><strong>振り返り</strong>（約3分）：1回目の結果の画面で、<strong>点数を覚えて</strong>、<strong>間違えた問題の解説</strong>を読む。分からないところは、隣の人に聞く、または、このページの<a href="#sec-terms">用語カード</a>・<a href="#sec-quiz">練習クイズ</a>で確かめる</li>
+              <li><strong>確認テスト（2回目）は任意</strong>：時間がある人、確かめたい人は、<a href="#sec-optional">下の「任意の取り組み」</a>から受ける</li>
+              <li><strong>用語カード</strong>：今回覚えた用語にチェックを入れて、フォームで提出する（約3分）</li>
+              <li>質問と、次回までの課題の確認（約1分）。読むだけの<a href="#sec-tip">「就活ワンポイント」</a>もある。自分の点数の推移は、<a href="#sec-optional">「任意の取り組み」</a>の「自分の成績を見る」から、いつでも見られる</li>
+              <li>次回（第7回）：<strong>コンピュータの中身を開ける</strong>——<span translate="no">CPU</span>・<span translate="no">記録媒体</span>と、企業のお金の管理（<span translate="no">テクノロジ系</span> p.244-255、<span translate="no">ストラテジ系</span> p.033-040）</li>
+            </ul>
+            <div class="vz-cta">
+              <a class="vz-btn vz-btn--ext" href="https://docs.google.com/forms/d/e/1FAIpQLSc8NEYwjrX4r0lK9LgwfQw2RhAyYMzgdwOIdZawFRbDbYCuRg/viewform" target="_blank" rel="noopener">第6回 今回覚えた用語を提出する（Googleフォーム）</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-terms">
+      <h2>用語カード（今日の用語）</h2>
+      <p class="lesson-note">用語カードは、今日の授業で出る用語と、その意味のリスト。授業の最後に、フォームで<strong>今回覚えた用語</strong>にチェックを入れて提出する。用語は日本語のまま覚える。試験は日本語で行われる。</p>
+      <div class="table-wrap">
+        <table class="schedule-table">
+          <thead><tr><th>用語</th><th>意味</th></tr></thead>
+          <tbody>
+            <tr><td><span translate="no">プロトコル</span></td><td>ネットワークを介してコンピュータ同士がデータをやり取りするために定められた、データ形式や送受信の手順などの国際標準の規則。通信プロトコルとも呼ばれる</td></tr>
+            <tr><td><span translate="no">TCP/IP</span></td><td>インターネットなどで標準的に使われている、通信の約束。4つの層に分けて考える（<span translate="no">TCP/IP階層モデル</span>）</td></tr>
+            <tr><td><span translate="no">IPアドレス</span></td><td>インターネットに接続している機器に割り当てられる番号。通信相手を指定・識別するのに使う。<span translate="no">グローバル</span>（世界で固有）と<span translate="no">プライベート</span>（組織の中で自由に使える）がある</td></tr>
+            <tr><td><span translate="no">ドメイン名</span></td><td><span translate="no">IPアドレス</span>の代わりに使う、人が覚えやすい名前（例：soumu.go.jp）</td></tr>
+            <tr><td><span translate="no">DNS</span></td><td><span translate="no">ドメイン名</span>と<span translate="no">IPアドレス</span>を結びつける仕組み。名前から、番号を調べられる</td></tr>
+            <tr><td><span translate="no">URL</span></td><td><span translate="no">Web</span>ページの場所を示す文字列。ふつう、中に<span translate="no">ドメイン名</span>が入っている</td></tr>
+            <tr><td><span translate="no">パケット</span></td><td>ネットワークで送るデータを分割するときの単位。分けて送ると、エラーのときに、その<span translate="no">パケット</span>だけ送り直せる</td></tr>
+            <tr><td><span translate="no">ISP</span></td><td>インターネットに接続できるサービスを提供する事業者（インターネットサービスプロバイダ）</td></tr>
+            <tr><td><span translate="no">AI</span></td><td>人工知能。データから学習して、予測や判断などを行う使い方が多い。出力は、人が確かめる必要がある</td></tr>
+            <tr><td><span translate="no">IoT</span></td><td>「モノのインターネット」。家電や自動車などのモノがインターネットにつながり、情報をやり取りする仕組み</td></tr>
+            <tr><td><span translate="no">組込みシステム</span></td><td>家電や機械などの中に組み込まれて、その機器を動かす、コンピュータのシステム（例：携帯電話、産業用ロボット）</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-quiz">
+      <h2>練習クイズ（サイト内・記録なし）</h2>
+      <p class="lesson-note">確認テストの内容を、自分のペースで練習するためのクイズ（確認テストと同じ内容）。回答はこのページの中で判定されるだけで、どこにも送信・保存されず、成績にも含まれない。何度でも試せる。</p>
+
+        <div class="quiz-set">
+          <div class="quiz" aria-live="polite" data-answer="イ">
+            <p class="quiz-q"><span class="quiz-q-num">Q1</span>ネットワークを介して，コンピュータどうしがデータをやり取りするために定められた，データ形式や送受信の手順などの決まりはどれか。</p>
+            <div class="quiz-choices">
+              <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span><span translate="no">IPアドレス</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span><span translate="no">プロトコル</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span><span translate="no">ドメイン名</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span><span translate="no">パケット</span></span></button>
+            </div>
+            <div class="quiz-feedback" hidden>
+              <p class="quiz-result"></p>
+              <p><span translate="no">プロトコル</span>は、ネットワークを介してコンピュータ同士がデータをやり取りするために定められた、データ形式や送受信の手順などの規則（総務省）。アは機器ごとの番号、ウはネットワークにつけた名前、エはデータを分けた単位。</p>
+              <button type="button" class="quiz-retry">もう一度</button>
+            </div>
+          </div>
+          <div class="quiz" aria-live="polite" data-answer="ウ">
+            <p class="quiz-q"><span class="quiz-q-num">Q2</span>インターネットに接続している機器を見分けるために，機器ごとに割り当てられる番号はどれか。</p>
+            <div class="quiz-choices">
+              <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span><span translate="no">ドメイン名</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span><span translate="no">プロトコル</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span><span translate="no">IPアドレス</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span><span translate="no">SSID</span></span></button>
+            </div>
+            <div class="quiz-feedback" hidden>
+              <p class="quiz-result"></p>
+              <p><span translate="no">IPアドレス</span>は、インターネットに接続している機器に割り当てられる番号で、通信相手を指定・識別するのに使う（JPRS）。アは人が覚えやすい名前、イは通信の決まり、エは<span translate="no">無線LAN</span>のネットワークの名前。</p>
+              <button type="button" class="quiz-retry">もう一度</button>
+            </div>
+          </div>
+          <div class="quiz" aria-live="polite" data-answer="エ">
+            <p class="quiz-q"><span class="quiz-q-num">Q3</span>「example.jp」のような<span translate="no">ドメイン名</span>でWebサイトを開くときに，<span translate="no">ドメイン名</span>に対応する<span translate="no">IPアドレス</span>を調べて答える仕組みはどれか。</p>
+            <div class="quiz-choices">
+              <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span><span translate="no">ISP</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span><span translate="no">パケット</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span><span translate="no">URL</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span><span translate="no">DNS</span></span></button>
+            </div>
+            <div class="quiz-feedback" hidden>
+              <p class="quiz-result"></p>
+              <p><span translate="no">DNS</span>は、人が覚えにくい<span translate="no">IPアドレス</span>の代わりに、覚えやすい名前（<span translate="no">ドメイン名</span>）をインターネットで使えるようにする仕組み（JPRS）。<span translate="no">ドメイン名</span>と<span translate="no">IPアドレス</span>を対応づける。アはインターネットに接続できるサービスを提供する事業者、イはデータを分けた単位、ウはWebページの場所を示す文字列。</p>
+              <button type="button" class="quiz-retry">もう一度</button>
+            </div>
+          </div>
+          <div class="quiz" aria-live="polite" data-answer="ア">
+            <p class="quiz-q"><span class="quiz-q-num">Q4</span><span translate="no">IoT</span>の説明として，最も適切なものはどれか。</p>
+            <div class="quiz-choices">
+              <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span>自動車や家電などのモノがインターネットにつながり，情報をやり取りして，データ化や自動化を進める。</span></button>
+              <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span>データを学習して，予測や判断などを行う技術。</span></button>
+              <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span><span translate="no">ドメイン名</span>と<span translate="no">IPアドレス</span>を対応づける仕組み。</span></button>
+              <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span>離れた拠点どうしをつなぐ，広い範囲のネットワーク。</span></button>
+            </div>
+            <div class="quiz-feedback" hidden>
+              <p class="quiz-result"></p>
+              <p><span translate="no">IoT</span>（Internet of Things、モノのインターネット）は、自動車・家電・ロボット・施設などあらゆるモノがインターネットにつながり、情報のやり取りをすることで、モノのデータ化やそれに基づく自動化などが進展し、新たな付加価値を生み出すこと（総務省 情報通信白書の用語解説）。イは<span translate="no">AI</span>、ウは<span translate="no">DNS</span>、エは<span translate="no">WAN</span>の説明。</p>
+              <button type="button" class="quiz-retry">もう一度</button>
+            </div>
+          </div>
+          <div class="quiz" aria-live="polite" data-answer="ウ">
+            <p class="quiz-q"><span class="quiz-q-num">Q5</span>カフェで，過去の売上データを学習して，明日の来店客数を予測するのに使われる技術はどれか。</p>
+            <div class="quiz-choices">
+              <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span><span translate="no">DNS</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span><span translate="no">IoT</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span><span translate="no">AI</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span><span translate="no">ISP</span></span></button>
+            </div>
+            <div class="quiz-feedback" hidden>
+              <p class="quiz-result"></p>
+              <p><span translate="no">AI</span>（人工知能）は、データを学習して、予測や判断などを行う技術。売上予測は、<span translate="no">AI</span>の活用例（IPAシラバス：教師あり学習による予測（売上予測など））。<span translate="no">IoT</span>は、モノがインターネットにつながる仕組みで、データを集めるのには使われるが、予測そのものを行う技術ではない。<span translate="no">DNS</span>と<span translate="no">ISP</span>は、インターネットにつながる仕組みと事業者。</p>
+              <button type="button" class="quiz-retry">もう一度</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-optional">
+      <h2>任意の取り組み</h2>
+      <p class="lesson-note">必須ではありません。時間があるとき、確かめたいときに使います。</p>
+      <h3>確認テスト（2回目）</h3>
+      <p>1回目と同じ5問です（問題の順番は違います）。受けたら、結果の画面の点数を、1回目の点数と自分で比べます。1回目の点数を、覚えておきます。</p>
+      <div class="vz-cta">
+        <a class="vz-btn vz-btn--ext" href="https://docs.google.com/forms/d/e/1FAIpQLScHsHvXnlvYX49B6W8ho1AmNIPNpvgIGDPMRDKpR1aDAmuXUw/viewform" target="_blank" rel="noopener">第6回 確認テスト（2回目・任意）を受ける（Googleフォーム）</a>
+      </div>
+      <h3>自分の成績を見る</h3>
+      <p>診断テスト・復習テスト・確認テストの点数の推移と、次に復習するとよい用語を見られます。学校のGoogleアカウントでログインすると、自分の分だけが表示されます。</p>
+      <div class="vz-cta">
+        <a class="vz-btn vz-btn--ext" href="https://script.google.com/a/macros/i-seifu.jp/s/AKfycbwquVX4xkXNy47RkGjCUz6Xmc4GFaPLpPkSVuW6z--m5Yth88yilipCYUSanlTpQF9P/exec" target="_blank" rel="noopener">自分の成績を見る（学校のGoogleアカウント）</a>
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-tip">
+      <h2>就活ワンポイント（任意）</h2>
+      <p class="lesson-note">授業時間には含めない、読むだけのコラム。成績にも含まれない。今日の言葉を、面接で使う練習。</p>
+      <h3>面接で「ITに詳しくない人に、説明してください」と言われたら</h3>
+      <p>面接官から、こう聞かれることがある。専門用語を使わずに、短く説明する練習になる。答えは、<strong>3つの順番</strong>で話すと、分かりやすくなる（一つの考え方）。下の吹き出しが、順に現れる。</p>
+      <div><button type="button" class="tip-ctl" data-target="tip-chat-1" aria-pressed="false">動きを止めて、全部を表示する</button></div>
+      <div class="tip-chat" id="tip-chat-1" role="group" aria-label="面接の会話の例。面接官の質問のあと、結論、理由、まとめの順に答える">
+        <div class="tip-b tip-b--q"><span class="tip-tag">面接官</span>インターネットの仕組みを、<span translate="no">IT</span>に詳しくない人に、説明してください。</div>
+        <div class="tip-b"><span class="tip-tag">① 結論</span>インターネットでは、機器ごとに、住所のような番号があります。それが<span translate="no">IPアドレス</span>です。</div>
+        <div class="tip-b"><span class="tip-tag">② 理由</span>番号は覚えにくいので、名前を使います。名前から番号を調べる仕組みが<span translate="no">DNS</span>で、電話帳のようなものだからです。</div>
+        <div class="tip-b"><span class="tip-tag">③ まとめ</span>仕事でも、専門用語を、身近な例で説明できるようになりたいです。</div>
+      </div>
+      <ul>
+        <li><strong>例文は一例</strong>。自分が実際に学んだこと、したことを話す。していないことは、言わない。</li>
+        <li>用語を、日本語のまま使えて、しかも「住所」「電話帳」のような<strong>例え</strong>で言い換えられると、<span translate="no">IT</span>に詳しくない人にも伝わる。</li>
+        <li>「家のネットワークを図にした」「<span translate="no">AI</span>の答えを、資料で確かめた」のように、<strong>自分がしたこと</strong>を一言入れると、話に説得力が出る。</li>
+      </ul>
+      <p class="lesson-note">答え方の順番（結論・理由・まとめ）は、この教材の一つの考え方で、公式のルールではない。<span translate="no">IPA</span>は、ITパスポート試験の合格について、「就職活動において、自らの知識を証明し、自己アピールに役立ちます」と紹介している（<span translate="no">IPA</span><a href="https://www3.jitec.ipa.go.jp/JitesCbt/html/about/merit.html" target="_blank" rel="noopener">「合格のメリット」</a>、確認日：2026-11-03。留学生向けに書かれた説明ではない）。</p>
+    </div>
+
+    <div class="syllabus-section" id="sec-tasks">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>第7回の予習：教科書を読む</strong>
+            <p>教科書 p.244-255 を読み、<span translate="no">CPU</span>が何をするものか、<span translate="no">記録媒体</span>にどんな種類があるか、確認しておく。第7回の授業の最後に、覚えた用語をフォームで提出する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>練習クイズで、間違えた用語を確かめる</strong>
+            <p>練習クイズは、全問正解になるまで繰り返す。間違えた用語は、用語カードで確かめる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">任意</span>
+          <div>
+            <strong>教科書の章末確認問題（p.346）</strong>
+            <p>今日の範囲の章末確認問題を、自分のペースで解く。授業では、同じ範囲を確認テストで確かめる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>よく開くサイトの<span translate="no">ドメイン名</span>を、3つ探す</strong>
+            <p>自分がよく開くサイト（学校、ニュース、動画など）の<span translate="no">URL</span>を見て、<span translate="no">ドメイン名</span>の部分を3つ書き出す。同じ名前の一部（例：「.jp」）が、ほかのサイトにもあるか、見る。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-refs">
+      <h2>参考リンク</h2>
+      <ul class="vz-links">
+        <li><a class="vz-link" href="https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ja_06/" target="_blank" rel="noopener"><b>用語集（は行）：<span translate="no">プロトコル</span>・<span translate="no">パケット</span>・<span translate="no">5G</span></b><span>総務省「国民のためのサイバーセキュリティサイト」</span></a></li>
+        <li><a class="vz-link" href="https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ja_04/" target="_blank" rel="noopener"><b>用語集（た行）：<span translate="no">ドメイン</span>・<span translate="no">ドメイン名</span></b><span>総務省「国民のためのサイバーセキュリティサイト」</span></a></li>
+        <li><a class="vz-link" href="https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ja_02/" target="_blank" rel="noopener"><b>用語集（か行）：<span translate="no">グローバルIPアドレス</span></b><span>総務省「国民のためのサイバーセキュリティサイト」。<span translate="no">プライベートIPアドレス</span>との違いと、<span translate="no">ルーター</span>の変換にも触れている</span></a></li>
+        <li><a class="vz-link" href="https://www.soumu.go.jp/main_sosiki/cybersecurity/kokumin/glossary/ja_01/" target="_blank" rel="noopener"><b>用語集（あ行）：インターネットサービスプロバイダ</b><span>総務省「国民のためのサイバーセキュリティサイト」</span></a></li>
+        <li><a class="vz-link" href="https://jprs.jp/related-info/guide/010.pdf" target="_blank" rel="noopener"><b>ＪＰＲＳ トピックス＆コラム ＤＮＳのしくみと動作原理（PDF）</b><span>JPRS。<span translate="no">IPアドレス</span>と<span translate="no">DNS</span>の説明を確かめた資料</span></a></li>
+        <li><a class="vz-link" href="https://www.soumu.go.jp/johotsusintokei/whitepaper/ja/h28/pdf/28yohgo.pdf" target="_blank" rel="noopener"><b>用語解説（PDF、平成28年版 情報通信白書）</b><span>総務省。<span translate="no">AI</span>と<span translate="no">IoT</span>の説明を確かめた資料（2016年版）</span></a></li>
+        <li><a class="vz-link" href="https://www.ipa.go.jp/shiken/syllabus/omgdg50000005kn1-att/syllabus_ip_ver6_5.pdf" target="_blank" rel="noopener"><b>ITパスポート試験シラバス（PDF、Ver.6.5）</b><span><span translate="no">IPA</span>。「通信プロトコル」「ネットワーク応用」「<span translate="no">IoT</span>システム・<span translate="no">組込みシステム</span>」「<span translate="no">AI</span>の利活用」の用語例で、試験での用語の書き方を確かめる</span></a></li>
+        <li><a class="vz-link" href="https://www3.jitec.ipa.go.jp/JitesCbt/html/about/merit.html" target="_blank" rel="noopener"><b>【ITパスポート試験】合格のメリット</b><span><span translate="no">IPA</span>。就活ワンポイントで紹介した記述の出典</span></a></li>
+        <li><a class="vz-link" href="https://www.ipa.go.jp/shiken/mondai-kaiotu/index.html" target="_blank" rel="noopener"><b>過去問題 | 試験情報 | IPA</b><span>公開問題と解答例の一覧。法令に特別の定めがある場合を除き、許諾・使用料は不要（IPA公式）。この授業では、年度と問番号を出典として書く</span></a></li>
+        <li><a class="vz-link" href="https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2025r07_ip_qs.pdf" target="_blank" rel="noopener"><b>令和7年度 ITパスポート試験 公開問題（PDF）</b><span>例題の出典</span></a></li>
+        <li><a class="vz-link" href="https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2025r07_ip_ans.pdf" target="_blank" rel="noopener"><b>令和7年度 ITパスポート試験 公開問題 解答例（PDF）</b><span>例題の正答の確認</span></a></li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week05.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第5回 つながる仕組み：LANから世界へ</span>
+      </a>
+      <a href="../it-passport-technology.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">ITパスポート テクノロジー系</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第7回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js?v=5"></script>
+</body>
+</html>
