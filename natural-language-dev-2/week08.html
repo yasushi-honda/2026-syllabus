@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第8回 AIエージェントに効率よく働いてもらう、指示の4つの型 | 自然言語開発 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=25">
+  <!-- 公式情報確認: 2026-11-05 (公式ドキュメントを、.md版と生HTMLをcurlで取得して原文照合。Antigravityは描画した本文と各ページの.md版で確認。各ページに更新日の表示はなく、更新日は未確認。①Claude Code: code.claude.com/docs/en/tools-reference「Asks multiple-choice questions to gather requirements or clarify ambiguity.」「Claude uses AskUserQuestion to ask you multiple-choice questions when it needs a decision or a clarification.」（「プロンプトで名指しすれば使われる」という明文は公式に見つからない）／permission-modes「Enter plan mode by pressing Shift+Tab or prefixing a single prompt with /plan.」／best-practices「If that system has a CLI, that's usually the easiest way in. With gh installed and signed in, for example, Claude will open pull requests and read review comments without any explanation from you.」「Give Claude something it can run that comes back pass or fail.」「Interview me until you could write the spec, then write it to SPEC.md.」／MCP追加 claude mcp add --transport http notion https://mcp.notion.com/mcp ②Codex CLI: learn.chatgpt.com/guides/best-practices（developers.openai.com/codex から転送）「Plan mode lets Codex gather context, ask clarifying questions, and build a stronger plan before implementation.」「Toggle with /plan or Shift+Tab.」／AGENTS.md「Codex reads AGENTS.md files before doing any work.」／MCP追加 codex mcp add context7 -- npx -y @upstash/context7-mcp ③Antigravity CLI（agy）: antigravity.google/docs/plan「the agent initiates a focused interview using interactive question prompts and structured options.」／docs/commands/grill-me「With /grill-me, the agent asks one question at a time and recommends an answer for each.」／docs/cli/modes「cycle through the active sequence: default > accept-edits > auto > plan > default.」／MCPは /mcp か設定ファイル（agy mcp add のような追加コマンドは公式に見つからない）／指示ファイルは AGENTS.md または GEMINI.md ④modelcontextprotocol.io/docs/getting-started/intro「MCP (Model Context Protocol) is an open-source standard for connecting AI applications to external systems.」「Think of MCP like a USB-C port for AI applications.」。未確認: 各ページの更新日、AskUserQuestionを名指しで頼めば使われるという公式の明文、agyの質問ツールの内部名、CodexとagyでCLIを一般的に使わせることへの公式の言及、Gemini CLI終了日の公式ソース。改名・終了: Antigravity CLI・Codex CLI・Claude Code 自体の終了・改名の公式発表は見つからず） -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev-2.html">自然言語開発 II</a>
+        <span>/</span>
+        <span>第8回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">AIエージェントに効率よく働いてもらう、<wbr>指示の4つの型</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 8</span>
+            <span class="page-badge">木曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-green">
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
+
+    <div class="qr-box qr-box--pc">
+      <a class="qr-box__zoom" href="qr/week08-page.svg" target="_blank" rel="noopener" aria-label="QRコードを大きく表示する">
+        <img class="qr-box__img" src="qr/week08-page.svg" alt="この第8回のページを開くQRコード。スマートフォンのカメラで読み取ると、このページが開く。" width="180" height="180">
+      </a>
+      <div class="qr-box__body">
+        <p class="qr-box__heading">📱 スマホで開く</p>
+        <p class="qr-box__text">教室の画面を見ながら、自分のスマートフォンで、このページを開けます。スマートフォンの<strong>カメラ</strong>で、このQRコードを読み取ってください。QRコードを押すと、大きく表示されます。</p>
+      </div>
+    </div>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">同じAIエージェントでも、<strong>指示のしかた</strong>で、できあがりと手間が大きく変わる。使用中のAIエージェントに<strong>効率よく働いてもらうための4つの型</strong>（①先に質問させる ②計画だけ立てさせる ③道具で解決できるか聞く ④確かめ方を渡す）を知り、自分の題材で試す</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">先に質問させる（選択肢で提案） / AskUserQuestion / plan（計画）モード / CLIとMCPで解決できる？ / 確かめ方を渡す / 指示ファイル（CLAUDE.md・AGENTS.md・GEMINI.md） / 指示の型カード</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">自分が使うAIエージェント（Claude Code／Codex CLI／Antigravity CLI）が使える状態のCodespace。第7回の作業フォルダ（仕様の1ページと、動く最小版）。<strong>今日は、新しいサービスの登録はしません</strong>。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>指示を<strong>4つの型</strong>に分けて説明でき、それぞれ<strong>どんなときに効くか</strong>が言える</li>
+        <li>実行する前に、<strong>選択肢つきで質問させる</strong>指示を書ける（使用中のエージェントでの出方の違いを知る）</li>
+        <li>「これは<strong>CLIやMCP</strong>で済む？」と、<strong>道具を先に聞く</strong>ことができる</li>
+        <li>合否が出る<strong>確かめ方</strong>を渡して、実行した結果を<strong>証拠</strong>として見せてもらえる</li>
+        <li>自分の題材で、4つの型を使った指示を試し、<strong>変える前と後</strong>を比べて、<strong>指示の型カード</strong>にまとめられる</li>
+      </ul>
+      <div class="lesson-tip">
+        <strong>今日の進め方:</strong> 型の名前を覚えるより、<strong>自分の指示を1つ書き換えて、結果が変わるのを見る</strong>ことが目的です。エージェントは3種類（Claude Code／Codex CLI／Antigravity CLI）が混ざっています。<strong>機能の名前は違っても、「実行する前に、選択肢を出して選ばせて」のような普通の文章は、どれにも通じます</strong>。ツールごとの違いは、2つの表で確かめます。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>ここまでの学びを振り返り、今日の4つの型の地図を見る</h3>
+          <div class="timeline-body">
+            <p><strong>① ここまでの振り返り</strong>（約15分。中間共有の名残）</p>
+            <ul>
+              <li>第1〜7回で、クラウド（Google Cloud）、AIエージェント、Neon、仕様を書いて作らせる、を体験してきた。<strong>1人1分</strong>で、「<strong>うまくいった指示</strong>」と「<strong>つまずいた指示</strong>」を1つずつ、隣の人に話す</li>
+              <li>全体で、いくつか聞く。つまずいた指示は、今日の4つの型で<strong>どう書き換えられるか</strong>を、あとで考える材料になる</li>
+            </ul>
+            <p><strong>② 今日の地図：指示の4つの型</strong>（約10分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-n8-map">
+              <p class="vz-fig-title" id="cap-n8-map">指示の4つの型</p>
+              <svg class="vz-svg" viewBox="0 0 360 292" role="img" aria-labelledby="n8-map-t n8-map-d">
+                <title id="n8-map-t">指示の4つの型</title>
+                <desc id="n8-map-d">1 先に質問させる。実行する前に、決めることを選択肢つきで聞いてもらう。1限の後半。2 計画だけ立てさせる。plan（計画）モードで、実行せずに計画だけ出してもらう。1限の後半。3 道具で解決できるか聞く。CLIやMCPで済むかを、先に聞く。2限の前半。4 確かめ方を渡す。合否が出る確認の手段を渡して、結果を証拠として見せてもらう。2限の前半。</desc>
+                <rect class="box-green box-key" x="8" y="6" width="344" height="62" rx="10"/>
+                <text class="t-b" x="22" y="30">1 先に質問させる</text>
+                <text class="t-sm" x="22" y="52">実行の前に、選択肢で聞いてもらう</text>
+                <text class="t-sm" x="342" y="30" text-anchor="end">1限後半</text>
+                <rect class="box-green" x="8" y="76" width="344" height="62" rx="10"/>
+                <text class="t-b" x="22" y="100">2 計画だけ立てさせる</text>
+                <text class="t-sm" x="22" y="122">plan（計画）モードで、まず案だけ</text>
+                <text class="t-sm" x="342" y="100" text-anchor="end">1限後半</text>
+                <rect class="box-green" x="8" y="146" width="344" height="62" rx="10"/>
+                <text class="t-b" x="22" y="170">3 道具で解決できる？と聞く</text>
+                <text class="t-sm" x="22" y="192">CLIやMCPで済むかを、先に</text>
+                <text class="t-sm" x="342" y="170" text-anchor="end">2限前半</text>
+                <rect class="box-green" x="8" y="216" width="344" height="62" rx="10"/>
+                <text class="t-b" x="22" y="240">4 確かめ方を渡す</text>
+                <text class="t-sm" x="22" y="262">合否が出る確認と、証拠を見せる</text>
+                <text class="t-sm" x="342" y="240" text-anchor="end">2限前半</text>
+              </svg>
+              <figcaption>2限後半に、自分の題材で4つとも試して、「指示の型カード」を作ります。</figcaption>
+            </figure>
+            <p><strong>③ 今日の例の題材を決める</strong>（約15分）</p>
+            <ul>
+              <li>第7回で作った<strong>動く最小版</strong>（または、自分の進級制作の一部）を開く。今日の指示の練習は、すべてこれを<strong>題材</strong>にする</li>
+              <li>題材に対して、<strong>「こう直したい／こう足したい」</strong>を1つ決める（例: 結果の表示を見やすくする、入力のチェックを足す、Neonへ保存する項目を増やす）。<strong>最初の指示</strong>（型を使う前の、ふつうの1文）を、メモに書いておく。これが、あとで「変える前」になる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>型①先に質問させる、型②計画だけ立てさせる</h3>
+          <div class="timeline-body">
+            <p><strong>型①　先に質問させる（選択肢で提案してもらう）</strong>（約25分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-n8-ask">
+              <p class="vz-fig-title" id="cap-n8-ask">先に質問させる流れ</p>
+              <svg class="vz-svg" viewBox="0 0 360 252" role="img" aria-labelledby="n8-ask-t n8-ask-d">
+                <title id="n8-ask-t">先に質問させる流れ</title>
+                <desc id="n8-ask-d">1 人が「実行する前に、決めることを選択肢つきで質問して」と頼む。2 エージェントが、決めることを選択肢にして聞く。3 人が選ぶ。4 エージェントが、選ばれた内容で実行する。決めるのは人。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="28">1 人：「先に、選択肢で質問して」</text>
+                <text class="t-sm" x="22" y="47">実行の前に、と一言そえる</text>
+                <line class="line" x1="180" y1="58" x2="180" y2="68" marker-end="url(#mk-s)"/>
+                <rect class="box-green" x="8" y="70" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="92">2 エージェント：選択肢で聞く</text>
+                <text class="t-sm" x="22" y="111">A案・B案・C案、それぞれの違いも</text>
+                <line class="line" x1="180" y1="122" x2="180" y2="132" marker-end="url(#mk-s)"/>
+                <rect class="box-green box-key" x="8" y="134" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="156">3 人：選ぶ（決めるのは人）</text>
+                <text class="t-sm" x="22" y="175">迷ったら「おすすめは？」と聞く</text>
+                <line class="line" x1="180" y1="186" x2="180" y2="196" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="198" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="220">4 エージェント：選ばれた内容で実行</text>
+                <text class="t-sm" x="22" y="239">思い込みで進めることが減る</text>
+              </svg>
+              <figcaption>あいまいなまま作らせると、エージェントは「自分の思い込み」で埋めて進めます。先に聞かせると、手戻りが減ります。</figcaption>
+            </figure>
+            <ul>
+              <li><strong>書き方の例</strong>（どのエージェントにも通じる、ふつうの文章）:</li>
+            </ul>
+            <pre class="md-preview">この題材を直したいです。実行する前に、決めることを選択肢つきで質問してください。
+質問は一度に3つまで、それぞれ選択肢にはおすすめも添えてください。
+私が選んでから、実行してください。</pre>
+            <ul>
+              <li><strong>使用中のエージェントでの出方</strong>（公式で確認したこと。確認日 2026-11-05）は、下の表のとおり。<strong>「名前を書けば必ずこの画面が出る」とは、公式には書かれていません</strong>。画面が文章の箇条書きになっても、中身が同じなら正解です</li>
+            </ul>
+            <table class="schedule-table schedule-table--stack">
+              <thead><tr><th>エージェント</th><th>「先に質問させる」の公式の説明</th></tr></thead>
+              <tbody>
+                <tr><td data-label="エージェント"><strong>Claude Code</strong></td><td data-label="公式の説明">質問のための道具<strong>AskUserQuestion</strong>がある。公式: "Asks multiple-choice questions to gather requirements or clarify ambiguity."（要件を集めたり、あいまいさをなくすために、選択式の質問をする）。選ぶか、Otherで自分の文章を入力する</td></tr>
+                <tr><td data-label="エージェント"><strong>Codex CLI</strong></td><td data-label="公式の説明">Planモードで確認の質問をする。公式: "Plan mode lets Codex gather context, ask clarifying questions, and build a stronger plan before implementation."。「先に質問してください」と頼む使い方も、公式のベストプラクティスにある</td></tr>
+                <tr><td data-label="エージェント"><strong>Antigravity CLI（agy）</strong></td><td data-label="公式の説明"><code>/plan</code>と<code>/grill-me</code>で、質問の画面が出る。公式: "the agent initiates a focused interview using interactive question prompts and structured options."（/plan）。<code>/grill-me</code>は1問ずつ、おすすめの答えを添えて聞く</td></tr>
+              </tbody>
+            </table>
+            <ul>
+              <li><strong>やってみる</strong>（約10分）: ③で決めた「直したいこと」について、上の例を自分の題材に合わせて書き、エージェントに送る。<strong>どんな質問が返ってきたか</strong>、<strong>自分では考えていなかった質問</strong>はあったかを、メモする。選んで、実行してもらい、最初の指示のときと<strong>できあがりがどう違うか</strong>を比べる</li>
+              <li>Claude Codeには、<strong>「あなたにインタビューして、仕様を書いて」</strong>と頼む使い方が、公式のベストプラクティスにある（例: "Interview me until you could write the spec, then write it to SPEC.md."）。仕様がまだ固まっていないときに便利</li>
+            </ul>
+
+            <p><strong>型②　計画だけ立てさせる（plan モード）</strong>（約25分）</p>
+            <ul>
+              <li><strong>plan（計画）モード</strong>は、<strong>ファイルを変えずに、まず案だけを出してもらう</strong>モード。大きな変更や、壊したくないものの前に使う。<strong>人が計画を読んで、OKを出してから、実行</strong>する</li>
+              <li>3つのエージェントとも、plan モードがある（公式、確認日 2026-11-05）。切り替えは次のとおり</li>
+            </ul>
+            <table class="schedule-table schedule-table--stack">
+              <thead><tr><th>エージェント</th><th>planモードへの入り方（公式）</th></tr></thead>
+              <tbody>
+                <tr><td data-label="エージェント"><strong>Claude Code</strong></td><td data-label="入り方"><code>Shift+Tab</code>を押す、または、1回だけなら、指示の先頭に<code>/plan</code>を付ける。起動時に<code>claude --permission-mode plan</code>も使える</td></tr>
+                <tr><td data-label="エージェント"><strong>Codex CLI</strong></td><td data-label="入り方"><code>/plan</code>、または<code>Shift+Tab</code>（公式: "Toggle with /plan or Shift+Tab."）</td></tr>
+                <tr><td data-label="エージェント"><strong>Antigravity CLI（agy）</strong></td><td data-label="入り方"><code>Shift+Tab</code>で、default → accept-edits → auto → plan の順に切り替わる。起動時は<code>agy --mode=plan</code></td></tr>
+              </tbody>
+            </table>
+            <pre class="md-preview">（planモードで）この変更の計画を立ててください。
+・変えるファイルと、変えない（触らない）ファイル
+・手順を、番号つきで
+・壊れる可能性があるところと、確かめ方
+まだ実行しないでください。</pre>
+            <ul>
+              <li><strong>やってみる</strong>（約15分）: ③の題材で、planモードに入って上の例を送る。出てきた計画を読んで、<strong>変えてほしくないファイルが入っていないか</strong>、<strong>手順が多すぎないか</strong>を確かめる。直したい点があれば、計画のまま言葉で直してから、「この計画で実行して」と頼む</li>
+              <li>型①と型②は、<strong>組み合わせる</strong>と強い。「先に質問してから、計画を立てて」と頼むと、<strong>聞く→計画→人がOK→実行</strong>の順になる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>型③道具で解決できる？と聞く、型④確かめ方を渡す</h3>
+          <div class="timeline-body">
+            <p><strong>型③　道具で解決できる？と聞く（CLIとMCP）</strong>（約25分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-n8-tool">
+              <p class="vz-fig-title" id="cap-n8-tool">道具の選び方：自然言語だけ？ CLI？ MCP？</p>
+              <svg class="vz-svg" viewBox="0 0 360 262" role="img" aria-labelledby="n8-tool-t n8-tool-d">
+                <title id="n8-tool-t">道具の選び方：自然言語だけ？ CLI？ MCP？</title>
+                <desc id="n8-tool-d">やりたいことに応じて、エージェントに使わせる道具を選ぶ。コードを書き換えるだけなら、自然言語の指示だけで足りる。GitHubやGoogle Cloudなど、コマンドのあるサービスを操作するなら、gh・gcloudなどのCLIを使わせる。ブラウザの操作など、外部のツールにつなぎたいときは、MCPを使う。迷ったら、エージェントに、CLIやMCPで済むかを先に聞く。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="28">コードを書き換えたい</text>
+                <text class="t-sm" x="22" y="47">→ 自然言語の指示だけで足りる</text>
+                <rect class="box-green" x="8" y="66" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="88">GitHubやGoogle Cloudを動かしたい</text>
+                <text class="t-sm" x="22" y="107">→ CLI（gh・gcloud）を使わせる</text>
+                <rect class="box-green" x="8" y="126" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="148">ブラウザなど、外部ツールにつなぎたい</text>
+                <text class="t-sm" x="22" y="167">→ MCP（Playwright MCPなど）</text>
+                <rect class="box-green box-key" x="8" y="188" width="344" height="68" rx="10"/>
+                <text class="t-b" x="22" y="212">迷ったら、先に聞く</text>
+                <text class="t-sm" x="22" y="233">「これは、CLIやMCPで済みますか？」</text>
+                <text class="t-sm" x="22" y="249">手作業の前に、一度聞く</text>
+              </svg>
+              <figcaption>第3回で見た、gcloud CLI・gh CLI・Playwright MCPの使い分けです。</figcaption>
+            </figure>
+            <ul>
+              <li><strong>MCP</strong>は、公式の定義では、"an open-source standard for connecting AI applications to external systems."（AIアプリを外部のシステムにつなぐための、オープンソースの標準）。公式は、"Think of MCP like a USB-C port for AI applications."（AI用のUSB-Cポートのようなもの）とたとえている（modelcontextprotocol.io、確認日 2026-11-05）</li>
+              <li><strong>CLI</strong>については、Claude Codeの公式のベストプラクティスに、"If that system has a CLI, that's usually the easiest way in."（そのシステムにCLIがあるなら、たいていそれがいちばん簡単な入り口）、例として、<code>gh</code>を入れてログインしていれば、説明しなくても、プルリクエストを開いたり、レビューのコメントを読んだりできる、とある。知らないCLIは、<code>--help</code>を見せるだけで足りる、とも書かれている。Codex CLIとagyの公式で、<strong>同じ趣旨の記述は見つかっていません</strong>が、CLIはターミナルで動く道具なので、使い方の考え方は同じです</li>
+              <li>だから、手作業を始める前に、<strong>エージェントに、先に聞く</strong>:</li>
+            </ul>
+            <pre class="md-preview">この作業（例：Google Cloudのプロジェクト一覧を確認する）は、
+gcloud などのCLIや、MCPで、あなたが自分で実行できますか？
+できるなら、使う道具と、実行するコマンドを、先に見せてください。
+まだ実行しないでください。</pre>
+            <table class="schedule-table schedule-table--stack">
+              <thead><tr><th>エージェント</th><th>MCPサーバーの足し方（公式）</th></tr></thead>
+              <tbody>
+                <tr><td data-label="エージェント"><strong>Claude Code</strong></td><td data-label="足し方"><code>claude mcp add --transport http notion https://mcp.notion.com/mcp</code>（公式のベストプラクティスの例）</td></tr>
+                <tr><td data-label="エージェント"><strong>Codex CLI</strong></td><td data-label="足し方"><code>codex mcp add context7 -- npx -y @upstash/context7-mcp</code>（公式の例）</td></tr>
+                <tr><td data-label="エージェント"><strong>Antigravity CLI（agy）</strong></td><td data-label="足し方"><code>/mcp</code>の管理画面か、設定ファイル（全体用は<code>~/.gemini/config/mcp_config.json</code>、プロジェクト用は<code>.agents/mcp_config.json</code>）。<code>agy mcp add</code>のような追加コマンドは、公式に見つかっていません</td></tr>
+              </tbody>
+            </table>
+            <ul>
+              <li><strong>今日は、新しいMCPサーバーを足しません</strong>（接続の作業はしない。Playwright MCPを実際に使うのは、第13回）。上の表は<strong>「足し方は、エージェントごとに違う」</strong>ことを知るためのもの。MCPには外部のサービスにつなぐ力があるので、<strong>よく知らないMCPサーバーは入れない</strong></li>
+              <li><strong>やってみる</strong>（約10分）: 自分の題材で、「<strong>手作業でやっていること</strong>」を1つ探す（例：Neonの中身の確認、GitHubへの反映、ブラウザでの動作確認）。上の例を、自分の作業に書き換えて送る。<strong>答えを読んで、実行はしない</strong>（コマンドの意味が分かってから実行する）</li>
+            </ul>
+
+            <p><strong>型④　確かめ方を渡す</strong>（約25分）</p>
+            <ul>
+              <li>エージェントは、「できました」と答えても、<strong>実際には動かないこと</strong>がある。そこで、<strong>合否が出る確かめ方</strong>を、指示と一緒に渡す。Claude Codeの公式のベストプラクティスに、"Give Claude something it can run that comes back pass or fail."（実行して、合格か不合格かが返ってくるものを渡す）とある</li>
+              <li>確かめ方の例: <strong>テストを実行する</strong>、<strong>プログラムを動かして出力を見る</strong>、<strong>画面のスクリーンショットと見比べる</strong>、<strong>SQLを実行して件数を見る</strong></li>
+              <li>さらに、<strong>実行したコマンドと、その出力を見せてもらう</strong>（「証拠」を求める）と、「やったふり」を見分けられる</li>
+            </ul>
+            <pre class="md-preview">直したら、確認のため、次のことをしてください。
+1. プログラムを実行する（コマンドを教えてください）
+2. 出力が「〇〇」になるかを確かめる
+実行したコマンドと、出力を、そのまま見せてください。
+合わなければ、直して、もう一度確かめてください。</pre>
+            <details class="vz-more">
+              <summary>毎回言わなくて済むように：指示ファイル（くわしく）</summary>
+              <ul>
+                <li>「確かめ方」や「やってはいけないこと」を、<strong>プロジェクトの指示ファイル</strong>に書いておくと、毎回の指示に書かなくて済む。エージェントごとに、読むファイルが違う（公式、確認日 2026-11-05）</li>
+                <li><strong>Claude Code</strong>は<code>CLAUDE.md</code>、<strong>Codex CLI</strong>は<code>AGENTS.md</code>（公式: "Codex reads AGENTS.md files before doing any work."）、<strong>Antigravity CLI（agy）</strong>は<code>AGENTS.md</code>または<code>GEMINI.md</code>（プロジェクトの一番上に置く）</li>
+                <li>書く内容の例: 「実行するコマンド（テストの実行など）」「触ってはいけないファイル（<code>.env</code>など）」「変更したら必ず確かめること」。<strong>秘密の値（パスワード、接続文字列）は書かない</strong></li>
+              </ul>
+            </details>
+            <ul>
+              <li><strong>やってみる</strong>（約10分）: ③の題材で、「直したら、<strong>こう確かめて</strong>」を足した指示を送る。エージェントが<strong>確かめ方を実行して、出力を見せてくれたか</strong>を確かめる。見せてくれた出力が、本当に合っているかは、<strong>自分の目で読む</strong></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>自分の題材で4つの型を組み合わせ、変える前と後を比べる</h3>
+          <div class="timeline-body">
+            <figure class="vz-fig" aria-labelledby="cap-n8-combo">
+              <p class="vz-fig-title" id="cap-n8-combo">4つの型を、組み合わせた指示の流れ</p>
+              <svg class="vz-svg" viewBox="0 0 360 232" role="img" aria-labelledby="n8-combo-t n8-combo-d">
+                <title id="n8-combo-t">4つの型を、組み合わせた指示の流れ</title>
+                <desc id="n8-combo-d">4つの型を組み合わせた流れ。1 先に質問して、決めることを選ぶ。2 planモードで、計画だけ出してもらい、人が読む。3 道具（CLI・MCP）で済むところは、先に聞いて、使ってもらう。4 実行したら、確かめ方を実行して、証拠を見せてもらう。</desc>
+                <rect class="box-green" x="8" y="6" width="344" height="46" rx="10"/>
+                <text class="t-b" x="22" y="34">1 先に質問させる（決めるのは人）</text>
+                <line class="line" x1="180" y1="54" x2="180" y2="62" marker-end="url(#mk-s)"/>
+                <rect class="box-green" x="8" y="64" width="344" height="46" rx="10"/>
+                <text class="t-b" x="22" y="92">2 計画だけ立てさせる（人が読む）</text>
+                <line class="line" x1="180" y1="112" x2="180" y2="120" marker-end="url(#mk-s)"/>
+                <rect class="box-green" x="8" y="122" width="344" height="46" rx="10"/>
+                <text class="t-b" x="22" y="150">3 道具で済むかを聞いて、使う</text>
+                <line class="line" x1="180" y1="170" x2="180" y2="178" marker-end="url(#mk-s)"/>
+                <rect class="box-green box-key" x="8" y="180" width="344" height="46" rx="10"/>
+                <text class="t-b" x="22" y="208">4 確かめ方を実行し、証拠を見せる</text>
+              </svg>
+              <figcaption>いつも4つを全部使うわけではありません。作業の大きさや、壊れたときの困り方に合わせて、選びます。</figcaption>
+            </figure>
+            <ul>
+              <li><strong>① 組み合わせて試す</strong>（約15分）: 1限前半③の「最初の指示」と同じ内容を、<strong>4つの型を使って書き直して</strong>、もう一度送る。使う型は、自分で選んでよい（最低2つ）</li>
+              <li><strong>② 変える前と後を比べる</strong>（約8分）: 次の3点を、メモに書く
+                <ul>
+                  <li>質問・計画・確認が<strong>入ったことで、何が変わったか</strong>（できあがり、やり取りの回数、手戻り）</li>
+                  <li><strong>効かなかった型</strong>はあったか。なぜか</li>
+                  <li>エージェントの答えで、<strong>自分の目で確かめた</strong>ところ</li>
+                </ul>
+              </li>
+              <li><strong>③ 隣の人と、1つずつ見せ合う</strong>（約7分）: いちばん効いた指示を、隣の人に見せる。違うエージェントを使っている人の指示は、<strong>自分のエージェントでも通じるか</strong>を考える</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>「指示の型カード」を書き、次回を知る</h3>
+          <div class="timeline-body">
+            <ul>
+              <li><strong>指示の型カード</strong>を書く（約5分）。自分が今後も使う指示の言い回しを、4行で残す。次の形を、自分の言葉に直してコピーしておく</li>
+            </ul>
+            <pre class="md-preview">① 先に質問：実行する前に、決めることを選択肢つきで質問してください。
+② 計画：まず計画だけ出してください。まだ実行しないでください。
+③ 道具：これは CLI や MCP で実行できますか？ 使う道具と手順を先に見せてください。
+④ 確認：直したら確かめ方を実行して、コマンドと出力をそのまま見せてください。</pre>
+            <ul>
+              <li>次回（第9回）：<strong>Firestoreに触れてみよう</strong>——NoSQLデータベース<strong>Firestore</strong>の基本概念に触れる。データベース自体の作成は<strong>gcloud CLI</strong>で行い、ドキュメントの保存・取得は<strong>Firestore SDK</strong>を使った数行のスクリプトを、使用中のAIエージェントと書いて試す（<a href="../natural-language-dev-2.html">授業計画一覧</a>）。今日の型は、そのまま使えます</li>
+              <li>「今日の型のうち、<strong>明日からも使うと決めたもの</strong>」を一言メモして退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>「指示の型カード」を、自分のノート（またはリポジトリの指示ファイル）に保存する</strong>
+            <p>次回以降、エージェントに指示を出すときに、すぐ使えるようにしておく。<strong>秘密の値（パスワード、接続文字列）は書かない</strong>。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>自分のエージェントの「質問させる」「planモード」を、1回ずつ、自分で試す</strong>
+            <p>今日の表の入り方で、実際にどんな画面が出るかを確かめる。出方が、公式の説明と違ったら、メモして次回に教えてください。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://code.claude.com/docs/en/tools-reference" target="_blank" rel="noopener">Tools reference（Claude Code公式）</a> — AskUserQuestion</li>
+        <li><a href="https://code.claude.com/docs/en/best-practices" target="_blank" rel="noopener">Best practices（Claude Code公式）</a> — 具体的に書く、確かめ方を渡す、CLIをつなぐ、インタビューさせる</li>
+        <li><a href="https://code.claude.com/docs/en/permission-modes" target="_blank" rel="noopener">Permission modes（Claude Code公式）</a> — plan モード</li>
+        <li><a href="https://learn.chatgpt.com/guides/best-practices" target="_blank" rel="noopener">Best practices（Codex公式）</a> — Planモード、質問させる</li>
+        <li><a href="https://antigravity.google/docs/plan" target="_blank" rel="noopener">Plan（Antigravity公式）</a> — /plan と質問の画面</li>
+        <li><a href="https://antigravity.google/docs/cli/modes" target="_blank" rel="noopener">Modes（Antigravity CLI公式）</a> — モードの切り替え</li>
+        <li><a href="https://modelcontextprotocol.io/docs/getting-started/intro" target="_blank" rel="noopener">What is the Model Context Protocol (MCP)?（MCP公式）</a> — MCPの定義</li>
+        <li><a href="week03.html">第3回 AIエージェントを選ぼう（本サイト）</a> — CLIとMCPの紹介</li>
+        <li><a href="week07.html">第7回 話題のAI製ゲームを、自然言語で再現しよう（本サイト）</a> — 今日の題材（仕様の1ページと、動く最小版）</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week07.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第7回 話題のAI製ゲームを、自然言語で再現しよう</span>
+      </a>
+      <a href="../natural-language-dev-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">自然言語開発 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第9回 Firestoreに触れてみよう（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js?v=5"></script>
+</body>
+</html>

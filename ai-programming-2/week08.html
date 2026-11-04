@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第8回 🎤 中間共有会 | AI活用プログラミング基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=25">
+  <!-- 公式情報確認: 2026-11-05 (curl生HTMLで確認。①support.google.com/gemininotebook/answer/16757456?hl=ja（Gemini Notebook でスライド資料を生成する、HTTP 200）: 「18 歳以上のユーザーのみが利用できます」「数分かかることがあります」「不正確な情報が含まれる場合があります」「PDF として共有したりすることが可能です」。②support.google.com/gemininotebook/answer/16758265?hl=ja（インフォグラフィック、HTTP 200）。③ai.google.dev/gemini-api/docs/aistudio-build-mode（HTTP 200）。改訂の上限・Educationの公開共有無効・PNG/pptx保存は第7回の確認（2026-10-22）を引き継ぐ。未確認（授業前に教員が確認）: 学校アカウントでのGemini Notebookの実画面、改訂できる総数の回数、チームでのソース共有の方法） -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--orange">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-programming-2.html">AI活用プログラミング基礎 II</a>
+        <span>/</span>
+        <span>第8回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">🎤 中間共有会</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 8</span>
+            <span class="page-badge">木曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-orange">
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
+
+    <div class="qr-box qr-box--pc">
+      <a class="qr-box__zoom" href="qr/week08-page.svg" target="_blank" rel="noopener" aria-label="QRコードを大きく表示する">
+        <img class="qr-box__img" src="qr/week08-page.svg" alt="この第8回のページを開くQRコード。スマートフォンのカメラで読み取ると、このページが開く。" width="180" height="180">
+      </a>
+      <div class="qr-box__body">
+        <p class="qr-box__heading">📱 スマホで開く</p>
+        <p class="qr-box__text">教室の画面を見ながら、自分のスマートフォンで、このページを開けます。スマートフォンの<strong>カメラ</strong>で、このQRコードを読み取ってください。QRコードを押すと、大きく表示されます。</p>
+      </div>
+    </div>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">集中講座から、agyやAI Studioの Build modeで<strong>作ってきたアプリ</strong>を、<strong>チームで選んで、チームごとに発表</strong>する。資料は<strong>Gemini Notebook</strong>で作る。AIには下書きを任せ、<strong>何を伝えるか・事実の点検・最後の言葉は人</strong>が行う</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">中間共有会 / 1チーム10分（発表7分＋質疑3分） / Gemini Notebook（インフォグラフィック・スライド） / AIは下書き・人が点検 / 保存したファイルで発表 / 「やってみた」経験の共有</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第7回でメモした、共有したURLと3行メモ。AIに出した指示で印象に残ったもの。画面のスクリーンショット。Gemini Notebookが開く学校のアカウント。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>集中講座から作ってきたアプリの中から、<strong>チームで見せるものを1つ選べる</strong></li>
+        <li><strong>Gemini Notebook</strong>で発表資料の下書きを作り、<strong>人が点検して直せる</strong>（事実・名前・数字・言い過ぎ）</li>
+        <li><strong>7分</strong>で、何を作ったか・どんな指示で形になったか・つまずきと工夫を伝え、<strong>3分</strong>の質疑に答えられる</li>
+        <li>他のチームの発表から、<strong>AIへの指示の工夫</strong>を1つ持ち帰る</li>
+      </ul>
+      <div class="lesson-tip">
+        <strong>今日の優先順位:</strong> 完璧さより、<strong>「やってみた」経験を共有する</strong>ことです。うまくいかなかったことも、立派な発表の材料になります。<strong>卒業進級制作の発表ではありません。</strong>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>発表の型を知り、チームで見せるアプリを選ぶ</h3>
+          <div class="timeline-body">
+            <figure class="vz-fig" aria-labelledby="cap-a8-map">
+              <p class="vz-fig-title" id="cap-a8-map">今日の流れ：準備してから、発表する</p>
+              <svg class="vz-svg" viewBox="0 0 360 252" role="img" aria-labelledby="a8-map-t a8-map-d">
+                <title id="a8-map-t">今日の流れ：準備してから、発表する</title>
+                <desc id="a8-map-d">1 見せるアプリをチームで選び、発表の型を知る。1限の前半。2 Gemini Notebookで資料の下書きを作り、人が点検して、ファイルで保存する。1限の後半。3 約8チームが、1チーム10分で発表する。2限の前半と後半。4 振り返りと、次回の予告。まとめ。</desc>
+                <rect class="box-orange" x="8" y="6" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="28">1 アプリを選ぶ・型を知る</text>
+                <text class="t-sm" x="22" y="47">チームで1つ決める</text>
+                <text class="t-sm" x="342" y="28" text-anchor="end">1限前半</text>
+                <line class="line" x1="180" y1="58" x2="180" y2="68" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="70" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="92">2 資料をつくる</text>
+                <text class="t-sm" x="22" y="111">AIが下書き、人が点検、ファイル保存</text>
+                <text class="t-sm" x="342" y="92" text-anchor="end">1限後半</text>
+                <line class="line" x1="180" y1="122" x2="180" y2="132" marker-end="url(#mk-s)"/>
+                <rect class="box-orange box-key" x="8" y="134" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="156">3 発表する（約8チーム）</text>
+                <text class="t-sm" x="22" y="175">1チーム10分＝発表7分＋質疑3分</text>
+                <text class="t-sm" x="342" y="156" text-anchor="end">2限</text>
+                <line class="line" x1="180" y1="186" x2="180" y2="196" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="198" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="220">4 ふりかえり</text>
+                <text class="t-sm" x="22" y="239">持ち帰る工夫を1つ・次回の予告</text>
+                <text class="t-sm" x="342" y="220" text-anchor="end">まとめ</text>
+              </svg>
+              <figcaption>発表の順番は、当日、先生が決めて案内します。</figcaption>
+            </figure>
+
+            <p><strong>① 発表の型を知る</strong>（約10分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-a8-seven">
+              <p class="vz-fig-title" id="cap-a8-seven">発表7分の型（例）</p>
+              <svg class="vz-svg" viewBox="0 0 360 214" role="img" aria-labelledby="a8-seven-t a8-seven-d">
+                <title id="a8-seven-t">発表7分の型（例）</title>
+                <desc id="a8-seven-d">発表7分の内訳の例。1 何を作ったか。1分。2 動かして見せる（デモ）。3分。3 AIへの指示の工夫とつまずき。2分。4 次にやりたいこと。1分。そのあと質疑が3分。合わせて10分。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="36" rx="8"/>
+                <text class="t-b" x="22" y="29">1 何を作ったか（1分）</text>
+                <rect class="box-orange box-key" x="8" y="48" width="344" height="36" rx="8"/>
+                <text class="t-b" x="22" y="71">2 動かして見せる・デモ（3分）</text>
+                <rect class="box-white" x="8" y="90" width="344" height="36" rx="8"/>
+                <text class="t-b" x="22" y="113">3 指示の工夫とつまずき（2分）</text>
+                <rect class="box-white" x="8" y="132" width="344" height="36" rx="8"/>
+                <text class="t-b" x="22" y="155">4 次にやりたいこと（1分）</text>
+                <rect class="box-white" x="8" y="174" width="344" height="34" rx="8"/>
+                <text class="t-b" x="22" y="196">質疑（3分）</text>
+              </svg>
+              <figcaption>これは一例です。チームの作品に合わせて、順番や時間を変えて構いません（合計で7分）。</figcaption>
+            </figure>
+            <ul>
+              <li>1チーム<strong>約10分</strong>。<strong>発表7分</strong>（デモを含む）＋<strong>質疑3分</strong>。時間になったら、先生が合図します</li>
+              <li>3番の「<strong>指示の工夫とつまずき</strong>」が、この発表でいちばん聞きたいところです。<strong>どんな指示を出したら形になったか</strong>を、実際の言葉で見せてください</li>
+            </ul>
+
+            <p><strong>② チームで、見せるアプリを1つ選ぶ</strong>（約20分）</p>
+            <ul>
+              <li>対象は、<strong>集中講座から、agyやAI StudioのBuild modeなどで作ってきたアプリ</strong>（バイブコーディングで作ったもの）。第6〜7回で作ったものに限りません。<strong>卒業進級制作の発表ではありません</strong></li>
+              <li>メンバーそれぞれが作ったものを順に見せ合い、<strong>チームで発表する1つ</strong>を決める。選ぶ観点の例: <strong>見せどころが分かりやすいか</strong>、<strong>共有したURLが開けるか</strong>、<strong>AIとのやり取りで話せることがあるか</strong></li>
+              <li>約8チームが発表するので、<strong>見せるものは絞る</strong>。選ばれなかった作品も、スクリーンショットや一言で触れてよい</li>
+              <li>誰が<strong>デモ</strong>をするか、誰が<strong>資料を作る</strong>かを決める（全員が少しずつ話すと、聞きやすくなります）</li>
+            </ul>
+
+            <p><strong>③ 素材を集める</strong>（約10分）</p>
+            <ul>
+              <li>資料の元になる<strong>素材</strong>を集める: アプリの<strong>画面のスクリーンショット</strong>、<strong>共有したURL</strong>、AIに出した<strong>印象に残った指示</strong>、第7回の<strong>3行メモ</strong>、つまずいたことと直し方</li>
+              <li><strong>個人情報・APIキー・<code>.env</code>の中身は、素材に入れない</strong>（次の時間に、素材をGemini Notebookへ入れるため）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>Gemini Notebookで下書きを作り、人が点検して、ファイルで保存する</h3>
+          <div class="timeline-body">
+            <figure class="vz-fig" aria-labelledby="cap-a8-line">
+              <p class="vz-fig-title" id="cap-a8-line">AIは下書き、人が決めて伝える</p>
+              <svg class="vz-svg" viewBox="0 0 360 252" role="img" aria-labelledby="a8-line-t a8-line-d">
+                <title id="a8-line-t">AIは下書き、人が決めて伝える</title>
+                <desc id="a8-line-d">左は人が決めること。何を伝えるか。どのアプリを選ぶか。事実の点検。最後の言葉。右はAIに任せること。素材の整理。図やスライドの下書き。ただし誤りを含みうる。下は、AIの出力は、人が確かめてから使う。公式には、不正確な情報が含まれる場合があると書かれている。</desc>
+                <rect class="box-orange box-key" x="8" y="6" width="168" height="130" rx="10"/>
+                <text class="t-c t-b" x="92" y="30">人が決める</text>
+                <text class="t-c t-sm" x="92" y="54">何を伝えるか</text>
+                <text class="t-c t-sm" x="92" y="74">どのアプリを選ぶか</text>
+                <text class="t-c t-sm" x="92" y="94">事実の点検</text>
+                <text class="t-c t-sm" x="92" y="114">最後の言葉</text>
+                <rect class="box-white" x="184" y="6" width="168" height="130" rx="10"/>
+                <text class="t-c t-b" x="268" y="30">AIに任せる</text>
+                <text class="t-c t-sm" x="268" y="54">素材の整理</text>
+                <text class="t-c t-sm" x="268" y="74">図・スライドの</text>
+                <text class="t-c t-sm" x="268" y="92">下書き</text>
+                <text class="t-c t-sm" x="268" y="114">（誤りを含みうる）</text>
+                <rect class="box-white" x="8" y="148" width="344" height="98" rx="10"/>
+                <text class="t-b" x="22" y="172">AIの出力は、人が確かめてから使う</text>
+                <text class="t-sm" x="22" y="194">公式: 不正確な情報が含まれる</text>
+                <text class="t-sm" x="22" y="212">場合がある</text>
+                <text class="t-sm" x="22" y="232">（Gemini Notebookのヘルプ）</text>
+              </svg>
+              <figcaption>この線引きで資料を作ります。AIに任せきりにしないことが、上手な使い方です。</figcaption>
+            </figure>
+
+            <p><strong>① Gemini Notebookに素材を入れて、下書きを作る</strong>（約20分）</p>
+            <ul>
+              <li><strong>Gemini Notebook</strong>（旧NotebookLM）を開き、新しいノートブックを作って、集めた<strong>素材をソースに入れる</strong></li>
+              <li><strong>インフォグラフィック</strong>か<strong>スライド資料</strong>を、1つ選んで生成する。どちらも<strong>18歳以上のみ</strong>の機能（本校の学生は全員18歳以上）。生成には<strong>数分かかることがある</strong>ので、待つ間に、発表で話すことをメモしておく</li>
+              <li>指示（プロンプト）にも工夫を。例:「<strong>聞く人は、同じ1年生。アプリを知らない人にも分かるように。1枚目は何を作ったか、2枚目は工夫、3枚目はつまずきと直し方</strong>」のように、<strong>相手・順番・枚数</strong>を書く</li>
+            </ul>
+            <details class="vz-more">
+              <summary>公式の注意（確認日 2026-11-05。くわしく）</summary>
+              <ul>
+                <li>生成物には、<strong>見た目が不自然だったり、事実として不正確な情報が含まれたりする</strong>場合がある（公式のヘルプ）</li>
+                <li>スライドは<strong>改訂</strong>の指示で直せるが、改訂時に<strong>ソースは考慮されない</strong>。改訂できる<strong>総数には上限</strong>があるので、まとめて直す（第7回で確認）</li>
+                <li>ノートブックの<strong>公開共有（リンクを知っている全員）は、Educationのアカウントでは今は無効</strong>（第7回で確認）。そこで、今日は<strong>保存したファイルで発表</strong>する</li>
+                <li>学校のアカウントでの実際の画面、改訂できる回数、チームでソースを共有する方法は、まだ確かめていません。画面が違うときは、先生に聞いてください</li>
+              </ul>
+            </details>
+
+            <p><strong>② 人が点検して、直す</strong>（約20分）</p>
+            <ul>
+              <li>できあがった下書きを、<strong>次の4つの目で確かめる</strong>。1つでも怪しければ、直すか、削る
+                <ul>
+                  <li><strong>事実</strong>: アプリがしないことを、できると書いていないか</li>
+                  <li><strong>名前・数字</strong>: アプリ名、メンバーの名前、回数や日付は合っているか</li>
+                  <li><strong>言い過ぎ</strong>: 「完璧」「誰でも使える」のような、確かめていない言葉はないか</li>
+                  <li><strong>伝わるか</strong>: 同じ1年生が、初めて見て分かるか</li>
+                </ul>
+              </li>
+              <li>直すときは、<strong>改訂の指示をまとめて1回</strong>で出す（回数に上限があるため）。細かい直しは、保存したあとで人が直してよい</li>
+              <li>最後の<strong>まとめの一言</strong>は、AIに任せず、<strong>自分たちの言葉</strong>で書く</li>
+            </ul>
+
+            <p><strong>③ ファイルで保存して、発表する端末に用意する</strong>（約10分）</p>
+            <ul>
+              <li>スライドは<strong>PDF</strong>か<strong>PowerPoint（.pptx）</strong>、インフォグラフィックは<strong>PNG</strong>で保存する</li>
+              <li><strong>発表する人のPC</strong>で、保存したファイルが<strong>開くこと</strong>、アプリの<strong>共有したURL</strong>が開くことを確かめる</li>
+              <li>デモの<strong>予備</strong>として、動いている画面の<strong>スクリーンショット</strong>も用意する（ネットワークが不安定でも話を進められる）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>発表①〜⑤：1チーム10分（発表7分＋質疑3分）</h3>
+          <div class="timeline-body">
+            <figure class="vz-fig" aria-labelledby="cap-a8-listen">
+              <p class="vz-fig-title" id="cap-a8-listen">聞く人の役目：メモを1チームごとに2行</p>
+              <svg class="vz-svg" viewBox="0 0 360 190" role="img" aria-labelledby="a8-listen-t a8-listen-d">
+                <title id="a8-listen-t">聞く人の役目：メモを1チームごとに2行</title>
+                <desc id="a8-listen-d">発表を聞くときは、1チームごとに2行のメモを書く。1行目は、よかった点を1つ。2行目は、聞きたいことを1つ。質疑の時間に、聞きたいことを質問してよい。</desc>
+                <rect class="box-orange box-key" x="8" y="6" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="28">1行目　よかった点を1つ</text>
+                <text class="t-sm" x="22" y="48">どこが、なぜ、よかったか</text>
+                <rect class="box-white" x="8" y="66" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="88">2行目　聞きたいことを1つ</text>
+                <text class="t-sm" x="22" y="108">質疑の3分で、聞いてよい</text>
+                <rect class="box-white" x="8" y="126" width="344" height="58" rx="10"/>
+                <text class="t-b" x="22" y="148">質問は、責めずに、知りたい気持ちで</text>
+                <text class="t-sm" x="22" y="170">「どんな指示で出ましたか」など</text>
+              </svg>
+              <figcaption>終わりに、メモの中から「持ち帰る工夫」を1つ選びます。</figcaption>
+            </figure>
+            <ul>
+              <li>約8チームが、先生が案内する順番で発表する。この時間は、<strong>発表①〜⑤</strong>の目安（進み具合で前後する）</li>
+              <li>聞く人は、<strong>1チームごとに2行のメモ</strong>（よかった点を1つ、聞きたいことを1つ）を書く。質疑の時間に、聞きたいことを質問してよい</li>
+              <li>発表するチームは、<strong>7分で話を終える</strong>。時間が足りないときは、3番（指示の工夫とつまずき）を残して、ほかを短くする</li>
+              <li>質疑のとき、答えに詰まっても大丈夫。「<strong>まだ試していない</strong>」「<strong>次に確かめたい</strong>」と、正直に答えるのも、よい発表です</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>発表⑥〜⑧と予備：続きの発表と、全体の質疑</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>2限前半の続き。<strong>発表⑥〜⑧</strong>を行う。時間が余ったら、<strong>予備の時間</strong>として、前に発表したチームへの追加の質問や、デモのやり直しに使う</li>
+              <li>全チームの発表が終わったら、<strong>全体で2分</strong>、感想を出し合う。<strong>他のチームの発表で、いちばん「まねしたい」と思った指示の工夫</strong>はどれか</li>
+              <li>先生から、<strong>AIの使い方</strong>についての講評（AIには下書きを任せ、人が判断して伝えられたか）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>持ち帰る工夫を1つ決め、次回を知る</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>聞いたメモの中から、<strong>自分の次の制作に持ち帰る指示の工夫を1つ</strong>、選んで書く</li>
+              <li>次回（第9回）：<strong>進級制作とAIエージェントをつなげよう</strong>——各自が並行して取り組む<strong>進級制作</strong>の現状を共有し、AIエージェント（agyまたはAI Studio Build mode）をどこに活かせるかを計画する（<a href="../ai-programming-2.html">授業計画一覧</a>）。前半で作った個人開発の延長として続けることも選べます</li>
+              <li>今日のうちに、<strong>AI Studioのプロジェクトも、共有（Share）も、削除しない</strong>。共有をやめる（Unshare）かどうかは、今日の発表が終わってから、各自で決める</li>
+              <li>「今日の発表で、<strong>AIに任せてよかったこと</strong>と、<strong>人が決めてよかったこと</strong>」を一言メモして退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>「持ち帰る指示の工夫」を、次の制作でひとつ試す</strong>
+            <p>今日のメモで選んだ工夫を、自分のアプリ（または進級制作）への指示に使ってみる。うまくいったか、どう変わったかを、一言メモする。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>次回に向けて、自分の進級制作の現状を、3行で書いておく</strong>
+            <p>①今どこまで進んでいるか　②困っていること　③AIエージェントに手伝ってほしいこと。次回（第9回）の計画づくりに使います。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://support.google.com/gemininotebook/answer/16758265?hl=ja" target="_blank" rel="noopener">Gemini Notebook でインフォグラフィックを生成する（NotebookLM ヘルプ）</a> — 形式・向き・PNG保存</li>
+        <li><a href="https://support.google.com/gemininotebook/answer/16757456?hl=ja" target="_blank" rel="noopener">Gemini Notebook でスライド資料を生成する（NotebookLM ヘルプ）</a> — 18歳以上、改訂、PDF/pptx、Educationの共有制限</li>
+        <li><a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio（Google公式）</a> — 共有（Share）の説明</li>
+        <li><a href="week07.html">第7回 Google AI Studio Build modeで仕上げよう②（本サイト）</a> — 共有のしかた、チームで選ぶ観点</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week07.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第7回 Google AI Studio Build modeで仕上げよう②</span>
+      </a>
+      <a href="../ai-programming-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AI活用プログラミング基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第9回 進級制作とAIエージェントをつなげよう（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js?v=5"></script>
+</body>
+</html>
