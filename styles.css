@@ -457,6 +457,9 @@ img { max-width: 100%; display: block; }
 }
 .qr-box__body { min-width: 0; }
 .qr-box__heading { margin: 0 0 0.3rem; font-weight: 700; color: #5c3f00; font-size: 1.02rem; }
+/* 琥珀以外の科目（orange=AI活用プログラミング基礎Ⅱ／green=自然言語開発Ⅱ）では、見出しの色も科目色の濃い版にそろえる */
+main.theme-orange .qr-box__heading { color: #7a3a00; }
+main.theme-green .qr-box__heading { color: #1f4d2e; }
 .qr-box__text { margin: 0 0 0.3rem; font-size: 0.93rem; line-height: 1.65; }
 .qr-box__text:last-child { margin-bottom: 0; }
 /* ゲームの案内ブロックの中に置く小さい版 */
