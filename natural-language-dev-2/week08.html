@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=25">
-  <!-- 公式情報確認: 2026-11-05 (公式ドキュメントを、.md版と生HTMLをcurlで取得して原文照合。Antigravityは描画した本文と各ページの.md版で確認。各ページに更新日の表示はなく、更新日は未確認。①Claude Code: code.claude.com/docs/en/tools-reference「Asks multiple-choice questions to gather requirements or clarify ambiguity.」「Claude uses AskUserQuestion to ask you multiple-choice questions when it needs a decision or a clarification.」（「プロンプトで名指しすれば使われる」という明文は公式に見つからない）／permission-modes「Enter plan mode by pressing Shift+Tab or prefixing a single prompt with /plan.」／best-practices「If that system has a CLI, that's usually the easiest way in. With gh installed and signed in, for example, Claude will open pull requests and read review comments without any explanation from you.」「Give Claude something it can run that comes back pass or fail.」「Interview me until you could write the spec, then write it to SPEC.md.」／MCP追加 claude mcp add --transport http notion https://mcp.notion.com/mcp ②Codex CLI: learn.chatgpt.com/guides/best-practices（developers.openai.com/codex から転送）「Plan mode lets Codex gather context, ask clarifying questions, and build a stronger plan before implementation.」「Toggle with /plan or Shift+Tab.」／AGENTS.md「Codex reads AGENTS.md files before doing any work.」／MCP追加 codex mcp add context7 -- npx -y @upstash/context7-mcp ③Antigravity CLI（agy）: antigravity.google/docs/plan「the agent initiates a focused interview using interactive question prompts and structured options.」／docs/commands/grill-me「With /grill-me, the agent asks one question at a time and recommends an answer for each.」／docs/cli/modes「cycle through the active sequence: default > accept-edits > auto > plan > default.」／MCPは /mcp か設定ファイル（agy mcp add のような追加コマンドは公式に見つからない）／指示ファイルは AGENTS.md または GEMINI.md ④modelcontextprotocol.io/docs/getting-started/intro「MCP (Model Context Protocol) is an open-source standard for connecting AI applications to external systems.」「Think of MCP like a USB-C port for AI applications.」。未確認: 各ページの更新日、AskUserQuestionを名指しで頼めば使われるという公式の明文、agyの質問ツールの内部名、CodexとagyでCLIを一般的に使わせることへの公式の言及、Gemini CLI終了日の公式ソース。改名・終了: Antigravity CLI・Codex CLI・Claude Code 自体の終了・改名の公式発表は見つからず） -->
+  <!-- 公式情報確認: 2026-11-05 (公式ドキュメントを、.md版と生HTMLをcurlで取得して原文照合。Antigravityは描画した本文と各ページの.md版で確認。各ページに更新日の表示はなく、更新日は未確認。①Claude Code: code.claude.com/docs/en/tools-reference「Asks multiple-choice questions to gather requirements or clarify ambiguity.」「Claude uses AskUserQuestion to ask you multiple-choice questions when it needs a decision or a clarification.」（「プロンプトで名指しすれば使われる」という明文は公式に見つからない）／permission-modes「Enter plan mode by pressing Shift+Tab or prefixing a single prompt with /plan.」／best-practices「If that system has a CLI, that's usually the easiest way in. With gh installed and signed in, for example, Claude will open pull requests and read review comments without any explanation from you.」「Give Claude something it can run that comes back pass or fail.」「Interview me until you could write the spec, then write it to SPEC.md.」／MCP追加 claude mcp add --transport http notion https://mcp.notion.com/mcp ②Codex CLI: learn.chatgpt.com/guides/best-practices（developers.openai.com/codex から転送）「Plan mode lets Codex gather context, ask clarifying questions, and build a stronger plan before implementation.」「Toggle with /plan or Shift+Tab.」／AGENTS.md（learn.chatgpt.com/docs/agent-configuration/agents-md）「Codex reads AGENTS.md files before doing any work.」／MCP追加（learn.chatgpt.com/docs/extend/mcp）codex mcp add context7 -- npx -y @upstash/context7-mcp ③Antigravity CLI（agy）: antigravity.google/docs/plan「the agent initiates a focused interview using interactive question prompts and structured options.」／docs/commands/grill-me「With /grill-me, the agent asks one question at a time and recommends an answer for each.」／docs/cli/modes「cycle through the active sequence: default > accept-edits > auto > plan > default.」／MCPは /mcp か設定ファイル（agy mcp add のような追加コマンドは公式に見つからない）／指示ファイルは AGENTS.md または GEMINI.md ④modelcontextprotocol.io/docs/getting-started/intro「MCP (Model Context Protocol) is an open-source standard for connecting AI applications to external systems.」「Think of MCP like a USB-C port for AI applications.」。未確認: 各ページの更新日、AskUserQuestionを名指しで頼めば使われるという公式の明文、agyの質問ツールの内部名、CodexとagyでCLIを一般的に使わせることへの公式の言及、Gemini CLI終了日の公式ソース。改名・終了: Antigravity CLI・Codex CLI・Claude Code 自体の終了・改名の公式発表は見つからず） -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -81,7 +81,7 @@
         <li>自分の題材で、4つの型を使った指示を試し、<strong>変える前と後</strong>を比べて、<strong>指示の型カード</strong>にまとめられる</li>
       </ul>
       <div class="lesson-tip">
-        <strong>今日の進め方:</strong> 型の名前を覚えるより、<strong>自分の指示を1つ書き換えて、結果が変わるのを見る</strong>ことが目的です。エージェントは3種類（Claude Code／Codex CLI／Antigravity CLI）が混ざっています。<strong>機能の名前は違っても、「実行する前に、選択肢を出して選ばせて」のような普通の文章は、どれにも通じます</strong>。ツールごとの違いは、2つの表で確かめます。
+        <strong>今日の進め方:</strong> 型の名前を覚えるより、<strong>自分の指示を1つ書き換えて、結果が変わるのを見る</strong>ことが目的です。エージェントは3種類（Claude Code／Codex CLI／Antigravity CLI）が混ざっています。<strong>機能の名前は違っても、「実行する前に、選択肢を出して選ばせて」のような普通の文章は、どれでも試せます（出方は違うことがあります）</strong>。ツールごとの違いは、表で確かめます。
       </div>
     </div>
 
@@ -98,7 +98,7 @@
           </div>
           <h3>ここまでの学びを振り返り、今日の4つの型の地図を見る</h3>
           <div class="timeline-body">
-            <p><strong>① ここまでの振り返り</strong>（約15分。中間共有の名残）</p>
+            <p><strong>① ここまでの振り返り</strong>（約15分）</p>
             <ul>
               <li>第1〜7回で、クラウド（Google Cloud）、AIエージェント、Neon、仕様を書いて作らせる、を体験してきた。<strong>1人1分</strong>で、「<strong>うまくいった指示</strong>」と「<strong>つまずいた指示</strong>」を1つずつ、隣の人に話す</li>
               <li>全体で、いくつか聞く。つまずいた指示は、今日の4つの型で<strong>どう書き換えられるか</strong>を、あとで考える材料になる</li>
@@ -169,7 +169,7 @@
               <figcaption>あいまいなまま作らせると、エージェントは「自分の思い込み」で埋めて進めます。先に聞かせると、手戻りが減ります。</figcaption>
             </figure>
             <ul>
-              <li><strong>書き方の例</strong>（どのエージェントにも通じる、ふつうの文章）:</li>
+              <li><strong>書き方の例</strong>（どのエージェントでも試せる、ふつうの文章。出方は違うことがある）:</li>
             </ul>
             <pre class="md-preview">この題材を直したいです。実行する前に、決めることを選択肢つきで質問してください。
 質問は一度に3つまで、それぞれ選択肢にはおすすめも添えてください。
@@ -182,7 +182,7 @@
               <tbody>
                 <tr><td data-label="エージェント"><strong>Claude Code</strong></td><td data-label="公式の説明">質問のための道具<strong>AskUserQuestion</strong>がある。公式: "Asks multiple-choice questions to gather requirements or clarify ambiguity."（要件を集めたり、あいまいさをなくすために、選択式の質問をする）。選ぶか、Otherで自分の文章を入力する</td></tr>
                 <tr><td data-label="エージェント"><strong>Codex CLI</strong></td><td data-label="公式の説明">Planモードで確認の質問をする。公式: "Plan mode lets Codex gather context, ask clarifying questions, and build a stronger plan before implementation."。「先に質問してください」と頼む使い方も、公式のベストプラクティスにある</td></tr>
-                <tr><td data-label="エージェント"><strong>Antigravity CLI（agy）</strong></td><td data-label="公式の説明"><code>/plan</code>と<code>/grill-me</code>で、質問の画面が出る。公式: "the agent initiates a focused interview using interactive question prompts and structured options."（/plan）。<code>/grill-me</code>は1問ずつ、おすすめの答えを添えて聞く</td></tr>
+                <tr><td data-label="エージェント"><strong>Antigravity CLI（agy）</strong></td><td data-label="公式の説明"><code>/plan</code>は、要件があいまいなときなどに、質問の画面が出る。<code>/grill-me</code>は、最初から1問ずつ聞く。公式: "the agent initiates a focused interview using interactive question prompts and structured options."（/plan）。<code>/grill-me</code>は、おすすめの答えを添えて聞く</td></tr>
               </tbody>
             </table>
             <ul>
@@ -192,7 +192,7 @@
 
             <p><strong>型②　計画だけ立てさせる（plan モード）</strong>（約25分）</p>
             <ul>
-              <li><strong>plan（計画）モード</strong>は、<strong>ファイルを変えずに、まず案だけを出してもらう</strong>モード。大きな変更や、壊したくないものの前に使う。<strong>人が計画を読んで、OKを出してから、実行</strong>する</li>
+              <li><strong>plan（計画）モード</strong>は、Claude Codeの公式の説明では、<strong>ファイルを変えずに、まず案だけを出してもらう</strong>モード（Codex CLI・agyにも同じ名前のモードがある）。大きな変更や、壊したくないものの前に使う。<strong>人が計画を読んで、OKを出してから、実行</strong>する</li>
               <li>3つのエージェントとも、plan モードがある（公式、確認日 2026-11-05）。切り替えは次のとおり</li>
             </ul>
             <table class="schedule-table schedule-table--stack">
@@ -253,7 +253,7 @@
             </figure>
             <ul>
               <li><strong>MCP</strong>は、公式の定義では、"an open-source standard for connecting AI applications to external systems."（AIアプリを外部のシステムにつなぐための、オープンソースの標準）。公式は、"Think of MCP like a USB-C port for AI applications."（AI用のUSB-Cポートのようなもの）とたとえている（modelcontextprotocol.io、確認日 2026-11-05）</li>
-              <li><strong>CLI</strong>については、Claude Codeの公式のベストプラクティスに、"If that system has a CLI, that's usually the easiest way in."（そのシステムにCLIがあるなら、たいていそれがいちばん簡単な入り口）、例として、<code>gh</code>を入れてログインしていれば、説明しなくても、プルリクエストを開いたり、レビューのコメントを読んだりできる、とある。知らないCLIは、<code>--help</code>を見せるだけで足りる、とも書かれている。Codex CLIとagyの公式で、<strong>同じ趣旨の記述は見つかっていません</strong>が、CLIはターミナルで動く道具なので、使い方の考え方は同じです</li>
+              <li><strong>CLI</strong>については、Claude Codeの公式のベストプラクティスに、"If that system has a CLI, that's usually the easiest way in."（そのシステムにCLIがあるなら、たいていそれがいちばん簡単な入り口）、例として、<code>gh</code>を入れてログインしていれば、説明しなくても、プルリクエストを開いたり、レビューのコメントを読んだりできる、とある。知らないCLIは、<code>--help</code>を見せるだけで足りる、とも書かれている。Codex CLIとagyの公式では、<strong>同じ趣旨の記述は見つかっていません</strong>。同じように使えるかは、試して確かめましょう</li>
               <li>だから、手作業を始める前に、<strong>エージェントに、先に聞く</strong>:</li>
             </ul>
             <pre class="md-preview">この作業（例：Google Cloudのプロジェクト一覧を確認する）は、
@@ -288,7 +288,7 @@ gcloud などのCLIや、MCPで、あなたが自分で実行できますか？
               <summary>毎回言わなくて済むように：指示ファイル（くわしく）</summary>
               <ul>
                 <li>「確かめ方」や「やってはいけないこと」を、<strong>プロジェクトの指示ファイル</strong>に書いておくと、毎回の指示に書かなくて済む。エージェントごとに、読むファイルが違う（公式、確認日 2026-11-05）</li>
-                <li><strong>Claude Code</strong>は<code>CLAUDE.md</code>、<strong>Codex CLI</strong>は<code>AGENTS.md</code>（公式: "Codex reads AGENTS.md files before doing any work."）、<strong>Antigravity CLI（agy）</strong>は<code>AGENTS.md</code>または<code>GEMINI.md</code>（プロジェクトの一番上に置く）</li>
+                <li><strong>Claude Code</strong>は<code>CLAUDE.md</code>、<strong>Codex CLI</strong>は<code>AGENTS.md</code>（公式: "Codex reads AGENTS.md files before doing any work."）、<strong>Antigravity CLI（agy）</strong>は<code>AGENTS.md</code>または<code>GEMINI.md</code>（プロジェクトのフォルダか、その親フォルダに置く）</li>
                 <li>書く内容の例: 「実行するコマンド（テストの実行など）」「触ってはいけないファイル（<code>.env</code>など）」「変更したら必ず確かめること」。<strong>秘密の値（パスワード、接続文字列）は書かない</strong></li>
               </ul>
             </details>
@@ -387,10 +387,15 @@ gcloud などのCLIや、MCPで、あなたが自分で実行できますか？
       <ul>
         <li><a href="https://code.claude.com/docs/en/tools-reference" target="_blank" rel="noopener">Tools reference（Claude Code公式）</a> — AskUserQuestion</li>
         <li><a href="https://code.claude.com/docs/en/best-practices" target="_blank" rel="noopener">Best practices（Claude Code公式）</a> — 具体的に書く、確かめ方を渡す、CLIをつなぐ、インタビューさせる</li>
-        <li><a href="https://code.claude.com/docs/en/permission-modes" target="_blank" rel="noopener">Permission modes（Claude Code公式）</a> — plan モード</li>
+        <li><a href="https://code.claude.com/docs/en/permission-modes" target="_blank" rel="noopener">Choose a permission mode（Claude Code公式）</a> — plan モード</li>
         <li><a href="https://learn.chatgpt.com/guides/best-practices" target="_blank" rel="noopener">Best practices（Codex公式）</a> — Planモード、質問させる</li>
-        <li><a href="https://antigravity.google/docs/plan" target="_blank" rel="noopener">Plan（Antigravity公式）</a> — /plan と質問の画面</li>
-        <li><a href="https://antigravity.google/docs/cli/modes" target="_blank" rel="noopener">Modes（Antigravity CLI公式）</a> — モードの切り替え</li>
+        <li><a href="https://antigravity.google/docs/plan" target="_blank" rel="noopener">Plan (/plan)（Antigravity公式）</a> — /plan と質問の画面</li>
+        <li><a href="https://antigravity.google/docs/cli/modes" target="_blank" rel="noopener">Choose an execution mode（Antigravity CLI公式）</a> — モードの切り替え</li>
+        <li><a href="https://antigravity.google/docs/commands/grill-me" target="_blank" rel="noopener">/grill-me（Antigravity公式）</a> — 1問ずつ質問する</li>
+        <li><a href="https://antigravity.google/docs/mcp" target="_blank" rel="noopener">MCP（Antigravity公式）</a> — 設定ファイルの場所</li>
+        <li><a href="https://antigravity.google/docs/rules" target="_blank" rel="noopener">Rules（Antigravity公式）</a> — AGENTS.md・GEMINI.md</li>
+        <li><a href="https://learn.chatgpt.com/docs/agent-configuration/agents-md" target="_blank" rel="noopener">AGENTS.md（Codex公式）</a> — Codexが読む指示ファイル</li>
+        <li><a href="https://learn.chatgpt.com/docs/extend/mcp" target="_blank" rel="noopener">MCP（Codex公式）</a> — codex mcp add</li>
         <li><a href="https://modelcontextprotocol.io/docs/getting-started/intro" target="_blank" rel="noopener">What is the Model Context Protocol (MCP)?（MCP公式）</a> — MCPの定義</li>
         <li><a href="week03.html">第3回 AIエージェントを選ぼう（本サイト）</a> — CLIとMCPの紹介</li>
         <li><a href="week07.html">第7回 話題のAI製ゲームを、自然言語で再現しよう（本サイト）</a> — 今日の題材（仕様の1ページと、動く最小版）</li>
