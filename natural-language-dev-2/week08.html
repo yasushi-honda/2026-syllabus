@@ -132,7 +132,8 @@
             <ul>
               <li>第7回で作った<strong>動く最小版</strong>（または、自分の進級制作の一部）を開く。今日の指示の練習は、すべてこれを<strong>題材</strong>にする</li>
               <li>題材に対して、<strong>「こう直したい／こう足したい」</strong>を1つ決める（例: 結果の表示を見やすくする、入力のチェックを足す、Neonへ保存する項目を増やす）。<strong>最初の指示</strong>（型を使う前の、ふつうの1文）を、メモに書いておく。これが、あとで「変える前」になる</li>
-              <li><strong>「変える前」の結果を残す</strong>: ①作業フォルダを<strong>2つコピー</strong>する（名前の例: <code>start</code>＝何も変えずに取っておく／<code>base</code>＝最初の指示を試す用。エージェントに「このフォルダを<code>start</code>と<code>base</code>の名前でコピーして」と頼んでもよい）②<code>base</code>で、<strong>最初の指示をそのまま送り</strong>、できあがりを<strong>画面かスクリーンショット</strong>と<strong>変わったファイルの名前</strong>でメモする（これが「変える前」の結果）。<code>start</code>は、<strong>触らない</strong>（以降の練習は、<code>start</code>のコピーでする）</li>
+              <li><strong>先に、DBが動くか確かめる</strong>: 第7回で作ったNeonの一時DBは<strong>72時間で期限切れ</strong>になるので、今日は切れている可能性が高い。保存や集計を使う題材のときは、<a href="week06.html">第6回</a>の手順で<strong>DBを作り直して</strong>、接続文字列（<code>.env</code>）を差し替える。DBを使わない題材（画面や入力チェックの直しなど）を選んでもよい</li>
+              <li><strong>「変える前」の結果を残す</strong>: ①作業フォルダを<strong>2つコピー</strong>する（名前の例: <code>start</code>＝何も変えずに取っておく／<code>base</code>＝最初の指示を試す用。エージェントに「このフォルダを<code>start</code>と<code>base</code>の名前でコピーして」と頼んでもよい）②<code>base</code>で、<strong>最初の指示をそのまま送り</strong>、できあがりを<strong>画面かスクリーンショット</strong>と<strong>変わったファイルの名前</strong>でメモする（これが「変える前」の結果）。<code>start</code>は、<strong>触らない</strong>（以降の練習は、<code>start</code>のコピーでする）③<strong>エージェントは、フォルダごとに新しく起動し直す</strong>（前の会話を引き継がない。同じ会話を続けると、前の指示や答えが混ざって、比べられなくなる）</li>
             </ul>
           </div>
         </div>
@@ -325,7 +326,7 @@ gcloud などのCLIや、MCPで、あなたが自分で実行できますか？
               <figcaption>いつも4つを全部使うわけではありません。作業の大きさや、壊れたときの困り方に合わせて、選びます。</figcaption>
             </figure>
             <ul>
-              <li><strong>① 組み合わせて試す</strong>（約15分）: <code>start</code>をもう一度コピーして<code>try2</code>を作る（<code>try</code>の変更が混ざらないようにするため）。<code>try2</code>で、1限前半③の「最初の指示」と同じ内容を、<strong>4つの型を使って書き直して</strong>送る。使う型は、自分で選んでよい（最低2つ）</li>
+              <li><strong>① 組み合わせて試す</strong>（約15分）: <code>start</code>をもう一度コピーして<code>try2</code>を作る（<code>try</code>の変更が混ざらないようにするため）。<code>try2</code>のフォルダで、エージェントを<strong>新しく起動し直して</strong>（<code>base</code>や<code>try</code>のときの会話を引き継がない）、1限前半③の「最初の指示」と同じ内容を、<strong>4つの型を使って書き直して</strong>送る。使う型は、自分で選んでよい（最低2つ）</li>
               <li><strong>② 変える前と後を比べる</strong>（約8分）: <code>base</code>（最初の指示）と<code>try2</code>（型を使った指示）を比べて、次の3点を、メモに書く
                 <ul>
                   <li>質問・計画・確認が<strong>入ったことで、何が変わったか</strong>（できあがり、やり取りの回数、手戻り）</li>
