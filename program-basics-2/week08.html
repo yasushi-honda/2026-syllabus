@@ -463,26 +463,32 @@ for (let i = 0; i &lt; products.length; i++) {
                   </ul>
                 </li>
                 <li>
-                  <p><strong>ゲーム班</strong>の表示: <code>if (characters[j].position === i) { … }</code>の中の2行（<code>cell.textContent</code>と<code>cell.title</code>）を、次の5行に置き換える</p>
+                  <p><strong>ゲーム班</strong>の表示: <code>if (characters[j].position === i) { … }</code>の中の<code>cell.textContent = characters[j].icon;</code>の1行を、次に置き換える（<code>image</code>があるキャラクターだけ画像にし、ないキャラクターは今までどおり絵文字。<code>cell.title</code>の行はそのまま残す）</p>
                   <button class="copy-md-btn" data-md-source="img-game">
                     <span class="btn-icon"></span> ゲーム班の画像表示をコピー
                   </button>
-<pre id="img-game" class="md-preview">      const pic = document.createElement("img");
-      pic.src = characters[j].image;
-      pic.alt = characters[j].name;
-      pic.className = "pic";
-      cell.appendChild(pic);</pre>
+<pre id="img-game" class="md-preview">      if (characters[j].image) {
+        const pic = document.createElement("img");
+        pic.src = characters[j].image;
+        pic.alt = characters[j].name;
+        pic.className = "pic";
+        cell.appendChild(pic);
+      } else {
+        cell.textContent = characters[j].icon;
+      }</pre>
                 </li>
                 <li>
-                  <p><strong>EC班</strong>の表示: <code>item.className = "item";</code>の次の行に、次の5行を足す（カードの一番上に画像が出る）</p>
+                  <p><strong>EC班</strong>の表示: <code>item.className = "item";</code>の次の行に、次を足す（<code>image</code>がある商品だけ、カードの一番上に画像が出る）</p>
                   <button class="copy-md-btn" data-md-source="img-ec">
                     <span class="btn-icon"></span> EC班の画像表示をコピー
                   </button>
-<pre id="img-ec" class="md-preview">  const pic = document.createElement("img");
-  pic.src = products[i].image;
-  pic.alt = products[i].name;
-  pic.className = "pic";
-  item.appendChild(pic);</pre>
+<pre id="img-ec" class="md-preview">  if (products[i].image) {
+    const pic = document.createElement("img");
+    pic.src = products[i].image;
+    pic.alt = products[i].name;
+    pic.className = "pic";
+    item.appendChild(pic);
+  }</pre>
                 </li>
                 <li>
                   <p><code>&lt;style&gt;</code>の中に、画像がはみ出さないための1行を足す</p>
