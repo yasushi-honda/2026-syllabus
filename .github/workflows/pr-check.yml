@@ -1,0 +1,23 @@
+name: PR static check
+
+# PR時に公開サイトの静的チェックを走らせる（デプロイは main への push 時のみで別ワークフロー）
+# 全PRで常に実行する（HTMLを触らないPRにもチェックが付く。数秒で終わる）
+# pull_request に加えて、main 以外のブランチへの push でも動かす
+# （PRのチェック欄には、ブランチ先頭コミットのチェックが表示される。このリポジトリでは pull_request 単独だと実行が作られなかったため）
+on:
+  pull_request:
+  push:
+    branches-ignore:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  static-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Check HTML (duplicate ids, copy targets, local links)
+        run: python3 tools/check/check_site.py
