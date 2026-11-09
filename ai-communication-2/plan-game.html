@@ -406,9 +406,9 @@
     updateBar();
     var h = '';
     h += you('この計画で作って。<br><span style="font-size:.88rem">' + LOGIC.SLOTS.map(function (sl) { return esc(sl.label) + ' ' + esc(LOGIC.optionText(sl.key, S.plan[sl.key])); }).join('<br>') + '</span>');
-    h += mimi(r.rebuilds === 0 ? '計画どおりに作りました。確かめ方のとおり、持ち物が5つ上から見えます！' : '作りました。計画に書かれていないところは、わたしが決めました。');
+    h += mimi(r.rebuilds === 0 ? '計画どおりに作りました。確かめ方のとおり、持ち物が5つ上から見えます！' : '作りました。計画のとおりに作ったところと、計画があいまいでわたしが決めたところがあります。');
     h += '<ul class="ph-feats"><li class="ph-feat ph-feat--want"><span><b>持ち物の名前の一覧</b>（ほしかったもの）</span></li>';
-    r.extras.forEach(function (f) { h += '<li class="ph-feat ph-feat--extra"><span><b>' + esc(LOGIC.FEATURES[f]) + '</b>（頼んでいない）</span></li>'; });
+    r.extras.forEach(function (f) { h += '<li class="ph-feat ph-feat--extra"><span><b>' + esc(LOGIC.FEATURES[f]) + '</b>（最小版にはいらないもの）</span></li>'; });
     h += '</ul>';
     var cls = r.rebuilds === 0 ? 'good' : (r.rebuilds <= 2 ? 'mid' : 'bad');
     h += '<div class="ph-feedback ph-feedback--' + cls + '"><strong class="ph-verdict">この計画で必要な作り直し: ' + r.rebuilds + '回　' + starText(LOGIC.stars(r.rebuilds)) + '</strong>';
