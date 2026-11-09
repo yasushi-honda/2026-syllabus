@@ -94,6 +94,8 @@ program-basics-2/       # プログラム基礎Ⅱ の各回詳細ページ
   week05.html           #   第5回 後期テーマ選択＆企画
   week06.html           #   第6回 CSS発展：レイアウトを整える
   week07.html           #   第7回 🔧バグ修正ワーク④（練習問題cart-bug.html: エラーが出るバグ・出ないバグ4つ、AIにバグ入りコードを生成させて直す、ペア交換、NOTES.md記録。図解3点。バグ入り版・修正版を実機で確認済み）
+  week08.html           #   第8回 個人制作① 基礎機能（2026-11-09作成。データと表示を分ける。ゲーム班=`characters`配列で6マスの盤面にキャラクター表示、EC班=`products`配列で商品一覧表示。骨組み`game.html`/`shop.html`をコピー→`for`+`createElement`+`appendChild`で配列から画面を作る→plan.mdの「4. 持つデータ」に沿って項目を足す→push。図解3点、QR。骨組みと表示コードは実機で表示確認済み。第6〜7回の実施結果は未反映）
+  qr/                   #   QRコードのSVG（week08-page.svg）
 ai-communication-2.html # AIコミュニケーション基礎Ⅱ（火3・4限／後期。授業内容確定済み、週ページ順次作成中）
 ai-communication-2/     # AIコミュニケーション基礎Ⅱ の各回詳細ページ
   week01.html           #   第1回 前期振り返り＆後期オリエンテーション
@@ -103,6 +105,8 @@ ai-communication-2/     # AIコミュニケーション基礎Ⅱ の各回詳細
   week05.html           #   第5回 AIエージェントに指示する①
   week06.html           #   第6回 AIエージェントに指示する②（指示を重ねて作品を育てる。まとめて/1つずつの比較、指示ログ）
   week07.html           #   第7回 🔧すれ違いワーク（人どうしのすれ違い体験、すれ違いの4つの型（授業用の整理で公式分類ではない）、お題カードで予想→観察→型の記録、書き直し、「確認の一文」で送る前に解釈を説明させる。**道具はagyかAI Studio Build modeを学生が1人ずつ選ぶ（2026-10-27、先生の決定）**。図解3点とお題の図2点）
+  week08.html           #   第8回 チャット型AIとエージェント型AIの違い（2026-11-09作成。同じお題（作品に「今日のひとこと」ボタンを追加）をGeminiアプリ（チャット）と自分の道具（agyかBuild、第7回と同じ）に頼み、誰が手を動かすか・確認する所・戻し方を「関わり方メモ」で比較。Build modeの中身はAntigravity Agentの中核部分と公式（確認日2026-11-09）、agyが同じ部品かは未確認と明記。「チャット型」は授業の言葉で公式用語ではない。図解4点＋QR。未確認: 学校アカウントでのGeminiアプリ、BuildのVersionsで戻せるか）
+  qr/                   #   QRコードのSVG（week08-page.svg）
   suregai-game.html     #     第7回 すれ違いハンター（1人用の練習ゲーム。1 ファイル HTML、JS のみ・記録なし。練習用AI「ミミ」相手の4ステージ＋すれ違いログのコピー。ミミは本物のagy・Buildではない）
 it-passport-technology.html   # ITパスポート テクノロジー系（水1・2限／後期。授業内容確定済み、週ページ順次作成中）
 it-passport-technology/       # ITパスポート テクノロジー系 の各回詳細ページ
@@ -268,7 +272,7 @@ docs/forms-gas/         # 学校フォーム作成（GAS+Playwright）の手順�
 
 - **共通ルール**: ①SVGは `role="img"` + `<title>` + `<desc>`、画像は `alt` を必ず付ける ②色だけで意味を伝えない（文字ラベルを併記する）③375〜390px幅で横スクロールが出ないこと、375px幅で補足文字が実寸約11px・本文が約11.7px以上あることを、Playwrightで実測して確認する（360px幅の小さいスマホでは補足文字が約10.4pxまで下がる。それより小さくしない）（viewBox幅360のSVGは幅が縮むと文字も縮むため、`main.theme-blue` / `main.theme-purple` ではスマホ幅だけ余白を詰めて文字を大きくしている） ④図の内容（回の番号・テーマ名・機能名）は親ページ・他の週ページと突き合わせ、comment-analyzerに依頼する
 - **テーマ色**: `vz-*` は amber 基調。`main.theme-slate`（秋の集中講座）／`main.theme-blue`（プログラム基礎Ⅱ）／`main.theme-purple`（AIコミュニケーション基礎Ⅱ）のように、`<main>` にクラスを付けて読み替える。**新しい色の科目で使うときは `styles.css` に読み替え（`main.theme-xxx`）を追加する**。丸点の色は `.dot` / `.dot-blue` / `.dot-orange`（白い数字を載せるので、コントラスト4.5:1以上の色だけ使う。`--c-green` は4.36:1で不足）。**`main.theme-slate` 専用のセレクタ（`.vz-field ul` など）もあるため、blue基調のページで SVG（`.vz-svg`）・`vz-fig`・`vz-flow` 以外の `vz-*` 部品を使うときは表示を確認する**
-- **CSSを触ったとき**: 週ページ側の `styles.css?v=N` を上げると、古いキャッシュを待たずに反映できる（`styles.css` を変えるたびに連番を上げる。現在の最新は `?v=25`（AI活用プログラミング基礎Ⅱ week08・自然言語開発Ⅱ week08 が使用。`.qr-box__heading` を orange／green の科目色にそろえる指定を追加。`app.js` は `?v=5`）。その前は `?v=24`（ITパスポート week05 が使用。QRコードの `.qr-box`、`.syllabus-section` の中に置いた `.demo-cta` のボタンの文字を白・下線なしにそろえる指定を追加）。その前は `?v=23`（ITパスポート week05・term-shooter.html が使用。琥珀の案内ブロック `.demo-cta--amber` を追加）。その前は `?v=22`（AIコミュニケーション基礎Ⅱ week07・suregai-game.html が使用。紫の案内ブロック `.demo-cta--purple` を追加）。その前は `?v=21`（ITパスポート week04 が使用。就活ワンポイントの `.tip-*`・止めるボタン `.tip-ctl` を追加。`app.js` は `?v=4`）。その前は `?v=19`（AI活用プログラミング基礎Ⅱ week06 が使用。比較表の `.schedule-table--stack`（スマホ幅で観点ごとのカードに積む。各 `td` に `data-label` を付ける）を追加。自然言語開発Ⅱ week06 は `?v=18`。`main.theme-orange` の追加で orange 基調のページでも `vz-*` を使える。他のページは古い連番のままで、影響する変更は入っていない））
+- **CSSを触ったとき**: 週ページ側の `styles.css?v=N` を上げると、古いキャッシュを待たずに反映できる（`styles.css` を変えるたびに連番を上げる。現在の最新は `?v=26`（プログラム基礎Ⅱ・AIコミュ基礎Ⅱ week08 が使用。`.qr-box__heading` を blue／purple の科目色にそろえる指定を追加）。その前は `?v=25`（AI活用プログラミング基礎Ⅱ week08・自然言語開発Ⅱ week08 が使用。`.qr-box__heading` を orange／green の科目色にそろえる指定を追加。`app.js` は `?v=5`）。その前は `?v=24`（ITパスポート week05 が使用。QRコードの `.qr-box`、`.syllabus-section` の中に置いた `.demo-cta` のボタンの文字を白・下線なしにそろえる指定を追加）。その前は `?v=23`（ITパスポート week05・term-shooter.html が使用。琥珀の案内ブロック `.demo-cta--amber` を追加）。その前は `?v=22`（AIコミュニケーション基礎Ⅱ week07・suregai-game.html が使用。紫の案内ブロック `.demo-cta--purple` を追加）。その前は `?v=21`（ITパスポート week04 が使用。就活ワンポイントの `.tip-*`・止めるボタン `.tip-ctl` を追加。`app.js` は `?v=4`）。その前は `?v=19`（AI活用プログラミング基礎Ⅱ week06 が使用。比較表の `.schedule-table--stack`（スマホ幅で観点ごとのカードに積む。各 `td` に `data-label` を付ける）を追加。自然言語開発Ⅱ week06 は `?v=18`。`main.theme-orange` の追加で orange 基調のページでも `vz-*` を使える。他のページは古い連番のままで、影響する変更は入っていない））
 
 ### 時間配分（固定・絶対厳守）
 

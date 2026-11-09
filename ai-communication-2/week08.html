@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第8回 チャット型AIとエージェント型AIの違い | AIコミュニケーション基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=26">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <!-- 公式情報確認: 2026-11-09（①Build modeは公式の説明ページ「Build apps in Google AI Studio」（ai.google.dev/gemini-api/docs/aistudio-build-mode）の「The Antigravity Agent」の節で、Build modeの体験を動かしているのはAntigravity Agentの中核部分（agent harness）で、前のプロンプトとファイルの状態を覚えている・複数のファイルを扱う・コードの更新を検証する、と書かれていることを生HTMLで確認。このページに更新日の表示は見つからなかった。変更を元に戻す機能・Plan・変更の承認は、説明ページに記載なし。agyが同じ部品を使っているかは、公式のどこにも書かれていないのを確認できていないため、このページでは「同じ」と書かない。②「エージェント」の定義は、Anthropic「Building effective agents」（anthropic.com/engineering/building-effective-agents）の英文を生HTML（curl）で照合して引用: "systems where LLMs dynamically direct their own processes and tool usage, maintaining control over how they accomplish tasks"、および「チェックポイントや行き詰まりで人にフィードバックを求めて止まれる」旨の記述。「チャット型」は公式の用語ではなく、この授業の言葉。③agyのdefaultモードで変更前に差分が出る・/clearは第3回で公式から裏取り済みの内容を再掲。参考リンク5本の生存を2026-11-09にcurlで確認（200）。Antigravity CLI（agy）の改名・停止の報道が無いことは第7回（2026-10-26）の確認から継続。授業前に教員が確認する項目: 学校アカウントでGeminiアプリ（チャット）が開くか、Buildの設定のVersionsタブで試す前の版に戻せるか（第7回から持ち越し）、作品のコードにAPIキー等が入っていないか（チャットに貼るため）） -->
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication-2.html">AIコミュニケーション基礎 II</a>
+        <span>/</span>
+        <span>第8回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">チャット型AIとエージェント型AIの違い</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 8</span>
+            <span class="page-badge">火曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-purple">
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
+
+    <div class="qr-box qr-box--pc">
+      <a class="qr-box__zoom" href="qr/week08-page.svg" target="_blank" rel="noopener" aria-label="QRコードを大きく表示する">
+        <img class="qr-box__img" src="qr/week08-page.svg" alt="この第8回のページを開くQRコード。スマートフォンのカメラで読み取ると、このページが開く。" width="180" height="180">
+      </a>
+      <div class="qr-box__body">
+        <p class="qr-box__heading">📱 スマホで開く</p>
+        <p class="qr-box__text">教室の画面を見ながら、自分のスマートフォンで、このページを開けます。スマートフォンの<strong>カメラ</strong>で、このQRコードを読み取ってください。QRコードを押すと、大きく表示されます。</p>
+      </div>
+    </div>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">同じお願いを、<strong>チャット</strong>と<strong>自分の道具（agyまたはBuild）</strong>の両方に頼み、<strong>AIとの関わり方がどう違うか</strong>を、自分の言葉で言う</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">チャット型 / エージェント型 / 誰が手を動かすか / 材料を渡す・確認する・戻す / 関わり方メモ / 任せ方の判断 / agyとAI Studio Build</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第7回と同じ道具（<strong>agy</strong>または<strong>AI StudioのBuild mode</strong>）と、その作品。学校のアカウントで開く<strong>Geminiアプリ</strong>（チャット用）。第7回までに育てた「agyへの指示メモ」（Googleドキュメント）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>同じお願いをしたとき、<strong>チャット型</strong>と<strong>エージェント型</strong>で、<strong>誰が何をしたか</strong>（材料を渡す・作業する・確認する・戻す）を比べて言える</li>
+        <li>agyとBuildは<strong>見え方（窓）が違う</strong>が、どちらも作品のファイルを読んで書き換える<strong>エージェント型の道具</strong>だと説明できる</li>
+        <li>自分の作業を<strong>どの場面でチャットに、どの場面でエージェントに頼むか</strong>、理由つきで決めて、指示メモに書ける</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <figure class="vz-fig" aria-labelledby="cap-a8-map">
+        <p class="vz-fig-title" id="cap-a8-map">今日の地図</p>
+        <svg class="vz-svg" viewBox="0 0 360 330" role="img" aria-labelledby="a8-map-t a8-map-d">
+          <title id="a8-map-t">今日の地図</title>
+          <desc id="a8-map-d">1 チャット型とエージェント型の言葉を整理する、2 同じお題をGeminiアプリ（チャット）に頼む、3 同じお題を自分の道具（agyまたはBuild）に頼む、4 関わり方メモで比べて言葉にする、5 任せ方を指示メモに書く、の順に進む。</desc>
+          <rect class="box-purple" x="8" y="8" width="344" height="48" rx="10"/>
+          <text class="t-b" x="22" y="28">① 言葉を整理する</text>
+          <text class="t-sm" x="22" y="46">チャット型とエージェント型</text>
+          <line class="line" x1="180" y1="58" x2="180" y2="66" marker-end="url(#mk-s)"/>
+          <rect class="box-purple" x="8" y="68" width="344" height="48" rx="10"/>
+          <text class="t-b" x="22" y="88">② チャットに頼む</text>
+          <text class="t-sm" x="22" y="106">Geminiアプリに、同じお題を相談する</text>
+          <line class="line" x1="180" y1="118" x2="180" y2="126" marker-end="url(#mk-s)"/>
+          <rect class="box-purple" x="8" y="128" width="344" height="48" rx="10"/>
+          <text class="t-b" x="22" y="148">③ 自分の道具に頼む</text>
+          <text class="t-sm" x="22" y="166">agyかBuildに、同じお題を任せる</text>
+          <line class="line" x1="180" y1="178" x2="180" y2="186" marker-end="url(#mk-s)"/>
+          <rect class="box-white box-key" x="8" y="188" width="344" height="48" rx="10"/>
+          <text class="t-b" x="22" y="208">④ 比べて言葉にする</text>
+          <text class="t-sm" x="22" y="226">関わり方メモ＋ペアで見せ合う</text>
+          <line class="line" x1="180" y1="238" x2="180" y2="246" marker-end="url(#mk-s)"/>
+          <rect class="box-purple" x="8" y="248" width="344" height="48" rx="10"/>
+          <text class="t-b" x="22" y="268">⑤ 任せ方を決める</text>
+          <text class="t-sm" x="22" y="286">指示メモに書き足す</text>
+          <rect class="band" x="8" y="302" width="344" height="24" rx="8"/>
+          <text class="t-c" x="180" y="319">どちらが上かではなく、使い分けを考える</text>
+        </svg>
+        <figcaption>今日は「どちらが優れているか」ではなく、「どんな関わり方になるか」を観察する回です。</figcaption>
+      </figure>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>チャット型とエージェント型の言葉を整理し、今日のお題を決める</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返りと、道具の準備（10分）</strong></p>
+            <ul>
+              <li>第7回の「すれ違いログ」と、指示メモに書き足した「送る前のチェック」を見返し、ペアで<strong>1つずつ</strong>紹介する（相手がいない人は、自分のログを見返す）</li>
+              <li>今日使う道具は、<strong>第7回に選んだものと同じ</strong>でよい（agyかBuild。途中で変えない）。比べるのは、この道具と、<strong>チャット</strong>（Geminiアプリ）</li>
+              <li><strong>agyを選んだ人</strong>: 停止していたCodespaceを<strong>再開（resume）</strong>する——「Create codespace」で新規作成しない。<code>python3 -m http.server 8000</code>を実行し、「ポート」タブ→<strong>「エディターでプレビュー」</strong>でSimple Browserを開いておく。agyで再ログインを求められたら、第2回と同じ手順で再認証する</li>
+              <li><strong>Buildを選んだ人</strong>: <a href="https://aistudio.google.com/" target="_blank" rel="noopener">Google AI Studio</a>（学校のアカウント）のBuild modeで、前期の作品か、第7回の練習用の作品を開く。どちらもない人は、講師に声をかける</li>
+              <li><strong>全員</strong>: 学校のアカウントで、<a href="https://gemini.google.com/" target="_blank" rel="noopener">Geminiアプリ</a>を新しいタブで開いておく（開けない人は講師に声をかける）</li>
+            </ul>
+            <p><strong>「チャット型」と「エージェント型」を整理する（15分）</strong></p>
+            <ul>
+              <li>講師の説明を聞きながら、下の図の<strong>手の動き</strong>を見る。違いは「賢さ」ではなく、<strong>誰が手を動かすか</strong>
+                <ul>
+                  <li><strong>チャット型</strong>: 人が聞くと、AIが<strong>文章で答える</strong>。答えを使うために、<strong>人が貼って、試す</strong>（この授業での呼び方）</li>
+                  <li><strong>エージェント型</strong>: 人が目的を頼むと、AIが<strong>ファイルを読む・書く・動かす</strong>まで進め、人は<strong>結果を確かめる</strong>（agyで第5〜7回に体験したこと）</li>
+                </ul>
+              </li>
+              <li>「チャット型」は公式の用語ではなく、<strong>この授業の言葉</strong>。「エージェント」は、Anthropicの記事（<a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">Building effective agents</a>）で、<em>"systems where LLMs dynamically direct their own processes and tool usage, maintaining control over how they accomplish tasks"</em>（AIが自分で進め方と道具の使い方を決めて進めるしくみ）と説明されている。同じ記事に、エージェントは<strong>途中や行き詰まりで人に確認を求めて止まれる</strong>という趣旨の記述もある（確認日 2026-11-09）</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-a8-hands">
+              <p class="vz-fig-title" id="cap-a8-hands">手を動かすのは、だれか</p>
+              <svg class="vz-svg" viewBox="0 0 360 250" role="img" aria-labelledby="a8-hands-t a8-hands-d">
+                <title id="a8-hands-t">チャット型とエージェント型の手の動き</title>
+                <desc id="a8-hands-d">左のチャット型は、1 人が聞く、2 AIが文章で答える、3 人が自分で貼って試す、の順。手を動かすのは人。右のエージェント型は、1 人が頼む、2 AIがファイルを読む・書く・動かす、3 人が差分やプレビューで確かめる、の順。AIが動かし、人が確認する。</desc>
+                <text class="t-b" x="90" y="20" text-anchor="middle">チャット型</text>
+                <text class="t-b" x="270" y="20" text-anchor="middle">エージェント型</text>
+                <rect class="box-white" x="8" y="30" width="164" height="52" rx="10"/>
+                <text class="t-b" x="20" y="50">① 人が聞く</text>
+                <text class="t-sm" x="20" y="70">「どうすれば？」</text>
+                <line class="line" x1="90" y1="84" x2="90" y2="92" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="94" width="164" height="52" rx="10"/>
+                <text class="t-b" x="20" y="114">② AIが答える</text>
+                <text class="t-sm" x="20" y="134">文章で返ってくる</text>
+                <line class="line" x1="90" y1="148" x2="90" y2="156" marker-end="url(#mk-s)"/>
+                <rect class="box-white box-key" x="8" y="158" width="164" height="52" rx="10"/>
+                <text class="t-b" x="20" y="178">③ 人が試す</text>
+                <text class="t-sm" x="20" y="198">自分で貼って動かす</text>
+                <rect class="box-purple" x="188" y="30" width="164" height="52" rx="10"/>
+                <text class="t-b" x="200" y="50">① 人が頼む</text>
+                <text class="t-sm" x="200" y="70">「作って・直して」</text>
+                <line class="line" x1="270" y1="84" x2="270" y2="92" marker-end="url(#mk-s)"/>
+                <rect class="box-purple" x="188" y="94" width="164" height="52" rx="10"/>
+                <text class="t-b" x="200" y="114">② AIが進める</text>
+                <text class="t-sm" x="200" y="134">読む・書く・動かす</text>
+                <line class="line" x1="270" y1="148" x2="270" y2="156" marker-end="url(#mk-s)"/>
+                <rect class="box-white box-key" x="188" y="158" width="164" height="52" rx="10"/>
+                <text class="t-b" x="200" y="178">③ 人が確かめる</text>
+                <text class="t-sm" x="200" y="198">差分・プレビュー</text>
+                <rect class="band" x="8" y="220" width="164" height="26" rx="8"/>
+                <text class="t-c" x="90" y="238">動かすのは人</text>
+                <rect class="band" x="188" y="220" width="164" height="26" rx="8"/>
+                <text class="t-c" x="270" y="238">AIが動かし、人が確認</text>
+              </svg>
+              <figcaption>どちらも、最後に「これでよいか」を決めるのは人です。変わるのは、人が手を動かす場所です。</figcaption>
+            </figure>
+            <p><strong>今日のお題と、「関わり方メモ」を準備する（15分）</strong></p>
+            <ul>
+              <li>今日のお題は、<strong>全員同じ</strong>。チャットにも、自分の道具にも、同じお願いをする</li>
+            </ul>
+            <button class="copy-md-btn" data-md-source="hikaku-prompt">
+              <span class="btn-icon"></span> 今日のお題をコピー
+            </button>
+            <pre id="hikaku-prompt" class="md-preview">今の作品のページに「今日のひとこと」ボタンを1つ追加したい。
+- ボタンを押すと、ひとことが3つのうち1つ、ランダムに表示される
+- ひとことは「今日もいい調子」「少し休もう」「次の一歩を決めよう」にする
+- 今あるデザインや文章は変えない</pre>
+            <ul>
+              <li>Googleドキュメント（指示メモと同じドキュメントでよい）に、次の表を作る（1行目は見出し、その下に2行）。これが「<strong>関わり方メモ</strong>」
+                <ul>
+                  <li>列: 相手／材料を渡したのは誰・どうやって／作業を進めたのは誰／確認した所／困ったこと・意外だったこと</li>
+                  <li>行: 「チャット（Geminiアプリ）」「自分の道具（agyまたはBuild）」</li>
+                </ul>
+              </li>
+              <li>実験の前に、次の<strong>予想</strong>を1行ずつ書く: 「チャットは、自分の作品のファイルを<strong>見られる</strong>と思うか」「自分の道具は、頼んでいない所まで<strong>変える</strong>と思うか」</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>同じお題を、チャットと自分の道具に頼んで、関わり方を観察する</h3>
+          <div class="timeline-body">
+            <p><strong>実験①: チャット（Geminiアプリ）に頼む（20分）</strong></p>
+            <ul>
+              <li>作品のコードを、チャットに<strong>貼り付ける</strong>——チャットが読めるのは、<strong>貼った内容</strong>だけ。貼らなければ、作品の中身は渡らない（この授業で試して確かめる）
+                <ul>
+                  <li><strong>agyの人</strong>: 作品のファイルを、ターミナルで<code>cat ファイル名.html</code>と打って表示し、全部コピーする（複数のファイルがある人は、HTMLファイル1つだけでよい）</li>
+                  <li><strong>Buildの人</strong>: 右側の<code>Code</code>タブで、HTMLなど中心になるファイルを開いてコピーする</li>
+                  <li>作品のコードに、<strong>APIキーや個人情報</strong>が入っていたら、貼らない（講師に声をかける）</li>
+                </ul>
+              </li>
+              <li>先に「今日のお題」、その下に貼ったコードを続けて送る。返ってきた答えを読んで、関わり方メモの「チャット」の行を埋める
+                <ul>
+                  <li>答えは<strong>文章（とコード）</strong>で返ってくる。作品のファイルは、まだ<strong>1文字も変わっていない</strong></li>
+                  <li>「自分なら、どのファイルの<strong>どこに</strong>、何を貼る？」を、メモに1行で書く。実際に貼って動かすのは、今日はしなくてよい（やってみたい人は、<strong>コピーした作品</strong>で）</li>
+                  <li>答えのコードが、今の作品の書き方とずれていないか（変数名・ボタンの場所など）も見る</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>実験②: 自分の道具（agyまたはBuild）に頼む（30分）</strong></p>
+            <ul>
+              <li><strong>agyの人</strong>: 元の作品は<strong>触らない</strong>。新しいコピーを作ってから、agyで<code>/clear</code>と打って新しい会話を始める（第7回と同じ。前のやりとりの影響を引きずらないため）
+                <pre><code>cp 元のファイル.html hikaku-1.html</code></pre>
+                複数のファイルがある人は、フォルダごとコピーする（<code>作品フォルダ</code>は自分のフォルダ名に置き換える）
+                <pre><code>cp -r 作品フォルダ hikaku-1</code></pre>
+                「<code>hikaku-1.html</code>（または<code>hikaku-1</code>フォルダ）について」と添えて、今日のお題を送る。<code>default</code>モードのまま進め、ファイルを変更する前に出る<strong>差分を読んでから</strong>承認する（第3回）。<code>hikaku-1</code>以外のファイルを変えようとしていたら、承認しない</li>
+              <li><strong>Buildの人</strong>: 今日のお題を、そのまま入力欄に送る。右側のプレビューで、ボタンが追加されたか確かめ、<code>Code</code>タブで<strong>どのファイルのどこが変わったか</strong>を見る。戻したくなったら、設定の<code>Versions</code>タブを見る（戻せるかは、教員が確認中。戻せないときは講師に声をかけて、練習用の作品を作り直す）</li>
+              <li>実験①と同じ観点で、関わり方メモの「自分の道具」の行を埋める。特に、次の3つを書く
+                <ul>
+                  <li><strong>材料</strong>——作品のコードを、貼り付けたか。AIが自分で読んだか</li>
+                  <li><strong>作業</strong>——ファイルを書き換えたのは、誰か</li>
+                  <li><strong>確認</strong>——止まって確認を求められた所はあったか。頼んでいない所が変わっていなかったか</li>
+                </ul>
+              </li>
+              <li>同じ指示でも、毎回同じ動きとは限らない。隣の人と結果が違ってよい</li>
+            </ul>
+            <p><strong>早く終わった人は</strong></p>
+            <ul>
+              <li>早く終わった人は、お題を少し変えてもう一度（例:「ひとことを5つにして」）試し、チャットと自分の道具で、<strong>2回目の頼み方がどう違うか</strong>を書き足す（チャットは、前の答えを覚えているか。自分の道具は、前の変更を覚えているか）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>agyとBuildを見比べ、「関わり方の違い」を自分の言葉にする</h3>
+          <div class="timeline-body">
+            <p><strong>道具の違う相手と見せ合う（20分）</strong></p>
+            <ul>
+              <li>可能なら、<strong>agyの人とBuildの人</strong>でペアを組む（同じ道具の人しかいないときは、同じ道具どうしでよい。相手がいない人は、自分のメモを見返す）</li>
+              <li>お互いの関わり方メモを見せ、次の3点を伝え合う
+                <ul>
+                  <li>チャットでは、<strong>自分が手を動かした所</strong>はどこか</li>
+                  <li>自分の道具では、<strong>AIが勝手に進めた所</strong>と、<strong>自分が確認した所</strong>はどこか</li>
+                  <li>相手の道具と比べて、<strong>見え方が違った所</strong>はどこか（差分で見るか、プレビューで見るか）</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>agyとBuildの関係を知る（10分）</strong></p>
+            <ul>
+              <li>講師が、公式の説明ページ（<a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio</a>）の内容を紹介する。Build modeは<strong>ブラウザの中の「窓」</strong>で、中でAIを動かしているのは<strong>Antigravity Agent</strong>（の中核部分）だと書かれている。前のプロンプトとファイルの状態を覚えている、複数のファイルを扱う、コードの更新を検証する、とも書かれている（確認日 2026-11-09）</li>
+              <li>agyは<strong>Antigravity CLI</strong>（ターミナルの窓）。<strong>agyがBuildと同じ部品を使っているか</strong>は、公式から確認できていないので、「同じ」とは言わない。言えるのは、<strong>どちらも「作品を読んで書き換える」エージェント型の道具で、見え方（窓）が違う</strong>こと</li>
+              <li>公式の説明ページに書かれていないこと（Planや変更の承認など）は、「ない」とは限らない。自分の画面で見つけたら、メモする</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-a8-two">
+              <p class="vz-fig-title" id="cap-a8-two">agyとBuild：窓が違う</p>
+              <svg class="vz-svg" viewBox="0 0 360 232" role="img" aria-labelledby="a8-two-t a8-two-d">
+                <title id="a8-two-t">agyとBuildは窓が違うエージェント型の道具</title>
+                <desc id="a8-two-d">上に「どちらも作品を読んで書き換えるエージェント型の道具」の帯。その下に左がAI Studio Build（ブラウザ、プレビューで見る）、右がagy（ターミナル、差分で見る）。下に、Buildの中身はAntigravity Agentの中核部分と公式にあること、agyが同じ部品かは公式から確認できていないことの注記。</desc>
+                <rect class="band" x="8" y="8" width="344" height="44" rx="10"/>
+                <text class="t-c" x="180" y="27">どちらも、作品を読んで</text>
+                <text class="t-c" x="180" y="45">書き換えるエージェント型</text>
+                <line class="line" x1="90" y1="54" x2="90" y2="66" marker-end="url(#mk-s)"/>
+                <line class="line" x1="270" y1="54" x2="270" y2="66" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="68" width="164" height="84" rx="10"/>
+                <text class="t-b" x="20" y="90">AI Studio Build</text>
+                <text class="t-sm" x="20" y="110">ブラウザの窓</text>
+                <text class="t-sm" x="20" y="128">プレビューで見る</text>
+                <text class="t-sm" x="20" y="144">Codeタブで中身</text>
+                <rect class="box-white" x="188" y="68" width="164" height="84" rx="10"/>
+                <text class="t-b" x="200" y="90">agy</text>
+                <text class="t-sm" x="200" y="110">ターミナルの窓</text>
+                <text class="t-sm" x="200" y="128">差分で見る</text>
+                <text class="t-sm" x="200" y="144">Antigravity CLI</text>
+                <rect class="box-purple" x="8" y="162" width="344" height="62" rx="10"/>
+                <text class="t-sm" x="20" y="182">Buildの中身は、Antigravity Agentの</text>
+                <text class="t-sm" x="20" y="198">中核部分と公式に書かれている。</text>
+                <text class="t-sm" x="20" y="214">agyが同じ部品かは、確認できていない。</text>
+              </svg>
+              <figcaption>「同じ仲間」と決めつけず、公式に書かれていることと、自分の画面で見えたことを分けて言います。</figcaption>
+            </figure>
+            <p><strong>「関わり方の違い」を言葉にする（20分）</strong></p>
+            <ul>
+              <li>関わり方メモの下に、次の3文を、<strong>自分の言葉</strong>で書く（講師の言葉をそのまま写さない）
+                <ul>
+                  <li>「チャット型は、<strong>＿＿</strong>が手を動かすので、＿＿という長所と、＿＿という手間がある」</li>
+                  <li>「エージェント型は、<strong>＿＿</strong>が手を動かすので、＿＿という長所と、＿＿という注意がいる」</li>
+                  <li>「agyとBuildは、＿＿の点で違い、＿＿の点で似ている」</li>
+                </ul>
+              </li>
+              <li>書けたら、ペアか講師の前で<strong>口に出して</strong>言ってみる。「長所」「手間」「注意」の中身は、自分の関わり方メモの記録から選ぶ</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>どの場面で、どちらに頼むか——任せ方を決めて、指示メモに書く</h3>
+          <div class="timeline-body">
+            <p><strong>任せ方の考え方を知る（5分）</strong></p>
+            <ul>
+              <li>講師が、下の図を紹介する。これは公式の分類ではなく、<strong>この授業での整理</strong>。例外はいくらでもあるので、自分の経験から直してよい</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-a8-pick">
+              <p class="vz-fig-title" id="cap-a8-pick">場面で使い分ける（授業での整理）</p>
+              <svg class="vz-svg" viewBox="0 0 360 226" role="img" aria-labelledby="a8-pick-t a8-pick-d">
+                <title id="a8-pick-t">場面ごとの頼み方の例</title>
+                <desc id="a8-pick-d">調べる・考える・相談する場面はチャット型が向きやすい。ファイルを直して動かして確かめる場面はエージェント型が向きやすい。中身の大事な判断と最後の確認は、どちらを使っても人が行う。</desc>
+                <rect class="box-white" x="8" y="8" width="344" height="62" rx="10"/>
+                <text class="t-b" x="22" y="30">調べる・考える・相談する</text>
+                <text class="t-sm" x="22" y="50">→ チャット型が向きやすい</text>
+                <text class="t-sm" x="22" y="64">作品のファイルに触らず、案を出してもらう</text>
+                <rect class="box-purple" x="8" y="80" width="344" height="62" rx="10"/>
+                <text class="t-b" x="22" y="102">ファイルを直す・動かして確かめる</text>
+                <text class="t-sm" x="22" y="122">→ エージェント型が向きやすい</text>
+                <text class="t-sm" x="22" y="136">貼る手間が減る。ただし差分を読む</text>
+                <rect class="box-white box-key" x="8" y="152" width="344" height="62" rx="10"/>
+                <text class="t-b" x="22" y="174">中身の大事な判断・最後の確認</text>
+                <text class="t-sm" x="22" y="194">→ どちらを使っても、人がする</text>
+                <text class="t-sm" x="22" y="208">何を作るか・これでよいかは、人が決める</text>
+              </svg>
+              <figcaption>向き不向きは「やりやすさ」の話で、決まりではありません。実験の記録を根拠に、自分で直します。</figcaption>
+            </figure>
+            <p><strong>自分の「任せ方メモ」を書く（15分）</strong></p>
+            <ul>
+              <li>「agyへの指示メモ」（第2回から育ててきたGoogleドキュメント）に、<strong>任せ方メモ</strong>を、自分の言葉で書き足す。形は自由だが、次の3つを入れる
+                <ul>
+                  <li>チャットに頼む場面を<strong>1つ</strong>と、その理由（今日の記録から）</li>
+                  <li>エージェント（agyまたはBuild）に頼む場面を<strong>1つ</strong>と、その理由</li>
+                  <li>エージェントに頼むとき、<strong>自分が必ず確認すること</strong>を1つ（例:「差分を読む」「頼んでいない所が変わっていないか見る」）</li>
+                </ul>
+              </li>
+              <li>第7回の「送る前のチェック」と、並べて読めるように整える。この任せ方メモは、次回からの<strong>自分のプロジェクト</strong>で使う</li>
+            </ul>
+            <p><strong>もう片方の道具を、短く試す（10分、早く終わった人）</strong></p>
+            <ul>
+              <li>隣の人が使っている道具（agyの人はBuild、Buildの人はagy）を見せてもらい、<strong>同じお題で、どこが違って見えるか</strong>を1行メモする。自分の画面で試すのは、時間があるときだけでよい（agyの設定やBuildの作品を作るのに時間がかかるため）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ ai-communication-2.html Week 9 「自分のプロジェクトを育てる①」と同期 -->
+              <li>次回（第9回）: <strong>自分のプロジェクトを育てる①</strong>——agy・AI Studio・Gemini Notebookを組み合わせ、作りたいものをAIと対話しながら形にする。<strong>今日の任せ方メモを、見ながら進める</strong></li>
+              <li>今日のキーワード「<strong>チャット型</strong>」「<strong>エージェント型</strong>」「<strong>誰が手を動かすか</strong>」を口に出して言えるか確認して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>関わり方メモと、任せ方メモを完成させる</strong>
+            <p>授業内で書ききれなかった人は家で仕上げる。関わり方メモは、2つの行（チャット／自分の道具）の全部の列を埋める。指示メモには、任せ方メモ（チャットの場面・エージェントの場面・必ず確認すること）が入っている状態にする。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>次回に作りたいものを、1〜3行で書いておく</strong>
+            <p>第9回の「自分のプロジェクト」で作りたいものを、指示メモに1〜3行で書く。「誰が使うか」「何ができるとうれしいか」を入れる。まだ決まらない人は、候補を2つ書く。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio（公式）</a> — Build modeの中身がAntigravity Agentであることの記述を含む公式解説</li>
+        <li><a href="https://www.anthropic.com/engineering/building-effective-agents" target="_blank" rel="noopener">Building effective agents（Anthropic）</a> — 「エージェント」の定義を含む解説（英語）</li>
+        <li><a href="https://antigravity.google/docs/cli/using/" target="_blank" rel="noopener">Antigravity CLI — CLI settings and tips（公式）</a> — <code>/clear</code>を含むQuick Tipsの公式解説（振り返り用）</li>
+        <li><a href="https://antigravity.google/docs/cli/best-practices/" target="_blank" rel="noopener">Antigravity CLI — CLI best practices（公式）</a> — 「探索→計画→実行」の公式解説（振り返り用）</li>
+        <li><a href="https://antigravity.google/docs/cli/modes/" target="_blank" rel="noopener">Antigravity CLI — Choose an execution mode（公式）</a> — <code>default</code>と<code>plan</code>を含む、<code>Shift+Tab</code>での実行モード切替の公式解説（振り返り用）</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week07.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第7回 🔧すれ違いワーク</span>
+      </a>
+      <a href="../ai-communication-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AIコミュニケーション基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第9回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js?v=5"></script>
+</body>
+</html>
