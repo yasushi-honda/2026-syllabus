@@ -54,6 +54,12 @@
       </div>
     </div>
 
+    <div class="demo-cta demo-cta--purple">
+      <p class="demo-cta__heading">🎮 計画ハンター（1人用の練習ゲーム）</p>
+      <p class="demo-cta__body">1限前半に、全員で遊びます。欠席した人、早く終わった人、家での復習にも。ルールで動く練習用AI「ミミ」を相手に、<strong>①計画なしで頼む ②計画を作って頼む ③計画の穴を見抜く</strong>の3ステージ（③は早く終わった人向け）で、<strong>作る前に計画があると、作り直しがどう変わるか</strong>を体験できます。遊んだ結果は「気づきのメモ」としてコピーできます。本物のagyやAI Studio Buildには接続せず、入力した内容はどこにも送信・保存されません。</p>
+      <a href="plan-game.html" class="demo-cta__link">→ ゲームを開く</a>
+    </div>
+
     <div class="lesson-overview">
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
@@ -62,7 +68,7 @@
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">企画メモ / 最小版（1画面・1機能） / 「あとで」リスト / 計画（質問→案→人が直す） / 戻れる状態 / 対話ログ / 誰が手を動かすか</div>
+          <div class="lesson-overview-value">企画メモ / 最小版（1画面・1機能） / 「あとで」リスト / 計画（質問→案→人が直す） / 作り直し / 戻れる状態 / 対話ログ / 誰が手を動かすか</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
@@ -75,6 +81,7 @@
       <h2>この回のゴール</h2>
       <ul>
         <li>「<strong>誰の・何の困りごとを・どんな形で</strong>」を1〜3行で決めて、<strong>最初に作る小さい版（最小版）</strong>を選べる</li>
+        <li>練習ゲーム「計画ハンター」で、<strong>作る前に計画があると、作り直しがどう変わるか</strong>を体験できる</li>
         <li>作る前に、<strong>チャットと計画</strong>を作って自分で直し、その計画を道具に渡して最小版を作ってもらい、<strong>戻れる状態にしてから</strong>1つ機能を足せる</li>
         <li><strong>対話ログ</strong>から、誰が手を動かしたか・自分が確認した所・戻した所を、自分の言葉で書ける。相談はチャット、作業は道具、のように<strong>頼み先を選んだ理由</strong>も言える</li>
       </ul>
@@ -123,11 +130,13 @@
           </div>
           <h3>作るものを決め、「最小版」を選ぶ</h3>
           <div class="timeline-body">
-            <p><strong>前回の振り返りと、道具の準備（10分）</strong></p>
+            <p><strong>計画ハンターを1人で遊ぶ（10分）</strong></p>
             <ul>
-              <li>第7回の「すれ違いログ」と、指示メモに書き足した「送る前のチェック」を見返し、ペアで<strong>1つずつ</strong>紹介する（相手がいない人は、自分のログを見返す）。今日からは、これを<strong>自分の作品</strong>で使う</li>
-              <li>今日の大事な考え: バイブコーディングは速く作れる。<strong>だからこそ、作る前に計画を作る</strong>。AIと一緒に計画を作り、人が直してから作ると、迷いや作り直しが減る</li>
-              <li>今日使う道具は、<strong>第7回に選んだものと同じ</strong>でよい（agyかBuild。変えたい人は変えてよいが、今日は途中で変えない）</li>
+              <li><strong>1人で</strong>、練習ゲーム<a href="plan-game.html" target="_blank" rel="noopener">計画ハンター</a>を遊ぶ（約7分）。ステージ1（計画なしで頼む）→ステージ2（計画を作って頼む）の順に進め、<strong>作り直しの回数</strong>を比べる。ステージ3（計画の穴を見抜く）は、早く終わった人や、あとで遊んでよい</li>
+              <li>相手は、ルールで動く練習用AI「ミミ」で、<strong>本物のagyやBuildではない</strong>。回数は練習用のルールで決まるので、本物の結果を決めつけるものではない。「計画の4項目」（作るもの・画面に出るもの・作らないもの・確かめ方）は、<strong>この授業での整理</strong>で、公式の分類ではない</li>
+              <li>結果の画面の<strong>「気づきのメモ」</strong>をコピーして、「agyへの指示メモ」に貼る（第7回の「すれ違いログ」と「送る前のチェック」も、今日の作品で使う）</li>
+              <li>今日の大事な考え: バイブコーディングは速く作れる。<strong>だからこそ、作る前に計画を作る</strong>。ゲームで見たとおり、決めていない所が多いと、作り直しが増えやすい。AIと一緒に計画を作り、人が直してから作る</li>
+              <li>道具の準備は、<strong>授業が始まる前</strong>に済ませておく（間に合わない人は、ゲームのあとに続ける）。今日使う道具は、<strong>第7回に選んだものと同じ</strong>でよい（agyかBuild。変えたい人は変えてよいが、今日は途中で変えない）</li>
               <li><strong>agyを選んだ人</strong>: 停止していたCodespaceを<strong>再開（resume）</strong>する——「Create codespace」で新規作成しない。<code>python3 -m http.server 8000</code>を実行し、「ポート」タブ→<strong>「エディターでプレビュー」</strong>でSimple Browserを開いておく。agyで再ログインを求められたら、第2回と同じ手順で再認証する</li>
               <li><strong>Buildを選んだ人</strong>: <a href="https://aistudio.google.com/" target="_blank" rel="noopener">Google AI Studio</a>（学校のアカウント）にログインし、Build modeを開いておく。今日の作品は<strong>新しく作る</strong>ので、前期の作品は要らない</li>
               <li><strong>全員</strong>: 学校のアカウントで、<a href="https://gemini.google.com/" target="_blank" rel="noopener">Geminiアプリ</a>を新しいタブで開いておく（開けない人は講師に声をかける）</li>
