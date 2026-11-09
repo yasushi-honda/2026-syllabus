@@ -184,7 +184,7 @@
         { id: 'empty', text: '（書かない）' }
       ] },
       { key: 'check', label: '④ 確かめ方', options: [
-        { id: 'ok', text: '開いたとき、持ち物が5つ、上から見える。ボタンや入力欄は無い。' },
+        { id: 'ok', text: '開いたとき、持ち物が5つ、上から見える。' },
         { id: 'vague', text: 'いい感じにできていればOK。' },
         { id: 'vague2', text: 'ちゃんと動く。' }
       ] }
@@ -203,18 +203,19 @@
       var extras = [];
       var reasons = [];
       function add(id, why) {
-        if (extras.indexOf(id) < 0) extras.push(id);
+        if (extras.indexOf(id) >= 0) return;
+        extras.push(id);
         reasons.push({ id: id, why: why });
       }
       if (plan.make === 'big') {
-        add('editform', '「作るもの」が大きいので、入力欄まで作った');
-        add('share', '「作るもの」に共有が入っているので、共有ボタンを作った');
+        add('editform', '「作るもの」に登録・編集があるので、入力欄を作った（計画どおり。ただし最小版には大きい）');
+        add('share', '「作るもの」に共有が入っているので、共有ボタンを作った（計画どおり。ただし最小版には大きい）');
       } else if (plan.make === 'vague') {
         add('editform', '「作るもの」があいまいなので、「登録できたほうが便利」と思って入力欄を足した');
       }
       if (plan.screens === 'big') {
-        add('login', '「画面に出るもの」にログイン画面があるので、作った');
-        add('calendar', '「画面に出るもの」にカレンダーがあるので、作った');
+        add('login', '「画面に出るもの」にログイン画面があるので、作った（計画どおり。ただし最小版には大きい）');
+        add('calendar', '「画面に出るもの」にカレンダーがあるので、作った（計画どおり。ただし最小版には大きい）');
       } else if (plan.screens === 'vague') {
         add('decor', '「見やすくておしゃれ」の中身が決まっていないので、動く飾りを足した');
       }
@@ -237,7 +238,7 @@
     var HOLES = [
       { id: 'h1', hole: 'not', plan: { make: 'ok', screens: 'ok', not: 'empty', check: 'ok' },
         why: '「作らないもの」が空だと、書かれていないことを、ミミは自分で決めてしまいやすい。' },
-      { id: 'h2', hole: 'make', plan: { make: 'big', screens: 'ok', not: 'ok', check: 'ok' },
+      { id: 'h2', hole: 'make', plan: { make: 'big', screens: 'ok', not: 'fewer', check: 'ok' },
         why: '「作るもの」に、登録・編集・共有が一度に入っていて大きい。最小版（1画面・1機能）に絞るところ。' },
       { id: 'h3', hole: 'check', plan: { make: 'ok', screens: 'ok', not: 'ok', check: 'vague' },
         why: '「いい感じ」では、できたかどうかを見て言えない。画面を見て「できた／できない」と言える形にする。' },
@@ -300,6 +301,7 @@
     v.innerHTML = html;
     var target = null;
     if (prev) { try { target = v.querySelector(prev); } catch (e) { target = null; } }
+    if (!target && prev) target = v.querySelector('.ph-card button:not([disabled]):not([data-home])');
     if (!target) { target = v.querySelector('h2'); if (target) target.setAttribute('tabindex', '-1'); }
     if (target) target.focus({ preventScroll: !nextFresh });
     nextFresh = false;
@@ -406,7 +408,7 @@
     updateBar();
     var h = '';
     h += you('この計画で作って。<br><span style="font-size:.88rem">' + LOGIC.SLOTS.map(function (sl) { return esc(sl.label) + ' ' + esc(LOGIC.optionText(sl.key, S.plan[sl.key])); }).join('<br>') + '</span>');
-    h += mimi(r.rebuilds === 0 ? '計画どおりに作りました。確かめ方のとおり、持ち物が5つ上から見えます！' : '作りました。計画のとおりに作ったところと、計画があいまいでわたしが決めたところがあります。');
+    h += mimi(r.rebuilds === 0 ? '計画どおりに作りました。確かめ方のとおり、持ち物が5つ上から見えます！' : '作りました。計画に書かれたことは、そのとおりに作りました。書かれていないところ、あいまいなところは、わたしが決めました。');
     h += '<ul class="ph-feats"><li class="ph-feat ph-feat--want"><span><b>持ち物の名前の一覧</b>（ほしかったもの）</span></li>';
     r.extras.forEach(function (f) { h += '<li class="ph-feat ph-feat--extra"><span><b>' + esc(LOGIC.FEATURES[f]) + '</b>（最小版にはいらないもの）</span></li>'; });
     h += '</ul>';
@@ -476,7 +478,7 @@
     h += '<tr><td>計画を作って頼む（ステージ2・最少）</td><td>' + (S.s2Best == null ? '未プレイ' : S.s2Best + '回') + '</td></tr></tbody></table>';
     var c = LOGIC.compareText(S.s1Done, S.s2Best);
     if (c) h += '<p>' + esc(c) + '</p>';
-    h += '<div class="ph-feedback ph-feedback--mid"><strong class="ph-verdict">ここまでの見立て</strong>ミミは、決まっていない所を自分で決めやすく、決めていない「作らないもの」「確かめ方」があると、作り直しが増えやすい練習用AIです。本物のagyやBuildでは、聞き返してくることもあり、回数は変わります。それでも、<strong>作る前に「作るもの・画面に出るもの・作らないもの・確かめ方」を決めておく</strong>と、ずれに気づきやすくなる、と考えて第8回で使います。</div>';
+    h += '<div class="ph-feedback ph-feedback--mid"><strong class="ph-verdict">ここまでの見立て</strong>ミミは、決まっていない所を自分で決めやすく、決めていない「作らないもの」「確かめ方」があると、作り直しが増えやすい練習用AIです。ステージ2は、何度か試した中の最少で比べています。ステージ2の回数には、確かめ方があいまいなときの確認のやり取り1回も含みます。本物のagyやBuildでは、聞き返してくることもあり、回数は変わります。それでも、<strong>作る前に「作るもの・画面に出るもの・作らないもの・確かめ方」を決めておく</strong>と、ずれに気づきやすくなる、と考えて第8回で使います。</div>';
     h += '<h3>指示メモに貼る、気づきのメモ</h3><div class="ph-copybox" id="phNote">' + esc(noteText()) + '</div>';
     h += '<div class="ph-row"><button type="button" class="ph-btn" id="phCopy">気づきのメモをコピー</button><span id="phCopyMsg" style="font-size:.88rem"></span></div>';
     h += '<div class="ph-row"><button type="button" class="ph-btn ph-btn--sub" data-home="1">ステージ選びに戻る</button><a class="ph-btn ph-btn--ghost" href="week08.html" style="text-decoration:none">第8回のページへ戻る</a></div></div>';
