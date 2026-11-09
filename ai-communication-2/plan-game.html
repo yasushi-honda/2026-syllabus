@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>計画ハンター（1人用の練習ゲーム） | AIコミュニケーション基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=26">
+  <!-- 第8回「自分の作品を決めて、最小版をつくる」で、「作る前に計画を作ると、作り直しが減る」を1人で体験するためのゲーム。ルールで動く練習用AI「ミミ」が相手で、本物のagyやBuildには接続しない。入力内容はどこにも送信・保存しない（再読み込みで最初から）。ミミの動きは「こうなりやすい」を練習用に決めたもので、本物のAIの動きそのものではない。「計画の4項目」（作るもの・画面に出るもの・作らないもの・確かめ方）は第8回の授業用の整理で、公式の分類ではない -->
+  <style>
+    .ph-note { background: #fff8e6; border: 1px solid #e8c766; border-radius: 6px; padding: .7rem 1rem; margin: 0 0 1.2rem; font-size: .9rem; line-height: 1.7; }
+    .ph-bar { display: flex; flex-wrap: wrap; gap: .4rem .8rem; align-items: center; justify-content: space-between; background: #2e2447; color: #fff; border-radius: 8px; padding: .6rem .9rem; margin-bottom: 1rem; position: sticky; top: 0; z-index: 5; }
+    .ph-bar strong { font-size: 1.05rem; }
+    .ph-bar .ph-combo { color: #ffd479; font-weight: 700; }
+    .ph-btn { display: inline-block; padding: .5rem .95rem; border: 0; border-radius: 6px; background: #5b3d9a; color: #fff; font-weight: 600; font-size: .92rem; cursor: pointer; font-family: inherit; line-height: 1.4; }
+    .ph-btn:hover:not(:disabled) { background: #46307a; }
+    .ph-btn:disabled { background: #b9b3c8; cursor: not-allowed; }
+    .ph-btn--sub { background: #4a4a5e; }
+    .ph-btn--sub:hover:not(:disabled) { background: #33333f; }
+    .ph-btn--ghost { background: #fff; color: #46307a; border: 2px solid #5b3d9a; }
+    .ph-btn--ghost:hover:not(:disabled) { background: #f1ecfa; }
+    .ph-btn:focus-visible, .ph-opt:focus-visible, .ph-stage:focus-visible { outline: 3px solid #ffb000; outline-offset: 2px; }
+    .ph-row { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: .6rem 0; }
+    .ph-card { background: #fff; border: 1px solid #d9d4c7; border-radius: 10px; padding: 1rem 1.1rem; margin-bottom: 1rem; }
+    .ph-card h2 { font-size: 1.1rem; margin: 0 0 .5rem; border: 0; padding: 0; }
+    .ph-card h3 { font-size: 1rem; margin: .8rem 0 .4rem; }
+    .ph-stages { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: .8rem; margin: .8rem 0 1rem; }
+    .ph-stage { text-align: left; background: #fff; border: 2px solid #d6cbee; border-radius: 10px; padding: .9rem 1rem; cursor: pointer; font-family: inherit; font-size: .9rem; line-height: 1.6; color: inherit; }
+    .ph-stage:hover { border-color: #5b3d9a; background: #faf7ff; }
+    .ph-stage-title { display: block; font-size: 1.05rem; font-weight: 700; margin: .3rem 0 .2rem; }
+    .ph-mimi { display: flex; gap: .6rem; align-items: flex-start; margin: .6rem 0; }
+    .ph-mimi-face { flex: 0 0 auto; font-size: 1.8rem; line-height: 1; }
+    .ph-bubble { position: relative; background: #f1ecfa; border: 1px solid #d6cbee; border-radius: 10px; padding: .55rem .8rem; font-size: .92rem; line-height: 1.7; min-width: 0; }
+    .ph-bubble--you { background: #eef6ff; border-color: #b9d3f0; }
+    .ph-pop { animation: phPop .35s ease-out; }
+    @keyframes phPop { from { transform: scale(.96); opacity: .3; } to { transform: scale(1); opacity: 1; } }
+    .ph-shake { animation: phShake .4s; }
+    @keyframes phShake { 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+    .ph-opts { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: .7rem; margin: .6rem 0; }
+    .ph-opt { text-align: left; background: #fff; border: 2px solid #d9d4c7; border-radius: 10px; padding: .6rem; cursor: pointer; font-family: inherit; font-size: .86rem; color: inherit; line-height: 1.55; }
+    .ph-opt:hover:not(:disabled) { border-color: #5b3d9a; }
+    .ph-opt[aria-pressed="true"] { border-color: #2f6db5; box-shadow: 0 0 0 3px #b9d3f0; }
+    .ph-opt.is-actual { border-color: #5b3d9a; box-shadow: 0 0 0 3px #d6cbee; }
+    .ph-opt:disabled { cursor: default; }
+    .ph-opt-head { font-weight: 700; margin-bottom: .3rem; }
+    .ph-feedback { border-radius: 8px; padding: .7rem .9rem; margin: .6rem 0; font-size: .92rem; line-height: 1.75; }
+    .ph-feedback--good { background: #eaf7ee; border: 1.5px solid #1a7f37; }
+    .ph-feedback--mid { background: #fff8e6; border: 1.5px solid #c99700; }
+    .ph-feedback--bad { background: #ffefed; border: 1.5px solid #c4382c; }
+    .ph-feedback strong.ph-verdict { display: block; font-size: 1rem; margin-bottom: .2rem; }
+    .ph-progress { height: 8px; background: #ece7f4; border-radius: 6px; overflow: hidden; margin: .3rem 0 .6rem; }
+    .ph-progress > div { height: 100%; background: #5b3d9a; transition: width .3s; }
+    .ph-ok { color: #1a7f37; font-weight: 700; }
+    .ph-ng { color: #b42318; font-weight: 700; }
+    .ph-big { font-size: 1.6rem; font-weight: 800; color: #46307a; }
+    .ph-rank { display: inline-block; background: #2e2447; color: #ffd479; border-radius: 8px; padding: .3rem .8rem; font-weight: 800; font-size: 1.1rem; }
+    .ph-hidden { display: none !important; }
+    .ph-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    @media (prefers-reduced-motion: reduce) { .ph-pop, .ph-shake { animation: none; } .ph-progress > div { transition: none; } }
+    @media (max-width: 480px) { .ph-card { padding: .85rem .8rem; } .ph-opts { grid-template-columns: minmax(0, 1fr); } }
+  
+    .ph-stars { color: #b07800; font-weight: 700; letter-spacing: .1em; }
+    .ph-stage-num { display: inline-block; background: #5b3d9a; color: #fff; border-radius: 999px; padding: 0 .6rem; font-size: .8rem; font-weight: 700; }
+    .ph-label { font-size: .82rem; font-weight: 700; color: #5a5470; margin: .7rem 0 .2rem; }
+    .ph-want { background: #eef6ff; border: 1px solid #b9d3f0; border-radius: 8px; padding: .55rem .8rem; line-height: 1.7; font-size: .93rem; margin: .5rem 0; }
+    .ph-feats { list-style: none; padding: 0; margin: .5rem 0; display: grid; gap: .4rem; }
+    .ph-feat { display: flex; flex-wrap: wrap; gap: .4rem .6rem; align-items: center; justify-content: space-between; border-radius: 8px; padding: .45rem .7rem; font-size: .92rem; }
+    .ph-feat--want { background: #eaf7ee; border: 1.5px solid #1a7f37; }
+    .ph-feat--extra { background: #fff8e6; border: 1.5px dashed #c99700; }
+    .ph-feat--gone { background: #f3f1f7; border: 1px solid #d9d4c7; color: #7a748c; text-decoration: line-through; }
+    .ph-feat b { font-weight: 700; }
+    .ph-plan { background: #faf7ff; border: 1px solid #d6cbee; border-radius: 10px; padding: .6rem .8rem; margin: .5rem 0; }
+    .ph-plan dt { font-weight: 700; font-size: .86rem; color: #46307a; margin-top: .45rem; }
+    .ph-plan dt:first-child { margin-top: 0; }
+    .ph-plan dd { margin: .1rem 0 0; font-size: .92rem; line-height: 1.6; }
+    .ph-plan dd.is-hole { background: #ffefed; border-radius: 4px; padding: 0 .3rem; }
+    .ph-slot { margin: .8rem 0; }
+    .ph-slot h3 { margin: 0 0 .3rem; }
+    .ph-opts--tight { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); }
+    .ph-count { display: inline-block; background: #2e2447; color: #ffd479; border-radius: 8px; padding: .1rem .6rem; font-weight: 800; }
+    .ph-cmp { width: 100%; border-collapse: collapse; font-size: .92rem; margin: .5rem 0; }
+    .ph-cmp th, .ph-cmp td { border: 1px solid #d6cbee; padding: .4rem .55rem; text-align: left; vertical-align: top; }
+    .ph-cmp th { background: #f1ecfa; }
+    .ph-copybox { background: #faf7ff; border: 1px solid #d6cbee; border-radius: 8px; padding: .6rem .8rem; font-size: .9rem; line-height: 1.75; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication-2.html">AIコミュニケーション基礎 II</a>
+        <span>/</span>
+        <a href="week08.html">第8回</a>
+        <span>/</span>
+        <span>計画ハンター</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">計画ハンター</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">1人用の練習ゲーム</span>
+            <span class="page-badge">第8回 計画づくり</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-purple">
+
+    <div class="ph-note">
+      これは<strong>練習用のゲーム</strong>です。相手は、決まったルールで動く練習用AI「<strong>ミミ</strong>」🤖です。<strong>本物のagyやAI Studio Buildではありません</strong>。本物は、聞き返してくることもあれば、ミミとは違う動き方をすることもあります。入力した内容は<strong>どこにも送信・保存されません</strong>（ページを再読み込みすると最初からになります）。<br>
+      「計画の4つの項目」（作るもの・画面に出るもの・作らないもの・確かめ方）は、<a href="week08.html">第8回</a>で使う<strong>授業用の整理</strong>で、公式の分類ではありません。
+    </div>
+
+    <div class="ph-bar">
+      <span>作り直し 計画なし <strong id="phR1">―</strong></span>
+      <span>計画あり（最少） <strong id="phR2">―</strong></span>
+      <span><button class="ph-btn ph-btn--sub" type="button" id="phHomeBtn">ステージを選ぶ</button></span>
+    </div>
+    <div class="ph-sr" aria-live="polite" id="phLive"></div>
+
+    <section id="phView"></section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // ==LOGIC-START==
+  // ここから下は、画面（DOM）にさわらない判定ロジック。node でも動かして確かめる。
+  var LOGIC = (function () {
+    var FEATURES = {
+      list: '持ち物の名前の一覧',
+      login: 'ログイン画面',
+      weather: '天気の表示',
+      share: '共有ボタン',
+      editform: '持ち物の入力欄',
+      calendar: 'カレンダー',
+      decor: '動く飾り'
+    };
+    // ステージ1: 計画なしで頼んだとき、ミミが（気を利かせて）作ってしまうもの
+    var STAGE1_BUILD = ['list', 'login', 'weather', 'share', 'editform'];
+    var WANTED = ['list'];
+
+    function stage1Extras(features) {
+      return features.filter(function (f) { return WANTED.indexOf(f) < 0; });
+    }
+    // 1回の依頼で直せるのは1か所（この練習のルール）。ほしいものは外せない。
+    function removeOne(features, id) {
+      if (WANTED.indexOf(id) >= 0 || features.indexOf(id) < 0) return { ok: false, features: features.slice() };
+      return { ok: true, features: features.filter(function (f) { return f !== id; }) };
+    }
+
+    // ステージ2: 計画の選択肢
+    var SLOTS = [
+      { key: 'make', label: '① 作るもの', options: [
+        { id: 'ok', text: '持ち物の名前が並んだ、1ページだけ。機能は1つ（見るだけ）。' },
+        { id: 'big', text: '持ち物を登録・編集して、友だちと共有できるアプリ。' },
+        { id: 'vague', text: '持ち物のページ。' }
+      ] },
+      { key: 'screens', label: '② 画面に出るもの', options: [
+        { id: 'ok', text: '明日の持ち物5つ（筆記用具・ノート・PC・充電器・水筒）の名前が、上から並ぶ。' },
+        { id: 'big', text: '一覧、入力欄、カレンダー、ログイン画面。' },
+        { id: 'vague', text: '見やすくて、おしゃれな画面。' }
+      ] },
+      { key: 'not', label: '③ 作らないもの', options: [
+        { id: 'ok', text: 'ログイン、天気、共有ボタン、入力欄は、今回は作らない。' },
+        { id: 'fewer', text: 'ログインは作らない。' },
+        { id: 'empty', text: '（書かない）' }
+      ] },
+      { key: 'check', label: '④ 確かめ方', options: [
+        { id: 'ok', text: '開いたとき、持ち物が5つ、上から見える。ボタンや入力欄は無い。' },
+        { id: 'vague', text: 'いい感じにできていればOK。' },
+        { id: 'vague2', text: 'ちゃんと動く。' }
+      ] }
+    ];
+    var BEST_PLAN = { make: 'ok', screens: 'ok', not: 'ok', check: 'ok' };
+
+    function slotOf(key) { return SLOTS.filter(function (s) { return s.key === key; })[0]; }
+    function optionText(key, id) {
+      var o = slotOf(key).options.filter(function (x) { return x.id === id; })[0];
+      return o ? o.text : '';
+    }
+
+    // 計画から、ミミが作るもの（ほしいもの以外の「余計なもの」）と、確かめられるかを決める。
+    // 「こうなりやすい」を練習用に決めたルールで、本物のAIの動きそのものではない。
+    function buildFromPlan(plan) {
+      var extras = [];
+      var reasons = [];
+      function add(id, why) {
+        if (extras.indexOf(id) < 0) extras.push(id);
+        reasons.push({ id: id, why: why });
+      }
+      if (plan.make === 'big') {
+        add('editform', '「作るもの」が大きいので、入力欄まで作った');
+        add('share', '「作るもの」に共有が入っているので、共有ボタンを作った');
+      } else if (plan.make === 'vague') {
+        add('editform', '「作るもの」があいまいなので、「登録できたほうが便利」と思って入力欄を足した');
+      }
+      if (plan.screens === 'big') {
+        add('login', '「画面に出るもの」にログイン画面があるので、作った');
+        add('calendar', '「画面に出るもの」にカレンダーがあるので、作った');
+      } else if (plan.screens === 'vague') {
+        add('decor', '「見やすくておしゃれ」の中身が決まっていないので、動く飾りを足した');
+      }
+      if (plan.not === 'empty') {
+        add('weather', '「作らないもの」が書かれていないので、ついでに天気を足した');
+        add('share', '「作らないもの」が書かれていないので、ついでに共有ボタンを足した');
+      } else if (plan.not === 'fewer') {
+        add('weather', '「作らないもの」にログインしか書かれていないので、天気を足した');
+        add('share', '「作らないもの」にログインしか書かれていないので、共有ボタンを足した');
+      }
+      var verifiable = plan.check === 'ok';
+      var rebuilds = extras.length + (verifiable ? 0 : 1);
+      if (!verifiable) reasons.push({ id: 'check', why: '「確かめ方」が決まっていないので、できたかどうかを判断できず、確認のやり取りが1回必要' });
+      return { extras: extras, verifiable: verifiable, rebuilds: rebuilds, reasons: reasons };
+    }
+
+    function stars(rebuilds) { return rebuilds === 0 ? 3 : (rebuilds <= 2 ? 2 : 1); }
+
+    // ステージ3: 穴のある計画
+    var HOLES = [
+      { id: 'h1', hole: 'not', plan: { make: 'ok', screens: 'ok', not: 'empty', check: 'ok' },
+        why: '「作らないもの」が空だと、書かれていないことを、ミミは自分で決めてしまいやすい。' },
+      { id: 'h2', hole: 'make', plan: { make: 'big', screens: 'ok', not: 'ok', check: 'ok' },
+        why: '「作るもの」に、登録・編集・共有が一度に入っていて大きい。最小版（1画面・1機能）に絞るところ。' },
+      { id: 'h3', hole: 'check', plan: { make: 'ok', screens: 'ok', not: 'ok', check: 'vague' },
+        why: '「いい感じ」では、できたかどうかを見て言えない。画面を見て「できた／できない」と言える形にする。' },
+      { id: 'h4', hole: 'screens', plan: { make: 'ok', screens: 'vague', not: 'ok', check: 'ok' },
+        why: '「見やすくておしゃれ」は人によって中身が違う。画面に何が出るかを、具体的に書く。' }
+    ];
+    function judgeHole(holeId, slotKey) {
+      var h = HOLES.filter(function (x) { return x.id === holeId; })[0];
+      return !!h && h.hole === slotKey;
+    }
+
+    // 結果の見立て（断定しない）
+    function compareText(r1, r2) {
+      if (r1 == null || r2 == null) return '';
+      if (r2 < r1) return 'この練習では、計画ありのほうが作り直しが少なかった（' + r1 + '回 → ' + r2 + '回）。';
+      if (r2 === r1) return 'この練習では、計画あり・なしで作り直しの回数が同じだった（' + r1 + '回）。計画の中身を見直してみよう。';
+      return 'この練習では、計画ありのほうが作り直しが多かった（' + r1 + '回 → ' + r2 + '回）。計画のどこがあいまいだったか、ステージ2で見直してみよう。';
+    }
+
+    return {
+      FEATURES: FEATURES, STAGE1_BUILD: STAGE1_BUILD, WANTED: WANTED, SLOTS: SLOTS, BEST_PLAN: BEST_PLAN, HOLES: HOLES,
+      stage1Extras: stage1Extras, removeOne: removeOne, optionText: optionText, buildFromPlan: buildFromPlan,
+      stars: stars, judgeHole: judgeHole, compareText: compareText
+    };
+  })();
+  // ==LOGIC-END==
+
+  // ============================================================
+  // 画面
+  // ============================================================
+  var S = {
+    s1: null,           // { features, rebuilds, done }
+    s1Done: null,       // ステージ1の最終の作り直し回数
+    plan: { make: null, screens: null, not: null, check: null },
+    s2Best: null,       // ステージ2の最少の作り直し回数
+    s2Tried: 0,
+    holeAns: {},        // 穴を見抜く: id -> 押した slot
+    holeHits: 0, holeFirst: {}
+  };
+  var nextFresh = true;
+
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function say(msg) { var l = $('phLive'); l.textContent = ''; setTimeout(function () { l.textContent = msg; }, 30); }
+  function starText(n) { return '★★★'.slice(0, n) + '☆☆☆'.slice(0, 3 - n); }
+  function mimi(html) { return '<div class="ph-mimi"><span class="ph-mimi-face" aria-hidden="true">🤖</span><div class="ph-bubble"><strong>ミミ:</strong> ' + html + '</div></div>'; }
+  function you(html) { return '<div class="ph-mimi"><span class="ph-mimi-face" aria-hidden="true">🧑</span><div class="ph-bubble ph-bubble--you"><strong>あなた:</strong> ' + html + '</div></div>'; }
+  function scrollTopOfView() { var v = $('phView'); if (v.getBoundingClientRect().top < 0) v.scrollIntoView({ block: 'start' }); }
+
+  function selFor(el) {
+    if (!el || el === document.body || !$('phView').contains(el)) return null;
+    if (el.id) return '#' + el.id;
+    var ks = Object.keys(el.dataset || {});
+    if (!ks.length) return null;
+    return ks.map(function (k) { return '[data-' + k.replace(/[A-Z]/g, function (c) { return '-' + c.toLowerCase(); }) + '="' + String(el.dataset[k]).replace(/"/g, '\\"') + '"]'; }).join('');
+  }
+  function view(html) {
+    var v = $('phView');
+    var prev = nextFresh ? null : selFor(document.activeElement);
+    v.innerHTML = html;
+    var target = null;
+    if (prev) { try { target = v.querySelector(prev); } catch (e) { target = null; } }
+    if (!target) { target = v.querySelector('h2'); if (target) target.setAttribute('tabindex', '-1'); }
+    if (target) target.focus({ preventScroll: !nextFresh });
+    nextFresh = false;
+  }
+
+  function updateBar() {
+    $('phR1').textContent = S.s1Done == null ? '―' : S.s1Done + '回';
+    $('phR2').textContent = S.s2Best == null ? '―' : S.s2Best + '回';
+  }
+  function stageStars() {
+    return {
+      1: S.s1Done == null ? 0 : null,
+      2: S.s2Best == null ? 0 : LOGIC.stars(S.s2Best),
+      3: Object.keys(S.holeAns).length < LOGIC.HOLES.length ? 0 : (S.holeHits >= 4 ? 3 : (S.holeHits >= 3 ? 2 : 1))
+    };
+  }
+
+  function home() {
+    var st = stageStars();
+    var h = '<div class="ph-card ph-pop"><h2>ステージを選ぶ</h2>';
+    h += mimi('こんにちは、ミミです。わたしは、<strong>決まっていないことを自分で決めて、ついでに余計なものまで作ってしまう</strong>練習用AIです。「持ち物チェックページ」を作る場面で、<strong>作る前に計画があると、作り直しがどう変わるか</strong>を体験してください。1→2→3の順がおすすめです。');
+    h += '<div class="ph-stages">';
+    h += '<button type="button" class="ph-stage" data-st="1"><span class="ph-stage-num">ステージ1</span> <span class="ph-stage-title">計画なしで頼む</span><span>「作って」だけ頼んで、作り直しの回数を数える</span><br><span class="ph-stars">' + (S.s1Done == null ? '未プレイ' : '作り直し ' + S.s1Done + '回') + '</span></button>';
+    h += '<button type="button" class="ph-stage" data-st="2"><span class="ph-stage-num">ステージ2</span> <span class="ph-stage-title">計画を作って頼む</span><span>4つの項目を選んで、作り直しをへらす</span><br><span class="ph-stars">' + (S.s2Best == null ? '未プレイ' : starText(st[2]) + '（最少 ' + S.s2Best + '回）') + '</span></button>';
+    h += '<button type="button" class="ph-stage" data-st="3"><span class="ph-stage-num">ステージ3</span> <span class="ph-stage-title">計画の穴を見抜く</span><span>穴のある計画を4つ。どこを先に直す？</span><br><span class="ph-stars">' + (st[3] === 0 ? '未プレイ' : starText(st[3])) + '</span></button>';
+    h += '</div>';
+    h += '<div class="ph-row"><button type="button" class="ph-btn ph-btn--ghost" id="phRes">結果と、気づきのコピーを見る</button></div></div>';
+    view(h);
+    document.querySelectorAll('[data-st]').forEach(function (b) { b.onclick = function () { [null, stage1, stage2, stage3][+b.dataset.st](); scrollTopOfView(); }; });
+    $('phRes').onclick = results;
+    updateBar();
+  }
+
+  // ---------- ステージ1 ----------
+  function stage1(restart) {
+    if (restart || !S.s1) S.s1 = { features: null, rebuilds: 0, done: false, asked: false };
+    var s = S.s1;
+    var h = '<div class="ph-card ph-pop"><h2>ステージ1 計画なしで頼む</h2>';
+    h += '<div class="ph-want"><strong>あなたがほしいもの（ミミには、まだ伝えていない）</strong><br>明日の授業の<strong>持ち物の名前が、一覧で見える1ページだけ</strong>。ほかの機能は、いらない。</div>';
+    if (!s.asked) {
+      h += you('明日の授業の持ち物を確かめるページを作って。');
+      h += '<div class="ph-row"><button type="button" class="ph-btn" id="phSend">ミミに頼む</button><button type="button" class="ph-btn ph-btn--sub" data-home="1">ステージ選びに戻る</button></div>';
+      h += '<p style="font-size:.88rem">「作るもの」も「作らないもの」も「確かめ方」も、決めずに頼みます。</p>';
+    } else {
+      var extras = LOGIC.stage1Extras(s.features);
+      h += mimi(s.rebuilds === 0 ? 'できました！ 持ち物のページです。ついでに、あったら便利そうなものも入れておきました。' : (extras.length ? '直しました。ほかに直すところはありますか？' : '直しました。これでどうですか？'));
+      h += '<ul class="ph-feats">';
+      LOGIC.STAGE1_BUILD.forEach(function (f) {
+        var on = s.features.indexOf(f) >= 0;
+        var want = LOGIC.WANTED.indexOf(f) >= 0;
+        if (want) h += '<li class="ph-feat ph-feat--want"><span><b>' + esc(LOGIC.FEATURES[f]) + '</b>（ほしかったもの）</span></li>';
+        else if (on) h += '<li class="ph-feat ph-feat--extra"><span><b>' + esc(LOGIC.FEATURES[f]) + '</b>（頼んでいない）</span><button type="button" class="ph-btn ph-btn--ghost" data-rm="' + f + '">これを外してもらう</button></li>';
+        else h += '<li class="ph-feat ph-feat--gone"><span>' + esc(LOGIC.FEATURES[f]) + '</span><span>外した</span></li>';
+      });
+      h += '</ul>';
+      h += '<p>作り直し <span class="ph-count">' + s.rebuilds + '回</span>　<span style="font-size:.86rem">（この練習では、ミミは<strong>1回の依頼で1か所</strong>ずつ直します。本物のAIは、まとめて直せることもあります）</span></p>';
+      if (!extras.length) {
+        h += '<div class="ph-feedback ph-feedback--mid"><strong class="ph-verdict">ほしかったページになりました。作り直しは ' + s.rebuilds + '回</strong>決めずに頼むと、「頼んでいないもの」を1つずつ外すやり取りが増えやすい。ステージ2では、先に計画を作って、この回数をへらしてみよう。</div>';
+        h += '<div class="ph-row"><button type="button" class="ph-btn" data-st2="1">ステージ2へ</button><button type="button" class="ph-btn ph-btn--sub" id="phRetry1">もう一度やる</button><button type="button" class="ph-btn ph-btn--sub" data-home="1">ステージ選びに戻る</button></div>';
+      } else {
+        h += '<div class="ph-row"><button type="button" class="ph-btn ph-btn--sub" data-home="1">ステージ選びに戻る</button></div>';
+      }
+    }
+    h += '</div>';
+    view(h);
+    if ($('phSend')) $('phSend').onclick = function () {
+      s.asked = true; s.features = LOGIC.STAGE1_BUILD.slice(); s.rebuilds = 0; say('ミミが作りました'); stage1();
+    };
+    document.querySelectorAll('[data-rm]').forEach(function (b) { b.onclick = function () {
+      var r = LOGIC.removeOne(s.features, b.dataset.rm);
+      if (r.ok) { s.features = r.features; s.rebuilds += 1; say('作り直し ' + s.rebuilds + '回'); }
+      if (!LOGIC.stage1Extras(s.features).length) S.s1Done = s.rebuilds;
+      updateBar(); stage1();
+    }; });
+    if ($('phRetry1')) $('phRetry1').onclick = function () { nextFresh = true; stage1(true); };
+    wireCommon();
+  }
+
+  // ---------- ステージ2 ----------
+  function stage2() {
+    var h = '<div class="ph-card ph-pop"><h2>ステージ2 計画を作って頼む</h2>';
+    h += '<div class="ph-want"><strong>あなたがほしいもの</strong>（ステージ1と同じ）<br>明日の授業の<strong>持ち物の名前が、一覧で見える1ページだけ</strong>。</div>';
+    h += mimi('計画の4つの項目を、1つずつ選んでください。選び終わったら「ミミに頼む」。<strong>作り直しが0回</strong>になる組み合わせを探してみよう（何度でも試せます）。');
+    LOGIC.SLOTS.forEach(function (sl) {
+      h += '<div class="ph-slot"><h3>' + esc(sl.label) + '</h3><div class="ph-opts ph-opts--tight">';
+      sl.options.forEach(function (o) {
+        h += '<button type="button" class="ph-opt" data-slot="' + sl.key + '" data-opt="' + o.id + '" aria-pressed="' + (S.plan[sl.key] === o.id ? 'true' : 'false') + '">' + esc(o.text) + '</button>';
+      });
+      h += '</div></div>';
+    });
+    var ready = LOGIC.SLOTS.every(function (sl) { return S.plan[sl.key]; });
+    h += '<div class="ph-row"><button type="button" class="ph-btn" id="phAsk"' + (ready ? '' : ' disabled') + '>ミミに頼む</button><button type="button" class="ph-btn ph-btn--sub" data-home="1">ステージ選びに戻る</button></div>';
+    if (!ready) h += '<p style="font-size:.88rem">4つの項目を、すべて選ぶと押せます。</p>';
+    h += '<div id="phOut"></div></div>';
+    view(h);
+    document.querySelectorAll('[data-slot]').forEach(function (b) { b.onclick = function () { S.plan[b.dataset.slot] = b.dataset.opt; stage2(); }; });
+    if ($('phAsk')) $('phAsk').onclick = function () { runPlan(); };
+    wireCommon();
+  }
+  function runPlan() {
+    var r = LOGIC.buildFromPlan(S.plan);
+    S.s2Tried += 1;
+    if (S.s2Best == null || r.rebuilds < S.s2Best) S.s2Best = r.rebuilds;
+    updateBar();
+    var h = '';
+    h += you('この計画で作って。<br><span style="font-size:.88rem">' + LOGIC.SLOTS.map(function (sl) { return esc(sl.label) + ' ' + esc(LOGIC.optionText(sl.key, S.plan[sl.key])); }).join('<br>') + '</span>');
+    h += mimi(r.rebuilds === 0 ? '計画どおりに作りました。確かめ方のとおり、持ち物が5つ上から見えます！' : '作りました。計画に書かれていないところは、わたしが決めました。');
+    h += '<ul class="ph-feats"><li class="ph-feat ph-feat--want"><span><b>持ち物の名前の一覧</b>（ほしかったもの）</span></li>';
+    r.extras.forEach(function (f) { h += '<li class="ph-feat ph-feat--extra"><span><b>' + esc(LOGIC.FEATURES[f]) + '</b>（頼んでいない）</span></li>'; });
+    h += '</ul>';
+    var cls = r.rebuilds === 0 ? 'good' : (r.rebuilds <= 2 ? 'mid' : 'bad');
+    h += '<div class="ph-feedback ph-feedback--' + cls + '"><strong class="ph-verdict">この計画で必要な作り直し: ' + r.rebuilds + '回　' + starText(LOGIC.stars(r.rebuilds)) + '</strong>';
+    if (r.reasons.length) h += '<ul style="margin:.3rem 0 0;padding-left:1.2rem">' + r.reasons.map(function (x) { return '<li>' + esc(x.why) + '</li>'; }).join('') + '</ul>';
+    else h += '4つの項目がそろっていると、ミミが自分で決める余地が少なく、確かめ方で「できた」と言えました。';
+    h += '</div>';
+    if (S.s1Done != null) h += '<p>' + esc(LOGIC.compareText(S.s1Done, r.rebuilds)) + '</p>';
+    h += '<div class="ph-row"><button type="button" class="ph-btn" data-st3="1">ステージ3へ</button><button type="button" class="ph-btn ph-btn--ghost" id="phRes2">結果を見る</button></div>';
+    $('phOut').innerHTML = h;
+    say('この計画で必要な作り直しは ' + r.rebuilds + '回');
+    $('phOut').scrollIntoView({ block: 'nearest' });
+    wireCommon();
+    if ($('phRes2')) $('phRes2').onclick = results;
+  }
+
+  // ---------- ステージ3 ----------
+  function stage3() {
+    var h = '<div class="ph-card ph-pop"><h2>ステージ3 計画の穴を見抜く</h2>';
+    h += mimi('ほかの人が書いた計画が4つあります。それぞれ、<strong>いちばん先に直したい項目</strong>を1つ選んでください。');
+    LOGIC.HOLES.forEach(function (ho, i) {
+      var ans = S.holeAns[ho.id];
+      h += '<div class="ph-slot"><h3>計画 ' + (i + 1) + '</h3><dl class="ph-plan">';
+      LOGIC.SLOTS.forEach(function (sl) {
+        h += '<dt>' + esc(sl.label) + '</dt><dd' + (ans && sl.key === ho.hole ? ' class="is-hole"' : '') + '>' + esc(LOGIC.optionText(sl.key, ho.plan[sl.key])) + '</dd>';
+      });
+      h += '</dl>';
+      if (!ans) {
+        h += '<div class="ph-row">' + LOGIC.SLOTS.map(function (sl) { return '<button type="button" class="ph-btn ph-btn--ghost" data-hole="' + ho.id + '" data-pick="' + sl.key + '">' + esc(sl.label) + '</button>'; }).join('') + '</div>';
+      } else {
+        var ok = LOGIC.judgeHole(ho.id, ans);
+        h += '<div class="ph-feedback ph-feedback--' + (ok ? 'good' : 'bad') + '"><strong class="ph-verdict">' + (ok ? '正解' : 'おしい') + '</strong>' + (ok ? '' : 'あなたが選んだのは「' + esc(LOGIC.SLOTS.filter(function (s) { return s.key === ans; })[0].label) + '」。先に直したいのは、赤い印の「' + esc(LOGIC.SLOTS.filter(function (s) { return s.key === ho.hole; })[0].label) + '」です。<br>') + esc(ho.why) + '</div>';
+      }
+      h += '</div>';
+    });
+    var all = Object.keys(S.holeAns).length === LOGIC.HOLES.length;
+    if (all) {
+      h += '<div class="ph-feedback ph-feedback--mid"><strong class="ph-verdict">' + S.holeHits + ' / ' + LOGIC.HOLES.length + ' 問 正解　' + starText(S.holeHits >= 4 ? 3 : (S.holeHits >= 3 ? 2 : 1)) + '</strong>穴は、「作るもの」「画面に出るもの」「作らないもの」「確かめ方」のどこにでもできる。自分の作品の計画でも、この4つを見直そう。</div>';
+      h += '<div class="ph-row"><button type="button" class="ph-btn" id="phRes3">結果と、気づきのコピーを見る</button><button type="button" class="ph-btn ph-btn--sub" id="phRetry3">もう一度やる</button></div>';
+    }
+    h += '<div class="ph-row"><button type="button" class="ph-btn ph-btn--sub" data-home="1">ステージ選びに戻る</button></div></div>';
+    view(h);
+    document.querySelectorAll('[data-hole]').forEach(function (b) { b.onclick = function () {
+      var id = b.dataset.hole;
+      if (S.holeAns[id]) return;
+      S.holeAns[id] = b.dataset.pick;
+      if (LOGIC.judgeHole(id, b.dataset.pick)) S.holeHits += 1;
+      say(LOGIC.judgeHole(id, b.dataset.pick) ? '正解' : 'おしい');
+      stage3();
+    }; });
+    if ($('phRes3')) $('phRes3').onclick = results;
+    if ($('phRetry3')) $('phRetry3').onclick = function () { S.holeAns = {}; S.holeHits = 0; nextFresh = true; stage3(); };
+    wireCommon();
+  }
+
+  // ---------- 結果 ----------
+  function noteText() {
+    var r1 = S.s1Done == null ? '（未プレイ）' : S.s1Done + '回';
+    var r2 = S.s2Best == null ? '（未プレイ）' : S.s2Best + '回';
+    return '【計画ハンターの気づき】\n計画なしで頼んだときの作り直し: ' + r1 + '\n計画を作って頼んだときの作り直し（最少）: ' + r2 + '\n自分の作品で、先に決めておきたいのは: （作るもの／画面に出るもの／作らないもの／確かめ方のうち、特に＿＿。理由は＿＿）\n※ミミは練習用のAIで、本物のagyやBuildの動きそのものではない。';
+  }
+  function results() {
+    var h = '<div class="ph-card ph-pop"><h2>結果</h2>';
+    h += '<table class="ph-cmp"><thead><tr><th>やり方</th><th>作り直し</th></tr></thead><tbody>';
+    h += '<tr><td>計画なしで頼む（ステージ1）</td><td>' + (S.s1Done == null ? '未プレイ' : S.s1Done + '回') + '</td></tr>';
+    h += '<tr><td>計画を作って頼む（ステージ2・最少）</td><td>' + (S.s2Best == null ? '未プレイ' : S.s2Best + '回') + '</td></tr></tbody></table>';
+    var c = LOGIC.compareText(S.s1Done, S.s2Best);
+    if (c) h += '<p>' + esc(c) + '</p>';
+    h += '<div class="ph-feedback ph-feedback--mid"><strong class="ph-verdict">ここまでの見立て</strong>ミミは、決まっていない所を自分で決めやすく、決めていない「作らないもの」「確かめ方」があると、作り直しが増えやすい練習用AIです。本物のagyやBuildでは、聞き返してくることもあり、回数は変わります。それでも、<strong>作る前に「作るもの・画面に出るもの・作らないもの・確かめ方」を決めておく</strong>と、ずれに気づきやすくなる、と考えて第8回で使います。</div>';
+    h += '<h3>指示メモに貼る、気づきのメモ</h3><div class="ph-copybox" id="phNote">' + esc(noteText()) + '</div>';
+    h += '<div class="ph-row"><button type="button" class="ph-btn" id="phCopy">気づきのメモをコピー</button><span id="phCopyMsg" style="font-size:.88rem"></span></div>';
+    h += '<div class="ph-row"><button type="button" class="ph-btn ph-btn--sub" data-home="1">ステージ選びに戻る</button><a class="ph-btn ph-btn--ghost" href="week08.html" style="text-decoration:none">第8回のページへ戻る</a></div></div>';
+    view(h);
+    $('phCopy').onclick = copyNote;
+    wireCommon();
+  }
+  function copyNote() {
+    var t = noteText();
+    var done = function (ok) { $('phCopyMsg').textContent = ok ? 'コピーしました' : 'コピーできませんでした。上の文を選択してコピーしてください'; };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(t).then(function () { done(true); }, function () { fallback(); });
+      } else fallback();
+    } catch (e) { fallback(); }
+    function fallback() {
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        var ok = document.execCommand('copy');
+        document.body.removeChild(ta); done(ok);
+      } catch (e2) { done(false); }
+    }
+  }
+
+  function wireCommon() {
+    document.querySelectorAll('[data-home]').forEach(function (b) { b.onclick = function () { nextFresh = true; home(); scrollTopOfView(); }; });
+    document.querySelectorAll('[data-st2]').forEach(function (b) { b.onclick = function () { nextFresh = true; stage2(); scrollTopOfView(); }; });
+    document.querySelectorAll('[data-st3]').forEach(function (b) { b.onclick = function () { nextFresh = true; stage3(); scrollTopOfView(); }; });
+  }
+
+  $('phHomeBtn').onclick = function () { nextFresh = true; home(); };
+  // 検査用（ページの動作には使わない）
+  window.__planhunter = { LOGIC: LOGIC, state: S };
+  home();
+})();
+</script>
+</body>
+</html>
