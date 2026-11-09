@@ -94,7 +94,7 @@ program-basics-2/       # プログラム基礎Ⅱ の各回詳細ページ
   week05.html           #   第5回 後期テーマ選択＆企画
   week06.html           #   第6回 CSS発展：レイアウトを整える
   week07.html           #   第7回 🔧バグ修正ワーク④（練習問題cart-bug.html: エラーが出るバグ・出ないバグ4つ、AIにバグ入りコードを生成させて直す、ペア交換、NOTES.md記録。図解3点。バグ入り版・修正版を実機で確認済み）
-  week08.html           #   第8回 個人制作① 基礎機能（2026-11-09作成。データと表示を分ける。ゲーム班=`characters`配列で6マスの盤面にキャラクター表示、EC班=`products`配列で商品一覧表示。骨組み`game.html`/`shop.html`をコピー→`for`+`createElement`+`appendChild`で配列から画面を作る→plan.mdの「4. 持つデータ」に沿って項目を足す→push。図解3点、QR。骨組みと表示コードは実機で表示確認済み。第6〜7回の実施結果は未反映）
+  week08.html           #   第8回 個人制作① 基礎機能（2026-11-09作成。データと表示を分ける。ゲーム班=`characters`配列で6マスの盤面にキャラクター表示、EC班=`products`配列で商品一覧表示。骨組み`game.html`/`shop.html`をコピー→`for`+`createElement`+`appendChild`で配列から画面を作る→plan.mdの「4. 持つデータ」に沿って項目を足す→push。図解3点、QR。骨組みと表示コードは実機で表示確認済み。**2限前半に、素材サイト（Kenney=CC0／いらすとや／Pixabay、確認日2026-11-09）の画像を使う任意の「広げる課題」を追加**（先生の提案。ダウンロードして`images/`に保存・URL直貼りはしない・`NOTES.md`に出典メモ・`image`項目＋`<img>`表示。コードは実機確認済み。Codespacesへ画像を入れる操作は未確認）。第6〜7回の実施結果は未反映）
   qr/                   #   QRコードのSVG（week08-page.svg）
 ai-communication-2.html # AIコミュニケーション基礎Ⅱ（火3・4限／後期。授業内容確定済み、週ページ順次作成中）
 ai-communication-2/     # AIコミュニケーション基礎Ⅱ の各回詳細ページ

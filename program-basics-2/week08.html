@@ -422,6 +422,85 @@ for (let i = 0; i &lt; products.length; i++) {
               <li>書き方が分からないときは、<strong>自分で書いた表示のコードの似た行をまねる</strong>。<code>createElement</code> → <code>textContent</code> → <code>appendChild</code>の3点セットは、どの部品でも同じ</li>
               <li>色や余白など、見た目のCSSは、第6回で書いた<code>&lt;style&gt;</code>の中を直せばよい。今日の主役はデータと表示なので、見た目の細かい調整は後回しでよい</li>
             </ul>
+            <details class="vz-more">
+              <summary>任意: 素材サイトの画像を使って、作品を広げる（早く終わった人向け）</summary>
+              <ul>
+                <li>絵文字のかわりに、<strong>Webで配られている無料の素材（画像）</strong>を使ってよい。必須ではない。<strong>先に今日の必須（データを足して画面に出す）</strong>を終えてから取り組む</li>
+                <li>
+                  <p>使ってよいサイトは、次の3つ（確認日 2026-11-09。各サイトの説明から要点だけを書いた。<strong>規約は変わることがあるので、使う前に自分でも読む</strong>）</p>
+                  <table class="schedule-table schedule-table--stack">
+                    <thead>
+                      <tr><th>サイト</th><th>公式に書かれている要点</th><th>使いどころ</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><td data-label="サイト"><a href="https://kenney.nl/assets" target="_blank" rel="noopener">Assets &middot; Kenney</a></td><td data-label="公式に書かれている要点">ゲーム用の素材がパブリックドメイン（CC0）。クレジット表記は必須ではなく、商用でも使える（<a href="https://kenney.nl/support" target="_blank" rel="noopener">Support &middot; Kenney</a>）。<strong>迷ったらここ</strong></td><td data-label="使いどころ">ゲーム班のキャラクター・マス</td></tr>
+                      <tr><td data-label="サイト"><a href="https://www.irasutoya.com/" target="_blank" rel="noopener">かわいいフリー素材集 いらすとや</a></td><td data-label="公式に書かれている要点">規約の範囲で、個人・商用を問わず無料。<strong>素材を主体にしたコンテンツや商品の再配布・販売は禁止</strong>。著作権は放棄されていない（<a href="https://www.irasutoya.com/p/terms.html" target="_blank" rel="noopener">ご利用について | いらすとや</a>）</td><td data-label="使いどころ">EC班の商品イラスト</td></tr>
+                      <tr><td data-label="サイト"><a href="https://pixabay.com/service/license-summary/" target="_blank" rel="noopener">Content License - Pixabay</a></td><td data-label="公式に書かれている要点">無料で使え、作者のクレジットは必須ではない。<strong>素材を加工せず、単独で売る・配ることは禁止</strong>。ロゴや商標が写る素材は商品・サービスに使えない</td><td data-label="使いどころ">EC班の商品写真</td></tr>
+                    </tbody>
+                  </table>
+                </li>
+                <li>守ること
+                  <ul>
+                    <li>画像は<strong>ダウンロードして、自分のリポジトリの<code>images</code>フォルダに保存</strong>する。ほかのサイトの画像のURLを、そのまま<code>src</code>に貼らない（相手の都合で消えたり、見られた記録が相手に残ったりする）</li>
+                    <li>ファイル名は、<strong>半角の英数字と<code>-</code>だけ</strong>にする（例: <code>mogura.png</code>）。日本語や空白があると、公開したときに表示されないことがある</li>
+                    <li>人の顔が写った写真、ロゴ、ブランド名の入った素材は使わない</li>
+                    <li>自分のリポジトリは<strong>公開される</strong>。素材のファイルそのものを配るための置き場にならないよう、作品の一部として使う</li>
+                  </ul>
+                </li>
+                <li>
+                  <p><strong>出典メモ</strong>: 使った素材ごとに、リポジトリの<code>NOTES.md</code>へ1行ずつ書く（「どこから持ってきたか」を、あとで言えるようにする）</p>
+                  <button class="copy-md-btn" data-md-source="notes-source">
+                    <span class="btn-icon"></span> 出典メモの型をコピー
+                  </button>
+<pre id="notes-source" class="md-preview">## 使った素材
+- images/mogura.png / サイト: Kenney / ライセンス: CC0 / URL: （ダウンロードしたページのURL） / 確認日: （今日の日付）</pre>
+                </li>
+                <li>
+                  <p>データに<code>image</code>の項目を足す（ファイル名は自分の画像に合わせる）</p>
+                  <ul>
+                    <li>ゲーム班: <code>{ name: "もぐら", icon: "🐹", image: "images/mogura.png", position: 1 }</code></li>
+                    <li>EC班: <code>{ name: "マグ", price: 800, image: "images/mug.png" }</code></li>
+                  </ul>
+                </li>
+                <li>
+                  <p><strong>ゲーム班</strong>の表示: <code>if (characters[j].position === i) { … }</code>の中の<code>cell.textContent = characters[j].icon;</code>の1行を、次に置き換える（<code>image</code>があるキャラクターだけ画像にし、ないキャラクターは今までどおり絵文字。<code>cell.title</code>の行はそのまま残す）</p>
+                  <button class="copy-md-btn" data-md-source="img-game">
+                    <span class="btn-icon"></span> ゲーム班の画像表示をコピー
+                  </button>
+<pre id="img-game" class="md-preview">      if (characters[j].image) {
+        const pic = document.createElement("img");
+        pic.src = characters[j].image;
+        pic.alt = characters[j].name;
+        pic.className = "pic";
+        cell.appendChild(pic);
+      } else {
+        cell.textContent = characters[j].icon;
+      }</pre>
+                </li>
+                <li>
+                  <p><strong>EC班</strong>の表示: <code>item.className = "item";</code>の次の行に、次を足す（<code>image</code>がある商品だけ、カードの一番上に画像が出る）</p>
+                  <button class="copy-md-btn" data-md-source="img-ec">
+                    <span class="btn-icon"></span> EC班の画像表示をコピー
+                  </button>
+<pre id="img-ec" class="md-preview">  if (products[i].image) {
+    const pic = document.createElement("img");
+    pic.src = products[i].image;
+    pic.alt = products[i].name;
+    pic.className = "pic";
+    item.appendChild(pic);
+  }</pre>
+                </li>
+                <li>
+                  <p><code>&lt;style&gt;</code>の中に、画像がはみ出さないための1行を足す</p>
+                  <button class="copy-md-btn" data-md-source="img-css">
+                    <span class="btn-icon"></span> 画像のCSSをコピー
+                  </button>
+<pre id="img-css" class="md-preview">.pic { display: block; max-width: 100%; max-height: 100%; }</pre>
+                </li>
+                <li>画像が出ないときは、<strong>ファイル名の綴り</strong>と<strong>フォルダ名（<code>images</code>）</strong>、Console（第7回の道具1）のエラーを見る。<code>alt</code>は、画像が表示できないときに出る代わりの文で、見えない人にも内容を伝える</li>
+                <li>画像の保存の操作（Codespacesのエクスプローラーへ画像を入れる方法）は、教員が授業前に実機で確認する。分からないときは、講師に声をかける</li>
+              </ul>
+            </details>
             <p><strong>AIに相談するときのルール（10分）</strong></p>
             <ul>
               <li>Codespacesの<strong>Copilot Chat</strong>（使える人）か、ブラウザの別タブで開いた<strong>Gemini</strong>（<a href="https://gemini.google.com/" target="_blank" rel="noopener">gemini.google.com</a>）に、<strong>今のコードを貼って</strong>、<strong>1回に頼むのは1つの変更だけ</strong>にする。コード全体の書き直しを頼むと、どこが変わったか分からなくなる</li>
