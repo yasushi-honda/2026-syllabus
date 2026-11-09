@@ -157,8 +157,8 @@
             </figure>
             <p><strong>骨組みのファイルを作って、画面を開く（15分）</strong></p>
             <ul>
-              <li>下の骨組みを、自分のジャンルのぶんだけコピーして、リポジトリの一番上のフォルダに新規ファイルとして保存する。ファイル名は、ゲーム班は<code>game.html</code>、EC班は<code>shop.html</code>。見た目は第6回の<code>layout.html</code>と同じ部品で、<strong>盤面（または商品の並び）の中身が空</strong>になっている</li>
-              <li>自分の<code>layout.html</code>がある人は、それをコピーして使ってもよい。その場合は、盤面のマス（<code>.hole</code>）や商品カード（<code>.item</code>）をHTMLから消し、置き場所の<code>div</code>に<code>id</code>（ゲーム班は<code>board</code>、EC班は<code>shop</code>）を付け、<code>&lt;/body&gt;</code>の直前に空の<code>&lt;script&gt;</code>を置く</li>
+              <li>下の骨組みを、自分のジャンルのぶんだけコピーして、リポジトリの一番上のフォルダに新規ファイルとして保存する。ファイル名は、ゲーム班は<code>game.html</code>、EC班は<code>shop.html</code>。見た目は第6回のFlexbox・Gridの考え方で組んであり、<strong>盤面（または商品の並び）の中身が空</strong>になっている</li>
+              <li>自分の<code>layout.html</code>がある人は、それをコピーして使ってもよい。その場合は、盤面のマス（<code>.hole</code>）や商品カード（<code>.card</code>など）をHTMLから消し、置き場所の<code>div</code>に<code>id</code>（ゲーム班は<code>board</code>、EC班は<code>shop</code>）を付け、<code>&lt;/body&gt;</code>の直前に空の<code>&lt;script&gt;</code>を置く。EC班は、下の骨組みの<code>&lt;style&gt;</code>にある<code>.item</code>と<code>.item .row</code>の2行も、自分のCSSに足す</li>
               <li>
                 <details class="vz-more">
                   <summary>ゲーム班の骨組み <code>game.html</code></summary>
@@ -354,7 +354,7 @@ for (let i = 0; i &lt; products.length; i++) {
   item.appendChild(row);
   shop.appendChild(item);
 }</pre>
-                <p><code>price</code>の行は、第2回の<strong>テンプレートリテラル</strong>（バッククォートで囲み、<code>${ }</code>で値を埋め込む書き方）。<code>row</code>は、第6回の<code>layout.html</code>で<code>display: flex</code>を付けた<code>.row</code>と同じ部品。</p>
+                <p><code>price</code>の行は、第2回の<strong>テンプレートリテラル</strong>（バッククォートで囲み、<code>${ }</code>で値を埋め込む書き方）。<code>row</code>は、<code>display: flex</code>で名前と価格を左右に離すための部品（骨組みの<code>&lt;style&gt;</code>に<code>.item .row</code>として入っている）。</p>
               </li>
               <li>保存して、Simple Browserを再読み込みする。<strong>ゲーム班</strong>は6マスの盤面に絵文字が2つ、<strong>EC班</strong>は商品カードが5枚並べば成功</li>
             </ul>
@@ -369,7 +369,8 @@ for (let i = 0; i &lt; products.length; i++) {
                   <ul>
                     <li><code>F12</code>で<code>Console</code>タブを開き、<strong>赤い文字の行番号</strong>から見る（第7回の道具1）</li>
                     <li><code>Cannot set properties of null</code>や<code>Cannot read properties of null</code>が出たら、<code>getElementById("board")</code>（EC班は<code>"shop"</code>）の名前が、HTMLの<code>id</code>と<strong>1文字も違わないか</strong>を確かめる</li>
-                    <li><code>characters is not defined</code>や<code>products is not defined</code>は、データを書いた行が、表示のコードより<strong>下</strong>にあるか、スペルが違う</li>
+                    <li><code>Cannot access 'characters' before initialization</code>（<code>products</code>も同じ）は、データを書いた行が、表示のコードより<strong>下</strong>にある</li>
+                    <li><code>characters is not defined</code>や<code>products is not defined</code>は、スペルが違う</li>
                     <li><code>Unexpected token</code>は、配列の<strong>カンマ</strong>の付け忘れ・付けすぎが多い。要素と要素の間にだけカンマがあり、最後の要素の後ろは付けても付けなくてもよい</li>
                     <li>エラーは出ないのに何も出ないときは、表示のコードの前後に<code>console.log(characters.length);</code>（EC班は<code>products.length</code>）を書いて、<code>Console</code>に件数が出るかを見る（第7回の道具2）</li>
                   </ul>
