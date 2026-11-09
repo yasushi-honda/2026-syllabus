@@ -151,6 +151,7 @@ autumn-intensive/       # 秋の集中講座 の日別詳細ページ（週ペ�
   day05.html            #   Day5 先輩が訪問する／先輩の話を聞く／交流する／ふりかえる（上級生が1年生の教室を訪問、先輩のプレゼン・インタビュー40分（質問を事前に伝える）、自由交流35分、アンケート・クロージング15分。時間配分は固定ルールの例外）
   images/               #   Day2 の説明用スクリーンショット（battle-baseの画面。day02-*.png。/screenshot skill で撮影）
 tools/furigana/        # ふりがな辞書の生成（build_dict.py・overrides.tsv・テスト・requirements.txt。仮想環境 .venv は管理対象外）
+tools/check/           # PRの静的チェック（check_site.py=id重複・コピーボタン対象・ローカルリンク切れ。標準ライブラリのみ。`.github/workflows/pr-check.yml` が全PRで実行し、PRにチェックが付くようにする。手元では `python3 tools/check/check_site.py`）
 tools/qr/              # QRコードの生成（make_qr.py・qr_list.tsv=出力パスとURLの一覧・テスト・requirements.txt。仮想環境 .venv は管理対象外。実行時のライブラリ・CDNは使わず、事前に静的なSVGにして埋め込む）
 styles.css              # 共通スタイル（Editorial Paper Edition ライトテーマ）
 app.js                  # Markdownコピー、サイト内クイズ、ふりがなトグル（<body data-furigana> があるページだけ）、QRコードの拡大表示（`a.qr-box__zoom` を押すと <dialog> で大きく出す。week05 が `?v=5`、他ページは古い連番のままで影響なし）
