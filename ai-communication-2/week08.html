@@ -62,7 +62,7 @@
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">企画メモ / 最小版（1画面・1機能） / 「あとで」リスト / 送る前のチェック / 戻れる状態 / 対話ログ / 誰が手を動かすか</div>
+          <div class="lesson-overview-value">企画メモ / 最小版（1画面・1機能） / 「あとで」リスト / 計画（質問→案→人が直す） / 戻れる状態 / 対話ログ / 誰が手を動かすか</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
@@ -75,7 +75,7 @@
       <h2>この回のゴール</h2>
       <ul>
         <li>「<strong>誰の・何の困りごとを・どんな形で</strong>」を1〜3行で決めて、<strong>最初に作る小さい版（最小版）</strong>を選べる</li>
-        <li>第6〜7回で身につけた<strong>送る前のチェック</strong>を使って、最小版を道具に作ってもらい、<strong>戻れる状態にしてから</strong>1つ機能を足せる</li>
+        <li>作る前に、<strong>チャットと計画</strong>を作って自分で直し、その計画を道具に渡して最小版を作ってもらい、<strong>戻れる状態にしてから</strong>1つ機能を足せる</li>
         <li><strong>対話ログ</strong>から、誰が手を動かしたか・自分が確認した所・戻した所を、自分の言葉で書ける。相談はチャット、作業は道具、のように<strong>頼み先を選んだ理由</strong>も言える</li>
       </ul>
     </div>
@@ -88,14 +88,14 @@
         <p class="vz-fig-title" id="cap-a8-map">今日の地図</p>
         <svg class="vz-svg" viewBox="0 0 360 330" role="img" aria-labelledby="a8-map-t a8-map-d">
           <title id="a8-map-t">今日の地図</title>
-          <desc id="a8-map-d">1 作るものを決めて企画メモを書く、2 最小版の指示を書く、3 最小版を道具に作ってもらって観察する、4 戻れる状態にしてから1つ機能を足す、5 対話ログで振り返る、の順に進む。</desc>
+          <desc id="a8-map-d">1 作るものを決めて企画メモを書く、2 チャットと計画を作って自分で直す、3 計画を道具に渡して最小版を作ってもらい観察する、4 戻れる状態にしてから1つ機能を足す、5 対話ログで振り返る、の順に進む。</desc>
           <rect class="box-purple" x="8" y="8" width="344" height="48" rx="10"/>
           <text class="t-b" x="22" y="28">① 作るものを決める</text>
           <text class="t-sm" x="22" y="46">企画メモ（誰の・何の困りごと・どんな形）</text>
           <line class="line" x1="180" y1="58" x2="180" y2="66" marker-end="url(#mk-s)"/>
           <rect class="box-purple" x="8" y="68" width="344" height="48" rx="10"/>
-          <text class="t-b" x="22" y="88">② 最小版の指示を書く</text>
-          <text class="t-sm" x="22" y="106">送る前に見直す</text>
+          <text class="t-b" x="22" y="88">② チャットと計画を作る</text>
+          <text class="t-sm" x="22" y="106">自分で直して、指示メモへ</text>
           <line class="line" x1="180" y1="118" x2="180" y2="126" marker-end="url(#mk-s)"/>
           <rect class="box-purple" x="8" y="128" width="344" height="48" rx="10"/>
           <text class="t-b" x="22" y="148">③ 最小版を作ってもらう</text>
@@ -126,6 +126,7 @@
             <p><strong>前回の振り返りと、道具の準備（10分）</strong></p>
             <ul>
               <li>第7回の「すれ違いログ」と、指示メモに書き足した「送る前のチェック」を見返し、ペアで<strong>1つずつ</strong>紹介する（相手がいない人は、自分のログを見返す）。今日からは、これを<strong>自分の作品</strong>で使う</li>
+              <li>今日の大事な考え: バイブコーディングは速く作れる。<strong>だからこそ、作る前に計画を作る</strong>。AIと一緒に計画を作り、人が直してから作ると、迷いや作り直しが減る</li>
               <li>今日使う道具は、<strong>第7回に選んだものと同じ</strong>でよい（agyかBuild。変えたい人は変えてよいが、今日は途中で変えない）</li>
               <li><strong>agyを選んだ人</strong>: 停止していたCodespaceを<strong>再開（resume）</strong>する——「Create codespace」で新規作成しない。<code>python3 -m http.server 8000</code>を実行し、「ポート」タブ→<strong>「エディターでプレビュー」</strong>でSimple Browserを開いておく。agyで再ログインを求められたら、第2回と同じ手順で再認証する</li>
               <li><strong>Buildを選んだ人</strong>: <a href="https://aistudio.google.com/" target="_blank" rel="noopener">Google AI Studio</a>（学校のアカウント）にログインし、Build modeを開いておく。今日の作品は<strong>新しく作る</strong>ので、前期の作品は要らない</li>
@@ -189,71 +190,66 @@
             <span class="timeline-time">1限 後半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>最小版の指示を書き、道具に作ってもらって観察する</h3>
+          <h3>AIと計画を作り、道具に作ってもらって観察する</h3>
           <div class="timeline-body">
-            <p><strong>最小版の指示を書く（15分）</strong></p>
+            <p><strong>チャットと、計画を作る（20分）</strong></p>
             <ul>
+              <li>作る前に、まず<strong>計画だけ</strong>を作る。バイブコーディングは速いので、決めずに作り始めると、迷って作り直しになりやすい。第3回の「探索→計画→実行」と同じ考え方で、今日は自分の作品に当てはめる</li>
+              <li>計画づくりの相談役は、<strong>チャット（Geminiアプリ）</strong>。この授業で使うチャットは、答え（文章やコード）が返ってくるだけで、作品のファイルには直接さわれない。だから「計画だけ」を頼みやすい</li>
               <li>
-                <p>指示メモに、最小版の指示の下書きを書く。次の型を使うと書きやすい（<strong>目的・使う人・1画面1機能・入れないもの・ファイル名</strong>）</p>
-                <button class="copy-md-btn" data-md-source="shiji-katachi">
-                  <span class="btn-icon"></span> 指示の型をコピー
+                <p>企画メモと最小版を、下の文の<code>（　）</code>に入れて、チャットに送る</p>
+                <button class="copy-md-btn" data-md-source="plan-chat">
+                  <span class="btn-icon"></span> 計画づくりの文をコピー
                 </button>
-<pre id="shiji-katachi" class="md-preview">【目的】（企画メモの「何の困りごとを」を1行で）
-【使う人】（企画メモの「誰の」）
-【作るもの】1ページだけ。機能は1つだけ。（最小版で選んだ機能）
-【入れないもの】上の機能以外は入れない。外部サービスやログインは使わない。
-【ファイル名】sakuhin-1.html （Buildの人は不要）</pre>
+<pre id="plan-chat" class="md-preview">私は専門学校の学生です。AIに手伝ってもらって、小さなWebページを1つ作ります。
+まだ作らないでください。コードも書かないでください。今日は「計画」だけを作ります。
+
+私の企画メモ:
+誰の: （ここに書く）
+何の困りごとを: （ここに書く）
+どんな形で: （ここに書く）
+最小版（1画面・1機能）: （ここに書く）
+
+次の順で進めてください。
+1. まず、私に質問を最大3つ、1つずつしてください（足りないところを知るため）。
+2. 私の答えをもとに、次の4項目で計画案を書いてください。
+   ① 作るもの（1行）
+   ② 画面に出るもの（箇条書き）
+   ③ 今回は作らないもの
+   ④ できたかの確かめ方（見て分かるもの、3つまで）
+決めるのは私です。個人情報は入れないでください。</pre>
               </li>
+              <li>チャットの質問に1つずつ答える。計画案が出たら、<strong>そのまま使わず</strong>、次の「直す」に進む</li>
             </ul>
-            <p><strong>送る前に見直す（10分）</strong></p>
+            <p><strong>計画を、自分で直す（10分）</strong></p>
             <ul>
-              <li>書いた指示を、<strong>送る前に1回だけ読み返す</strong>。次の3つが言えれば、送ってよい
+              <li>計画案を、次の<strong>3点</strong>で見て、直す。直す人は人間で、AIは案を出しただけ
                 <ul>
-                  <li>何を作るかを、1行で言える</li>
-                  <li>「入れないもの」が書いてある（ほかの機能は入れない）</li>
-                  <li>agyの人は、ファイル名が書いてある</li>
+                  <li>① 作るものが<strong>1行で言え</strong>、自分の最小版（1画面・1機能）と合っているか</li>
+                  <li>③ 作らないものに、「あとで」リストの機能が入っているか。<strong>機能が増えすぎていないか</strong>（多ければ削る）</li>
+                  <li>④ 確かめ方が、<strong>画面を見て「できた／できない」と言える</strong>形か</li>
                 </ul>
               </li>
-              <li>第6〜7回の<strong>「送る前のチェック」</strong>と同じ考え方。言えないところがあれば、指示を直してから送る</li>
+              <li>直した計画を、「agyへの指示メモ」に<strong>「計画」</strong>として貼る。直した所は、対話ログに1行書く（「AIの案のどこを、なぜ直したか」）</li>
+              <li>第6〜7回の「送る前のチェック」（範囲を書いたか、ほかは変えないと書いたか）と同じ考え方。計画の「作らないもの」が、その役目をする</li>
             </ul>
-            <details class="vz-more">
-              <summary>任意: 作る前に、AIに「どう理解したか」を説明させる（第7回の確認の一文）</summary>
-              <ul>
-                <li>ずれが心配な人だけ。作品はまだ無いので、第7回の確認の一文を<strong>「新しく作る」用</strong>に直したものを使う。「ここに指示」は、自分で書いた指示に置き換える</li>
-                <li>
-                <p><strong>agyの人</strong>は、次をコピーして送る</p>
-                <button class="copy-md-btn" data-md-source="confirm-new-agy">
-                  <span class="btn-icon"></span> 確認の一文（agy・新規作成）をコピー
-                </button>
-<pre id="confirm-new-agy" class="md-preview">まだ実行しないでください。ファイルは作らないでください。
-次の指示を、どう理解したかを3行で説明してください。
-1行目: どのファイルを新しく作るか
-2行目: 何ができるページにするか
-3行目: 今回は作らないものは何か
-指示: （ここに自分で書いた指示）</pre>
-              </li>
-                <li>
-                <p><strong>Buildの人</strong>は、次をコピーして送る</p>
-                <button class="copy-md-btn" data-md-source="confirm-new-build">
-                  <span class="btn-icon"></span> 確認の一文（Build・新規作成）をコピー
-                </button>
-<pre id="confirm-new-build" class="md-preview">まだ作らないでください。
-次の指示を、どう理解したかを3行で説明してください。
-1行目: 何を作るか
-2行目: 何ができるようにするか
-3行目: 今回は作らないものは何か
-指示: （ここに自分で書いた指示）</pre>
-                Buildの既定は「すぐ変更を加える」と、第7回に教員の画面で確認した。「作らないでください」と頼んでも、作り始めることがある（そのときは、そのまま観察して対話ログに書く）
-              </li>
-                <li>3行の説明を読み、<strong>自分の意図とずれていないか</strong>を見る。ずれていたら、指示を直してから、本番の指示を送る</li>
-              </ul>
-            </details>
-            <p><strong>最小版を作ってもらう（25分）</strong></p>
+            <p><strong>計画を渡して、最小版を作ってもらう（20分）</strong></p>
             <ul>
+              <li>
+                <p>直した計画を、下の文の最後に貼って、道具（agyまたはBuild）に送る</p>
+                <button class="copy-md-btn" data-md-source="plan-handoff">
+                  <span class="btn-icon"></span> 計画を渡す文をコピー
+                </button>
+<pre id="plan-handoff" class="md-preview">次の計画のとおりに、最小版を作ってください。
+計画にないことは、しないでください。
+【ファイル名】sakuhin-1.html （Buildの人は不要）
+
+（ここに、自分で直した計画を貼る）</pre>
+              </li>
               <li><strong>agyの人</strong>: 第1〜6回で使ってきたリポジトリの一番上のフォルダで、<code>sakuhin-1.html</code>を作ってもらう。agyは<code>default</code>モードのまま進め、ファイルを作る・変更する前に出る<strong>差分を読んでから</strong>承認する（第3回）。<code>sakuhin-1.html</code>以外のファイルを変えようとしていたら、承認しない</li>
               <li><strong>Buildの人</strong>: 指示を入力欄に送る。右側のプレビューで動きを確かめ、<code>Code</code>タブで、どのファイルができたかを見る</li>
               <li>agyの人がブラウザで見るには: 「ポート」タブ→「エディターでプレビュー」でSimple Browserを開き、アドレスバーの<strong>末尾だけ</strong>を<code>/sakuhin-1.html</code>に書き換える（<code>http://localhost:8000/…</code>と全体を打ち直さない）</li>
-              <li>動いたかどうかを見て、<strong>対話ログ</strong>に1行書く。対話ログはGoogleドキュメントの表で、今日のあいだずっと使う。列は次の4つ
+              <li>できたものを、計画の<strong>④確かめ方</strong>で見る。計画にないことをしていたら、それも書く。<strong>対話ログ</strong>に1行書く。対話ログはGoogleドキュメントの表で、今日のあいだずっと使う。列は次の4つ
                 <ul>
                   <li>送った指示（要約）／AIがしたこと／自分が確認した所／直した・戻したこと</li>
                 </ul>
@@ -315,7 +311,7 @@
               <figcaption>足す前にコピーを作っておけば、失敗しても、動いていた版にすぐ戻れます。</figcaption>
             </figure>
             <ul>
-              <li>機能を足す指示も、<strong>送る前のチェック</strong>を通す。確認の一文を使うかどうかは、<strong>自分で決める</strong>（小さい機能なら省いてもよい）。使った・使わなかった理由を、対話ログに書く</li>
+              <li>機能を足すときも、道具に頼む前に、<strong>3行の短い計画</strong>（足す機能／足さないもの／確かめ方）を指示メモに書いてから送る。書かずに送った場合は、その理由を対話ログに書く</li>
               <li>足した結果を確かめ、対話ログに書く（送った指示／AIがしたこと／自分が確認した所）。<strong>agyの人</strong>は、Simple Browserのアドレスバーの<strong>末尾だけ</strong>を<code>/sakuhin-2.html</code>に書き換えて更新する（<code>sakuhin-1.html</code>のままだと、足す前の画面が出る）</li>
             </ul>
             <p><strong>途中で相談したくなったら、チャットを使ってよい（10分）</strong></p>
@@ -414,6 +410,7 @@
                 <ul>
                   <li>「<strong>チャットに頼む</strong>のは、＿＿のとき。理由は＿＿」</li>
                   <li>「<strong>道具（agyまたはBuild）に頼む</strong>のは、＿＿のとき。理由は＿＿。頼むときに必ず確認するのは＿＿」</li>
+                  <li>「<strong>先に計画を作った</strong>ことで、＿＿が変わった（または変わらなかった）。計画で直したのは＿＿」</li>
                 </ul>
               </li>
               <li>これは決まりではなく、<strong>今日の自分の経験から出した、いまの考え</strong>。次回以降に変わってよい</li>
