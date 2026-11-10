@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第7回 コンピュータの中身を開ける | ITパスポート テクノロジー系</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=26">
+</head>
+<body data-furigana="furigana/week07.json">
+  <!-- 公式情報確認: 2026-11-10 (IPA「ITパスポート試験シラバス Ver.6.5」の「コンピュータの構成」「プロセッサの基本的な仕組み」「メモリの種類と特徴」「記録媒体の種類と特徴」「記憶階層」「会計・財務」の用語例を、PDFからテキスト化して原文照合。令和7年度 公開問題 問5・問34・問75 は、問題冊子（画像PDF）のページ画像を目視して原文転記し、解答例PDFで正答を照合）。
+       本文のやさしい言い換え（公的資料の逐語引用ではない）: CPU＝「コンピュータの頭脳」（シラバスの「演算，制御」を、やさしく言い換えた）、クロック周波数・HDD・SSDの特徴（「一般に」の比較）、主記憶とRAMの関係、キャッシュメモリ・補助記憶の説明、損益分岐点・変動費・固定費・損益計算書・貸借対照表の説明（シラバスは用語例と「簡単な計算」「基本的な財務諸表の読み方」だけを書いており、定義文は書いていない）。確認テスト・練習クイズ・フォームの解説は、この言い換えのまま。
+       書かなかったこと: CPUの内部（レジスタ・命令の実行の流れ）、GPGPU、DDR SDRAMなどの規格名、RAIDなど、教科書 p.244-255 の細かい内容、キャッシュフロー計算書・流動比率・投資利益率などの財務指標、減価償却、税金（シラバスの「その他税関連」）。PCやサーバがどの帳簿の項目になるかは、金額や使う期間の決まりで変わるため、「会社の資産になることがある」とだけ書いた。令和7年度の公開問題の範囲では、CPUやクロック周波数を直接問う問は見つからず、記憶媒体は問75、会計は問5・問34を使った。 -->
+  <!-- 挿絵4枚（images/week07-story-1〜4.jpg）は、画像生成AI（Gemini 3.1 Flash Image）で作った架空の場面のイラスト（2026-11-10）。画像内に文字・実在の人物や企業のロゴは含めない。Aさん=第2〜6回と同じ画風の架空の人物。カフェも架空 -->
+  <!-- 用語カードの12語は、フォーム「ITパスポート 第7回 今回覚えた用語」の選択肢と一致。ゲーム term-shooter.html の第7回データ（TERM_SETS[7]）の用語は、この12語に前回のDNS・IPアドレス・ドメイン名の復習を加えたもの -->
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--amber">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../it-passport-technology.html">ITパスポート テクノロジー系</a>
+        <span>/</span>
+        <span>第7回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">コンピュータの中身を<wbr>開ける</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 7</span>
+            <span class="page-badge">水曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-amber">
+
+    <div class="message-box">このページはブラウザの翻訳機能で母語に翻訳できます。ただし、試験に出る主な専門用語（例: <span translate="no">CPU</span>、<span translate="no">SSD</span>、<span translate="no">損益分岐点</span>）は翻訳されないように設定しています。<strong>本番のITパスポート試験は日本語で行われる</strong>ので、専門用語は日本語のまま覚えてください。</div>
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
+
+    <div class="qr-box qr-box--pc">
+      <a class="qr-box__zoom" href="qr/week07-page.svg" target="_blank" rel="noopener" aria-label="QRコードを大きく表示する">
+        <img class="qr-box__img" src="qr/week07-page.svg" alt="この第7回のページを開くQRコード。スマートフォンのカメラで読み取ると、このページが開く。" width="180" height="180">
+      </a>
+      <div class="qr-box__body">
+        <p class="qr-box__heading">📱 スマホで開く</p>
+        <p class="qr-box__text">教室の画面を見ながら、自分のスマートフォンで、このページを開けます。スマートフォンの<strong>カメラ</strong>で、このQRコードを読み取ってください。QRコードを押すと、大きく表示されます。</p>
+        <p class="qr-box__text">スマートフォンでも、ブラウザの翻訳が使えます。ゲームも、スマートフォンで遊べます。</p>
+      </div>
+    </div>
+
+    <div class="demo-cta demo-cta--amber">
+      <p class="demo-cta__heading">🎮 用語シューティング（1人用のゲーム）</p>
+      <p class="demo-cta__body">画面に出る<strong>「意味」に合う用語</strong>の的を撃つゲームです。授業の中で2回（ステージ1・ステージ2）遊びます。点数は記録されません。試験の点数とも関係なく、用語を覚えるための練習です。ゲームの画面も、ブラウザの翻訳で意味を母語にできます（用語は日本語のまま表示されます）。音は初めは出ません。</p>
+      <a href="term-shooter.html?w=7" class="demo-cta__link">→ ゲームを開く</a>
+    </div>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">カフェのレジのパソコンが遅くなったAさんと一緒に、コンピュータの中身を開ける。頭脳（<span translate="no">CPU</span>）・作業の机（<span translate="no">主記憶</span>）・保存場所（<span translate="no">補助記憶</span>）の役割を学ぶ。そのあと、パソコンを買い替えるお金をどう考えるか——売上と利益、<span translate="no">損益分岐点</span>、会社の成績表（<span translate="no">財務諸表</span>）——を学ぶ</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value"><span translate="no">CPU</span> / <span translate="no">クロック周波数</span> / <span translate="no">主記憶</span> / <span translate="no">キャッシュメモリ</span> / <span translate="no">補助記憶</span> / <span translate="no">HDD</span> / <span translate="no">SSD</span> / <span translate="no">変動費</span> / <span translate="no">固定費</span> / <span translate="no">損益分岐点</span> / <span translate="no">損益計算書</span> / <span translate="no">貸借対照表</span></div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">教科書（学研「ITパスポートをひとつひとつわかりやすく。」）のテクノロジ系 p.244-255、ストラテジ系 p.033-040 を読んでおく。授業の最初に復習テスト、最後に確認テスト（1回目と、任意の2回目）と用語カードのフォームを使う（学校のGoogleアカウント）。ゲームは、スマートフォンでもパソコンでも遊べる</div>
+        </div>
+      </div>
+    </div>
+
+    <nav aria-label="このページの目次">
+      <ul class="vz-jump">
+        <li><a class="vz-chip" href="#sec-flow">授業の流れ</a></li>
+        <li><a class="vz-chip" href="#sec-terms">用語カード</a></li>
+        <li><a class="vz-chip" href="#sec-quiz">練習クイズ</a></li>
+        <li><a class="vz-chip" href="#sec-optional">任意の取り組み</a></li>
+        <li><a class="vz-chip" href="#sec-tip">就活ワンポイント</a></li>
+        <li><a class="vz-chip" href="#sec-tasks">課題</a></li>
+        <li><a class="vz-chip" href="#sec-refs">参考リンク</a></li>
+        <li><a class="vz-chip vz-chip--cta" href="https://docs.google.com/forms/d/e/1FAIpQLSfCWkx3578GDfqRCse5HKHQwkd0oodyCvgrNiRCQko35r8RlA/viewform" target="_blank" rel="noopener">第7回 今回覚えた用語を提出する ↗</a></li>
+        <li><a class="vz-chip vz-chip--cta" href="https://script.google.com/a/macros/i-seifu.jp/s/AKfycbwquVX4xkXNy47RkGjCUz6Xmc4GFaPLpPkSVuW6z--m5Yth88yilipCYUSanlTpQF9P/exec" target="_blank" rel="noopener">自分の成績を見る ↗</a></li>
+      </ul>
+    </nav>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>コンピュータの5つの機能（入力・出力・記憶・演算・制御）を言える。<span translate="no">CPU</span>が、演算と制御を行う頭脳だと説明できる</li>
+        <li><span translate="no">主記憶</span>（電源を切ると消える・いま使うデータを置く）と<span translate="no">補助記憶</span>（保存する・電源を切っても残る）の違いを、例を使って説明できる</li>
+        <li><span translate="no">HDD</span>と<span translate="no">SSD</span>の違いを言える。記憶装置の速さ・大きさの関係（<span translate="no">記憶階層</span>）を図で説明できる</li>
+        <li><span translate="no">変動費</span>と<span translate="no">固定費</span>の違いを言え、<span translate="no">損益分岐点</span>の簡単な計算ができる</li>
+        <li><span translate="no">損益計算書</span>と<span translate="no">貸借対照表</span>の違いを言える。IT機器も会社の資産になることがあると知る</li>
+        <li>過去問（令和7年度）を、問い方の型を使って解く</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section" id="sec-flow">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。休憩10分は授業時間に含めません。🎮のブロックは、ゲームで遊ぶ時間です。</p>
+
+      <div class="vz-timebar">
+        <p class="vz-fig-title">180分の流れ（ブロックを押すと、その内容へ移動）</p>
+        <ol class="vz-timebar-track">
+          <li style="--w:40"><a class="vz-seg" href="#blk-1"><span class="vz-seg-time">40分</span><span class="vz-seg-name">復習テスト<br>5つの機能</span></a></li>
+          <li style="--w:50"><a class="vz-seg" href="#blk-2"><span class="vz-seg-time">50分</span><span class="vz-seg-name">CPU・メモリ<br>🎮ゲーム①</span></a></li>
+          <li style="--w:10"><a class="vz-seg vz-seg--break"><span class="vz-seg-time">休憩</span><span class="vz-seg-name">10分</span></a></li>
+          <li style="--w:50"><a class="vz-seg" href="#blk-3"><span class="vz-seg-time">50分</span><span class="vz-seg-name">保存装置・お金<br>🎮ゲーム②</span></a></li>
+          <li style="--w:30"><a class="vz-seg" href="#blk-4"><span class="vz-seg-time">30分</span><span class="vz-seg-name">過去問<br>確認テスト1回目</span></a></li>
+          <li style="--w:10"><a class="vz-seg" href="#blk-5"><span class="vz-seg-time">10分</span><span class="vz-seg-name">まとめ</span></a></li>
+        </ol>
+        <p class="vz-timebar-note">授業時間の合計は 40 + 50 + 50 + 30 + 10 = 180分（休憩を除く）</p>
+      </div>
+
+      <div class="timeline">
+
+        <!-- ================= 1限 前半 ================= -->
+        <div class="timeline-block" id="blk-1">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の復習テスト → パソコンが遅くなったストーリー → コンピュータの5つの機能</h3>
+          <div class="timeline-body">
+
+            <p><strong>前回の復習テスト（約10分：テスト約5分＋解説の確認約5分）</strong></p>
+            <p>前回（第6回）の内容を、1週間たって、どれだけ覚えているかを確かめる5問（約5分）。前回の確認テストで、<span translate="no">DNS</span>の正答率が、ほかより低かった。そのため、<span translate="no">DNS</span>と<span translate="no">IPアドレス</span>を、聞き方を変えて、何問か入れている。<strong>点数を競うものではない</strong>。覚えていることと、忘れていることを、自分で知るためのテスト。送信すると、点数と、正解・解説が表示される。そのあと、間違えた問題の解説を読む。分からないところは、隣の人か先生に聞く。</p>
+            <div class="vz-cta">
+              <a class="vz-btn vz-btn--ext" href="https://docs.google.com/forms/d/e/1FAIpQLSdeXT6D8rXth6FC_1UU5niLMSXz1fFykhTzFiJKVRxgiYpmdQ/viewform" target="_blank" rel="noopener">第7回 復習テスト（前回分）を受ける（Googleフォーム）</a>
+            </div>
+
+            <p><strong>今日のストーリー：レジのパソコンが遅い（約10分）</strong></p>
+            <p>駅前のカフェを開いたAさん（架空の話）は、お店のレジに、古いパソコンを使っている。最近、動きが遅い。中身を開けて、考えてみる。</p>
+            <ol class="vz-steps">
+              <li class="vz-step"><img class="vz-step-img" src="images/week07-story-1.jpg" alt="カフェのレジの前に、お客さんの列ができている。レジのパソコンの画面は固まっていて、Aさんが困った顔で画面を見ている。" width="800" height="597" loading="lazy"><b>1. レジのパソコンが、固まる</b>お客さんが並んでいるのに、画面が止まる。パソコンの中では、何が起きているのか。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week07-story-2.jpg" alt="パソコンのふたを開けて、中をのぞくAさん。中には、頭脳のような部品、小さな作業机のような部品、本棚のような部品が見える。" width="800" height="597" loading="lazy"><b>2. パソコンの中身を開けてみる</b>考える部品（<strong><span translate="no">CPU</span></strong>）、いま使うデータを広げる机（<strong><span translate="no">主記憶</span></strong>）、データをしまう本棚（<strong><span translate="no">補助記憶</span></strong>）がある。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week07-story-3.jpg" alt="Aさんが、古い大きな箱型の保存装置と、小さな薄い保存装置を、両手に持って見比べている。机の上には、小さなUSBメモリも置いてある。" width="800" height="597" loading="lazy"><b>3. 保存の装置を、見比べる</b>古い保存装置（<strong><span translate="no">HDD</span></strong>）と、新しい保存装置（<strong><span translate="no">SSD</span></strong>）。違いは何か。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week07-story-4.jpg" alt="カフェの事務室で、Aさんが、新しいパソコンのカタログと電卓を見ながら、考えている。机の上には、コーヒーカップと、売上の紙がある。" width="800" height="597" loading="lazy"><b>4. 新しいパソコンを買うお金は、どう考える？</b>パソコンは、お店の財産（資産）。何杯売れば、元が取れるのか。お店のお金を、数字で見る。</li>
+            </ol>
+            <p class="lesson-note">1・2は<span translate="no">CPU</span>と<span translate="no">主記憶</span>、3は<span translate="no">補助記憶</span>（<span translate="no">HDD</span>・<span translate="no">SSD</span>）、4は企業のお金の管理（ストラテジ系）の話。順番に学ぶ。</p>
+
+            <p><strong>ペアで話す（約5分）</strong>：自分のスマートフォンやパソコンが「遅い」と感じたのは、どんなとき（たくさんのアプリを開いたとき、写真や動画がたくさん入っているとき、古くなったとき、など）か。そのとき、何をしたか。日本語で話す。</p>
+
+            <p><strong>今日の地図（約5分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-w7-map">
+              <p class="vz-fig-title" id="cap-w7-map">パソコンの中身から、お店のお金まで</p>
+              <svg class="vz-svg" viewBox="0 0 360 288" role="img" aria-labelledby="w7-map-t w7-map-d">
+                <title id="w7-map-t">今日の地図：コンピュータの中身と、企業のお金の管理</title>
+                <desc id="w7-map-d">上から順に、1 コンピュータの5つの機能、2 頭脳（CPU）、3 いま使うデータの置き場所（主記憶・キャッシュメモリ）、4 データの保存場所（補助記憶・HDD・SSD）、5 企業のお金の管理（損益分岐点・財務諸表）。</desc>
+                <line class="line" x1="22" y1="30" x2="22" y2="258"/>
+                <rect class="box-white" x="2" y="6" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="30" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="35">1</text>
+                <text class="t-b" x="44" y="27">コンピュータの5つの機能</text>
+                <text class="t-sm" x="44" y="45">入力・出力・記憶・演算・制御</text>
+                <rect class="box-white" x="2" y="62" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="86" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="91">2</text>
+                <text class="t-b" x="44" y="83">頭脳</text>
+                <text class="t-sm" x="44" y="101" translate="no">CPU・クロック周波数</text>
+                <rect class="box-white" x="2" y="118" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="142" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="147">3</text>
+                <text class="t-b" x="44" y="139">いま使うデータを置く場所</text>
+                <text class="t-sm" x="44" y="157" translate="no">主記憶・キャッシュメモリ</text>
+                <rect class="box-white" x="2" y="174" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="198" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="203">4</text>
+                <text class="t-b" x="44" y="195">データを保存する場所</text>
+                <text class="t-sm" x="44" y="213" translate="no">補助記憶・HDD・SSD</text>
+                <rect class="box-white" x="2" y="230" width="356" height="48" rx="8"/>
+                <circle class="dot-orange" cx="22" cy="254" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="259">5</text>
+                <text class="t-b" x="44" y="251">企業のお金の管理</text>
+                <text class="t-sm" x="44" y="269" translate="no">損益分岐点・財務諸表</text>
+              </svg>
+              <figcaption>1・2・3は1限前半と後半、4は2限前半、5（ストラテジ系）は2限前半の後半で学ぶ。</figcaption>
+            </figure>
+
+            <p><strong>コンピュータの5つの機能（約10分、教科書 p.244-255）</strong></p>
+            <p>IPAのシラバスは、コンピュータが<strong>5つの基本的な機能</strong>から構成されていて、それらが連携していると書いている（用語例：<span translate="no">演算</span>、<span translate="no">制御</span>、<span translate="no">記憶</span>、<span translate="no">入力</span>、<span translate="no">出力</span>。確認日：2026-11-10）。パソコンやスマートフォンの中で、この5つが、どの部品の役割かを、下の図で見る。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w7-five">
+              <p class="vz-fig-title" id="cap-w7-five">コンピュータの5つの機能と、部品</p>
+              <svg class="vz-svg" viewBox="0 0 360 276" role="img" aria-labelledby="w7-five-t w7-five-d">
+                <title id="w7-five-t">コンピュータの5つの機能</title>
+                <desc id="w7-five-d">入力装置から、CPUにデータが入る。CPUは、演算と制御を行い、記憶装置とデータをやり取りする。CPUから、出力装置に結果が出る。</desc>
+                <rect class="box-white" x="2" y="4" width="170" height="56" rx="8"/>
+                <text class="t-b" x="12" y="28">入力</text>
+                <text class="t-sm" x="12" y="48">キーボード・タッチ</text>
+                <rect class="box-white" x="188" y="4" width="170" height="56" rx="8"/>
+                <text class="t-b" x="198" y="28">出力</text>
+                <text class="t-sm" x="198" y="48">画面・プリンタ</text>
+                <line class="line-orange" x1="87" y1="62" x2="87" y2="98" marker-end="url(#mk-s)"/>
+                <line class="line-orange" x1="273" y1="98" x2="273" y2="62" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="2" y="100" width="356" height="62" rx="8"/>
+                <text class="t-b" x="12" y="126" translate="no">CPU</text>
+                <text class="t-sm" x="12" y="148"><tspan translate="no">演算</tspan>（計算する）と<tspan translate="no">制御</tspan>（全体に指示を出す）</text>
+                <line class="line-orange" x1="180" y1="164" x2="180" y2="198" marker-start="url(#mk-s)" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="2" y="200" width="356" height="72" rx="8"/>
+                <text class="t-b" x="12" y="226">記憶</text>
+                <text class="t-sm" x="12" y="246"><tspan translate="no">主記憶</tspan>：いま使うデータ</text>
+                <text class="t-sm" x="12" y="264"><tspan translate="no">補助記憶</tspan>：保存するデータ</text>
+              </svg>
+              <figcaption>どの部品が、どの機能を担当するかを、図で結びつける。「頭脳」の<span translate="no">CPU</span>が真ん中にあり、基本の考え方では、データは<span translate="no">CPU</span>を通る、と考える。</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <!-- ================= 1限 後半 ================= -->
+        <div class="timeline-block" id="blk-2">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3><span translate="no">CPU</span> → <span translate="no">主記憶</span>・<span translate="no">キャッシュメモリ</span> → スマートフォンの保存容量を見る → 🎮ゲーム①（テクノロジ系：コンピュータシステム 教科書 p.244-255）</h3>
+          <div class="timeline-body">
+
+            <p><strong>① <span translate="no">CPU</span>：コンピュータの頭脳（約15分）</strong></p>
+            <p><span translate="no">CPU</span>（Central Processing Unit）は、プログラムの命令を読み取って、<span translate="no">演算</span>と<span translate="no">制御</span>を行う部品。ストーリーの2の「考える部品」が、これ。パソコンやスマートフォンのすべての動きは、<span translate="no">CPU</span>の指示と計算が、元になっている。IPAのシラバスは、<span translate="no">CPU</span>を、プロセッサの基本的な仕組みの用語例に挙げている。</p>
+            <p>では、<span translate="no">CPU</span>の「速さ」は、どう表すのか。</p>
+            <ul>
+              <li><strong><span translate="no">クロック周波数</span></strong>：<span translate="no">CPU</span>が動く速さの目安の一つ。<span translate="no">GHz</span>（ギガヘルツ）などで表す。数が大きいほど、1秒間に動く回数が多い。ただし、<span translate="no">CPU</span>の性能は、<span translate="no">クロック周波数</span>だけでは決まらない（次の<span translate="no">マルチコア</span>の数なども関係する）。</li>
+              <li><strong><span translate="no">マルチコアプロセッサ</span></strong>：1つの<span translate="no">CPU</span>の中に、処理を行う部分（コア）が、複数ある<span translate="no">CPU</span>。複数の仕事を、同時に進めやすい。</li>
+              <li><strong><span translate="no">GPU</span></strong>：画像などの処理を、得意とするプロセッサ。ゲームや動画で使われる。</li>
+            </ul>
+            <p class="lesson-note">この3つは、シラバスの用語例にある（<span translate="no">マルチコアプロセッサ</span>・<span translate="no">GPU</span>・<span translate="no">クロック周波数</span>）。用語カードに入れるのは<span translate="no">クロック周波数</span>だけ。<span translate="no">マルチコアプロセッサ</span>と<span translate="no">GPU</span>は、名前と、おおまかな意味を知っていればよい。</p>
+
+            <p><strong>② <span translate="no">主記憶</span>と<span translate="no">キャッシュメモリ</span>：いま使うデータを置く場所（約10分）</strong></p>
+            <p><span translate="no">CPU</span>は、仕事をするとき、使うプログラムやデータを、すぐに読み書きできる場所に置く。これが<strong><span translate="no">主記憶</span></strong>（メインメモリ）。机の上に、いま使う資料を広げているイメージ。<span translate="no">主記憶</span>には、<span translate="no">RAM</span>が使われる。<span translate="no">RAM</span>は<strong><span translate="no">揮発性メモリ</span></strong>で、<strong>電源を切ると、内容が消える</strong>（シラバスの用語例：<span translate="no">RAM</span>、<span translate="no">ROM</span>、<span translate="no">揮発性メモリ</span>、<span translate="no">不揮発性メモリ</span>（<span translate="no">フラッシュメモリ</span>））。</p>
+            <ul>
+              <li><strong><span translate="no">RAM</span></strong>：読み書きできるメモリ。揮発性（電源を切ると消える）。<span translate="no">主記憶</span>に使う。</li>
+              <li><strong><span translate="no">ROM</span></strong>：基本的に、読み出し専用のメモリ。電源を切っても消えない（不揮発性）。</li>
+              <li><strong><span translate="no">フラッシュメモリ</span></strong>：電源を切っても消えない、不揮発性の半導体メモリ。<span translate="no">USBメモリ</span>や<span translate="no">SDカード</span>、<span translate="no">SSD</span>で使われる。</li>
+            </ul>
+            <p>もう一つ。<span translate="no">CPU</span>は、とても速い。<span translate="no">主記憶</span>は、<span translate="no">CPU</span>より、速さが追いつかない。そこで、<span translate="no">CPU</span>と<span translate="no">主記憶</span>の間に、<strong>小さくて速い</strong>メモリを置く。これが<strong><span translate="no">キャッシュメモリ</span></strong>。よく使うデータを、そこに置いておくので、<span translate="no">主記憶</span>まで取りに行く回数が減る。</p>
+            <p><strong>ストーリーに戻る</strong>：レジのパソコンが固まる理由は、<span translate="no">CPU</span>が古い、<span translate="no">主記憶</span>が足りない（机が狭い）、保存装置が遅い、などが考えられる。1つに決められないので、「どの部品が、どの仕事をするか」を、先に知る。</p>
+
+            <p><strong>手を動かす：自分のスマートフォンの「保存の容量」を見る（約10分）</strong></p>
+            <ol>
+              <li>自分のスマートフォンの、<strong>設定</strong>アプリを開く。「情報」「端末情報」「ストレージ（保存容量）」などの名前の項目を探す。機種によって、名前や場所が違う。見つからないときは、設定アプリの検索に「ストレージ」と入力する</li>
+              <li>見つけた<strong>保存容量</strong>（例：128GB）と、今使っている量を、スマートフォンのメモアプリなどに、メモする。これは、<span translate="no">補助記憶</span>（データを保存する場所）の大きさ</li>
+              <li>機種によっては、<span translate="no">主記憶</span>（<span translate="no">RAM</span>）の大きさ（例：6GB）も、表示される。表示される人は、保存容量と比べる（<span translate="no">主記憶</span>は、保存容量より、ふつう、ずっと小さい）。表示されない機種もある</li>
+              <li>隣の人と、比べる。「保存容量」と「<span translate="no">主記憶</span>」は、どちらが大きいか。なぜ、そうなっていると思うか</li>
+            </ol>
+
+            <div class="demo-cta demo-cta--amber">
+              <p class="demo-cta__heading">🎮 ゲーム①：用語シューティング ステージ1（約10分）</p>
+              <p class="demo-cta__body">ここまでに出た用語（<span translate="no">CPU</span>・<span translate="no">クロック周波数</span>・<span translate="no">主記憶</span>・<span translate="no">キャッシュメモリ</span>と、前回の<span translate="no">DNS</span>・<span translate="no">IPアドレス</span>・<span translate="no">ドメイン名</span>）を、ゲームで確かめる。画面の「意味」を読んで、合う用語の的を撃つ。点数は記録されない。最初は音が出ない。間違えた用語は、最後の画面に一覧が出る。</p>
+              <p class="demo-cta__body"><strong>進め方：</strong>1回は約2分。<strong>目標は「ランク<span translate="no">A</span>以上」（7問中6問以上）</strong>。終わったら、間違えた用語の一覧を、下の<a href="#sec-terms">用語カード</a>で確かめて、もう一度遊ぶ。ページを開くと、「スタート」ボタンが出る。翻訳を使う人は、翻訳してから押す。</p>
+              <a href="term-shooter.html?w=7&amp;stage=1" class="demo-cta__link">→ ステージ1を始める</a>
+              <div class="qr-box qr-box--inline qr-box--pc">
+                <a class="qr-box__zoom" href="qr/week07-game-stage1.svg" target="_blank" rel="noopener" aria-label="QRコードを大きく表示する">
+                  <img class="qr-box__img" src="qr/week07-game-stage1.svg" alt="ゲーム ステージ1を開くQRコード。スマートフォンのカメラで読み取ると、ゲームが開く。" width="150" height="150">
+                </a>
+                <div class="qr-box__body">
+                  <p class="qr-box__heading">📱 スマホで遊ぶ</p>
+                  <p class="qr-box__text">スマートフォンのカメラで、このQRコードを読み取ると、ステージ1が開く。押すと、大きく表示される。</p>
+                </div>
+              </div>
+            </div>
+
+            <p><strong>ペアで確かめる（約5分）</strong>：「<span translate="no">CPU</span>」「<span translate="no">主記憶</span>」「<span translate="no">キャッシュメモリ</span>」を、カフェのAさんに、やさしい日本語で説明する。たとえ（頭脳・机・机の上の手元のメモ、など）を使ってよい。1人が説明して、もう1人が、分かりにくいところを聞く。説明できたら、反対にする。</p>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <!-- ================= 2限 前半 ================= -->
+        <div class="timeline-block" id="blk-3">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3><span translate="no">補助記憶</span>（<span translate="no">HDD</span>・<span translate="no">SSD</span>）と<span translate="no">記憶階層</span> → 企業のお金の管理 → 🎮ゲーム②（テクノロジ系 p.244-255、ストラテジ系 p.033-040）</h3>
+          <div class="timeline-body">
+
+            <p><strong>① <span translate="no">補助記憶</span>と、記録媒体の種類（約10分）</strong></p>
+            <p><span translate="no">主記憶</span>は、電源を切ると消える。だから、残したいデータは、別の場所に<strong>保存</strong>する。これが<strong><span translate="no">補助記憶</span></strong>（保存する装置・<span translate="no">記録媒体</span>）。ストーリーの3の本棚。<span translate="no">主記憶</span>より、読み書きは遅いが、容量が大きく、電源を切っても残る。</p>
+            <div class="table-wrap">
+              <table class="schedule-table">
+                <thead><tr><th>種類</th><th>記録のしかた</th><th>特徴（一般に）</th></tr></thead>
+                <tbody>
+                  <tr><td><span translate="no">HDD</span></td><td>磁気ディスクを回転させて、記録する</td><td>動く部品がある。<span translate="no">SSD</span>より、遅く、衝撃に弱い</td></tr>
+                  <tr><td><span translate="no">SSD</span></td><td>半導体メモリ（<span translate="no">フラッシュメモリ</span>）に記録する</td><td>動く部品がない。<span translate="no">HDD</span>より、読み書きが速い</td></tr>
+                  <tr><td><span translate="no">USBメモリ</span>・<span translate="no">SDカード</span></td><td>半導体メモリ（<span translate="no">フラッシュメモリ</span>）に記録する</td><td>小さくて、持ち運びやすい。データの受け渡しに使う</td></tr>
+                  <tr><td><span translate="no">CD</span>・<span translate="no">DVD</span>・<span translate="no">ブルーレイディスク</span></td><td>光ディスク。光で読み書きする</td><td>持ち運べる。<span translate="no">CD-ROM</span>・<span translate="no">DVD-ROM</span>は読み出し専用、<span translate="no">CD-R</span>・<span translate="no">DVD-R</span>は1回だけ書き込める</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="lesson-note">表の特徴は、一般的な比べ方。機種や値段によって、例外がある。シラバスの用語例には、上の名前がすべて入っている。<span translate="no">DVD-RAM</span>は、<strong>光ディスク</strong>。過去問（問75）で、半導体メモリではないものとして出る。</p>
+
+            <p><strong>② <span translate="no">記憶階層</span>：速さと大きさの関係（約7分）</strong></p>
+            <p>ここまでの装置を、<span translate="no">CPU</span>に近い順に並べると、「速くて小さい」から「遅くて大きい」へ、つながる。これを<strong><span translate="no">記憶階層</span></strong>の考え方という（シラバスの用語例：<span translate="no">キャッシュメモリ</span>、<span translate="no">主記憶</span>、<span translate="no">補助記憶</span>）。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w7-hier">
+              <p class="vz-fig-title" id="cap-w7-hier"><span translate="no">記憶階層</span>：<span translate="no">CPU</span>に近いほど、速くて、小さい</p>
+              <svg class="vz-svg" viewBox="0 0 360 232" role="img" aria-labelledby="w7-hier-t w7-hier-d">
+                <title id="w7-hier-t">記憶階層：CPUに近い順に、キャッシュメモリ、主記憶、補助記憶</title>
+                <desc id="w7-hier-d">上から順に、CPU、キャッシュメモリ（小さくて速い）、主記憶（電源を切ると消える）、補助記憶（大きくて遅い・電源を切っても残る）。下に行くほど、横幅が広く、容量が大きいことを表す。</desc>
+                <rect class="box-orange" x="120" y="4" width="120" height="40" rx="8"/>
+                <text class="t-b t-c" x="180" y="30" translate="no">CPU</text>
+                <rect class="box-white" x="70" y="56" width="220" height="50" rx="8"/>
+                <text class="t-b t-c" x="180" y="78" translate="no">キャッシュメモリ</text>
+                <text class="t-sm t-c" x="180" y="96">小さい・とても速い</text>
+                <rect class="box-white" x="30" y="118" width="300" height="50" rx="8"/>
+                <text class="t-b t-c" x="180" y="140" translate="no">主記憶</text>
+                <text class="t-sm t-c" x="180" y="158">電源を切ると消える</text>
+                <rect class="box-white" x="2" y="180" width="356" height="50" rx="8"/>
+                <text class="t-b t-c" x="180" y="202" translate="no">補助記憶</text>
+                <text class="t-sm t-c" x="180" y="220">大きい・遅い・電源を切っても残る</text>
+              </svg>
+              <figcaption>横幅は「容量の大きさ」のイメージ（実際の比率ではない）。上ほど、<span translate="no">CPU</span>に近く、速い。下ほど、遅いが、たくさん保存できる。値段の関係は、教科書で確かめる。</figcaption>
+            </figure>
+            <p><strong>ストーリーに戻る</strong>：Aさんは、レジのパソコンの保存装置が<span translate="no">HDD</span>なら、<span translate="no">SSD</span>に替えることで、起動やデータの読み込みが速くなることがある、と知った。でも、いくらかかるのか。そして、その費用は、元が取れるのか。次は、お店のお金の話。</p>
+
+            <p><strong>③ 企業のお金の管理：売上・利益・損益分岐点（約15分、教科書 ストラテジ系 p.033-040）</strong></p>
+            <p>お店は、<strong>売上</strong>（お客さんからもらうお金）から、<strong>費用</strong>を引いた残りが、<strong>利益</strong>になる。IPAのシラバスは、会計・財務の用語例に、<span translate="no">利益</span>、<span translate="no">粗利益</span>、<span translate="no">営業利益</span>、<span translate="no">損益分岐点</span>、<span translate="no">原価</span>、<span translate="no">変動費</span>、<span translate="no">固定費</span>、<span translate="no">販売量</span>などを挙げ、<span translate="no">損益分岐点</span>や利益率の簡単な計算を、活用例にしている。</p>
+            <p>費用は、2種類に分けて考える。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w7-cost">
+              <p class="vz-fig-title" id="cap-w7-cost">費用の2種類：<span translate="no">変動費</span>と<span translate="no">固定費</span></p>
+              <div class="vz-fields vz-fields--2">
+                <section class="vz-field vz-f-st">
+                  <h4><span translate="no">変動費</span></h4>
+                  <p>売る量（作る量）に応じて、<strong>増える</strong>費用。</p>
+                  <ul class="vz-tags"><li>例：コーヒーの豆</li><li>例：カップ</li></ul>
+                </section>
+                <section class="vz-field vz-f-st">
+                  <h4><span translate="no">固定費</span></h4>
+                  <p>売る量に関係なく、<strong>かかる</strong>費用。</p>
+                  <ul class="vz-tags"><li>例：お店の家賃</li><li>例：レジのパソコンの代金</li></ul>
+                </section>
+              </div>
+              <figcaption>パソコンの代金は、1杯売っても10杯売っても、同じ金額。だから、お店から見ると、<span translate="no">固定費</span>の仲間として考えられる（会計の細かい扱いは、教科書で確かめる）。</figcaption>
+            </figure>
+
+            <p><strong>例：Aさんのカフェで、<span translate="no">損益分岐点</span>を計算する</strong>（説明用の数字）</p>
+            <ul>
+              <li>コーヒー1杯の価格：<strong>500円</strong></li>
+              <li>1杯あたりの<span translate="no">変動費</span>（豆・カップなど）：<strong>150円</strong></li>
+              <li>1か月の<span translate="no">固定費</span>（家賃など）：<strong>210,000円</strong></li>
+            </ul>
+            <ol>
+              <li>1杯売るごとに、増える利益：500円－150円＝<strong>350円</strong></li>
+              <li><span translate="no">固定費</span>210,000円を、取り戻すのに必要な杯数：210,000円÷350円＝<strong>600杯</strong></li>
+              <li>600杯で、利益がちょうど<strong>0</strong>になる。これが<strong><span translate="no">損益分岐点</span></strong>。600杯より少ないと赤字、多いと黒字。たとえば700杯なら、350円×700杯－210,000円＝<strong>35,000円</strong>の利益</li>
+            </ol>
+            <figure class="vz-fig" aria-labelledby="cap-w7-bep">
+              <p class="vz-fig-title" id="cap-w7-bep"><span translate="no">損益分岐点</span>の図（カフェの例）</p>
+              <svg class="vz-svg" viewBox="0 0 360 270" role="img" aria-labelledby="w7-bep-t w7-bep-d">
+                <title id="w7-bep-t">損益分岐点の図：売上の線と、費用の線が交わる点が、600杯</title>
+                <desc id="w7-bep-d">横軸は販売量（杯）、縦軸は金額。売上の線は、0から右上へ、まっすぐ上がる。費用の線は、固定費210,000円の高さから、ゆるやかに上がる。2本の線が交わる点が損益分岐点で、販売量は600杯。交わる点より左は赤字、右は黒字。</desc>
+                <line class="line" x1="40" y1="220" x2="40" y2="14"/>
+                <line class="line" x1="40" y1="220" x2="350" y2="220"/>
+                <text class="t-sm" x="46" y="12">金額</text>
+                <text class="t-sm" x="236" y="240">販売量（杯）→</text>
+                <line class="line-blue" x1="40" y1="136" x2="340" y2="76"/>
+                <line class="line-orange" x1="40" y1="220" x2="340" y2="20"/>
+                <circle class="dot-orange" cx="220" cy="100" r="6"/>
+                <text class="t-b" x="48" y="168">固定費210,000円</text>
+                <text class="t-sm" x="60" y="36">売上の線（500円×杯数）</text>
+                <text class="t-sm" x="214" y="150">費用の線</text>
+                <text class="t-sm" x="214" y="166">（固定費＋変動費）</text>
+                <text class="t-b" x="122" y="264"><tspan translate="no">損益分岐点</tspan>：600杯（300,000円）</text>
+                <text class="t-sm" x="96" y="148">赤字</text>
+                <text class="t-sm" x="298" y="70">黒字</text>
+              </svg>
+              <figcaption>費用の線は、<span translate="no">固定費</span>（210,000円）からスタートする。売上の線が、費用の線に追いつく点が、<span translate="no">損益分岐点</span>。この点を超えると、売れば売るほど、利益が増える。</figcaption>
+            </figure>
+            <p class="lesson-note">この例の<span translate="no">固定費</span>は、家賃などの金額。レジのパソコン代を入れた計算は、課題（自分のお店で計算する）と、ペアで話す内容で考える。</p>
+            <p><strong>今日、覚える式：</strong><span translate="no">損益分岐点</span>の販売量 ＝ <span translate="no">固定費</span> ÷（1個あたりの価格 － 1個あたりの<span translate="no">変動費</span>）。式の丸暗記より、「1杯売ると、いくら残るか（350円）」を考える。</p>
+            <p><strong>利益の種類</strong>（シラバスの用語例）：売上から、<span translate="no">原価</span>（商品を作る・仕入れるのにかかった費用）を引いたものが<strong><span translate="no">粗利益</span></strong>。そこから、家賃・給料などの費用を引いたものが、<strong><span translate="no">営業利益</span></strong>。</p>
+
+            <p><strong>④ 会社の成績表：<span translate="no">財務諸表</span>と、資産としてのIT機器（約5分）</strong></p>
+            <p>会社は、お金の状況を、決まった形の書類（<strong><span translate="no">財務諸表</span></strong>）にまとめて、報告する。シラバスには、<span translate="no">損益計算書</span>、<span translate="no">貸借対照表</span>、<span translate="no">キャッシュフロー計算書</span>が出てくる。今日は、<strong>最初の2つ</strong>を、違いで覚える。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w7-fs">
+              <p class="vz-fig-title" id="cap-w7-fs"><span translate="no">損益計算書</span>と<span translate="no">貸借対照表</span></p>
+              <div class="vz-fields vz-fields--2">
+                <section class="vz-field vz-f-st">
+                  <h4><span translate="no">損益計算書</span></h4>
+                  <p>一定の<strong>期間</strong>（例：1年間）の、収益と費用から、<strong>利益</strong>を示す。</p>
+                  <ul class="vz-tags"><li>問い：この1年で、いくらもうけたか</li></ul>
+                </section>
+                <section class="vz-field vz-f-st">
+                  <h4><span translate="no">貸借対照表</span></h4>
+                  <p>ある<strong>時点</strong>の、<strong>資産・負債・純資産</strong>の状況を示す。</p>
+                  <ul class="vz-tags"><li>問い：今日、会社に何があり、何を借りているか</li></ul>
+                </section>
+              </div>
+              <figcaption>覚え方：<span translate="no">損益計算書</span>は「期間のもうけ」、<span translate="no">貸借対照表</span>は「ある日の財産」。<span translate="no">キャッシュフロー計算書</span>（お金の出入り）は、今日は名前だけ。</figcaption>
+            </figure>
+            <p>Aさんが買う新しいパソコンは、お店の<strong>資産</strong>（会社が持っている、価値のあるもの）になることがある（<span translate="no">貸借対照表</span>の「資産」の側。金額や使う期間などの決まりで、扱いが変わる。今日は、「IT機器も、会社の資産になることがある」と知っていればよい）。IT機器は、ただの道具でなく、お金の面でも、会社の大事な持ち物。</p>
+            <p><strong>ペアで話す（約3分）</strong>：Aさんが、新しいパソコン（150,000円とする）を買った。このお金は、<span translate="no">変動費</span>と<span translate="no">固定費</span>のどちらの考え方に近いか。そう考えた理由を、日本語で話す。</p>
+
+            <div class="demo-cta demo-cta--amber">
+              <p class="demo-cta__heading">🎮 ゲーム②：用語シューティング ステージ2（約10分）</p>
+              <p class="demo-cta__body">今日の用語（<span translate="no">補助記憶</span>・<span translate="no">HDD</span>・<span translate="no">SSD</span>・<span translate="no">変動費</span>・<span translate="no">固定費</span>・<span translate="no">損益分岐点</span>・<span translate="no">損益計算書</span>・<span translate="no">貸借対照表</span>）と、1限の<span translate="no">CPU</span>・<span translate="no">キャッシュメモリ</span>が混ざる。的が降りてくる速さも上がる。ライフは3つ。最後の画面に、間違えた用語の一覧が出る。ここでも、点数は記録されない。</p>
+              <p class="demo-cta__body"><strong>進め方：</strong>1回は約2分。<strong>目標は「ランク<span translate="no">A</span>以上」（10問中8問以上）</strong>。何度でも挑戦してよい。終わったら、間違えた用語の一覧を<a href="#sec-terms">用語カード</a>で確かめる。「スタート」ボタンを押すまで、時間は進まない。</p>
+              <a href="term-shooter.html?w=7&amp;stage=2" class="demo-cta__link">→ ステージ2を始める</a>
+              <div class="qr-box qr-box--inline qr-box--pc">
+                <a class="qr-box__zoom" href="qr/week07-game-stage2.svg" target="_blank" rel="noopener" aria-label="QRコードを大きく表示する">
+                  <img class="qr-box__img" src="qr/week07-game-stage2.svg" alt="ゲーム ステージ2を開くQRコード。スマートフォンのカメラで読み取ると、ゲームが開く。" width="150" height="150">
+                </a>
+                <div class="qr-box__body">
+                  <p class="qr-box__heading">📱 スマホで遊ぶ</p>
+                  <p class="qr-box__text">スマートフォンのカメラで、このQRコードを読み取ると、ステージ2が開く。押すと、大きく表示される。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= 2限 後半 ================= -->
+        <div class="timeline-block" id="blk-4">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>過去問演習 → 用語を説明し合う → 確認テスト（1回目）</h3>
+          <div class="timeline-body">
+
+            <p><strong>過去問演習（約15分）</strong>：今日の範囲の令和7年度の公開問題を、問い方の型を使って解く。3問ある。自分で選んでから、答えと解説を見る。</p>
+
+            <div class="exam-q">
+              <p class="exam-q-text">【例題①】問75　次の記憶媒体のうち，記憶素子として半導体メモリを用いているものだけを全て挙げたものはどれか。</p>
+            <p class="exam-q-text">a　CD-ROM</p>
+            <p class="exam-q-text">b　DVD-RAM</p>
+            <p class="exam-q-text">c　RAM</p>
+            <p class="exam-q-text">d　SSD</p>
+            <p class="exam-q-text">e　USBメモリ</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>a, b, c</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>a, b, e</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>c, d, e</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>c, e</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問75（<span translate="no">テクノロジ系</span>。問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：ウ</strong>（型：5つの選択肢を1つずつ判定して、全部に当たる組合せを選ぶ）。<span translate="no">RAM</span>（<span translate="no">主記憶</span>に使うメモリ）、<span translate="no">SSD</span>、<span translate="no">USBメモリ</span>は、半導体メモリ。<span translate="no">CD-ROM</span>と<span translate="no">DVD-RAM</span>は、光ディスクで、半導体メモリではない。まず、<strong>確実に半導体メモリだと分かるもの</strong>（<span translate="no">RAM</span>）にしるしをつけ、選択肢の組合せから、<span translate="no">a</span>と<span translate="no">b</span>を含むものを外す、という進め方ができる。今日の用語の<span translate="no">SSD</span>は、「半導体メモリ」とセットで覚える。</p>
+              </details>
+            </div>
+
+            <div class="exam-q">
+              <p class="exam-q-text">【例題②】問34　ある商品を5,000個販売したところ，売上げが6,000万円，利益が400万円となった。商品1個当たりの変動費が7,000円であるとき，利益を1,000万円以上にするためには，少なくともあと何個販売すればよいか。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>500</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>1,200</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>6,200</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>7,500</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問34（<span translate="no">ストラテジ系</span>。問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：イ</strong>（型：1個あたりの「増える利益」を求めて、足りない利益を割る）。①1個の売値：6,000万円÷5,000個＝12,000円。②1個売るごとに増える利益：12,000円－変動費7,000円＝5,000円。③足りない利益：1,000万円－400万円＝600万円。④必要な個数：600万円÷5,000円＝<strong>1,200個</strong>。<span translate="no">固定費</span>は、販売個数が増えても変わらないので、この計算には出てこない。<span translate="no">損益分岐点</span>の考え方と同じ。</p>
+              </details>
+            </div>
+
+            <div class="exam-q">
+              <p class="exam-q-text">【例題③】問5　A社ではB商品の仕入れと販売を行っている。ある期のB商品の仕入単価は期首から上昇し続け，期末が最も高くなった。当該期の売上原価を“期首棚卸高＋当期商品仕入高－期末棚卸高”で計算するとき，期末棚卸高の計算に期末の仕入単価を用いると，B商品の期末棚卸高及び売上原価は，期中の仕入単価の平均値を用いる場合に比べてどのようになるか。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>期末棚卸高，売上原価ともに上がる。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>期末棚卸高，売上原価ともに変わらない。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>期末棚卸高は上がり，売上原価は下がる。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>期末棚卸高は下がり，売上原価は上がる。</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問5（<span translate="no">ストラテジ系</span>。問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：ウ</strong>（型：問題文に書いてある式に、変化をあてはめる）。期末の仕入単価は、平均の単価より高い。だから、期末の単価で<span translate="no">期末棚卸高</span>（期末に残っている商品の金額）を計算すると、金額は<strong>上がる</strong>。式「<span translate="no">売上原価</span>＝期首棚卸高＋当期商品仕入高－期末棚卸高」で、引く数（期末棚卸高）が大きくなるので、<span translate="no">売上原価</span>は<strong>下がる</strong>。この問題は、用語の意味を知らなくても、<strong>式の中の「－」</strong>に注目すれば解ける。今日の範囲の<span translate="no">利益</span>と<span translate="no">原価</span>の関係（売上－費用＝利益。原価だけを引くと粗利益）につながる。</p>
+              </details>
+            </div>
+
+
+            <p><strong>用語を、ペアで説明し合う（約10分）</strong>：下の「用語カード」の12語から、3つずつ選び、1人が、やさしい日本語で意味を説明する。もう1人は、どの用語かを当てる。</p>
+
+            <p><strong>確認テスト（1回目）（約5分）</strong></p>
+            <p>今日の内容の5問。<strong>点数を競うものではない</strong>。今、どこまで分かっているかを、自分で知るためのテスト。分からない問題は、思い出せる範囲で答える。送信すると、点数と、正解・解説が表示される。</p>
+            <div class="vz-cta">
+              <a class="vz-btn vz-btn--ext" href="https://docs.google.com/forms/d/e/1FAIpQLSfjvkDajAKJQa3cSxxgvpb1TS6JLabSVErk3Ohbc7h5KqnFgQ/viewform" target="_blank" rel="noopener">第7回 確認テスト（1回目）を受ける（Googleフォーム）</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= まとめ ================= -->
+        <div class="timeline-block" id="blk-5">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り → 用語カードの提出・次回予告</h3>
+          <div class="timeline-body">
+            <ul>
+              <li><strong>振り返り</strong>（約3分）：1回目の結果の画面で、<strong>点数を覚えて</strong>、<strong>間違えた問題の解説</strong>を読む。分からないところは、隣の人に聞く、または、このページの<a href="#sec-terms">用語カード</a>・<a href="#sec-quiz">練習クイズ</a>・<a href="term-shooter.html?w=7">ゲーム</a>で確かめる</li>
+              <li><strong>確認テスト（2回目）は任意</strong>：時間がある人、確かめたい人は、<a href="#sec-optional">下の「任意の取り組み」</a>から受ける</li>
+              <li><strong>用語カード</strong>：今回覚えた用語にチェックを入れて、フォームで提出する（約3分）</li>
+              <li>質問と、次回までの課題の確認（約1分）。読むだけの<a href="#sec-tip">「就活ワンポイント」</a>もある。自分の点数の推移は、<a href="#sec-optional">「任意の取り組み」</a>の「自分の成績を見る」から、いつでも見られる</li>
+              <li>次回（第8回）：<strong>止まらないシステムを作る</strong>——<span translate="no">稼働率</span>・<span translate="no">RASIS</span>と、システム構成（<span translate="no">テクノロジ系</span> p.256-269、<span translate="no">ストラテジ系</span>のシステム戦略）</li>
+            </ul>
+            <div class="vz-cta">
+              <a class="vz-btn vz-btn--ext" href="https://docs.google.com/forms/d/e/1FAIpQLSfCWkx3578GDfqRCse5HKHQwkd0oodyCvgrNiRCQko35r8RlA/viewform" target="_blank" rel="noopener">第7回 今回覚えた用語を提出する（Googleフォーム）</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-terms">
+      <h2>用語カード（今日の用語）</h2>
+      <p class="lesson-note">用語カードは、今日の授業で出る用語と、その意味のリスト。授業の最後に、フォームで<strong>今回覚えた用語</strong>にチェックを入れて提出する。用語は日本語のまま覚える。試験は日本語で行われる。</p>
+      <div class="table-wrap">
+        <table class="schedule-table">
+          <thead><tr><th>用語</th><th>意味</th></tr></thead>
+          <tbody>
+            <tr><td><span translate="no">CPU</span></td><td>コンピュータの頭脳。プログラムの命令を読み取って、<span translate="no">演算</span>（計算）と<span translate="no">制御</span>（全体の指示）を行う部品</td></tr>
+            <tr><td><span translate="no">クロック周波数</span></td><td><span translate="no">CPU</span>が動く速さの目安の一つ。単位は <span translate="no">GHz</span>（ギガヘルツ）など。数が大きいほど、1秒間に動く回数が多い。性能は、これだけでは決まらない</td></tr>
+            <tr><td><span translate="no">主記憶</span></td><td><span translate="no">CPU</span>がいま使うプログラムやデータを置く場所（メインメモリ）。<span translate="no">RAM</span>が使われ、電源を切ると内容が消える</td></tr>
+            <tr><td><span translate="no">キャッシュメモリ</span></td><td><span translate="no">CPU</span>と主記憶の間にあって、よく使うデータを置いておく、小さくて速いメモリ</td></tr>
+            <tr><td><span translate="no">補助記憶</span></td><td>データやプログラムを、長く保存する装置。主記憶より遅いが、容量が大きく、電源を切っても残る（例：<span translate="no">HDD</span>、<span translate="no">SSD</span>）</td></tr>
+            <tr><td><span translate="no">HDD</span></td><td>磁気ディスクを回転させて、データを記録する補助記憶装置。動く部品があるので、一般に、<span translate="no">SSD</span>より読み書きが遅く、衝撃に弱い</td></tr>
+            <tr><td><span translate="no">SSD</span></td><td>半導体メモリ（<span translate="no">フラッシュメモリ</span>）にデータを記録する補助記憶装置。動く部品がなく、一般に、<span translate="no">HDD</span>より読み書きが速い</td></tr>
+            <tr><td><span translate="no">変動費</span></td><td>販売量（作る量）に応じて増える費用（例：コーヒーの豆・カップ）</td></tr>
+            <tr><td><span translate="no">固定費</span></td><td>販売量に関係なく、かかる費用（例：家賃）</td></tr>
+            <tr><td><span translate="no">損益分岐点</span></td><td>利益がちょうど0になる、売上（販売量）。これを超えると黒字になる</td></tr>
+            <tr><td><span translate="no">損益計算書</span></td><td>一定期間の、収益と費用から、利益を示す<span translate="no">財務諸表</span></td></tr>
+            <tr><td><span translate="no">貸借対照表</span></td><td>ある時点の、資産・負債・純資産の状況を示す<span translate="no">財務諸表</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-quiz">
+      <h2>練習クイズ（サイト内・記録なし）</h2>
+      <p class="lesson-note">確認テストの内容を、自分のペースで練習するためのクイズ（確認テストと同じ内容）。回答はこのページの中で判定されるだけで、どこにも送信・保存されず、成績にも含まれない。何度でも試せる。</p>
+
+        <div class="quiz-set">
+          <div class="quiz" aria-live="polite" data-answer="イ">
+            <p class="quiz-q"><span class="quiz-q-num">Q1</span>コンピュータの中で，プログラムの命令を読み取り，演算と制御を行う装置はどれか。</p>
+            <div class="quiz-choices">
+              <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span><span translate="no">主記憶</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span><span translate="no">CPU</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span><span translate="no">SSD</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span><span translate="no">キャッシュメモリ</span></span></button>
+            </div>
+            <div class="quiz-feedback" hidden>
+              <p class="quiz-result"></p>
+              <p><span translate="no">CPU</span>は、プログラムの命令を読み取って、演算と制御を行う、コンピュータの頭脳（IPAシラバスの用語例：演算，制御，CPU）。アは、CPUがいま使うデータを置く場所。ウは、データを保存する装置。エは、CPUと主記憶の間で、よく使うデータを置く小さくて速いメモリ。</p>
+              <button type="button" class="quiz-retry">もう一度</button>
+            </div>
+          </div>
+          <div class="quiz" aria-live="polite" data-answer="ア">
+            <p class="quiz-q"><span class="quiz-q-num">Q2</span>電源を切ると記憶した内容が消える，CPUがいま使うプログラムやデータを置くメモリはどれか。</p>
+            <div class="quiz-choices">
+              <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span><span translate="no">主記憶</span>（<span translate="no">RAM</span>）</span></button>
+              <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span><span translate="no">SSD</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span><span translate="no">HDD</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span><span translate="no">USBメモリ</span></span></button>
+            </div>
+            <div class="quiz-feedback" hidden>
+              <p class="quiz-result"></p>
+              <p><span translate="no">主記憶</span>は、CPUがいま使うプログラムやデータを置く場所で、<span translate="no">RAM</span>が使われる。<span translate="no">RAM</span>は揮発性メモリで、電源を切ると内容が消える（IPAシラバスの用語例：RAM，揮発性メモリ）。イ・ウ・エは、電源を切っても内容が残る、データを保存する装置。</p>
+              <button type="button" class="quiz-retry">もう一度</button>
+            </div>
+          </div>
+          <div class="quiz" aria-live="polite" data-answer="ア">
+            <p class="quiz-q"><span class="quiz-q-num">Q3</span>半導体メモリ（フラッシュメモリ）を使い，動く部品がなく，一般に<span translate="no">HDD</span>より読み書きが速い補助記憶装置はどれか。</p>
+            <div class="quiz-choices">
+              <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span><span translate="no">SSD</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span><span translate="no">DVD-ROM</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span><span translate="no">HDD</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span><span translate="no">CD-R</span></span></button>
+            </div>
+            <div class="quiz-feedback" hidden>
+              <p class="quiz-result"></p>
+              <p><span translate="no">SSD</span>は、半導体メモリを使う補助記憶装置。令和7年度の公開問題 問75でも、<span translate="no">SSD</span>は半導体メモリを用いるものとして扱われている。<span translate="no">HDD</span>は、磁気ディスクを回転させて記録する。<span translate="no">DVD-ROM</span>と<span translate="no">CD-R</span>は、光ディスク。</p>
+              <button type="button" class="quiz-retry">もう一度</button>
+            </div>
+          </div>
+          <div class="quiz" aria-live="polite" data-answer="ウ">
+            <p class="quiz-q"><span class="quiz-q-num">Q4</span>カフェで，コーヒー1杯の価格が600円，1杯あたりの<span translate="no">変動費</span>が200円，1か月の<span translate="no">固定費</span>が200,000円のとき，1か月の<span translate="no">損益分岐点</span>の販売量（利益がちょうど0になる杯数）は何杯か。</p>
+            <div class="quiz-choices">
+              <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span>250杯</span></button>
+              <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span>333杯</span></button>
+              <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span>500杯</span></button>
+              <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span>1,000杯</span></button>
+            </div>
+            <div class="quiz-feedback" hidden>
+              <p class="quiz-result"></p>
+              <p>1杯売るごとに増える利益は、600円－200円＝400円。固定費200,000円を取り戻すには、200,000円÷400円＝500杯。500杯で、利益がちょうど0になる（<span translate="no">損益分岐点</span>）。イは、固定費を価格600円で割った数。エは、固定費を変動費200円で割った数。どちらも、1杯あたりの増える利益（400円）を使っていない。</p>
+              <button type="button" class="quiz-retry">もう一度</button>
+            </div>
+          </div>
+          <div class="quiz" aria-live="polite" data-answer="イ">
+            <p class="quiz-q"><span class="quiz-q-num">Q5</span>ある時点での，企業の<span translate="no">資産</span>・<span translate="no">負債</span>・<span translate="no">純資産</span>の状況を示す<span translate="no">財務諸表</span>はどれか。</p>
+            <div class="quiz-choices">
+              <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span><span translate="no">損益計算書</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span><span translate="no">貸借対照表</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span><span translate="no">キャッシュフロー計算書</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span><span translate="no">勘定科目</span></span></button>
+            </div>
+            <div class="quiz-feedback" hidden>
+              <p class="quiz-result"></p>
+              <p><span translate="no">貸借対照表</span>は、ある時点の、資産・負債・純資産の状況を示す財務諸表。<span translate="no">損益計算書</span>は、一定期間の収益と費用から、利益を示す。<span translate="no">キャッシュフロー計算書</span>は、お金の出入りを示す。<span translate="no">勘定科目</span>は、取引を分類する項目の名前で、財務諸表そのものではない。</p>
+              <button type="button" class="quiz-retry">もう一度</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-optional">
+      <h2>任意の取り組み</h2>
+      <p class="lesson-note">必須ではありません。時間があるとき、確かめたいときに使います。</p>
+      <h3>用語シューティング（ゲーム）</h3>
+      <p>授業で遊んだゲームを、何度でも遊べます。間違えた用語の一覧を見て、用語カードで確かめると、覚えやすくなります。</p>
+      <div class="vz-cta">
+        <a class="vz-btn" href="term-shooter.html?w=7">用語シューティングを遊ぶ</a>
+      </div>
+      <h3>確認テスト（2回目）</h3>
+      <p>1回目と同じ5問です（問題の順番は違います）。受けたら、結果の画面の点数を、1回目の点数と自分で比べます。1回目の点数を、覚えておきます。</p>
+      <div class="vz-cta">
+        <a class="vz-btn vz-btn--ext" href="https://docs.google.com/forms/d/e/1FAIpQLScyGvMI7oxfD3A-OyxKcr51d5oa0lNauaQkyt55nnc7gl9v2Q/viewform" target="_blank" rel="noopener">第7回 確認テスト（2回目・任意）を受ける（Googleフォーム）</a>
+      </div>
+      <h3>自分の成績を見る</h3>
+      <p>診断テスト・復習テスト・確認テストの点数の推移と、次に復習するとよい用語を見られます。学校のGoogleアカウントでログインすると、自分の分だけが表示されます。</p>
+      <div class="vz-cta">
+        <a class="vz-btn vz-btn--ext" href="https://script.google.com/a/macros/i-seifu.jp/s/AKfycbwquVX4xkXNy47RkGjCUz6Xmc4GFaPLpPkSVuW6z--m5Yth88yilipCYUSanlTpQF9P/exec" target="_blank" rel="noopener">自分の成績を見る（学校のGoogleアカウント）</a>
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-tip">
+      <h2>就活ワンポイント（任意）</h2>
+      <p class="lesson-note">授業時間には含めない、読むだけのコラム。成績にも含まれない。今日の言葉を、面接で使う練習。</p>
+      <h3>面接で「パソコンを選ぶとき、何を見ればいいですか」と聞かれたら</h3>
+      <p>お店の仕事や、アルバイトで、お客さんに聞かれることがある。専門用語を使わずに、短く説明する練習になる。答えは、<strong>3つの順番</strong>で話すと、分かりやすくなる（一つの考え方）。下の吹き出しが、順に現れる。</p>
+      <div><button type="button" class="tip-ctl" data-target="tip-chat-1" aria-pressed="false">動きを止めて、全部を表示する</button></div>
+      <div class="tip-chat" id="tip-chat-1" role="group" aria-label="面接の会話の例。面接官の質問のあと、結論、理由、まとめの順に答える">
+        <div class="tip-b tip-b--q"><span class="tip-tag">面接官</span>お客様に、「パソコンは、何を見て選べばいいですか」と聞かれたら、どう答えますか。</div>
+        <div class="tip-b"><span class="tip-tag">① 結論</span>見る場所の一つは、<span translate="no">CPU</span>と、メモリと、保存の装置です。人にたとえると、<span translate="no">CPU</span>は頭、メモリは作業の机、保存の装置は本棚です。</div>
+        <div class="tip-b"><span class="tip-tag">② 理由</span>たとえば、机が狭いと、たくさんの作業を同時にするとき、遅くなることがあるからです。</div>
+        <div class="tip-b"><span class="tip-tag">③ まとめ</span>お客様が何に使うかを聞いて、合う選び方を、一緒に考えたいです。</div>
+      </div>
+      <ul>
+        <li><strong>例文は一例</strong>。自分が実際に学んだこと、したことを話す。していないことは、言わない。</li>
+        <li>用語を、日本語のまま使えて、しかも「頭」「机」「本棚」のような<strong>例え</strong>で言い換えられると、<span translate="no">IT</span>に詳しくない人にも伝わる。</li>
+        <li>「自分のスマートフォンの保存容量を調べた」のように、<strong>自分がしたこと</strong>を一言入れると、話に説得力が出る。</li>
+      </ul>
+      <p class="lesson-note">答え方の順番（結論・理由・まとめ）は、この教材の一つの考え方で、公式のルールではない。<span translate="no">IPA</span>は、ITパスポート試験の合格について、「就職活動において、自らの知識を証明し、自己アピールに役立ちます」と紹介している（<span translate="no">IPA</span><a href="https://www3.jitec.ipa.go.jp/JitesCbt/html/about/merit.html" target="_blank" rel="noopener">「合格のメリット」</a>、確認日：2026-11-10。留学生向けに書かれた説明ではない）。</p>
+    </div>
+
+    <div class="syllabus-section" id="sec-tasks">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>第8回の予習：教科書を読む</strong>
+            <p>教科書 p.256-269 を読み、<span translate="no">稼働率</span>が何を表すか、確認しておく（第8回は「止まらないシステムを作る」）。第8回の授業の最後に、覚えた用語をフォームで提出する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>練習クイズとゲームで、間違えた用語を確かめる</strong>
+            <p>練習クイズは、全問正解になるまで繰り返す。ゲームは、最後の画面の「間違えた用語」の一覧を見て、用語カードで確かめる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">任意</span>
+          <div>
+            <strong>教科書の章末確認問題</strong>
+            <p>今日の範囲（テクノロジ系 p.244-255、ストラテジ系 p.033-040）の章末確認問題を、自分のペースで解く。授業では、同じ範囲を確認テストで確かめる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>自分のお店で、<span translate="no">損益分岐点</span>を計算してみる</strong>
+            <p>好きな商品を1つ選び（例：ラーメン、スマートフォンのケース）、価格・1個あたりの<span translate="no">変動費</span>・1か月の<span translate="no">固定費</span>を、自分で決める（架空の数字でよい）。授業の式で、何個売ると<span translate="no">損益分岐点</span>になるか、計算する。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-refs">
+      <h2>参考リンク</h2>
+      <ul class="vz-links">
+        <li><a class="vz-link" href="https://www.ipa.go.jp/shiken/syllabus/omgdg50000005kn1-att/syllabus_ip_ver6_5.pdf" target="_blank" rel="noopener"><b>ITパスポート試験シラバス（PDF、Ver.6.5）</b><span><span translate="no">IPA</span>。「コンピュータの構成」「プロセッサ」「メモリ」「会計・財務」の用語例で、試験での用語の書き方を確かめる</span></a></li>
+        <li><a class="vz-link" href="https://www3.jitec.ipa.go.jp/JitesCbt/html/about/merit.html" target="_blank" rel="noopener"><b>【ITパスポート試験】合格のメリット</b><span><span translate="no">IPA</span>。就活ワンポイントで紹介した記述の出典</span></a></li>
+        <li><a class="vz-link" href="https://www.ipa.go.jp/shiken/mondai-kaiotu/index.html" target="_blank" rel="noopener"><b>過去問題 | 試験情報 | IPA</b><span>公開問題と解答例の一覧。法令に特別の定めがある場合を除き、許諾・使用料は不要（IPA公式）。この授業では、年度と問番号を出典として書く</span></a></li>
+        <li><a class="vz-link" href="https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2025r07_ip_qs.pdf" target="_blank" rel="noopener"><b>令和7年度 ITパスポート試験 公開問題（PDF）</b><span>例題の出典（問5・問34・問75）</span></a></li>
+        <li><a class="vz-link" href="https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2025r07_ip_ans.pdf" target="_blank" rel="noopener"><b>令和7年度 ITパスポート試験 公開問題 解答例（PDF）</b><span>例題の正答の確認</span></a></li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week06.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第6回 インターネットが動く原理とその先</span>
+      </a>
+      <a href="../it-passport-technology.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">ITパスポート テクノロジー系</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第8回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js?v=5"></script>
+</body>
+</html>
