@@ -232,22 +232,83 @@
 
             <p><strong>① <span translate="no">CPU</span>：コンピュータの頭脳（約15分）</strong></p>
             <p><span translate="no">CPU</span>（Central Processing Unit）は、プログラムの命令を読み取って、<span translate="no">演算</span>と<span translate="no">制御</span>を行う部品。ストーリーの2の「考える部品」が、これ。パソコンやスマートフォンのすべての動きは、<span translate="no">CPU</span>の指示と計算が、元になっている。IPAのシラバスは、<span translate="no">CPU</span>を、プロセッサの基本的な仕組みの用語例に挙げている。</p>
-            <p>では、<span translate="no">CPU</span>の「速さ」は、どう表すのか。</p>
-            <ul>
-              <li><strong><span translate="no">クロック周波数</span></strong>：<span translate="no">CPU</span>が動く速さの目安の一つ。<span translate="no">GHz</span>（ギガヘルツ）などで表す。数が大きいほど、1秒間に動く回数が多い。ただし、<span translate="no">CPU</span>の性能は、<span translate="no">クロック周波数</span>だけでは決まらない（次の<span translate="no">マルチコア</span>の数なども関係する）。</li>
-              <li><strong><span translate="no">マルチコアプロセッサ</span></strong>：1つの<span translate="no">CPU</span>の中に、処理を行う部分（コア）が、複数ある<span translate="no">CPU</span>。複数の仕事を、同時に進めやすい。</li>
-              <li><strong><span translate="no">GPU</span></strong>：画像などの処理を、得意とするプロセッサ。ゲームや動画で使われる。</li>
-            </ul>
-            <p class="lesson-note">この3つは、シラバスの用語例にある（<span translate="no">マルチコアプロセッサ</span>・<span translate="no">GPU</span>・<span translate="no">クロック周波数</span>）。用語カードに入れるのは<span translate="no">クロック周波数</span>だけ。<span translate="no">マルチコアプロセッサ</span>と<span translate="no">GPU</span>は、名前と、おおまかな意味を知っていればよい。</p>
+            <p><span translate="no">CPU</span>の中は、大きく2つの働きに分かれる。そして、<span translate="no">CPU</span>の「速さ」には、いくつかの見方がある。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w7-cpu">
+              <p class="vz-fig-title" id="cap-w7-cpu"><span translate="no">CPU</span>の2つの働きと、速さに関わるもの</p>
+              <svg class="vz-svg" viewBox="0 0 360 264" role="img" aria-labelledby="w7-cpu-t w7-cpu-d">
+                <title id="w7-cpu-t">CPUの2つの働きと、速さに関わるもの</title>
+                <desc id="w7-cpu-d">CPUは、制御（全体に指示を出す）と演算（計算する）を行う。速さに関わるものは、クロック周波数（動く速さの目安）、マルチコアプロセッサ（処理を行う部分が複数ある）、GPU（画像の処理が得意）。</desc>
+                <rect class="box-orange" x="2" y="4" width="356" height="100" rx="8"/>
+                <text class="t-b" x="12" y="26" translate="no">CPU（頭脳）</text>
+                <rect class="box-white" x="12" y="38" width="164" height="56" rx="8"/>
+                <text class="t-b t-c" x="94" y="62" translate="no">制御</text>
+                <text class="t-sm t-c" x="94" y="82">全体に指示を出す</text>
+                <rect class="box-white" x="186" y="38" width="162" height="56" rx="8"/>
+                <text class="t-b t-c" x="267" y="62" translate="no">演算</text>
+                <text class="t-sm t-c" x="267" y="82">計算する</text>
+                <rect class="box-white" x="2" y="114" width="356" height="46" rx="8"/>
+                <text class="t-b" x="12" y="136" translate="no">クロック周波数</text>
+                <text class="t-sm" x="12" y="153">動く速さの目安。<tspan translate="no">GHz</tspan>で表す</text>
+                <rect class="box-white" x="2" y="166" width="356" height="46" rx="8"/>
+                <text class="t-b" x="12" y="188" translate="no">マルチコアプロセッサ</text>
+                <text class="t-sm" x="12" y="205">処理を行う部分（コア）が、複数ある</text>
+                <rect class="box-white" x="2" y="218" width="356" height="44" rx="8"/>
+                <text class="t-b" x="12" y="239" translate="no">GPU</text>
+                <text class="t-sm" x="12" y="256">画像の処理が得意。ゲームや動画で使う</text>
+              </svg>
+              <figcaption><span translate="no">クロック周波数</span>は、数が大きいほど、1秒間に動く回数が多い。ただし、<span translate="no">CPU</span>の性能は、これだけでは決まらない（コアの数なども関係する）。</figcaption>
+            </figure>
+            <p class="lesson-note">この3つは、シラバスの用語例にある。用語カードに入れるのは<span translate="no">クロック周波数</span>だけ。<span translate="no">マルチコアプロセッサ</span>と<span translate="no">GPU</span>は、名前と、おおまかな意味を知っていればよい。</p>
 
             <p><strong>② <span translate="no">主記憶</span>と<span translate="no">キャッシュメモリ</span>：いま使うデータを置く場所（約10分）</strong></p>
-            <p><span translate="no">CPU</span>は、仕事をするとき、使うプログラムやデータを、すぐに読み書きできる場所に置く。これが<strong><span translate="no">主記憶</span></strong>（メインメモリ）。机の上に、いま使う資料を広げているイメージ。<span translate="no">主記憶</span>には、<span translate="no">RAM</span>が使われる。<span translate="no">RAM</span>は<strong><span translate="no">揮発性メモリ</span></strong>で、<strong>電源を切ると、内容が消える</strong>（シラバスの用語例：<span translate="no">RAM</span>、<span translate="no">ROM</span>、<span translate="no">揮発性メモリ</span>、<span translate="no">不揮発性メモリ</span>（<span translate="no">フラッシュメモリ</span>））。</p>
-            <ul>
-              <li><strong><span translate="no">RAM</span></strong>：読み書きできるメモリ。揮発性（電源を切ると消える）。<span translate="no">主記憶</span>に使う。</li>
-              <li><strong><span translate="no">ROM</span></strong>：基本的に、読み出し専用のメモリ。電源を切っても消えない（不揮発性）。</li>
-              <li><strong><span translate="no">フラッシュメモリ</span></strong>：電源を切っても消えない、不揮発性の半導体メモリ。<span translate="no">USBメモリ</span>や<span translate="no">SDカード</span>、<span translate="no">SSD</span>で使われる。</li>
-            </ul>
-            <p>もう一つ。<span translate="no">CPU</span>は、とても速い。<span translate="no">主記憶</span>は、<span translate="no">CPU</span>より、速さが追いつかない。そこで、<span translate="no">CPU</span>と<span translate="no">主記憶</span>の間に、<strong>小さくて速い</strong>メモリを置く。これが<strong><span translate="no">キャッシュメモリ</span></strong>。よく使うデータを、そこに置いておくので、<span translate="no">主記憶</span>まで取りに行く回数が減る。</p>
+            <p><span translate="no">CPU</span>は、仕事をするとき、使うプログラムやデータを、すぐに読み書きできる場所に置く。これが<strong><span translate="no">主記憶</span></strong>（メインメモリ）。机の上に、いま使う資料を広げているイメージ。<span translate="no">主記憶</span>には、<span translate="no">RAM</span>が使われる。<span translate="no">RAM</span>は<strong><span translate="no">揮発性メモリ</span></strong>で、<strong>電源を切ると、内容が消える</strong>。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w7-mem">
+              <p class="vz-fig-title" id="cap-w7-mem">メモリの種類：電源を切ると、どうなるか</p>
+              <svg class="vz-svg" viewBox="0 0 360 180" role="img" aria-labelledby="w7-mem-t w7-mem-d">
+                <title id="w7-mem-t">メモリの種類：RAM・ROM・フラッシュメモリ</title>
+                <desc id="w7-mem-d">RAMは読み書きできる揮発性メモリで、電源を切ると内容が消える。主記憶に使う。ROMは基本的に読み出し専用で、電源を切っても消えない。フラッシュメモリは不揮発性の半導体メモリで、電源を切っても消えない。USBメモリ、SDカード、SSDで使う。</desc>
+                <rect class="box-white" x="2" y="4" width="356" height="52" rx="8"/>
+                <text class="t-b" x="12" y="28" translate="no">RAM</text>
+                <text class="t-sm" x="12" y="46">読み書きできる。主記憶に使う</text>
+                <rect class="box-orange" x="252" y="14" width="96" height="32" rx="8"/>
+                <text class="t-b t-c" x="300" y="35">消える</text>
+                <rect class="box-white" x="2" y="62" width="356" height="52" rx="8"/>
+                <text class="t-b" x="12" y="86" translate="no">ROM</text>
+                <text class="t-sm" x="12" y="104">基本的に、読み出し専用</text>
+                <rect class="box-green" x="252" y="72" width="96" height="32" rx="8"/>
+                <text class="t-b t-c" x="300" y="93">残る</text>
+                <rect class="box-white" x="2" y="120" width="356" height="56" rx="8"/>
+                <text class="t-b" x="12" y="144" translate="no">フラッシュメモリ</text>
+                <text class="t-sm" x="12" y="164"><tspan translate="no">USBメモリ・SDカード・SSD</tspan>で使う</text>
+                <rect class="box-green" x="252" y="130" width="96" height="32" rx="8"/>
+                <text class="t-b t-c" x="300" y="151">残る</text>
+              </svg>
+              <figcaption><span translate="no">RAM</span>は<span translate="no">揮発性メモリ</span>（電源を切ると消える）、<span translate="no">ROM</span>と<span translate="no">フラッシュメモリ</span>は<span translate="no">不揮発性メモリ</span>（電源を切っても消えない）。シラバスの用語例にある。</figcaption>
+            </figure>
+
+            <p>もう一つ。<span translate="no">CPU</span>は、とても速い。<span translate="no">主記憶</span>は、<span translate="no">CPU</span>より、速さが追いつかない。そこで、<span translate="no">CPU</span>と<span translate="no">主記憶</span>の間に、<strong>小さくて速い</strong>メモリを置く。これが<strong><span translate="no">キャッシュメモリ</span></strong>。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w7-cache">
+              <p class="vz-fig-title" id="cap-w7-cache"><span translate="no">キャッシュメモリ</span>の置き場所と働き</p>
+              <svg class="vz-svg" viewBox="0 0 360 168" role="img" aria-labelledby="w7-cache-t w7-cache-d">
+                <title id="w7-cache-t">CPU・キャッシュメモリ・主記憶の位置</title>
+                <desc id="w7-cache-d">左から、CPU、キャッシュメモリ、主記憶の順に並び、それぞれの間でデータをやり取りする。よく使うデータはキャッシュメモリに置くので、主記憶まで取りに行く回数が減る。</desc>
+                <rect class="box-orange" x="2" y="10" width="70" height="60" rx="8"/>
+                <text class="t-b t-c" x="37" y="46" translate="no">CPU</text>
+                <line class="line-orange" x1="74" y1="40" x2="100" y2="40" marker-start="url(#mk-s)" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="102" y="10" width="130" height="60" rx="8"/>
+                <text class="t-b t-c" x="167" y="36" translate="no">キャッシュメモリ</text>
+                <text class="t-sm t-c" x="167" y="56">小さくて速い</text>
+                <line class="line-orange" x1="234" y1="40" x2="260" y2="40" marker-start="url(#mk-s)" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="262" y="10" width="96" height="60" rx="8"/>
+                <text class="t-b t-c" x="310" y="36" translate="no">主記憶</text>
+                <text class="t-sm t-c" x="310" y="56">大きめ・遅め</text>
+                <rect class="box-blue" x="2" y="90" width="356" height="68" rx="8"/>
+                <text class="t-b" x="12" y="114">よく使うデータは、ここに置く</text>
+                <text class="t-sm" x="12" y="134">→ 主記憶まで取りに行く回数が減る</text>
+                <text class="t-sm" x="12" y="150">→ <tspan translate="no">CPU</tspan>が待つ時間が減る</text>
+              </svg>
+              <figcaption>近くに置いた小さな机（<span translate="no">キャッシュメモリ</span>）に、よく使う資料を置くイメージ。</figcaption>
+            </figure>
             <p><strong>ストーリーに戻る</strong>：レジのパソコンが固まる理由は、<span translate="no">CPU</span>が古い、<span translate="no">主記憶</span>が足りない（机が狭い）、保存装置が遅い、などが考えられる。1つに決められないので、「どの部品が、どの仕事をするか」を、先に知る。</p>
 
             <p><strong>手を動かす：自分のスマートフォンの「保存の容量」を見る（約10分）</strong></p>
