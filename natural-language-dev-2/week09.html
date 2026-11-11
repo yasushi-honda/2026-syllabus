@@ -364,7 +364,8 @@ npx wrangler deploy</pre>
             <ul>
               <li>登録のコマンドは、公式のとおり<code>npx wrangler secret put &lt;KEY&gt;</code>（例: <code>npx wrangler secret put WRITE_PASS</code>）。実行すると、値を入力する画面になる。<strong>公式の注意: <code>wrangler secret put</code>は、新しい版を作って、すぐに公開する</strong></li>
               <li>ローカルで試す合言葉は、公式のとおり<strong><code>.dev.vars</code></strong>に書く。<strong>公式: "The .dev.vars and .env files should not be committed to git."</strong>（git に入れない）。<code>.gitignore</code>に<code>.dev.vars*</code>が入っているかを、確かめる</li>
-              <li>確かめ方（型④）: 合言葉なしでPOST → 401、合言葉ありでPOST → 保存、を、コマンドと出力で見せてもらう。<strong>合言葉の値は、画面に出さない</strong></li>
+              <li>確かめ方（型④）: まず<strong>ローカル</strong>（<code>wrangler dev</code>）で、合言葉なしでPOST → 401、合言葉ありでPOST → 保存、を、コマンドと出力で見せてもらう。<strong>合言葉の値は、画面に出さない</strong></li>
+              <li><strong>公開側に反映する</strong>: <code>wrangler secret put</code>は、合言葉の値を公開側に登録するだけで、<strong>ローカルで直したコードは公開されない</strong>。直したコードは、もう一度<code>npx wrangler deploy</code>で公開する。そのあと<strong>公開URLに、合言葉なしでPOST → 401</strong>が返ることを、コマンドと出力で確かめる（公開側が古いままだと、合言葉なしでも保存できてしまう）</li>
             </ul>
             <p><strong>③ NeonとD1を比べる</strong>（約10分）</p>
             <table class="schedule-table schedule-table--stack">
