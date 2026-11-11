@@ -303,12 +303,12 @@
               <p class="diagram-hub-caption">Codespacesのように「たまたま公開されていた」のではなく、公開する前提で多層防御を組み込んで設計したサーバーを置く——これが本番運用のセオリー</p>
             </div>
             <ul>
-              <li>Cloud RunはWebSocket通信にも対応している（公式: <a href="https://docs.cloud.google.com/run/docs/triggering/websockets" target="_blank" rel="noopener">Using WebSockets</a>）。ただし接続時間には既定5分・最大60分の上限があり再接続が必要になること、複数のサーバーが同時に動く構成ではプレイヤー情報を共有する仕組み（<strong>Firestore</strong>等、第9回で学ぶ）が必要になることにも触れておく</li>
+              <li>Cloud RunはWebSocket通信にも対応している（公式: <a href="https://docs.cloud.google.com/run/docs/triggering/websockets" target="_blank" rel="noopener">Using WebSockets</a>）。ただし接続時間には既定5分・最大60分の上限があり再接続が必要になること、複数のサーバーが同時に動く構成ではプレイヤー情報を共有する仕組み（データベース等。第9回で、Cloudflare WorkersとD1に触れる）が必要になることにも触れておく</li>
             </ul>
 
             <p><strong>今日はここまで</strong></p>
             <ul>
-              <li>今日は「実はもう世界中に公開されていたという事実」「そこに潜む危険と、セオリーとしての多層防御」を<strong>概念として理解する</strong>ところまで。実際にクラウドにデプロイする体験は、後半の回（Cloud Run・Firestoreなど）で扱う</li>
+              <li>今日は「実はもう世界中に公開されていたという事実」「そこに潜む危険と、セオリーとしての多層防御」を<strong>概念として理解する</strong>ところまで。実際にクラウドにデプロイする体験は、後半の回（第9回のCloudflare Workers・D1など）で扱う</li>
             </ul>
           </div>
         </div>
