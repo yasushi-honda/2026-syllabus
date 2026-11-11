@@ -175,7 +175,7 @@
             <p><strong>① Codespaceからログインする</strong>（約15分）</p>
             <ul>
               <li>Wrangler（ラングラー）は、Cloudflareが出している<strong>コマンドの道具（CLI）</strong>。Workerの作成・公開と、D1の作成・操作に使う。第3回の<code>gh</code>や、第6回のNeonのCLIと同じ種類の道具</li>
-              <li>ふつうの<code>wrangler login</code>は、ブラウザが<code>localhost:8976</code>に戻ってくる作りで、Codespacesのような遠隔の環境では、つながらないことがある。公式（2026-08-04の更新情報）は、そうした環境のために<strong><code>--device</code></strong>を用意している。次を実行する:</li>
+              <li>ふつうの<code>wrangler login</code>は、ブラウザが<code>localhost:8976</code>に戻ってくる作りで、Codespacesのような遠隔の環境では、つながらないことがある。公式（2026-08-04の更新情報）は、そうした環境のために<strong><code>--device</code></strong>を用意している（公式が挙げる環境にGitHub Codespacesが入っている）。<strong>学校のネットワークで<code>--device</code>が通るかは、公式では確かめられていない</strong>（授業前に先生が確認します）。次を実行する:</li>
             </ul>
             <pre class="md-preview">npx wrangler login --device</pre>
             <ul>
@@ -243,6 +243,7 @@
 ]</pre>
             <ul>
               <li><code>binding</code>の名前（上の例では<code>DB</code>）が、Workerのコードの中で<code>env.DB</code>として使われる（公式: "Your binding is available in your Worker at env.&lt;BINDING_NAME&gt;"）。<strong>バインディングが、Neonでいう「接続文字列」のかわり</strong>。設定ファイルに書かれているのは、<strong>データベースの名前とID</strong>で、パスワードのような秘密ではない（それでも、よく分からない値は、公開のリポジトリに出さない）</li>
+              <li><strong>名前をそろえる</strong>: <code>wrangler d1 create</code>が書き足すバインディング名は、<code>DB</code>とは限らない（公式の例は<code>prod_d1_tutorial</code>）。<code>wrangler.jsonc</code>の<code>binding</code>の名前と、コードの<code>env.&lt;名前&gt;</code>が<strong>同じか</strong>を、必ず見比べる。違うときは、エージェントに「コードのほうを合わせて」と頼む</li>
             </ul>
           </div>
         </div>
@@ -448,6 +449,7 @@ npx wrangler deploy</pre>
         <li><a href="https://developers.cloudflare.com/changelog/post/2026-09-01-d1-free-tier-limit-enforcement/" target="_blank" rel="noopener">D1 enforces free tier daily query limits（Cloudflare更新情報）</a> — 上限を超えたときの動き</li>
         <li><a href="https://developers.cloudflare.com/workers/platform/limits/" target="_blank" rel="noopener">Limits（Cloudflare Workers公式）</a> — Workersの無料プランの上限</li>
         <li><a href="https://developers.cloudflare.com/workers/configuration/routing/workers-dev/" target="_blank" rel="noopener">workers.dev（Cloudflare Workers公式）</a> — 公開URL</li>
+        <li><a href="https://developers.cloudflare.com/workers/get-started/guide/" target="_blank" rel="noopener">CLI（Cloudflare Workers公式の始め方）</a> — デプロイ時のサブドメイン設定、523エラーの案内</li>
         <li><a href="https://developers.cloudflare.com/workers/configuration/secrets/" target="_blank" rel="noopener">Secrets（Cloudflare Workers公式）</a> — wrangler secret put と .dev.vars</li>
         <li><a href="https://developers.cloudflare.com/agents/model-context-protocol/cloudflare/servers-for-cloudflare/" target="_blank" rel="noopener">Cloudflare's own MCP servers（Cloudflare Agents公式）</a> — CloudflareのMCPサーバー（今日は足さない）</li>
         <li><a href="week05.html">第5回 スコアを保存して守ろう（本サイト）</a> — 秘密の値と最小権限</li>
