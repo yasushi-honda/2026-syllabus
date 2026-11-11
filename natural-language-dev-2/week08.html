@@ -235,13 +235,13 @@
               <p class="vz-fig-title" id="cap-n8-tool">道具の選び方：自然言語だけ？ CLI？ MCP？</p>
               <svg class="vz-svg" viewBox="0 0 360 262" role="img" aria-labelledby="n8-tool-t n8-tool-d">
                 <title id="n8-tool-t">道具の選び方：自然言語だけ？ CLI？ MCP？</title>
-                <desc id="n8-tool-d">やりたいことに応じて、エージェントに使わせる道具を選ぶ。コードを書き換えるだけなら、自然言語の指示だけで足りる。GitHubやGoogle Cloudなど、コマンドのあるサービスを操作するなら、gh・gcloudなどのCLIを使わせる。ブラウザの操作など、外部のツールにつなぎたいときは、MCPを使う。迷ったら、エージェントに、CLIやMCPで済むかを先に聞く。</desc>
+                <desc id="n8-tool-d">やりたいことに応じて、エージェントに使わせる道具を選ぶ。コードを書き換えるだけなら、自然言語の指示だけで足りる。GitHubやCloudflareなど、コマンドのあるサービスを操作するなら、gh・wranglerなどのCLIを使わせる。ブラウザの操作など、外部のツールにつなぎたいときは、MCPを使う。迷ったら、エージェントに、CLIやMCPで済むかを先に聞く。</desc>
                 <rect class="box-white" x="8" y="6" width="344" height="52" rx="10"/>
                 <text class="t-b" x="22" y="28">コードを書き換えたい</text>
                 <text class="t-sm" x="22" y="47">→ 自然言語の指示だけで足りる</text>
                 <rect class="box-green" x="8" y="66" width="344" height="52" rx="10"/>
-                <text class="t-b" x="22" y="88">GitHubやGoogle Cloudを動かしたい</text>
-                <text class="t-sm" x="22" y="107">→ CLI（gh・gcloud）を使わせる</text>
+                <text class="t-b" x="22" y="88">GitHubやCloudflareを動かしたい</text>
+                <text class="t-sm" x="22" y="107">→ CLI（gh・wrangler）を使わせる</text>
                 <rect class="box-green" x="8" y="126" width="344" height="52" rx="10"/>
                 <text class="t-b" x="22" y="148">ブラウザなど、外部ツールにつなぎたい</text>
                 <text class="t-sm" x="22" y="167">→ MCP（Playwright MCPなど）</text>
@@ -250,15 +250,15 @@
                 <text class="t-sm" x="22" y="233">「これは、CLIやMCPで済みますか？」</text>
                 <text class="t-sm" x="22" y="249">手作業の前に、一度聞く</text>
               </svg>
-              <figcaption>第3回で見た、gcloud CLI・gh CLI・Playwright MCPの使い分けです。</figcaption>
+              <figcaption>第3回で見た、CLI（gh・gcloudなど）とPlaywright MCPの使い分けです。第9回からは、Google Cloudの代わりにWranglerを使います。</figcaption>
             </figure>
             <ul>
               <li><strong>MCP</strong>は、公式の定義では、"an open-source standard for connecting AI applications to external systems."（AIアプリを外部のシステムにつなぐための、オープンソースの標準）。公式は、"Think of MCP like a USB-C port for AI applications."（AI用のUSB-Cポートのようなもの）とたとえている（modelcontextprotocol.io、確認日 2026-11-05）</li>
               <li><strong>CLI</strong>については、Claude Codeの公式のベストプラクティスに、"If that system has a CLI, that's usually the easiest way in."（そのシステムにCLIがあるなら、たいていそれがいちばん簡単な入り口）、例として、<code>gh</code>を入れてログインしていれば、説明しなくても、プルリクエストを開いたり、レビューのコメントを読んだりできる、とある。知らないCLIは、<code>--help</code>を見せるだけで足りる、とも書かれている。Codex CLIとagyの公式では、<strong>同じ趣旨の記述は見つかっていません</strong>。同じように使えるかは、試して確かめましょう</li>
               <li>だから、手作業を始める前に、<strong>エージェントに、先に聞く</strong>:</li>
             </ul>
-            <pre class="md-preview">この作業（例：Google Cloudのプロジェクト一覧を確認する）は、
-gcloud などのCLIや、MCPで、あなたが自分で実行できますか？
+            <pre class="md-preview">この作業（例：Workerを公開する）は、
+wrangler などのCLIや、MCPで、あなたが自分で実行できますか？
 できるなら、使う道具と、実行するコマンドを、先に見せてください。
 まだ実行しないでください。</pre>
             <table class="schedule-table schedule-table--stack">
