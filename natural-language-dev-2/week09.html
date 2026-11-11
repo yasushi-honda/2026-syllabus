@@ -80,7 +80,7 @@
         <li><strong>無料の上限</strong>（超えるとD1のクエリが失敗する）と、<strong>公開URLは誰でも開ける</strong>こと、そのための最低限の備え（合言葉、個人情報を入れない）を説明できる</li>
       </ul>
       <div class="lesson-tip">
-        <strong>今日の進め方:</strong> 授業計画を<strong>変更</strong>しました。これまでの予定にあった「Google Cloud」は、使わないことになりました（先生の決定）。かわりに、<strong>クレジットカードを使わず、無料の枠の中で試せる</strong>Cloudflareを使います。Neon（第5〜7回）は、そのまま続けて使えます。今日は、<strong>NeonとD1の違いを、体験で比べる</strong>のが目的の1つです。コードは、AIエージェントに書かせます。<strong>人は、質問に答え、計画を読み、確かめ方を決めて、結果を自分の目で見ます</strong>。
+        <strong>今日の進め方:</strong> 授業計画を<strong>変更</strong>しました。これまでの予定にあった「Google Cloud」は、使わないことになりました（先生の決定）。かわりに、<strong>無料プランの枠の中で試せる</strong>Cloudflareを使います（登録でクレジットカードなどを求められないかは、公式に明記が見つからないため、授業前に先生が確認します）。Neonも引き続き使えます（第5〜6回の一時DBは期限が切れているので、作り直します）。今日は、<strong>NeonとD1の違いを、体験で比べる</strong>のが目的の1つです。コードは、AIエージェントに書かせます。<strong>人は、質問に答え、計画を読み、確かめ方を決めて、結果を自分の目で見ます</strong>。
       </div>
     </div>
 
@@ -289,7 +289,7 @@ return Response.json(results);</pre>
             <p><strong>② ローカルで確かめる（型④）</strong>（約20分）</p>
             <ul>
               <li><code>wrangler dev</code>は、公式のとおり<strong>ローカルモードが既定</strong>（"wrangler dev now uses local mode by default"）。ローカルのD1は、<strong>本番のデータとは別</strong>（公式: "A local session does not have access to your production data by default."）。だから、<strong>何度試しても本番に影響しない</strong></li>
-              <li>D1のコマンドは、<strong>どちらに向けるかを必ず書く</strong>。ローカル用は<code>--local</code>、本番は<code>--remote</code>（公式: --local「Execute commands/files against a local DB for use with wrangler dev」、--remote「Execute commands/files against a remote D1 database」）。<strong>書き忘れると本番に向かう</strong>（公式: "Without the --local flag, the commands are executed against the remote version"）ので、今日は<strong>両方とも、毎回書く</strong>:</li>
+              <li>D1のコマンドは、<strong>どちらに向けるかを必ず書く</strong>。ローカル用は<code>--local</code>、本番は<code>--remote</code>（公式: --local「Execute commands/files against a local DB for use with wrangler dev」、--remote「Execute commands/files against a remote D1 database」）。<strong>書き忘れたときの向き先は、公式のページによって説明が違う</strong>（D1 Local developmentには "Without the `--local` flag, the commands are executed against the remote version" とあり、D1 Getting startedの出力では、フラグなしで実行すると「リモートで実行するには --remote を足す」と表示される）。どちらが正しいか確かめていないので、今日は<strong>--localか--remoteを、毎回必ず書く</strong>:</li>
             </ul>
             <pre class="md-preview">npx wrangler d1 execute scores-db --local --file=./schema.sql
 npx wrangler dev</pre>
