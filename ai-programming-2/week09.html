@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=26">
+  <!-- 冒頭の参考の話: arXiv 2512.14012（v2、2026-08-18）の要旨を arxiv.org/abs から、「実装の前に計画し、出力はすべて確かめる」は本文PDF（RQ2）から原文で照合（確認日 2026-11-12）。v1（2025-12-16）の要旨が同じ文言かは未確認。「就職に役立つか」は論文の対象外のため断定しない。 -->
   <!-- 公式情報確認: 2026-11-11 (curlで確認。①antigravity.google/docs/plan（HTTP 200、.md版を取得）: "The `/plan` command facilitates structured planning, codebase exploration, and requirements discovery before jumping directly into code execution." "Exploration without side effects: The agent reads files ... without writing code prematurely." "You retain full control to leave inline comments, request adjustments, or click Proceed to begin implementation."。agyのplanモード（Shift+Tab、agy --mode=plan）は natural-language-dev-2/week08 の確認（2026-11-05）を引き継ぐ。②ai.google.dev/gemini-api/docs/aistudio-build-mode（HTTP 200）: Build modeの公式説明にPlanモードの記述は見つからなかった（2026-11-11に.md版でplanを検索、該当なし）。Planのスライダーは教員の画面で確認済み（2026-10-15、week06）。未確認（授業前に教員が確認）: 学生の画面（学校アカウント）のBuild modeにPlanの選択肢があるか、進級制作のリポジトリの実際の状態） -->
 </head>
 <body>
@@ -58,15 +59,15 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">授業の冒頭に、前回の発表と、卒業進級制作について、<strong>チームで相談しながらアンケートに答え</strong>、そのうえで、各自が並行して取り組む<strong>進級制作</strong>に、AIエージェント（<strong>agy</strong>または<strong>AI Studio Build mode</strong>）を<strong>どこに活かせるか</strong>を考えて、次の一歩を決める。前半で作った<strong>個人開発の延長</strong>として続けることも選べる</div>
+          <div class="lesson-overview-value">授業の冒頭に、AIを使って作るときの<strong>考え方の参考</strong>を聞き、前回の発表の感想と<strong>卒業進級制作（個人制作）の困りごと</strong>を、<strong>チームで相談しながらアンケート</strong>に書く。先生が読み上げて、困りごとにその場で答える。そのあとは、各自が並行して取り組む<strong>進級制作</strong>（または<strong>個人開発の延長</strong>）を進める<strong>ワーク</strong>の時間にする。AIエージェント（<strong>agy</strong>または<strong>AI Studio Build mode</strong>）を<strong>どこに活かせるか</strong>は、ワークの中で考える</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">進級制作 / 個人開発の延長 / アンケート（チームで相談・先生が読み上げ） / AIを活かす場所（調べる・作る・直す・説明する） / 次の一歩のメモ（足すこと・やらないこと・できたかの見かた） / 計画だけ出させる</div>
+          <div class="lesson-overview-value">進級制作 / 個人開発の延長 / 計画して、確かめるのは人 / アンケート（チームで相談・先生が読み上げ） / ワーク / 困ったときの道具（AIを活かす場所の4つの型・次の一歩のメモ・計画だけ出させる）</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
-          <div class="lesson-overview-value">前回（第8回）の発表を思い出せること（発表の資料や、聞いたときのメモがあれば手元に）。進級制作、または続けたい個人開発のリポジトリを開けること。agyが動くCodespacesか、AI Studio。アンケートは、先生がClassroomで案内します。回答は、先生が読み上げます（学生が発表する時間ではありません）。</div>
+          <div class="lesson-overview-value">前回（第8回）の発表を思い出せること（資料や、聞いたときのメモがあれば手元に）。進級制作、または続けたい個人開発のリポジトリを開けること。agyが動くCodespacesか、AI Studio。アンケートは、先生がClassroomで案内します。回答は、先生が読み上げます（学生が発表する時間ではありません）。</div>
         </div>
       </div>
     </div>
@@ -74,13 +75,13 @@
     <div class="syllabus-section">
       <h2>この回のゴール</h2>
       <ul>
-        <li>自分が進める作品を、<strong>進級制作</strong>か<strong>個人開発の延長</strong>から選べる</li>
-        <li>前回の発表（自分のチームか他のチーム）の感想と、<strong>卒業進級制作（個人制作）で今困っていること</strong>を、チームで相談しながら<strong>アンケートで伝えられる</strong></li>
-        <li>AIを活かせる場所を、<strong>調べる・作る・直す・説明する</strong>の4つで考えられる</li>
-        <li>次回の実装に向けて、<strong>次の一歩のメモ</strong>（足すこと・やらないこと・できたかの見かた）を、<strong>人が読んで直して</strong>決められる</li>
+        <li>AIを使って作るときに、<strong>計画して、確かめるのは人</strong>だという考え方を、自分の言葉で言える</li>
+        <li>前回の発表の感想と、<strong>卒業進級制作（個人制作）で今困っていること</strong>を、チームで相談しながら<strong>アンケートで伝えられる</strong></li>
+        <li>自分の作品（<strong>進級制作</strong>か<strong>個人開発の延長</strong>）を、今日のワークの時間で<strong>1つ前に進められる</strong></li>
+        <li>困ったときに、<strong>チーム・先生・AI</strong>のどれに頼るかを選べる</li>
       </ul>
       <div class="lesson-tip">
-        <strong>今日の優先順位:</strong> 進み具合は人それぞれで構いません。<strong>進んでいる人も、これからの人も</strong>、「次の1歩」を決めて帰ることが目標です。
+        <strong>今日の優先順位:</strong> 進み具合は人それぞれで構いません。<strong>進んでいる人も、これからの人も</strong>、ワークの時間で「次に進めたい1つ」を決めて、進めて帰ることが目標です。
       </div>
     </div>
 
@@ -95,39 +96,68 @@
             <span class="timeline-time">1限 前半</span>
             <span class="timeline-duration">約40分</span>
           </div>
-          <h3>アンケートで前回を振り返り、続ける作品を選ぶ</h3>
+          <h3>参考になる話を聞き、アンケートで困りごとを出す</h3>
           <div class="timeline-body">
             <figure class="vz-fig" aria-labelledby="cap-a9-map">
-              <p class="vz-fig-title" id="cap-a9-map">今日の流れ：アンケートから始めて、次の1歩を決める</p>
+              <p class="vz-fig-title" id="cap-a9-map">今日の流れ：聞いて、出して、作品を進める</p>
               <svg class="vz-svg" viewBox="0 0 360 252" role="img" aria-labelledby="a9-map-t a9-map-d">
-                <title id="a9-map-t">今日の流れ：アンケートから始めて、次の1歩を決める</title>
-                <desc id="a9-map-d">1 アンケートをチームで相談しながら書き、先生の読み上げを聞いて、続ける作品を選ぶ。進級制作か、個人開発の延長。1限の前半。2 困りごとから、AIを活かす場所を洗い出し、足すことを一文にする。1限の後半。3 次の一歩のメモを作る。足すこと、やらないこと、できたかの見かた。2限の前半。4 計画を見せ合って直す。2限の後半とまとめ。</desc>
+                <title id="a9-map-t">今日の流れ：聞いて、出して、作品を進める</title>
+                <desc id="a9-map-d">1 参考になる話を聞き、アンケートをチームで相談しながら書く。1限の前半。2 先生が回答を読み上げ、困りごとにその場で答える。1限の前半。3 自分の作品を進めるワーク。卒業進級制作か、個人制作。1限の後半から2限の後半まで。困ったら、チーム、先生、AIの順に頼る。4 今日の成果を残す。2限の後半とまとめ。</desc>
                 <rect class="box-orange" x="8" y="6" width="344" height="50" rx="10"/>
-                <text class="t-b" x="22" y="28">1 アンケートと、続ける作品</text>
-                <text class="t-sm" x="22" y="47">チームで相談して書く・先生が読み上げる</text>
+                <text class="t-b" x="22" y="28">1 参考の話・アンケート</text>
+                <text class="t-sm" x="22" y="47">チームで相談して書く</text>
                 <text class="t-sm" x="342" y="28" text-anchor="end">1限前半</text>
                 <line class="line" x1="180" y1="58" x2="180" y2="68" marker-end="url(#mk-s)"/>
                 <rect class="box-orange" x="8" y="70" width="344" height="50" rx="10"/>
-                <text class="t-b" x="22" y="92">2 AIを活かす場所を洗い出す</text>
-                <text class="t-sm" x="22" y="111">困りごとから、足すことを一文に</text>
-                <text class="t-sm" x="342" y="92" text-anchor="end">1限後半</text>
+                <text class="t-b" x="22" y="92">2 読み上げ・困りごとに答える</text>
+                <text class="t-sm" x="22" y="111">先生が、その場で</text>
+                <text class="t-sm" x="342" y="92" text-anchor="end">1限前半</text>
                 <line class="line" x1="180" y1="122" x2="180" y2="132" marker-end="url(#mk-s)"/>
                 <rect class="box-orange box-key" x="8" y="134" width="344" height="50" rx="10"/>
-                <text class="t-b" x="22" y="156">3 次の一歩のメモを作る</text>
-                <text class="t-sm" x="22" y="175">足すこと・やらないこと・できたかの見かた</text>
-                <text class="t-sm" x="342" y="156" text-anchor="end">2限前半</text>
+                <text class="t-b" x="22" y="156">3 自分の作品を進めるワーク</text>
+                <text class="t-sm" x="22" y="175">困ったら、チーム・先生・AIの順</text>
+                <text class="t-sm" x="342" y="156" text-anchor="end">1限後半〜</text>
                 <line class="line" x1="180" y1="186" x2="180" y2="196" marker-end="url(#mk-s)"/>
                 <rect class="box-white" x="8" y="198" width="344" height="50" rx="10"/>
-                <text class="t-b" x="22" y="220">4 見せ合って直す</text>
-                <text class="t-sm" x="22" y="239">次回の実装につなぐ</text>
+                <text class="t-b" x="22" y="220">4 今日の成果を残す</text>
+                <text class="t-sm" x="22" y="239">次回すぐ続けられるように</text>
                 <text class="t-sm" x="342" y="220" text-anchor="end">2限後半</text>
               </svg>
-              <figcaption>実装は次回（第10回）です。今日は「何を作るか」を決める回です。</figcaption>
+              <figcaption>ワークの時間が中心です。実装の続きは第10回につながります。</figcaption>
             </figure>
 
-            <p><strong>① アンケートを、チームで相談しながら書く</strong>（約15分）</p>
+            <p><strong>① 参考になる話：プロは、雰囲気で全部を任せない</strong>（約10分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-a9-control">
+              <p class="vz-fig-title" id="cap-a9-control">AIを使って作るときの、人の役目</p>
+              <svg class="vz-svg" viewBox="0 0 360 192" role="img" aria-labelledby="a9-control-t a9-control-d">
+                <title id="a9-control-t">AIを使って作るときの、人の役目</title>
+                <desc id="a9-control-d">AIを使って作るとき、人が手綱を握る流れ。1 先に計画する：何を作るか、どこまでやるか。2 AIに任せる：下書き、調べもの、手間のかかる作業。3 人が確かめる：出力を読み、動かして、使うかどうかを決める。</desc>
+                <rect class="box-orange" x="8" y="6" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="28">1 先に計画する</text>
+                <text class="t-sm" x="22" y="48">何を作るか、どこまでやるか</text>
+                <line class="line" x1="180" y1="60" x2="180" y2="68" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="70" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="92">2 AIに任せる</text>
+                <text class="t-sm" x="22" y="112">下書き・調べもの・手間のかかる作業</text>
+                <line class="line" x1="180" y1="124" x2="180" y2="132" marker-end="url(#mk-s)"/>
+                <rect class="box-orange box-key" x="8" y="134" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="156">3 人が確かめる</text>
+                <text class="t-sm" x="22" y="176">読んで、動かして、使うか決める</text>
+              </svg>
+              <figcaption>この流れは、第8回の「AIは下書き、人が判断」と同じ考え方です。</figcaption>
+            </figure>
+
             <ul>
-              <li>授業の最初に、<strong>先生がClassroomで案内するGoogleフォーム</strong>のアンケートに答える（フォームの場所と答え方は、先生の案内に従う）</li>
+              <li>研究論文<a href="https://arxiv.org/abs/2512.14012" target="_blank" rel="noopener">「Professional Software Developers Don't Vibe, They Control: AI Agent Use for Coding in 2025」</a>（arXiv。2025-12-16に投稿、いま読めるのは2026-08-18の改訂版v2。主にCornell大学とUC San Diegoの研究者）の話。<strong>経験のある開発者</strong>について、13人への現場の観察と、99人へのアンケートをした研究</li>
+              <li>論文の要旨（原文）: "while experienced developers value agents as a productivity boost, they retain their agency in software design and implementation out of insistence on fundamental software quality attributes, employing strategies for controlling agent behavior leveraging their expertise."（経験者はAIを生産性の助けとして評価するが、ソフトウェアの品質を大事にするので、設計と実装の主導権は手放さず、自分の経験を使ってAIの動きを制御している）</li>
+              <li>論文の本文でも、経験者は "they plan before implementing and validate all agentic outputs"（実装の前に計画し、AIの出力はすべて確かめる）と報告されている（RQ2。<strong>要旨ではなく本文</strong>）。プロも<strong>AIを使っている</strong>。ちがいは、<strong>先に計画し、出てきたものを人が確かめる</strong>こと。授業では、これを第8回までの「AIは下書き、人が判断」と同じ考え方として受け取る</li>
+              <li>注意: この研究の対象は<strong>経験のある開発者</strong>で、授業の学生とは立場がちがいます。<strong>就職に役立つかどうかは、この論文は扱っていません</strong>。ここで受け取るのは、「AIで作るときは、計画と確かめるところを人が持つ」という考え方の参考です</li>
+              <li>隣の人と1分: 自分の作品で、<strong>「ここは人が確かめたい」</strong>と思うところは、どこか</li>
+            </ul>
+
+            <p><strong>② アンケートを、チームで相談しながら書く</strong>（約10分）</p>
+            <ul>
+              <li><strong>先生がClassroomで案内するGoogleフォーム</strong>のアンケートに答える（フォームの場所と答え方は、先生の案内に従う）</li>
               <li>チームは、<strong>第8回のチーム</strong>のままで構いません（近くの2〜3人に組み直してもよい。先生の指示に従う）。<strong>チームで相談しながら</strong>書く。答え方の単位（一人ひとりか、チームか）は、先生の案内に従う</li>
               <li>前回の発表のうち、書きたいものを<strong>1つ</strong>選ぶ。<strong>自分のチームの発表でも、他のチームの発表でもよい</strong>。思い出せない人は、前回の資料や、聞いたときのメモを開く。チームの人に聞いてもよい</li>
               <li>質問は、たとえば次のようなものです（<strong>実際の質問は、先生のフォームに従う</strong>）:</li>
@@ -143,34 +173,16 @@
               <strong>書くのは、感想・工夫・困りごとだけ。</strong>個人情報（住所・電話番号など）や、人を責める言い方は書きません。
             </div>
 
-            <p><strong>② 先生が回答を読み上げる</strong>（約10分）</p>
+            <p><strong>③ 先生が回答を読み上げる</strong>（約10分）</p>
             <ul>
               <li>学生が発表する時間では<strong>ありません</strong>。<strong>先生が</strong>集まった回答を読み上げる。聞く人は、<strong>「それは、自分の作品にも使えそう」</strong>と思ったところに一言メモする</li>
               <li>困りごとは、<strong>同じ困りごとの人がいる</strong>ことに気づくために聞く。責めずに、知りたい気持ちで聞く</li>
             </ul>
 
-            <p><strong>③ 続ける作品を選ぶ</strong>（約15分）</p>
-            <figure class="vz-fig" aria-labelledby="cap-a9-choice">
-              <p class="vz-fig-title" id="cap-a9-choice">どちらで進めてもよい</p>
-              <svg class="vz-svg" viewBox="0 0 360 190" role="img" aria-labelledby="a9-choice-t a9-choice-d">
-                <title id="a9-choice-t">どちらで進めてもよい</title>
-                <desc id="a9-choice-d">続ける作品は2つから選べる。A 進級制作に、AIエージェントを活かす。B 前半で作った個人開発の延長として続ける。どちらを選んでも、今日の進め方と、次回からの流れは同じ。</desc>
-                <rect class="box-orange box-key" x="8" y="6" width="344" height="58" rx="10"/>
-                <text class="t-b" x="22" y="28">A 進級制作に活かす</text>
-                <text class="t-sm" x="22" y="48">すでに動いている作品にAIを足す</text>
-                <rect class="box-orange box-key" x="8" y="72" width="344" height="58" rx="10"/>
-                <text class="t-b" x="22" y="94">B 個人開発の延長</text>
-                <text class="t-sm" x="22" y="114">前半（agy・Build mode）で作ったものを育てる</text>
-                <rect class="box-white" x="8" y="138" width="344" height="46" rx="10"/>
-                <text class="t-b" x="22" y="160">どちらでも、流れは同じ</text>
-                <text class="t-sm" x="22" y="177">途中で変えてもよい（先生に一言）</text>
-              </svg>
-              <figcaption>進み具合がちがってよいので、自分に合う方を選びます。</figcaption>
-            </figure>
+            <p><strong>④ 先生が、困りごとに答える</strong>（約10分）</p>
             <ul>
-              <li><strong>A 進級制作</strong>: すでに動いている部分がある人。AIエージェントを、その作品のどこに足すかを考える</li>
-              <li><strong>B 個人開発の延長</strong>: 進級制作がまだ形になっていない人、またはこの授業で作ったアプリを育てたい人。第6〜8回のアプリなどを、続きとして伸ばす</li>
-              <li>選んだら、作品の名前と、リポジトリの場所（または AI Studio のアプリ）を<strong>メモ</strong>する。選べない人は先生に相談する</li>
+              <li>読み上げた困りごとのうち、<strong>多くの人に関わるもの</strong>から、先生がその場で答える（全部には、この時間では答えきれません）</li>
+              <li>答えきれなかったもの、自分だけのものは、<strong>ワークの時間に先生が席をまわって</strong>聞く。自分から先生を呼んでもよい</li>
             </ul>
           </div>
         </div>
@@ -180,9 +192,63 @@
             <span class="timeline-time">1限 後半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>困りごとから、AIを活かす場所を洗い出し、足すことを決める</h3>
+          <h3>ワーク①：自分の作品を進める</h3>
           <div class="timeline-body">
-            <p><strong>① AIを活かす場所を、4つに分けて洗い出す</strong>（約25分）</p>
+            <p><strong>① 続ける作品を選び、今日進めることを決める</strong>（約10分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-a9-choice">
+              <p class="vz-fig-title" id="cap-a9-choice">どちらで進めてもよい</p>
+              <svg class="vz-svg" viewBox="0 0 360 190" role="img" aria-labelledby="a9-choice-t a9-choice-d">
+                <title id="a9-choice-t">どちらで進めてもよい</title>
+                <desc id="a9-choice-d">続ける作品は2つから選べる。A 卒業進級制作に、AIエージェントを活かす。B 個人制作として、前半で作った個人開発の延長を続ける。どちらを選んでも、今日の進め方と、次回からの流れは同じ。</desc>
+                <rect class="box-orange box-key" x="8" y="6" width="344" height="58" rx="10"/>
+                <text class="t-b" x="22" y="28">A 卒業進級制作に活かす</text>
+                <text class="t-sm" x="22" y="48">すでに動いている作品にAIを足す</text>
+                <rect class="box-orange box-key" x="8" y="72" width="344" height="58" rx="10"/>
+                <text class="t-b" x="22" y="94">B 個人制作（個人開発の延長）</text>
+                <text class="t-sm" x="22" y="114">前半（agy・Build mode）で作ったものを育てる</text>
+                <rect class="box-white" x="8" y="138" width="344" height="46" rx="10"/>
+                <text class="t-b" x="22" y="160">どちらでも、流れは同じ</text>
+                <text class="t-sm" x="22" y="177">途中で変えてもよい（先生に一言）</text>
+              </svg>
+              <figcaption>進み具合がちがってよいので、自分に合う方を選びます。</figcaption>
+            </figure>
+
+            <ul>
+              <li><strong>A 卒業進級制作</strong>: すでに動いている部分がある人。AIエージェントを、その作品のどこに足すかを考える</li>
+              <li><strong>B 個人制作（個人開発の延長）</strong>: 進級制作がまだ形になっていない人、またはこの授業で作ったアプリを育てたい人。第6〜8回のアプリなどを、続きとして伸ばす</li>
+              <li>選んだら、作品の名前と、リポジトリの場所（または AI Studio のアプリ）を<strong>メモ</strong>する。選べない人は先生に相談する</li>
+              <li>今日のワークで<strong>進めたいことを1つ</strong>決めて、メモする（大きすぎるときは、半分に割る）</li>
+            </ul>
+
+            <p><strong>② ワーク</strong>（約40分）</p>
+            <ul>
+              <li>自分の作品を進める。AIエージェントに頼むときは、<strong>先に何をしてほしいか、どこまでやるか</strong>を言葉にしてから頼み、出てきたものは<strong>人が読んで、動かして確かめる</strong>（冒頭の話と同じ）</li>
+              <li><strong>困ったときの頼り先</strong>: ①まず<strong>チームの人</strong>に聞く　②それでも分からなければ<strong>先生</strong>を呼ぶ（先生が席をまわります）　③AIに頼むときは、下の「困ったときの道具」を使ってもよい</li>
+              <li>うまく進まなくても大丈夫。<strong>どこで止まったかを一言メモ</strong>しておけば、それがそのまま次回の出発点になる</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>ワーク②：困ったときの道具を使いながら進める</h3>
+          <div class="timeline-body">
+            <p><strong>① 困ったときの道具（使いたい人が使う）</strong>（約10分）</p>
+            <ul>
+              <li>どれも<strong>必須ではありません</strong>。作品が進んでいる人は、そのままワークを続けてください。迷ったときの助けとして、折りたたんで置いてあります</li>
+            </ul>
+            <details class="vz-more">
+              <summary>道具1: AIを活かす場所を、4つに分けて考える</summary>
             <figure class="vz-fig" aria-labelledby="cap-a9-four">
               <p class="vz-fig-title" id="cap-a9-four">AIを活かす場所：4つの型</p>
               <svg class="vz-svg" viewBox="0 0 360 252" role="img" aria-labelledby="a9-four-t a9-four-d">
@@ -203,36 +269,14 @@
               </svg>
               <figcaption>4つの型は授業用の整理で、公式の分類ではありません。</figcaption>
             </figure>
-            <ul>
-              <li>アンケートに書いた<strong>困りごと</strong>（なければ、自分の作品で<strong>AIに手伝ってほしいこと</strong>）を、<strong>4つのどれか</strong>に分ける。複数にまたがってもよい</li>
-              <li>それぞれに、<strong>AIに任せてよいこと</strong>と、<strong>人が決めること</strong>（何を作るか・事実の点検・最後の判断）を1つずつ書く。第8回の「AIは下書き、人が判断」と同じ線引き</li>
-              <li>チームで、<strong>隣の人の洗い出しに1つ足す</strong>（「こういう頼み方もある」）</li>
-            </ul>
 
-            <p><strong>② 今日の優先度を決め、足すことを一文にする</strong>（約25分）</p>
-            <ul>
-              <li>洗い出した中から、<strong>次回の1回（90分）で終わりそうな1つ</strong>に絞る。大きすぎるときは、半分に割る</li>
-              <li>絞った理由を一言メモする（「いちばん困っているから」「確かめやすいから」など）</li>
-              <li>絞ったものを、<strong>「この作品に（足すこと）を1つ足したい」</strong>という一文にして、メモする。2限の最初に、そのまま使います</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="timeline-block timeline-block--break">
-          <div class="timeline-header">
-            <span class="timeline-time">休憩</span>
-            <span class="timeline-duration">10分</span>
-          </div>
-        </div>
-
-        <div class="timeline-block">
-          <div class="timeline-header">
-            <span class="timeline-time">2限 前半</span>
-            <span class="timeline-duration">約50分</span>
-          </div>
-          <h3>次の一歩のメモを作る：AIに「計画だけ」出させ、人が直す</h3>
-          <div class="timeline-body">
-            <p><strong>① 次の一歩のメモの形を知る</strong>（約10分）</p>
+              <ul>
+                <li>困りごとが、<strong>4つのどれか</strong>に当てはまるか考える。複数にまたがってもよい</li>
+                <li>それぞれに、<strong>AIに任せてよいこと</strong>と、<strong>人が決めること</strong>（何を作るか・事実の点検・最後の判断）を1つずつ書く</li>
+              </ul>
+            </details>
+            <details class="vz-more">
+              <summary>道具2: 次の一歩のメモを作り、AIに「計画だけ」出させて、人が直す</summary>
             <figure class="vz-fig" aria-labelledby="cap-a9-plan">
               <p class="vz-fig-title" id="cap-a9-plan">次の一歩のメモ：足す・やらない・確かめる</p>
               <svg class="vz-svg" viewBox="0 0 360 190" role="img" aria-labelledby="a9-plan-t a9-plan-d">
@@ -250,19 +294,14 @@
               </svg>
               <figcaption>計画は、短く、確かめられる形にします。</figcaption>
             </figure>
-            <ul>
-              <li><strong>足すことは1つだけ</strong>。「やらないこと」を決めると、AIが勝手に広げるのを防げる</li>
-              <li><strong>できたかの見かた</strong>は、「見て分かること」で書く（画面にこう出る、押すとこうなる）</li>
-            </ul>
 
-            <p><strong>② AIに「計画だけ」出させる</strong>（約15分）</p>
-            <ul>
-              <li><strong>agy</strong>: <code>/plan</code>で、<strong>ファイルを変える前に</strong>計画を出してもらえる。公式: "The agent reads files ... without writing code prematurely."（探索のあいだ、コードは書かれない）。計画は画面で読んで、直しを言葉で頼み、OKを出してから進む（公式: "leave inline comments, request adjustments, or click Proceed"）。切り替えは<code>Shift+Tab</code>でも行える（公式: antigravity.google/docs/cli/reference のキー操作一覧）</li>
-              <li><strong>AI Studio Build mode</strong>: 公式の説明ページには、Planモードの記述は見つからなかった。<strong>教員の画面にはPlan（Default／Plan／Maxのスライダー）があると確認</strong>している（第6回）が、<strong>自分の画面にあるかは未確認</strong>。なければ、指示に<strong>「実行せず、計画だけを出してください」</strong>と書いて頼む</li>
-              <li>頼み方の例（どちらでも）: <code>この作品に「（足すこと）」を1つ足したい。ファイルは変えず、計画だけ出してください。やらないことと、できたかの見かたも書いてください。</code></li>
-            </ul>
-
-            <p><strong>③ 人が読んで、直す</strong>（約25分）</p>
+              <ul>
+                <li><strong>足すことは1つだけ</strong>。「やらないこと」を決めると、AIが勝手に広げるのを防げる</li>
+                <li><strong>できたかの見かた</strong>は、「見て分かること」で書く（画面にこう出る、押すとこうなる）</li>
+                <li><strong>agy</strong>: <code>/plan</code>で、<strong>ファイルを変える前に</strong>計画を出してもらえる。公式: "The agent reads files ... without writing code prematurely."（探索のあいだ、コードは書かれない）。計画は画面で読んで、直しを言葉で頼み、OKを出してから進む（公式: "leave inline comments, request adjustments, or click Proceed"）。切り替えは<code>Shift+Tab</code>でも行える（公式: antigravity.google/docs/cli/reference のキー操作一覧）</li>
+                <li><strong>AI Studio Build mode</strong>: 公式の説明ページには、Planモードの記述は見つからなかった。<strong>教員の画面にはPlan（Default／Plan／Maxのスライダー）があると確認</strong>している（第6回）が、<strong>自分の画面にあるかは未確認</strong>。なければ、指示に<strong>「実行せず、計画だけを出してください」</strong>と書いて頼む</li>
+                <li>頼み方の例（どちらでも）: <code>この作品に「（足すこと）」を1つ足したい。ファイルは変えず、計画だけ出してください。やらないことと、できたかの見かたも書いてください。</code></li>
+              </ul>
             <figure class="vz-fig" aria-labelledby="cap-a9-fix">
               <p class="vz-fig-title" id="cap-a9-fix">AIの計画を、人が3点で点検する</p>
               <svg class="vz-svg" viewBox="0 0 360 190" role="img" aria-labelledby="a9-fix-t a9-fix-d">
@@ -280,14 +319,21 @@
               </svg>
               <figcaption>直すのは人です。直しは、計画の言葉のまま頼みます（コードにはまだ進まない）。</figcaption>
             </figure>
-            <ul>
-              <li>出てきた計画を、上の<strong>3点</strong>で読む。直したい所を言葉で頼んで、<strong>計画を直してもらう</strong></li>
-              <li>直した計画から、<strong>自分のメモ</strong>（足すこと・やらないこと・できたかの見かた）に写す。<strong>この回では、まだ実装に進まない</strong></li>
-              <li>うまく出ない人は、先に自分でメモを書いて、AIに「この計画の抜けや危ない所を教えて」と頼む（人の計画をAIが点検する形）</li>
-            </ul>
+
+              <ul>
+                <li>出てきた計画を、上の<strong>3点</strong>で読む。直したい所を言葉で頼んで、<strong>計画を直してもらう</strong>。直した計画から、<strong>自分のメモ</strong>（足すこと・やらないこと・できたかの見かた）に写す</li>
+                <li>うまく出ない人は、先に自分でメモを書いて、AIに「この計画の抜けや危ない所を教えて」と頼む（人の計画をAIが点検する形）</li>
+              </ul>
+            </details>
             <div class="lesson-tip">
               <strong>進級制作のリポジトリを、AI Studioに直接取り込まない。</strong>取り込むと、AI Studio向けに書き直されたコピーができ、GitHubへ送り返す（Force push）と、mainがその形に置き換わります（第7回）。AI Studioで試したいときは、<strong>コピー（別のリポジトリ）</strong>を取って、そのコピーを使います。別のブランチを取るだけでは、AI Studioが送る先（main）を守れるか確かめていないので、<strong>ブランチのコピーは使いません</strong>。進級制作の中身を変えるときは、<strong>agyで、元のリポジトリのブランチ上</strong>で行うのが安全です。
             </div>
+
+            <p><strong>② ワーク</strong>（約40分）</p>
+            <ul>
+              <li>1限のつづきを進める。先生が席をまわるので、<strong>困りごとはその場で聞く</strong></li>
+              <li>1つ終わったら、<strong>人の目で確かめる</strong>（動かす、画面で見る）。AIが「できた」と言っても、確かめるのは人</li>
+            </ul>
           </div>
         </div>
 
@@ -296,15 +342,15 @@
             <span class="timeline-time">2限 後半</span>
             <span class="timeline-duration">約30分</span>
           </div>
-          <h3>計画を見せ合って、直す</h3>
+          <h3>ワーク③と、今日の成果を残す</h3>
           <div class="timeline-body">
             <ul>
-              <li><strong>ペアで見せ合う</strong>（約15分）: 次の一歩のメモを読み合う。聞く人は、<strong>「1回（90分）で終わりそうか」「できたかの見かたで『できた』と言えるか」</strong>の2つだけを聞く</li>
-              <li><strong>直す</strong>（約10分）: 言われたことを、自分のメモに反映する。大きすぎたら、半分に割る</li>
-              <li><strong>次回の準備を確かめる</strong>（約5分）: 作品の場所（リポジトリ・アプリ）を開けるか、agyが動くか。動かない人は今のうちに先生へ</li>
+              <li><strong>ワーク</strong>（約20分）: つづきを進める。区切りのいいところで手を止める</li>
+              <li><strong>今日の成果を残す</strong>（約10分）: どこまで進んだか、次にやることを、<strong>自分のリポジトリのメモ（<code>NOTES.md</code>など）か、手元のメモ</strong>に書く。進んだ分は、コミット・プッシュしておく（やり方が分からない人は先生へ）</li>
+              <li><strong>次回の準備を確かめる</strong>: 作品の場所（リポジトリ・アプリ）を、次回も開けるか。agyが動くか。動かない人は今のうちに先生へ</li>
             </ul>
             <div class="lesson-tip">
-              <strong>計画が決まらなくても大丈夫。</strong>「いちばん困っていること」を1つ書いておけば、次回はそこから始められます。
+              <strong>進まなくても大丈夫。</strong>「いちばん困っていること」を1つ書いておけば、次回はそこから始められます。
             </div>
           </div>
         </div>
@@ -314,14 +360,13 @@
             <span class="timeline-time">まとめ</span>
             <span class="timeline-duration">約10分</span>
           </div>
-          <h3>今日決めた「次の1歩」を確かめ、次回を知る</h3>
+          <h3>今日進めたことを確かめ、次回を知る</h3>
           <div class="timeline-body">
             <ul>
-              <li><strong>全体の確認</strong>（約3分）: 数人が、自分の「足すこと」と「できたかの見かた」を1文で発表する</li>
-              <li><strong>先生のひとこと</strong>（約2分）: AIには計画の下書きを任せ、<strong>何を足すか・どこまでやるか</strong>は人が決められたか</li>
-              <li>次の一歩のメモを、<strong>自分のリポジトリのメモ（<code>NOTES.md</code>など）か、手元のメモ</strong>に残す（約3分）。次回、そのまま使います</li>
-              <li>次回（第10回、約1分）：<strong>進級制作に小さな改善を加える①</strong>——第9回の計画に基づき、進級制作（または個人開発の延長）に<strong>小さな改善を1つ実装</strong>する（<a href="../ai-programming-2.html">授業計画一覧</a>）</li>
-              <li>「今日の計画で、<strong>AIに任せてよかったこと</strong>と、<strong>人が決めてよかったこと</strong>」を一言メモして退出</li>
+              <li><strong>先生のひとこと</strong>（約3分）: 今日のアンケートで出た困りごとを、次回以降にどう扱うか</li>
+              <li><strong>一言メモ</strong>（約4分）: 今日<strong>AIに任せたこと</strong>と、<strong>自分で決めた・確かめたこと</strong>を、一言ずつ</li>
+              <li>次回（第10回、約1分）：<strong>進級制作に小さな改善を加える①</strong>——今日のつづきとして、進級制作（または個人開発の延長）に<strong>小さな改善を1つ実装</strong>する（<a href="../ai-programming-2.html">授業計画一覧</a>）</li>
+              <li>成果のメモが残っているか、最後に確かめて退出（約2分）</li>
             </ul>
           </div>
         </div>
@@ -335,8 +380,8 @@
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>次の一歩のメモを、次回すぐ使える場所に残しておく</strong>
-            <p>足すこと（1つ）・やらないこと・できたかの見かた。リポジトリの<code>NOTES.md</code>か、手元のメモでよい。次回の最初に開きます。</p>
+            <strong>今日の成果を、次回すぐ使える場所に残しておく</strong>
+            <p>どこまで進んだか、次にやること。リポジトリの<code>NOTES.md</code>か、手元のメモでよい。次回の最初に開きます。</p>
           </div>
         </div>
         <div class="lesson-task">
@@ -352,6 +397,7 @@
     <div class="syllabus-section">
       <h2>参考リンク</h2>
       <ul>
+        <li><a href="https://arxiv.org/abs/2512.14012" target="_blank" rel="noopener">Professional Software Developers Don't Vibe, They Control: AI Agent Use for Coding in 2025（arXiv）</a> — 冒頭の話の論文（2025-12-16投稿、改訂版v2は2026-08-18、確認日 2026-11-12）</li>
         <li><a href="https://antigravity.google/docs/plan" target="_blank" rel="noopener">Plan (/plan)（Antigravity公式）</a> — 計画だけ出させる、質問の画面、計画の承認</li>
         <li><a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio（Google公式）</a> — Build modeの説明（Planモードの記述は見つからなかった）</li>
         <li><a href="week07.html">第7回 Google AI Studio Build modeで仕上げよう②（本サイト）</a> — 進級制作を直接取り込まない理由、コピーの取り方</li>
