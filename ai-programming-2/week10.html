@@ -9,7 +9,8 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=26">
-  <!-- 前回（第9回）のアンケート結果の分類は、回答の個別内容を載せず、分類と件数のみ（2026-11-12）。頼み方・コードの理解の項は授業用の整理で、公式の分類ではない。 -->
+  <!-- 前回（第9回）のアンケート結果の分類は、回答の個別内容を載せず、分類と件数のみ（2026-11-12）。頼み方・コードの理解・ループを回す前に決める4つは授業用の整理で、公式の分類ではない。 -->
+  <!-- ループエンジニアリング（2026-11-12確認）: 2026年6月ごろから使われ始めた言葉で定義は決まっていない。出典は解説記事（本文をcurlで照合）: codingwithroby.substack.com（X上のSteinberger氏の投稿「Stop prompting coding agents. You should be designing loops that prompt your agents.」の引用、命名は2026年6月）／zbrain.ai（悪い指示のループは速く高くつく失敗をするだけ、よいループはよい指示の上に作る、理解の負債）／alphasignalai.substack.com（多くの開発者にはまだ要らない、費用と安全）／smartscope.blog（完成条件を検査できる形で書く、再試行に回数と失敗条件を付ける、2026-06-11公開）。一次資料（Steinberger氏の投稿、Osmani氏の原文）は未確認。 -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -58,11 +59,11 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">第9回で決めた「次に進めたいこと」をもとに、進級制作（または個人開発の延長）に<strong>小さな改善を1つ実装</strong>する。冒頭に、前回のアンケートで多かった困りごと（<strong>AIへの頼み方</strong>、<strong>AIが書いたコードの理解</strong>）を短く扱い、あとは<strong>ワーク</strong>の時間にする。先生が席をまわる</div>
+          <div class="lesson-overview-value">第9回の論文の「計画して、確かめるのは人」を受けて、<strong>プロンプト（1回の頼み方）から、ループ（頼む→確かめる→直す、をくり返す）へ</strong>進む考え方を説明する。そのうえで、進級制作（または個人開発の延長）に<strong>小さな改善を1つ実装</strong>するワークをする。前回のアンケートで多かった困りごと（<strong>AIへの頼み方</strong>、<strong>コードの理解</strong>）も、冒頭で短く扱う。先生が席をまわる</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">小さな改善 / 小さく・見せて・確かめ方を渡す / コードを説明させる / エラーは全文を貼る / コミット・プッシュ</div>
+          <div class="lesson-overview-value">プロンプトからループへ / 1周を小さく / 止める条件（できたかの見かた） / 人が見る場所 / 周回数 / コミット・プッシュ</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
@@ -74,13 +75,13 @@
     <div class="syllabus-section">
       <h2>この回のゴール</h2>
       <ul>
-        <li>第9回のメモをもとに、今日の<strong>小さな改善を1つ</strong>決められる</li>
-        <li>AIに、<strong>小さく・見せて・確かめ方つき</strong>で頼める</li>
-        <li>AIが書いたコードを<strong>説明させ</strong>、エラーが出たときに<strong>必要な情報を伝えられる</strong></li>
-        <li>小さな改善を1つ実装し、<strong>動かして確かめ</strong>、コミット・プッシュまでできる</li>
+        <li>「プロンプトより、<strong>ループ</strong>」と言われ始めている背景を、自分の言葉で言える（<strong>言葉の定義はまだ決まっていない</strong>ことも含めて）</li>
+        <li>ループを回す前に決める<strong>4つ</strong>（1周の大きさ・止める条件・人が見る場所・周回数）を、自分の作品で決められる</li>
+        <li>AIに<strong>小さく・見せて・確かめ方つき</strong>で頼め、コードを<strong>説明させ</strong>、エラーは<strong>全文を貼れる</strong></li>
+        <li>小さな改善を、<strong>1周〜数周</strong>回して実装し、<strong>止める条件で確かめて</strong>、コミット・プッシュまでできる</li>
       </ul>
       <div class="lesson-tip">
-        <strong>今日の優先順位:</strong> 大きな改善でなくて構いません。<strong>動くところまで、小さく1つ</strong>が目標です。進まなかったときは、「どこで止まったか」を書いておけば、次回の出発点になります。
+        <strong>今日の優先順位:</strong> 大きな改善でなくて構いません。<strong>動くところまで、小さく1つ</strong>が目標です。止まったときは、「どこで止まったか」を書いておけば、次回の出発点になります。
       </div>
     </div>
 
@@ -95,16 +96,16 @@
             <span class="timeline-time">1限 前半</span>
             <span class="timeline-duration">約40分</span>
           </div>
-          <h3>前回の続きを確かめ、頼み方とコードの理解を短く知る</h3>
+          <h3>プロンプトから、ループへ。頼み方とコードの理解を短く知る</h3>
           <div class="timeline-body">
             <figure class="vz-fig" aria-labelledby="cap-a10-map">
-              <p class="vz-fig-title" id="cap-a10-map">今日の流れ：短く知って、小さく1つ作る</p>
+              <p class="vz-fig-title" id="cap-a10-map">今日の流れ：ループを知って、小さく回す</p>
               <svg class="vz-svg" viewBox="0 0 360 252" role="img" aria-labelledby="a10-map-t a10-map-d">
-                <title id="a10-map-t">今日の流れ：短く知って、小さく1つ作る</title>
-                <desc id="a10-map-d">1 前回のメモを開き、今日の小さな改善を1つ決める。1限の前半。2 前回のアンケートで多かった、AIへの頼み方と、コードの理解を、短く知る。1限の前半。3 小さな改善を実装するワーク。先生が席をまわる。1限の後半から2限の後半まで。4 動かして確かめ、コミット・プッシュで残す。2限の後半。</desc>
+                <title id="a10-map-t">今日の流れ：ループを知って、小さく回す</title>
+                <desc id="a10-map-d">1 第9回の続きとして、プロンプトからループへの考え方を知る。1限の前半。2 前回のアンケートで多かった、頼み方とコードの理解を知り、今日の1周を決める。1限の前半。3 ループを回すワーク。1周ずつ、頼む、確かめる、直す。先生が席をまわる。1限の後半から2限の後半まで。4 止める条件で止めて、コミット・プッシュで残す。2限の後半。</desc>
                 <rect class="box-orange" x="8" y="6" width="344" height="50" rx="10"/>
-                <text class="t-b" x="22" y="28">1 前回のメモから、今日の1つ</text>
-                <text class="t-sm" x="22" y="47">小さく、1つだけ決める</text>
+                <text class="t-b" x="22" y="28">1 プロンプトから、ループへ</text>
+                <text class="t-sm" x="22" y="47">第9回の論文のつづき</text>
                 <text class="t-sm" x="342" y="28" text-anchor="end">1限前半</text>
                 <line class="line" x1="180" y1="58" x2="180" y2="68" marker-end="url(#mk-s)"/>
                 <rect class="box-orange" x="8" y="70" width="344" height="50" rx="10"/>
@@ -113,37 +114,67 @@
                 <text class="t-sm" x="342" y="92" text-anchor="end">1限前半</text>
                 <line class="line" x1="180" y1="122" x2="180" y2="132" marker-end="url(#mk-s)"/>
                 <rect class="box-orange box-key" x="8" y="134" width="344" height="50" rx="10"/>
-                <text class="t-b" x="22" y="156">3 小さな改善を実装するワーク</text>
-                <text class="t-sm" x="22" y="175">先生が席をまわる</text>
+                <text class="t-b" x="22" y="156">3 ループを回すワーク</text>
+                <text class="t-sm" x="22" y="175">1周ずつ。先生が席をまわる</text>
                 <text class="t-sm" x="342" y="156" text-anchor="end">1限後半〜</text>
                 <line class="line" x1="180" y1="186" x2="180" y2="196" marker-end="url(#mk-s)"/>
                 <rect class="box-white" x="8" y="198" width="344" height="50" rx="10"/>
-                <text class="t-b" x="22" y="220">4 動かして確かめ、残す</text>
-                <text class="t-sm" x="22" y="239">コミット・プッシュ</text>
+                <text class="t-b" x="22" y="220">4 止めて、残す</text>
+                <text class="t-sm" x="22" y="239">止める条件で止めて、コミット・プッシュ</text>
                 <text class="t-sm" x="342" y="220" text-anchor="end">2限後半</text>
               </svg>
               <figcaption>ワークの時間が中心です。続きは第11回につながります。</figcaption>
             </figure>
 
-            <p><strong>① 前回のメモを開いて、今日の1つを決める</strong>（約10分）</p>
+            <p><strong>① 第9回のつづき：プロンプトから、ループへ</strong>（約15分）</p>
             <ul>
-              <li>第9回で残した<strong>「今日の成果」のメモ</strong>を開く。<strong>次にやること</strong>から、今日実装する<strong>小さな改善を1つ</strong>選ぶ（大きいときは、半分に割る）</li>
-              <li>メモがない人は、作品を開いて、<strong>「次に直したい所」を1つ</strong>決める。決められない人は先生を呼ぶ</li>
+              <li>第9回の論文: プロは、雰囲気で全部を任せず、<strong>計画して、AIに任せ、人が確かめる</strong>。今日は、その<strong>1回の流れを、くり返す</strong>話</li>
+              <li>2026年6月ごろから、「<strong>プロンプトより、ループ</strong>」と言われ始めている。OpenClawという開発ツールの作者が、X上で "Stop prompting coding agents. You should be designing loops that prompt your agents."（コーディングエージェントに、プロンプトを打つのをやめよう。エージェントにプロンプトを打つ<strong>ループ</strong>を設計しよう）と書いた、と解説記事が紹介している。この考え方は、<strong>ループエンジニアリング</strong>とも呼ばれ始めた</li>
+              <li>人が1回ずつ指示を書く代わりに、<strong>「実行→確認→直す」をくり返す仕組み</strong>を作る。解説記事の整理では、大事なのは<strong>「完成条件」「検証」「再試行」「停止」</strong>を決めること（<a href="https://smartscope.blog/generative-ai/methodology/loop-engineering-agent-loops-2026/" target="_blank" rel="noopener">SmartScope</a>）</li>
+              <li><strong>注意</strong>: この言葉は<strong>最近使われ始めたばかりで、定義は決まっていません</strong>。ここで紹介したのは、<strong>解説記事</strong>で、公式の定義ではなく、元の投稿や原文は確かめていません</li>
+              <li>「プロンプトが要らなくなる」わけでは<strong>ありません</strong>。解説記事にも、「悪い指示でループを回すと、<strong>速く、高くつく失敗</strong>をするだけ」「よいループは、よい指示の上に作る」とある（<a href="https://zbrain.ai/loop-engineering/" target="_blank" rel="noopener">ZBrain</a>）。<strong>今日の「頼み方」の練習は、そのまま、ループの土台</strong></li>
+              <li>「ほとんどの開発者には、まだ要らない」という意見もある（費用と安全の理由。<a href="https://alphasignalai.substack.com/p/most-developers-do-not-need-agent" target="_blank" rel="noopener">AlphaSignal</a>）。AIに自動で回させる使い方は、<strong>今日はしません</strong>。今日は、<strong>人が回す小さなループ</strong>で練習する</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-a10-loop">
+              <p class="vz-fig-title" id="cap-a10-loop">プロンプトから、ループへ：頼む→確かめる→直す、をくり返す</p>
+              <svg class="vz-svg" viewBox="0 0 360 232" role="img" aria-labelledby="a10-loop-t a10-loop-d">
+                <title id="a10-loop-t">プロンプトから、ループへ：頼む→確かめる→直す、をくり返す</title>
+                <desc id="a10-loop-d">1回で頼んで終わりにせず、頼む、確かめる、直す、をくり返す流れ。1 頼む：小さく、確かめ方も一緒に。2 確かめる：人が動かして、できたかの見かたで見る。3 直す：何が違ったかを一言にして頼み直す。3から1へ戻る矢印で、くり返しを表す。4 止める・残す：できたら止めて、コミットで残す。</desc>
+                <rect class="box-orange box-key" x="8" y="6" width="300" height="46" rx="10"/>
+                <text class="t-b" x="22" y="27">1 頼む（小さく）</text>
+                <text class="t-sm" x="22" y="45">足すことは1つ。確かめ方も一緒に</text>
+                <line class="line" x1="158" y1="54" x2="158" y2="62" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="64" width="300" height="46" rx="10"/>
+                <text class="t-b" x="22" y="85">2 確かめる（人が）</text>
+                <text class="t-sm" x="22" y="103">動かして、できたかの見かたで見る</text>
+                <line class="line" x1="158" y1="112" x2="158" y2="120" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="122" width="300" height="46" rx="10"/>
+                <text class="t-b" x="22" y="143">3 直す・頼み直す</text>
+                <text class="t-sm" x="22" y="161">何が違ったかを一言にして頼む</text>
+                <path class="line" d="M308,145 L340,145 L340,29 L312,29" fill="none" marker-end="url(#mk-s)"/>
+                <line class="line" x1="158" y1="170" x2="158" y2="178" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="180" width="300" height="46" rx="10"/>
+                <text class="t-b" x="22" y="201">4 止める・残す</text>
+                <text class="t-sm" x="22" y="219">できたら止めて、コミットで残す</text>
+              </svg>
+              <figcaption>右の矢印が「くり返し」です。回す前に、止める条件を決めておきます。</figcaption>
+            </figure>
+
+            <ul>
+              <li>ループを回す前に、次の<strong>4つ</strong>を決める（<strong>授業用の整理で、公式の分類ではありません</strong>）:
+                <ul>
+                  <li><strong>1周の大きさ</strong>: 小さく。足すことは1つだけ</li>
+                  <li><strong>止める条件</strong>: 「できたかの見かた」。<strong>画面で見て分かること</strong>で書く（「いい感じになったら」は、止められない）</li>
+                  <li><strong>人が見る場所</strong>: 人が動かして確かめる所と、コードを読む所</li>
+                  <li><strong>周回数</strong>: 今日は<strong>最大3周</strong>まで。3周しても止まらなければ、「どこで止まったか」を書いて、先生を呼ぶ</li>
+                </ul>
+              </li>
             </ul>
 
-            <p><strong>② 前回のアンケートから：AIへの頼み方</strong>（約15分）</p>
+            <p><strong>② アンケートから：1周の頼み方</strong>（約10分）</p>
             <ul>
-              <li>前回のアンケート（22件）の「今困っていること」を、分類しました（1件が複数にまたがるものは、主なもので数えています。<strong>個別の回答は載せません</strong>）:</li>
-            </ul>
-            <ul>
-              <li><strong>AIに思い通りに動いてもらえない</strong>（プロンプトの書き方、一発で出ない、など）: 6件</li>
-              <li><strong>AIが作ったコードの理解・エラーを自分で直す</strong>: 4件</li>
-              <li><strong>作品づくりの技術</strong>（データベースの設計、Gitでの共有、サーバーに上げる、AIの組み込みなど）: 4件</li>
-              <li><strong>チーム・進め方</strong>（役割分担、発表の準備など）: 3件</li>
-              <li>その他（アイデア、進路など）: 2件　／　特になし: 3件</li>
-            </ul>
-            <ul>
-              <li>今日の冒頭は、多かった<strong>上の2つ</strong>（頼み方・コードの理解）を、短く扱う。<strong>技術的な個別の困りごと</strong>（データベース・Git・サーバーなど）は、ワークの時間に<strong>先生を呼んで</strong>ください</li>
+              <li>前回のアンケート（22件）の「今困っていること」を、分類しました（1件が複数にまたがるものは、主なもので数えています。<strong>個別の回答は載せません</strong>）: <strong>AIに思い通りに動いてもらえない</strong>（プロンプトの書き方、一発で出ない、など）6件／<strong>AIが作ったコードの理解・エラーを自分で直す</strong>4件／<strong>作品づくりの技術</strong>（データベース、Git、サーバー、AIの組み込みなど）4件／<strong>チーム・進め方</strong>3件／その他2件／特になし3件</li>
+              <li>多かった<strong>上の2つ</strong>を、冒頭で短く扱う。<strong>技術的な個別の困りごと</strong>（データベース・Git・サーバーなど）は、ワークの時間に<strong>先生を呼んで</strong>ください</li>
             </ul>
             <figure class="vz-fig" aria-labelledby="cap-a10-ask">
               <p class="vz-fig-title" id="cap-a10-ask">AIへの頼み方：小さく・見せて・確かめ方を渡す</p>
@@ -164,14 +195,15 @@
               </svg>
               <figcaption>この3つは授業用の整理で、公式の分類ではありません。第9回の「次の一歩のメモ」と同じ考え方です。</figcaption>
             </figure>
+
             <ul>
-              <li><strong>小さく</strong>: 「ログイン機能を全部作って」ではなく、「入力欄を1つ足して」。1回で頼むのは、<strong>1つだけ</strong></li>
+              <li><strong>小さく</strong>: 「ログイン機能を全部作って」ではなく、「入力欄を1つ足して」。1周で頼むのは、<strong>1つだけ</strong></li>
               <li><strong>見せて</strong>: 「いい感じに」ではなく、「ボタンを押すと、リストの下に1行増える」のように、<strong>見て分かる形</strong>で書く</li>
-              <li><strong>確かめ方を渡す</strong>: 「できたら、〇〇が画面に出るはずです。その確かめ方も書いてください」と、頼む文に入れる</li>
-              <li>思い通りに出なかったら、<strong>頼み直す前に</strong>、「何が違ったか」を一言で書いてから頼む（「そうじゃない」だけだと、AIにも伝わりにくい）</li>
+              <li><strong>確かめ方を渡す</strong>: 「できたら、〇〇が画面に出るはずです。その確かめ方も書いてください」と、頼む文に入れる（<strong>止める条件</strong>になる）</li>
+              <li>思い通りに出なかったら、<strong>頼み直す前に</strong>、「何が違ったか」を一言で書いてから頼む（これが<strong>2周目</strong>の頼み方）</li>
             </ul>
 
-            <p><strong>③ 前回のアンケートから：AIが書いたコードを理解する</strong>（約15分）</p>
+            <p><strong>③ アンケートから：コードの理解（人が見る場所）</strong>（約10分）</p>
             <figure class="vz-fig" aria-labelledby="cap-a10-read">
               <p class="vz-fig-title" id="cap-a10-read">AIが書いたコードを、理解する・直す</p>
               <svg class="vz-svg" viewBox="0 0 360 192" role="img" aria-labelledby="a10-read-t a10-read-d">
@@ -191,11 +223,18 @@
               </svg>
               <figcaption>この3つは授業用の整理で、公式の分類ではありません。</figcaption>
             </figure>
+
             <ul>
               <li><strong>説明させる</strong>: 分からないコードは、そのまま使わずに、「このコードが何をしているか、初心者向けに、順番に説明してください」と頼む。説明を読んで、<strong>自分の言葉で一言</strong>にしてみる</li>
               <li><strong>変えた所を聞く</strong>: 直してもらったあとは、「どこを、なぜ変えましたか」と聞く。<strong>変えた理由が分かれば</strong>、次に自分で直せる</li>
               <li><strong>エラーは全文を貼る</strong>: エラーの文を、<strong>途中で切らずに全部</strong>と、<strong>直前にしたこと</strong>を一緒に伝える。APIキー・<code>.env</code>の中身・個人情報が入っていないかは、貼る前に確かめる</li>
-              <li>注意: AIの説明や直し方が<strong>いつも正しいとは限りません</strong>。説明を読んで<strong>動かして確かめる</strong>のは、人です（第9回の冒頭の話と同じ）</li>
+              <li>ループを速く回すほど、<strong>コードを読まないまま増える</strong>危険がある（解説記事では「理解の負債」と呼ばれている。<a href="https://zbrain.ai/loop-engineering/" target="_blank" rel="noopener">ZBrain</a>）。AIの説明や直し方は<strong>いつも正しいとは限りません</strong>。<strong>動かして確かめる</strong>のは、人です</li>
+            </ul>
+
+            <p><strong>④ 前回のメモから、今日の1周を決める</strong>（約5分）</p>
+            <ul>
+              <li>第9回で残した<strong>「今日の成果」のメモ</strong>の<strong>次にやること</strong>から、今日の<strong>小さな改善を1つ</strong>選ぶ（大きいときは、半分に割る）。メモがない人は、作品を開いて、<strong>「次に直したい所」を1つ</strong>決める</li>
+              <li>上の<strong>4つ</strong>（1周の大きさ・止める条件・人が見る場所・周回数）を、<strong>一言ずつメモ</strong>する</li>
             </ul>
           </div>
         </div>
@@ -205,9 +244,9 @@
             <span class="timeline-time">1限 後半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>ワーク①：小さな改善を実装する</h3>
+          <h3>ワーク①：ループを回して、小さな改善を実装する</h3>
           <div class="timeline-body">
-            <p><strong>① 頼む文を、小さく作る</strong>（約10分）</p>
+            <p><strong>① 1周目の頼む文を作る</strong>（約10分）</p>
             <ul>
               <li>今日の改善を、<strong>小さく・見せて・確かめ方つき</strong>の頼む文にして、メモする。例: <code>この作品に「（足すこと）」を1つ足したい。（やらないこと）は変えないでください。できたら、（画面でこう見える）はずです。その確かめ方も書いてください。</code></li>
               <li>先に計画だけ出させたい人は、第9回の「<a href="week09.html">困ったときの道具</a>」（AIに「計画だけ」出させる）を使ってよい</li>
@@ -215,7 +254,8 @@
 
             <p><strong>② ワーク</strong>（約40分）</p>
             <ul>
-              <li>AIエージェント（agyまたはAI Studio Build mode）に頼んで、小さな改善を実装する。出てきたものは、<strong>人が読んで、動かして確かめる</strong></li>
+              <li>AIエージェント（agyまたはAI Studio Build mode）に頼んで、1周ずつ回す。<strong>頼む→人が確かめる→直す</strong>。出てきたものは、<strong>止める条件</strong>で見る</li>
+              <li><strong>周回ログ</strong>: 1周ごとに、<strong>一行</strong>だけメモする（<strong>頼んだこと→結果→次に直すこと</strong>）。メモの場所は、<code>NOTES.md</code>か手元のメモ</li>
               <li><strong>困ったときの頼り先</strong>: ①まず<strong>チームの人</strong>　②それでも分からなければ<strong>先生</strong>を呼ぶ（先生が席をまわります。データベース・Git・サーバーなどの個別の困りごとも、ここで）　③AIには、上の「頼み方」と「コードの理解」を使う</li>
               <li>うまく進まなくても大丈夫。<strong>どこで止まったかを一言メモ</strong>する</li>
             </ul>
@@ -234,21 +274,21 @@
             <span class="timeline-time">2限 前半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>ワーク②：実装を進め、動かして確かめる</h3>
+          <h3>ワーク②：止める条件で確かめ、必要なら次の周を回す</h3>
           <div class="timeline-body">
             <p><strong>① ワーク</strong>（約40分）</p>
             <ul>
               <li>1限のつづきを進める。先生が席をまわるので、<strong>困りごとはその場で聞く</strong></li>
-              <li>コードが分からなくなったら、「<strong>説明させる</strong>」「<strong>変えた所を聞く</strong>」を使う。エラーが出たら、「<strong>全文を貼る</strong>」</li>
+              <li>コードが分からなくなったら、「<strong>説明させる</strong>」「<strong>変えた所を聞く</strong>」を使う。エラーが出たら、「<strong>全文を貼る</strong>」。<strong>周回数は最大3周</strong>（3周して止まらなければ、先生へ）</li>
             </ul>
             <div class="lesson-tip">
               <strong>進級制作のリポジトリを、AI Studioに直接取り込まない。</strong>取り込むと、AI Studio向けに書き直されたコピーができ、GitHubへ送り返す（Force push）と、mainがその形に置き換わります（第7回）。AI Studioで試したいときは、<strong>コピー（別のリポジトリ）</strong>を取って、そのコピーを使います。進級制作の中身を変えるときは、<strong>agyで、元のリポジトリのブランチ上</strong>で行うのが安全です。
             </div>
 
-            <p><strong>② 動かして確かめる</strong>（約10分）</p>
+            <p><strong>② 止める条件で確かめる</strong>（約10分）</p>
             <ul>
-              <li>頼む文に書いた<strong>「できたかの見かた」</strong>で、実際に動かして、画面で確かめる。AIが「できた」と言っても、確かめるのは人</li>
-              <li>確かめた結果を、<strong>一言メモ</strong>する（動いた／ここが違った）</li>
+              <li>頼む文に書いた<strong>「できたかの見かた」</strong>で、実際に動かして、画面で確かめる。<strong>できていれば、止める</strong>（もう1周しない）。AIが「できた」と言っても、確かめるのは人</li>
+              <li>確かめた結果を、<strong>周回ログ</strong>に一行（動いた／ここが違った）</li>
             </ul>
           </div>
         </div>
@@ -266,7 +306,7 @@
               <li><strong>次回の準備を確かめる</strong>: 作品の場所を、次回も開けるか。agyが動くか。動かない人は今のうちに先生へ</li>
             </ul>
             <div class="lesson-tip">
-              <strong>動かなくても大丈夫。</strong>動かなかった分は、「どこで止まったか」をメモに書いて残せば、次回はそこから始められます。
+              <strong>動かなくても大丈夫。</strong>動かなかった分は、「どこで止まったか」を周回ログに書いて残せば、次回はそこから始められます。
             </div>
           </div>
         </div>
@@ -276,13 +316,13 @@
             <span class="timeline-time">まとめ</span>
             <span class="timeline-duration">約10分</span>
           </div>
-          <h3>今日進めたことを確かめ、次回を知る</h3>
+          <h3>今日回したループを振り返り、次回を知る</h3>
           <div class="timeline-body">
             <ul>
               <li><strong>先生のひとこと</strong>（約3分）: 今日のワークで出た困りごとを、次回にどう扱うか</li>
-              <li><strong>一言メモ</strong>（約4分）: 今日<strong>AIに任せたこと</strong>と、<strong>自分で確かめたこと</strong>を、一言ずつ</li>
-              <li>次回（第11回、約1分）：<strong>進級制作に小さな改善を加える②</strong>——第10回の続き。改善を積み重ね、動作確認とコミット・プッシュまで行う（<a href="../ai-programming-2.html">授業計画一覧</a>）</li>
-              <li>成果のメモが残っているか、最後に確かめて退出（約2分）</li>
+              <li><strong>一言メモ</strong>（約4分）: 今日<strong>何周回したか</strong>、<strong>どこで止めたか</strong>。<strong>AIに任せたこと</strong>と、<strong>自分で確かめたこと</strong>を、一言ずつ</li>
+              <li>次回（第11回、約1分）：<strong>進級制作に小さな改善を加える②</strong>——第10回の続き。<strong>改善を積み重ね</strong>（ループを何度も回し）、動作確認とコミット・プッシュまで行う（<a href="../ai-programming-2.html">授業計画一覧</a>）</li>
+              <li>周回ログと成果のメモが残っているか、最後に確かめて退出（約2分）</li>
             </ul>
           </div>
         </div>
@@ -296,8 +336,8 @@
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>今日の成果と、次にやることを、メモに残しておく</strong>
-            <p>動いたところ、止まったところ、次にやること。リポジトリの<code>NOTES.md</code>か、手元のメモでよい。次回の最初に開きます。</p>
+            <strong>今日の周回ログと成果、次にやることを、メモに残しておく</strong>
+            <p>何周回したか、動いたところ、止まったところ、次にやること。リポジトリの<code>NOTES.md</code>か、手元のメモでよい。次回の最初に開きます。</p>
           </div>
         </div>
         <div class="lesson-task">
@@ -312,8 +352,13 @@
 
     <div class="syllabus-section">
       <h2>参考リンク</h2>
+      <p class="lesson-note">「ループエンジニアリング」は最近使われ始めた言葉で、定義は決まっていません。次の3つは<strong>解説記事</strong>で、公式の定義ではありません（確認日 2026-11-12）。</p>
       <ul>
-        <li><a href="week09.html">第9回 進級制作とAIエージェントをつなげよう（本サイト）</a> — 次の一歩のメモ、AIに「計画だけ」出させる、困ったときの道具</li>
+        <li><a href="https://codingwithroby.substack.com/p/loop-engineering-stop-prompting-agents" target="_blank" rel="noopener">Loop Engineering: Stop Prompting Agents（Eric Roby）</a> — 「プロンプトを打つのをやめ、ループを設計する」という投稿の紹介（2026年6月）</li>
+        <li><a href="https://zbrain.ai/loop-engineering/" target="_blank" rel="noopener">Loop engineering: The foundation for building self-driving AI agents（ZBrain）</a> — 悪い指示のループは速く失敗する、理解の負債</li>
+        <li><a href="https://alphasignalai.substack.com/p/most-developers-do-not-need-agent" target="_blank" rel="noopener">Most Developers Do Not Need Agent Loops Yet（AlphaSignal）</a> — まだ要らない人が多い、という意見（費用と安全）</li>
+        <li><a href="https://smartscope.blog/generative-ai/methodology/loop-engineering-agent-loops-2026/" target="_blank" rel="noopener">Loop Engineering：agentの完成条件・検査・停止を設計する（SmartScope）</a> — 完成条件・検証・再試行・停止</li>
+        <li><a href="week09.html">第9回 進級制作とAIエージェントをつなげよう（本サイト）</a> — 論文の話、次の一歩のメモ、AIに「計画だけ」出させる、困ったときの道具</li>
         <li><a href="week07.html">第7回 Google AI Studio Build modeで仕上げよう②（本サイト）</a> — 進級制作を直接取り込まない理由、コピーの取り方</li>
       </ul>
     </div>
