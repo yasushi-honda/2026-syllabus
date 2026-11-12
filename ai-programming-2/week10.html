@@ -10,7 +10,7 @@
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=26">
   <!-- 前回（第9回）のアンケート結果の分類は、回答の個別内容を載せず、分類と件数のみ（2026-11-12）。頼み方・コードの理解・ループを回す前に決める4つは授業用の整理で、公式の分類ではない。 -->
-  <!-- ループエンジニアリング（2026-11-12確認）: 2026年6月ごろから使われ始めた言葉で定義は決まっていない。出典は解説記事（本文をcurlで照合）: codingwithroby.substack.com（X上のSteinberger氏の投稿「Stop prompting coding agents. You should be designing loops that prompt your agents.」の引用、命名は2026年6月）／zbrain.ai（悪い指示のループは速く高くつく失敗をするだけ、よいループはよい指示の上に作る、理解の負債）／alphasignalai.substack.com（多くの開発者にはまだ要らない、費用と安全）／smartscope.blog（完成条件を検査できる形で書く、再試行に回数と失敗条件を付ける、2026-06-11公開）。一次資料（Steinberger氏の投稿、Osmani氏の原文）は未確認。 -->
+  <!-- ループエンジニアリング（2026-11-12確認）: 2026年6月ごろから使われ始めた言葉で定義は決まっていない。出典は解説記事（本文をcurlで照合）: codingwithroby.substack.com（X上のSteinberger氏の投稿「Stop prompting coding agents. You should be designing loops that prompt your agents.」の引用、命名は2026年6月）／zbrain.ai（悪い指示のループは速く高くつく失敗をするだけ、よいループはよい指示の上に作る、理解の負債）／alphasignalai.substack.com（多くの開発者にはまだ要らない、費用と安全）／smartscope.blog（完成条件を検査できる形で書く、再試行に回数と失敗条件を付ける、2026-06-11公開・2026-10-13更新）。一次資料（Steinberger氏の投稿、Osmani氏の原文）は未確認。 -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -130,9 +130,10 @@
             <ul>
               <li>第9回の論文: プロは、雰囲気で全部を任せず、<strong>計画して、AIに任せ、人が確かめる</strong>。今日は、その<strong>1回の流れを、くり返す</strong>話</li>
               <li>2026年6月ごろから、「<strong>プロンプトより、ループ</strong>」と言われ始めている。OpenClawという開発ツールの作者が、X上で "Stop prompting coding agents. You should be designing loops that prompt your agents."（コーディングエージェントに、プロンプトを打つのをやめよう。エージェントにプロンプトを打つ<strong>ループ</strong>を設計しよう）と書いた、と解説記事が紹介している。この考え方は、<strong>ループエンジニアリング</strong>とも呼ばれ始めた</li>
-              <li>人が1回ずつ指示を書く代わりに、<strong>「実行→確認→直す」をくり返す仕組み</strong>を作る。解説記事の整理では、大事なのは<strong>「完成条件」「検証」「再試行」「停止」</strong>を決めること（<a href="https://smartscope.blog/generative-ai/methodology/loop-engineering-agent-loops-2026/" target="_blank" rel="noopener">SmartScope</a>）</li>
+              <li>人が1回ずつ指示を書く代わりに、<strong>「実行→確認→直す」をくり返す仕組み</strong>を作る。解説記事の一つは、<strong>「完成条件」「検証」「再試行」「停止」</strong>（と引き継ぎ）を設計する考え方として使える、としている（<a href="https://smartscope.blog/generative-ai/methodology/loop-engineering-agent-loops-2026/" target="_blank" rel="noopener">SmartScope</a>）</li>
               <li><strong>注意</strong>: この言葉は<strong>最近使われ始めたばかりで、定義は決まっていません</strong>。ここで紹介したのは、<strong>解説記事</strong>で、公式の定義ではなく、元の投稿や原文は確かめていません</li>
-              <li>「プロンプトが要らなくなる」わけでは<strong>ありません</strong>。解説記事にも、「悪い指示でループを回すと、<strong>速く、高くつく失敗</strong>をするだけ」「よいループは、よい指示の上に作る」とある（<a href="https://zbrain.ai/loop-engineering/" target="_blank" rel="noopener">ZBrain</a>）。<strong>今日の「頼み方」の練習は、そのまま、ループの土台</strong></li>
+              <li>「プロンプトが要らなくなる」わけでは<strong>ありません</strong>。解説記事にも、悪い指示や悪い文脈でループを回すと、<strong>速く、高くつく失敗</strong>をするだけ、よいループは、よい指示と文脈の上に作る、とある（要約。<a href="https://zbrain.ai/loop-engineering/" target="_blank" rel="noopener">ZBrain</a>）。<strong>今日の「頼み方」の練習は、そのまま、ループの土台</strong></li>
+              <li>記事が言う「ループ」は、<strong>AIが自動で回し続けるもの</strong>です。今日は、その考え方を、<strong>人が回す練習版</strong>で体験します</li>
               <li>「ほとんどの開発者には、まだ要らない」という意見もある（費用と安全の理由。<a href="https://alphasignalai.substack.com/p/most-developers-do-not-need-agent" target="_blank" rel="noopener">AlphaSignal</a>）。AIに自動で回させる使い方は、<strong>今日はしません</strong>。今日は、<strong>人が回す小さなループ</strong>で練習する</li>
             </ul>
             <figure class="vz-fig" aria-labelledby="cap-a10-loop">
@@ -352,7 +353,7 @@
 
     <div class="syllabus-section">
       <h2>参考リンク</h2>
-      <p class="lesson-note">「ループエンジニアリング」は最近使われ始めた言葉で、定義は決まっていません。次の3つは<strong>解説記事</strong>で、公式の定義ではありません（確認日 2026-11-12）。</p>
+      <p class="lesson-note">「ループエンジニアリング」は最近使われ始めた言葉で、定義は決まっていません。次の4つは<strong>解説記事</strong>で、公式の定義ではありません（確認日 2026-11-12）。</p>
       <ul>
         <li><a href="https://codingwithroby.substack.com/p/loop-engineering-stop-prompting-agents" target="_blank" rel="noopener">Loop Engineering: Stop Prompting Agents（Eric Roby）</a> — 「プロンプトを打つのをやめ、ループを設計する」という投稿の紹介（2026年6月）</li>
         <li><a href="https://zbrain.ai/loop-engineering/" target="_blank" rel="noopener">Loop engineering: The foundation for building self-driving AI agents（ZBrain）</a> — 悪い指示のループは速く失敗する、理解の負債</li>
