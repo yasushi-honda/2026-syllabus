@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=26">
+  <!-- 2限前半②のループ（2026-11-12追記）: 解説記事4つ（codingwithroby.substack.com／zbrain.ai／alphasignalai.substack.com／smartscope.blog）の本文をcurlで照合。言葉は2026年6月ごろから使われ始めた最近のもので定義は決まっていない。一次資料（Steinberger氏のX投稿・Osmani氏の原文）は未確認。ループを回す前に決める4つは授業用の整理で公式の分類ではない。ループの範囲はローカル（wrangler dev・--local・localhost）だけで、deploy・--remote・secret・.envは含めない。 -->
   <!-- 公式情報確認: 2026-11-11 (developers.cloudflare.com の各ページの .md 版と生HTMLを curl で取得して原文照合。①D1 Getting started（更新 Aug 25, 2026）: 「D1 uses the familiar SQL query language (as used by SQLite).」／npm create cloudflare@latest -- d1-tutorial（Hello World example・Worker only・TypeScript）／npx wrangler@latest d1 create prod-d1-tutorial →「Would you like Wrangler to add it on your behalf?」で Yes／wrangler.jsonc の d1_databases（binding・database_name・database_id）／npx wrangler d1 execute prod-d1-tutorial --local --file=./schema.sql（「To execute on your remote database, add a --remote flag」）／prepare() と bind() の ? プレースホルダー（「Using bind() prevents users from executing arbitrary SQL (known as "SQL injection")」）②D1 wrangler-commands: --local「Execute commands/files against a local DB for use with wrangler dev」／--remote「Execute commands/files against a remote D1 database」／local-development「wrangler dev now uses local mode by default」「A local session does not have access to your production data by default.」③Wrangler login（workers/wrangler/commands/general、更新 Sep 2, 2026）と changelog 2026-08-04「Pass --device to authenticate without starting a temporary callback server on localhost:8976」「GitHub Codespaces」「You have 5 minutes to approve this request.」「Available in Wrangler version 4.119.0 or later.」④claim-deployments（更新 Jul 14, 2026）: wrangler deploy --temporary（Wrangler 4.102.0 以降）「Claim within: 60 minutes」「If the user does not complete the claim, Cloudflare deletes the account and its resources.」D1「One database, with up to 100 MB per database and 100 MB total」⑤workers.dev:「When enabled, your workers.dev URL is available publicly.」／get-started/guide: ローカルは http://localhost:8787、デプロイ時にサブドメインを設定する案内／secrets: npx wrangler secret put <KEY>、.dev.vars は git に入れない ⑥D1 pricing（Free: 読み取り5 million/日・書き込み100,000/日・合計5 GB・10データベース、00:00 UTCにリセット）／D1 limits（1データベース 500 MB）／changelog 2026-09-01「D1 queries on the Workers Free plan will fail when an account exceeds the daily row read or row write limits」「Stored data is not affected.」／Workers limits: Free 100,000リクエスト/日、超過で Error 1027 ⑦MCP: Cloudflare's own MCP servers（agents/model-context-protocol/cloudflare/servers-for-cloudflare）。未確認: Cloudflareの登録でクレジットカード等の支払い方法が求められるか（公式のサインアップ手順には「Email」と「Password」だけが書かれているが、支払い方法について明記した公式ページは見つかっていない）、メール確認をしないとデプロイできないか、学校のネットワークと学校アカウントでの実画面、wrangler d1 create / execute が一時アカウント（--temporary）でも通るか（公式の表には D1 は1つ・100MBとあるが、wrangler のコマンドで作れるかは未確認）。D1・Workers・Wrangler に終了・改名の公式発表は見つからず（新しいCLI cf はベータで、本授業では使わない）。日本語の公式ドキュメントはない（/ja/ は404）） -->
 </head>
 <body>
@@ -260,7 +261,7 @@
             <span class="timeline-time">2限 前半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>型④確かめ方を渡して、ローカルで確かめ、本番に公開する</h3>
+          <h3>型④確かめ方を渡して、ローカルで小さなループを回し、本番に公開する</h3>
           <div class="timeline-body">
             <p><strong>① Workerと表をつくらせる</strong>（約15分）</p>
             <pre class="md-preview">計画のとおり、次を作ってください。
@@ -287,7 +288,7 @@ return Response.json(results);</pre>
               <li>公式では、"Using bind() prevents users from executing arbitrary SQL (known as "SQL injection") against your application and deleting or otherwise modifying your database."（<code>bind()</code>を使うと、入力を使って、勝手なSQLを実行され、データベースを消されたり書き換えられたりするのを防げる）と説明している。<strong>入力をSQLの文字列に直接つなげていないか</strong>を、必ず見る。<code>LIMIT 20</code>のように、<strong>返す件数を絞る</strong>と、上限の「行」も節約できる</li>
             </ul>
 
-            <p><strong>② ローカルで確かめる（型④）</strong>（約20分）</p>
+            <p><strong>② ローカルで確かめる（型④）：小さなループにする</strong>（約20分）</p>
             <ul>
               <li><code>wrangler dev</code>は、公式のとおり<strong>ローカルモードが既定</strong>（"wrangler dev now uses local mode by default"）。ローカルのD1は、<strong>本番のデータとは別</strong>（公式: "A local session does not have access to your production data by default."）。だから、<strong>何度試しても本番に影響しない</strong></li>
               <li>D1のコマンドは、<strong>どちらに向けるかを必ず書く</strong>。ローカル用は<code>--local</code>、本番は<code>--remote</code>（公式: --local「Execute commands/files against a local DB for use with wrangler dev」、--remote「Execute commands/files against a remote D1 database」）。<strong>書き忘れたときの向き先は、公式のページによって説明が違う</strong>（D1 Local developmentには "Without the `--local` flag, the commands are executed against the remote version" とあり、D1 Getting startedの出力では、フラグなしで実行すると「リモートで実行するには --remote を足す」と表示される）。どちらが正しいか確かめていないので、今日は<strong>--localか--remoteを、毎回必ず書く</strong>:</li>
@@ -300,9 +301,23 @@ npx wrangler dev</pre>
             <pre class="md-preview">ローカルで確かめてください。
 1. POST /scores で、名前とスコアを2件保存する（curlのコマンドを教えてください）
 2. GET /scores で、その2件が返るかを見る
-実行したコマンドと、出力を、そのまま見せてください。
-合わなければ、直して、もう一度確かめてください。</pre>
+実行したコマンドと、出力を、そのまま見せてください。</pre>
             <ul>
+              <li>ここまでが、1回の「確かめ方を渡す」。合わなかったとき、<strong>人が毎回「直して」と頼む</strong>代わりに、エージェントに<strong>直して、もう一度確かめる</strong>ところまで任せてみる。これが、<strong>小さなループ</strong>（頼む→確かめる→直す、をくり返す）</li>
+              <li>背景: 2026年6月ごろから、「<strong>プロンプトより、ループ</strong>」と言われ始めている。OpenClawという開発ツールの作者がX上で書いた "Stop prompting coding agents. You should be designing loops that prompt your agents."（コーディングエージェントに、プロンプトを打つのをやめよう。エージェントにプロンプトを打つ<strong>ループ</strong>を設計しよう）を、解説記事が紹介している。<strong>ループエンジニアリング</strong>とも呼ばれ始めた。ただし、<strong>最近使われ始めたばかりで、定義は決まっていません</strong>。出典は<strong>解説記事</strong>で、公式の定義ではなく、元の投稿や原文は確かめていません（下の参考リンク）</li>
+              <li>解説記事の一つは、<strong>完成条件・検証・再試行・停止</strong>（と引き継ぎ）を設計する考え方として使える、としている。<strong>今日の型④は、その「完成条件（止める条件）」と「検証」にあたる</strong>。また、悪い指示や悪い文脈でループを回すと、<strong>速く、高くつく失敗</strong>をするだけ、とも書かれている（要約）。<strong>型①②③の土台の上に、ループが乗る</strong></li>
+              <li>ループを回す前に、<strong>4つ</strong>を決める（<strong>授業用の整理で、公式の分類ではありません</strong>）: <strong>1周の大きさ</strong>（今日は、ローカルでの確認と直し）／<strong>止める条件</strong>（下の「2件が返る」）／<strong>人が見る場所</strong>（出力と、直したコード）／<strong>周回数</strong>（最大3周）</li>
+              <li><strong>範囲は、ローカルだけ</strong>。<code>wrangler dev</code>・<code>--local</code>のD1・<code>localhost</code>へのcurlまで。<strong><code>deploy</code>・<code>--remote</code>・<code>secret</code>・<code>.env</code>は、ループに入れない</strong>（公開や秘密に関わる操作は、<strong>人が実行する</strong>。次の③と、2限後半）。解説記事にも、人が見ていないループは、費用と安全の面で危険がある、という意見がある</li>
+            </ul>
+            <p>型④を、ループにして頼む（<strong>最大3周</strong>）:</p>
+            <pre class="md-preview">ローカルで確かめて、直す、をくり返してください。
+・止める条件: POST /scores で2件保存し、GET /scores で、その2件（名前とスコアが合っている）が返ること
+・1周ごとに、実行したコマンドと出力、直したことを、一行で報告してください
+・最大3周まで。3周しても止める条件を満たさないときは、そこで止まって、どこで詰まったかを報告してください
+・範囲はローカルだけです。deploy、--remote、secret、.envには、触れないでください</pre>
+            <ul>
+              <li>エージェントが<strong>3周で止まるか</strong>、本当に<strong>範囲の外に出ていないか</strong>を、<strong>人が見る</strong>。守らないときは、人が止めて、先生を呼ぶ。エージェントによって、動きは違う（<strong>確かめてから任せる</strong>）</li>
+              <li>1周ごとの報告を、<strong>周回ログ</strong>としてメモに残す。何周で止まったか、<strong>直したコードを読んで、何が変わったか</strong>を、自分の言葉で一言にする（<strong>速く回るほど、読まないまま増える</strong>。解説記事では「理解の負債」と呼ばれている）</li>
               <li>見せてもらった出力が<strong>本当に2件になっているか</strong>、保存した名前とスコアが合っているかを、<strong>自分の目で読む</strong>。「できました」だけの返事は、確かめたことにならない</li>
               <li>確かめ方の失敗例も試す: 名前を空にして送る、スコアに文字を入れる。<strong>どんな返事になるか</strong>を見て、エージェントに「入力のチェックが足りないところは？」と聞く</li>
             </ul>
@@ -452,6 +467,10 @@ npx wrangler deploy</pre>
         <li><a href="https://developers.cloudflare.com/workers/get-started/guide/" target="_blank" rel="noopener">CLI（Cloudflare Workers公式の始め方）</a> — デプロイ時のサブドメイン設定、523エラーの案内</li>
         <li><a href="https://developers.cloudflare.com/workers/configuration/secrets/" target="_blank" rel="noopener">Secrets（Cloudflare Workers公式）</a> — wrangler secret put と .dev.vars</li>
         <li><a href="https://developers.cloudflare.com/agents/model-context-protocol/cloudflare/servers-for-cloudflare/" target="_blank" rel="noopener">Cloudflare's own MCP servers（Cloudflare Agents公式）</a> — CloudflareのMCPサーバー（今日は足さない）</li>
+        <li><a href="https://codingwithroby.substack.com/p/loop-engineering-stop-prompting-agents" target="_blank" rel="noopener">Loop Engineering: Stop Prompting Agents（Eric Roby）</a> — 解説記事（定義は決まっていない）。「プロンプトを打つのをやめ、ループを設計する」という投稿の紹介（2026年6月）</li>
+        <li><a href="https://zbrain.ai/loop-engineering/" target="_blank" rel="noopener">Loop engineering: The foundation for building self-driving AI agents（ZBrain）</a> — 解説記事。悪い指示のループは速く失敗する、理解の負債</li>
+        <li><a href="https://alphasignalai.substack.com/p/most-developers-do-not-need-agent" target="_blank" rel="noopener">Most Developers Do Not Need Agent Loops Yet（AlphaSignal）</a> — 解説記事。まだ要らない人が多い、という意見（費用と安全）</li>
+        <li><a href="https://smartscope.blog/generative-ai/methodology/loop-engineering-agent-loops-2026/" target="_blank" rel="noopener">Loop Engineering：agentの完成条件・検査・停止を設計する（SmartScope）</a> — 解説記事。完成条件・検証・再試行・停止</li>
         <li><a href="week05.html">第5回 スコアを保存して守ろう（本サイト）</a> — 秘密の値と最小権限</li>
         <li><a href="week07.html">第7回 話題のAI製ゲームを、自然言語で再現しよう（本サイト）</a> — サーバーを置く理由の図</li>
         <li><a href="week08.html">第8回 指示の4つの型（本サイト）</a> — 今日使った型</li>
