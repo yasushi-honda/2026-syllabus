@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第10回 進級制作に小さな改善を加える① | AI活用プログラミング基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=26">
+  <!-- 前回（第9回）のアンケート結果の分類は、回答の個別内容を載せず、分類と件数のみ（2026-11-12）。頼み方・コードの理解の項は授業用の整理で、公式の分類ではない。 -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--orange">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-programming-2.html">AI活用プログラミング基礎 II</a>
+        <span>/</span>
+        <span>第10回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">進級制作に小さな改善を加える①</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 10</span>
+            <span class="page-badge">木曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-orange">
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
+
+    <div class="qr-box qr-box--pc">
+      <a class="qr-box__zoom" href="qr/week10-page.svg" target="_blank" rel="noopener" aria-label="QRコードを大きく表示する">
+        <img class="qr-box__img" src="qr/week10-page.svg" alt="この第10回のページを開くQRコード。スマートフォンのカメラで読み取ると、このページが開く。" width="180" height="180">
+      </a>
+      <div class="qr-box__body">
+        <p class="qr-box__heading">📱 スマホで開く</p>
+        <p class="qr-box__text">教室の画面を見ながら、自分のスマートフォンで、このページを開けます。スマートフォンの<strong>カメラ</strong>で、このQRコードを読み取ってください。QRコードを押すと、大きく表示されます。</p>
+      </div>
+    </div>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">第9回で決めた「次に進めたいこと」をもとに、進級制作（または個人開発の延長）に<strong>小さな改善を1つ実装</strong>する。冒頭に、前回のアンケートで多かった困りごと（<strong>AIへの頼み方</strong>、<strong>AIが書いたコードの理解</strong>）を短く扱い、あとは<strong>ワーク</strong>の時間にする。先生が席をまわる</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">小さな改善 / 小さく・見せて・確かめ方を渡す / コードを説明させる / エラーは全文を貼る / コミット・プッシュ</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第9回で残した「今日の成果」のメモ（<code>NOTES.md</code>か手元のメモ）。進級制作、または続けたい個人開発のリポジトリを開けること。agyが動くCodespacesか、AI Studio。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>第9回のメモをもとに、今日の<strong>小さな改善を1つ</strong>決められる</li>
+        <li>AIに、<strong>小さく・見せて・確かめ方つき</strong>で頼める</li>
+        <li>AIが書いたコードを<strong>説明させ</strong>、エラーが出たときに<strong>必要な情報を伝えられる</strong></li>
+        <li>小さな改善を1つ実装し、<strong>動かして確かめ</strong>、コミット・プッシュまでできる</li>
+      </ul>
+      <div class="lesson-tip">
+        <strong>今日の優先順位:</strong> 大きな改善でなくて構いません。<strong>動くところまで、小さく1つ</strong>が目標です。進まなかったときは、「どこで止まったか」を書いておけば、次回の出発点になります。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の続きを確かめ、頼み方とコードの理解を短く知る</h3>
+          <div class="timeline-body">
+            <figure class="vz-fig" aria-labelledby="cap-a10-map">
+              <p class="vz-fig-title" id="cap-a10-map">今日の流れ：短く知って、小さく1つ作る</p>
+              <svg class="vz-svg" viewBox="0 0 360 252" role="img" aria-labelledby="a10-map-t a10-map-d">
+                <title id="a10-map-t">今日の流れ：短く知って、小さく1つ作る</title>
+                <desc id="a10-map-d">1 前回のメモを開き、今日の小さな改善を1つ決める。1限の前半。2 前回のアンケートで多かった、AIへの頼み方と、コードの理解を、短く知る。1限の前半。3 小さな改善を実装するワーク。先生が席をまわる。1限の後半から2限の後半まで。4 動かして確かめ、コミット・プッシュで残す。2限の後半。</desc>
+                <rect class="box-orange" x="8" y="6" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="28">1 前回のメモから、今日の1つ</text>
+                <text class="t-sm" x="22" y="47">小さく、1つだけ決める</text>
+                <text class="t-sm" x="342" y="28" text-anchor="end">1限前半</text>
+                <line class="line" x1="180" y1="58" x2="180" y2="68" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="70" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="92">2 頼み方・コードの理解</text>
+                <text class="t-sm" x="22" y="111">アンケートで多かった困りごと</text>
+                <text class="t-sm" x="342" y="92" text-anchor="end">1限前半</text>
+                <line class="line" x1="180" y1="122" x2="180" y2="132" marker-end="url(#mk-s)"/>
+                <rect class="box-orange box-key" x="8" y="134" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="156">3 小さな改善を実装するワーク</text>
+                <text class="t-sm" x="22" y="175">先生が席をまわる</text>
+                <text class="t-sm" x="342" y="156" text-anchor="end">1限後半〜</text>
+                <line class="line" x1="180" y1="186" x2="180" y2="196" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="198" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="220">4 動かして確かめ、残す</text>
+                <text class="t-sm" x="22" y="239">コミット・プッシュ</text>
+                <text class="t-sm" x="342" y="220" text-anchor="end">2限後半</text>
+              </svg>
+              <figcaption>ワークの時間が中心です。続きは第11回につながります。</figcaption>
+            </figure>
+
+            <p><strong>① 前回のメモを開いて、今日の1つを決める</strong>（約10分）</p>
+            <ul>
+              <li>第9回で残した<strong>「今日の成果」のメモ</strong>を開く。<strong>次にやること</strong>から、今日実装する<strong>小さな改善を1つ</strong>選ぶ（大きいときは、半分に割る）</li>
+              <li>メモがない人は、作品を開いて、<strong>「次に直したい所」を1つ</strong>決める。決められない人は先生を呼ぶ</li>
+            </ul>
+
+            <p><strong>② 前回のアンケートから：AIへの頼み方</strong>（約15分）</p>
+            <ul>
+              <li>前回のアンケート（22件）の「今困っていること」を、分類しました（1件が複数にまたがるものは、主なもので数えています。<strong>個別の回答は載せません</strong>）:</li>
+            </ul>
+            <ul>
+              <li><strong>AIに思い通りに動いてもらえない</strong>（プロンプトの書き方、一発で出ない、など）: 6件</li>
+              <li><strong>AIが作ったコードの理解・エラーを自分で直す</strong>: 4件</li>
+              <li><strong>作品づくりの技術</strong>（データベースの設計、Gitでの共有、サーバーに上げる、AIの組み込みなど）: 4件</li>
+              <li><strong>チーム・進め方</strong>（役割分担、発表の準備など）: 3件</li>
+              <li>その他（アイデア、進路など）: 2件　／　特になし: 3件</li>
+            </ul>
+            <ul>
+              <li>今日の冒頭は、多かった<strong>上の2つ</strong>（頼み方・コードの理解）を、短く扱う。<strong>技術的な個別の困りごと</strong>（データベース・Git・サーバーなど）は、ワークの時間に<strong>先生を呼んで</strong>ください</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-a10-ask">
+              <p class="vz-fig-title" id="cap-a10-ask">AIへの頼み方：小さく・見せて・確かめ方を渡す</p>
+              <svg class="vz-svg" viewBox="0 0 360 192" role="img" aria-labelledby="a10-ask-t a10-ask-d">
+                <title id="a10-ask-t">AIへの頼み方：小さく・見せて・確かめ方を渡す</title>
+                <desc id="a10-ask-d">思い通りに動いてもらうための頼み方の3つの工夫。1 小さく頼む：足すことは1つ。やらないことも伝える。2 見せて頼む：ほしい画面や動きを、例や言葉で具体的に伝える。3 確かめ方を渡す：できたかの見かたを、頼む文に入れる。この3つは授業用の整理で、公式の分類ではない。</desc>
+                <rect class="box-orange box-key" x="8" y="6" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="28">1 小さく頼む</text>
+                <text class="t-sm" x="22" y="48">足すことは1つ。やらないことも伝える</text>
+                <line class="line" x1="180" y1="60" x2="180" y2="68" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="70" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="92">2 見せて頼む</text>
+                <text class="t-sm" x="22" y="112">ほしい画面や動きを、例や言葉で具体的に</text>
+                <line class="line" x1="180" y1="124" x2="180" y2="132" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="134" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="156">3 確かめ方を渡す</text>
+                <text class="t-sm" x="22" y="176">できたかの見かたを、頼む文に入れる</text>
+              </svg>
+              <figcaption>この3つは授業用の整理で、公式の分類ではありません。第9回の「次の一歩のメモ」と同じ考え方です。</figcaption>
+            </figure>
+            <ul>
+              <li><strong>小さく</strong>: 「ログイン機能を全部作って」ではなく、「入力欄を1つ足して」。1回で頼むのは、<strong>1つだけ</strong></li>
+              <li><strong>見せて</strong>: 「いい感じに」ではなく、「ボタンを押すと、リストの下に1行増える」のように、<strong>見て分かる形</strong>で書く</li>
+              <li><strong>確かめ方を渡す</strong>: 「できたら、〇〇が画面に出るはずです。その確かめ方も書いてください」と、頼む文に入れる</li>
+              <li>思い通りに出なかったら、<strong>頼み直す前に</strong>、「何が違ったか」を一言で書いてから頼む（「そうじゃない」だけだと、AIにも伝わりにくい）</li>
+            </ul>
+
+            <p><strong>③ 前回のアンケートから：AIが書いたコードを理解する</strong>（約15分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-a10-read">
+              <p class="vz-fig-title" id="cap-a10-read">AIが書いたコードを、理解する・直す</p>
+              <svg class="vz-svg" viewBox="0 0 360 192" role="img" aria-labelledby="a10-read-t a10-read-d">
+                <title id="a10-read-t">AIが書いたコードを、理解する・直す</title>
+                <desc id="a10-read-d">AIが書いたコードの理解と、エラーのときの伝え方。1 説明させる：このコードを順番に説明して、と頼む。2 変えた所を聞く：どこを、なぜ変えたかを聞く。3 エラーは全文を貼る：エラーの文と、直前にしたことを伝える。この3つは授業用の整理で、公式の分類ではない。</desc>
+                <rect class="box-orange box-key" x="8" y="6" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="28">1 説明させる</text>
+                <text class="t-sm" x="22" y="48">「このコードを、順番に説明して」と頼む</text>
+                <line class="line" x1="180" y1="60" x2="180" y2="68" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="70" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="92">2 変えた所を聞く</text>
+                <text class="t-sm" x="22" y="112">「どこを、なぜ変えたか」を聞く</text>
+                <line class="line" x1="180" y1="124" x2="180" y2="132" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="134" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="156">3 エラーは全文を貼る</text>
+                <text class="t-sm" x="22" y="176">エラーの文と、直前にしたことを伝える</text>
+              </svg>
+              <figcaption>この3つは授業用の整理で、公式の分類ではありません。</figcaption>
+            </figure>
+            <ul>
+              <li><strong>説明させる</strong>: 分からないコードは、そのまま使わずに、「このコードが何をしているか、初心者向けに、順番に説明してください」と頼む。説明を読んで、<strong>自分の言葉で一言</strong>にしてみる</li>
+              <li><strong>変えた所を聞く</strong>: 直してもらったあとは、「どこを、なぜ変えましたか」と聞く。<strong>変えた理由が分かれば</strong>、次に自分で直せる</li>
+              <li><strong>エラーは全文を貼る</strong>: エラーの文を、<strong>途中で切らずに全部</strong>と、<strong>直前にしたこと</strong>を一緒に伝える。APIキー・<code>.env</code>の中身・個人情報が入っていないかは、貼る前に確かめる</li>
+              <li>注意: AIの説明や直し方が<strong>いつも正しいとは限りません</strong>。説明を読んで<strong>動かして確かめる</strong>のは、人です（第9回の冒頭の話と同じ）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>ワーク①：小さな改善を実装する</h3>
+          <div class="timeline-body">
+            <p><strong>① 頼む文を、小さく作る</strong>（約10分）</p>
+            <ul>
+              <li>今日の改善を、<strong>小さく・見せて・確かめ方つき</strong>の頼む文にして、メモする。例: <code>この作品に「（足すこと）」を1つ足したい。（やらないこと）は変えないでください。できたら、（画面でこう見える）はずです。その確かめ方も書いてください。</code></li>
+              <li>先に計画だけ出させたい人は、第9回の「<a href="week09.html">困ったときの道具</a>」（AIに「計画だけ」出させる）を使ってよい</li>
+            </ul>
+
+            <p><strong>② ワーク</strong>（約40分）</p>
+            <ul>
+              <li>AIエージェント（agyまたはAI Studio Build mode）に頼んで、小さな改善を実装する。出てきたものは、<strong>人が読んで、動かして確かめる</strong></li>
+              <li><strong>困ったときの頼り先</strong>: ①まず<strong>チームの人</strong>　②それでも分からなければ<strong>先生</strong>を呼ぶ（先生が席をまわります。データベース・Git・サーバーなどの個別の困りごとも、ここで）　③AIには、上の「頼み方」と「コードの理解」を使う</li>
+              <li>うまく進まなくても大丈夫。<strong>どこで止まったかを一言メモ</strong>する</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>ワーク②：実装を進め、動かして確かめる</h3>
+          <div class="timeline-body">
+            <p><strong>① ワーク</strong>（約40分）</p>
+            <ul>
+              <li>1限のつづきを進める。先生が席をまわるので、<strong>困りごとはその場で聞く</strong></li>
+              <li>コードが分からなくなったら、「<strong>説明させる</strong>」「<strong>変えた所を聞く</strong>」を使う。エラーが出たら、「<strong>全文を貼る</strong>」</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>進級制作のリポジトリを、AI Studioに直接取り込まない。</strong>取り込むと、AI Studio向けに書き直されたコピーができ、GitHubへ送り返す（Force push）と、mainがその形に置き換わります（第7回）。AI Studioで試したいときは、<strong>コピー（別のリポジトリ）</strong>を取って、そのコピーを使います。進級制作の中身を変えるときは、<strong>agyで、元のリポジトリのブランチ上</strong>で行うのが安全です。
+            </div>
+
+            <p><strong>② 動かして確かめる</strong>（約10分）</p>
+            <ul>
+              <li>頼む文に書いた<strong>「できたかの見かた」</strong>で、実際に動かして、画面で確かめる。AIが「できた」と言っても、確かめるのは人</li>
+              <li>確かめた結果を、<strong>一言メモ</strong>する（動いた／ここが違った）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>ワーク③と、コミット・プッシュで残す</h3>
+          <div class="timeline-body">
+            <ul>
+              <li><strong>ワーク</strong>（約20分）: つづきを進める。区切りのいいところで手を止める</li>
+              <li><strong>コミット・プッシュ</strong>（約10分）: 動いた分を、<strong>コミットして、プッシュ</strong>する。コミットのメッセージは、「何を足したか」を一言で書く。やり方が分からない人や、チームでGitの共有に困っている人は、先生へ</li>
+              <li><strong>次回の準備を確かめる</strong>: 作品の場所を、次回も開けるか。agyが動くか。動かない人は今のうちに先生へ</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>動かなくても大丈夫。</strong>動かなかった分は、「どこで止まったか」をメモに書いて残せば、次回はそこから始められます。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>今日進めたことを確かめ、次回を知る</h3>
+          <div class="timeline-body">
+            <ul>
+              <li><strong>先生のひとこと</strong>（約3分）: 今日のワークで出た困りごとを、次回にどう扱うか</li>
+              <li><strong>一言メモ</strong>（約4分）: 今日<strong>AIに任せたこと</strong>と、<strong>自分で確かめたこと</strong>を、一言ずつ</li>
+              <li>次回（第11回、約1分）：<strong>進級制作に小さな改善を加える②</strong>——第10回の続き。改善を積み重ね、動作確認とコミット・プッシュまで行う（<a href="../ai-programming-2.html">授業計画一覧</a>）</li>
+              <li>成果のメモが残っているか、最後に確かめて退出（約2分）</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>今日の成果と、次にやることを、メモに残しておく</strong>
+            <p>動いたところ、止まったところ、次にやること。リポジトリの<code>NOTES.md</code>か、手元のメモでよい。次回の最初に開きます。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>動いた様子を、画面のスクリーンショット1枚で残す</strong>
+            <p>次回の「変える前」と「変えた後」を見比べるために使います。個人情報・APIキー・<code>.env</code>の中身が映らないようにします。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="week09.html">第9回 進級制作とAIエージェントをつなげよう（本サイト）</a> — 次の一歩のメモ、AIに「計画だけ」出させる、困ったときの道具</li>
+        <li><a href="week07.html">第7回 Google AI Studio Build modeで仕上げよう②（本サイト）</a> — 進級制作を直接取り込まない理由、コピーの取り方</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week09.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第9回 進級制作とAIエージェントをつなげよう</span>
+      </a>
+      <a href="../ai-programming-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AI活用プログラミング基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第11回 進級制作に小さな改善を加える②（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js?v=5"></script>
+</body>
+</html>
