@@ -306,19 +306,19 @@ npx wrangler dev</pre>
               <li>ここまでが、1回の「確かめ方を渡す」。合わなかったとき、<strong>人が毎回「直して」と頼む</strong>代わりに、エージェントに<strong>直して、もう一度確かめる</strong>ところまで任せてみる。これが、<strong>小さなループ</strong>（頼む→確かめる→直す、をくり返す）</li>
               <li>背景: 2026年6月ごろから、「<strong>プロンプトより、ループ</strong>」と言われ始めている。OpenClawという開発ツールの作者がX上で書いた "Stop prompting coding agents. You should be designing loops that prompt your agents."（コーディングエージェントに、プロンプトを打つのをやめよう。エージェントにプロンプトを打つ<strong>ループ</strong>を設計しよう）を、解説記事が紹介している。<strong>ループエンジニアリング</strong>とも呼ばれ始めた。ただし、<strong>最近使われ始めたばかりで、定義は決まっていません</strong>。出典は<strong>解説記事</strong>で、公式の定義ではなく、元の投稿や原文は確かめていません（下の参考リンク）</li>
               <li>解説記事の一つは、<strong>完成条件・検証・再試行・停止</strong>（と引き継ぎ）を設計する考え方として使える、としている。<strong>今日の型④は、その「完成条件（止める条件）」と「検証」にあたる</strong>。また、悪い指示や悪い文脈でループを回すと、<strong>速く、高くつく失敗</strong>をするだけ、とも書かれている（要約）。<strong>型①②③の土台の上に、ループが乗る</strong></li>
-              <li>ループを回す前に、<strong>4つ</strong>を決める（<strong>授業用の整理で、公式の分類ではありません</strong>）: <strong>1周の大きさ</strong>（今日は、ローカルでの確認と直し）／<strong>止める条件</strong>（下の「2件が返る」）／<strong>人が見る場所</strong>（出力と、直したコード）／<strong>周回数</strong>（最大3周）</li>
+              <li>ループを回す前に、<strong>4つ</strong>を決める（<strong>授業用の整理で、公式の分類ではありません</strong>）: <strong>1周の大きさ</strong>（今日は、ローカルでの確認と直し）／<strong>止める条件</strong>（下の「今回保存した2件が、結果に含まれる」）／<strong>人が見る場所</strong>（出力と、直したコード）／<strong>周回数</strong>（最大3周）</li>
               <li><strong>範囲は、ローカルだけ</strong>。<code>wrangler dev</code>・<code>--local</code>のD1・<code>localhost</code>へのcurlまで。<strong><code>deploy</code>・<code>--remote</code>・<code>secret</code>・<code>.env</code>は、ループに入れない</strong>（公開や秘密に関わる操作は、<strong>人が実行する</strong>。次の③と、2限後半）。解説記事にも、人が見ていないループは、費用と安全の面で危険がある、という意見がある</li>
             </ul>
             <p>型④を、ループにして頼む（<strong>最大3周</strong>）:</p>
             <pre class="md-preview">ローカルで確かめて、直す、をくり返してください。
-・止める条件: POST /scores で2件保存し、GET /scores で、その2件（名前とスコアが合っている）が返ること
+・止める条件: 周ごとに、新しいテスト用の名前（例: round1-a、round1-b）で2件を POST /scores に保存し、GET /scores の結果に、その2件（名前とスコアが合っている）が含まれること（前の周のデータが残っていても構いません）
 ・1周ごとに、実行したコマンドと出力、直したことを、一行で報告してください
 ・最大3周まで。3周しても止める条件を満たさないときは、そこで止まって、どこで詰まったかを報告してください
 ・範囲はローカルだけです。deploy、--remote、secret、.envには、触れないでください</pre>
             <ul>
               <li>エージェントが<strong>3周で止まるか</strong>、本当に<strong>範囲の外に出ていないか</strong>を、<strong>人が見る</strong>。守らないときは、人が止めて、先生を呼ぶ。エージェントによって、動きは違う（<strong>確かめてから任せる</strong>）</li>
               <li>1周ごとの報告を、<strong>周回ログ</strong>としてメモに残す。何周で止まったか、<strong>直したコードを読んで、何が変わったか</strong>を、自分の言葉で一言にする（<strong>速く回るほど、読まないまま増える</strong>。解説記事では「理解の負債」と呼ばれている）</li>
-              <li>見せてもらった出力が<strong>本当に2件になっているか</strong>、保存した名前とスコアが合っているかを、<strong>自分の目で読む</strong>。「できました」だけの返事は、確かめたことにならない</li>
+              <li>見せてもらった出力に、<strong>今回保存した2件が本当に含まれているか</strong>、名前とスコアが合っているかを、<strong>自分の目で読む</strong>（ローカルには、前に確かめた分のデータも残っているので、件数が2件とは限らない）。「できました」だけの返事は、確かめたことにならない</li>
               <li>確かめ方の失敗例も試す: 名前を空にして送る、スコアに文字を入れる。<strong>どんな返事になるか</strong>を見て、エージェントに「入力のチェックが足りないところは？」と聞く</li>
             </ul>
 
