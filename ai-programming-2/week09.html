@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=26">
+  <!-- 挿絵3枚（images/week09-*.jpg）: nano-banana（Gemini 3.1 Flash Image）で生成、文字なし、2026-11-12。 -->
   <!-- 冒頭の参考の話: arXiv 2512.14012（v2、2026-08-18）の要旨を arxiv.org/abs から、「実装の前に計画し、出力はすべて確かめる」は本文PDF（RQ2）から原文で照合（確認日 2026-11-12）。v1（2025-12-16）の要旨が同じ文言かは未確認。「就職に役立つか」は論文の対象外のため断定しない。 -->
   <!-- 公式情報確認: 2026-11-11 (curlで確認。①antigravity.google/docs/plan（HTTP 200、.md版を取得）: "The `/plan` command facilitates structured planning, codebase exploration, and requirements discovery before jumping directly into code execution." "Exploration without side effects: The agent reads files ... without writing code prematurely." "You retain full control to leave inline comments, request adjustments, or click Proceed to begin implementation."。agyのplanモード（Shift+Tab、agy --mode=plan）は natural-language-dev-2/week08 の確認（2026-11-05）を引き継ぐ。②ai.google.dev/gemini-api/docs/aistudio-build-mode（HTTP 200）: Build modeの公式説明にPlanモードの記述は見つからなかった（2026-11-11に.md版でplanを検索、該当なし）。Planのスライダーは教員の画面で確認済み（2026-10-15、week06）。未確認（授業前に教員が確認）: 学生の画面（学校アカウント）のBuild modeにPlanの選択肢があるか、進級制作のリポジトリの実際の状態） -->
 </head>
@@ -146,6 +147,11 @@
               </svg>
               <figcaption>この流れは、第8回の「AIは下書き、人が判断」と同じ考え方です。</figcaption>
             </figure>
+            <ol class="vz-steps">
+              <li class="vz-step"><img class="vz-step-img" src="images/week09-plan.jpg" alt="机で、一人の学生が、紙に四角や丸と矢印を描いて、作りたいものの計画を考えている。横には、お茶のカップとノートパソコンがある。" width="800" height="597" loading="lazy"><b>先に計画する</b>AIに頼む前に、何を作るか、どこまでやるかを、自分で考える</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week09-delegate.jpg" alt="学生が、計画を描いた紙を手に持って、にこやかに見ている。机の上では、小さな丸いロボットが、キーボードを打って作業をしている。" width="800" height="597" loading="lazy"><b>AIに任せる</b>下書き、調べもの、手間のかかる作業を、AIに頼む</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week09-check.jpg" alt="学生が、ペンで画面を指しながら、出てきた結果をていねいに確かめている。机の上には、チェックマークの入った確認表がある。横では、小さなロボットが静かに待っている。" width="800" height="597" loading="lazy"><b>人が確かめる</b>出てきたものを読んで、動かして、使うかどうかを人が決める</li>
+            </ol>
 
             <ul>
               <li>研究論文<a href="https://arxiv.org/abs/2512.14012" target="_blank" rel="noopener">「Professional Software Developers Don't Vibe, They Control: AI Agent Use for Coding in 2025」</a>（arXiv。2025-12-16に投稿、いま読めるのは2026-08-18の改訂版v2。主にCornell大学とUC San Diegoの研究者）の話。<strong>経験のある開発者</strong>について、13人への現場の観察と、99人へのアンケートをした研究</li>
