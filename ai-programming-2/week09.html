@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=26">
-  <!-- 冒頭の参考の話: arXiv 2512.14012 の要旨を arxiv.org/abs から原文取得して照合（確認日 2026-11-12）。「就職に役立つか」は論文の対象外のため断定しない。 -->
+  <!-- 冒頭の参考の話: arXiv 2512.14012（v2、2026-08-18）の要旨を arxiv.org/abs から、「実装の前に計画し、出力はすべて確かめる」は本文PDF（RQ2）から原文で照合（確認日 2026-11-12）。v1（2025-12-16）の要旨が同じ文言かは未確認。「就職に役立つか」は論文の対象外のため断定しない。 -->
   <!-- 公式情報確認: 2026-11-11 (curlで確認。①antigravity.google/docs/plan（HTTP 200、.md版を取得）: "The `/plan` command facilitates structured planning, codebase exploration, and requirements discovery before jumping directly into code execution." "Exploration without side effects: The agent reads files ... without writing code prematurely." "You retain full control to leave inline comments, request adjustments, or click Proceed to begin implementation."。agyのplanモード（Shift+Tab、agy --mode=plan）は natural-language-dev-2/week08 の確認（2026-11-05）を引き継ぐ。②ai.google.dev/gemini-api/docs/aistudio-build-mode（HTTP 200）: Build modeの公式説明にPlanモードの記述は見つからなかった（2026-11-11に.md版でplanを検索、該当なし）。Planのスライダーは教員の画面で確認済み（2026-10-15、week06）。未確認（授業前に教員が確認）: 学生の画面（学校アカウント）のBuild modeにPlanの選択肢があるか、進級制作のリポジトリの実際の状態） -->
 </head>
 <body>
@@ -148,9 +148,9 @@
             </figure>
 
             <ul>
-              <li>2025年12月の研究論文<a href="https://arxiv.org/abs/2512.14012" target="_blank" rel="noopener">「Professional Software Developers Don't Vibe, They Control: AI Agent Use for Coding in 2025」</a>（UC San Diego・Cornell大学、arXiv）の話。<strong>経験のある開発者</strong>に、現場の観察（13人）とアンケート（99人）をした研究</li>
+              <li>研究論文<a href="https://arxiv.org/abs/2512.14012" target="_blank" rel="noopener">「Professional Software Developers Don't Vibe, They Control: AI Agent Use for Coding in 2025」</a>（arXiv。2025-12-16に投稿、いま読めるのは2026-08-18の改訂版v2。主にCornell大学とUC San Diegoの研究者）の話。<strong>経験のある開発者</strong>について、13人への現場の観察と、99人へのアンケートをした研究</li>
               <li>論文の要旨（原文）: "while experienced developers value agents as a productivity boost, they retain their agency in software design and implementation out of insistence on fundamental software quality attributes, employing strategies for controlling agent behavior leveraging their expertise."（経験者はAIを生産性の助けとして評価するが、ソフトウェアの品質を大事にするので、設計と実装の主導権は手放さず、自分の経験を使ってAIの動きを制御している）</li>
-              <li>つまり、プロも<strong>AIを使っている</strong>。ちがいは、<strong>先に計画し、出てきたものを人が確かめる</strong>こと。みなさんが第8回までやってきた「AIは下書き、人が判断」と、同じ考え方</li>
+              <li>論文の本文でも、経験者は "they plan before implementing and validate all agentic outputs"（実装の前に計画し、AIの出力はすべて確かめる）と報告されている（RQ2。<strong>要旨ではなく本文</strong>）。プロも<strong>AIを使っている</strong>。ちがいは、<strong>先に計画し、出てきたものを人が確かめる</strong>こと。授業では、これを第8回までの「AIは下書き、人が判断」と同じ考え方として受け取る</li>
               <li>注意: この研究の対象は<strong>経験のある開発者</strong>で、授業の学生とは立場がちがいます。<strong>就職に役立つかどうかは、この論文は扱っていません</strong>。ここで受け取るのは、「AIで作るときは、計画と確かめるところを人が持つ」という考え方の参考です</li>
               <li>隣の人と1分: 自分の作品で、<strong>「ここは人が確かめたい」</strong>と思うところは、どこか</li>
             </ul>
@@ -397,7 +397,7 @@
     <div class="syllabus-section">
       <h2>参考リンク</h2>
       <ul>
-        <li><a href="https://arxiv.org/abs/2512.14012" target="_blank" rel="noopener">Professional Software Developers Don't Vibe, They Control: AI Agent Use for Coding in 2025（arXiv）</a> — 冒頭の話の論文（2025-12-16、確認日 2026-11-12）</li>
+        <li><a href="https://arxiv.org/abs/2512.14012" target="_blank" rel="noopener">Professional Software Developers Don't Vibe, They Control: AI Agent Use for Coding in 2025（arXiv）</a> — 冒頭の話の論文（2025-12-16投稿、改訂版v2は2026-08-18、確認日 2026-11-12）</li>
         <li><a href="https://antigravity.google/docs/plan" target="_blank" rel="noopener">Plan (/plan)（Antigravity公式）</a> — 計画だけ出させる、質問の画面、計画の承認</li>
         <li><a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio（Google公式）</a> — Build modeの説明（Planモードの記述は見つからなかった）</li>
         <li><a href="week07.html">第7回 Google AI Studio Build modeで仕上げよう②（本サイト）</a> — 進級制作を直接取り込まない理由、コピーの取り方</li>
