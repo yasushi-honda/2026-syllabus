@@ -272,9 +272,10 @@
 const scoreText = document.getElementById("score");
 let score = 0;
 let playing = true;
+const cellCount = 6;
 
 function moveCharacter(character) {
-  character.position = Math.floor(Math.random() * 6);
+  character.position = Math.floor(Math.random() * cellCount);
 }
 
 function hit(cellNumber) {
@@ -294,7 +295,7 @@ function hit(cellNumber) {
 function render() {
   board.innerHTML = "";
 
-  for (let i = 0; i &lt; 6; i++) {
+  for (let i = 0; i &lt; cellCount; i++) {
     const cell = document.createElement("div");
     cell.className = "hole";
 
@@ -318,7 +319,7 @@ function render() {
 render();</pre>
                 <ul>
                   <li><code>render</code>は、第8回の表示のコードを<strong>関数</strong>にして、<strong>最初に画面を空にする</strong>（<code>board.innerHTML = "";</code>）行を足したもの。空にしないと、呼ぶたびにマスが増え続ける</li>
-                  <li><code>hit</code>が<strong>当たり判定</strong>。押された番号（<code>cellNumber</code>）と、キャラクターの<code>position</code>が<strong>同じなら当たり</strong>。当たりなら<code>score</code>を1増やし、<code>moveCharacter</code>でそのキャラクターを0〜5のどこかへ動かす（同じマスに戻ることもある）。<code>break</code>は「見つかったので、<code>for</code>文をここで終える」</li>
+                  <li><code>hit</code>が<strong>当たり判定</strong>。押された番号（<code>cellNumber</code>）と、キャラクターの<code>position</code>が<strong>同じなら当たり</strong>。当たりなら<code>score</code>を1増やし、<code>moveCharacter</code>でそのキャラクターを0〜（<code>cellCount</code>−1）のどこかへ動かす（同じマスに戻ることもある）。<code>break</code>は「見つかったので、<code>for</code>文をここで終える」</li>
                   <li><code>hit</code>の<code>for</code>は、<strong>後ろから</strong>探している。同じマスに2体いると、<code>render</code>は後のキャラクターの絵文字を出す（前のを上書きする）ので、見えているほうを当たりにそろえるため</li>
                   <li>最後の<code>render()</code>は、<strong>データを変えたあとの画面の作り直し</strong>。ファイルを開いた直後の最初の表示も、この1行で出る</li>
                 </ul>
@@ -387,7 +388,7 @@ showCart();</pre>
             </ul>
             <p><strong>③ 動きを確かめ、データを変えてみる（15分）</strong></p>
             <ul>
-              <li><strong>ゲーム班</strong>: キャラクターを1体足す（第8回と同じ。前の行の末尾に<strong>カンマ</strong>）。絵文字が3つになり、当たりが3か所になる。また、<code>Math.random() * 6</code>の<code>6</code>を、盤面のマス数に合わせて変えると、動く範囲が変わる（盤面を9マスにした人は<code>9</code>）</li>
+              <li><strong>ゲーム班</strong>: キャラクターを1体足す（第8回と同じ。前の行の末尾に<strong>カンマ</strong>）。絵文字が3つになり、当たりが3か所になる。また、一番上の<code>const cellCount = 6;</code>の<code>6</code>を、盤面のマス数に合わせて変える（盤面を9マスにした人は<code>9</code>）。<code>render</code>のマスの数と、<code>moveCharacter</code>の動く範囲が、同じ<code>cellCount</code>で一緒に変わる</li>
               <li><strong>EC班</strong>: 同じ商品を3回押して、カートに3行できること、合計が価格の3倍になること（例: マグ800円なら2400円）を、電卓と見比べて確かめる。<code>price</code>を書き換えて、合計も変わることも見る</li>
               <li>ここで見てほしいのは、<strong>画面を直接書き換えていない</strong>のに、画面が変わったこと。変えたのは<code>score</code>と<code>cart</code>というデータだけ。<strong>データを変えて、<code>render</code>（<code>showCart</code>）を呼ぶ</strong>——これが、今日の形になる</li>
               <li>
