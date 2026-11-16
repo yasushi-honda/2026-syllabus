@@ -271,13 +271,17 @@
 <pre id="code-game" class="md-preview">const board = document.getElementById("board");
 const scoreText = document.getElementById("score");
 let score = 0;
+let playing = true;
 
 function moveCharacter(character) {
   character.position = Math.floor(Math.random() * 6);
 }
 
 function hit(cellNumber) {
-  for (let j = 0; j &lt; characters.length; j++) {
+  if (!playing) {
+    return;
+  }
+  for (let j = characters.length - 1; j &gt;= 0; j--) {
     if (characters[j].position === cellNumber) {
       score = score + 1;
       moveCharacter(characters[j]);
@@ -315,6 +319,7 @@ render();</pre>
                 <ul>
                   <li><code>render</code>は、第8回の表示のコードを<strong>関数</strong>にして、<strong>最初に画面を空にする</strong>（<code>board.innerHTML = "";</code>）行を足したもの。空にしないと、呼ぶたびにマスが増え続ける</li>
                   <li><code>hit</code>が<strong>当たり判定</strong>。押された番号（<code>cellNumber</code>）と、キャラクターの<code>position</code>が<strong>同じなら当たり</strong>。当たりなら<code>score</code>を1増やし、<code>moveCharacter</code>でそのキャラクターを0〜5のどこかへ動かす（同じマスに戻ることもある）。<code>break</code>は「見つかったので、<code>for</code>文をここで終える」</li>
+                  <li><code>hit</code>の<code>for</code>は、<strong>後ろから</strong>探している。同じマスに2体いると、<code>render</code>は後のキャラクターの絵文字を出す（前のを上書きする）ので、見えているほうを当たりにそろえるため</li>
                   <li>最後の<code>render()</code>は、<strong>データを変えたあとの画面の作り直し</strong>。ファイルを開いた直後の最初の表示も、この1行で出る</li>
                 </ul>
               </li>
@@ -442,12 +447,14 @@ showCart();</pre>
                 </button>
 <pre id="add-game-timer" class="md-preview">const startButton = document.querySelector(".start");
 let timer = null;
+playing = false;
 
 startButton.addEventListener("click", function () {
   if (timer !== null) {
     return;
   }
   score = 0;
+  playing = true;
   let left = 15;
 
   timer = setInterval(function () {
@@ -458,13 +465,14 @@ startButton.addEventListener("click", function () {
     if (left &lt;= 0) {
       clearInterval(timer);
       timer = null;
+      playing = false;
     }
     render();
   }, 1000);
 
   render();
 });</pre>
-                <p>このコードでは、「はじめる」を押す前や15秒がたった後も、マスを押せば点が入る（点を入れない作りは、早く終わった人の発展）。<code>setInterval(関数, 1000)</code>は、<strong>1000ミリ秒（1秒）ごと</strong>に関数を動かす。<code>clearInterval</code>で止める。<code>if (timer !== null) { return; }</code>は、「はじめる」を押しすぎて、二重に動くのを防ぐ。点を変えたい人は、<code>hit</code>の<code>score = score + 1;</code>を<code>score = score + characters[j].point;</code>にする（<code>point</code>は、第8回で足した項目）</p>
+                <p><code>playing</code>は、「いまゲーム中か」を覚える変数。<code>false</code>の間は、<code>hit</code>の最初の<code>return</code>で、マスを押しても点が入らない。<code>setInterval(関数, 1000)</code>は、<strong>1000ミリ秒（1秒）ごと</strong>に関数を動かす。<code>clearInterval</code>で止める。<code>if (timer !== null) { return; }</code>は、「はじめる」を押しすぎて、二重に動くのを防ぐ。点を変えたい人は、<code>hit</code>の<code>score = score + 1;</code>を<code>score = score + characters[j].point;</code>にする（<code>point</code>は、第8回で足した項目）</p>
               </li>
               <li>
                 <p><strong>EC班の例：カートの取り消しボタン</strong>。<code>showCart</code>の中の、<code>cartList.appendChild(line);</code>の<strong>すぐ上</strong>に足す</p>
