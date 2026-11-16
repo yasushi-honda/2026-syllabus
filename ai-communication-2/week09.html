@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第9回 自分のプロジェクトを育てる① | AIコミュニケーション基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=26">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <!-- 公式情報確認: 2026-11-16（①参考リンク5本の生存と<title>をcurlで確認: Build modeの説明ページ（ai.google.dev/gemini-api/docs/aistudio-build-mode）=「Build apps in Google AI Studio」、Gemini Notebookヘルプ2本（support.google.com/gemininotebook/answer/16179559=「Gemini Notebook でチャットを使用する」、/16215270=「ノートブックの新しいソースを追加または検索する」）、Antigravity CLIの実行モード（antigravity.google/docs/cli/modes/）、Google AI Studio。②この回で新しく書いた外部サービスの主張は、「Gemini Notebookにソース（資料）を追加できる」（第2回で公式ヘルプから裏取り済みの内容の再掲）だけ。ソースの種類（Webページ以外に何を入れられるか）、ソースを入れたときの答えの範囲、引用の表示は、この回では公式から確認していないため断定せず、「画面に出る選択肢で確かめる」「資料に戻って自分で確かめる」と書いた。③agyのdefaultモードで変更前に差分が出る・コピーを作って足す手順は、第3回・第8回から再掲。④「相談・資料の整理・作る」の3つの頼み先の分け方は、この授業での整理で、公式の分類ではない。⑤第8回の授業結果（所要時間、◎△✕の伝わり方、Buildで版を戻せるか）は未反映。この回は、第8回の続き（各自のsakuhin-N.html・企画メモ・計画・対話ログ・頼み先のメモ）があることを前提に書いた。授業前に教員が確認する項目: 学校アカウントでGemini Notebookが開くか・ソースを追加できるか、Buildの設定のVersionsタブで前の版に戻せるか（第7回から持ち越し）） -->
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication-2.html">AIコミュニケーション基礎 II</a>
+        <span>/</span>
+        <span>第9回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">自分のプロジェクトを育てる①</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 9</span>
+            <span class="page-badge">火曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-purple">
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
+
+    <div class="qr-box qr-box--pc">
+      <a class="qr-box__zoom" href="qr/week09-page.svg" target="_blank" rel="noopener" aria-label="QRコードを大きく表示する">
+        <img class="qr-box__img" src="qr/week09-page.svg" alt="この第9回のページを開くQRコード。スマートフォンのカメラで読み取ると、このページが開く。" width="180" height="180">
+      </a>
+      <div class="qr-box__body">
+        <p class="qr-box__heading">📱 スマホで開く</p>
+        <p class="qr-box__text">教室の画面を見ながら、自分のスマートフォンで、このページを開けます。スマートフォンの<strong>カメラ</strong>で、このQRコードを読み取ってください。QRコードを押すと、大きく表示されます。</p>
+      </div>
+    </div>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">第8回に作った<strong>自分の作品</strong>を、計画を見ながら<strong>育てる</strong>回。作品の点検から<strong>今日の目標</strong>を計画に書き、<strong>相談（チャット）・資料の整理（Gemini Notebook）・作る（agyまたはBuild）</strong>を使い分けて、2周育てる。最後に、頼み先のメモを書き直す</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">点検（◎△✕） / 今日の目標 / 短い計画 / 頼み先（相談・資料の整理・作る） / Gemini Notebook（資料＝ソース） / 周回 / 対話ログ / 頼み先のメモ</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第8回の<strong>作品（<code>sakuhin-N.html</code>、またはBuildの作品）</strong>と、「agyへの指示メモ」（企画メモ・計画・結果・頼み先のメモ）、対話ログ。<strong>Geminiアプリ</strong>と<strong>Gemini Notebook</strong>（学校のアカウント）。第8回を欠席した人は、講師に声をかける（企画メモと最小版から始める）</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>作品を、計画の<strong>確かめ方</strong>で点検し、<strong>動くもの・動かないもの・計画に書かなかったのにAIが決めたこと</strong>を自分の言葉で言える</li>
+        <li>点検をもとに、<strong>今日の目標</strong>を、<strong>短い計画</strong>（足す機能・足さないもの・確かめ方）として書ける</li>
+        <li><strong>相談はチャット、資料の整理はGemini Notebook、作るのはagyまたはBuild</strong>と、<strong>頼み先を選んで</strong>2周育てられる</li>
+        <li>ずれたとき、原因が<strong>計画の書き方・送り方・AIの出し方のぶれ</strong>のどれかを切り分け、<strong>頼み先のメモ</strong>を今日の記録で書き直せる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <figure class="vz-fig" aria-labelledby="cap-a9-map">
+        <p class="vz-fig-title" id="cap-a9-map">今日の地図</p>
+        <svg class="vz-svg" viewBox="0 0 360 330" role="img" aria-labelledby="a9-map-t a9-map-d">
+          <title id="a9-map-t">今日の地図</title>
+          <desc id="a9-map-d">1 作品を計画の確かめ方で点検する、2 今日の目標を短い計画に書く、3 頼み先を選んで1周目を育てる、4 結果を見て、次の短い計画を書き、2周目を育てる、5 記録と頼み先のメモを書き直す、の順に進む。</desc>
+          <rect class="box-purple" x="8" y="8" width="344" height="48" rx="10"/>
+          <text class="t-b" x="22" y="28">① 作品を点検する</text>
+          <text class="t-sm" x="22" y="46">計画の確かめ方で、◎△✕</text>
+          <line class="line" x1="180" y1="58" x2="180" y2="66" marker-end="url(#mk-s)"/>
+          <rect class="box-purple" x="8" y="68" width="344" height="48" rx="10"/>
+          <text class="t-b" x="22" y="88">② 今日の目標を書く</text>
+          <text class="t-sm" x="22" y="106">短い計画（足す機能・足さない・確かめ方）</text>
+          <line class="line" x1="180" y1="118" x2="180" y2="126" marker-end="url(#mk-s)"/>
+          <rect class="box-purple" x="8" y="128" width="344" height="48" rx="10"/>
+          <text class="t-b" x="22" y="148">③ 頼み先を選んで、1周目</text>
+          <text class="t-sm" x="22" y="166">相談・資料の整理・作る、のどれか</text>
+          <line class="line" x1="180" y1="178" x2="180" y2="186" marker-end="url(#mk-s)"/>
+          <rect class="box-purple" x="8" y="188" width="344" height="48" rx="10"/>
+          <text class="t-b" x="22" y="208">④ 結果を見て、2周目</text>
+          <text class="t-sm" x="22" y="226">ずれた原因を切り分け、次の短い計画へ</text>
+          <line class="line" x1="180" y1="238" x2="180" y2="246" marker-end="url(#mk-s)"/>
+          <rect class="box-white box-key" x="8" y="248" width="344" height="48" rx="10"/>
+          <text class="t-b" x="22" y="268">⑤ 記録と頼み先のメモ</text>
+          <text class="t-sm" x="22" y="286">今日の経験から、書き直す</text>
+          <rect class="band" x="8" y="302" width="344" height="24" rx="8"/>
+          <text class="t-c" x="180" y="319">育てるのは、作品と、頼み方</text>
+        </svg>
+        <figcaption>今日は「たくさん作る」より、「計画を見ながら、頼み先を選んで、記録を残す」練習です。</figcaption>
+      </figure>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>作品を点検し、今日の目標を計画に書く</h3>
+          <div class="timeline-body">
+            <p><strong>道具と記録を開く（10分）</strong></p>
+            <ul>
+              <li>「agyへの指示メモ」（企画メモ・計画・結果・頼み先のメモ）と、<strong>対話ログ</strong>を開く。第8回の最後に書いた<strong>頼み先のメモ</strong>を、もう一度読む（今日、書き直す）</li>
+              <li><strong>agyを選んでいる人</strong>: 停止していたCodespaceを<strong>再開（resume）</strong>する——「Create codespace」で新規作成しない。<code>python3 -m http.server 8000</code>を実行し、「ポート」タブ→<strong>「エディターでプレビュー」</strong>でSimple Browserを開く。agyで再ログインを求められたら、第2回と同じ手順で再認証する</li>
+              <li><strong>Buildを選んでいる人</strong>: <a href="https://aistudio.google.com/" target="_blank" rel="noopener">Google AI Studio</a>（学校のアカウント）で、第8回の作品を開く（見つからないときは、講師に声をかける）</li>
+              <li><strong>全員</strong>: <a href="https://gemini.google.com/" target="_blank" rel="noopener">Geminiアプリ</a>と、<strong>Gemini Notebook</strong>（前期から使っているもの）を、それぞれ新しいタブで開いておく（開けない人は講師に声をかける）</li>
+            </ul>
+            <p><strong>作品を、計画の確かめ方で点検する（15分）</strong></p>
+            <ul>
+              <li>第8回に最後まで育てた版（agyの人は、いちばん番号の大きい<code>sakuhin-N.html</code>。Simple Browserのアドレスバーの<strong>末尾だけ</strong>を書き換えて開く）を、指示メモの<strong>計画</strong>の「確かめ方」と見比べる。◎（計画どおり）・△（ずれた）・✕（できなかった）の基準は、第8回と同じ</li>
+              <li>点検の結果を、指示メモに<strong>「点検（第9回のはじめ）」</strong>として、次の3行で書く
+                <ul>
+                  <li>動いているもの（確かめ方のうち、満たしているもの）</li>
+                  <li>動いていないもの、または直したいもの</li>
+                  <li><strong>計画に書かなかったのに、AIが決めていたこと</strong>（見た目、文言、動きなど。1つ探す）</li>
+                </ul>
+              </li>
+              <li>作品が動かない人、第8回で最小版までできなかった人は、<strong>今日の目標を「最小版を動かすこと」</strong>にしてよい。ここで無理に機能を足さない</li>
+            </ul>
+            <p><strong>今日の目標を、短い計画に書く（15分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-a9-goal">
+              <p class="vz-fig-title" id="cap-a9-goal">点検から、今日の目標へ</p>
+              <svg class="vz-svg" viewBox="0 0 360 300" role="img" aria-labelledby="a9-goal-t a9-goal-d">
+                <title id="a9-goal-t">点検から今日の目標を決める流れ</title>
+                <desc id="a9-goal-d">点検で見つけた、動いていないものと、AIが決めていたこと、そして「あとで」リストを材料にして、今日の目標を1つ選ぶ。選んだ目標を、足す機能、足さないもの、確かめ方の3行の短い計画に書く。</desc>
+                <rect class="box-white" x="8" y="8" width="344" height="46" rx="10"/>
+                <text class="t-b" x="22" y="28">材料① 点検で見つけたこと</text>
+                <text class="t-sm" x="22" y="46">動かない所・AIが決めていたこと</text>
+                <rect class="box-white" x="8" y="62" width="344" height="46" rx="10"/>
+                <text class="t-b" x="22" y="82">材料② 「あとで」リスト</text>
+                <text class="t-sm" x="22" y="100">第8回に残した、足したい機能</text>
+                <line class="line" x1="180" y1="110" x2="180" y2="122" marker-end="url(#mk-s)"/>
+                <rect class="box-white box-key" x="8" y="124" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="146">今日の目標は、1つだけ</text>
+                <text class="t-sm" x="22" y="166">直す ／ 足す ／ 言葉を整える のどれか</text>
+                <line class="line" x1="180" y1="178" x2="180" y2="190" marker-end="url(#mk-s)"/>
+                <rect class="box-purple" x="8" y="192" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="214">短い計画（3行）</text>
+                <text class="t-sm" x="22" y="234">足す機能・足さないもの・確かめ方</text>
+                <rect class="band" x="8" y="256" width="344" height="36" rx="8"/>
+                <text class="t-c" x="180" y="279">目標が2つになったら、1つを「あとで」へ</text>
+              </svg>
+              <figcaption>目標は「作品をよくする」ではなく、画面を見て「できた／できない」と言える1つにします。</figcaption>
+            </figure>
+            <ul>
+              <li>点検の材料と「あとで」リストから、<strong>今日の目標を1つだけ</strong>選ぶ。種類は3つのどれでもよい
+                <ul>
+                  <li><strong>直す</strong>——✕や△になった所を直す</li>
+                  <li><strong>足す</strong>——「あとで」リストから、機能を1つ足す</li>
+                  <li><strong>言葉を整える</strong>——画面の説明文、ボタンの文言、使い方の文を整える</li>
+                </ul>
+              </li>
+              <li>
+                <p>目標を、3行の<strong>短い計画</strong>にして、指示メモの計画の下に書く（型は第8回と同じ。自分の内容に書き換える）</p>
+                <button class="copy-md-btn" data-md-source="plan-short-w9">
+                  <span class="btn-icon"></span> 短い計画の型をコピー
+                </button>
+<pre id="plan-short-w9" class="md-preview">【今日の目標】（直す／足す／言葉を整える、のどれか。1つだけ）
+【足さないもの】（今回は触らないこと）
+【確かめ方】（画面を見て「できた／できない」と言える形）</pre>
+              </li>
+              <li>送る前に、<strong>目標が1つに絞れているか</strong>、<strong>確かめ方が画面で言えるか</strong>を見る。言えなければ、計画を直してから進む</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>頼み先を選んで、1周目を育てる</h3>
+          <div class="timeline-body">
+            <p><strong>頼み先を3つに分けて、今日の計画に当てはめる（10分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-a9-who">
+              <p class="vz-fig-title" id="cap-a9-who">頼み先は、3つ</p>
+              <svg class="vz-svg" viewBox="0 0 360 330" role="img" aria-labelledby="a9-who-t a9-who-d">
+                <title id="a9-who-t">相談、資料の整理、作るの3つの頼み先</title>
+                <desc id="a9-who-d">1 相談はGeminiアプリのチャット。文章で答えが返るだけで、作品のファイルにはさわらない。2 資料の整理はGemini Notebook。自分の資料をソースとして入れ、整理や下書きを頼む。作品のファイルにはさわらない。3 作るのはagyまたはBuild。計画を渡し、ファイルを作る、変える。どれも、最後に決めるのは人。</desc>
+                <rect class="box-white" x="8" y="8" width="344" height="86" rx="10"/>
+                <text class="t-b" x="22" y="30">① 相談　Geminiアプリ</text>
+                <text class="t-sm" x="22" y="52">案をもらう・質問してもらう・言葉を直す</text>
+                <text class="t-sm" x="22" y="72">作品のファイルには、さわらない</text>
+                <text class="t-sm" x="22" y="88">（計画だけ作りたいときに向く）</text>
+                <rect class="box-white" x="8" y="104" width="344" height="86" rx="10"/>
+                <text class="t-b" x="22" y="126">② 資料の整理　Gemini Notebook</text>
+                <text class="t-sm" x="22" y="148">自分の資料（ソース）を入れて、整理や下書きを頼む</text>
+                <text class="t-sm" x="22" y="168">作品のファイルには、さわらない</text>
+                <text class="t-sm" x="22" y="184">（企画メモ・計画・ログが材料）</text>
+                <rect class="box-purple" x="8" y="200" width="344" height="86" rx="10"/>
+                <text class="t-b" x="22" y="222">③ 作る　agyまたはBuild</text>
+                <text class="t-sm" x="22" y="244">計画を渡して、作る・直す・足す</text>
+                <text class="t-sm" x="22" y="264">差分やプレビューで、人が確かめる</text>
+                <text class="t-sm" x="22" y="280">（計画にないことはしない、と書く）</text>
+                <rect class="band" x="8" y="296" width="344" height="28" rx="8"/>
+                <text class="t-c" x="180" y="315">どれも、最後に決めるのは人</text>
+              </svg>
+              <figcaption>この3つの分け方は、授業での整理で、公式の分類ではありません。使いながら、自分の分け方に直していきます。</figcaption>
+            </figure>
+            <ul>
+              <li>今日の短い計画を見て、<strong>どの頼み先に、何を頼むか</strong>を、指示メモに1〜2行で書く（例:「まず相談で確かめ方を直す。次にagyに足してもらう」「資料の整理は使わない。理由は、整理する資料がないから」）</li>
+              <li>3つ全部を使う必要はない。<strong>使わない</strong>と決めてもよい。ただし、決めた理由を1行書く</li>
+              <li>Gemini Notebookは、<strong>自分の資料をソースとして追加</strong>して使う（追加の手順は、第2回と同じ。公式ヘルプ: <a href="https://support.google.com/gemininotebook/answer/16215270?hl=ja" target="_blank" rel="noopener">ノートブックの新しいソースを追加または検索する</a>）。入れられるソースの種類は、<strong>画面の「追加」に出る選択肢</strong>で確かめる（この授業ページでは、種類を断定しない）</li>
+            </ul>
+            <p><strong>1周目を育てる（35分）</strong></p>
+            <ul>
+              <li>今日の目標の種類で、進め方が少し変わる</li>
+            </ul>
+            <table class="schedule-table schedule-table--stack">
+              <thead>
+                <tr><th>今日の目標</th><th>頼み先の例</th><th>気をつけること</th></tr>
+              </thead>
+              <tbody>
+                <tr><td data-label="今日の目標">直す</td><td data-label="頼み先の例">作る（agyまたはBuild）。原因が分からないときは、先に相談（チャット）</td><td data-label="気をつけること">直す所を<strong>1か所</strong>に絞る。「ほかは変えない」と書く</td></tr>
+                <tr><td data-label="今日の目標">足す</td><td data-label="頼み先の例">作る（agyまたはBuild）。足す前に、必要なら相談で確かめ方を直す</td><td data-label="気をつけること">足すのは<strong>1つだけ</strong>。第8回と同じく、<strong>動いている版を残して</strong>から足す</td></tr>
+                <tr><td data-label="今日の目標">言葉を整える</td><td data-label="頼み先の例">資料の整理（Gemini Notebook）か、相談（チャット）で下書き。作品への反映は、作る（agyまたはBuild）に頼むか、自分で直す</td><td data-label="気をつけること">AIの下書きは、<strong>そのまま使わず</strong>、自分で読んで直す（誰に向けた言葉か、事実が合っているか）</td></tr>
+              </tbody>
+            </table>
+            <ul>
+              <li><strong>agyの人（直す・足す）</strong>: 第8回と同じ流れ。<strong>コピーを先に作り、送るのは最後</strong>。サーバーを動かしているターミナルは止めずに、<strong>別のターミナル</strong>で、いちばん新しい版（例: <code>sakuhin-2.html</code>）を、まだ使っていない番号にコピーする
+                <pre><code>cp sakuhin-2.html sakuhin-4.html</code></pre>
+                （番号は、自分の持っているファイルに合わせて読み替える。分からないときは、agyに「<code>sakuhin-2.html</code>を<code>sakuhin-4.html</code>にコピーして」と頼んでもよい）。agyは<code>default</code>モードのまま、<strong>差分を読んでから</strong>承認する。新しいファイル以外を変えようとしていたら、承認しない。Simple Browserのアドレスバーは、末尾だけを新しいファイル名に書き換える</li>
+              <li><strong>Buildの人（直す・足す）</strong>: 短い計画を入力欄に送り、右側のプレビューで確かめる。設定の<code>Versions</code>タブで、足す前の版があることを見ておく（戻せるかは、第7回から続けて教員が確認中）</li>
+              <li>
+                <p>作る頼み先に送る文（短い計画を、最後に貼る）</p>
+                <button class="copy-md-btn" data-md-source="plan-send-w9">
+                  <span class="btn-icon"></span> 計画を渡す文をコピー
+                </button>
+<pre id="plan-send-w9" class="md-preview">次の計画のとおりに、作品を変えてください。
+計画にないことは、しないでください。
+（agyの人だけ）新しく作ったファイルだけを変えてください。元のファイルは変えないでください。
+
+（ここに、短い計画を貼る）</pre>
+              </li>
+              <li>できたものを、<strong>確かめ方</strong>で見て、◎△✕のどれかを、<strong>「結果①（第9回・1周目）」</strong>として計画の下に書く。対話ログにも、頼み先（チャット／Notebook／道具）と同じ印を付ける</li>
+            </ul>
+            <p><strong>早く終わった人は</strong></p>
+            <ul>
+              <li>「あとで」リストから、2周目に足す機能の候補を1つ選び、理由を1行書いておく</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>結果を見て、資料を使いながら2周目を育てる</h3>
+          <div class="timeline-body">
+            <p><strong>1周目の結果から、原因を切り分ける（10分）</strong></p>
+            <ul>
+              <li>△や✕だった人は、原因を次の3つで切り分けて、<strong>直してから</strong>次に進む（第8回と同じ考え方）
+                <ul>
+                  <li><strong>計画の書き方</strong>——確かめ方が決まっていない、足さないものが書かれていない。→ 計画を直す</li>
+                  <li><strong>送り方</strong>——計画を貼り忘れた、ファイル名を書かなかった、頼み先を間違えた。→ 送る文や頼み先を直す</li>
+                  <li><strong>AIの出し方のぶれ</strong>——計画も送り方も良いのに、外れた。どこが外れたかを指して、「計画にないことはしないで」と頼み直す</li>
+                </ul>
+              </li>
+              <li>◎だった人は、「<strong>計画に書かなかったのに、AIが決めたこと</strong>」が、結果にも入っていないかを、もう一度探す</li>
+              <li>どうしても崩れたら、<strong>最後の手段</strong>として、動いていた版に戻る（agyの人は、もう一度コピーを作り直す。Buildの人は、<code>Versions</code>タブで足す前の版へ。戻せないときは、講師に声をかける）。戻ったら、<strong>計画に足りない所がなかったか見てから</strong>やり直す</li>
+            </ul>
+            <p><strong>資料を使って、作品の言葉を整える（15分）</strong></p>
+            <ul>
+              <li>2周目に入る前に、<strong>Gemini Notebook</strong>を1回使ってみる（使わない選択をした人は、チャットで同じことをしてよい。ただし、チャットの答えが、自分の資料の範囲に収まっているとは限らない点に注意する）</li>
+              <li>ソースに入れるのは、<strong>自分で書いた資料</strong>（企画メモ、計画、対話ログの要約など）。<strong>実名や他人の個人情報、APIキー</strong>は入れない。ソースの追加の画面で、どんな種類を選べるかは、画面で確かめる</li>
+              <li>
+                <p>次の文をNotebookのチャットに送る（<code>（　）</code>は自分の内容に）</p>
+                <button class="copy-md-btn" data-md-source="nb-prompt-w9">
+                  <span class="btn-icon"></span> Notebookへの頼みの文をコピー
+                </button>
+<pre id="nb-prompt-w9" class="md-preview">ソースにある私の企画メモと計画をもとに、次のことを手伝ってください。
+1. 作品を使う人に向けた、3行の説明文の案を2つ書いてください。
+2. 計画の「確かめ方」の中で、画面を見て「できた／できない」と言いにくいものがあれば、言い換えの案を出してください。
+ソースに書かれていないことは、決めつけないでください。分からない所は「書かれていない」と答えてください。
+（今日の目標: ここに書く）</pre>
+              </li>
+              <li>返ってきた案は、<strong>そのまま使わず</strong>、次の点で自分で見る
+                <ul>
+                  <li>答えの中で、<strong>自分の資料に書いてあること</strong>と、<strong>書いていないのに足されたこと</strong>を分けて見る（資料に戻って、自分で確かめる。AIの答えは、間違っていることがある）</li>
+                  <li>使う人に向けた言葉として、合っているか</li>
+                </ul>
+              </li>
+              <li>使う言葉を決めたら、指示メモの計画に反映する。対話ログには、<strong>「Notebook」と印</strong>を付けて、「資料の何が答えに出て、自分が何を直したか」を1行書く</li>
+            </ul>
+            <p><strong>2周目を育てる（25分）</strong></p>
+            <ul>
+              <li>1周目の結果と、Notebookで整えた言葉を使って、<strong>次の短い計画</strong>を書く（型は1限前半と同じ。今日の目標は、また1つだけ）</li>
+              <li>1周目と同じ流れで、頼み先を選んで送る。agyの人は、<strong>またコピーを先に作る</strong>（番号をもう1つ進める）。Buildの人は、プレビューで確かめる</li>
+              <li>できたものを、確かめ方で見て、<strong>「結果②（第9回・2周目）」</strong>として、◎△✕と一言を書く。対話ログにも書く</li>
+              <li>相談したいときは、チャットを使ってよい（例:「この確かめ方で、画面を見て言えるか」）。チャットやNotebookに作品のコードを貼るときは、<strong>APIキーや個人情報が入っていないか</strong>を先に見る</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>記録を整え、頼み先のメモを書き直す</h3>
+          <div class="timeline-body">
+            <p><strong>今日の記録を見比べる（12分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-a9-rec">
+              <p class="vz-fig-title" id="cap-a9-rec">今日の記録で、3つを見比べる</p>
+              <svg class="vz-svg" viewBox="0 0 360 266" role="img" aria-labelledby="a9-rec-t a9-rec-d">
+                <title id="a9-rec-t">計画、結果、対話ログを見比べる</title>
+                <desc id="a9-rec-d">今日の短い計画、結果、対話ログの3つを見比べる。見比べて書くのは、1 どの頼み先がうまくいったか、2 ずれた原因は計画、送り方、AIのぶれのどれか、3 頼み先のメモを、どう書き直すか、の3つ。</desc>
+                <rect class="box-white" x="8" y="8" width="108" height="64" rx="10"/>
+                <text class="t-b t-c" x="62" y="36">短い計画</text>
+                <text class="t-sm t-c" x="62" y="56">2つ</text>
+                <rect class="box-white" x="126" y="8" width="108" height="64" rx="10"/>
+                <text class="t-b t-c" x="180" y="36">結果</text>
+                <text class="t-sm t-c" x="180" y="56">◎△✕</text>
+                <rect class="box-white" x="244" y="8" width="108" height="64" rx="10"/>
+                <text class="t-b t-c" x="298" y="36">対話ログ</text>
+                <text class="t-sm t-c" x="298" y="56">頼み先の印</text>
+                <line class="line" x1="62" y1="74" x2="130" y2="100" marker-end="url(#mk-s)"/>
+                <line class="line" x1="180" y1="74" x2="180" y2="98" marker-end="url(#mk-s)"/>
+                <line class="line" x1="298" y1="74" x2="230" y2="100" marker-end="url(#mk-s)"/>
+                <rect class="box-white box-key" x="8" y="102" width="344" height="98" rx="10"/>
+                <text class="t-b" x="22" y="126">見比べて、書くこと</text>
+                <text class="t-sm" x="22" y="148">① どの頼み先が、うまくいったか</text>
+                <text class="t-sm" x="22" y="168">② ずれたのは、計画・送り方・AIのぶれのどれか</text>
+                <text class="t-sm" x="22" y="188">③ 頼み先のメモを、どう書き直すか</text>
+                <rect class="band" x="8" y="214" width="344" height="40" rx="8"/>
+                <text class="t-c" x="180" y="239">自分の言葉で書く（講師の言葉を写さない）</text>
+              </svg>
+              <figcaption>3つ目の「書き直し」が、今日いちばん大事な記録です。</figcaption>
+            </figure>
+            <ul>
+              <li>自分の<strong>計画・結果（①②）・対話ログ</strong>を読み返し、次の3つを、<strong>自分の言葉</strong>で書く
+                <ul>
+                  <li><strong>うまくいった頼み先</strong>——どの場面で、チャット・Notebook・道具のどれが、役に立ったか。理由も1行</li>
+                  <li><strong>ずれたこと</strong>——△や✕の原因は、<strong>計画の書き方・送り方・AIの出し方のぶれ</strong>のどれだったか。◎だけだった人は、「計画に書かなかったのに、AIが決めたこと」を書く</li>
+                  <li><strong>計画に書き足したこと</strong>——次から、計画に最初から書いておくこと</li>
+                </ul>
+              </li>
+            </ul>
+            <p><strong>ペアで1分ずつ見せ合う（8分）</strong></p>
+            <ul>
+              <li>隣の人と、<strong>1人1分</strong>で、書いた3つのうち1つを口に出して伝える。聞いた人は、質問を<strong>1つ</strong>返す（相手がいない人は、講師に1分で話す）</li>
+              <li>相手の頼み先の選び方で、<strong>自分と違う所</strong>があれば、理由を聞く。どちらが正しい、という話にしない（作品も、目標も、人によって違う）</li>
+            </ul>
+            <p><strong>頼み先のメモを書き直す（10分）</strong></p>
+            <ul>
+              <li>第8回に書いた<strong>頼み先のメモ</strong>を、今日の記録を根拠に書き直す。<strong>3つの頼み先（相談・資料の整理・作る）</strong>のそれぞれについて、1〜2行で書く
+                <ul>
+                  <li>「<strong>相談（チャット）</strong>を使うのは、＿＿のとき。理由は＿＿」</li>
+                  <li>「<strong>資料の整理（Gemini Notebook）</strong>を使うのは、＿＿のとき。または、使わなかった。理由は＿＿」</li>
+                  <li>「<strong>作る（agyまたはBuild）</strong>に頼む前に、計画に書いておくのは＿＿」</li>
+                </ul>
+              </li>
+              <li>これは決まりではなく、<strong>今日の自分の経験から出した、いまの考え</strong>。次回以降に変わってよい。書き直した所には、「どこを、なぜ直したか」を1行添える</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ ai-communication-2.html Week 10 「中間相互レビュー・振り返り」と同期 -->
+              <li>次回（第10回）: <strong>中間相互レビュー・振り返り</strong>——AIとのやりとりの記録を見せ合い、コミュニケーションの工夫を共有する。<strong>今日の対話ログ・計画と結果・頼み先のメモ</strong>が、そのまま見せる材料になる</li>
+              <li>今日のキーワード「<strong>点検</strong>」「<strong>今日の目標は1つ</strong>」「<strong>頼み先を選ぶ</strong>」を口に出して言えるか確認して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>対話ログと、指示メモへの書き足しを完成させる</strong>
+            <p>授業内で書ききれなかった人は家で仕上げる。指示メモには、点検・今日の短い計画（2つ）・結果（①②）・書き直した頼み先のメモが入っている状態にする。対話ログは、頼み先（チャット／Notebook／道具）の印を付けておく。うまくいかなかった人は、うまくいかなかった理由と、次に直す1か所を書く。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>次回、見せたい記録を1つ選んでおく</strong>
+            <p>第10回で、AIとのやりとりの記録を見せ合う。対話ログの中から、「見てもらいたい場面」を1つ選び、なぜそれを選んだかを1行書く（うまくいった場面でも、失敗した場面でもよい）。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://support.google.com/gemininotebook/answer/16215270?hl=ja" target="_blank" rel="noopener">Gemini Notebook ヘルプ — ノートブックの新しいソースを追加または検索する</a> — ソースの追加の公式手順（確認日 2026-11-16）</li>
+        <li><a href="https://support.google.com/gemininotebook/answer/16179559?hl=ja" target="_blank" rel="noopener">Gemini Notebook ヘルプ — Gemini Notebook でチャットを使用する</a> — Notebookのチャットの公式説明</li>
+        <li><a href="https://ai.google.dev/gemini-api/docs/aistudio-build-mode" target="_blank" rel="noopener">Build apps in Google AI Studio（公式）</a> — Build modeの公式解説</li>
+        <li><a href="https://antigravity.google/docs/cli/modes/" target="_blank" rel="noopener">Antigravity CLI — Choose an execution mode（公式）</a> — <code>default</code>と<code>plan</code>を含む実行モードの公式解説（振り返り用）</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week08.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第8回 自分の作品を決めて、最小版をつくる</span>
+      </a>
+      <a href="../ai-communication-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AIコミュニケーション基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第10回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js?v=5"></script>
+</body>
+</html>

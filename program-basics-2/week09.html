@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第9回 個人制作② インタラクション | プログラム基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=26">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <!-- 公式情報確認: 2026-11-16（参考リンクのMDN 5ページの生存とタイトルを確認。外部サービスの操作手順は扱わない。AIはCopilot ChatまたはGeminiで、前期第10回・後期第8回と同じ使い方。教材コード（ゲーム班・EC班のクリック処理と再表示のコード）は、ブラウザで実行して、本文に書いた動きのとおりになることを確認済み。第6〜8回の授業結果は未反映） -->
+  <header class="page-header page-header--blue">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../program-basics-2.html">プログラム基礎 II</a>
+        <span>/</span>
+        <span>第9回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">個人制作② インタラクション</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 9</span>
+            <span class="page-badge">火曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-blue">
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
+
+    <div class="qr-box qr-box--pc">
+      <a class="qr-box__zoom" href="qr/week09-page.svg" target="_blank" rel="noopener" aria-label="QRコードを大きく表示する">
+        <img class="qr-box__img" src="qr/week09-page.svg" alt="この第9回のページを開くQRコード。スマートフォンのカメラで読み取ると、このページが開く。" width="180" height="180">
+      </a>
+      <div class="qr-box__body">
+        <p class="qr-box__heading">📱 スマホで開く</p>
+        <p class="qr-box__text">教室の画面を見ながら、自分のスマートフォンで、このページを開けます。スマートフォンの<strong>カメラ</strong>で、このQRコードを読み取ってください。QRコードを押すと、大きく表示されます。</p>
+      </div>
+    </div>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">クリック・入力に応じて、作品が<strong>動的に変わる</strong>ようにする。ゲーム班は<strong>当たり判定とスコア計算</strong>、EC班は<strong>カート追加と合計金額の計算</strong>。<strong>データを変えて、画面を作り直す</strong></div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">インタラクション / <code>addEventListener</code> / <code>click</code> / 関数 / 当たり判定 / スコア / カート / 合計 / 再表示（<code>render</code>）</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第8回で作った<strong><code>game.html</code>（EC班は<code>shop.html</code>）</strong>と、<strong><code>plan.md</code></strong>の第9回の欄（「第9回に最初にやること」）。ファイルが無い人は、<a href="week08.html">第8回のページ</a>の骨組みとコードから始められる。AIは<strong>Copilot Chat</strong>（使える人）か<strong>Gemini</strong>（ブラウザの別タブ）のどちらか</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>マスやボタンを<strong>クリックしたときに動く処理</strong>を、<code>addEventListener</code>で書ける</li>
+        <li>クリックのたびに<strong>配列や数（スコア・カート）を変えて、画面を作り直す</strong>流れを説明できる</li>
+        <li>ゲーム班は<strong>当たり判定とスコア計算</strong>、EC班は<strong>カートへの追加と合計金額の計算</strong>が動く</li>
+        <li>自分の<code>plan.md</code>に合わせて、動きを1つ足し、<code>push</code>できる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回までの成果を確認し、今日の考え方を知る</h3>
+          <div class="timeline-body">
+            <p><strong>前回の振り返りと、環境を整える（10分）</strong></p>
+            <ul>
+              <li>第8回の<code>game.html</code>（EC班は<code>shop.html</code>）と<code>plan.md</code>が<code>push</code>できているかをGitHub上で確認する。終わっていない人は、今日の最後の時間で<code>push</code>する</li>
+              <li><code>plan.md</code>の<strong>「5. 制作の予定」の第9回</strong>の欄（第8回の最後に書いた「第9回に最初にやること」）を読む。今日作る動きを、隣の人に一言で言ってみる（例:「マスをクリックしたらスコアを1増やす」「ボタンで商品をカートに入れる」）</li>
+              <li><code>python3 -m http.server 8000</code>を起動し、第1回（前期）と同じ手順で「ポート」タブ→「エディターでプレビュー」→ Simple Browserを開いておく。開くファイルは、アドレスバーの<strong>末尾だけ</strong>を<code>/game.html</code>（EC班は<code>/shop.html</code>）に書き換える</li>
+            </ul>
+            <p><strong>今日の考え方：データを変えて、画面を作り直す（15分）</strong></p>
+            <ul>
+              <li>第8回で、配列のデータを変えると画面が変わることを確かめた。今日は、その<strong>「データを変える」を、人のクリックで起こす</strong></li>
+              <li>流れは3つだけ。<strong>① クリックされる → ② データを変える（スコアを増やす、カートに足す）→ ③ 画面を作り直す</strong>。画面の部品を直接書き換えるより、データを変えてから、第8回の表示のコードをもう一度動かすほうが、間違えにくい</li>
+              <li>そのために、第8回の表示のコードを<strong>関数</strong>（名前を付けてまとめた処理）に入れる。ゲーム班は<code>render</code>、EC班は<code>showCart</code>という名前にする。関数は、<strong>呼ぶたびに</strong>同じ処理をもう一度動かせる</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-w9-map">
+              <p class="vz-fig-title" id="cap-w9-map">今日の地図：クリック → データ → 画面</p>
+              <svg class="vz-svg" viewBox="0 0 360 272" role="img" aria-labelledby="w9-map-t w9-map-d">
+                <title id="w9-map-t">クリックからデータの変更、画面の作り直しまでの流れ</title>
+                <desc id="w9-map-d">1 人がクリックする、2 配列や数（スコア・カート）を変える、3 画面を作り直す、の順に進み、また1に戻る。</desc>
+                <rect class="box-blue" x="8" y="8" width="242" height="52" rx="10"/>
+                <text class="t-b" x="22" y="30">① クリックされる</text>
+                <text class="t-sm" x="22" y="50">マスやボタンを押す</text>
+                <line class="line" x1="129" y1="62" x2="129" y2="78" marker-end="url(#mk-s)"/>
+                <rect class="box-white box-key" x="8" y="80" width="242" height="52" rx="10"/>
+                <text class="t-b" x="22" y="102">② データを変える</text>
+                <text class="t-sm" x="22" y="122">スコアを増やす・カートに足す</text>
+                <line class="line" x1="129" y1="134" x2="129" y2="150" marker-end="url(#mk-s)"/>
+                <rect class="box-blue" x="8" y="152" width="242" height="52" rx="10"/>
+                <text class="t-b" x="22" y="174">③ 画面を作り直す</text>
+                <text class="t-sm" x="22" y="194">第8回の表示のコードを、もう一度</text>
+                <polyline class="line" points="250,178 330,178 330,34 250,34" marker-end="url(#mk-s)"/>
+                <text class="t-sm t-halo" x="322" y="100" text-anchor="end">押すたびに</text>
+                <text class="t-sm t-halo" x="322" y="118" text-anchor="end">くり返す</text>
+                <rect class="band" x="8" y="222" width="344" height="40" rx="10"/>
+                <text class="t-c" x="180" y="247">②を変えてから、③で画面を合わせる</text>
+              </svg>
+              <figcaption>今日の主役は②です。①と③は、書き方が決まっています。</figcaption>
+            </figure>
+            <figure class="vz-fig" aria-labelledby="cap-w9-listen">
+              <p class="vz-fig-title" id="cap-w9-listen">クリックを受け取る書き方：3つを決める</p>
+              <svg class="vz-svg" viewBox="0 0 360 250" role="img" aria-labelledby="w9-listen-t w9-listen-d">
+                <title id="w9-listen-t">addEventListenerで決める3つのこと</title>
+                <desc id="w9-listen-d">1 どの部品か（マスやボタン）、2 何が起きたらか（click）、3 何をするか（関数の中身）。押されたときだけ3が動く。</desc>
+                <rect class="box-blue" x="8" y="8" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="30">① どの部品に？</text>
+                <text class="t-sm" x="22" y="50">マス（cell）や、ボタン（button）</text>
+                <line class="line" x1="180" y1="62" x2="180" y2="78" marker-end="url(#mk-s)"/>
+                <rect class="box-blue" x="8" y="80" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="102">② 何が起きたら？</text>
+                <text class="t-sm" x="22" y="122">"click"（クリックされたとき）</text>
+                <line class="line" x1="180" y1="134" x2="180" y2="150" marker-end="url(#mk-s)"/>
+                <rect class="box-white box-key" x="8" y="152" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="174">③ 何をする？</text>
+                <text class="t-sm" x="22" y="194">function の中身。データを変えて、再表示</text>
+                <rect class="band" x="8" y="214" width="344" height="30" rx="10"/>
+                <text class="t-c t-sm" x="180" y="234">押されたときだけ、③が動く</text>
+              </svg>
+              <figcaption>書き方は <code>部品.addEventListener("click", function () { ... });</code>。<code>{ }</code>の中に③を書きます。</figcaption>
+            </figure>
+            <p><strong>骨組みを、少し更新する（15分）</strong></p>
+            <ul>
+              <li>今日のコードが画面の文字を書き換えられるように、HTMLに<code>id</code>を足す。下の変更を、自分のジャンルのぶんだけ行う</li>
+              <li>
+                <details class="vz-more">
+                  <summary>ゲーム班：スコアの<code>span</code>に<code>id</code>を付ける</summary>
+                  <p><code>game.html</code>の<code>&lt;div class="bar"&gt;</code>の中の、次の1行を置き換える（<code>score</code>という名前で、後からコードが見つけられるようにする）。</p>
+                  <button class="copy-md-btn" data-md-source="html-game">
+                    <span class="btn-icon"></span> ゲーム班のHTMLの変更をコピー
+                  </button>
+<pre id="html-game" class="md-preview">&lt;span id="score"&gt;スコア: 0&lt;/span&gt;</pre>
+                </details>
+              </li>
+              <li>
+                <details class="vz-more">
+                  <summary>EC班：カートの欄を足し、<code>id</code>を付ける</summary>
+                  <p><code>shop.html</code>の3か所を変える。①<code>&lt;div class="bar"&gt;</code>の中の「カート: 0点」の行を、次に置き換える。</p>
+                  <button class="copy-md-btn" data-md-source="html-ec-1">
+                    <span class="btn-icon"></span> ①カート件数の行をコピー
+                  </button>
+<pre id="html-ec-1" class="md-preview">&lt;span id="cart-count"&gt;カート: 0点&lt;/span&gt;</pre>
+                  <p>②<code>&lt;div class="shop" id="shop"&gt;&lt;/div&gt;</code>の<strong>すぐ下</strong>に、カートの欄を足す。</p>
+                  <button class="copy-md-btn" data-md-source="html-ec-2">
+                    <span class="btn-icon"></span> ②カートの欄をコピー
+                  </button>
+<pre id="html-ec-2" class="md-preview">  &lt;div class="cart"&gt;
+    &lt;h2&gt;カート&lt;/h2&gt;
+    &lt;ul id="cart-list"&gt;&lt;/ul&gt;
+    &lt;p id="total"&gt;合計: 0円&lt;/p&gt;
+  &lt;/div&gt;</pre>
+                  <p>③<code>&lt;style&gt;</code>の中（<code>.item .row</code>の行の下）に、カートとボタンの見た目を足す。</p>
+                  <button class="copy-md-btn" data-md-source="css-ec">
+                    <span class="btn-icon"></span> ③見た目のCSSをコピー
+                  </button>
+<pre id="css-ec" class="md-preview">    .cart { margin-top: 24px; padding: 12px; border: 2px solid #3d5a73; border-radius: 8px; }
+    .item button { margin-top: 8px; }</pre>
+                </details>
+              </li>
+              <li>保存して再読み込みしても、見た目はほとんど変わらない（EC班は、下にカートの欄が出る）。<strong>エラーが出ていなければ成功</strong>。変更の中身は、このあとのコードが使う</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>クリックを受け取り、データを変えて、画面を作り直す</h3>
+          <div class="timeline-body">
+            <p><strong>① クリックされたことを、まず確かめる（10分）</strong></p>
+            <ul>
+              <li>第8回の表示のコードの、<code>board.appendChild(cell);</code>（EC班は<code>shop.appendChild(item);</code>）の<strong>すぐ上</strong>に、次の3行を足す。クリックしたら<code>Console</code>に文字が出る、という確認だけ。<code>function () { ... }</code>の中は、押されたときに動く</li>
+              <li>
+                <p><strong>ゲーム班</strong>（マスをクリックすると、何番のマスかが出る）</p>
+                <button class="copy-md-btn" data-md-source="try-game">
+                  <span class="btn-icon"></span> ゲーム班の確認コードをコピー
+                </button>
+<pre id="try-game" class="md-preview">  cell.addEventListener("click", function () {
+    console.log(i + "番のマスがクリックされた");
+  });</pre>
+              </li>
+              <li>
+                <p><strong>EC班</strong>（商品カードをクリックすると、商品名が出る）</p>
+                <button class="copy-md-btn" data-md-source="try-ec">
+                  <span class="btn-icon"></span> EC班の確認コードをコピー
+                </button>
+<pre id="try-ec" class="md-preview">  item.addEventListener("click", function () {
+    console.log(products[i].name + "がクリックされた");
+  });</pre>
+              </li>
+              <li>保存・再読み込みして、<code>F12</code>の<code>Console</code>タブを開き、マス（商品カード）を押してみる。<strong>押した場所に合った文字が出れば成功</strong>。<code>i</code>は<code>for</code>文の番号なので、マスごとに違う文字が出る。確認できたら、この3行は消してよい（次のコードに含まれる）</li>
+            </ul>
+            <p><strong>② 表示を関数にまとめ、クリックでデータを変える（25分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-w9-two">
+              <p class="vz-fig-title" id="cap-w9-two">ゲーム班とEC班で、中身を比べる</p>
+              <svg class="vz-svg" viewBox="0 0 360 330" role="img" aria-labelledby="w9-two-t w9-two-d">
+                <title id="w9-two-t">ゲーム班とEC班の、クリックしたときの4つの手順</title>
+                <desc id="w9-two-d">ゲーム班は、マスを押す、当たりか調べる、scoreを増やす、画面を作り直す。EC班は、ボタンを押す、cartに足す、合計を出す、画面を作り直す。どちらも最後は画面の作り直し。</desc>
+                <rect class="box-blue" x="8" y="8" width="168" height="34" rx="10"/>
+                <text class="t-b t-c" x="92" y="30">ゲーム班</text>
+                <rect class="box-blue" x="184" y="8" width="168" height="34" rx="10"/>
+                <text class="t-b t-c" x="268" y="30">EC班</text>
+                <rect class="box-white" x="8" y="58" width="168" height="40" rx="10"/>
+                <text class="t-b t-c" x="92" y="83">① マスを押す</text>
+                <rect class="box-white" x="184" y="58" width="168" height="40" rx="10"/>
+                <text class="t-b t-c" x="268" y="83">① ボタンを押す</text>
+                <line class="line" x1="92" y1="100" x2="92" y2="110" marker-end="url(#mk-s)"/>
+                <line class="line" x1="268" y1="100" x2="268" y2="110" marker-end="url(#mk-s)"/>
+                <rect class="box-white box-key" x="8" y="112" width="168" height="40" rx="10"/>
+                <text class="t-b t-c" x="92" y="137">② 当たりか調べる</text>
+                <rect class="box-white box-key" x="184" y="112" width="168" height="40" rx="10"/>
+                <text class="t-b t-c" x="268" y="137">② cart に足す</text>
+                <line class="line" x1="92" y1="154" x2="92" y2="164" marker-end="url(#mk-s)"/>
+                <line class="line" x1="268" y1="154" x2="268" y2="164" marker-end="url(#mk-s)"/>
+                <rect class="box-white box-key" x="8" y="166" width="168" height="40" rx="10"/>
+                <text class="t-b t-c" x="92" y="191">③ score を増やす</text>
+                <rect class="box-white box-key" x="184" y="166" width="168" height="40" rx="10"/>
+                <text class="t-b t-c" x="268" y="191">③ 合計を出す</text>
+                <line class="line" x1="92" y1="208" x2="92" y2="218" marker-end="url(#mk-s)"/>
+                <line class="line" x1="268" y1="208" x2="268" y2="218" marker-end="url(#mk-s)"/>
+                <rect class="box-blue" x="8" y="220" width="168" height="40" rx="10"/>
+                <text class="t-b t-c" x="92" y="245">④ 画面を作り直す</text>
+                <rect class="box-blue" x="184" y="220" width="168" height="40" rx="10"/>
+                <text class="t-b t-c" x="268" y="245">④ 画面を作り直す</text>
+                <rect class="band" x="8" y="278" width="344" height="40" rx="10"/>
+                <text class="t-c" x="180" y="303">②③が「データを変える」、④が再表示</text>
+              </svg>
+              <figcaption>道具は違っても、「押す → データを変える → 画面を作り直す」の形は同じです。</figcaption>
+            </figure>
+            <ul>
+              <li>データ（<code>characters</code>や<code>products</code>）は、第8回のまま残す。その<strong>下</strong>の、第8回の表示のコードを全部消して、自分のジャンルのコードに置き換える（コピーしてよい）。第8回で足した表示（背景色など）がある人は、同じ行を<code>render</code>（<code>for</code>文）の中に戻す</li>
+              <li>
+                <p><strong>ゲーム班</strong>のコード（マスをクリックしたら、当たりかを調べ、当たりなら<code>score</code>を1増やして、キャラクターを別のマスへ動かす）</p>
+                <button class="copy-md-btn" data-md-source="code-game">
+                  <span class="btn-icon"></span> ゲーム班のコードをコピー
+                </button>
+<pre id="code-game" class="md-preview">const board = document.getElementById("board");
+const scoreText = document.getElementById("score");
+let score = 0;
+
+function moveCharacter(character) {
+  character.position = Math.floor(Math.random() * 6);
+}
+
+function hit(cellNumber) {
+  for (let j = 0; j &lt; characters.length; j++) {
+    if (characters[j].position === cellNumber) {
+      score = score + 1;
+      moveCharacter(characters[j]);
+      break;
+    }
+  }
+  render();
+}
+
+function render() {
+  board.innerHTML = "";
+
+  for (let i = 0; i &lt; 6; i++) {
+    const cell = document.createElement("div");
+    cell.className = "hole";
+
+    for (let j = 0; j &lt; characters.length; j++) {
+      if (characters[j].position === i) {
+        cell.textContent = characters[j].icon;
+        cell.title = characters[j].name;
+      }
+    }
+
+    cell.addEventListener("click", function () {
+      hit(i);
+    });
+
+    board.appendChild(cell);
+  }
+
+  scoreText.textContent = `スコア: ${score}`;
+}
+
+render();</pre>
+                <ul>
+                  <li><code>render</code>は、第8回の表示のコードを<strong>関数</strong>にして、<strong>最初に画面を空にする</strong>（<code>board.innerHTML = "";</code>）行を足したもの。空にしないと、呼ぶたびにマスが増え続ける</li>
+                  <li><code>hit</code>が<strong>当たり判定</strong>。押された番号（<code>cellNumber</code>）と、キャラクターの<code>position</code>が<strong>同じなら当たり</strong>。当たりなら<code>score</code>を1増やし、<code>moveCharacter</code>でそのキャラクターを0〜5のどこかへ動かす（同じマスに戻ることもある）。<code>break</code>は「見つかったので、<code>for</code>文をここで終える」</li>
+                  <li>最後の<code>render()</code>は、<strong>データを変えたあとの画面の作り直し</strong>。ファイルを開いた直後の最初の表示も、この1行で出る</li>
+                </ul>
+              </li>
+              <li>
+                <p><strong>EC班</strong>のコード（商品カードに「カートに入れる」ボタンを付け、押したら<code>cart</code>に足して、件数と合計を出す）</p>
+                <button class="copy-md-btn" data-md-source="code-ec">
+                  <span class="btn-icon"></span> EC班のコードをコピー
+                </button>
+<pre id="code-ec" class="md-preview">const shop = document.getElementById("shop");
+const cartList = document.getElementById("cart-list");
+const cartCount = document.getElementById("cart-count");
+const totalText = document.getElementById("total");
+const cart = [];
+
+function showCart() {
+  cartList.innerHTML = "";
+  let total = 0;
+
+  for (let i = 0; i &lt; cart.length; i++) {
+    const line = document.createElement("li");
+    line.textContent = `${cart[i].name} ${cart[i].price}円`;
+    cartList.appendChild(line);
+    total = total + cart[i].price;
+  }
+
+  cartCount.textContent = `カート: ${cart.length}点`;
+  totalText.textContent = `合計: ${total}円`;
+}
+
+for (let i = 0; i &lt; products.length; i++) {
+  const item = document.createElement("div");
+  item.className = "item";
+
+  const row = document.createElement("div");
+  row.className = "row";
+
+  const name = document.createElement("span");
+  name.textContent = products[i].name;
+
+  const price = document.createElement("span");
+  price.textContent = `${products[i].price}円`;
+
+  const button = document.createElement("button");
+  button.textContent = "カートに入れる";
+  button.addEventListener("click", function () {
+    cart.push(products[i]);
+    showCart();
+  });
+
+  row.appendChild(name);
+  row.appendChild(price);
+  item.appendChild(row);
+  item.appendChild(button);
+  shop.appendChild(item);
+}
+
+showCart();</pre>
+                <ul>
+                  <li><code>cart</code>は、カートに入れた商品を入れていく<strong>空の配列</strong>。<code>cart.push(products[i])</code>で、押した商品を<strong>1件、後ろに足す</strong></li>
+                  <li><code>showCart</code>が<strong>画面の作り直し</strong>。カートを空にしてから、<code>cart</code>を1件ずつ見て一覧を作り、<strong><code>total</code>に価格を足して合計</strong>を出す。<code>total = total + cart[i].price;</code>は「今の合計に、この商品の価格を足して、合計を更新する」</li>
+                  <li>商品の一覧（<code>shop</code>）は、ファイルを開いたときに1回だけ作る。ボタンを押して作り直すのは、カートの欄だけ</li>
+                </ul>
+              </li>
+              <li>保存して再読み込みする。<strong>ゲーム班</strong>は、絵文字のマスを押すとスコアが1増え、絵文字が別のマスへ動けば成功。絵文字のないマスを押しても、スコアは変わらない。<strong>EC班</strong>は、「カートに入れる」を押すたびに、カートの一覧が1行ずつ増え、合計とカート件数が変われば成功</li>
+            </ul>
+            <p><strong>③ 動きを確かめ、データを変えてみる（15分）</strong></p>
+            <ul>
+              <li><strong>ゲーム班</strong>: キャラクターを1体足す（第8回と同じ。前の行の末尾に<strong>カンマ</strong>）。絵文字が3つになり、当たりが3か所になる。また、<code>Math.random() * 6</code>の<code>6</code>を、盤面のマス数に合わせて変えると、動く範囲が変わる（盤面を9マスにした人は<code>9</code>）</li>
+              <li><strong>EC班</strong>: 同じ商品を3回押して、カートに3行できること、合計が価格の3倍になること（例: マグ800円なら2400円）を、電卓と見比べて確かめる。<code>price</code>を書き換えて、合計も変わることも見る</li>
+              <li>ここで見てほしいのは、<strong>画面を直接書き換えていない</strong>のに、画面が変わったこと。変えたのは<code>score</code>と<code>cart</code>というデータだけ。<strong>データを変えて、<code>render</code>（<code>showCart</code>）を呼ぶ</strong>——これが、今日の形になる</li>
+              <li>
+                <details class="vz-more">
+                  <summary>うまく動かないときの確認</summary>
+                  <ul>
+                    <li><code>F12</code>で<code>Console</code>タブを開き、<strong>赤い文字の行番号</strong>から見る（第7回の道具1）</li>
+                    <li><code>Cannot set properties of null</code>は、<code>getElementById</code>の名前が、HTMLの<code>id</code>と<strong>1文字も違わないか</strong>を確かめる（<code>score</code>、<code>cart-list</code>、<code>cart-count</code>、<code>total</code>。EC班は、前の「骨組みの更新」をしたかも見る）</li>
+                    <li>押しても何も起きないときは、<code>addEventListener</code>の行の後ろの<code>});</code>が書けているか、第8回の古い表示のコードが<strong>消さずに残っていないか</strong>を見る（古い方と新しい方が、2回表示を作っていることがある）</li>
+                    <li>ゲーム班でマスが増え続けるときは、<code>render</code>の最初の<code>board.innerHTML = "";</code>が抜けている</li>
+                    <li>EC班でカートが1回押しただけで増えない・全部同じ商品になるときは、<code>cart.push(products[i])</code>の<code>i</code>のつづりを見る。<code>for</code>文の中で書いているかも確認する</li>
+                    <li>合計が<code>NaN</code>や、文字がつながった数（例: <code>800300</code>）になるときは、<code>price</code>を引用符で囲んでいないか見る（第8回と同じ）</li>
+                    <li>何が起きているか分からないときは、確かめたい行の前後に<code>console.log(score);</code>（EC班は<code>console.log(cart.length);</code>）を書いて、<code>Console</code>に値が出るかを見る（第7回の道具2）</li>
+                  </ul>
+                </details>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>自分の企画に合わせて、動きを1つ足す</h3>
+          <div class="timeline-body">
+            <p><strong><code>plan.md</code>から、足す動きを1つ選ぶ（10分）</strong></p>
+            <ul>
+              <li><code>plan.md</code>の<strong>「3. 必要な機能」</strong>から、今日足す動きを<strong>1つだけ</strong>選ぶ。下の表は例で、<strong>自分の<code>plan.md</code>に書いた機能が優先</strong></li>
+              <li>
+                <table class="schedule-table schedule-table--stack">
+                  <thead>
+                    <tr><th>ジャンル</th><th>足す動きの例</th><th>使うもの</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td data-label="ジャンル">ゲーム班</td><td data-label="足す動きの例">「はじめる」で15秒のゲームにする／当たった数ごとに点を変える（<code>point</code>）／ミスで減点する</td><td data-label="使うもの"><code>setInterval</code>、<code>if</code>、第8回で足した項目</td></tr>
+                    <tr><td data-label="ジャンル">EC班</td><td data-label="足す動きの例">カートの取り消しボタン／1000円以上で「送料無料」と出す／在庫（<code>stock</code>）が0なら押せない</td><td data-label="使うもの"><code>splice</code>、<code>if</code>、第8回で足した項目</td></tr>
+                  </tbody>
+                </table>
+              </li>
+              <li><strong>1回に1つだけ変更</strong>して、変えるたびに保存・再読み込みで確かめる。うまくいかなくなったら、直前の状態に戻せるよう、動いている状態で一度<code>commit</code>しておくとよい</li>
+            </ul>
+            <p><strong>動きを足す（30分）</strong></p>
+            <ul>
+              <li>
+                <p><strong>ゲーム班の例：「はじめる」で15秒のゲームにする</strong>（1秒ごとに全員が動く。15秒たつと止まる）。コードの一番下（<code>render();</code>の<strong>前</strong>）に足す</p>
+                <button class="copy-md-btn" data-md-source="add-game-timer">
+                  <span class="btn-icon"></span> ゲーム班のタイマーのコードをコピー
+                </button>
+<pre id="add-game-timer" class="md-preview">const startButton = document.querySelector(".start");
+let timer = null;
+
+startButton.addEventListener("click", function () {
+  if (timer !== null) {
+    return;
+  }
+  score = 0;
+  let left = 15;
+
+  timer = setInterval(function () {
+    for (let j = 0; j &lt; characters.length; j++) {
+      moveCharacter(characters[j]);
+    }
+    left = left - 1;
+    if (left &lt;= 0) {
+      clearInterval(timer);
+      timer = null;
+    }
+    render();
+  }, 1000);
+
+  render();
+});</pre>
+                <p><code>setInterval(関数, 1000)</code>は、<strong>1000ミリ秒（1秒）ごと</strong>に関数を動かす。<code>clearInterval</code>で止める。<code>if (timer !== null) { return; }</code>は、「はじめる」を押しすぎて、二重に動くのを防ぐ。点を変えたい人は、<code>hit</code>の<code>score = score + 1;</code>を<code>score = score + characters[j].point;</code>にする（<code>point</code>は、第8回で足した項目）</p>
+              </li>
+              <li>
+                <p><strong>EC班の例：カートの取り消しボタン</strong>。<code>showCart</code>の中の、<code>cartList.appendChild(line);</code>の<strong>すぐ上</strong>に足す</p>
+                <button class="copy-md-btn" data-md-source="add-ec-remove">
+                  <span class="btn-icon"></span> EC班の取り消しボタンのコードをコピー
+                </button>
+<pre id="add-ec-remove" class="md-preview">    const remove = document.createElement("button");
+    remove.textContent = "取り消す";
+    remove.addEventListener("click", function () {
+      cart.splice(i, 1);
+      showCart();
+    });
+    line.appendChild(remove);</pre>
+                <p><code>cart.splice(i, 1)</code>は、<strong><code>i</code>番目から1件だけ</strong>、配列から取り除く。取り除いたあとに<code>showCart()</code>を呼ぶと、一覧も合計も、自動で合う</p>
+              </li>
+              <li>
+                <p><strong>EC班の例：1000円以上で「送料無料」</strong>。<code>showCart</code>の最後の行、<code>totalText.textContent = ...;</code>を、次に置き換える</p>
+                <button class="copy-md-btn" data-md-source="add-ec-free">
+                  <span class="btn-icon"></span> EC班の送料無料のコードをコピー
+                </button>
+<pre id="add-ec-free" class="md-preview">  if (total &gt;= 1000) {
+    totalText.textContent = `合計: ${total}円（送料無料）`;
+  } else {
+    totalText.textContent = `合計: ${total}円`;
+  }</pre>
+              </li>
+              <li>書き方が分からないときは、<strong>自分で書いた似た行をまねる</strong>。「クリックされたら → データを変える → 画面を作り直す」の3点セットは、どの動きでも同じ</li>
+              <li>色や余白など、見た目の細かい調整は後回しでよい。今日の主役は、クリックに応じてデータが変わること</li>
+            </ul>
+            <p><strong>AIに相談するときのルール（10分）</strong></p>
+            <ul>
+              <li>Codespacesの<strong>Copilot Chat</strong>（使える人）か、ブラウザの別タブで開いた<strong>Gemini</strong>（<a href="https://gemini.google.com/" target="_blank" rel="noopener">gemini.google.com</a>）に、<strong>今のコードを貼って</strong>、<strong>1回に頼むのは1つの変更だけ</strong>にする。コード全体の書き直しを頼むと、どこが変わったか分からなくなる</li>
+              <li>返ってきたコードは、<strong>読んでから貼る</strong>。分からない行は、そのまま聞き返してよい。貼ったあとは必ず保存・再読み込みで動かして確かめる。AIの答えも、第7回で見たとおり、間違っていることがある</li>
+              <li>AIが使えない人は、隣の人にコードを見てもらうか、下の参考リンク（MDN）を見る</li>
+              <li>
+                <p>依頼文の例（<code>（　）</code>の中を、自分の内容に書き換える）</p>
+                <button class="copy-md-btn" data-md-source="prompt-w9">
+                  <span class="btn-icon"></span> 依頼文の例をコピー
+                </button>
+<pre id="prompt-w9" class="md-preview">次のHTMLとJavaScriptは、クリックに応じてデータを変え、画面を作り直す作品です。
+（ゲーム班:マスをクリックしてスコアを増やす／EC班:商品をカートに入れて合計を出す）。
+やりたい変更は、次の1つだけです。
+（例:ミスのときはスコアを1減らす／カートの合計が3000円以上なら「割引」と表示する）
+変更したい部分だけを教えてください。理由も1行で説明してください。
+
+（ここに、game.html または shop.html の中身を貼り付ける）</pre>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>動作を確認し、<code>push</code>して、<code>plan.md</code>に記録する</h3>
+          <div class="timeline-body">
+            <p><strong>動作確認（10分）</strong></p>
+            <ul>
+              <li><code>Console</code>に<strong>赤い文字がない</strong>こと</li>
+              <li>ゲーム班: 当たりのマスを押すと<code>score</code>が増え、はずれのマスでは増えないこと。EC班: カートに入れた商品の数と一覧が合い、<strong>合計が電卓の答えと同じ</strong>こと</li>
+              <li>再読み込みすると、スコアやカートは<strong>最初の状態に戻る</strong>（今日はまだ<code>localStorage</code>に保存しない。第4回で作った保存の仕組みを、作品に使うかは<code>plan.md</code>の企画しだい）</li>
+            </ul>
+            <p><strong><code>commit</code>・<code>push</code>と公開URLの確認（10分）</strong></p>
+            <ul>
+              <li>前期第4回と同じ手順で、<code>game.html</code>（EC班は<code>shop.html</code>）を<code>commit</code>・<code>push</code>する（コミットメッセージ例: <code>個人制作②: マスのクリックでスコアが増える</code>／<code>個人制作②: カートと合計金額</code>）</li>
+              <li>GitHub Pagesに公開しているリポジトリなら、公開URLの末尾に<code>/game.html</code>（EC班は<code>/shop.html</code>）を付けると、ブラウザで見られる（反映に1〜数分かかることがある）。<strong>第10回は互いの作品を見せ合うので、公開URLで動くところまで確認しておく</strong></li>
+            </ul>
+            <p><strong><code>plan.md</code>に記録する（10分）</strong></p>
+            <ul>
+              <li><code>plan.md</code>の<strong>「5. 制作の予定」</strong>の第9回の欄を、<strong>実際にできたこと</strong>に書き換える（例: 「当たり判定とスコアまで。タイマーは途中」）。できなかったことも1行書く</li>
+              <li>第10回は「中間相互レビュー」。<strong>人に見せたい点</strong>（見てほしい動き）と、<strong>聞きたいこと</strong>を1行ずつ、第10回の欄に書く</li>
+              <li><code>plan.md</code>も<code>commit</code>・<code>push</code>する</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ program-basics-2.html Week 10 「中間相互レビュー」と同期 -->
+              <li>次回（第10回）: <strong>中間相互レビュー</strong>——互いの作品を見せ合い、フィードバックを交換する。他者のコードを読む経験と、改善点を言葉にする練習。今日動くようになった部分が、見せる中心になる</li>
+              <li>今日のキーワード「<strong><code>addEventListener</code></strong>」「<strong>データを変えて、画面を作り直す</strong>」「<strong>当たり判定／合計の計算</strong>」を口に出して言えるか確認して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>game.html</code>（EC班は<code>shop.html</code>）と<code>plan.md</code>を<code>push</code>する</strong>
+            <p>授業内で終わらなかった人は、家で<code>push</code>まで済ませる。<code>push</code>後に、GitHub上でファイルが見えることを確認する。動きまで届かなかった場合は、できたところまででよいので、<code>plan.md</code>の第9回の欄に「どこまでできたか」を書いておく。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>第10回で見せる準備をする</strong>
+            <p>公開URLで動くことを確認し、<code>plan.md</code>の第10回の欄に「見てほしい動き」と「聞きたいこと」を書いておく。画面が崩れる所があれば、見せる前に直しておく。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/EventTarget/addEventListener" target="_blank" rel="noopener">MDN — EventTarget: addEventListener() メソッド</a> — クリックを受け取る</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Functions" target="_blank" rel="noopener">MDN — 関数</a> — 処理に名前を付けてまとめる</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/push" target="_blank" rel="noopener">MDN — Array.prototype.push()</a> — カートに1件足す</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/splice" target="_blank" rel="noopener">MDN — Array.prototype.splice()</a> — 配列から取り除く</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/Window/setInterval" target="_blank" rel="noopener">MDN — Window: setInterval() メソッド</a> — 一定時間ごとに処理を動かす</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week08.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第8回 個人制作① 基礎機能</span>
+      </a>
+      <a href="../program-basics-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">プログラム基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第10回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js?v=5"></script>
+</body>
+</html>
