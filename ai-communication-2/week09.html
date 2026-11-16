@@ -13,7 +13,7 @@
 <body>
   <div class="grain-overlay"></div>
 
-  <!-- 公式情報確認: 2026-11-16（①参考リンク5本の生存と<title>をcurlで確認: Build modeの説明ページ（ai.google.dev/gemini-api/docs/aistudio-build-mode）=「Build apps in Google AI Studio」、Gemini Notebookヘルプ2本（support.google.com/gemininotebook/answer/16179559=「Gemini Notebook でチャットを使用する」、/16215270=「ノートブックの新しいソースを追加または検索する」）、Antigravity CLIの実行モード（antigravity.google/docs/cli/modes/）、Google AI Studio。②この回で新しく書いた外部サービスの主張は、「Gemini Notebookにソース（資料）を追加できる」（第2回で公式ヘルプから裏取り済みの内容の再掲）だけ。ソースの種類（Webページ以外に何を入れられるか）、ソースを入れたときの答えの範囲、引用の表示は、この回では公式から確認していないため断定せず、「画面に出る選択肢で確かめる」「資料に戻って自分で確かめる」と書いた。③agyのdefaultモードで変更前に差分が出る・コピーを作って足す手順は、第3回・第8回から再掲。④「相談・資料の整理・作る」の3つの頼み先の分け方は、この授業での整理で、公式の分類ではない。⑤第8回の授業結果（所要時間、◎△✕の伝わり方、Buildで版を戻せるか）は未反映。この回は、第8回の続き（各自のsakuhin-N.html・企画メモ・計画・対話ログ・頼み先のメモ）があることを前提に書いた。授業前に教員が確認する項目: 学校アカウントでGemini Notebookが開くか・ソースを追加できるか、Buildの設定のVersionsタブで前の版に戻せるか（第7回から持ち越し）） -->
+  <!-- 公式情報確認: 2026-11-16（①参考リンク5本の生存と<title>をcurlで確認: Build modeの説明ページ（ai.google.dev/gemini-api/docs/aistudio-build-mode）=「Build apps in Google AI Studio」、Gemini Notebookヘルプ2本（support.google.com/gemininotebook/answer/16179559=「Gemini Notebook でチャットを使用する」、/16215270=「ノートブックの新しいソースを追加または検索する」）、Antigravity CLIの実行モード（antigravity.google/docs/cli/modes/）、Google AI Studio。②この回で新しく書いた外部サービスの主張は、「Gemini Notebookにソース（資料）を追加できる」（第2回で公式ヘルプから裏取り済みの内容の再掲）だけ。ソースの種類（Webページ以外に何を入れられるか）、ソースを入れたときの答えの範囲、引用の表示は、この回では公式から確認していないため断定せず、「画面に出る選択肢で確かめる」「資料に戻って自分で確かめる」と書いた。③agyのdefaultモードで変更前に差分が出る・コピーを作って足す手順は、第3回・第8回から再掲。④「相談・資料の整理・作る」の3つの頼み先の分け方は、この授業での整理で、公式の分類ではない。⑤第8回の授業結果（所要時間、◎△✕の伝わり方、Buildで版を戻せるか）は未反映。この回は、第8回の続き（各自のsakuhin-N.html・企画メモ・計画・対話ログ・頼み先のメモ）があることを前提に書いた。授業前に教員が確認する項目: 学校アカウントでGemini Notebookが開くか・ソースを追加できるか、Notebookに本文のプロンプト（ソースに書かれていないことは決めつけない）を実際に送り、「書かれていない」と答えるか、Buildの設定のVersionsタブで前の版に戻せるか（第7回から持ち越し）） -->
   <header class="page-header page-header--purple">
     <div class="container">
       <nav class="breadcrumb">
@@ -127,7 +127,7 @@
             <p><strong>道具と記録を開く（10分）</strong></p>
             <ul>
               <li>「agyへの指示メモ」（企画メモ・計画・結果・頼み先のメモ）と、<strong>対話ログ</strong>を開く。第8回の最後に書いた<strong>頼み先のメモ</strong>を、もう一度読む（今日、書き直す）</li>
-              <li><strong>agyを選んでいる人</strong>: 停止していたCodespaceを<strong>再開（resume）</strong>する——「Create codespace」で新規作成しない。<code>python3 -m http.server 8000</code>を実行し、「ポート」タブ→<strong>「エディターでプレビュー」</strong>でSimple Browserを開く。agyで再ログインを求められたら、第2回と同じ手順で再認証する</li>
+              <li><strong>agyを選んでいる人</strong>: 停止していたCodespaceを<strong>再開（resume）</strong>する——「Create codespace」で新規作成しない（resumeで動かないときは、講師に声をかける）。<code>python3 -m http.server 8000</code>を実行し、「ポート」タブ→<strong>「エディターでプレビュー」</strong>でSimple Browserを開く。agyで再ログインを求められたら、第2回と同じ手順で再認証する</li>
               <li><strong>Buildを選んでいる人</strong>: <a href="https://aistudio.google.com/" target="_blank" rel="noopener">Google AI Studio</a>（学校のアカウント）で、第8回の作品を開く（見つからないときは、講師に声をかける）</li>
               <li><strong>全員</strong>: <a href="https://gemini.google.com/" target="_blank" rel="noopener">Geminiアプリ</a>と、<strong>Gemini Notebook</strong>（前期から使っているもの）を、それぞれ新しいタブで開いておく（開けない人は講師に声をかける）</li>
             </ul>
@@ -228,7 +228,7 @@
               <li>3つ全部を使う必要はない。<strong>使わない</strong>と決めてもよい。ただし、決めた理由を1行書く</li>
               <li>Gemini Notebookは、<strong>自分の資料をソースとして追加</strong>して使う（追加の手順は、第2回と同じ。公式ヘルプ: <a href="https://support.google.com/gemininotebook/answer/16215270?hl=ja" target="_blank" rel="noopener">ノートブックの新しいソースを追加または検索する</a>）。入れられるソースの種類は、<strong>画面の「追加」に出る選択肢</strong>で確かめる（この授業ページでは、種類を断定しない）</li>
             </ul>
-            <p><strong>1周目を育てる（35分）</strong></p>
+            <p><strong>1周目を育てる（40分）</strong></p>
             <ul>
               <li>今日の目標の種類で、進め方が少し変わる</li>
             </ul>
@@ -296,7 +296,7 @@
             <p><strong>資料を使って、作品の言葉を整える（15分）</strong></p>
             <ul>
               <li>2周目に入る前に、<strong>Gemini Notebook</strong>を1回使ってみる（使わない選択をした人は、チャットで同じことをしてよい。ただし、チャットの答えが、自分の資料の範囲に収まっているとは限らない点に注意する）</li>
-              <li>ソースに入れるのは、<strong>自分で書いた資料</strong>（企画メモ、計画、対話ログの要約など）。<strong>実名や他人の個人情報、APIキー</strong>は入れない。ソースの追加の画面で、どんな種類を選べるかは、画面で確かめる</li>
+              <li>ソースに入れるのは、<strong>自分で書いた資料</strong>（企画メモ、計画、対話ログの要約など）。<strong>実名や他人の個人情報、APIキー</strong>は入れない（ソースは保存されるので、人に知られたくない情報は入れない）。ソースの追加の画面で、どんな種類を選べるかは、画面で確かめる</li>
               <li>
                 <p>次の文をNotebookのチャットに送る（<code>（　）</code>は自分の内容に）</p>
                 <button class="copy-md-btn" data-md-source="nb-prompt-w9">

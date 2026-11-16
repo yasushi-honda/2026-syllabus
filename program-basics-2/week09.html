@@ -464,7 +464,7 @@ startButton.addEventListener("click", function () {
 
   render();
 });</pre>
-                <p><code>setInterval(関数, 1000)</code>は、<strong>1000ミリ秒（1秒）ごと</strong>に関数を動かす。<code>clearInterval</code>で止める。<code>if (timer !== null) { return; }</code>は、「はじめる」を押しすぎて、二重に動くのを防ぐ。点を変えたい人は、<code>hit</code>の<code>score = score + 1;</code>を<code>score = score + characters[j].point;</code>にする（<code>point</code>は、第8回で足した項目）</p>
+                <p>このコードでは、「はじめる」を押す前や15秒がたった後も、マスを押せば点が入る（点を入れない作りは、早く終わった人の発展）。<code>setInterval(関数, 1000)</code>は、<strong>1000ミリ秒（1秒）ごと</strong>に関数を動かす。<code>clearInterval</code>で止める。<code>if (timer !== null) { return; }</code>は、「はじめる」を押しすぎて、二重に動くのを防ぐ。点を変えたい人は、<code>hit</code>の<code>score = score + 1;</code>を<code>score = score + characters[j].point;</code>にする（<code>point</code>は、第8回で足した項目）</p>
               </li>
               <li>
                 <p><strong>EC班の例：カートの取り消しボタン</strong>。<code>showCart</code>の中の、<code>cartList.appendChild(line);</code>の<strong>すぐ上</strong>に足す</p>
