@@ -14,7 +14,7 @@
   <!-- 公式情報確認: 2026-11-17 (IPA「ITパスポート試験シラバス Ver.6.5」の「入出力デバイス」「システムの構成」「システムの評価指標」「ソリューションビジネス」の用語例を、PDFからテキスト化して原文照合。令和7年度 公開問題 問82・問94 は、問題冊子（画像PDF）のページ画像を目視して原文転記し、解答例PDFで正答を照合）。
        本文のやさしい言い換え（公的資料の逐語引用ではない）: クライアントサーバシステム・クラウドコンピューティング・オンプレミス・稼働率（MTBF÷（MTBF＋MTTR））・MTBF・MTTR・デュアルシステム・フェールセーフ・フォールトトレラント・フールプルーフ・ホットスタンバイ・コールドスタンバイ・ソリューションビジネスの説明（シラバスは用語例と「稼働率向上策の検討」などの活用例だけを書いており、定義文はほとんど書いていない）。確認テスト・練習クイズ・フォームの解説は、この言い換えのまま。
        RASIS: IPAシラバスVer.6.5の用語例には見当たらない（grepで0件、確認日2026-11-17）。親ページと教科書（p.256-269）の語なので載せるが、「シラバスの用語例ではなく、教科書の語」と本文に明記し、5つの意味は信頼性の説明として軽く扱う（出典により「保全性」「完全性」など言い方が分かれる）。確認テスト・ゲームの対象にしない（用語カードには入れる）。
-       書かなかったこと: RAID・NAS・ライブマイグレーション・VDI・コンテナ型仮想化などの詳細（名前だけ）、ハウジング・ホスティングの違い、TCOの計算、故障率の計算、レスポンスタイム・ベンチマーク（シラバスの用語例にあるが今日は扱わない）。令和7年度の公開問題の範囲（確認したページ）では、稼働率は問94、レプリケーション（処理形態の用語例）は問82だけが該当。ソリューション・SaaS・オンプレミスを直接問う問は見つからず、入出力インタフェースもBLE（問56、第6回で使用）以外は見つからなかった。 -->
+       書かなかったこと: RAID・NAS・ライブマイグレーション・VDI・コンテナ型仮想化などの詳細（名前だけ）、ハウジング・ホスティングの違い、TCOの計算、故障率の計算、レスポンスタイム・ベンチマークの詳しい内容（シラバスの用語例にあり、名前とおおまかな意味だけ「システムの性能」として1段落で触れた）。令和7年度の公開問題の範囲（確認したページ）では、稼働率は問94、レプリケーション（処理形態の用語例）は問82だけが該当。ソリューション・SaaS・オンプレミスを直接問う問は見つからず、入出力インタフェースもBLE（問56、第6回で使用）以外は見つからなかった。 -->
   <!-- 挿絵4枚（images/week08-story-1〜4.jpg）は、画像生成AI（Gemini 3.1 Flash Image）で作った架空の場面のイラスト（2026-11-17）。画像内に文字・実在の人物や企業のロゴは含めない。Aさん=第2〜7回と同じ設定の架空の人物（画風は毎回少し違う）。カフェも架空 -->
   <!-- 用語カードの12語は、フォーム「ITパスポート 第8回 今回覚えた用語」の選択肢と一致。ゲーム term-shooter.html の第8回データ（TERM_SETS[8]）の用語は、RASIS・ソリューションビジネス以外の10語に、前回の損益分岐点・SSDなどの復習を加えたもの -->
   <div class="grain-overlay"></div>
@@ -148,7 +148,7 @@
             <p>駅前のカフェを開いたAさん（架空の話）は、お店のレジを、パソコンで動かしている。前回は、パソコンが遅い話だった。今回は、もっと困ること。お客さんが並ぶ、いちばん忙しい時間に、レジが止まってしまった。</p>
             <ol class="vz-steps">
               <li class="vz-step"><img class="vz-step-img" src="images/week08-story-1.jpg" alt="夜のカフェで、お客さんの長い列ができている。レジのパソコンの画面は青いまま固まっていて、店員が画面を指さし、Aさんが心配そうな顔で見ている。" width="800" height="597" loading="lazy"><b>1. 忙しい夜に、レジが止まる</b>列が伸びる。お客さんは待っている。お店にとって、システムが止まることは、売上が止まること。</li>
-              <li class="vz-step"><img class="vz-step-img" src="images/week08-story-2.jpg" alt="お店の事務室で、2台のパソコンが並んでいる。1台は動いていて、もう1台は予備として待機している。Aさんが、ほっとした顔でコーヒーカップを持っている。" width="800" height="597" loading="lazy"><b>2. 予備を用意する</b>もし1台が止まっても、もう1台がすぐ代わりに動けるようにしておく。止まりにくい作り方（<strong><span translate="no">デュプレックスシステム</span></strong>・<span translate="no">デュアルシステム</span>など）がある。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week08-story-2.jpg" alt="お店の事務室で、2台のパソコンが並んでいる。1台は動いていて、もう1台は予備として待機している。Aさんが、ほっとした顔でコーヒーカップを持っている。" width="800" height="597" loading="lazy"><b>2. 予備を用意する</b>もし1台が止まっても、もう1台が代わりに動けるようにしておく。止まりにくい作り方（<strong><span translate="no">デュプレックスシステム</span></strong>・<span translate="no">デュアルシステム</span>など）がある。</li>
               <li class="vz-step"><img class="vz-step-img" src="images/week08-story-3.jpg" alt="左はカフェの中の戸棚に置かれた小さなサーバ機器、右は街の上に浮かぶ雲とデータセンターの絵。Aさんが2つを見比べて考えている。" width="800" height="597" loading="lazy"><b>3. サーバを、持つか、借りるか</b>お店の中に置いて自分で動かす（<strong><span translate="no">オンプレミス</span></strong>）か、インターネットの向こうで借りる（<strong><span translate="no">クラウドコンピューティング</span></strong>）か。</li>
               <li class="vz-step"><img class="vz-step-img" src="images/week08-story-4.jpg" alt="IT会社の人とAさんが、お店のテーブルで握手している。机の上のタブレットには、グラフが映っている。" width="800" height="597" loading="lazy"><b>4. IT会社に、相談する</b>どうすれば止まらなくなるか。IT会社が、Aさんの困りごとを聞いて、解決策を提案する仕事が、<strong><span translate="no">ソリューションビジネス</span></strong>。</li>
             </ol>
@@ -205,7 +205,7 @@
                 </tbody>
               </table>
             </div>
-            <p>もう一つ。新しい装置をつないだとき、コンピュータが、その装置を使えるようにするためのソフトが<strong><span translate="no">デバイスドライバ</span></strong>。装置をつなぐだけで、自動的に使えるようになる機能を<strong><span translate="no">プラグアンドプレイ</span></strong>という（シラバスの用語例）。</p>
+            <p>もう一つ。新しい装置をつないだとき、コンピュータが、その装置を使えるようにするためのソフトが<strong><span translate="no">デバイスドライバ</span></strong>。装置をつなぐだけで、自動的に使えるようになる機能を<strong><span translate="no">プラグアンドプレイ</span></strong>という（どちらもシラバスの項目に出てくる）。</p>
             <p class="lesson-note">この表の規格は、用語カードには入れない。名前を見て、「あ、あれのことだ」と分かれば十分。表の「使い道」は、一般的な例。</p>
           </div>
         </div>
@@ -220,7 +220,7 @@
           <div class="timeline-body">
 
             <p><strong>① 処理のしかた：集中・分散・並列（約10分）</strong></p>
-            <p>コンピュータで処理をするとき、仕事を、どこで、どう分けるか。シラバスは、代表的な<strong>処理形態</strong>として、次の3つを用語例に挙げている。</p>
+            <p>コンピュータで処理をするとき、仕事を、どこで、どう分けるか。シラバスは、代表的な<strong>処理形態</strong>として、次の3つ（ほかに<span translate="no">レプリケーション</span>）を用語例に挙げている。</p>
             <div class="table-wrap">
               <table class="schedule-table">
                 <thead><tr><th>処理形態</th><th>どんな形か</th><th>Aさんのお店でたとえると</th></tr></thead>
@@ -280,7 +280,7 @@
               </div>
               <figcaption>どちらが正しい、ではない。お金・手間・止まりにくさなどを見て、選ぶ。</figcaption>
             </figure>
-            <p>クラウドコンピューティングの<strong>使い方の種類</strong>として、シラバスは<span translate="no">SaaS</span>・<span translate="no">PaaS</span>・<span translate="no">IaaS</span>を用語例に挙げている（ストラテジ系のソリューションビジネスの用語例）。何を借りるかの違い。今日は、名前と、おおまかな意味だけ。</p>
+            <p>クラウドの代表的な<strong>サービスの形</strong>として、シラバスは（ソリューションの形態の）<span translate="no">SaaS</span>・<span translate="no">PaaS</span>・<span translate="no">IaaS</span>を用語例に挙げている（ストラテジ系のソリューションビジネスの用語例）。何を借りるかの違い。今日は、名前と、おおまかな意味だけ。</p>
             <div class="table-wrap">
               <table class="schedule-table">
                 <thead><tr><th>名前</th><th>何を借りるか（おおまかに）</th><th>たとえ</th></tr></thead>
@@ -339,7 +339,7 @@
             <p><strong>① <span translate="no">稼働率</span>：どれだけ動いているか（約12分）</strong></p>
             <p>止まりにくさを、数字で表したものが<strong><span translate="no">稼働率</span></strong>。「全体の時間のうち、動いている時間の割合」。IPAのシラバスは、<span translate="no">稼働率</span>・<span translate="no">故障率</span>・<span translate="no">MTBF</span>（平均故障間動作時間）・<span translate="no">MTTR</span>（平均修復時間）を用語例に挙げ、<span translate="no">稼働率向上策の検討</span>を活用例にしている（確認日：2026-11-17）。</p>
             <ul>
-              <li><strong><span translate="no">MTBF</span></strong>：故障してから、次に故障するまでの、<strong>動いている時間</strong>の平均。長いほど、止まりにくい</li>
+              <li><strong><span translate="no">MTBF</span></strong>：故障が直ってから、次に故障するまでの、<strong>動いている時間</strong>の平均。長いほど、止まりにくい</li>
               <li><strong><span translate="no">MTTR</span></strong>：故障してから、直るまでの、<strong>修理にかかる時間</strong>の平均。短いほど、早く直る</li>
             </ul>
             <p><span translate="no">稼働率</span> ＝ <span translate="no">MTBF</span> ÷（<span translate="no">MTBF</span> ＋ <span translate="no">MTTR</span>）。<strong>動いている時間 ÷ 全体の時間</strong>、と考えると、式を忘れても作れる。</p>
@@ -350,6 +350,7 @@
               <li>もし、修理が早くなって、<span translate="no">MTTR</span>が5時間になれば、80÷（80＋5）＝約0.94。<strong>直す時間が短くなると、<span translate="no">稼働率</span>が上がる</strong></li>
             </ol>
             <p class="lesson-note">稼働率は、0から1の間の数（1に近いほど止まりにくい）。1を超えたら、計算が間違っている。</p>
+            <p><strong>システムの「性能」は、名前だけ</strong>：「信頼性」（止まりにくさ）のほかに、システムの<strong>性能</strong>（どれだけ速く処理できるか）の見方もある。シラバスは、<span translate="no">レスポンスタイム</span>（応答時間：頼んでから、結果が返るまでの時間）と<span translate="no">ベンチマーク</span>（性能を比べるための測定）を用語例に挙げている（確認日：2026-11-17）。今日は、<strong>名前と、おおまかな意味だけ</strong>。用語カードには入れない。</p>
 
             <p><strong>② 直列と並列：つなぎ方で、稼働率が変わる（約10分）</strong></p>
             <p>装置を複数つなぐとき、<strong>直列</strong>（全部が動いていないと、システムが動かない）と、<strong>並列</strong>（1台でも動いていれば、システムが動く）がある。装置の稼働率が、どちらも0.9のとき、計算してみる。</p>
@@ -418,7 +419,7 @@
                   <ul class="vz-tags"><li>例：ふたを開けると、止まる</li></ul>
                 </section>
               </div>
-              <figcaption>「<strong>止まる</strong>ことで守る」のが<span translate="no">フェールセーフ</span>、「<strong>止まらない</strong>ようにする」のが<span translate="no">フォールトトレラント</span>、「<strong>人の間違い</strong>に備える」のが<span translate="no">フールプルーフ</span>。たとえ（例）は、この教材の説明用。</figcaption>
+              <figcaption>「安全な側に動く（例：<strong>止まる</strong>ことで守る）」のが<span translate="no">フェールセーフ</span>、「<strong>止まらない</strong>ようにする」のが<span translate="no">フォールトトレラント</span>、「<strong>人の間違い</strong>に備える」のが<span translate="no">フールプルーフ</span>。たとえ（例）は、この教材の説明用。</figcaption>
             </figure>
             <p><strong><span translate="no">RASIS</span>（レイシス）：教科書の語（約3分）</strong>。信頼性を考えるときの5つの見方の頭文字（<span translate="no">Reliability</span>＝信頼性、<span translate="no">Availability</span>＝可用性、<span translate="no">Serviceability</span>＝保守性、<span translate="no">Integrity</span>＝保全性、<span translate="no">Security</span>＝安全性）。今日の話とのつながりは、次のとおり。</p>
             <ul>
@@ -531,7 +532,7 @@
           <thead><tr><th>用語</th><th>意味</th></tr></thead>
           <tbody>
             <tr><td><span translate="no">稼働率</span></td><td>全体の時間のうち、システムが動いている時間の割合。<span translate="no">MTBF</span>÷（<span translate="no">MTBF</span>＋<span translate="no">MTTR</span>）で求める。1に近いほど、止まりにくい</td></tr>
-            <tr><td><span translate="no">MTBF</span></td><td>平均故障間動作時間。故障してから次に故障するまで、動いている時間の平均。長いほど、止まりにくい</td></tr>
+            <tr><td><span translate="no">MTBF</span></td><td>平均故障間動作時間。直ってから次に故障するまで、動いている時間の平均。長いほど、止まりにくい</td></tr>
             <tr><td><span translate="no">MTTR</span></td><td>平均修復時間。故障してから、直るまでにかかる時間の平均。短いほど、早く直る</td></tr>
             <tr><td><span translate="no">RASIS</span></td><td>信頼性を考える5つの見方（信頼性・可用性・保守性・保全性・安全性）の頭文字。教科書の語で、IPAシラバスの用語例にはない</td></tr>
             <tr><td><span translate="no">デュアルシステム</span></td><td>同じ処理を2系統の装置で同時に行い、結果を照らし合わせる方式。片方が壊れても、続けられる</td></tr>
