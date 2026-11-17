@@ -21,6 +21,24 @@
       border: 2px solid rgba(255,176,0,.65); box-shadow: 0 0 0 1px rgba(62,230,255,.35), 0 0 28px rgba(255,95,216,.35), 0 0 60px rgba(62,230,255,.18); }
     .ts-game.is-shake { animation: tsShake .4s; }
     @keyframes tsShake { 0%,100% { transform: translate(0,0); } 20% { transform: translate(-6px,2px); } 40% { transform: translate(5px,-3px); } 60% { transform: translate(-4px,-2px); } 80% { transform: translate(3px,3px); } }
+    /* 第8回だけの演出（.is-w8）: コンボの大きな文字・画面の光・ボーナス問題の表示 */
+    .ts-banner { position: absolute; left: 50%; top: 40%; z-index: 4; pointer-events: none; opacity: 0; transform: translate(-50%,-50%) scale(.5);
+      font: 900 2.2rem/1 'Noto Serif JP', serif; letter-spacing: .04em; white-space: nowrap; color: var(--ts-amber);
+      text-shadow: 0 0 10px #ff5fd8, 0 0 24px #3ee6ff, 0 2px 0 #000; }
+    .ts-banner.is-on { animation: tsPop 1s ease-out forwards; }
+    @keyframes tsPop { 0% { opacity: 0; transform: translate(-50%,-50%) scale(.4); } 18% { opacity: 1; transform: translate(-50%,-50%) scale(1.2); } 65% { opacity: 1; transform: translate(-50%,-50%) scale(1); } 100% { opacity: 0; transform: translate(-50%,-62%) scale(1.05); } }
+    .ts-game.is-flash { animation: tsFlash .5s; }
+    @keyframes tsFlash { 0% { box-shadow: 0 0 0 2px #fff, 0 0 40px 8px rgba(255,224,138,.9), inset 0 0 60px rgba(255,224,138,.5); } 100% { box-shadow: 0 0 0 1px rgba(62,230,255,.35), 0 0 28px rgba(255,95,216,.35), 0 0 60px rgba(62,230,255,.18); } }
+    .ts-bonus { display: none; margin: .3rem 0 0; text-align: center; font-weight: 700; color: #ffe08a; text-shadow: 0 0 8px rgba(255,176,0,.7); }
+    .ts-game.is-w8 .ts-bonus { display: block; visibility: hidden; min-height: 1.5em; }
+    .ts-game.is-w8 .ts-bonus.is-on { visibility: visible; animation: tsPulse 1s ease-in-out infinite; }
+    @keyframes tsPulse { 50% { opacity: .6; } }
+    @media (prefers-reduced-motion: reduce) {
+      .ts-banner.is-on { animation: none; opacity: 1; transform: translate(-50%,-50%) scale(1); }
+      .ts-game.is-flash { animation: none; }
+      .ts-game.is-w8 .ts-bonus.is-on { animation: none; }
+    }
+    @media (max-width: 480px) { .ts-banner { font-size: 1.6rem; } }
     .ts-cv { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; display: block; }
     .ts-cv--bg { z-index: 0; }
     .ts-cv--fx { z-index: 3; }
@@ -133,6 +151,8 @@
       <canvas class="ts-cv ts-cv--bg" id="cv-bg" aria-hidden="true"></canvas>
       <canvas class="ts-cv ts-cv--fx" id="cv-fx" aria-hidden="true"></canvas>
 
+      <div class="ts-banner" id="ts-banner" aria-hidden="true" translate="no"></div>
+
       <!-- スタート画面 -->
       <section class="ts-screen" id="screen-start" aria-labelledby="start-title">
         <h2 class="ts-title" id="start-title">用語シューティング</h2>
@@ -140,6 +160,7 @@
         <ul class="ts-howto">
           <li>1ステージは7〜10問です（ステージ1は7問、ステージ2は10問）。ライフは3つ。まちがえる、または時間切れになると、ライフが1つ減ります。</li>
           <li>つづけて正解すると、コンボで得点が増えます。まちがえると、コンボは元にもどります。</li>
+          <li id="rule-w8" hidden>3問つづけて正解するたびに、「COMBO」の演出が出ます。ときどき出る「★ボーナス問題」に正解すると、+300点で、減っていたライフが1つ回復します。</li>
           <li>操作は、的をクリック（タップ）、またはキーボードの <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> <kbd>4</kbd> キーです（左の的から順に1〜4）。<kbd>P</kbd> キーでポーズできます。</li>
         </ul>
         <div class="ts-stages">
@@ -169,6 +190,7 @@
           <span>得点 <b id="hud-score">0</b></span>
           <span>コンボ ×<b id="hud-mult">1</b></span>
         </div>
+        <p class="ts-bonus" id="ts-bonus">★ ボーナス問題：+300点・ライフ回復</p>
         <div class="ts-meaning-box">
           <p class="ts-meaning-cap">この意味に合う用語は？</p>
           <div id="meaning-bank"></div>
@@ -356,6 +378,9 @@
 
     var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
     var game = $("game"), field = $("field");
+    /* 第8回だけの演出（コンボの文字・ボーナス問題）。他の回は今までどおり */
+    var fxOn = (week === 8);
+    if (fxOn) { game.classList.add("is-w8"); $("rule-w8").hidden = false; }
     var targets = Array.prototype.slice.call(field.querySelectorAll(".ts-target"));
     var termEls = targets.map(function (b) { return b.querySelector(".ts-term"); });
     var screens = { start: $("screen-start"), play: $("screen-play"), result: $("screen-result") };
@@ -391,6 +416,7 @@
     function sfx(kind) {
       if (kind === "ok") { tone(660, 0.12, "square", 0.05); tone(990, 0.18, "square", 0.05, 0.08); }
       else if (kind === "ng") { tone(160, 0.3, "sawtooth", 0.07); }
+      else if (kind === "combo") { tone(784, 0.1, "square", 0.05); tone(988, 0.1, "square", 0.05, 0.08); tone(1318, 0.22, "square", 0.05, 0.16); }
       else if (kind === "end") { tone(523, 0.15, "triangle", 0.08); tone(659, 0.15, "triangle", 0.08, 0.14); tone(784, 0.3, "triangle", 0.08, 0.28); }
     }
     function setSound(on) {
@@ -455,6 +481,13 @@
         parts.push({ x: x, y: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 0.05, r: 1.5 + Math.random() * 3, c: i % 3 === 0 ? "#ffffff" : color, life: 500 + Math.random() * 400, max: 900 });
       }
     }
+    /* 大きな文字を中央に出す（第8回のみ）。動きを減らす設定のときは、動かさずに少しの間だけ表示する */
+    function banner(text) {
+      var b = $("ts-banner"); b.textContent = text;
+      b.classList.remove("is-on"); void b.offsetWidth; b.classList.add("is-on");
+      clearTimeout(banner.t); banner.t = setTimeout(function () { b.classList.remove("is-on"); }, reduce.matches ? 900 : 1000);
+      if (!reduce.matches) { game.classList.remove("is-flash"); void game.offsetWidth; game.classList.add("is-flash"); setTimeout(function () { game.classList.remove("is-flash"); }, 500); }
+    }
     function shake() {
       game.classList.remove("is-shake"); void game.offsetWidth; game.classList.add("is-shake");
       setTimeout(function () { game.classList.remove("is-shake"); }, 450);
@@ -481,7 +514,7 @@
     function startStage(s) {
       var list = DATA[STAGES[s].key] || [];
       if (list.length < 4) return; /* 的は4つ。語が4つ未満だと、前の問題の的が残るので始めない */
-      g.stage = s; g.order = shuffle(list.map(function (_, i) { return i; })); g.qi = 0; g.lives = 3; g.score = 0; g.combo = 0; g.correct = 0; g.wrong = []; g.over = false; g.paused = false;
+      g.stage = s; g.order = shuffle(list.map(function (_, i) { return i; })); g.qi = 0; g.lives = 3; g.score = 0; g.combo = 0; g.correct = 0; g.wrong = []; g.over = false; g.paused = false; g.bonus = false;
       $("pause").hidden = true; setPauseLabel();
       show("play"); nextQuestion();
     }
@@ -499,6 +532,8 @@
         targets[i].className = "ts-target"; targets[i].disabled = false; targets[i].dataset.ok = (t === item.term) ? "1" : "0";
         targets[i].style.transform = "translateY(0)";
       });
+      g.bonus = fxOn && ((g.qi + 1) % 4 === 0) && (g.qi < g.order.length - 1); /* 4問目・8問目（最後の問題は除く） */
+      $("ts-bonus").classList.toggle("is-on", g.bonus);
       g.progress = 0; g.state = "fall"; fb(""); hud(); place();
     }
     function place() {
@@ -518,6 +553,12 @@
         btn.classList.add("is-hit");
         targets.forEach(function (b) { if (b !== btn) b.classList.add("is-dim"); });
         fb("ok"); sfx("ok"); g.wait = 600;
+        if (fxOn) {
+          var big = null;
+          if (g.bonus) { g.score += 300; if (g.lives < 3) g.lives++; big = "★ BONUS +300！"; }
+          if (g.combo % 3 === 0) { big = (big ? big + "  " : "") + "COMBO ×" + mult().toFixed(1); burst(btn, "#ffe08a"); burst(btn, "#ff5fd8"); }
+          if (big) { banner(big); sfx("combo"); }
+        }
       } else {
         g.combo = 0; g.lives--;
         if (g.wrong.indexOf(g.cur.idx) < 0) g.wrong.push(g.cur.idx);
@@ -552,6 +593,7 @@
         Array.prototype.slice.call(m.childNodes).forEach(function (n) { if (n.nodeType === 3) m.replaceChild(document.createTextNode(n.nodeValue), n); });
       });
       $("res-none").hidden = g.wrong.length > 0;
+      $("ts-bonus").classList.remove("is-on");
       show("result"); sfx("end");
       $("btn-again").focus();
     }
@@ -576,7 +618,7 @@
     Array.prototype.forEach.call(document.querySelectorAll(".ts-stage"), function (b) { b.addEventListener("click", function () { startStage(parseInt(b.dataset.stage, 10)); }); });
     $("btn-pause").addEventListener("click", function () { setPause(!g.paused); });
     $("btn-resume").addEventListener("click", function () { setPause(false); $("pause-msg").textContent = "ポーズ中"; $("btn-resume").textContent = "再開する"; $("btn-pause").focus(); });
-    $("btn-quit").addEventListener("click", function () { g.paused = false; g.state = "idle"; $("pause").hidden = true; show("start"); });
+    $("btn-quit").addEventListener("click", function () { $("ts-bonus").classList.remove("is-on"); g.paused = false; g.state = "idle"; $("pause").hidden = true; show("start"); });
     $("btn-again").addEventListener("click", function () { startStage(g.stage); });
     $("btn-select").addEventListener("click", function () { show("start"); });
     $("btn-sound").addEventListener("click", function () { setSound(!soundOn); });
