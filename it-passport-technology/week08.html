@@ -47,8 +47,7 @@
     <!-- 図解の矢印の部品（画面には表示されない） -->
     <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
       <defs>
-        <marker id="mk-sm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
-        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+        <marker id="mk-sm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
       </defs>
     </svg>
 
@@ -283,9 +282,9 @@
                 <rect class="box-blue" x="10" y="100" width="28" height="26" rx="8"/>
                 <rect class="box-blue" x="44" y="100" width="28" height="26" rx="8"/>
                 <rect class="box-blue" x="78" y="100" width="28" height="26" rx="8"/>
-                <line class="line-orange" x1="24" y1="100" x2="50" y2="78" marker-end="url(#mk-s)"/>
-                <line class="line-orange" x1="58" y1="100" x2="58" y2="78" marker-end="url(#mk-s)"/>
-                <line class="line-orange" x1="92" y1="100" x2="66" y2="78" marker-end="url(#mk-s)"/>
+                <line class="line-orange" x1="24" y1="100" x2="50" y2="78" marker-end="url(#mk-sm)"/>
+                <line class="line-orange" x1="58" y1="100" x2="58" y2="78" marker-end="url(#mk-sm)"/>
+                <line class="line-orange" x1="92" y1="100" x2="66" y2="78" marker-end="url(#mk-sm)"/>
                 <text class="t-sm t-c" x="58" y="150">仕事を1台に集める</text>
                 <rect class="box-blue" x="128" y="44" width="32" height="28" rx="8"/>
                 <rect class="box-blue" x="164" y="44" width="32" height="28" rx="8"/>
@@ -302,8 +301,8 @@
                 <text class="t-b t-c" x="280" y="121">A</text>
                 <rect class="box-blue" x="306" y="100" width="36" height="30" rx="8"/>
                 <text class="t-b t-c" x="324" y="121">B</text>
-                <line class="line-orange" x1="284" y1="72" x2="280" y2="98" marker-end="url(#mk-s)"/>
-                <line class="line-orange" x1="320" y1="72" x2="324" y2="98" marker-end="url(#mk-s)"/>
+                <line class="line-orange" x1="284" y1="72" x2="280" y2="98" marker-end="url(#mk-sm)"/>
+                <line class="line-orange" x1="320" y1="72" x2="324" y2="98" marker-end="url(#mk-sm)"/>
                 <text class="t-sm t-c" x="302" y="150">同時に処理する</text>
               </svg>
               <figcaption>集中は「1台に集める」、分散は「分けて持つ」、並列は「1つの仕事を分けて同時に」。</figcaption>
@@ -467,9 +466,11 @@
                 <text class="t-b t-c" x="72" y="56">動いている</text>
                 <rect class="box-orange" x="144" y="30" width="44" height="40" rx="8"/>
                 <text class="t-b t-c" x="166" y="56">直す</text>
-                <rect class="box-green" x="190" y="30" width="138" height="40" rx="8"/>
-                <text class="t-b t-c" x="259" y="56">動いている</text>
-                <rect class="box-orange" x="330" y="30" width="28" height="40" rx="8"/>
+                <rect class="box-green" x="190" y="30" width="86" height="40" rx="8"/>
+                <text class="t-b t-c" x="233" y="56">動いている</text>
+                <rect class="box-orange" x="278" y="30" width="44" height="40" rx="8"/>
+                <text class="t-b t-c" x="300" y="56">直す</text>
+                <text class="t-b" x="332" y="58">…</text>
                 <line class="line" x1="166" y1="72" x2="166" y2="84"/>
                 <text class="t-sm" x="100" y="98"><tspan class="t-b" translate="no">MTTR</tspan>：直している時間（の平均）</text>
                 <rect class="box-orange" x="2" y="110" width="356" height="84" rx="8"/>
@@ -498,7 +499,7 @@
                 <text class="t-b" x="4" y="18">直列（全部が動く必要がある）</text>
                 <rect class="box-white" x="2" y="30" width="100" height="50" rx="8"/>
                 <text class="t-b t-c" x="52" y="60">装置A 0.9</text>
-                <line class="line-orange" x1="104" y1="55" x2="130" y2="55" marker-end="url(#mk-s)"/>
+                <line class="line-orange" x1="104" y1="55" x2="130" y2="55" marker-end="url(#mk-sm)"/>
                 <rect class="box-white" x="132" y="30" width="100" height="50" rx="8"/>
                 <text class="t-b t-c" x="182" y="60">装置B 0.9</text>
                 <rect class="box-orange" x="244" y="30" width="114" height="50" rx="8"/>
@@ -511,7 +512,7 @@
                 <text class="t-b t-c" x="52" y="230">装置B 0.9</text>
                 <line class="line-orange" x1="104" y1="167" x2="130" y2="196"/>
                 <line class="line-orange" x1="104" y1="225" x2="130" y2="196"/>
-                <line class="line-orange" x1="130" y1="196" x2="146" y2="196" marker-end="url(#mk-s)"/>
+                <line class="line-orange" x1="130" y1="196" x2="146" y2="196" marker-end="url(#mk-sm)"/>
                 <rect class="box-green" x="148" y="150" width="210" height="92" rx="8"/>
                 <text class="t-b" x="158" y="176">止まる確率：0.1×0.1＝0.01</text>
                 <text class="t-b" x="158" y="198">稼働率：1－0.01</text>
@@ -546,8 +547,8 @@
                 <text class="t-b t-c" x="67" y="62">系統A</text>
                 <rect class="box-blue" x="12" y="84" width="110" height="38" rx="8"/>
                 <text class="t-b t-c" x="67" y="108">系統B</text>
-                <line class="line-orange" x1="124" y1="57" x2="208" y2="72" marker-end="url(#mk-s)"/>
-                <line class="line-orange" x1="124" y1="103" x2="208" y2="88" marker-end="url(#mk-s)"/>
+                <line class="line-orange" x1="124" y1="57" x2="208" y2="72" marker-end="url(#mk-sm)"/>
+                <line class="line-orange" x1="124" y1="103" x2="208" y2="88" marker-end="url(#mk-sm)"/>
                 <rect class="box-orange" x="210" y="52" width="138" height="56" rx="8"/>
                 <text class="t-b t-c" x="279" y="76">結果を</text>
                 <text class="t-b t-c" x="279" y="96">照らし合わせる</text>
@@ -556,8 +557,8 @@
                 <rect class="box-green" x="12" y="180" width="100" height="74" rx="8"/>
                 <text class="t-b t-c" x="62" y="212">主の装置</text>
                 <text class="t-sm t-c" x="62" y="234">動作中</text>
-                <line class="line-orange" x1="114" y1="205" x2="168" y2="198" marker-end="url(#mk-s)"/>
-                <line class="line-orange" x1="114" y1="230" x2="168" y2="242" marker-end="url(#mk-s)"/>
+                <line class="line-orange" x1="114" y1="205" x2="168" y2="198" marker-end="url(#mk-sm)"/>
+                <line class="line-orange" x1="114" y1="230" x2="168" y2="242" marker-end="url(#mk-sm)"/>
                 <rect class="box-blue" x="170" y="178" width="186" height="38" rx="8"/>
                 <text class="t-b" x="180" y="196" translate="no">ホットスタンバイ</text>
                 <text class="t-sm" x="180" y="210">待機中。すぐ引き継ぐ</text>
@@ -642,19 +643,19 @@
                 <text class="t-w t-b t-c" x="22" y="33">1</text>
                 <text class="t-b" x="44" y="25">困りごとを聞く</text>
                 <text class="t-sm" x="44" y="43">お客さんの問題点を知る</text>
-                <line class="line-orange" x1="22" y1="54" x2="22" y2="66" marker-end="url(#mk-s)"/>
+                <line class="line-orange" x1="22" y1="54" x2="22" y2="66" marker-end="url(#mk-sm)"/>
                 <rect class="box-white" x="2" y="66" width="356" height="48" rx="8"/>
                 <circle class="dot" cx="22" cy="90" r="13"/>
                 <text class="t-w t-b t-c" x="22" y="95">2</text>
                 <text class="t-b" x="44" y="87">解決案を提案する</text>
                 <text class="t-sm" x="44" y="105">どうすれば止まらないかを考える</text>
-                <line class="line-orange" x1="22" y1="116" x2="22" y2="128" marker-end="url(#mk-s)"/>
+                <line class="line-orange" x1="22" y1="116" x2="22" y2="128" marker-end="url(#mk-sm)"/>
                 <rect class="box-white" x="2" y="128" width="356" height="48" rx="8"/>
                 <circle class="dot" cx="22" cy="152" r="13"/>
                 <text class="t-w t-b t-c" x="22" y="157">3</text>
                 <text class="t-b" x="44" y="149">解決の方法を選ぶ</text>
                 <text class="t-sm" x="44" y="167">自社で作る・パッケージ・他社サービス</text>
-                <line class="line-orange" x1="22" y1="178" x2="22" y2="190" marker-end="url(#mk-s)"/>
+                <line class="line-orange" x1="22" y1="178" x2="22" y2="190" marker-end="url(#mk-sm)"/>
                 <rect class="box-white" x="2" y="190" width="356" height="48" rx="8"/>
                 <circle class="dot-orange" cx="22" cy="214" r="13"/>
                 <text class="t-w t-b t-c" x="22" y="219">4</text>
