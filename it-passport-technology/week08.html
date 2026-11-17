@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第8回 止まらないシステムを作る | ITパスポート テクノロジー系</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=26">
+</head>
+<body data-furigana="furigana/week08.json">
+  <!-- 公式情報確認: 2026-11-17 (IPA「ITパスポート試験シラバス Ver.6.5」の「入出力デバイス」「システムの構成」「システムの評価指標」「ソリューションビジネス」の用語例を、PDFからテキスト化して原文照合。令和7年度 公開問題 問82・問94 は、問題冊子（画像PDF）のページ画像を目視して原文転記し、解答例PDFで正答を照合）。
+       本文のやさしい言い換え（公的資料の逐語引用ではない）: クライアントサーバシステム・クラウドコンピューティング・オンプレミス・稼働率（MTBF÷（MTBF＋MTTR））・MTBF・MTTR・デュアルシステム・フェールセーフ・フォールトトレラント・フールプルーフ・ホットスタンバイ・コールドスタンバイ・ソリューションビジネスの説明（シラバスは用語例と「稼働率向上策の検討」などの活用例だけを書いており、定義文はほとんど書いていない）。確認テスト・練習クイズ・フォームの解説は、この言い換えのまま。
+       RASIS: IPAシラバスVer.6.5の用語例には見当たらない（grepで0件、確認日2026-11-17）。親ページと教科書（p.256-269）の語なので載せるが、「シラバスの用語例ではなく、教科書の語」と本文に明記し、5つの意味は信頼性の説明として軽く扱う（出典により「保全性」「完全性」など言い方が分かれる）。確認テスト・ゲームの対象にしない（用語カードには入れる）。
+       書かなかったこと: RAID・NAS・ライブマイグレーション・VDI・コンテナ型仮想化などの詳細（名前だけ）、ハウジング・ホスティングの違い、TCOの計算、故障率の計算、レスポンスタイム・ベンチマークの詳しい内容（シラバスの用語例にあり、名前とおおまかな意味だけ「システムの性能」として1段落で触れた）。令和7年度の公開問題の範囲（確認したページ）では、稼働率は問94、レプリケーション（処理形態の用語例）は問82だけが該当。ソリューション・SaaS・オンプレミスを直接問う問は見つからず、入出力インタフェースもBLE（問56、第6回で使用）以外は見つからなかった。 -->
+  <!-- 挿絵4枚（images/week08-story-1〜4.jpg）は、画像生成AI（Gemini 3.1 Flash Image）で作った架空の場面のイラスト（2026-11-17）。画像内に文字・実在の人物や企業のロゴは含めない。Aさん=第2〜7回と同じ設定の架空の人物（画風は毎回少し違う）。カフェも架空 -->
+  <!-- 用語カードの12語は、フォーム「ITパスポート 第8回 今回覚えた用語」の選択肢と一致。ゲーム term-shooter.html の第8回データ（TERM_SETS[8]）の用語は、RASIS・ソリューションビジネス以外の10語に、前回の損益分岐点・SSDなどの復習を加えたもの -->
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--amber">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../it-passport-technology.html">ITパスポート テクノロジー系</a>
+        <span>/</span>
+        <span>第8回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">止まらない<wbr>システムを作る</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 8</span>
+            <span class="page-badge">水曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-amber">
+
+    <div class="message-box">このページはブラウザの翻訳機能で母語に翻訳できます。ただし、試験に出る主な専門用語（例: <span translate="no">稼働率</span>、<span translate="no">クラウドコンピューティング</span>、<span translate="no">フェールセーフ</span>）は翻訳されないように設定しています。<strong>本番のITパスポート試験は日本語で行われる</strong>ので、専門用語は日本語のまま覚えてください。</div>
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
+
+    <div class="qr-box qr-box--pc">
+      <a class="qr-box__zoom" href="qr/week08-page.svg" target="_blank" rel="noopener" aria-label="QRコードを大きく表示する">
+        <img class="qr-box__img" src="qr/week08-page.svg" alt="この第8回のページを開くQRコード。スマートフォンのカメラで読み取ると、このページが開く。" width="180" height="180">
+      </a>
+      <div class="qr-box__body">
+        <p class="qr-box__heading">📱 スマホで開く</p>
+        <p class="qr-box__text">教室の画面を見ながら、自分のスマートフォンで、このページを開けます。スマートフォンの<strong>カメラ</strong>で、このQRコードを読み取ってください。QRコードを押すと、大きく表示されます。</p>
+        <p class="qr-box__text">スマートフォンでも、ブラウザの翻訳が使えます。ゲームも、スマートフォンで遊べます。</p>
+      </div>
+    </div>
+
+    <div class="demo-cta demo-cta--amber">
+      <p class="demo-cta__heading">🎮 用語シューティング（1人用のゲーム）</p>
+      <p class="demo-cta__body">画面に出る<strong>「意味」に合う用語</strong>の的を撃つゲームです。授業の中で2回（ステージ1・ステージ2）遊びます。点数は記録されません。試験の点数とも関係なく、用語を覚えるための練習です。ゲームの画面も、ブラウザの翻訳で意味を母語にできます（用語は日本語のまま表示されます）。音は初めは出ません。</p>
+      <a href="term-shooter.html?w=8" class="demo-cta__link">→ ゲームを開く</a>
+    </div>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">カフェのレジが、混んでいる夜に止まってしまったAさんと一緒に、止まらないシステムの作り方を学ぶ。システムの形（<span translate="no">クライアントサーバシステム</span>・<span translate="no">クラウドコンピューティング</span>・<span translate="no">オンプレミス</span>）、止まりにくさを表す数字（<span translate="no">稼働率</span>）、止まりにくくする設計（<span translate="no">デュアルシステム</span>・<span translate="no">フェールセーフ</span>など）、そしてITの会社が、お客さんの困りごとを解決する仕事（<span translate="no">ソリューションビジネス</span>）</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value"><span translate="no">稼働率</span> / <span translate="no">MTBF</span> / <span translate="no">MTTR</span> / <span translate="no">RASIS</span> / <span translate="no">デュアルシステム</span> / <span translate="no">フェールセーフ</span> / <span translate="no">フォールトトレラント</span> / <span translate="no">フールプルーフ</span> / <span translate="no">クライアントサーバシステム</span> / <span translate="no">クラウドコンピューティング</span> / <span translate="no">オンプレミス</span> / <span translate="no">ソリューションビジネス</span></div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">教科書（学研「ITパスポートをひとつひとつわかりやすく。」）のテクノロジ系 p.256-269、ストラテジ系 p.125-128 を読んでおく。授業の最初に復習テスト、最後に確認テスト（1回目と、任意の2回目）と用語カードのフォームを使う（学校のGoogleアカウント）。ゲームは、スマートフォンでもパソコンでも遊べる</div>
+        </div>
+      </div>
+    </div>
+
+    <nav aria-label="このページの目次">
+      <ul class="vz-jump">
+        <li><a class="vz-chip" href="#sec-flow">授業の流れ</a></li>
+        <li><a class="vz-chip" href="#sec-terms">用語カード</a></li>
+        <li><a class="vz-chip" href="#sec-quiz">練習クイズ</a></li>
+        <li><a class="vz-chip" href="#sec-optional">任意の取り組み</a></li>
+        <li><a class="vz-chip" href="#sec-tip">就活ワンポイント</a></li>
+        <li><a class="vz-chip" href="#sec-tasks">課題</a></li>
+        <li><a class="vz-chip" href="#sec-refs">参考リンク</a></li>
+        <li><a class="vz-chip vz-chip--cta" href="https://docs.google.com/forms/d/e/1FAIpQLSd9hmN4zSrp8XK1Cwa90Jti1Fl-tkhidOXBXsXp2Q4l4SXSAA/viewform" target="_blank" rel="noopener">第8回 今回覚えた用語を提出する ↗</a></li>
+        <li><a class="vz-chip vz-chip--cta" href="https://script.google.com/a/macros/i-seifu.jp/s/AKfycbwquVX4xkXNy47RkGjCUz6Xmc4GFaPLpPkSVuW6z--m5Yth88yilipCYUSanlTpQF9P/exec" target="_blank" rel="noopener">自分の成績を見る ↗</a></li>
+      </ul>
+    </nav>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li><span translate="no">クライアントサーバシステム</span>が、どんな役割分担かを説明できる。<span translate="no">クラウドコンピューティング</span>と<span translate="no">オンプレミス</span>の違いを言える</li>
+        <li><span translate="no">稼働率</span>が何を表すかを言え、<span translate="no">MTBF</span>と<span translate="no">MTTR</span>から計算できる。<strong>直列</strong>と<strong>並列</strong>の<span translate="no">稼働率</span>の違いを、簡単な数字で計算できる</li>
+        <li><span translate="no">デュアルシステム</span>・<span translate="no">フェールセーフ</span>・<span translate="no">フォールトトレラント</span>・<span translate="no">フールプルーフ</span>の違いを、例で言える</li>
+        <li><span translate="no">ソリューションビジネス</span>が、どんな仕事かを言える</li>
+        <li>過去問（令和7年度）を、問い方の型を使って解く</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section" id="sec-flow">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。休憩10分は授業時間に含めません。🎮のブロックは、ゲームで遊ぶ時間です。</p>
+
+      <div class="vz-timebar">
+        <p class="vz-fig-title">180分の流れ（ブロックを押すと、その内容へ移動）</p>
+        <ol class="vz-timebar-track">
+          <li style="--w:40"><a class="vz-seg" href="#blk-1"><span class="vz-seg-time">40分</span><span class="vz-seg-name">復習テスト<br>つなぐ装置</span></a></li>
+          <li style="--w:50"><a class="vz-seg" href="#blk-2"><span class="vz-seg-time">50分</span><span class="vz-seg-name">システムの形<br>🎮ゲーム①</span></a></li>
+          <li style="--w:10"><a class="vz-seg vz-seg--break"><span class="vz-seg-time">休憩</span><span class="vz-seg-name">10分</span></a></li>
+          <li style="--w:50"><a class="vz-seg" href="#blk-3"><span class="vz-seg-time">50分</span><span class="vz-seg-name">稼働率・信頼性<br>🎮ゲーム②</span></a></li>
+          <li style="--w:30"><a class="vz-seg" href="#blk-4"><span class="vz-seg-time">30分</span><span class="vz-seg-name">過去問<br>確認テスト1回目</span></a></li>
+          <li style="--w:10"><a class="vz-seg" href="#blk-5"><span class="vz-seg-time">10分</span><span class="vz-seg-name">まとめ</span></a></li>
+        </ol>
+        <p class="vz-timebar-note">授業時間の合計は 40 + 50 + 50 + 30 + 10 = 180分（休憩を除く）</p>
+      </div>
+
+      <div class="timeline">
+
+        <!-- ================= 1限 前半 ================= -->
+        <div class="timeline-block" id="blk-1">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の復習テスト → レジが止まったストーリー → 今日の地図 → 入出力装置とインタフェース</h3>
+          <div class="timeline-body">
+
+            <p><strong>前回の復習テスト（約10分：テスト約5分＋解説の確認約5分）</strong></p>
+            <p>前回（第7回）の内容を、1週間たって、どれだけ覚えているかを確かめる5問（約5分）。前回の確認テストで、<span translate="no">損益分岐点</span>の正答率が、ほかより低かった。そのため、<span translate="no">損益分岐点</span>の計算を、聞き方を変えて、何問か入れている。<strong>点数を競うものではない</strong>。覚えていることと、忘れていることを、自分で知るためのテスト。送信すると、点数と、正解・解説が表示される。そのあと、間違えた問題の解説を読む。分からないところは、隣の人か先生に聞く。</p>
+            <div class="vz-cta">
+              <a class="vz-btn vz-btn--ext" href="https://docs.google.com/forms/d/e/1FAIpQLSdglF0QBO8DVAqXSfc9-xh4UN8d1_hRhzoEZCOgYTV6tlkcAg/viewform" target="_blank" rel="noopener">第8回 復習テスト（前回分）を受ける（Googleフォーム）</a>
+            </div>
+
+            <p><strong>今日のストーリー：混んでいる夜に、レジが止まった（約10分）</strong></p>
+            <p>駅前のカフェを開いたAさん（架空の話）は、お店のレジを、パソコンで動かしている。前回は、パソコンが遅い話だった。今回は、もっと困ること。お客さんが並ぶ、いちばん忙しい時間に、レジが止まってしまった。</p>
+            <ol class="vz-steps">
+              <li class="vz-step"><img class="vz-step-img" src="images/week08-story-1.jpg" alt="夜のカフェで、お客さんの長い列ができている。レジのパソコンの画面は青いまま固まっていて、店員が画面を指さし、Aさんが心配そうな顔で見ている。" width="800" height="597" loading="lazy"><b>1. 忙しい夜に、レジが止まる</b>列が伸びる。お客さんは待っている。お店にとって、システムが止まることは、売上が止まること。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week08-story-2.jpg" alt="お店の事務室で、2台のパソコンが並んでいる。1台は動いていて、もう1台は予備として待機している。Aさんが、ほっとした顔でコーヒーカップを持っている。" width="800" height="597" loading="lazy"><b>2. 予備を用意する</b>もし1台が止まっても、もう1台が代わりに動けるようにしておく。止まりにくい作り方（<strong><span translate="no">デュプレックスシステム</span></strong>・<span translate="no">デュアルシステム</span>など）がある。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week08-story-3.jpg" alt="左はカフェの中の戸棚に置かれた小さなサーバ機器、右は街の上に浮かぶ雲とデータセンターの絵。Aさんが2つを見比べて考えている。" width="800" height="597" loading="lazy"><b>3. サーバを、持つか、借りるか</b>お店の中に置いて自分で動かす（<strong><span translate="no">オンプレミス</span></strong>）か、インターネットの向こうで借りる（<strong><span translate="no">クラウドコンピューティング</span></strong>）か。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week08-story-4.jpg" alt="IT会社の人とAさんが、お店のテーブルで握手している。机の上のタブレットには、グラフが映っている。" width="800" height="597" loading="lazy"><b>4. IT会社に、相談する</b>どうすれば止まらなくなるか。IT会社が、Aさんの困りごとを聞いて、解決策を提案する仕事が、<strong><span translate="no">ソリューションビジネス</span></strong>。</li>
+            </ol>
+            <p class="lesson-note">2・3は、システムの形と、止まりにくくする設計の話。4は、IT会社の仕事（ストラテジ系）の話。順番に学ぶ。</p>
+
+            <p><strong>ペアで話す（約5分）</strong>：自分がよく使うアプリやサービス（地図、動画、決済、ゲームなど）が、使えなくなったことがあるか。そのとき、どう困ったか、どうしたか。日本語で話す。</p>
+
+            <p><strong>今日の地図（約5分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-w8-map">
+              <p class="vz-fig-title" id="cap-w8-map">つなぐ装置から、止まらないシステムまで</p>
+              <svg class="vz-svg" viewBox="0 0 360 288" role="img" aria-labelledby="w8-map-t w8-map-d">
+                <title id="w8-map-t">今日の地図：入出力装置から、止まらないシステムまで</title>
+                <desc id="w8-map-d">上から順に、1 コンピュータとつなぐ装置（入出力インタフェース）、2 システムの形（クライアントサーバシステム）、3 持つか借りるか（オンプレミス・クラウドコンピューティング）、4 止まりにくさの数字（稼働率）、5 止まりにくくする設計と、IT会社の仕事（ソリューションビジネス）。</desc>
+                <line class="line" x1="22" y1="30" x2="22" y2="258"/>
+                <rect class="box-white" x="2" y="6" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="30" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="35">1</text>
+                <text class="t-b" x="44" y="27">つなぐ装置</text>
+                <text class="t-sm" x="44" y="45" translate="no">入出力インタフェース・USB・Bluetooth</text>
+                <rect class="box-white" x="2" y="62" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="86" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="91">2</text>
+                <text class="t-b" x="44" y="83">システムの形</text>
+                <text class="t-sm" x="44" y="101" translate="no">クライアントサーバシステム</text>
+                <rect class="box-white" x="2" y="118" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="142" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="147">3</text>
+                <text class="t-b" x="44" y="139">持つか、借りるか</text>
+                <text class="t-sm" x="44" y="157" translate="no">オンプレミス・クラウドコンピューティング</text>
+                <rect class="box-white" x="2" y="174" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="198" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="203">4</text>
+                <text class="t-b" x="44" y="195">止まりにくさの数字</text>
+                <text class="t-sm" x="44" y="213" translate="no">稼働率・MTBF・MTTR</text>
+                <rect class="box-white" x="2" y="230" width="356" height="48" rx="8"/>
+                <circle class="dot-orange" cx="22" cy="254" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="259">5</text>
+                <text class="t-b" x="44" y="251">止まりにくくする設計・IT会社の仕事</text>
+                <text class="t-sm" x="44" y="269" translate="no">デュアルシステム・ソリューション</text>
+              </svg>
+              <figcaption>1は1限前半、2・3は1限後半、4・5は2限前半で学ぶ。</figcaption>
+            </figure>
+
+            <p><strong>入出力装置と、つなぐ規格（約10分、教科書 p.256-269）</strong></p>
+            <p>パソコンやスマートフォンには、キーボード・マウス・画面・プリンタなどの<strong>入出力装置</strong>をつなぐ。つなぎ方の決まり（<strong><span translate="no">入出力インタフェース</span></strong>）には、線でつなぐ<strong>有線</strong>と、線のいらない<strong>無線</strong>がある。IPAのシラバスは、次のような規格名を、用語例に挙げている（確認日：2026-11-17）。今日は、<strong>名前と、おおまかな使い道</strong>を知っていればよい。</p>
+            <div class="table-wrap">
+              <table class="schedule-table">
+                <thead><tr><th>つなぎ方</th><th>規格の名前</th><th>おおまかな使い道（一般に）</th></tr></thead>
+                <tbody>
+                  <tr><td>有線</td><td><span translate="no">USB</span>（<span translate="no">Type-A / Type-B / Type-C</span> など）</td><td>キーボード・マウス・USBメモリ・充電など、いろいろな機器をつなぐ</td></tr>
+                  <tr><td>有線</td><td><span translate="no">HDMI</span>・<span translate="no">DisplayPort</span></td><td>画面（ディスプレイ・テレビ）に、映像をつなぐ</td></tr>
+                  <tr><td>無線</td><td><span translate="no">Bluetooth</span></td><td>イヤホン・キーボードなどを、近くで無線でつなぐ（第6回の問56で出た）</td></tr>
+                  <tr><td>無線</td><td><span translate="no">NFC</span>・<span translate="no">RFID</span></td><td>近づけて読み取る（交通系ICカード・電子マネーなど）</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>もう一つ。新しい装置をつないだとき、コンピュータが、その装置を使えるようにするためのソフトが<strong><span translate="no">デバイスドライバ</span></strong>。装置をつなぐだけで、自動的に使えるようになる機能を<strong><span translate="no">プラグアンドプレイ</span></strong>という（どちらもシラバスの項目に出てくる）。</p>
+            <p class="lesson-note">この表の規格は、用語カードには入れない。名前を見て、「あ、あれのことだ」と分かれば十分。表の「使い道」は、一般的な例。</p>
+          </div>
+        </div>
+
+        <!-- ================= 1限 後半 ================= -->
+        <div class="timeline-block" id="blk-2">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>処理形態とシステム構成 → <span translate="no">クライアントサーバシステム</span> → <span translate="no">クラウド</span>と<span translate="no">オンプレミス</span> → 🎮ゲーム①（テクノロジ系：コンピュータシステム 教科書 p.256-269）</h3>
+          <div class="timeline-body">
+
+            <p><strong>① 処理のしかた：集中・分散・並列（約10分）</strong></p>
+            <p>コンピュータで処理をするとき、仕事を、どこで、どう分けるか。シラバスは、代表的な<strong>処理形態</strong>として、次の3つ（ほかに<span translate="no">レプリケーション</span>）を用語例に挙げている。</p>
+            <div class="table-wrap">
+              <table class="schedule-table">
+                <thead><tr><th>処理形態</th><th>どんな形か</th><th>Aさんのお店でたとえると</th></tr></thead>
+                <tbody>
+                  <tr><td><span translate="no">集中処理</span></td><td>1台の大きなコンピュータに、仕事を集めて処理する</td><td>注文も会計も、事務室の1台がすべて行う</td></tr>
+                  <tr><td><span translate="no">分散処理</span></td><td>仕事を、複数のコンピュータに分けて、ネットワークでつなぐ</td><td>注文は店頭の機器、会計はレジ、集計は事務室、と分ける</td></tr>
+                  <tr><td><span translate="no">並列処理</span></td><td>1つの仕事を、複数に分けて、同時に処理する</td><td>注文の山を、2人のスタッフで同時にさばく</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="lesson-note">表の「たとえ」は、この教材の説明用。シラバスは、3つの名前（と<span translate="no">レプリケーション</span>）を用語例にしているだけで、定義文は書いていない。<span translate="no">レプリケーション</span>（データを複製して、同じ内容にそろえておくこと）は、過去問（問82）で出る。</p>
+
+            <p><strong>② <span translate="no">クライアントサーバシステム</span>：頼む側と、頼まれる側（約10分）</strong></p>
+            <p>分散処理の代表が、<strong><span translate="no">クライアントサーバシステム</span></strong>。サービスを<strong>頼む側</strong>（<span translate="no">クライアント</span>）と、頼まれて<strong>処理する側</strong>（<span translate="no">サーバ</span>）に、役割を分ける。ブラウザでWebページを開くとき、自分のパソコンやスマートフォンが<span translate="no">クライアント</span>、Webページを返すコンピュータが<span translate="no">サーバ</span>。第6回のDNSも、同じ形で動いていた。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w8-cs">
+              <p class="vz-fig-title" id="cap-w8-cs"><span translate="no">クライアントサーバシステム</span>の形</p>
+              <svg class="vz-svg" viewBox="0 0 360 230" role="img" aria-labelledby="w8-cs-t w8-cs-d">
+                <title id="w8-cs-t">クライアントサーバシステムの形</title>
+                <desc id="w8-cs-d">左に、頼む側のクライアントが3台（パソコン、スマートフォン、タブレット）。右に、頼まれて処理する側のサーバが1台。クライアントとサーバの間を、「要求」と「結果」が行き来する両向きの矢印でつないでいる。</desc>
+                <rect class="box-white" x="2" y="6" width="130" height="50" rx="8"/>
+                <text class="t-b" x="12" y="28">パソコン</text>
+                <text class="t-sm" x="12" y="46" translate="no">クライアント</text>
+                <rect class="box-white" x="2" y="90" width="130" height="50" rx="8"/>
+                <text class="t-b" x="12" y="112">スマートフォン</text>
+                <text class="t-sm" x="12" y="130" translate="no">クライアント</text>
+                <rect class="box-white" x="2" y="174" width="130" height="50" rx="8"/>
+                <text class="t-b" x="12" y="196">タブレット</text>
+                <text class="t-sm" x="12" y="214" translate="no">クライアント</text>
+                <rect class="box-orange" x="228" y="70" width="130" height="90" rx="8"/>
+                <text class="t-b t-c" x="293" y="106" translate="no">サーバ</text>
+                <text class="t-sm t-c" x="293" y="128">頼まれて、</text>
+                <text class="t-sm t-c" x="293" y="146">処理する</text>
+                <line class="line-orange" x1="134" y1="40" x2="226" y2="92" marker-start="url(#mk-s)" marker-end="url(#mk-s)"/>
+                <line class="line-orange" x1="134" y1="116" x2="226" y2="116" marker-start="url(#mk-s)" marker-end="url(#mk-s)"/>
+                <line class="line-orange" x1="134" y1="190" x2="226" y2="142" marker-start="url(#mk-s)" marker-end="url(#mk-s)"/>
+                <text class="t-sm" x="146" y="138">要求と結果</text>
+              </svg>
+              <figcaption>クライアントが「要求」を送り、サーバが処理して「結果」を返す。サーバが止まると、クライアントは全員、困る。<strong>だから、サーバは止まりにくく作る必要がある</strong>（今日の後半のテーマ）。</figcaption>
+            </figure>
+            <p>ほかの形として、シラバスは、対等な機器どうしが直接やり取りする<span translate="no">ピアツーピア</span>、複数のコンピュータをまとめて1つのように使う<span translate="no">クラスタ</span>、1台のコンピュータの中に、仮想のコンピュータを作る<span translate="no">仮想化</span>なども、用語例に挙げている。今日は、<strong>名前だけ</strong>知っていればよい。</p>
+
+            <p><strong>③ 持つか、借りるか：<span translate="no">オンプレミス</span>と<span translate="no">クラウドコンピューティング</span>（約10分、教科書 p.125-128）</strong></p>
+            <p>Aさんは、予約のシステムのサーバを、どこに置くか考えている。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w8-cloud">
+              <p class="vz-fig-title" id="cap-w8-cloud"><span translate="no">オンプレミス</span>と<span translate="no">クラウドコンピューティング</span></p>
+              <div class="vz-fields vz-fields--2">
+                <section class="vz-field vz-f-st">
+                  <h4><span translate="no">オンプレミス</span></h4>
+                  <p>サーバなどを、<strong>自社の施設の中</strong>に置いて、自社で運用する。</p>
+                  <ul class="vz-tags"><li>例：お店の戸棚にサーバを置く</li></ul>
+                </section>
+                <section class="vz-field vz-f-st">
+                  <h4><span translate="no">クラウドコンピューティング</span></h4>
+                  <p>サーバなどを、<strong>インターネット経由</strong>で借りて使う。</p>
+                  <ul class="vz-tags"><li>例：会社が運営するサーバを借りる</li></ul>
+                </section>
+              </div>
+              <figcaption>どちらが正しい、ではない。お金・手間・止まりにくさなどを見て、選ぶ。</figcaption>
+            </figure>
+            <p>クラウドの代表的な<strong>サービスの形</strong>として、シラバスは（ソリューションの形態の）<span translate="no">SaaS</span>・<span translate="no">PaaS</span>・<span translate="no">IaaS</span>を用語例に挙げている（ストラテジ系のソリューションビジネスの用語例）。何を借りるかの違い。今日は、名前と、おおまかな意味だけ。</p>
+            <div class="table-wrap">
+              <table class="schedule-table">
+                <thead><tr><th>名前</th><th>何を借りるか（おおまかに）</th><th>たとえ</th></tr></thead>
+                <tbody>
+                  <tr><td><span translate="no">SaaS</span>（サース）</td><td>ソフトウェアを、インターネット経由で使う</td><td>できあがった料理を、注文して食べる</td></tr>
+                  <tr><td><span translate="no">PaaS</span>（パース）</td><td>ソフトウェアを作って動かすための、土台（プラットフォーム）を借りる</td><td>キッチンと道具を借りて、自分で料理する</td></tr>
+                  <tr><td><span translate="no">IaaS</span>（イアース）</td><td>サーバなどの、インフラ（基盤）を借りる</td><td>場所だけ借りて、設備から自分でそろえる</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="lesson-note">表の「たとえ」は、この教材の説明用で、公式の説明ではない。クラウドの提供形態（<span translate="no">パブリッククラウド</span>・<span translate="no">プライベートクラウド</span>など）も、シラバスの用語例にあるが、今日は扱わない。</p>
+
+            <p><strong>ストーリーに戻る</strong>：Aさんの店のレジは、1台のパソコンにつながっている形だった。そのパソコンが止まると、お店全体が止まる。サーバの置き場所を考える前に、「止まりにくさ」を、数字で見る方法を、次に学ぶ。</p>
+
+            <p><strong>手を動かす：自分のスマートフォンのアプリを、クライアントとサーバに分けてみる（約5分）</strong></p>
+            <ol>
+              <li>自分がよく使うアプリを1つ選ぶ（例：地図、動画、ゲーム）</li>
+              <li>自分のスマートフォンが<span translate="no">クライアント</span>。では、<span translate="no">サーバ</span>は、何を処理していそうか。<strong>「要求」と「結果」</strong>に分けて、メモに書く（例：地図なら、要求＝「駅の場所」、結果＝「地図のデータ」）</li>
+              <li>隣の人と、見せ合う</li>
+            </ol>
+
+            <div class="demo-cta demo-cta--amber">
+              <p class="demo-cta__heading">🎮 ゲーム①：用語シューティング ステージ1（約10分）</p>
+              <p class="demo-cta__body">ここまでに出た用語（<span translate="no">クライアントサーバシステム</span>・<span translate="no">クラウドコンピューティング</span>・<span translate="no">オンプレミス</span>と、前回の<span translate="no">損益分岐点</span>・<span translate="no">SSD</span>・<span translate="no">変動費</span>・<span translate="no">固定費</span>）を、ゲームで確かめる。画面の「意味」を読んで、合う用語の的を撃つ。点数は記録されない。最初は音が出ない。間違えた用語は、最後の画面に一覧が出る。</p>
+              <p class="demo-cta__body"><strong>進め方：</strong>1回は約2分。<strong>目標は「ランク<span translate="no">A</span>以上」（7問中6問以上）</strong>。終わったら、間違えた用語の一覧を、下の<a href="#sec-terms">用語カード</a>で確かめて、もう一度遊ぶ。ページを開くと、「スタート」ボタンが出る。翻訳を使う人は、翻訳してから押す。</p>
+              <a href="term-shooter.html?w=8&amp;stage=1" class="demo-cta__link">→ ステージ1を始める</a>
+              <div class="qr-box qr-box--inline qr-box--pc">
+                <a class="qr-box__zoom" href="qr/week08-game-stage1.svg" target="_blank" rel="noopener" aria-label="QRコードを大きく表示する">
+                  <img class="qr-box__img" src="qr/week08-game-stage1.svg" alt="ゲーム ステージ1を開くQRコード。スマートフォンのカメラで読み取ると、ゲームが開く。" width="150" height="150">
+                </a>
+                <div class="qr-box__body">
+                  <p class="qr-box__heading">📱 スマホで遊ぶ</p>
+                  <p class="qr-box__text">スマートフォンのカメラで、このQRコードを読み取ると、ステージ1が開く。押すと、大きく表示される。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <!-- ================= 2限 前半 ================= -->
+        <div class="timeline-block" id="blk-3">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3><span translate="no">稼働率</span>（<span translate="no">MTBF</span>・<span translate="no">MTTR</span>）→ 直列と並列 → 信頼性の設計 → <span translate="no">ソリューションビジネス</span> → 🎮ゲーム②（テクノロジ系 p.256-269、ストラテジ系 p.125-128）</h3>
+          <div class="timeline-body">
+
+            <p><strong>① <span translate="no">稼働率</span>：どれだけ動いているか（約12分）</strong></p>
+            <p>止まりにくさを、数字で表したものが<strong><span translate="no">稼働率</span></strong>。「全体の時間のうち、動いている時間の割合」。IPAのシラバスは、<span translate="no">稼働率</span>・<span translate="no">故障率</span>・<span translate="no">MTBF</span>（平均故障間動作時間）・<span translate="no">MTTR</span>（平均修復時間）を用語例に挙げ、<span translate="no">稼働率向上策の検討</span>を活用例にしている（確認日：2026-11-17）。</p>
+            <ul>
+              <li><strong><span translate="no">MTBF</span></strong>：故障が直ってから、次に故障するまでの、<strong>動いている時間</strong>の平均。長いほど、止まりにくい</li>
+              <li><strong><span translate="no">MTTR</span></strong>：故障してから、直るまでの、<strong>修理にかかる時間</strong>の平均。短いほど、早く直る</li>
+            </ul>
+            <p><span translate="no">稼働率</span> ＝ <span translate="no">MTBF</span> ÷（<span translate="no">MTBF</span> ＋ <span translate="no">MTTR</span>）。<strong>動いている時間 ÷ 全体の時間</strong>、と考えると、式を忘れても作れる。</p>
+            <p><strong>例：</strong>Aさんのレジのパソコンは、平均で80時間動くと故障し、直すのに平均で20時間かかる（説明用の数字）。</p>
+            <ol>
+              <li>動いている時間：80時間（<span translate="no">MTBF</span>）。直している時間：20時間（<span translate="no">MTTR</span>）。全体：80＋20＝100時間</li>
+              <li><span translate="no">稼働率</span>＝80÷100＝<strong>0.8</strong>（80%）</li>
+              <li>もし、修理が早くなって、<span translate="no">MTTR</span>が5時間になれば、80÷（80＋5）＝約0.94。<strong>直す時間が短くなると、<span translate="no">稼働率</span>が上がる</strong></li>
+            </ol>
+            <p class="lesson-note">稼働率は、0から1の間の数（1に近いほど止まりにくい）。1を超えたら、計算が間違っている。</p>
+            <p><strong>システムの「性能」は、名前だけ</strong>：「信頼性」（止まりにくさ）のほかに、システムの<strong>性能</strong>（どれだけ速く処理できるか）の見方もある。シラバスは、<span translate="no">レスポンスタイム</span>（応答時間：頼んでから、結果が返るまでの時間）と<span translate="no">ベンチマーク</span>（性能を比べるための測定）を用語例に挙げている（確認日：2026-11-17）。今日は、<strong>名前と、おおまかな意味だけ</strong>。用語カードには入れない。</p>
+
+            <p><strong>② 直列と並列：つなぎ方で、稼働率が変わる（約10分）</strong></p>
+            <p>装置を複数つなぐとき、<strong>直列</strong>（全部が動いていないと、システムが動かない）と、<strong>並列</strong>（1台でも動いていれば、システムが動く）がある。装置の稼働率が、どちらも0.9のとき、計算してみる。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w8-par">
+              <p class="vz-fig-title" id="cap-w8-par">直列と並列：<span translate="no">稼働率</span>0.9の装置を2台つなぐ</p>
+              <svg class="vz-svg" viewBox="0 0 360 300" role="img" aria-labelledby="w8-par-t w8-par-d">
+                <title id="w8-par-t">直列と並列の稼働率</title>
+                <desc id="w8-par-d">上は直列。稼働率0.9の装置が2台、一列につながっている。両方が動かないと動かないので、稼働率は0.9掛ける0.9で0.81。下は並列。稼働率0.9の装置が2台、並んでいる。どちらも止まったときだけ止まるので、稼働率は1引く0.1掛ける0.1で0.99。</desc>
+                <text class="t-b" x="4" y="18">直列（全部が動く必要がある）</text>
+                <rect class="box-white" x="2" y="30" width="100" height="50" rx="8"/>
+                <text class="t-b t-c" x="52" y="60">装置A 0.9</text>
+                <line class="line-orange" x1="104" y1="55" x2="130" y2="55" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="132" y="30" width="100" height="50" rx="8"/>
+                <text class="t-b t-c" x="182" y="60">装置B 0.9</text>
+                <rect class="box-orange" x="244" y="30" width="114" height="50" rx="8"/>
+                <text class="t-b t-c" x="301" y="52">0.9×0.9</text>
+                <text class="t-b t-c" x="301" y="72">＝0.81</text>
+                <text class="t-b" x="4" y="130">並列（1台でも動けば動く）</text>
+                <rect class="box-white" x="2" y="142" width="100" height="50" rx="8"/>
+                <text class="t-b t-c" x="52" y="172">装置A 0.9</text>
+                <rect class="box-white" x="2" y="200" width="100" height="50" rx="8"/>
+                <text class="t-b t-c" x="52" y="230">装置B 0.9</text>
+                <line class="line-orange" x1="104" y1="167" x2="130" y2="196"/>
+                <line class="line-orange" x1="104" y1="225" x2="130" y2="196"/>
+                <line class="line-orange" x1="130" y1="196" x2="146" y2="196" marker-end="url(#mk-s)"/>
+                <rect class="box-green" x="148" y="150" width="210" height="92" rx="8"/>
+                <text class="t-b" x="158" y="176">止まる確率：0.1×0.1＝0.01</text>
+                <text class="t-b" x="158" y="198">稼働率：1－0.01</text>
+                <text class="t-b" x="158" y="222">＝0.99</text>
+                <text class="t-sm" x="4" y="282">直列は、1台より下がる。並列は、1台より上がる。</text>
+              </svg>
+              <figcaption>並列は、「全部が同時に止まる確率」を、1から引く。1台の止まる確率が0.1なら、2台とも止まる確率は0.1×0.1＝0.01。3台なら、0.1×0.1×0.1＝0.001（稼働率0.999）。</figcaption>
+            </figure>
+            <p><strong>今日、覚える考え方：</strong>直列は<strong>かけ算</strong>（全部が動く確率）。並列は「<strong>全部が止まる確率を、1から引く</strong>」。これは、過去問（問94）の型。</p>
+
+            <p><strong>③ 止まりにくくする設計（約10分、教科書 p.256-269）</strong></p>
+            <p>稼働率を上げるには、並列のように、予備を用意する。これが、<strong>信頼性の設計</strong>の考え方。シラバスは、次の語を用語例に挙げている。</p>
+            <div class="table-wrap">
+              <table class="schedule-table">
+                <thead><tr><th>用語</th><th>どんな考え方か（やさしい言い換え）</th></tr></thead>
+                <tbody>
+                  <tr><td><span translate="no">デュアルシステム</span></td><td>同じ処理を、<strong>2系統</strong>の装置で同時に行い、結果を照らし合わせる。片方が壊れても、もう片方で続けられる</td></tr>
+                  <tr><td><span translate="no">デュプレックスシステム</span></td><td>主の装置と、<strong>予備</strong>の装置を用意する。主が壊れたら、予備に切り替える（予備の待機のしかたに、下の2つがある）</td></tr>
+                  <tr><td><span translate="no">ホットスタンバイ</span></td><td>予備の装置を、<strong>すぐ引き継げる状態</strong>で待機させる</td></tr>
+                  <tr><td><span translate="no">コールドスタンバイ</span></td><td>予備の装置を、<strong>止めておき</strong>、必要になったら、起動して引き継ぐ</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>もう一つ、故障や間違いが起きたときの<strong>考え方</strong>として、似た名前の3つがある。「<strong>何が起きたとき、どうなるように作るか</strong>」で見分ける。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w8-3f">
+              <p class="vz-fig-title" id="cap-w8-3f">似た名前の3つを、見分ける</p>
+              <div class="vz-fields">
+                <section class="vz-field vz-f-st">
+                  <h4><span translate="no">フェールセーフ</span></h4>
+                  <p>故障したとき、<strong>安全な側</strong>に動く。</p>
+                  <ul class="vz-tags"><li>例：故障したら、機械が止まる</li></ul>
+                </section>
+                <section class="vz-field vz-f-st">
+                  <h4><span translate="no">フォールトトレラント</span></h4>
+                  <p>故障しても、<strong>動き続ける</strong>。</p>
+                  <ul class="vz-tags"><li>例：1台壊れても、予備が代わる</li></ul>
+                </section>
+                <section class="vz-field vz-f-st">
+                  <h4><span translate="no">フールプルーフ</span></h4>
+                  <p>人が<strong>間違った操作</strong>をしても、危険にならない。</p>
+                  <ul class="vz-tags"><li>例：ふたを開けると、止まる</li></ul>
+                </section>
+              </div>
+              <figcaption>「安全な側に動く（例：<strong>止まる</strong>ことで守る）」のが<span translate="no">フェールセーフ</span>、「<strong>止まらない</strong>ようにする」のが<span translate="no">フォールトトレラント</span>、「<strong>人の間違い</strong>に備える」のが<span translate="no">フールプルーフ</span>。たとえ（例）は、この教材の説明用。</figcaption>
+            </figure>
+            <p><strong><span translate="no">RASIS</span>（レイシス）：教科書の語（約3分）</strong>。信頼性を考えるときの5つの見方の頭文字（<span translate="no">Reliability</span>＝信頼性、<span translate="no">Availability</span>＝可用性、<span translate="no">Serviceability</span>＝保守性、<span translate="no">Integrity</span>＝保全性、<span translate="no">Security</span>＝安全性）。今日の話とのつながりは、次のとおり。</p>
+            <ul>
+              <li><strong>可用性</strong>：使いたいときに、使えること。数字で表したものが、<span translate="no">稼働率</span></li>
+              <li><strong>信頼性</strong>：壊れにくいこと。<span translate="no">MTBF</span>が、目安になる</li>
+              <li><strong>保守性</strong>：壊れたとき、直しやすいこと。<span translate="no">MTTR</span>が、目安になる</li>
+            </ul>
+            <p class="lesson-note"><span translate="no">RASIS</span>は、教科書（p.256-269）の語。IPAシラバスVer.6.5の用語例には、見当たらない（確認日：2026-11-17）。本によって、<span translate="no">Integrity</span>を「保全性」「完全性」と書くなど、言い方に違いがある。今日は、<strong>「使える・壊れにくい・直しやすい」と、稼働率・<span translate="no">MTBF</span>・<span translate="no">MTTR</span>のつながり</strong>が分かれば十分。確認テストとゲームには、出さない。</p>
+
+            <p><strong>④ <span translate="no">ソリューションビジネス</span>：IT会社の仕事（約5分、教科書 p.125-128）</strong></p>
+            <p>ストーリーの4。IPAのシラバスは、<span translate="no">ソリューションビジネス</span>を「顧客との信頼関係を築き、顧客の問題点を知り、問題解決案を提案し、問題解決への支援を行うこと」と書いている（確認日：2026-11-17）。Aさんの困りごと（レジが止まる）を聞いて、IT会社が、解決策を提案する。解決のしかたには、<strong>自社で作る</strong>・<strong>パッケージ（できあがったソフト）を入れる</strong>・<strong>他社のサービス（クラウドなど）を使う</strong>、などがある（シラバスの記述）。</p>
+            <p><strong>ペアで話す（約3分）</strong>：Aさんの店に、おすすめしたいのは、「予備のパソコンを置く（<span translate="no">オンプレミス</span>）」と「予約システムをクラウドで借りる」の、どちらか。理由も、日本語で話す。正解は1つではない。お金・手間・止まりにくさを使って、説明する。</p>
+
+            <div class="demo-cta demo-cta--amber">
+              <p class="demo-cta__heading">🎮 ゲーム②：用語シューティング ステージ2（約10分）</p>
+              <p class="demo-cta__body">今日の用語（<span translate="no">稼働率</span>・<span translate="no">MTBF</span>・<span translate="no">MTTR</span>・<span translate="no">デュアルシステム</span>・<span translate="no">フェールセーフ</span>・<span translate="no">フォールトトレラント</span>・<span translate="no">フールプルーフ</span>）と、1限の<span translate="no">クライアントサーバシステム</span>・<span translate="no">クラウドコンピューティング</span>・<span translate="no">オンプレミス</span>が混ざる。的が降りてくる速さも上がる。ライフは3つ。最後の画面に、間違えた用語の一覧が出る。ここでも、点数は記録されない。</p>
+              <p class="demo-cta__body"><strong>進め方：</strong>1回は約2分。<strong>目標は「ランク<span translate="no">A</span>以上」（10問中8問以上）</strong>。何度でも挑戦してよい。終わったら、間違えた用語の一覧を<a href="#sec-terms">用語カード</a>で確かめる。「スタート」ボタンを押すまで、時間は進まない。</p>
+              <a href="term-shooter.html?w=8&amp;stage=2" class="demo-cta__link">→ ステージ2を始める</a>
+              <div class="qr-box qr-box--inline qr-box--pc">
+                <a class="qr-box__zoom" href="qr/week08-game-stage2.svg" target="_blank" rel="noopener" aria-label="QRコードを大きく表示する">
+                  <img class="qr-box__img" src="qr/week08-game-stage2.svg" alt="ゲーム ステージ2を開くQRコード。スマートフォンのカメラで読み取ると、ゲームが開く。" width="150" height="150">
+                </a>
+                <div class="qr-box__body">
+                  <p class="qr-box__heading">📱 スマホで遊ぶ</p>
+                  <p class="qr-box__text">スマートフォンのカメラで、このQRコードを読み取ると、ステージ2が開く。押すと、大きく表示される。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= 2限 後半 ================= -->
+        <div class="timeline-block" id="blk-4">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>過去問演習 → 用語を説明し合う → 確認テスト（1回目）</h3>
+          <div class="timeline-body">
+
+            <p><strong>過去問演習（約15分）</strong>：今日の範囲の令和7年度の公開問題を、問い方の型を使って解く。2問ある。自分で選んでから、答えと解説を見る。</p>
+
+            <div class="exam-q">
+              <p class="exam-q-text">【例題①】問94　稼働率0.9の装置で並列システムを構成したい。このシステムの稼働率を0.999とするためには，最低何台の装置で並列システムを構成する必要があるか。ここで，並列システムを構成したときに，少なくとも1台の装置が稼働していればシステムは正常に稼働しているものとする。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>2</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>3</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>4</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>5</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問94（<span translate="no">テクノロジ系</span>。問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：イ</strong>（型：並列は「全部が止まる確率」を1から引く。台数を、1台ずつ増やして確かめる）。1台が止まっている確率は、1－0.9＝0.1。<strong>2台</strong>：全部止まる確率は0.1×0.1＝0.01。稼働率は1－0.01＝0.99。0.999に<strong>足りない</strong>。<strong>3台</strong>：全部止まる確率は0.1×0.1×0.1＝0.001。稼働率は1－0.001＝<strong>0.999</strong>。目標に届く。だから、最低<strong>3台</strong>。今日の図の「並列」の計算を、台数を変えて続けるだけで解ける。</p>
+              </details>
+            </div>
+
+            <div class="exam-q">
+              <p class="exam-q-text">【例題②】問82　あるコンピュータのデータベースの内容を他のコンピュータのデータベースに複製して，両者の内容が一致するように同期させるDBMSの機能はどれか。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>アーカイブ</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>バックアップ</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>レプリケーション</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>ロールバック</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問82（<span translate="no">テクノロジ系</span>。問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：ウ</strong>（型：問題文のキーワードに合う用語を選ぶ。「複製」「同期」「内容が一致」）。<span translate="no">レプリケーション</span>は、データを複製して、複数の場所で同じ内容にそろえておくこと。シラバスの処理形態の用語例にもある。1台が止まっても、複製を持つもう1台で続けられるので、<strong>止まりにくいシステムの考え方</strong>につながる。<span translate="no">バックアップ</span>（イ）は、壊れたときのために、データの写しを別に保存すること。<span translate="no">ロールバック</span>（エ）は、処理の途中で失敗したとき、元の状態に戻すこと。<span translate="no">アーカイブ</span>（ア）は、長く保管するために、まとめて保存すること。この問題の仲間（データベース）は、第9回でもう一度学ぶ。</p>
+              </details>
+            </div>
+
+            <p class="lesson-note">令和7年度の公開問題の確認した範囲では、<span translate="no">クライアントサーバシステム</span>・<span translate="no">クラウドコンピューティング</span>・<span translate="no">ソリューションビジネス</span>を直接問う問は、見つからなかった。この3つは、確認テストと練習クイズで確かめる。</p>
+
+            <p><strong>用語を、ペアで説明し合う（約10分）</strong>：下の「用語カード」の12語から、3つずつ選び、1人が、やさしい日本語で意味を説明する。もう1人は、どの用語かを当てる。</p>
+
+            <p><strong>確認テスト（1回目）（約5分）</strong></p>
+            <p>今日の内容の5問。<strong>点数を競うものではない</strong>。今、どこまで分かっているかを、自分で知るためのテスト。分からない問題は、思い出せる範囲で答える。送信すると、点数と、正解・解説が表示される。</p>
+            <div class="vz-cta">
+              <a class="vz-btn vz-btn--ext" href="https://docs.google.com/forms/d/e/1FAIpQLSeQWGX96IQxrVSzg_RIfyhGrrGhfXEdlU_nFJPq6JMjr8F86w/viewform" target="_blank" rel="noopener">第8回 確認テスト（1回目）を受ける（Googleフォーム）</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= まとめ ================= -->
+        <div class="timeline-block" id="blk-5">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り → 用語カードの提出・次回予告</h3>
+          <div class="timeline-body">
+            <ul>
+              <li><strong>振り返り</strong>（約3分）：1回目の結果の画面で、<strong>点数を覚えて</strong>、<strong>間違えた問題の解説</strong>を読む。分からないところは、隣の人に聞く、または、このページの<a href="#sec-terms">用語カード</a>・<a href="#sec-quiz">練習クイズ</a>・<a href="term-shooter.html?w=8">ゲーム</a>で確かめる</li>
+              <li><strong>確認テスト（2回目）は任意</strong>：時間がある人、確かめたい人は、<a href="#sec-optional">下の「任意の取り組み」</a>から受ける</li>
+              <li><strong>用語カード</strong>：今回覚えた用語にチェックを入れて、フォームで提出する（約3分）</li>
+              <li>質問と、次回までの課題の確認（約1分）。読むだけの<a href="#sec-tip">「就活ワンポイント」</a>もある。自分の点数の推移は、<a href="#sec-optional">「任意の取り組み」</a>の「自分の成績を見る」から、いつでも見られる</li>
+              <li>次回（第9回）：<strong>ソフトウェアとデータベース：使いやすさとデータ活用</strong>——<span translate="no">OS</span>・<span translate="no">データベース</span>・<span translate="no">情報デザイン</span>（<span translate="no">テクノロジ系</span> p.276-313）</li>
+            </ul>
+            <div class="vz-cta">
+              <a class="vz-btn vz-btn--ext" href="https://docs.google.com/forms/d/e/1FAIpQLSd9hmN4zSrp8XK1Cwa90Jti1Fl-tkhidOXBXsXp2Q4l4SXSAA/viewform" target="_blank" rel="noopener">第8回 今回覚えた用語を提出する（Googleフォーム）</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-terms">
+      <h2>用語カード（今日の用語）</h2>
+      <p class="lesson-note">用語カードは、今日の授業で出る用語と、その意味のリスト。授業の最後に、フォームで<strong>今回覚えた用語</strong>にチェックを入れて提出する。用語は日本語のまま覚える。試験は日本語で行われる。</p>
+      <div class="table-wrap">
+        <table class="schedule-table">
+          <thead><tr><th>用語</th><th>意味</th></tr></thead>
+          <tbody>
+            <tr><td><span translate="no">稼働率</span></td><td>全体の時間のうち、システムが動いている時間の割合。<span translate="no">MTBF</span>÷（<span translate="no">MTBF</span>＋<span translate="no">MTTR</span>）で求める。1に近いほど、止まりにくい</td></tr>
+            <tr><td><span translate="no">MTBF</span></td><td>平均故障間動作時間。直ってから次に故障するまで、動いている時間の平均。長いほど、止まりにくい</td></tr>
+            <tr><td><span translate="no">MTTR</span></td><td>平均修復時間。故障してから、直るまでにかかる時間の平均。短いほど、早く直る</td></tr>
+            <tr><td><span translate="no">RASIS</span></td><td>信頼性を考える5つの見方（信頼性・可用性・保守性・保全性・安全性）の頭文字。教科書の語で、IPAシラバスの用語例にはない</td></tr>
+            <tr><td><span translate="no">デュアルシステム</span></td><td>同じ処理を2系統の装置で同時に行い、結果を照らし合わせる方式。片方が壊れても、続けられる</td></tr>
+            <tr><td><span translate="no">フェールセーフ</span></td><td>故障したとき、安全な側に動くようにする設計の考え方（例：故障したら、機械が止まる）</td></tr>
+            <tr><td><span translate="no">フォールトトレラント</span></td><td>一部が故障しても、システム全体が動き続けるようにする設計の考え方</td></tr>
+            <tr><td><span translate="no">フールプルーフ</span></td><td>人が間違った操作をしても、危険にならないようにする設計の考え方</td></tr>
+            <tr><td><span translate="no">クライアントサーバシステム</span></td><td>サービスを頼む側（クライアント）と、頼まれて処理する側（サーバ）に、役割を分ける方式</td></tr>
+            <tr><td><span translate="no">クラウドコンピューティング</span></td><td>サーバなどを、インターネット経由で借りて使う形態</td></tr>
+            <tr><td><span translate="no">オンプレミス</span></td><td>サーバなどを、自社の施設の中に置いて、自社で運用する形態</td></tr>
+            <tr><td><span translate="no">ソリューションビジネス</span></td><td>顧客の問題点を知り、解決案を提案し、解決を支援する仕事（ITの会社が行う）</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-quiz">
+      <h2>練習クイズ（サイト内・記録なし）</h2>
+      <p class="lesson-note">確認テストの内容を、自分のペースで練習するためのクイズ（確認テストと同じ内容）。回答はこのページの中で判定されるだけで、どこにも送信・保存されず、成績にも含まれない。何度でも試せる。</p>
+
+        <div class="quiz-set">
+          <div class="quiz" aria-live="polite" data-answer="ウ">
+            <p class="quiz-q"><span class="quiz-q-num">Q1</span>ある装置は，平均80時間動くと故障し，修理に平均20時間かかる。この装置の<span translate="no">稼働率</span>はどれか。</p>
+            <div class="quiz-choices">
+              <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span>0.2</span></button>
+              <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span>0.25</span></button>
+              <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span>0.8</span></button>
+              <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span>4</span></button>
+            </div>
+            <div class="quiz-feedback" hidden>
+              <p class="quiz-result"></p>
+              <p><span translate="no">稼働率</span>は、動いている割合。<span translate="no">稼働率</span>＝<span translate="no">MTBF</span>（平均故障間動作時間）÷（<span translate="no">MTBF</span>＋<span translate="no">MTTR</span>（平均修復時間））＝80÷（80＋20）＝0.8。アは、故障している割合（20÷100）。イは、<span translate="no">MTTR</span>を<span translate="no">MTBF</span>で割った数。エは、<span translate="no">MTBF</span>を<span translate="no">MTTR</span>で割った数で、<span translate="no">稼働率</span>は1を超えない。</p>
+              <button type="button" class="quiz-retry">もう一度</button>
+            </div>
+          </div>
+          <div class="quiz" aria-live="polite" data-answer="ウ">
+            <p class="quiz-q"><span class="quiz-q-num">Q2</span><span translate="no">稼働率</span>が0.9の装置を2台，並列に接続したシステムがある。少なくとも1台が動いていれば，システムは正常に動いているものとする。このシステムの<span translate="no">稼働率</span>はどれか。</p>
+            <div class="quiz-choices">
+              <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span>0.81</span></button>
+              <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span>0.9</span></button>
+              <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span>0.99</span></button>
+              <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span>0.999</span></button>
+            </div>
+            <div class="quiz-feedback" hidden>
+              <p class="quiz-result"></p>
+              <p>並列システムは、2台とも止まっているときだけ止まる。1台が止まっている確率は1－0.9＝0.1。2台とも止まる確率は0.1×0.1＝0.01。だから、<span translate="no">稼働率</span>は1－0.01＝0.99。アは、2台とも動いていなければならない（直列）の計算（0.9×0.9）。エは、3台の並列にしたときの値。</p>
+              <button type="button" class="quiz-retry">もう一度</button>
+            </div>
+          </div>
+          <div class="quiz" aria-live="polite" data-answer="ア">
+            <p class="quiz-q"><span class="quiz-q-num">Q3</span>システムの一部が故障したとき，システム全体を安全な状態に移すように設計する考え方はどれか。</p>
+            <div class="quiz-choices">
+              <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span><span translate="no">フェールセーフ</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span><span translate="no">フォールトトレラント</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span><span translate="no">フールプルーフ</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span><span translate="no">ホットスタンバイ</span></span></button>
+            </div>
+            <div class="quiz-feedback" hidden>
+              <p class="quiz-result"></p>
+              <p><span translate="no">フェールセーフ</span>は、故障したときに、安全な側に動くようにする設計の考え方（例：故障したら、機械が止まる）。<span translate="no">フォールトトレラント</span>は、故障しても、動き続けるようにする考え方。<span translate="no">フールプルーフ</span>は、人が間違った操作をしても、危険にならないようにする考え方。<span translate="no">ホットスタンバイ</span>は、予備の装置を、すぐ引き継げる状態で待機させる方式。</p>
+              <button type="button" class="quiz-retry">もう一度</button>
+            </div>
+          </div>
+          <div class="quiz" aria-live="polite" data-answer="イ">
+            <p class="quiz-q"><span class="quiz-q-num">Q4</span>サービスを要求するコンピュータ（クライアント）と，要求に応じて処理するコンピュータ（サーバ）に役割を分けて，処理する方式はどれか。</p>
+            <div class="quiz-choices">
+              <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span><span translate="no">ピアツーピア</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span><span translate="no">クライアントサーバシステム</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span><span translate="no">デュアルシステム</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span><span translate="no">バッチ処理</span></span></button>
+            </div>
+            <div class="quiz-feedback" hidden>
+              <p class="quiz-result"></p>
+              <p><span translate="no">クライアントサーバシステム</span>は、サービスを頼む側（クライアント）と、頼まれて処理する側（サーバ）に、役割を分ける方式（IPAシラバスの用語例）。<span translate="no">ピアツーピア</span>は、対等な機器どうしが直接やり取りする方式。<span translate="no">デュアルシステム</span>は、同じ処理を2系統で行う信頼性の方式。<span translate="no">バッチ処理</span>は、まとめて処理する利用形態。</p>
+              <button type="button" class="quiz-retry">もう一度</button>
+            </div>
+          </div>
+          <div class="quiz" aria-live="polite" data-answer="ウ">
+            <p class="quiz-q"><span class="quiz-q-num">Q5</span>自社の建物の中にサーバなどを置いて，自社で運用する形態はどれか。</p>
+            <div class="quiz-choices">
+              <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span><span translate="no">クラウドコンピューティング</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span><span translate="no">SaaS</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span><span translate="no">オンプレミス</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span><span translate="no">アウトソーシング</span></span></button>
+            </div>
+            <div class="quiz-feedback" hidden>
+              <p class="quiz-result"></p>
+              <p><span translate="no">オンプレミス</span>は、サーバなどを自社の施設の中に置いて、自社で運用する形態（IPAシラバスの用語例）。<span translate="no">クラウドコンピューティング</span>は、インターネット経由で、サーバなどを借りて使う形態。<span translate="no">SaaS</span>は、クラウドで、ソフトウェアを使うサービス。<span translate="no">アウトソーシング</span>は、業務を外部の会社に任せること。</p>
+              <button type="button" class="quiz-retry">もう一度</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-optional">
+      <h2>任意の取り組み</h2>
+      <p class="lesson-note">必須ではありません。時間があるとき、確かめたいときに使います。</p>
+      <h3>用語シューティング（ゲーム）</h3>
+      <p>授業で遊んだゲームを、何度でも遊べます。間違えた用語の一覧を見て、用語カードで確かめると、覚えやすくなります。</p>
+      <div class="vz-cta">
+        <a class="vz-btn" href="term-shooter.html?w=8">用語シューティングを遊ぶ</a>
+      </div>
+      <h3>確認テスト（2回目）</h3>
+      <p>1回目と同じ5問です（問題の順番は違います）。受けたら、結果の画面の点数を、1回目の点数と自分で比べます。1回目の点数を、覚えておきます。</p>
+      <div class="vz-cta">
+        <a class="vz-btn vz-btn--ext" href="https://docs.google.com/forms/d/e/1FAIpQLSftB7p14Iy7Nrky1wrHAYZJH8qKwAMYBDUwDH6FHn3tBQGYGQ/viewform" target="_blank" rel="noopener">第8回 確認テスト（2回目・任意）を受ける（Googleフォーム）</a>
+      </div>
+      <h3>自分の成績を見る</h3>
+      <p>診断テスト・復習テスト・確認テストの点数の推移と、次に復習するとよい用語を見られます。学校のGoogleアカウントでログインすると、自分の分だけが表示されます。</p>
+      <div class="vz-cta">
+        <a class="vz-btn vz-btn--ext" href="https://script.google.com/a/macros/i-seifu.jp/s/AKfycbwquVX4xkXNy47RkGjCUz6Xmc4GFaPLpPkSVuW6z--m5Yth88yilipCYUSanlTpQF9P/exec" target="_blank" rel="noopener">自分の成績を見る（学校のGoogleアカウント）</a>
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-tip">
+      <h2>就活ワンポイント（任意）</h2>
+      <p class="lesson-note">授業時間には含めない、読むだけのコラム。成績にも含まれない。今日の言葉を、面接で使う練習。</p>
+      <h3>面接で「システムが止まったとき、どうしますか」と聞かれたら</h3>
+      <p>ITの仕事でも、お店のアルバイトでも、機械やシステムが止まることはある。そのときの考え方を、短く説明する練習になる。答えは、<strong>3つの順番</strong>で話すと、分かりやすくなる（一つの考え方）。下の吹き出しが、順に現れる。</p>
+      <div><button type="button" class="tip-ctl" data-target="tip-chat-1" aria-pressed="false">動きを止めて、全部を表示する</button></div>
+      <div class="tip-chat" id="tip-chat-1" role="group" aria-label="面接の会話の例。面接官の質問のあと、結論、理由、まとめの順に答える">
+        <div class="tip-b tip-b--q"><span class="tip-tag">面接官</span>お客様が使っているシステムが、突然止まりました。まず、どうしますか。</div>
+        <div class="tip-b"><span class="tip-tag">① 結論</span>まず、お客様に状況を伝えて、止まっている範囲を確認します。そのあと、予備の仕組みがあれば、切り替えます。</div>
+        <div class="tip-b"><span class="tip-tag">② 理由</span>授業で、システムは止まることがあると学びました。だから、<span translate="no">稼働率</span>を上げるために、予備を用意することが大切だと考えています。</div>
+        <div class="tip-b"><span class="tip-tag">③ まとめ</span>止まったときに、早く直して、お客様の困りごとを減らせるように、確認の手順を覚えていきたいです。</div>
+      </div>
+      <ul>
+        <li><strong>例文は一例</strong>。自分が実際に学んだこと、したことを話す。していないことは、言わない。</li>
+        <li>用語を、日本語のまま使えて、しかも「予備を用意する」のような<strong>やさしい言い方</strong>で言い換えられると、<span translate="no">IT</span>に詳しくない人にも伝わる。</li>
+        <li>「<span translate="no">稼働率</span>が高いほど、止まりにくい」のように、<strong>数字と意味</strong>をセットで言えると、説得力が出る。</li>
+      </ul>
+      <p class="lesson-note">答え方の順番（結論・理由・まとめ）は、この教材の一つの考え方で、公式のルールではない。<span translate="no">IPA</span>は、ITパスポート試験の合格について、「就職活動において、自らの知識を証明し、自己アピールに役立ちます」と紹介している（<span translate="no">IPA</span><a href="https://www3.jitec.ipa.go.jp/JitesCbt/html/about/merit.html" target="_blank" rel="noopener">「合格のメリット」</a>、確認日：2026-11-10。留学生向けに書かれた説明ではない）。</p>
+    </div>
+
+    <div class="syllabus-section" id="sec-tasks">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>第9回の予習：教科書を読む</strong>
+            <p>教科書 p.276-313 を読み、<span translate="no">OS</span>が何をするものか、確認しておく（第9回は「ソフトウェアとデータベース：使いやすさとデータ活用」）。第9回の授業の最後に、覚えた用語をフォームで提出する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>練習クイズとゲームで、間違えた用語を確かめる</strong>
+            <p>練習クイズは、全問正解になるまで繰り返す。ゲームは、最後の画面の「間違えた用語」の一覧を見て、用語カードで確かめる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">任意</span>
+          <div>
+            <strong>教科書の章末確認問題</strong>
+            <p>今日の範囲（テクノロジ系 p.256-269、章末確認問題は p.270）を、自分のペースで解く。授業では、同じ範囲を確認テストで確かめる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>自分の装置の<span translate="no">稼働率</span>を、計算してみる</strong>
+            <p>身近な装置（例：自分のスマートフォン、学校のWi-Fi）を1つ選び、「平均で何時間動いて、何時間で直るか」を、自分で決める（架空の数字でよい）。授業の式で、<span translate="no">稼働率</span>を計算する。そのあと、同じ装置を2台並列にしたら、<span translate="no">稼働率</span>がどうなるかも計算する。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-refs">
+      <h2>参考リンク</h2>
+      <ul class="vz-links">
+        <li><a class="vz-link" href="https://www.ipa.go.jp/shiken/syllabus/omgdg50000005kn1-att/syllabus_ip_ver6_5.pdf" target="_blank" rel="noopener"><b>ITパスポート試験シラバス（PDF、Ver.6.5）</b><span><span translate="no">IPA</span>。「入出力デバイス」「システムの構成」「システムの評価指標」「ソリューションビジネス」の用語例で、試験での用語の書き方を確かめる</span></a></li>
+        <li><a class="vz-link" href="https://www3.jitec.ipa.go.jp/JitesCbt/html/about/merit.html" target="_blank" rel="noopener"><b>【ITパスポート試験】合格のメリット</b><span><span translate="no">IPA</span>。就活ワンポイントで紹介した記述の出典</span></a></li>
+        <li><a class="vz-link" href="https://www.ipa.go.jp/shiken/mondai-kaiotu/index.html" target="_blank" rel="noopener"><b>過去問題 | 試験情報 | IPA</b><span>公開問題と解答例の一覧。法令に特別の定めがある場合を除き、許諾・使用料は不要（IPA公式）。この授業では、年度と問番号を出典として書く</span></a></li>
+        <li><a class="vz-link" href="https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2025r07_ip_qs.pdf" target="_blank" rel="noopener"><b>令和7年度 ITパスポート試験 公開問題（PDF）</b><span>例題の出典（問82・問94）</span></a></li>
+        <li><a class="vz-link" href="https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2025r07_ip_ans.pdf" target="_blank" rel="noopener"><b>令和7年度 ITパスポート試験 公開問題 解答例（PDF）</b><span>例題の正答の確認</span></a></li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week07.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第7回 コンピュータの中身を開ける</span>
+      </a>
+      <a href="../it-passport-technology.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">ITパスポート テクノロジー系</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第9回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js?v=5"></script>
+</body>
+</html>
