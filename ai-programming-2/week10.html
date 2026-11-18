@@ -154,16 +154,84 @@
             <ol class="vz-steps">
               <li class="vz-step"><img class="vz-step-img" src="images/week10-vibe.jpg" alt="学生が椅子に深くもたれ、頭の後ろで腕を組んで、気楽に頼んでいる。机の上では、小さなロボットが、色とりどりの積み木や小物を、山のように積み上げている。少し散らかっていて、いまにも崩れそうな所がある。" width="800" height="597" loading="lazy"><b>ノリで頼む</b>気軽に任せると、思わぬ形のものが、山のように出てくることがある（絵の例）</li>
             </ol>
+            <p><strong>◆ バイブコーディングとは</strong></p>
             <ul>
-              <li><strong>バイブコーディング</strong>: 辞書（Merriam-Webster）の説明では、AIに作りたいものを伝えて、<strong>作らせる</strong>やり方。"In vibe coding the coder does not need to understand how or why the code works"（作る人は、コードがなぜ動くかを理解しなくてよい）。バグが残ることは受け入れる、ともある。2025年2月のAndrej Karpathy氏のX投稿が出どころと考えられている（辞書の記述。<strong>投稿の原文は確かめていません</strong>）。辞書は、<strong>意味が変わる可能性もある、ごく新しい言葉</strong>だとも書いている</li>
-              <li>気軽に試す、使い捨てを作る、には向く。ただし<strong>進級制作のように、直し続ける作品</strong>では、<strong>「なぜ動くか分からない」が、あとで困る</strong>。第9回の論文の「プロは雰囲気で任せず、計画して、人が確かめる」が、そこにつながる</li>
-              <li>第9回の論文（<a href="https://arxiv.org/abs/2512.14012" target="_blank" rel="noopener">Professional Software Developers Don't Vibe, They Control（arXiv）</a>）: プロは、雰囲気で全部を任せず、<strong>計画して、AIに任せ、人が確かめる</strong>。今日は、その<strong>1回の流れを、くり返す</strong>話</li>
-              <li>2026年6月ごろから、「<strong>プロンプトより、ループ</strong>」と言われ始めている。OpenClawという開発ツールの作者が、X上で "Stop prompting coding agents. You should be designing loops that prompt your agents."（コーディングエージェントに、プロンプトを打つのをやめよう。エージェントにプロンプトを打つ<strong>ループ</strong>を設計しよう）と書いた、と解説記事が紹介している。この考え方は、<strong>ループエンジニアリング</strong>とも呼ばれ始めた</li>
-              <li>人が1回ずつ指示を書く代わりに、<strong>「実行→確認→直す」をくり返す仕組み</strong>を作る。解説記事の一つは、<strong>「完成条件」「検証」「再試行」「停止」</strong>（と引き継ぎ）を設計する考え方として使える、としている（<a href="https://smartscope.blog/generative-ai/methodology/loop-engineering-agent-loops-2026/" target="_blank" rel="noopener">SmartScope</a>）</li>
-              <li><strong>注意</strong>: この言葉は<strong>最近使われ始めたばかりで、定義は決まっていません</strong>。ここで紹介したのは、<strong>解説記事</strong>で、公式の定義ではなく、元の投稿や原文は確かめていません</li>
-              <li>「プロンプトが要らなくなる」わけでは<strong>ありません</strong>。解説記事にも、悪い指示や悪い文脈でループを回すと、<strong>速く、高くつく失敗</strong>をするだけ、よいループは、よい指示と文脈の上に作る、とある（要約。<a href="https://zbrain.ai/loop-engineering/" target="_blank" rel="noopener">ZBrain</a>）。<strong>今日の「頼み方」の練習は、そのまま、ループの土台</strong></li>
-              <li>「ほとんどの開発者には、まだ要らない」という意見もある（費用と安全の理由。<a href="https://alphasignalai.substack.com/p/most-developers-do-not-need-agent" target="_blank" rel="noopener">AlphaSignal</a>）。記事が言う「ループ」は、<strong>AIが自動で回し続けるもの</strong>で、その使い方は<strong>今日はしません</strong>。今日は、<strong>人が回す小さなループ</strong>で練習する</li>
+              <li>AIに作りたいものを伝えて、<strong>作らせる</strong>やり方（辞書: Merriam-Webster）</li>
+              <li>作る人は、<strong>コードがなぜ動くか</strong>を理解しなくてよい。バグが残ることは、受け入れる</li>
+              <li>気軽に試す、使い捨てを作る、には向く。ただし<strong>進級制作のように、直し続ける作品</strong>では、<strong>「なぜ動くか分からない」が、あとで困る</strong></li>
             </ul>
+            <details class="vz-more">
+              <summary>辞書の原文と、言葉の出どころ</summary>
+              <ul>
+                <li>原文: "In vibe coding the coder does not need to understand how or why the code works"（作る人は、コードがなぜ動くかを理解しなくてよい）</li>
+                <li>2025年2月のAndrej Karpathy氏のX投稿が出どころと考えられている（辞書の記述。<strong>投稿の原文は確かめていません</strong>）</li>
+                <li>辞書は、<strong>意味が変わる可能性もある、ごく新しい言葉</strong>だとも書いている</li>
+              </ul>
+            </details>
+
+            <p><strong>◆ 第9回の論文を、思い出す</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-a10-paper">
+              <p class="vz-fig-title" id="cap-a10-paper">第9回の論文：プロはAIをどう使う？</p>
+              <svg class="vz-svg" viewBox="0 0 360 300" role="img" aria-labelledby="a10-paper-t a10-paper-d">
+                <title id="a10-paper-t">第9回の論文：プロはAIをどう使う？</title>
+                <desc id="a10-paper-d">論文の内容をやさしくまとめた図。1 経験のある開発者に聞いた。13人を観察し、99人にアンケートをした。2 AIは使っている。生産性の助けになると評価している。3 でも、設計と実装の主導権は手放さない。ソフトウェアの品質を大事にするから。4 やっていることは、実装の前に計画し、AIの出力はすべて確かめること。注意：対象は経験のある開発者で、就職に役立つかは、論文は扱っていない。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="44" rx="10"/>
+                <circle class="dot" cx="30" cy="28" r="12"/><text class="t-b t-c t-w" x="30" y="33">1</text>
+                <text class="t-b" x="52" y="26">だれに聞いた？</text>
+                <text class="t-sm" x="52" y="44">経験のある開発者。13人を観察、99人にアンケート</text>
+                <line class="line" x1="180" y1="52" x2="180" y2="64" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="66" width="344" height="44" rx="10"/>
+                <circle class="dot" cx="30" cy="88" r="12"/><text class="t-b t-c t-w" x="30" y="93">2</text>
+                <text class="t-b" x="52" y="86">AIを使っている？</text>
+                <text class="t-sm" x="52" y="104">使っている。生産性の助けになる、と評価</text>
+                <line class="line" x1="180" y1="112" x2="180" y2="124" marker-end="url(#mk-s)"/>
+                <rect class="box-orange box-key" x="8" y="126" width="344" height="44" rx="10"/>
+                <circle class="dot" cx="30" cy="148" r="12"/><text class="t-b t-c t-w" x="30" y="153">3</text>
+                <text class="t-b" x="52" y="146">でも、手放さないもの</text>
+                <text class="t-sm" x="52" y="164">設計と実装の主導権。品質を大事にするから</text>
+                <line class="line" x1="180" y1="172" x2="180" y2="184" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="186" width="344" height="44" rx="10"/>
+                <circle class="dot" cx="30" cy="208" r="12"/><text class="t-b t-c t-w" x="30" y="213">4</text>
+                <text class="t-b" x="52" y="206">やっていること</text>
+                <text class="t-sm" x="52" y="224">実装の前に計画し、出力はすべて確かめる</text>
+                <rect class="band" x="8" y="244" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="266">注意：対象は経験のある開発者</text>
+                <text class="t-sm" x="22" y="285">就職に役立つかは、論文は扱っていません</text>
+              </svg>
+              <figcaption>論文の要旨と本文を、授業用に、やさしい日本語にまとめた図です。原文は、下の「論文の原文」で見られます。</figcaption>
+            </figure>
+            <ul>
+              <li>論文: <a href="https://arxiv.org/abs/2512.14012" target="_blank" rel="noopener">Professional Software Developers Don't Vibe, They Control（arXiv）</a></li>
+              <li>プロも、AIを<strong>使っている</strong>。ちがいは、<strong>先に計画して、AIに任せ、出てきたものを人が確かめる</strong>こと。第9回の論文の「雰囲気で任せず、計画して、人が確かめる」が、バイブコーディングとの分かれ目になる</li>
+              <li>今日は、その<strong>1回の流れを、くり返す</strong>話</li>
+            </ul>
+            <details class="vz-more">
+              <summary>論文の原文（要旨と本文）</summary>
+              <ul>
+                <li>要旨（原文）: "while experienced developers value agents as a productivity boost, they retain their agency in software design and implementation out of insistence on fundamental software quality attributes, employing strategies for controlling agent behavior leveraging their expertise."（経験者はAIを生産性の助けとして評価するが、ソフトウェアの品質を大事にするので、設計と実装の主導権は手放さず、自分の経験でAIの動きを制御している）</li>
+                <li>本文（RQ2）: "they plan before implementing and validate all agentic outputs"（実装の前に計画し、AIの出力はすべて確かめる）。<strong>要旨ではなく、本文の記述</strong></li>
+                <li>2025-12-16に投稿。いま読めるのは2026-08-18の改訂版v2。主にCornell大学とUC San Diegoの研究者。対象は<strong>経験のある開発者</strong>で、授業の学生とは立場がちがう。<strong>就職に役立つかどうかは、扱っていません</strong></li>
+              </ul>
+            </details>
+
+            <p><strong>◆ 「プロンプトより、ループ」と言われ始めている</strong></p>
+            <ul>
+              <li>2026年6月ごろから、「<strong>プロンプトより、ループ</strong>」と言われ始めている。<strong>ループエンジニアリング</strong>とも呼ばれ始めた</li>
+              <li>人が1回ずつ指示を書く代わりに、<strong>「実行→確認→直す」をくり返す仕組み</strong>を作る考え方</li>
+              <li>「プロンプトが要らなくなる」わけでは<strong>ありません</strong>。<strong>今日の「頼み方」の練習は、そのまま、ループの土台</strong></li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>注意:</strong> この言葉は<strong>最近使われ始めたばかりで、定義は決まっていません</strong>。ここで紹介したのは<strong>解説記事</strong>で、公式の定義ではなく、元の投稿や原文は確かめていません。記事が言う「ループ」は、<strong>AIが自動で回し続けるもの</strong>で、その使い方は<strong>今日はしません</strong>。今日は、<strong>人が回す小さなループ</strong>で練習します。
+            </div>
+            <details class="vz-more">
+              <summary>解説記事の中身（出典つき）</summary>
+              <ul>
+                <li>OpenClawという開発ツールの作者が、X上で "Stop prompting coding agents. You should be designing loops that prompt your agents."（コーディングエージェントに、プロンプトを打つのをやめよう。エージェントにプロンプトを打つ<strong>ループ</strong>を設計しよう）と書いた、と解説記事が紹介している</li>
+                <li>「完成条件」「検証」「再試行」「停止」（と引き継ぎ）を設計する考え方として使える、としている（<a href="https://smartscope.blog/generative-ai/methodology/loop-engineering-agent-loops-2026/" target="_blank" rel="noopener">SmartScope</a>）</li>
+                <li>悪い指示や悪い文脈でループを回すと、<strong>速く、高くつく失敗</strong>をするだけ。よいループは、よい指示と文脈の上に作る（要約。<a href="https://zbrain.ai/loop-engineering/" target="_blank" rel="noopener">ZBrain</a>）</li>
+                <li>「ほとんどの開発者には、まだ要らない」という意見もある（費用と安全の理由。<a href="https://alphasignalai.substack.com/p/most-developers-do-not-need-agent" target="_blank" rel="noopener">AlphaSignal</a>）</li>
+              </ul>
+            </details>
             <figure class="vz-fig" aria-labelledby="cap-a10-loop">
               <p class="vz-fig-title" id="cap-a10-loop">プロンプトから、ループへ：頼む→確かめる→直す、をくり返す</p>
               <svg class="vz-svg" viewBox="0 0 360 232" role="img" aria-labelledby="a10-loop-t a10-loop-d">
