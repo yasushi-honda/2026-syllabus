@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第10回 24時間働くAIエージェントを知る：dots・Muse・Grok Bot | 自然言語開発 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=26">
+  <!-- 授業計画の変更（2026-11-18、先生の指示）: 親ページの第10回「進級制作にクラウド機能を統合①：設計」を、この回（常時稼働型AIエージェント）に差し替えた。第11回以降の行は今回は直していない（第11回の「第10回の計画に基づき」との矛盾は残る）。体験は任意・個人情報なし（先生の決定）。 -->
+  <!-- 公式情報確認: 2026-11-18（生HTMLをcurlで取得、またはPlaywrightで実レンダリングして原文照合。①Meta Muse: 日本語の公式発表 about.fb.com/ja/news/2026/10/muse-personal-ai-agent-launches-in-japan/「Metaは10月23日（日本時間）より、パーソナルAIエージェント「Muse」の日本での提供を開始します」「メールの送信や商品の購入など重要な操作の前には利用者本人に確認します」「iOS、Android、および muse.ai で提供を開始します。多くの基本的な機能は無料で利用でき、さらに活用したい方向けにはサブスクリプションプランもご用意しています」／about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/ の「Muse runs on its own dedicated computer in the cloud」「Muse checks with the person before sensitive actions like sending an email or making a purchase.」「Muse shows people a complete audit trail of everything it has done and plans to do.」／muse.ai/blog（How We Built Safety Into Muse）の「Sentinel is the sole permission authority for connector actions and network egress.」「Muse proposes actions, but only Sentinel can grant permission to perform action.」「two isolated security domains on one box, not an LLM powered agent with root」／muse.ai/terms（2026年11月17日から適用）の「18歳未満…の利用者…は、Museを利用することはできません」。②OpenAI dots: help.openai.com/en/articles/20001530-getting-started-with-your-dot（Playwrightで原文。更新は「18時間前」表記）の「Your dot is an always-on agent in ChatGPT」「Your dot has its own cloud computer」「Dots are rolling out in ChatGPT to Pro users aged 18 and older in markets excluding the European Economic Area, Switzerland, and the UK.」「Access to your local computer is optional and starts turned off.」「You can pause it at any time.」。openai.com/index/introducing-dots/ は curl で403のため原文未照合。日本での提供可否は公式に明記を確認できず。③xAI（SpaceXAI）Grok Bot: x.ai/news/introducing-grok-bot「Bots have their own computer.」「only come back when something needs your approval」「Grok Bot is in beta」（8月11日開始）、x.ai/news/grok-bot-more-plans「Grok Bot is now included with all SuperGrok, Cursor Pro, and Cursor Teams plans.」「Grok Bot comes with its own usage」、x.ai/bot「Grok Bot is generally available for Enterprise」。日本での提供・無料トライアルは公式で確認できず（日本の報道は二次情報）。④Google: support.google.com/gemini/answer/17094507「Available without a Google AI subscription in Australia, Canada, India, Japan, South Korea, and the US.」「For now, this feature isn’t available if you sign in with a work or school Google Account.」「Do not enter sign-in info, payment details, or info you may find sensitive directly into the task thread.」／答え17171264（リリースノート 2026.11.17）「Tasks in Gemini is rolling out free of charge for hundreds of millions of users in the US, India, Canada, Australia, Japan, and Korea」／同ヘルプの「we renamed it Task」（Sparkの改名）。⑤Microsoft Autopilot: techcommunity.microsoft.com/blog/microsoft-copilot-blog/autopilot-meet-your-trusted-personal-teammate/4572611「Autopilot has its own identity, memory, workspace, and remote computer」「Starting today, Autopilot is rolling out to eligible customers in Frontier.」（投稿日 Nov 17, 2026）。⑥Anthropic Claude Duet: claude.com/resources/articles/claude-duet「A research preview is available by waitlist today, starting with US Pro, Max, and Ultra subscribers.」「checks with you before it acts on your behalf」「Claude Duet has a virtual machine with its own browser」。未確認: dotsとGrok Botの日本での提供可否と料金、Museの日本での無料枠の上限、Museの新規登録（電話番号またはメール）の実画面と承認の表示、Tasks in Geminiの画面（Chat/Taskの切り替え）が学生の個人アカウントで出るか、学校のネットワークでの表示。日本の報道（Impress Watch 西田宗千佳氏の連載）にある「Museは日本のアカウントからは使いにくい」は、10月23日の日本提供開始より前の記述なので使わない。） -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--green">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../natural-language-dev-2.html">自然言語開発 II</a>
+        <span>/</span>
+        <span>第10回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">24時間働くAIエージェントを<wbr>知る：dots・Muse・Grok Bot</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 10</span>
+            <span class="page-badge">木曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-green">
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
+
+    <div class="qr-box qr-box--pc">
+      <a class="qr-box__zoom" href="qr/week10-page.svg" target="_blank" rel="noopener" aria-label="QRコードを大きく表示する">
+        <img class="qr-box__img" src="qr/week10-page.svg" alt="この第10回のページを開くQRコード。スマートフォンのカメラで読み取ると、このページが開く。" width="180" height="180">
+      </a>
+      <div class="qr-box__body">
+        <p class="qr-box__heading">📱 スマホで開く</p>
+        <p class="qr-box__text">教室の画面を見ながら、自分のスマートフォンで、このページを開けます。スマートフォンの<strong>カメラ</strong>で、このQRコードを読み取ってください。QRコードを押すと、大きく表示されます。<strong>今日の体験（2限前半、任意）は、スマートフォンのアプリでもできます</strong>。</p>
+      </div>
+    </div>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">2026年の8月から11月にかけて、各社が相次いで出した<strong>常時稼働型のAIエージェント</strong>（OpenAIの<strong>dots</strong>、Metaの<strong>Muse</strong>、xAIの<strong>Grok Bot</strong>、GoogleのTasks in Gemini、MicrosoftのAutopilot、AnthropicのClaude Duet）を、公式の説明で比べる。「答えるAI」から「<strong>代わりに動くAI</strong>」への変化と、<strong>動き続けるAIに、何を渡して、何は人が決めるか</strong>を考え、自分の進級制作に専属のエージェントを置くなら、の<strong>設計シート</strong>を書く</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">常時稼働型エージェント / 専用のクラウドPC / 記憶 / 承認 / Sentinel（Muse） / 最小権限 / 操作の記録（監査） / 定期タスク / 日本での提供状況 / 設計シート</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">自分が使うAIエージェント（Claude Code／Codex CLI／Antigravity CLI）が使える状態のCodespace。第9回の記録（Workerの公開URL、NeonかD1かの理由）。<strong>体験（2限前半）は任意</strong>です。やる人だけ、<strong>個人のアカウント</strong>（Museは電話番号またはメールで登録、Tasks in Geminiは個人のGoogleアカウント。<strong>学校のアカウントでは使えません</strong>）を使います。やらない人も、授業は同じように進められます。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>「常時稼働型エージェント」が、これまでのAIエージェント（自分のPCで動くClaude Codeなど）と<strong>どこが違うか</strong>を、図で説明できる</li>
+        <li>6つのサービスについて、<strong>公式が書いていること</strong>と、<strong>公式で確かめられていないこと</strong>を分けて言える（日本で今使えるのは何か）</li>
+        <li>Museの設計を例に、<strong>「動かす側」と「許可する側」を分ける</strong>考え方と、承認・操作の記録・パスワードを見せない仕組みを説明できる</li>
+        <li>自分の進級制作に専属のエージェントを置くなら、<strong>目標・任せる仕事・承認が要る操作・渡す権限・止める条件</strong>を、設計シートに書ける</li>
+      </ul>
+      <div class="lesson-tip">
+        <strong>今日の進め方:</strong> <strong>授業計画を変更</strong>しました。予定では「進級制作にクラウド機能を統合①：設計」でしたが、この数か月、各社から<strong>24時間動くAIエージェント</strong>が次々に出ているため、先生の決定で、今日はこの話題にします（クラウド機能の設計は、次の回以降の扱いを先生が決めます）。今日の内容は、<strong>公式の発表と説明書を読んで</strong>書いています。まだ新しいサービスばかりで、画面や条件は<strong>数週間で変わる</strong>ことがあります。ページには<strong>確認した日（2026-11-18）</strong>を書き、<strong>確かめられていないことは「未確認」</strong>と書きました。体験は<strong>任意</strong>で、<strong>メールや予定表など、個人のアプリはつながない</strong>ことにします。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>「答えるAI」から「代わりに動くAI」へ：6つのサービスの地図を読む</h3>
+          <div class="timeline-body">
+            <p><strong>① これまでのAIエージェントと、何が違うか</strong>（約10分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-n10-shift">
+              <p class="vz-fig-title" id="cap-n10-shift">これまでと、2026年に出てきたもの</p>
+              <svg class="vz-svg" viewBox="0 0 360 292" role="img" aria-labelledby="n10-shift-t n10-shift-d">
+                <title id="n10-shift-t">これまでと、2026年に出てきたもの</title>
+                <desc id="n10-shift-d">上の段は、これまでのAIエージェント。自分のPCで動くので、PCを閉じると止まる。下の段は、2026年に出てきた常時稼働型。専用のクラウドPCで動くので、アプリを閉じても動き続ける。重要な操作の前に人へ確認する、と書くサービスが多い。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="122" rx="10"/>
+                <text class="t-b" x="22" y="28">これまで：自分のPCで動く</text>
+                <text class="t-sm" x="22" y="50">例: Claude Code、Codex CLI（第8〜9回で使用）</text>
+                <text class="t-sm" x="22" y="70">自分が頼む → エージェントが、自分のPCで作業</text>
+                <text class="t-sm" x="22" y="90">PCを閉じる・Codespaceが止まると、止まる</text>
+                <text class="t-sm" x="22" y="110">頼まれたときに、動く</text>
+                <line class="line" x1="180" y1="130" x2="180" y2="146" marker-end="url(#mk-s)"/>
+                <rect class="box-green box-key" x="8" y="148" width="344" height="138" rx="10"/>
+                <text class="t-b" x="22" y="170">今年：専用のクラウドPCで動く</text>
+                <text class="t-sm" x="22" y="192">例: dots、Muse、Grok Bot</text>
+                <text class="t-sm" x="22" y="212">アプリを閉じても、作業が続く</text>
+                <text class="t-sm" x="22" y="232">決めた時刻や、状況の変化で、自分から動く</text>
+                <text class="t-sm" x="22" y="252">記憶を持つ。使うほど、好みを覚える</text>
+                <text class="t-sm" x="22" y="272">重要な操作の前に、人へ確認する、と書く社が多い</text>
+              </svg>
+              <figcaption>「専用のクラウドPC」「続けて動く」「記憶」「承認」は、主なサービスの公式の説明に、くり返し出てくる言葉です（サービスごとに、書いてあるものと書いていないものがあります）。4つの部品としてまとめたのは、<strong>この授業の整理で、公式の分類ではありません</strong>。</figcaption>
+            </figure>
+            <ul>
+              <li>Metaの公式発表（Muse）: "Muse is a personal AI agent. It doesn’t just answer questions, it actually does the work."（質問に答えるだけでなく、実際に作業をする）</li>
+              <li>OpenAIの公式ヘルプ（dots）: "Your dot is an always-on agent in ChatGPT that can take on ongoing responsibility and keep making progress between conversations."（会話と会話のあいだも、仕事を進める）</li>
+              <li>第9回で、Workerを<strong>公開URLに置きっぱなし</strong>にした。あれは「<strong>人が作ったコードが、動き続ける</strong>」。今日見るのは「<strong>AIが、判断しながら、動き続ける</strong>」</li>
+            </ul>
+            <p><strong>② 6つのサービスを、公式の説明で並べる</strong>（約20分）。確認日 2026-11-18。「日本」の列は、<strong>公式で確かめられた範囲</strong>だけを書いています。</p>
+            <table class="schedule-table schedule-table--stack">
+              <thead><tr><th>サービス</th><th>公式に書いてあること</th><th>日本</th></tr></thead>
+              <tbody>
+                <tr><td data-label="サービス"><strong>Muse</strong>（Meta）</td><td data-label="公式に書いてあること">専用のクラウドPC「Muse Secure VM」で動く。メール送信・購入の前に本人へ確認。操作の記録を見られる。アプリを閉じても作業を続ける</td><td data-label="日本"><strong>2026-10-23に提供開始</strong>（iOS・Android・muse.ai）。多くの基本機能は無料、有料プランもある。<strong>18歳未満は利用不可</strong></td></tr>
+                <tr><td data-label="サービス"><strong>dots</strong>（OpenAI）</td><td data-label="公式に書いてあること">ChatGPTの中の常時稼働エージェント。自分専用のクラウドPC。自分のPCへの接続は、初期設定ではオフ。いつでも一時停止できる</td><td data-label="日本">対象は、18歳以上のProなど。EEA・スイス・英国は除く。<strong>日本は公式で確認できず（未確認）</strong></td></tr>
+                <tr><td data-label="サービス"><strong>Grok Bot</strong>（xAI）</td><td data-label="公式に書いてあること">Botごとに自分のコンピューター。24時間動く（8月11日にbetaで開始。公式ページには現在「beta外」とある）。承認が要るときだけ人に戻る。Botどうしがやりとりする。作業を見せると、手順を覚える</td><td data-label="日本">SuperGrokやCursorのプランに含まれる。<strong>日本は公式で確認できず（未確認）</strong></td></tr>
+                <tr><td data-label="サービス"><strong>Tasks in Gemini</strong>（Google。以前の名前は Gemini Spark）</td><td data-label="公式に書いてあること">背景で複数の手順を進める。決めた時刻に実行できる。公式ヘルプが「機密情報をタスクに直接入れない」と注意している</td><td data-label="日本"><strong>2026-11-17から日本でも無料</strong>。<strong>現時点では、個人のGoogleアカウントのみ。学校・職場のアカウントは不可</strong>（公式ヘルプの "For now"）</td></tr>
+                <tr><td data-label="サービス"><strong>Autopilot</strong>（Microsoft）</td><td data-label="公式に書いてあること">自分の身元・記憶・作業場所・遠隔のコンピューターを持つ。クラウドで動く</td><td data-label="日本">Frontierプログラムに登録した、条件を満たす顧客に、11月17日から順次（Copilotのライセンスなどが条件）。<strong>個人向けとは書かれていない</strong></td></tr>
+                <tr><td data-label="サービス"><strong>Claude Duet</strong>（Anthropic）</td><td data-label="公式に書いてあること">専用の仮想マシンとブラウザを持ち、PCやスマホが閉じていても動く。「実行する前に確認する」と書いてある</td><td data-label="日本"><strong>研究プレビュー。待機リストで、米国のPro・Max・Ultraから</strong>。日本のことは書かれていない（米国から）</td></tr>
+              </tbody>
+            </table>
+            <ul>
+              <li>「<strong>公式で確認できず</strong>」は、<strong>使えない</strong>という意味ではありません。公式のページに、日本のことが書いていないだけです。日本の報道は、Grok Botを日本から使えると伝えていますが、<strong>これは二次情報</strong>です。先生の確認結果を、授業で伝えます</li>
+              <li>古い記事に注意。「Museは日本のアカウントから使いにくい」と書いた記事があるが、10月23日の日本提供の<strong>前</strong>の話。<strong>記事の日付と公式を、必ず見比べる</strong></li>
+            </ul>
+            <p><strong>③ 隣の人と、1分ずつ</strong>（約10分）。6つのうち、<strong>自分が使うなら、どれに、どんな仕事を頼みたいか</strong>。そして<strong>それを頼むのが、こわい仕事は何か</strong>。1つずつ。</p>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>動き続けるAIに、何を渡すか：Museの設計を読む</h3>
+          <div class="timeline-body">
+            <p><strong>① 「動かす側」と「許可する側」を分ける</strong>（約20分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-n10-sentinel">
+              <p class="vz-fig-title" id="cap-n10-sentinel">Museの設計：作業する側と、許可する側</p>
+              <svg class="vz-svg" viewBox="0 0 360 330" role="img" aria-labelledby="n10-sentinel-t n10-sentinel-d">
+                <title id="n10-sentinel-t">Museの設計：作業する側と、許可する側</title>
+                <desc id="n10-sentinel-d">利用者が、Museに仕事を頼む。Museは、専用のクラウドPCの中で作業をする。Museがインターネットやアプリに何かをするには、別のエージェントのSentinelの許可が必要。重要な操作のとき、Sentinelは利用者本人に承認を求める。Museは、パスワードや支払い方法を見られない。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="46" rx="10"/>
+                <text class="t-b" x="22" y="34">利用者（あなた）</text>
+                <text class="t-sm" x="342" y="34" text-anchor="end">頼む・承認する</text>
+                <line class="line" x1="180" y1="54" x2="180" y2="68" marker-end="url(#mk-s)"/>
+                <rect class="band" x="8" y="70" width="344" height="168" rx="10"/>
+                <text class="t-sm" x="20" y="88">専用のクラウドPC（Muse Secure VM）</text>
+                <rect class="box-green" x="20" y="98" width="320" height="56" rx="10"/>
+                <text class="t-b" x="34" y="122">Muse（作業する側）</text>
+                <text class="t-sm" x="34" y="142">「こうしたい」と提案する。パスワードは見えない</text>
+                <line class="line" x1="180" y1="156" x2="180" y2="170" marker-end="url(#mk-s)"/>
+                <rect class="box-green box-key" x="20" y="172" width="320" height="56" rx="10"/>
+                <text class="t-b" x="34" y="196">Sentinel（許可する側）</text>
+                <text class="t-sm" x="34" y="216">Museとは別のエージェント。通信を、ここで止める</text>
+                <line class="line" x1="180" y1="240" x2="180" y2="254" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="256" width="344" height="68" rx="10"/>
+                <text class="t-b" x="22" y="280">インターネット・つないだアプリ</text>
+                <text class="t-sm" x="22" y="300">許可された操作だけが、外に出る</text>
+                <text class="t-sm" x="22" y="316">メール送信・購入などは、あなたの承認が先</text>
+              </svg>
+              <figcaption>Meta公式のブログと発表の内容を、この授業用に簡単にした図です。実際の仕組みは、公式の原文を見てください（参考リンク）。<strong>全部の操作を毎回確認するわけではありません</strong>（公式ブログは、低リスクの操作は割り込みなしで進む場合があると書いています）。</figcaption>
+            </figure>
+            <ul>
+              <li>Meta公式のブログの原文: "Sentinel is the sole permission authority for connector actions and network egress."（Sentinelだけが、アプリへの操作と、ネットワークの外へ出ることを許可する）／"Muse proposes actions, but only Sentinel can grant permission to perform action."（Museは操作を提案するだけで、許可できるのはSentinelだけ）</li>
+              <li>同じブログの原文: "The right mental model is two isolated security domains on one box, not an LLM powered agent with root."（1台の中に、分けられた2つの領域がある。管理者権限を持つAIではない）</li>
+              <li>Meta公式の発表（日本語）: 「メールの送信や商品の購入など重要な操作の前には利用者本人に確認します」「利用者は、Museが行った操作や今後行う予定の操作の履歴を確認できます」</li>
+              <li><strong>考えるポイント</strong>: <strong>「頼まれたAI」に、許可も任せると、何が起きるか</strong>。第5回の<strong>最小権限</strong>と、どうつながるか</li>
+            </ul>
+            <p><strong>② 各社の「承認」を見比べる</strong>（約15分）。公式の原文で、<strong>人が確認する場面</strong>を探す。</p>
+            <table class="schedule-table schedule-table--stack">
+              <thead><tr><th>サービス</th><th>公式の原文（確認する場面）</th></tr></thead>
+              <tbody>
+                <tr><td data-label="サービス"><strong>Muse</strong></td><td data-label="公式の原文">"Muse checks with the person before sensitive actions like sending an email or making a purchase."</td></tr>
+                <tr><td data-label="サービス"><strong>Grok Bot</strong></td><td data-label="公式の原文">"only come back when something needs your approval"</td></tr>
+                <tr><td data-label="サービス"><strong>Claude Duet</strong></td><td data-label="公式の原文">"checks with you before it acts on your behalf"</td></tr>
+                <tr><td data-label="サービス"><strong>dots</strong></td><td data-label="公式の原文">"You choose what it can do on its own, review its work, and give feedback or change direction as you go. You can pause it at any time."</td></tr>
+                <tr><td data-label="サービス"><strong>Tasks in Gemini</strong></td><td data-label="公式の原文">"Do not enter sign-in info, payment details, or info you may find sensitive directly into the task thread."（公式ヘルプの注意）</td></tr>
+              </tbody>
+            </table>
+            <ul>
+              <li>上の表に引いた原文で<strong>「実行の前に人へ確認する」とはっきり書いてある</strong>のは、<strong>Muse・Grok Bot・Claude Duet</strong>。<strong>dots</strong>は「自分で任せる範囲を選び、結果を確認し、一時停止できる」という書き方で、<strong>必ず承認が要る</strong>とは書いていない。<strong>Tasks in Gemini</strong>のこの原文は「機密情報を入れない」という<strong>注意</strong>だが、同じヘルプに「タスクによっては、完了前に確認を求めることがある」（"Some tasks may require your confirmation before Gemini completes them."）とも、購入のときは「1タップの承認が先」とも書いてある（リリースノート）。<strong>Autopilot</strong>の公式ブログにも、「何に承認が要るかを自分で決める」（"decide what requires approval"）とある。<strong>承認の場面は、サービスごとに違う</strong>ので、同じだと思わない。<strong>書いていないこと</strong>は、分からないままにする（例: 「承認なしで動く範囲が、どこまでか」は、各社の画面で確かめるまで言えない）</li>
+              <li>Muse公式ブログは、<strong>AIは間違うし、読んだデータで攻撃されることもある</strong>という前提で、被害を小さくする設計にした、と書いている。<strong>「間違う前提で作る」</strong>は、自分の作品を作るときにも使える</li>
+            </ul>
+            <p><strong>③ 第9回とつなぐ</strong>（約15分）。Workerを公開URLに置いたとき、<strong>公開URLは誰でも開ける</strong>ことを確かめた。動き続けるエージェントに仕事を頼むときも、同じ質問をする。</p>
+            <ul>
+              <li><strong>誰が</strong>それを動かせるか（頼む人、頼まれたAI、第三者）</li>
+              <li><strong>何を</strong>渡したか（アカウント、メール、予定、支払い）。渡したものは、<strong>後から取り戻せるか</strong>（公式は「接続を解除してもよい」と書くが、<strong>すでに取得した情報が消えるかは、サービスごとに違う</strong>。dotsのヘルプには、接続を解除しても、すでに取得した情報は削除されない、とある）</li>
+              <li><strong>どこで止めるか</strong>（一時停止、接続の解除、削除）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>小さな定期タスクで、承認・履歴・止め方を観察する（体験は任意）</h3>
+          <div class="timeline-body">
+            <p><strong>① 先に決める3つのルール</strong>（約5分）。<strong>体験する人も、しない人も、同じルール</strong>です。</p>
+            <ul>
+              <li><strong>個人のアカウントだけ</strong>。学校のアカウントや、学校のメールは使わない（Tasks in Geminiは、学校・職場のアカウントでは使えない、と公式ヘルプにある）</li>
+              <li><strong>メール・予定表・写真・支払いは、つながない</strong>。公開されている情報だけを使うタスクにする</li>
+              <li><strong>18歳以上</strong>の人だけ（Museの規約。本校の学生は全員、18歳以上）。登録に電話番号やメールが必要になる。<strong>入れたくない人は、体験しなくてよい</strong></li>
+            </ul>
+            <p><strong>② 頼むタスクを決める</strong>（約10分）。<strong>公開情報だけ</strong>で、<strong>間違っても困らない</strong>仕事にする。</p>
+            <pre class="md-preview">例: 毎朝、自分の進級制作の分野（例: 地図、天気、ゲーム）の
+    ニュースを、3件だけ、1行ずつの要約で、教えてください。
+    出典のURLも付けてください。
+    メールや予定表には、つながないでください。</pre>
+            <p><strong>③ A: 体験する人</strong>（約25分）。MuseかTasks in Geminiのどちらか1つで、タスクを頼む。</p>
+            <ul>
+              <li><strong>Muse</strong>: iOS・Android・muse.ai。登録は、電話番号またはメール。日本の公式発表によると、基本の機能の多くは無料</li>
+              <li><strong>Tasks in Gemini</strong>: 個人のGoogleアカウントで、Geminiの画面。公式ヘルプに、Chat と Task を切り替える場所がある、と書いてある（<strong>学生の画面に出るかは、未確認</strong>）</li>
+              <li>観察して、<strong>記録する</strong>（下の「観察メモ」）: ①頼んだ文 ②AIが、<strong>確認してきたこと</strong>（あれば）③<strong>実行の履歴</strong>がどこで見られるか ④<strong>止める方法</strong>がどこにあるか ⑤<strong>思っていたのと違ったこと</strong></li>
+              <li>画面に、名前・電話番号・メールアドレスが出たら、<strong>撮影・共有はしない</strong></li>
+              <li>手が止まったら、手を挙げる。<strong>うまくいかなくても、それも記録になります</strong>（公式で確認できなかったことの例になる）</li>
+            </ul>
+            <p><strong>③ B: 体験しない人</strong>（約25分）。先生の画面（または、体験している人の画面）を見ながら、<strong>自分のAIエージェント</strong>（Claude Code／Codex CLI／Antigravity CLI）に、<strong>同じタスクの仕様</strong>を書かせる（<strong>実行はしない</strong>）。第8回の型②（計画だけ立てさせる）を使う。</p>
+            <pre class="md-preview">毎朝、決まった時刻に、公開されているニュースを3件だけ
+要約して届けるタスクの「仕様」を書いてください。まだ作らないでください。
+・目的 ・入力（どの情報を読むか） ・出力 ・実行する時刻
+・人に確認する場面 ・止める方法 ・間違えたとき困らないための工夫
+最初に、私に質問があれば、選択肢で聞いてください。</pre>
+            <p><strong>④ 観察メモをそろえる</strong>（約10分）。体験した人もしない人も、<strong>次の表を、1行ずつ</strong>埋める（自分のノートに）。</p>
+            <pre class="md-preview">・使ったもの（Muse／Tasks in Gemini／先生の画面／仕様だけ）
+・頼んだ文
+・AIが人に確認してきたこと（なければ「なし」）
+・実行の履歴は、どこで見られたか
+・止める方法は、どこにあったか
+・公式の説明と、違っていたこと
+・いちばん「こわい」と思ったこと</pre>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>自分の進級制作に、専属のエージェントを置くなら：設計シートを書く</h3>
+          <div class="timeline-body">
+            <p><strong>① 設計シートの5項目を知る</strong>（約5分）。これは、<strong>この授業の整理で、公式の分類ではありません</strong>。</p>
+            <figure class="vz-fig" aria-labelledby="cap-n10-sheet">
+              <p class="vz-fig-title" id="cap-n10-sheet">設計シートの5項目</p>
+              <svg class="vz-svg" viewBox="0 0 360 286" role="img" aria-labelledby="n10-sheet-t n10-sheet-d">
+                <title id="n10-sheet-t">設計シートの5項目</title>
+                <desc id="n10-sheet-d">専属のエージェントを置くときに決める5つのこと。1つ目は目標。2つ目は任せる仕事。3つ目は承認が要る操作。4つ目は渡す権限。5つ目は止める条件。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="48" rx="10"/>
+                <circle class="dot" cx="30" cy="30" r="12"/><text class="t-b t-c t-w" x="30" y="35">1</text>
+                <text class="t-b" x="52" y="26">目標</text><text class="t-sm" x="52" y="45">何のために置くか。1文で</text>
+                <rect class="box-white" x="8" y="62" width="344" height="48" rx="10"/>
+                <circle class="dot" cx="30" cy="86" r="12"/><text class="t-b t-c t-w" x="30" y="91">2</text>
+                <text class="t-b" x="52" y="82">任せる仕事</text><text class="t-sm" x="52" y="101">いつ・何を・どこまで</text>
+                <rect class="box-green box-key" x="8" y="118" width="344" height="48" rx="10"/>
+                <circle class="dot" cx="30" cy="142" r="12"/><text class="t-b t-c t-w" x="30" y="147">3</text>
+                <text class="t-b" x="52" y="138">承認が要る操作</text><text class="t-sm" x="52" y="157">送る・買う・消す・公開する</text>
+                <rect class="box-green box-key" x="8" y="174" width="344" height="48" rx="10"/>
+                <circle class="dot" cx="30" cy="198" r="12"/><text class="t-b t-c t-w" x="30" y="203">4</text>
+                <text class="t-b" x="52" y="194">渡す権限</text><text class="t-sm" x="52" y="213">読むだけ／書ける。必要な分だけ</text>
+                <rect class="box-white" x="8" y="230" width="344" height="48" rx="10"/>
+                <circle class="dot" cx="30" cy="254" r="12"/><text class="t-b t-c t-w" x="30" y="259">5</text>
+                <text class="t-b" x="52" y="250">止める条件</text><text class="t-sm" x="52" y="269">いつ止めるか。誰が止めるか</text>
+              </svg>
+              <figcaption>太い枠の3と4が、今日いちばん考える場所です。<strong>承認が要る操作</strong>と<strong>渡す権限</strong>は、<strong>人が決める</strong>ところです。</figcaption>
+            </figure>
+            <p><strong>② AIエージェントと、設計シートを書く</strong>（約20分）。第8回の型①（先に質問させる）で、<strong>自分の進級制作</strong>（または第7回の題材）に、<strong>専属のエージェントを置くなら</strong>のシートを作る。</p>
+            <pre class="md-preview">私の進級制作に、専属のAIエージェントを置くとしたら、
+設計シートを作りたいです。まだ、何も作らないでください。
+次の5項目を、順番に、私に質問して決めてください。
+質問は、1回に1つ。選択肢で聞いてください。
+1. 目標  2. 任せる仕事  3. 承認が要る操作  4. 渡す権限  5. 止める条件
+最後に、私が決めたことだけを、表にしてください。
+私が決めていないことは、「未定」と書いてください。</pre>
+            <ul>
+              <li>書いたあと、<strong>3（承認が要る操作）と4（渡す権限）</strong>を、自分の目で読む。<strong>AIが決めたことが、混ざっていないか</strong>（「未定」のところを、AIが勝手に埋めていないか）</li>
+              <li>隣の人に、<strong>3つの質問</strong>をしてもらう: ①これを渡して、いちばん困るのは何か ②止める条件は、あなたが見ていないときも効くか ③<strong>第9回の公開URLと、つながっているところはあるか</strong></li>
+            </ul>
+            <p><strong>③ 今日の見方を、1文にする</strong>（約5分）。</p>
+            <pre class="md-preview">動き続けるAIに任せるとき、私が人として決めることは、（　　　）です。</pre>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>今日の記録を残し、次回を知る</h3>
+          <div class="timeline-body">
+            <ul>
+              <li>今日の記録を、自分のノート（またはリポジトリ）に残す（約5分）。<strong>名前・電話番号・メールアドレス・パスワード・トークンは書かない</strong>:</li>
+            </ul>
+            <pre class="md-preview">・観察メモ（2限前半の7項目）
+・設計シート（5項目。「未定」は未定のまま）
+・「私が人として決めることは、（　　）です」の1文
+・公式で確かめられなかったこと（あれば、1つ）</pre>
+            <ul>
+              <li>次回（第11回）：授業計画では「進級制作にクラウド機能を統合②：実装」ですが、<strong>前回までの予定（第10回の設計）を、今日の内容に差し替えた</strong>ため、<strong>進め方は、先生が決めて、次回の前に連絡します</strong>（<a href="../natural-language-dev-2.html">授業計画一覧</a>）。第9回の記録（公開URL、NeonかD1かの理由）は、残しておいてください</li>
+              <li>「今日の話で、<strong>いちばん、自分で決めたい</strong>と思ったこと」を一言メモして退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>今日の記録（観察メモ、設計シート、1文）を残す</strong>
+            <p>次の回の材料になる。<strong>個人情報とパスワードは書かない</strong>。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>体験したサービスで、接続を解除する・タスクを止める・アカウントを使わなくなる場合の手順を、確かめる</strong>
+            <p>体験した人だけ。<strong>止め方が分かる</strong>ことまでが、体験です。画面の出方が、今日の説明と違ったら、メモして次回に教えてください。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>公式の説明で、日本での提供が「未確認」だったサービスを、1つ選んで、公式のページで調べる</strong>
+            <p>書いてあったら、<strong>ページの名前と日付</strong>をメモする。見つからなければ、<strong>見つからなかった</strong>ことも記録になる。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <p class="lesson-note">確認日は 2026-11-18 です。公式のページは英語が多く、条件や画面は数週間で変わることがあります。</p>
+      <ul>
+        <li><a href="https://about.fb.com/ja/news/2026/10/muse-personal-ai-agent-launches-in-japan/" target="_blank" rel="noopener">Meta、パーソナルAIエージェント「Muse」を日本で提供開始（Meta公式、日本語）</a> — 日本での提供開始、無料と有料、承認</li>
+        <li><a href="https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/" target="_blank" rel="noopener">Introducing Muse: The World’s First Personal AI Agent Built for Everyone（Meta公式）</a> — 専用のクラウドPC、Sentinel、承認、操作の記録</li>
+        <li><a href="https://muse.ai/blog/security-and-safety-for-ai-agents-our-approach-with-muse" target="_blank" rel="noopener">How We Built Safety Into Muse（Muse公式ブログ）</a> — 「動かす側」と「許可する側」を分ける設計の原文</li>
+        <li><a href="https://muse.ai/terms" target="_blank" rel="noopener">Muse利用規約の補足条項（Muse公式、日本語）</a> — 18歳未満は利用不可、料金、無料の変更</li>
+        <li><a href="https://help.openai.com/en/articles/20001530-getting-started-with-your-dot" target="_blank" rel="noopener">Getting started with your dot（OpenAI Help Center）</a> — dotsの説明、対象、接続、一時停止</li>
+        <li><a href="https://x.ai/news/introducing-grok-bot" target="_blank" rel="noopener">Introducing Grok Bot（xAI公式）</a> — Botの説明、承認</li>
+        <li><a href="https://x.ai/news/grok-bot-more-plans" target="_blank" rel="noopener">Grok Bot is now included with more plans（xAI公式）</a> — 対象のプラン</li>
+        <li><a href="https://support.google.com/gemini/answer/17094507?hl=en" target="_blank" rel="noopener">Manage your tasks &amp; workflows in Gemini Apps（Gemini Apps Help）</a> — Tasks in Geminiの対象国、個人アカウントのみ、入れてはいけない情報</li>
+        <li><a href="https://support.google.com/gemini/answer/17171264?hl=en" target="_blank" rel="noopener">Gemini Apps’ release updates &amp; improvements（Gemini Apps Help）</a> — 2026年11月17日の更新（Tasks in Geminiが日本でも無料）</li>
+        <li><a href="https://techcommunity.microsoft.com/blog/microsoft-copilot-blog/autopilot-meet-your-trusted-personal-teammate/4572611" target="_blank" rel="noopener">Autopilot: meet your trusted personal teammate（Microsoft Tech Community）</a> — Autopilotの説明、Frontierでの提供</li>
+        <li><a href="https://claude.com/resources/articles/claude-duet" target="_blank" rel="noopener">Introducing Claude Duet（Claude公式）</a> — 研究プレビュー、待機リスト、米国から</li>
+        <li><a href="week05.html">第5回 スコアを保存して守ろう（本サイト）</a> — 秘密の値と最小権限</li>
+        <li><a href="week08.html">第8回 指示の4つの型（本サイト）</a> — 今日使った型①②</li>
+        <li><a href="week09.html">第9回 Cloudflare WorkersとD1に触れてみよう（本サイト）</a> — 公開URLは誰でも開ける</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week09.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第9回 Cloudflare WorkersとD1に触れてみよう</span>
+      </a>
+      <a href="../natural-language-dev-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">自然言語開発 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第11回（進め方は先生が決めて連絡します）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js?v=5"></script>
+</body>
+</html>
