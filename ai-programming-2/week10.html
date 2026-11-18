@@ -12,6 +12,7 @@
   <!-- 前回（第9回）のアンケート結果の分類は、回答の個別内容を載せず、分類と件数のみ（2026-11-12）。頼み方・コードの理解・ループを回す前に決める4つは授業用の整理で、公式の分類ではない。 -->
   <!-- ループエンジニアリング（2026-11-12確認）: 2026年6月ごろから使われ始めた言葉で定義は決まっていない。出典は解説記事（本文をcurlで照合）: codingwithroby.substack.com（X上のSteinberger氏の投稿「Stop prompting coding agents. You should be designing loops that prompt your agents.」の引用、命名は2026年6月）／zbrain.ai（悪い指示のループは速く高くつく失敗をするだけ、よいループはよい指示の上に作る、理解の負債）／alphasignalai.substack.com（多くの開発者にはまだ要らない、費用と安全）／smartscope.blog（完成条件を検査できる形で書く、再試行に回数と失敗条件を付ける、2026-06-11公開・2026-10-13更新）。一次資料（Steinberger氏の投稿、Osmani氏の原文）は未確認。 -->
   <!-- バイブコーディング→AI駆動開発（2026-11-19追記、先生の提案）: Merriam-Webster（merriam-webster.com/slang/vibe-coding、Playwrightで原文確認、2026-11-19）の「In vibe coding the coder does not need to understand how or why the code works」「The word is believed to have been coined by Andrej Karpathy (a co-founder of OpenAI), who described the practice in a recent social media post.」「@karpathy, X (formerly Twitter), 2 Feb. 2025」「it is an extremely recent word there is a decent possibility that it will change meaning」。Karpathy氏のX投稿の原文そのものは未確認（辞書の記述による）。「AI駆動開発」は日本でよく使われる言い方だが定義は決まっておらず、この授業では「計画して、確かめるのは人」のやり方をまとめた授業用の呼び方。3段の図は授業用の整理で公式の分類ではない。 -->
+  <!-- 挿絵4枚（2026-11-19、nano-banana。文字なし。week10-vibe/loop/read/stop.jpg。先生の指示「イラストを入れて、図解をもっと」）。図解は8点追加（決める4つ・アンケート・頼む文の型・周回ログ・困ったときの頼り先・止める判断・コミット・一言メモ）。「頼む文の型」「困ったときの頼り先」などは授業用の整理で公式の分類ではない。 -->
 </head>
 <body>
   <div class="grain-overlay"></div>
@@ -150,6 +151,9 @@
               </svg>
               <figcaption>「AI駆動開発」は、日本でよく使われる言い方ですが、<strong>定義は決まっていません</strong>。この授業では、2と3をまとめて、そう呼びます。3つの段は<strong>授業用の整理で、公式の分類ではありません</strong>。</figcaption>
             </figure>
+            <ol class="vz-steps">
+              <li class="vz-step"><img class="vz-step-img" src="images/week10-vibe.jpg" alt="学生が椅子に深くもたれ、頭の後ろで腕を組んで、気楽に頼んでいる。机の上では、小さなロボットが、色とりどりの積み木や小物を、山のように積み上げている。少し散らかっていて、いまにも崩れそうな所がある。" width="800" height="597" loading="lazy"><b>ノリで頼む</b>気軽に任せると、思わぬ形のものが、山のように出てくることがある（絵の例）</li>
+            </ol>
             <ul>
               <li><strong>バイブコーディング</strong>: 辞書（Merriam-Webster）の説明では、AIに作りたいものを伝えて、<strong>作らせる</strong>やり方。"In vibe coding the coder does not need to understand how or why the code works"（作る人は、コードがなぜ動くかを理解しなくてよい）。バグが残ることは受け入れる、ともある。2025年2月のAndrej Karpathy氏のX投稿が出どころと考えられている（辞書の記述。<strong>投稿の原文は確かめていません</strong>）。辞書は、<strong>意味が変わる可能性もある、ごく新しい言葉</strong>だとも書いている</li>
               <li>気軽に試す、使い捨てを作る、には向く。ただし<strong>進級制作のように、直し続ける作品</strong>では、<strong>「なぜ動くか分からない」が、あとで困る</strong>。第9回の論文の「プロは雰囲気で任せず、計画して、人が確かめる」が、そこにつながる</li>
@@ -185,21 +189,64 @@
               <figcaption>右の矢印が「くり返し」です。回す前に、止める条件を決めておきます。</figcaption>
             </figure>
 
-            <ul>
-              <li>ループを回す前に、次の<strong>4つ</strong>を決める（<strong>授業用の整理で、公式の分類ではありません</strong>）:
-                <ul>
-                  <li><strong>1周の大きさ</strong>: 小さく。足すことは1つだけ</li>
-                  <li><strong>止める条件</strong>: 「できたかの見かた」。<strong>画面で見て分かること</strong>で書く（「いい感じになったら」は、止められない）</li>
-                  <li><strong>人が見る場所</strong>: 人が動かして確かめる所と、コードを読む所</li>
-                  <li><strong>周回数</strong>: 今日は<strong>最大3周</strong>まで。3周しても止まらなければ、「どこで止まったか」を書いて、先生を呼ぶ</li>
-                </ul>
-              </li>
-            </ul>
+            <ol class="vz-steps">
+              <li class="vz-step"><img class="vz-step-img" src="images/week10-loop.jpg" alt="学生と小さなロボットが、机で並んで作業している。机の下には、丸い3つの場面が矢印でつながっている。1つ目は、ロボットに指で頼む手。2つ目は、ノートパソコンの画面を虫めがねで確かめる場面。3つ目は、鉛筆で直す場面。" width="800" height="597" loading="lazy"><b>くり返す</b>頼む → 確かめる → 直す、を、小さく何度か回す</li>
+            </ol>
+
+            <figure class="vz-fig" aria-labelledby="cap-a10-four">
+              <p class="vz-fig-title" id="cap-a10-four">ループを回す前に決める4つ</p>
+              <svg class="vz-svg" viewBox="0 0 360 252" role="img" aria-labelledby="a10-four-t a10-four-d">
+                <title id="a10-four-t">ループを回す前に決める4つ</title>
+                <desc id="a10-four-d">ループを回す前に決める4つのこと。1 1周の大きさ：小さく、足すことは1つだけ。2 止める条件：画面で見て分かることで書く。3 人が見る場所：動かして確かめる所と、コードを読む所。4 周回数：今日は最大3周まで。止まらなければ先生へ。この4つは授業用の整理で、公式の分類ではない。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="54" rx="10"/>
+                <circle class="dot" cx="30" cy="33" r="12"/><text class="t-b t-c t-w" x="30" y="38">1</text>
+                <text class="t-b" x="52" y="30">1周の大きさ</text>
+                <text class="t-sm" x="52" y="49">小さく。足すことは1つだけ</text>
+                <rect class="box-orange box-key" x="8" y="68" width="344" height="54" rx="10"/>
+                <circle class="dot" cx="30" cy="95" r="12"/><text class="t-b t-c t-w" x="30" y="100">2</text>
+                <text class="t-b" x="52" y="92">止める条件</text>
+                <text class="t-sm" x="52" y="111">画面で見て分かることで書く</text>
+                <rect class="box-white" x="8" y="130" width="344" height="54" rx="10"/>
+                <circle class="dot" cx="30" cy="157" r="12"/><text class="t-b t-c t-w" x="30" y="162">3</text>
+                <text class="t-b" x="52" y="154">人が見る場所</text>
+                <text class="t-sm" x="52" y="173">動かして確かめる所と、コードを読む所</text>
+                <rect class="box-white" x="8" y="192" width="344" height="54" rx="10"/>
+                <circle class="dot" cx="30" cy="219" r="12"/><text class="t-b t-c t-w" x="30" y="224">4</text>
+                <text class="t-b" x="52" y="216">周回数</text>
+                <text class="t-sm" x="52" y="235">今日は最大3周まで。止まらなければ先生へ</text>
+              </svg>
+              <figcaption>この4つは<strong>授業用の整理で、公式の分類ではありません</strong>。止める条件は、「いい感じになったら」では止められません。<strong>画面で見て分かること</strong>で書きます。</figcaption>
+            </figure>
 
             <p><strong>② アンケートから：1周の頼み方</strong>（約10分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-a10-survey">
+              <p class="vz-fig-title" id="cap-a10-survey">前回のアンケートで、困っていたこと（22件）</p>
+              <svg class="vz-svg" viewBox="0 0 360 226" role="img" aria-labelledby="a10-survey-t a10-survey-d">
+                <title id="a10-survey-t">前回のアンケートで、困っていたこと（22件）</title>
+                <desc id="a10-survey-d">前回のアンケート22件の、今困っていることの分類。AIへの頼み方が6件、コードの理解・エラーが4件、作品づくりの技術が4件、チーム・進め方が3件、その他が2件、特になしが3件。上の2つを、今日の冒頭で扱う。</desc>
+                <text class="t-sm" x="14" y="27">AIへの頼み方</text>
+                <rect class="box-orange box-key" x="160" y="8" width="144" height="26" rx="6"/>
+                <text class="t-b" x="310" y="27">6件</text>
+                <text class="t-sm" x="14" y="63">コードの理解・エラー</text>
+                <rect class="box-orange box-key" x="160" y="44" width="96" height="26" rx="6"/>
+                <text class="t-b" x="262" y="63">4件</text>
+                <text class="t-sm" x="14" y="99">作品づくりの技術</text>
+                <rect class="box-white" x="160" y="80" width="96" height="26" rx="6"/>
+                <text class="t-b" x="262" y="99">4件</text>
+                <text class="t-sm" x="14" y="135">チーム・進め方</text>
+                <rect class="box-white" x="160" y="116" width="72" height="26" rx="6"/>
+                <text class="t-b" x="238" y="135">3件</text>
+                <text class="t-sm" x="14" y="171">その他</text>
+                <rect class="box-white" x="160" y="152" width="48" height="26" rx="6"/>
+                <text class="t-b" x="214" y="171">2件</text>
+                <text class="t-sm" x="14" y="207">特になし</text>
+                <rect class="box-white" x="160" y="188" width="72" height="26" rx="6"/>
+                <text class="t-b" x="238" y="207">3件</text>
+              </svg>
+              <figcaption>1件が複数にまたがるものは、主なもので数えています。<strong>個別の回答は載せません</strong>。太い枠の上の2つを、冒頭で短く扱います。</figcaption>
+            </figure>
             <ul>
-              <li>前回のアンケート（22件）の「今困っていること」を、分類しました（1件が複数にまたがるものは、主なもので数えています。<strong>個別の回答は載せません</strong>）: <strong>AIに思い通りに動いてもらえない</strong>（プロンプトの書き方、一発で出ない、など）6件／<strong>AIが作ったコードの理解・エラーを自分で直す</strong>4件／<strong>作品づくりの技術</strong>（データベース、Git、サーバー、AIの組み込みなど）4件／<strong>チーム・進め方</strong>3件／その他2件／特になし3件</li>
-              <li>多かった<strong>上の2つ</strong>を、冒頭で短く扱う。<strong>技術的な個別の困りごと</strong>（データベース・Git・サーバーなど）は、ワークの時間に<strong>先生を呼んで</strong>ください</li>
+              <li>多かった<strong>上の2つ</strong>（頼み方、コードの理解）を、冒頭で短く扱う。<strong>作品づくりの技術</strong>（データベース・Git・サーバー・AIの組み込みなど）は、ワークの時間に<strong>先生を呼んで</strong>ください</li>
             </ul>
             <figure class="vz-fig" aria-labelledby="cap-a10-ask">
               <p class="vz-fig-title" id="cap-a10-ask">AIへの頼み方：小さく・見せて・確かめ方を渡す</p>
@@ -248,6 +295,9 @@
               </svg>
               <figcaption>この3つは授業用の整理で、公式の分類ではありません。</figcaption>
             </figure>
+            <ol class="vz-steps">
+              <li class="vz-step"><img class="vz-step-img" src="images/week10-read.jpg" alt="長いコードの巻物が、ノートパソコンの画面から流れ出ている。小さなロボットが、そのうちの一つのかたまりを指で示して説明している。学生は、身を乗り出してうなずき、鉛筆でノートにメモをとっている。" width="800" height="597" loading="lazy"><b>読んで、聞く</b>分からない所は、AIに説明させて、自分の言葉にする</li>
+            </ol>
 
             <ul>
               <li><strong>説明させる</strong>: 分からないコードは、そのまま使わずに、「このコードが何をしているか、初心者向けに、順番に説明してください」と頼む。説明を読んで、<strong>自分の言葉で一言</strong>にしてみる</li>
@@ -276,14 +326,76 @@
               <li>今日の改善を、<strong>小さく・見せて・確かめ方つき</strong>の頼む文にして、メモする。例: <code>この作品に「（足すこと）」を1つ足したい。（やらないこと）は変えないでください。できたら、（画面でこう見える）はずです。その確かめ方も書いてください。</code></li>
               <li>先に計画だけ出させたい人は、第9回の「<a href="week09.html">困ったときの道具</a>」（AIに「計画だけ」出させる）を使ってよい</li>
             </ul>
+            <figure class="vz-fig" aria-labelledby="cap-a10-prompt">
+              <p class="vz-fig-title" id="cap-a10-prompt">1周目の頼む文：4つの文を、つなぐ</p>
+              <svg class="vz-svg" viewBox="0 0 360 240" role="img" aria-labelledby="a10-prompt-t a10-prompt-d">
+                <title id="a10-prompt-t">1周目の頼む文：4つの文を、つなぐ</title>
+                <desc id="a10-prompt-d">1周目の頼む文の型。1 この作品に、足すことを1つ足したい。2 やらないことは変えないでください。3 できたら、画面でこう見えるはずです。これが止める条件になる。4 その確かめ方も、書いてください。</desc>
+                <rect class="box-orange" x="8" y="6" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="28">この作品に「<tspan>（足すこと）</tspan>」を1つ足したい。</text>
+                <text class="t-sm" x="22" y="47">足すことは、1つだけ</text>
+                <rect class="box-orange" x="8" y="64" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="86">「<tspan>（やらないこと）</tspan>」は変えないでください。</text>
+                <text class="t-sm" x="22" y="105">ほかを壊されないための歯止め</text>
+                <rect class="box-orange box-key" x="8" y="122" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="144">できたら「<tspan>（画面でこう見える）</tspan>」はずです。</text>
+                <text class="t-sm" x="22" y="163">これが「止める条件」になる</text>
+                <rect class="box-white" x="8" y="180" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="202">その確かめ方も、書いてください。</text>
+                <text class="t-sm" x="22" y="221">AIに、確かめ方も出させる</text>
+              </svg>
+              <figcaption><strong>（　）の中</strong>を、自分の作品の言葉に変えます。</figcaption>
+            </figure>
 
             <p><strong>② ワーク</strong>（約40分）</p>
             <ul>
               <li>AIエージェント（agyまたはAI Studio Build mode）に頼んで、1周ずつ回す。<strong>頼む→人が確かめる→直す</strong>。出てきたものは、<strong>止める条件</strong>で見る</li>
-              <li><strong>周回ログ</strong>: 1周ごとに、<strong>一行</strong>だけメモする（<strong>頼んだこと→結果→次に直すこと</strong>）。メモの場所は、<code>NOTES.md</code>か手元のメモ</li>
-              <li><strong>困ったときの頼り先</strong>: ①まず<strong>チームの人</strong>　②それでも分からなければ<strong>先生</strong>を呼ぶ（先生が席をまわります。データベース・Git・サーバーなどの個別の困りごとも、ここで）　③AIには、上の「頼み方」と「コードの理解」を使う</li>
-              <li>うまく進まなくても大丈夫。<strong>どこで止まったかを一言メモ</strong>する</li>
+              <li><strong>周回ログ</strong>は、1周ごとに一行（下の図）。<strong>困ったときの頼り先</strong>も、下の図の順です</li>
             </ul>
+            <figure class="vz-fig" aria-labelledby="cap-a10-log">
+              <p class="vz-fig-title" id="cap-a10-log">周回ログ：1周ごとに、一行</p>
+              <svg class="vz-svg" viewBox="0 0 360 246" role="img" aria-labelledby="a10-log-t a10-log-d">
+                <title id="a10-log-t">周回ログ：1周ごとに、一行</title>
+                <desc id="a10-log-d">周回ログの書き方。1周ごとに、頼んだこと、結果、次に直すことを、一行で書く。今日は最大3周まで。3周しても止まらなければ、止まった所を書いて、先生へ。</desc>
+                <rect class="box-orange" x="8" y="6" width="344" height="46" rx="10"/>
+                <text class="t-b" x="22" y="27">頼んだこと</text>
+                <text class="t-sm" x="22" y="44">この周で、AIに頼んだ内容</text>
+                <line class="line" x1="180" y1="54" x2="180" y2="66" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="68" width="344" height="46" rx="10"/>
+                <text class="t-b" x="22" y="89">結果</text>
+                <text class="t-sm" x="22" y="106">動いた／ここが違った</text>
+                <line class="line" x1="180" y1="116" x2="180" y2="128" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="130" width="344" height="46" rx="10"/>
+                <text class="t-b" x="22" y="151">次に直すこと</text>
+                <text class="t-sm" x="22" y="168">次の周の、頼み方になる</text>
+                <rect class="band" x="8" y="188" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="210">最大3周まで</text>
+                <text class="t-sm" x="22" y="229">止まらなければ、止まった所を書いて先生へ</text>
+              </svg>
+              <figcaption>メモの場所は、<code>NOTES.md</code>か手元のメモです。</figcaption>
+            </figure>
+            <figure class="vz-fig" aria-labelledby="cap-a10-help">
+              <p class="vz-fig-title" id="cap-a10-help">困ったときの頼り先</p>
+              <svg class="vz-svg" viewBox="0 0 360 180" role="img" aria-labelledby="a10-help-t a10-help-d">
+                <title id="a10-help-t">困ったときの頼り先</title>
+                <desc id="a10-help-d">困ったときの頼り先の順番。1 まず、チームの人に相談する。2 それでも分からなければ、先生を呼ぶ。先生は席をまわる。データベース、Git、サーバーの困りごとも。3 AIには、今日の頼み方とコードの理解の方法を使う。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="46" rx="10"/>
+                <circle class="dot" cx="30" cy="29" r="12"/><text class="t-b t-c t-w" x="30" y="34">1</text>
+                <text class="t-b" x="52" y="26">まず、チームの人</text>
+                <text class="t-sm" x="52" y="45">分からなければ、相談する</text>
+                <line class="line" x1="180" y1="54" x2="180" y2="64" marker-end="url(#mk-s)"/>
+                <rect class="box-orange box-key" x="8" y="66" width="344" height="46" rx="10"/>
+                <circle class="dot" cx="30" cy="89" r="12"/><text class="t-b t-c t-w" x="30" y="94">2</text>
+                <text class="t-b" x="52" y="86">それでも分からなければ、先生</text>
+                <text class="t-sm" x="52" y="105">席をまわります。DB・Git・サーバーも</text>
+                <line class="line" x1="180" y1="114" x2="180" y2="124" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="126" width="344" height="46" rx="10"/>
+                <circle class="dot" cx="30" cy="149" r="12"/><text class="t-b t-c t-w" x="30" y="154">3</text>
+                <text class="t-b" x="52" y="146">AIには、頼み方と理解を使う</text>
+                <text class="t-sm" x="52" y="165">小さく・見せて・確かめ方／説明させる</text>
+              </svg>
+              <figcaption>うまく進まなくても大丈夫です。<strong>どこで止まったかを一言メモ</strong>しておきます。</figcaption>
+            </figure>
           </div>
         </div>
 
@@ -311,6 +423,42 @@
             </div>
 
             <p><strong>② 止める条件で確かめる</strong>（約10分）</p>
+            <ol class="vz-steps">
+              <li class="vz-step"><img class="vz-step-img" src="images/week10-stop.jpg" alt="学生が、チェックの入った確認表を見終えて、小さな旗をノートパソコンの上に立てようとしている。横では、小さなロボットが、腕を下ろして静かに座っている。上には、保存を表すディスクの絵が浮かんでいる。" width="800" height="597" loading="lazy"><b>止めて、残す</b>確かめ方に合ったら止めて、コミットで残す</li>
+            </ol>
+            <figure class="vz-fig" aria-labelledby="cap-a10-judge">
+              <p class="vz-fig-title" id="cap-a10-judge">止める条件で確かめる：止めるか、次の周へ</p>
+              <svg class="vz-svg" viewBox="0 0 360 266" role="img" aria-labelledby="a10-judge-t a10-judge-d">
+                <title id="a10-judge-t">止める条件で確かめる：止めるか、次の周へ</title>
+                <desc id="a10-judge-d">止める条件で確かめる流れ。動かして、画面で見る。できたかの見かたに合うか。合えば、止める。もう1周しない。周回ログに動いたと一行書く。違えば、何が違ったかを一言にして頼み直し、次の周へ。最大3周まで。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="46" rx="10"/>
+                <text class="t-b" x="22" y="27">動かして、画面で見る</text>
+                <text class="t-sm" x="22" y="44">頼む文に書いた「できたかの見かた」で</text>
+                <line class="line" x1="180" y1="54" x2="180" y2="64" marker-end="url(#mk-s)"/>
+                <rect class="box-orange box-key" x="8" y="66" width="344" height="46" rx="10"/>
+                <text class="t-b" x="22" y="87">できたかの見かたに、合う？</text>
+                <text class="t-sm" x="22" y="104">AIが「できた」と言っても、確かめるのは人</text>
+                <line class="line" x1="92" y1="114" x2="92" y2="128" marker-end="url(#mk-s)"/>
+                <line class="line" x1="268" y1="114" x2="268" y2="128" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="130" width="168" height="62" rx="10"/>
+                <text class="t-b" x="22" y="152">合う</text>
+                <text class="t-sm" x="22" y="172">止める</text>
+                <text class="t-sm" x="22" y="187">（もう1周しない）</text>
+                <rect class="box-white" x="184" y="130" width="168" height="62" rx="10"/>
+                <text class="t-b" x="198" y="152">違う</text>
+                <text class="t-sm" x="198" y="172">何が違ったかを一言に</text>
+                <text class="t-sm" x="198" y="187">して、頼み直す</text>
+                <line class="line" x1="92" y1="194" x2="92" y2="208" marker-end="url(#mk-s)"/>
+                <line class="line" x1="268" y1="194" x2="268" y2="208" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="210" width="168" height="48" rx="10"/>
+                <text class="t-sm" x="22" y="231">周回ログに「動いた」</text>
+                <text class="t-sm" x="22" y="249">と一行</text>
+                <rect class="box-white" x="184" y="210" width="168" height="48" rx="10"/>
+                <text class="t-b" x="198" y="231">次の周へ</text>
+                <text class="t-sm" x="198" y="249">最大3周まで</text>
+              </svg>
+              <figcaption>「できた」と決めるのは、AIではなく<strong>人</strong>です。</figcaption>
+            </figure>
             <ul>
               <li>頼む文に書いた<strong>「できたかの見かた」</strong>で、実際に動かして、画面で確かめる。<strong>できていれば、止める</strong>（もう1周しない）。AIが「できた」と言っても、確かめるのは人</li>
               <li>確かめた結果を、<strong>周回ログ</strong>に一行（動いた／ここが違った）</li>
@@ -325,6 +473,28 @@
           </div>
           <h3>ワーク③と、コミット・プッシュで残す</h3>
           <div class="timeline-body">
+            <figure class="vz-fig" aria-labelledby="cap-a10-commit">
+              <p class="vz-fig-title" id="cap-a10-commit">動いた分を、残す：コミット→プッシュ</p>
+              <svg class="vz-svg" viewBox="0 0 360 180" role="img" aria-labelledby="a10-commit-t a10-commit-d">
+                <title id="a10-commit-t">動いた分を、残す：コミット→プッシュ</title>
+                <desc id="a10-commit-d">動いた分を残す流れ。1 動いた分をコミットする。メッセージは、何を足したかを一言で。2 プッシュして、GitHubに送って残す。3 次回も開けるかを確かめる。作品の場所と、agyが動くか。だめなら先生へ。</desc>
+                <rect class="box-orange" x="8" y="6" width="344" height="46" rx="10"/>
+                <circle class="dot" cx="30" cy="29" r="12"/><text class="t-b t-c t-w" x="30" y="34">1</text>
+                <text class="t-b" x="52" y="26">動いた分を、コミット</text>
+                <text class="t-sm" x="52" y="45">メッセージは「何を足したか」を一言で</text>
+                <line class="line" x1="180" y1="54" x2="180" y2="64" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="66" width="344" height="46" rx="10"/>
+                <circle class="dot" cx="30" cy="89" r="12"/><text class="t-b t-c t-w" x="30" y="94">2</text>
+                <text class="t-b" x="52" y="86">プッシュ</text>
+                <text class="t-sm" x="52" y="105">GitHubに送って、残す</text>
+                <line class="line" x1="180" y1="114" x2="180" y2="124" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="126" width="344" height="46" rx="10"/>
+                <circle class="dot" cx="30" cy="149" r="12"/><text class="t-b t-c t-w" x="30" y="154">3</text>
+                <text class="t-b" x="52" y="146">次回も開けるか、確かめる</text>
+                <text class="t-sm" x="52" y="165">作品の場所。agyが動くか。だめなら先生へ</text>
+              </svg>
+              <figcaption>やり方が分からない人や、チームでGitの共有に困っている人は、先生へ。</figcaption>
+            </figure>
             <ul>
               <li><strong>ワーク</strong>（約20分）: つづきを進める。区切りのいいところで手を止める</li>
               <li><strong>コミット・プッシュ</strong>（約10分）: 動いた分を、<strong>コミットして、プッシュ</strong>する。コミットのメッセージは、「何を足したか」を一言で書く。やり方が分からない人や、チームでGitの共有に困っている人は、先生へ</li>
@@ -343,6 +513,23 @@
           </div>
           <h3>今日回したループを振り返り、次回を知る</h3>
           <div class="timeline-body">
+            <figure class="vz-fig" aria-labelledby="cap-a10-wrap">
+              <p class="vz-fig-title" id="cap-a10-wrap">今日の一言メモ（3つ）</p>
+              <svg class="vz-svg" viewBox="0 0 360 132" role="img" aria-labelledby="a10-wrap-t a10-wrap-d">
+                <title id="a10-wrap-t">今日の一言メモ（3つ）</title>
+                <desc id="a10-wrap-d">今日の一言メモ。1 今日、何周回して、どこで止めたか。2 AIに任せたこと。3 自分で確かめたこと。それぞれ一言で書く。</desc>
+                <rect class="box-orange box-key" x="8" y="6" width="344" height="46" rx="10"/>
+                <text class="t-b" x="22" y="27">今日、何周回して、どこで止めたか</text>
+                <text class="t-sm" x="22" y="44">周回ログを見て、一言で</text>
+                <rect class="box-white" x="8" y="62" width="168" height="62" rx="10"/>
+                <text class="t-b" x="22" y="86">AIに任せたこと</text>
+                <text class="t-sm" x="22" y="108">一言</text>
+                <rect class="box-white" x="184" y="62" width="168" height="62" rx="10"/>
+                <text class="t-b" x="198" y="86">自分で確かめたこと</text>
+                <text class="t-sm" x="198" y="108">一言</text>
+              </svg>
+              <figcaption>周回ログと成果のメモが残っているか、最後に確かめて退出します。</figcaption>
+            </figure>
             <ul>
               <li><strong>先生のひとこと</strong>（約3分）: 今日のワークで出た困りごとを、次回にどう扱うか</li>
               <li><strong>一言メモ</strong>（約4分）: 今日<strong>何周回したか</strong>、<strong>どこで止めたか</strong>。<strong>AIに任せたこと</strong>と、<strong>自分で確かめたこと</strong>を、一言ずつ</li>
