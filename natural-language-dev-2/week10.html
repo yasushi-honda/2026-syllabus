@@ -3,13 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>第10回 24時間働くAIエージェントを知る：dots・Muse・Grok Bot | 自然言語開発 II</title>
+  <title>第10回 Museを使いこなす：24時間働く個人AIエージェント | 自然言語開発 II</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=26">
-  <!-- 授業計画の変更（2026-11-18、先生の指示）: 親ページの第10回「進級制作にクラウド機能を統合①：設計」を、この回（常時稼働型AIエージェント）に差し替えた。第11回以降の行は今回は直していない（第11回の「第10回の計画に基づき」との矛盾は残る）。体験は任意・個人情報なし（先生の決定）。 -->
+  <!-- 授業計画の変更（2026-11-18、先生の指示）: 親ページの第10回「進級制作にクラウド機能を統合①：設計」を、常時稼働型AIエージェントの回に差し替えた。2026-11-19に、先生の指示でMuse特化に書き直した。第11回以降の行は直していない（第11回の「第10回の計画に基づき」との矛盾は残る）。体験は任意・個人情報なし（先生の決定）。 -->
+  <!-- Muse特化への書き直し（2026-11-19、先生の指示「Museが無料で使えるのでMuseに特化。2026年11月19日時点のweb公式情報から、図解多めで、便利な使い方と注意点も」）。第10回の旧版（6サービス比較）の比較表は、折りたたみの「ほかのサービスは？」に残した。 -->
+  <!-- Muse公式情報確認: 2026-11-19（Playwrightで実レンダリングし原文照合。日本語ヘルプは meta.com/ja-jp/help/…）。①利用開始: ヘルプ「Museの利用を始める方法」（更新5日前）「Museは使用制限付きで無料で利用できます。無料利用上限に達して、さらに利用したい場合は、有料のサブスクリプションにアップグレードするか、無料利用上限が更新されるまでお待ちください。」「Museからの回答を待たずに次の質問をすることができます。他のAIアプリとは異なり、Museは逐次応答型ではなく」「ボイスモードは、一部の国でのみ利用できます。」「Museが正しくないことや、予期しない行動をとることがあります。AIの行動を注意深くモニタリングし、必要に応じて介入しましょう。」アドバイス6つ（背景を説明する／変更を依頼する／フォローアップを利用する／どのような形式が望ましいかを伝える／境界線を定義する／帰属の追加）。②料金: ヘルプ「Museサブスクリプションについて」（更新3週間前）「Powerプラン($20/月) 毎週5億のMuseトークン」「Maximumプラン($100/月) 毎週30億のMuseトークン」「MuseおよびMuseサブスクリプションは、試験運用中につき提供地域が限定されており、まだご利用になれない場合があります。」「サブスクリプション登録するには、18歳以上であるか、お住まいの国の法的成人年齢に達している必要があります。」。無料枠の上限の数字は公式で見つからず（第三者サイトの数字は使わない）。③日本: Meta日本語公式 about.fb.com/ja/news/2026/10/muse-personal-ai-agent-launches-in-japan/「Metaは10月23日（日本時間）より…日本での提供を開始します」「Museは日本において本日より iOS、Android、および muse.ai で提供を開始します。多くの基本的な機能は無料で利用でき、さらに活用したい方向けにはサブスクリプションプランもご用意しています。」「音声モードの高度な機能やアバター…Muse独自のメールアドレス…これらの機能の日本での提供状況については、別途ご案内します。」Mac・WhatsAppの日本での提供は日本語発表に記載なし（muse.ai のホームには「モバイルまたはMac…WhatsApp」とあるが日本向けの明記なし）。④承認・権限: ヘルプ「Museがあなたのガイダンスと承認に基づいて機能する仕組み」（更新5日前）「完璧な自動システムは存在しません。Museはあなたに代わって行動するため、Museのアクションを注意深く導き、承認する責任はあなたにあります。」「メールを送信するなどのアクションは、自分が実行する場合と同様に、元に戻すことはできません。」「[Ask for some actions]を選択すると、Museはすべての書き込みアクションと重要な読み取りアクションの前にアクセス許可を要求します。」承認オプション5つ（1回だけ許可／このタスクを許可／このサイトを許可／常に許可／却下）。「Museをリセットすると、すべての情報、チャット履歴、ファイル、アクティブなタスクが完全に削除されます。この操作は元に戻せません。」⑤データ: ヘルプ「Museのデータを管理する方法」「MuseとのやりとりをMetaがAIモデルの開発や改善に使用できるかどうかは、利用者が決定できます。この設定はMuseを初めて使用するときにオンになっています。」「名前、メールアドレス、電話番号、社会保障番号などの個人情報は削除されます。また、インタラクションとあなたのアカウントの関連付けも解除します。」⑥プライバシー: ヘルプ「Museによるプライバシー、安全性、セキュリティの扱い」「Museは、利用者の会話やバーチャルマシンのデータをMetaの広告システムと共有することはありません。」プロンプトインジェクションの説明。⑦コネクター: ヘルプ「Museとコネクターの連携」「接続を解除すると、Museとコネクターとのデータ交換が停止します。以前にMuseがそのコネクターでタスクを実行するために使用した情報は、Museのメモリーや会話履歴に残っている可能性があります。」「Metaはカスタムコネクターや、カスタムコネクターによる情報の使用方法を確認しません。」⑧ウェブ: ヘルプ「Museエージェントのウェブ閲覧方法」「[ブラウザーをコントロール]を選択して…一時停止」「タスクを停止」。Chrome拡張機能「MuseのアクティビティがGoogleアカウントや閲覧履歴に表示され、Meta社製品内外で表示される広告やおすすめ、コンテンツに影響する場合があります。」⑨アーティファクト・スキル・カスタマイズ: 各ヘルプの記載どおり（ファイル種類、スキルは自動で使われる、メモリーのインポート）。⑩Muse公式サイト muse.ai/security-and-privacy のFAQ「Muse does not make purchases or move money without your explicit approval.」「Always verify the purchase details and the merchant’s terms on the merchant’s site before approving the purchase.」「Only use Muse from official Meta entry points—beware of fake Muse sites or apps asking for your login.」「Muse will never ask for your password via a link in a post or DM.」。ブログ muse.ai/blog/how-we-designed-muse「Muse has its own computer, with a file system and a terminal」「the default allows for standard browsing of the web and stops for anything hard to undo」「You can’t trust what you can’t see」「notifies you only when something is meaningfully new or needs your input」。muse.ai/terms（2026-11-17適用）「18歳未満…の利用者…は、Museを利用することはできません」「Metaは、Museを期間限定で無料提供することを決定したり…Museの無料提供…をいつでも事前通知なく、単独の裁量で変更または中止する権利を留保します。」。⑪追加確認（日本語ヘルプ原文）: 承認オプションの説明「1回だけ許可: Museは今回に限り実行します。」「このタスクを許可: Museはタスク全体に対してこのタイプのアクションを実行できます。」「このサイトを許可: 今後、Museはこのウェブサイトでこのタイプのアクションを再度確認なしで実行できます」「常に許可:今後、Museはこのコネクターに対してこのタイプのアクションを、再度の確認なしに実行できます」「却下: 今回はMuseが処理しません」。設定の語「[常に確認]を選択すると、Museはアクションを実行する前に許可を求めます。」（コネクターとウェブアクセスのデフォルトの両方）。「この設定を変更すると、過去のインタラクションにも適用されます。」（データ管理ヘルプ、AIモデル改善の設定）。パスワード: ヘルプ「Museはセキュアな資格情報ストアを使用して、AIモデルがパスワードなどの情報を確認することなく、認証されたアクションを完了できます」／muse.ai FAQ「Muse can use the Secure Credentials Store to complete an authorized action without the AI model seeing your password.」。ブログ（承認の種類）「Muse has support for obtaining one-time, session-scoped, task-scoped, time-bounded, or perpetual permission. Sentinel decides which grant…」（場面で選択肢が変わりうる）。ブログ（承認の数の調整）「To balance the signal-to-noise ratio of user approvals…」（要約として使用）。「プレビューではありません」は授業での説明（公式の語ではない）。未確認: 日本での有料プランの提供と円の料金、無料枠の上限の数字、Mac・WhatsAppの日本での提供、学校のネットワークと端末での表示、学生の画面での実際の承認表示。「4つの分け方」「承認の選択肢の図」「設計シート」は授業用の整理で公式の分類ではない。 -->
   <!-- 公式情報確認: 2026-11-18（生HTMLをcurlで取得、またはPlaywrightで実レンダリングして原文照合。①Meta Muse: 日本語の公式発表 about.fb.com/ja/news/2026/10/muse-personal-ai-agent-launches-in-japan/「Metaは10月23日（日本時間）より、パーソナルAIエージェント「Muse」の日本での提供を開始します」「メールの送信や商品の購入など重要な操作の前には利用者本人に確認します」「iOS、Android、および muse.ai で提供を開始します。多くの基本的な機能は無料で利用でき、さらに活用したい方向けにはサブスクリプションプランもご用意しています」／about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/ の「Muse runs on its own dedicated computer in the cloud」「Muse checks with the person before sensitive actions like sending an email or making a purchase.」「Muse shows people a complete audit trail of everything it has done and plans to do.」／muse.ai/blog（How We Built Safety Into Muse）の「Sentinel is the sole permission authority for connector actions and network egress.」「Muse proposes actions, but only Sentinel can grant permission to perform action.」「two isolated security domains on one box, not an LLM powered agent with root」／muse.ai/terms（2026年11月17日から適用）の「18歳未満…の利用者…は、Museを利用することはできません」。②OpenAI dots: help.openai.com/en/articles/20001530-getting-started-with-your-dot（Playwrightで原文。更新は「18時間前」表記）の「Your dot is an always-on agent in ChatGPT」「Your dot has its own cloud computer」「Dots are rolling out in ChatGPT to Pro users aged 18 and older in markets excluding the European Economic Area, Switzerland, and the UK.」「Access to your local computer is optional and starts turned off.」「You can pause it at any time.」。openai.com/index/introducing-dots/ は curl で403のため原文未照合。日本での提供可否は公式に明記を確認できず。③xAI（SpaceXAI）Grok Bot: x.ai/news/introducing-grok-bot「Bots have their own computer.」「only come back when something needs your approval」「Grok Bot is in beta」（8月11日開始）、x.ai/news/grok-bot-more-plans「Grok Bot is now included with all SuperGrok, Cursor Pro, and Cursor Teams plans.」「Grok Bot comes with its own usage」、x.ai/bot「Grok Bot is generally available for Enterprise」。日本での提供・無料トライアルは公式で確認できず（日本の報道は二次情報）。④Google: support.google.com/gemini/answer/17094507「Available without a Google AI subscription in Australia, Canada, India, Japan, South Korea, and the US.」「For now, this feature isn’t available if you sign in with a work or school Google Account.」「Do not enter sign-in info, payment details, or info you may find sensitive directly into the task thread.」／答え17171264（リリースノート 2026.11.17）「Tasks in Gemini is rolling out free of charge for hundreds of millions of users in the US, India, Canada, Australia, Japan, and Korea」／同ヘルプの「we renamed it Task」（Sparkの改名）。⑤Microsoft Autopilot: techcommunity.microsoft.com/blog/microsoft-copilot-blog/autopilot-meet-your-trusted-personal-teammate/4572611「Autopilot has its own identity, memory, workspace, and remote computer」「Starting today, Autopilot is rolling out to eligible customers in Frontier.」（投稿日 Nov 17, 2026）。⑥Anthropic Claude Duet: claude.com/resources/articles/claude-duet「A research preview is available by waitlist today, starting with US Pro, Max, and Ultra subscribers.」「checks with you before it acts on your behalf」「Claude Duet has a virtual machine with its own browser」。未確認: dotsとGrok Botの日本での提供可否と料金、Museの日本での無料枠の上限、Museの新規登録（電話番号またはメール）の実画面と承認の表示、Tasks in Geminiの画面（Chat/Taskの切り替え）が学生の個人アカウントで出るか、学校のネットワークでの表示。日本の報道（Impress Watch 西田宗千佳氏の連載）にある「Museは日本のアカウントからは使いにくい」は、10月23日の日本提供開始より前の記述なので使わない。） -->
 </head>
 <body>
@@ -26,7 +28,7 @@
       </nav>
       <div class="page-title-area">
         <div>
-          <h1 class="page-title">24時間働くAIエージェントを<wbr>知る：dots・Muse・Grok Bot</h1>
+          <h1 class="page-title">Museを使いこなす：<wbr>24時間働く個人AIエージェント</h1>
           <div class="page-meta-badges">
             <span class="page-badge">Week 10</span>
             <span class="page-badge">木曜 3・4限</span>
@@ -59,15 +61,15 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">2026年の8月から11月にかけて、各社が相次いで出した<strong>常時稼働型のAIエージェント</strong>（OpenAIの<strong>dots</strong>、Metaの<strong>Muse</strong>、xAIの<strong>Grok Bot</strong>、GoogleのTasks in Gemini、MicrosoftのAutopilot、AnthropicのClaude Duet）を、公式の説明で比べる。「答えるAI」から「<strong>代わりに動くAI</strong>」への変化と、<strong>動き続けるAIに、何を渡して、何は人が決めるか</strong>を考え、自分の進級制作に専属のエージェントを置くなら、の<strong>設計シート</strong>を書く</div>
+          <div class="lesson-overview-value">2026年に出てきた<strong>常時稼働型のAIエージェント</strong>のうち、日本で<strong>基本的な機能が無料で始められる</strong><strong>Muse</strong>（Meta）に絞って、公式の説明から、<strong>何ができるか・どう始めるか・便利な使い方</strong>を図で知る。あわせて、<strong>承認・権限・止め方・データの消し方</strong>と、<strong>注意点</strong>を、自分のルールにする。体験は任意（個人情報なし）</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">常時稼働型エージェント / 専用のクラウドPC / 記憶 / 承認 / Sentinel（Muse） / 最小権限 / 操作の記録（監査） / 定期タスク / 日本での提供状況 / 設計シート</div>
+          <div class="lesson-overview-value">Muse / 専用のクラウドPC（Muse Secure VM） / 目標 / アーティファクト / スキル / コネクター / 承認（許可・却下） / アクセス許可 / Sentinel / 活動ログ / 忘れる・リセット / 最小権限</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
-          <div class="lesson-overview-value">自分が使うAIエージェント（Claude Code／Codex CLI／Antigravity CLI）が使える状態のCodespace。第9回の記録（Workerの公開URL、NeonかD1かの理由）。<strong>体験（2限前半）は任意</strong>です。やる人だけ、<strong>個人のアカウント</strong>（Museは電話番号またはメールで登録、Tasks in Geminiは個人のGoogleアカウント。<strong>学校のアカウントでは使えません</strong>）を使います。やらない人も、授業は同じように進められます。</div>
+          <div class="lesson-overview-value">自分が使うAIエージェント（Claude Code／Codex CLI／Antigravity CLI）が使える状態のCodespace。第9回の記録。<strong>体験（2限前半）は任意</strong>です。やる人だけ、<strong>個人のアカウント</strong>（Metaアカウント。メールアドレスか電話番号で作れる。<strong>18歳以上</strong>）で、スマートフォンのアプリか muse.ai を使います。やらない人も、授業は同じように進められます。</div>
         </div>
       </div>
     </div>
@@ -75,14 +77,14 @@
     <div class="syllabus-section">
       <h2>この回のゴール</h2>
       <ul>
-        <li>「常時稼働型エージェント」が、これまでのAIエージェント（自分のPCで動くClaude Codeなど）と<strong>どこが違うか</strong>を、図で説明できる</li>
-        <li>6つのサービスについて、<strong>公式が書いていること</strong>と、<strong>公式で確かめられていないこと</strong>を分けて言える（日本で今使えるのは何か）</li>
-        <li>Museの設計を例に、<strong>「動かす側」と「許可する側」を分ける</strong>考え方と、承認・操作の記録・パスワードを見せない仕組みを説明できる</li>
-        <li>自分の進級制作に専属のエージェントを置くなら、<strong>目標・任せる仕事・承認が要る操作・渡す権限・止める条件</strong>を、設計シートに書ける</li>
+        <li>Museが「何をするAI」かを、図で説明できる（専用のクラウドPC・目標・アプリを閉じても動く）</li>
+        <li>日本で使える範囲・料金・条件を、<strong>公式で確かめた分</strong>と<strong>確かめられていない分</strong>に分けて言える</li>
+        <li>頼み方・目標・リマインダー・アーティファクト・スキルの<strong>使い方</strong>を、3つ以上、説明できる</li>
+        <li>承認・権限・止め方・データの消し方と、<strong>注意点</strong>を言え、自分のルールを書ける</li>
       </ul>
-      <div class="lesson-tip">
-        <strong>今日の進め方:</strong> <strong>授業計画を変更</strong>しました。予定では「進級制作にクラウド機能を統合①：設計」でしたが、この数か月、各社から<strong>24時間動くAIエージェント</strong>が次々に出ているため、先生の決定で、今日はこの話題にします（クラウド機能の設計は、次の回以降の扱いを先生が決めます）。今日の内容は、<strong>公式の発表と説明書を読んで</strong>書いています。まだ新しいサービスばかりで、画面や条件は<strong>数週間で変わる</strong>ことがあります。ページには<strong>確認した日（2026-11-18）</strong>を書き、<strong>確かめられていないことは「未確認」</strong>と書きました。体験は<strong>任意</strong>で、<strong>メールや予定表など、個人のアプリはつながない</strong>ことにします。
-      </div>
+            <div class="lesson-tip">
+              <strong>今日の進め方:</strong> <strong>授業計画を変更</strong>しました。予定では「進級制作にクラウド機能を統合①：設計」でしたが、Metaの<strong>Muse</strong>が日本で提供され、<strong>基本的な機能は無料で始められる</strong>ため、先生の決定で、今日はMuseに絞ります（クラウド機能の設計は、次の回以降の扱いを先生が決めます）。今日の内容は、<strong>公式の説明を読んで</strong>書いています。体験は<strong>任意</strong>で、<strong>メールや予定表など、個人のアプリはつながない</strong>ことにします。
+            </div>
     </div>
 
     <div class="syllabus-section">
@@ -96,53 +98,216 @@
             <span class="timeline-time">1限 前半</span>
             <span class="timeline-duration">約40分</span>
           </div>
-          <h3>「答えるAI」から「代わりに動くAI」へ：6つのサービスの地図を読む</h3>
+          <h3>Museってなに？ 何ができて、日本で使えて、どう始めるのか</h3>
           <div class="timeline-body">
-            <p><strong>① これまでのAIエージェントと、何が違うか</strong>（約10分）</p>
+            <p><strong>① 答えるAIから、代わりに動くAIへ</strong>（約10分）</p>
             <figure class="vz-fig" aria-labelledby="cap-n10-shift">
-              <p class="vz-fig-title" id="cap-n10-shift">これまでと、2026年に出てきたもの</p>
-              <svg class="vz-svg" viewBox="0 0 360 292" role="img" aria-labelledby="n10-shift-t n10-shift-d">
-                <title id="n10-shift-t">これまでと、2026年に出てきたもの</title>
-                <desc id="n10-shift-d">上の段は、これまでのAIエージェント。自分のPCで動くので、PCを閉じると止まる。下の段は、2026年に出てきた常時稼働型。専用のクラウドPCで動くので、アプリを閉じても動き続ける。重要な操作の前に人へ確認する、と書くサービスが多い。</desc>
-                <rect class="box-white" x="8" y="6" width="344" height="122" rx="10"/>
-                <text class="t-b" x="22" y="28">これまで：自分のPCで動く</text>
-                <text class="t-sm" x="22" y="50">例: Claude Code、Codex CLI（第8〜9回で使用）</text>
-                <text class="t-sm" x="22" y="70">自分が頼む → エージェントが、自分のPCで作業</text>
-                <text class="t-sm" x="22" y="90">PCを閉じる・Codespaceが止まると、止まる</text>
-                <text class="t-sm" x="22" y="110">頼まれたときに、動く</text>
-                <line class="line" x1="180" y1="130" x2="180" y2="146" marker-end="url(#mk-s)"/>
-                <rect class="box-green box-key" x="8" y="148" width="344" height="138" rx="10"/>
-                <text class="t-b" x="22" y="170">今年：専用のクラウドPCで動く</text>
-                <text class="t-sm" x="22" y="192">例: dots、Muse、Grok Bot</text>
-                <text class="t-sm" x="22" y="212">アプリを閉じても、作業が続く</text>
-                <text class="t-sm" x="22" y="232">決めた時刻や、状況の変化で、自分から動く</text>
-                <text class="t-sm" x="22" y="252">記憶を持つ。使うほど、好みを覚える</text>
-                <text class="t-sm" x="22" y="272">重要な操作の前に、人へ確認する、と書く社が多い</text>
+              <p class="vz-fig-title" id="cap-n10-shift">答えるAI から、代わりに動くAI へ</p>
+              <svg class="vz-svg" viewBox="0 0 360 258" role="img" aria-labelledby="n10-shift-t n10-shift-d">
+                <title id="n10-shift-t">答えるAI から、代わりに動くAI へ</title>
+                <desc id="n10-shift-d">上の段は、これまでのAI。質問に答え、頼まれたときに動き、アプリを閉じると止まる。下の段は、Muse。目標を伝えると計画を立て、アプリを閉じても作業が続き、進んだら知らせてくれる。メール送信や購入の前は、人に確認する。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="96" rx="10"/>
+                <text class="t-b" x="22" y="28">これまでのAI</text>
+                <text class="t-sm" x="22" y="50">質問すると、答えが返ってくる</text>
+                <text class="t-sm" x="22" y="70">頼まれたときに、動く</text>
+                <text class="t-sm" x="22" y="90">アプリを閉じると、そこで止まる</text>
+                <line class="line" x1="180" y1="104" x2="180" y2="118" marker-end="url(#mk-s)"/>
+                <rect class="box-orange box-key" x="8" y="120" width="344" height="130" rx="10"/>
+                <text class="t-b" x="22" y="142">Muse（個人AIエージェント）</text>
+                <text class="t-sm" x="22" y="164">目標を伝えると、計画を立てる</text>
+                <text class="t-sm" x="22" y="184">アプリを閉じても、作業が続く</text>
+                <text class="t-sm" x="22" y="204">進んだら、知らせてくれる</text>
+                <text class="t-sm" x="22" y="224">メール送信・購入の前は、人に確認</text>
               </svg>
-              <figcaption>「専用のクラウドPC」「続けて動く」「記憶」「承認」は、主なサービスの公式の説明に、くり返し出てくる言葉です（サービスごとに、書いてあるものと書いていないものがあります）。4つの部品としてまとめたのは、<strong>この授業の整理で、公式の分類ではありません</strong>。</figcaption>
+              <figcaption>Meta公式の説明（確認日 2026-11-19）をもとに、この授業用に整理した図です。</figcaption>
+            </figure>
+            <ol class="vz-steps">
+              <li class="vz-step"><img class="vz-step-img" src="images/week10-muse-day.jpg" alt="学生が、ソファで温かい飲み物を持ち、スマートフォンに映った、小さなアシスタントのアバターを見ている。まわりには、カレンダー、買い物袋、書類、時計の絵が浮かび、裏で作業が進んでいることを表している。横には、小さなロボットのぬいぐるみが座っている。" width="800" height="597" loading="lazy"><b>裏で進む</b>アプリを閉じても、Museは目標に向かって作業を続ける（絵の例）</li>
+            </ol>
+            <ul>
+              <li>Meta公式の説明: "Muse is a personal AI agent. It doesn’t just answer questions, it actually does the work."（質問に答えるだけでなく、実際に作業をする）</li>
+              <li>公式ブログ: "Muse has its own computer, with a file system and a terminal"（Museは、ファイルとターミナルを持つ、自分のコンピューターを持つ）。<strong>専用のクラウドPC</strong>（Muse Secure VM）の中で動くので、アプリを閉じても作業が続く</li>
+              <li>Museは<strong>基本的な機能を無料で始められる</strong>（日本でも。使用量に上限あり）。だから、今日は<strong>Museに絞って</strong>、使い方と注意点を、公式の説明で確かめる</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-n10-can">
+              <p class="vz-fig-title" id="cap-n10-can">Museにできること（公式の説明から）</p>
+              <svg class="vz-svg" viewBox="0 0 360 206" role="img" aria-labelledby="n10-can-t n10-can-d">
+                <title id="n10-can-t">Museにできること（公式の説明から）</title>
+                <desc id="n10-can-d">Museにできること。1 調べて、まとめる。2 資料や画像やWebツールやポッドキャストを作る。3 ブラウザで、フォーム入力や予約や購入をする。購入は承認つき。4 目標を追い、リマインドし、知らせる。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="44" rx="10"/>
+                <circle class="dot" cx="30" cy="28" r="12"/><text class="t-b t-c t-w" x="30" y="33">1</text>
+                <text class="t-b" x="52" y="26">調べて、まとめる</text>
+                <text class="t-sm" x="52" y="44">ウェブを調べて、文書やPDFにする</text>
+                <rect class="box-orange" x="8" y="56" width="344" height="44" rx="10"/>
+                <circle class="dot" cx="30" cy="78" r="12"/><text class="t-b t-c t-w" x="30" y="83">2</text>
+                <text class="t-b" x="52" y="76">作る</text>
+                <text class="t-sm" x="52" y="94">資料・画像・Webツール・ポッドキャスト</text>
+                <rect class="box-orange box-key" x="8" y="106" width="344" height="44" rx="10"/>
+                <circle class="dot" cx="30" cy="128" r="12"/><text class="t-b t-c t-w" x="30" y="133">3</text>
+                <text class="t-b" x="52" y="126">ブラウザで動く</text>
+                <text class="t-sm" x="52" y="144">フォーム入力・予約・購入（承認つき）</text>
+                <rect class="box-orange" x="8" y="156" width="344" height="44" rx="10"/>
+                <circle class="dot" cx="30" cy="178" r="12"/><text class="t-b t-c t-w" x="30" y="183">4</text>
+                <text class="t-b" x="52" y="176">続ける</text>
+                <text class="t-sm" x="52" y="194">目標を追い、リマインドし、知らせる</text>
+              </svg>
+              <figcaption>4つの分け方は、この授業用の整理で、公式の分類ではありません。</figcaption>
+            </figure>
+            <div class="lesson-tip">
+              <strong>⚠ 注意:</strong> この回の内容は、<strong>2026-11-19時点の公式の説明</strong>にもとづきます。新しいサービスで、<strong>画面・条件・無料の範囲は数週間で変わる</strong>ことがあります。公式で確かめられなかったことは、「未確認」と書きました。
+            </div>
+            <p><strong>② 日本で使えるのか？ 料金は？</strong>（約10分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-n10-avail">
+              <p class="vz-fig-title" id="cap-n10-avail">日本で使える範囲（公式で確かめた分）</p>
+              <svg class="vz-svg" viewBox="0 0 360 256" role="img" aria-labelledby="n10-avail-t n10-avail-d">
+                <title id="n10-avail-t">日本で使える範囲（公式で確かめた分）</title>
+                <desc id="n10-avail-d">Museの、日本で使える範囲。1 iOSとAndroidとmuse.aiで、2026年10月23日から。2 料金は、無料で上限あり。有料プランもある。3 18歳以上で、Metaアカウントで入る。4 音声モードの高度な機能、アバター、Muse独自のメールアドレスは、日本での提供状況が別途案内される。5 Mac、WhatsApp、円での料金、日本での有料の提供は、公式で確認できていない。</desc>
+                <rect class="box-orange box-key" x="8" y="6" width="344" height="44" rx="10"/>
+                <circle class="dot" cx="30" cy="28" r="12"/><text class="t-b t-c t-w" x="30" y="33">1</text>
+                <text class="t-b" x="52" y="26">使える入口</text>
+                <text class="t-sm" x="52" y="44">iOS・Android・muse.ai（2026-10-23〜）</text>
+                <rect class="box-orange" x="8" y="56" width="344" height="44" rx="10"/>
+                <circle class="dot" cx="30" cy="78" r="12"/><text class="t-b t-c t-w" x="30" y="83">2</text>
+                <text class="t-b" x="52" y="76">料金</text>
+                <text class="t-sm" x="52" y="94">無料（上限あり）。有料プランもある</text>
+                <rect class="box-white" x="8" y="106" width="344" height="44" rx="10"/>
+                <circle class="dot" cx="30" cy="128" r="12"/><text class="t-b t-c t-w" x="30" y="133">3</text>
+                <text class="t-b" x="52" y="126">条件</text>
+                <text class="t-sm" x="52" y="144">18歳以上。Metaアカウントで入る</text>
+                <rect class="box-orange" x="8" y="156" width="344" height="44" rx="10"/>
+                <circle class="dot" cx="30" cy="178" r="12"/><text class="t-b t-c t-w" x="30" y="183">4</text>
+                <text class="t-b" x="52" y="176">日本は「別途案内」</text>
+                <text class="t-sm" x="52" y="194">音声の高度な機能・アバター・独自メール</text>
+                <rect class="box-white" x="8" y="206" width="344" height="44" rx="10"/>
+                <circle class="dot" cx="30" cy="228" r="12"/><text class="t-b t-c t-w" x="30" y="233">5</text>
+                <text class="t-b" x="52" y="226">公式で確認できず</text>
+                <text class="t-sm" x="52" y="244">Mac・WhatsApp・円の料金・日本の有料</text>
+              </svg>
+              <figcaption>太い枠が、いま日本で使えると確かめた入口です。「公式で確認できず」は、使えないという意味ではなく、確かめられていないという意味です。</figcaption>
+            </figure>
+            <figure class="vz-fig" aria-labelledby="cap-n10-plan">
+              <p class="vz-fig-title" id="cap-n10-plan">料金プラン（Meta公式ヘルプ）</p>
+              <svg class="vz-svg" viewBox="0 0 360 240" role="img" aria-labelledby="n10-plan-t n10-plan-d">
+                <title id="n10-plan-t">料金プラン（Meta公式ヘルプ）</title>
+                <desc id="n10-plan-d">Museの料金プラン。無料は、使用量に上限がある。上限の数字は公式で見つからない。Powerプランは月20ドルで、毎週5億Museトークンまで。Maximumプランは月100ドルで、毎週30億Museトークンまで。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="76" rx="10"/>
+                <text class="t-b" x="22" y="28">無料</text>
+                <text class="t-sm" x="22" y="50">使用量に上限あり</text>
+                <text class="t-sm" x="22" y="70">上限の数字は、公式で見つからない</text>
+                <line class="line" x1="180" y1="84" x2="180" y2="92" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="94" width="344" height="64" rx="10"/>
+                <text class="t-b" x="22" y="116">Power：月 $20</text>
+                <text class="t-sm" x="22" y="138">毎週 5億（500M）Museトークンまで</text>
+                <line class="line" x1="180" y1="160" x2="180" y2="168" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="170" width="344" height="64" rx="10"/>
+                <text class="t-b" x="22" y="192">Maximum：月 $100</text>
+                <text class="t-sm" x="22" y="214">毎週 30億（3B）Museトークンまで</text>
+              </svg>
+              <figcaption>公式ヘルプはドル表記です。日本の円での料金と、日本で有料プランに入れるかは、公式で確認できていません（ヘルプには「提供地域が限定されている」とあります）。</figcaption>
             </figure>
             <ul>
-              <li>Metaの公式発表（Muse）: "Muse is a personal AI agent. It doesn’t just answer questions, it actually does the work."（質問に答えるだけでなく、実際に作業をする）</li>
-              <li>OpenAIの公式ヘルプ（dots）: "Your dot is an always-on agent in ChatGPT that can take on ongoing responsibility and keep making progress between conversations."（会話と会話のあいだも、仕事を進める）</li>
-              <li>第9回で、Workerを<strong>公開URLに置きっぱなし</strong>にした。あれは「<strong>人が作ったコードが、動き続ける</strong>」。今日見るのは「<strong>AIが、判断しながら、動き続ける</strong>」</li>
+              <li>日本語の公式発表: 「Museは日本において本日より iOS、Android、および muse.ai で提供を開始します。多くの基本的な機能は無料で利用でき、さらに活用したい方向けにはサブスクリプションプランもご用意しています。」（2026-10-23）</li>
+              <li><strong>18歳未満は、Museを利用できません</strong>（Muse利用規約の補足条項。年齢は技術的な方法で推定され、必要ならクレジットカードの認証も使うとある）。規約は「居住する国・地域で求められている年齢が18歳を超える場合は、その年齢」とも書いている。日本では、本校の学生は全員18歳以上</li>
+              <li>Meta公式の規約: 無料提供は、<strong>予告なく変更・中止されることがある</strong>、とある。今日の「無料」は、<strong>いまの条件</strong>です</li>
             </ul>
-            <p><strong>② 6つのサービスを、公式の説明で並べる</strong>（約20分）。確認日 2026-11-18。「日本」の列は、<strong>公式で確かめられた範囲</strong>だけを書いています。</p>
-            <table class="schedule-table schedule-table--stack">
+            <div class="lesson-tip">
+              <strong>⚠ 注意:</strong> 有料プラン（$20／$100）は、日本で申し込めるか、円でいくらかが、<strong>公式で確認できていません</strong>。授業では<strong>有料プランに入りません</strong>。クレジットカードなどの支払い情報は、入力しないでください。
+            </div>
+            <details class="vz-more">
+              <summary>ほかのサービスは？（dots・Grok Bot・Tasks in Gemini・Autopilot・Claude Duet）の比較表</summary>
+              <p>2026-11-18に確認した、ほかの常時稼働型エージェントです（Museは、上で説明したので省きました）。「公式で確認できず」は、使えないという意味ではありません。</p>
+              <table class="schedule-table schedule-table--stack">
               <thead><tr><th>サービス</th><th>公式に書いてあること</th><th>日本</th></tr></thead>
               <tbody>
-                <tr><td data-label="サービス"><strong>Muse</strong>（Meta）</td><td data-label="公式に書いてあること">専用のクラウドPC「Muse Secure VM」で動く。メール送信・購入の前に本人へ確認。操作の記録を見られる。アプリを閉じても作業を続ける</td><td data-label="日本"><strong>2026-10-23に提供開始</strong>（iOS・Android・muse.ai）。多くの基本機能は無料、有料プランもある。<strong>18歳未満は利用不可</strong></td></tr>
-                <tr><td data-label="サービス"><strong>dots</strong>（OpenAI）</td><td data-label="公式に書いてあること">ChatGPTの中の常時稼働エージェント。自分専用のクラウドPC。自分のPCへの接続は、初期設定ではオフ。いつでも一時停止できる</td><td data-label="日本">対象は、18歳以上のProなど。EEA・スイス・英国は除く。<strong>日本は公式で確認できず（未確認）</strong></td></tr>
-                <tr><td data-label="サービス"><strong>Grok Bot</strong>（xAI）</td><td data-label="公式に書いてあること">Botごとに自分のコンピューター。24時間動く（8月11日にbetaで開始。公式ページには現在「beta外」とある）。承認が要るときだけ人に戻る。Botどうしがやりとりする。作業を見せると、手順を覚える</td><td data-label="日本">SuperGrokやCursorのプランに含まれる。<strong>日本は公式で確認できず（未確認）</strong></td></tr>
-                <tr><td data-label="サービス"><strong>Tasks in Gemini</strong>（Google。以前の名前は Gemini Spark）</td><td data-label="公式に書いてあること">背景で複数の手順を進める。決めた時刻に実行できる。公式ヘルプが「機密情報をタスクに直接入れない」と注意している</td><td data-label="日本"><strong>2026-11-17から日本でも無料</strong>。<strong>現時点では、個人のGoogleアカウントのみ。学校・職場のアカウントは不可</strong>（公式ヘルプの "For now"）</td></tr>
-                <tr><td data-label="サービス"><strong>Autopilot</strong>（Microsoft）</td><td data-label="公式に書いてあること">自分の身元・記憶・作業場所・遠隔のコンピューターを持つ。クラウドで動く</td><td data-label="日本">Frontierプログラムに登録した、条件を満たす顧客に、11月17日から順次（Copilotのライセンスなどが条件）。<strong>個人向けとは書かれていない</strong></td></tr>
-                <tr><td data-label="サービス"><strong>Claude Duet</strong>（Anthropic）</td><td data-label="公式に書いてあること">専用の仮想マシンとブラウザを持ち、PCやスマホが閉じていても動く。「実行する前に確認する」と書いてある</td><td data-label="日本"><strong>研究プレビュー。待機リストで、米国のPro・Max・Ultraから</strong>。日本のことは書かれていない（米国から）</td></tr>
+              <tr><td data-label="サービス"><strong>dots</strong>（OpenAI）</td><td data-label="公式に書いてあること">ChatGPTの中の常時稼働エージェント。自分専用のクラウドPC。自分のPCへの接続は、初期設定ではオフ。いつでも一時停止できる</td><td data-label="日本">対象は、18歳以上のProなど。EEA・スイス・英国は除く。<strong>日本は公式で確認できず（未確認）</strong></td></tr>
+              <tr><td data-label="サービス"><strong>Grok Bot</strong>（xAI）</td><td data-label="公式に書いてあること">Botごとに自分のコンピューター。24時間動く（8月11日にbetaで開始。公式ページには現在「beta外」とある）。承認が要るときだけ人に戻る。Botどうしがやりとりする。作業を見せると、手順を覚える</td><td data-label="日本">SuperGrokやCursorのプランに含まれる。<strong>日本は公式で確認できず（未確認）</strong></td></tr>
+              <tr><td data-label="サービス"><strong>Tasks in Gemini</strong>（Google。以前の名前は Gemini Spark）</td><td data-label="公式に書いてあること">背景で複数の手順を進める。決めた時刻に実行できる。公式ヘルプが「機密情報をタスクに直接入れない」と注意している</td><td data-label="日本"><strong>2026-11-17から日本でも無料</strong>。<strong>現時点では、個人のGoogleアカウントのみ。学校・職場のアカウントは不可</strong>（公式ヘルプの "For now"）</td></tr>
+              <tr><td data-label="サービス"><strong>Autopilot</strong>（Microsoft）</td><td data-label="公式に書いてあること">自分の身元・記憶・作業場所・遠隔のコンピューターを持つ。クラウドで動く</td><td data-label="日本">Frontierプログラムに登録した、条件を満たす顧客に、11月17日から順次（Copilotのライセンスなどが条件）。<strong>個人向けとは書かれていない</strong></td></tr>
+              <tr><td data-label="サービス"><strong>Claude Duet</strong>（Anthropic）</td><td data-label="公式に書いてあること">専用の仮想マシンとブラウザを持ち、PCやスマホが閉じていても動く。「実行する前に確認する」と書いてある</td><td data-label="日本"><strong>研究プレビュー。待機リストで、米国のPro・Max・Ultraから</strong>。日本のことは書かれていない（米国から）</td></tr>
               </tbody>
             </table>
+              <ul>
+                <li><a href="https://help.openai.com/en/articles/20001530-getting-started-with-your-dot" target="_blank" rel="noopener">Getting started with your dot（OpenAI Help Center）</a> — dots</li>
+                <li><a href="https://x.ai/news/introducing-grok-bot" target="_blank" rel="noopener">Introducing Grok Bot（xAI公式）</a>・<a href="https://x.ai/news/grok-bot-more-plans" target="_blank" rel="noopener">Grok Bot is now included with more plans（xAI公式）</a> — Grok Bot</li>
+                <li><a href="https://support.google.com/gemini/answer/17094507?hl=en" target="_blank" rel="noopener">Manage your tasks &amp; workflows in Gemini Apps（Gemini Apps Help）</a>・<a href="https://support.google.com/gemini/answer/17171264?hl=en" target="_blank" rel="noopener">Gemini Apps’ release updates &amp; improvements（Gemini Apps Help）</a> — Tasks in Gemini</li>
+                <li><a href="https://techcommunity.microsoft.com/blog/microsoft-copilot-blog/autopilot-meet-your-trusted-personal-teammate/4572611" target="_blank" rel="noopener">Autopilot: meet your trusted personal teammate（Microsoft Tech Community）</a> — Autopilot</li>
+                <li><a href="https://claude.com/resources/articles/claude-duet" target="_blank" rel="noopener">Introducing Claude Duet（Claude公式）</a> — Claude Duet</li>
+              </ul>
+            </details>
+            <p><strong>③ はじめ方</strong>（約10分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-n10-signup">
+              <p class="vz-fig-title" id="cap-n10-signup">はじめ方：4つのステップ</p>
+              <svg class="vz-svg" viewBox="0 0 360 242" role="img" aria-labelledby="n10-signup-t n10-signup-d">
+                <title id="n10-signup-t">はじめ方：4つのステップ</title>
+                <desc id="n10-signup-d">はじめ方の4つのステップ。1 muse.aiか、公式アプリを開く。2 Metaアカウントで入る。Facebook、Instagram、またはメールアドレスか電話番号で作れる。3 最初の設定を見る。設定の、アクセス許可と、データコントロール。4 リスクの少ない小さなタスクから始める。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="44" rx="10"/>
+                <circle class="dot" cx="30" cy="28" r="12"/><text class="t-b t-c t-w" x="30" y="33">1</text>
+                <text class="t-b" x="52" y="26">入口を開く</text>
+                <text class="t-sm" x="52" y="44">muse.ai か、公式アプリ</text>
+                <line class="line" x1="180" y1="53" x2="180" y2="65" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="68" width="344" height="44" rx="10"/>
+                <circle class="dot" cx="30" cy="90" r="12"/><text class="t-b t-c t-w" x="30" y="95">2</text>
+                <text class="t-b" x="52" y="88">Metaアカウントで入る</text>
+                <text class="t-sm" x="52" y="106">FB・Instagram、またはメール・電話番号</text>
+                <line class="line" x1="180" y1="115" x2="180" y2="127" marker-end="url(#mk-s)"/>
+                <rect class="box-orange box-key" x="8" y="130" width="344" height="44" rx="10"/>
+                <circle class="dot" cx="30" cy="152" r="12"/><text class="t-b t-c t-w" x="30" y="157">3</text>
+                <text class="t-b" x="52" y="150">最初の設定を見る</text>
+                <text class="t-sm" x="52" y="168">設定 → アクセス許可／データコントロール</text>
+                <line class="line" x1="180" y1="177" x2="180" y2="189" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="192" width="344" height="44" rx="10"/>
+                <circle class="dot" cx="30" cy="214" r="12"/><text class="t-b t-c t-w" x="30" y="219">4</text>
+                <text class="t-b" x="52" y="212">小さなタスクから</text>
+                <text class="t-sm" x="52" y="230">リスクの少ないものを、1つ</text>
+              </svg>
+              <figcaption>公式ヘルプ「Museの利用を始める方法」の内容を、この授業用に4つにしました。</figcaption>
+            </figure>
             <ul>
-              <li>「<strong>公式で確認できず</strong>」は、<strong>使えない</strong>という意味ではありません。公式のページに、日本のことが書いていないだけです。日本の報道は、Grok Botを日本から使えると伝えていますが、<strong>これは二次情報</strong>です。先生の確認結果を、授業で伝えます</li>
-              <li>古い記事に注意。「Museは日本のアカウントから使いにくい」と書いた記事があるが、10月23日の日本提供の<strong>前</strong>の話。<strong>記事の日付と公式を、必ず見比べる</strong></li>
+              <li>公式ヘルプ: Metaアカウントで入る。持っていなければ、<strong>FacebookかInstagramのアカウント、またはメールアドレス／電話番号</strong>で作れる</li>
+              <li>muse.ai のログイン画面にも、「携帯電話番号またはメールアドレス（必須）」とある。Metaのヘルプには、電話番号やメールを、<strong>ログインの支援・アカウントのお知らせ・安全のため</strong>に使う、と書いてある</li>
+              <li><strong>入れたくない人は、体験しなくてよい</strong>（体験は任意）</li>
             </ul>
-            <p><strong>③ 隣の人と、1分ずつ</strong>（約10分）。6つのうち、<strong>自分が使うなら、どれに、どんな仕事を頼みたいか</strong>。そして<strong>それを頼むのが、こわい仕事は何か</strong>。1つずつ。</p>
+            <div class="lesson-tip">
+              <strong>⚠ 注意:</strong> <strong>公式の入口</strong>（muse.ai と、公式アプリ）だけから入ってください。公式サイトのFAQに、"beware of fake Muse sites or apps asking for your login"（ログインを求める、にせのMuseのサイトやアプリに注意）、"Muse will never ask for your password via a link in a post or DM"（投稿やDMのリンクで、パスワードを聞くことはない）とあります。
+            </div>
+            <p><strong>④ Museの画面の地図</strong>（約10分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-n10-map">
+              <p class="vz-fig-title" id="cap-n10-map">Museの画面の地図（公式ヘルプより）</p>
+              <svg class="vz-svg" viewBox="0 0 360 294" role="img" aria-labelledby="n10-map-t n10-map-d">
+                <title id="n10-map-t">Museの画面の地図（公式ヘルプより）</title>
+                <desc id="n10-map-d">Museの画面の地図。1 チャット。メインとサイドがあり、待たずに次を頼める。2 目標。長く追うことを、計画ごと見る。3 アイデア。Museからのおすすめタスク。4 ライブラリ。作った資料の置き場所。5 アシスタントのアイコン。活動ログ、今後の予定、記憶。6 設定。アクセス許可、コネクター、データコントロール。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="27" r="12"/><text class="t-b t-c t-w" x="30" y="32">1</text>
+                <text class="t-b" x="52" y="25">チャット</text>
+                <text class="t-sm" x="52" y="43">メインとサイド。待たずに次を頼める</text>
+                <rect class="box-orange" x="8" y="54" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="75" r="12"/><text class="t-b t-c t-w" x="30" y="80">2</text>
+                <text class="t-b" x="52" y="73">目標</text>
+                <text class="t-sm" x="52" y="91">長く追うことを、計画ごと見る</text>
+                <rect class="box-white" x="8" y="102" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="123" r="12"/><text class="t-b t-c t-w" x="30" y="128">3</text>
+                <text class="t-b" x="52" y="121">アイデア</text>
+                <text class="t-sm" x="52" y="139">Museからの、おすすめタスク</text>
+                <rect class="box-orange" x="8" y="150" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="171" r="12"/><text class="t-b t-c t-w" x="30" y="176">4</text>
+                <text class="t-b" x="52" y="169">ライブラリ</text>
+                <text class="t-sm" x="52" y="187">作った資料の置き場所</text>
+                <rect class="box-orange box-key" x="8" y="198" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="219" r="12"/><text class="t-b t-c t-w" x="30" y="224">5</text>
+                <text class="t-b" x="52" y="217">アシスタント（アイコン）</text>
+                <text class="t-sm" x="52" y="235">活動ログ・今後の予定・記憶</text>
+                <rect class="box-orange" x="8" y="246" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="267" r="12"/><text class="t-b t-c t-w" x="30" y="272">6</text>
+                <text class="t-b" x="52" y="265">設定</text>
+                <text class="t-sm" x="52" y="283">アクセス許可・コネクター・データ</text>
+              </svg>
+              <figcaption>画面の名前は公式ヘルプの表記です。見た目やタブの位置は、アプリの更新で変わることがあります。</figcaption>
+            </figure>
+            <ul>
+              <li><strong>アシスタントのアイコン</strong>をタップすると、<strong>活動ログ</strong>（Museがしたこと、あなたが許可したこと）と、<strong>今後の予定</strong>（日時指定のタスク・リマインダー）が見られる（公式ヘルプ）</li>
+              <li>名前・性格は、<strong>自分で変えられる</strong>（「もっとカジュアルに」「短く」と頼むだけ）。公式ブログは、自分だけの名前をつけることを、人が気に入る機能の1つとしている</li>
+              <li><strong>アバターの一部の機能は、日本では「別途案内」</strong>（Meta日本語発表）。アシスタントのアイコンの場所や見え方が、日本のアカウントで違う可能性があるので、<strong>実際の画面で確かめて記録</strong>する（日本のアカウントでの実画面は、未確認）</li>
+            </ul>
           </div>
         </div>
 
@@ -151,9 +316,262 @@
             <span class="timeline-time">1限 後半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>動き続けるAIに、何を渡すか：Museの設計を読む</h3>
+          <h3>便利な使い方：頼み方・目標・リマインダー・資料づくり・スキル</h3>
           <div class="timeline-body">
-            <p><strong>① 「動かす側」と「許可する側」を分ける</strong>（約20分）</p>
+            <p><strong>① 頼み方の6つのコツ</strong>（約10分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-n10-tips">
+              <p class="vz-fig-title" id="cap-n10-tips">頼み方の6つのコツ（公式ヘルプの「アドバイス」）</p>
+              <svg class="vz-svg" viewBox="0 0 360 294" role="img" aria-labelledby="n10-tips-t n10-tips-d">
+                <title id="n10-tips-t">頼み方の6つのコツ（公式ヘルプの「アドバイス」）</title>
+                <desc id="n10-tips-d">頼み方の6つのコツ。1 背景を説明する。2 変更を頼む。3 フォローアップを使う。4 形式を伝える。5 境界線を決める。例は、メールだけで、SMSは見ない。6 AIが作ったことを、相手に伝えるノートを足せる。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="27" r="12"/><text class="t-b t-c t-w" x="30" y="32">1</text>
+                <text class="t-b" x="52" y="25">背景を説明する</text>
+                <text class="t-sm" x="52" y="43">情報が多いほど、答えがよくなる</text>
+                <rect class="box-orange" x="8" y="54" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="75" r="12"/><text class="t-b t-c t-w" x="30" y="80">2</text>
+                <text class="t-b" x="52" y="73">変更を頼む</text>
+                <text class="t-sm" x="52" y="91">合わない所は、そう伝える</text>
+                <rect class="box-white" x="8" y="102" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="123" r="12"/><text class="t-b t-c t-w" x="30" y="128">3</text>
+                <text class="t-b" x="52" y="121">フォローアップを使う</text>
+                <text class="t-sm" x="52" y="139">最初からやり直さず、つづける</text>
+                <rect class="box-orange" x="8" y="150" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="171" r="12"/><text class="t-b t-c t-w" x="30" y="176">4</text>
+                <text class="t-b" x="52" y="169">形式を伝える</text>
+                <text class="t-sm" x="52" y="187">表・リスト・ファイル・口調</text>
+                <rect class="box-orange box-key" x="8" y="198" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="219" r="12"/><text class="t-b t-c t-w" x="30" y="224">5</text>
+                <text class="t-b" x="52" y="217">境界線を決める</text>
+                <text class="t-sm" x="52" y="235">例:「メールだけ。SMSは見ない」</text>
+                <rect class="box-orange" x="8" y="246" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="267" r="12"/><text class="t-b t-c t-w" x="30" y="272">6</text>
+                <text class="t-b" x="52" y="265">AI作成の注記</text>
+                <text class="t-sm" x="52" y="283">相手に伝わるよう、ノートを足せる</text>
+              </svg>
+              <figcaption>公式ヘルプのアドバイスを、順に並べました。5の「境界線」が、安全にも効きます。</figcaption>
+            </figure>
+            <pre class="md-preview">悪い例: 「ニュースを教えて」
+良い例: 「毎朝、進級制作の分野（例: 地図、天気）のニュースを、3件だけ、
+        1行ずつ、出典URLつきで教えて。メールや予定表は見ないで。」</pre>
+            <div class="lesson-tip">
+              <strong>⚠ 注意:</strong> 「境界線を決める」は、<strong>安全のための頼み方</strong>でもあります。<strong>何をしてよくて、何をしてはいけないか</strong>を、最初に書きます。
+            </div>
+            <p><strong>② 長く動かす：目標・リマインダー・サイドチャット</strong>（約10分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-n10-bg">
+              <p class="vz-fig-title" id="cap-n10-bg">長く動かす：目標からお知らせまで</p>
+              <svg class="vz-svg" viewBox="0 0 360 242" role="img" aria-labelledby="n10-bg-t n10-bg-d">
+                <title id="n10-bg-t">長く動かす：目標からお知らせまで</title>
+                <desc id="n10-bg-d">長く動かす流れ。1 目標を伝える。2 Museが計画を立てる。3 アプリを閉じても、裏で作業が続く。4 新しいことがあるときや、承認が要るときに、知らせる。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="44" rx="10"/>
+                <circle class="dot" cx="30" cy="28" r="12"/><text class="t-b t-c t-w" x="30" y="33">1</text>
+                <text class="t-b" x="52" y="26">目標を伝える</text>
+                <text class="t-sm" x="52" y="44">例:「今月の出費を、見える形に」</text>
+                <line class="line" x1="180" y1="53" x2="180" y2="65" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="68" width="344" height="44" rx="10"/>
+                <circle class="dot" cx="30" cy="90" r="12"/><text class="t-b t-c t-w" x="30" y="95">2</text>
+                <text class="t-b" x="52" y="88">計画を立てる</text>
+                <text class="t-sm" x="52" y="106">Museが、やることを分ける</text>
+                <line class="line" x1="180" y1="115" x2="180" y2="127" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="130" width="344" height="44" rx="10"/>
+                <circle class="dot" cx="30" cy="152" r="12"/><text class="t-b t-c t-w" x="30" y="157">3</text>
+                <text class="t-b" x="52" y="150">裏で進める</text>
+                <text class="t-sm" x="52" y="168">アプリを閉じても、作業が続く</text>
+                <line class="line" x1="180" y1="177" x2="180" y2="189" marker-end="url(#mk-s)"/>
+                <rect class="box-orange box-key" x="8" y="192" width="344" height="44" rx="10"/>
+                <circle class="dot" cx="30" cy="214" r="12"/><text class="t-b t-c t-w" x="30" y="219">4</text>
+                <text class="t-b" x="52" y="212">知らせる・確認する</text>
+                <text class="t-sm" x="52" y="230">新しいことがあるとき／承認が要るとき</text>
+              </svg>
+              <figcaption>公式ブログ: Museは、裏の作業が終わると、知らせる価値があるかを考え、新しいことか、あなたの入力が要るときだけ通知する、とあります。</figcaption>
+            </figure>
+            <ul>
+              <li><strong>目標</strong>: 長く追うことを伝えると、Museが計画に分け、<strong>[目標]タブ</strong>で、進み具合を見られる（削除もそこから）</li>
+              <li><strong>リマインダー</strong>: 「何を、いつ」教えてほしいかを伝える。確認は、アシスタント → [今後]。公式は「予定された時刻に…送信するよう試みます」と書いている（<strong>必ず届くとは書いていません</strong>）</li>
+              <li><strong>サイドチャット</strong>: 話題ごとに、別のスレッドを作れる。メインのチャットを散らかさない</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>⚠ 注意:</strong> 大事な予定の通知を、<strong>Museだけに頼らない</strong>ようにしてください（公式も「試みます」としか書いていません）。
+            </div>
+            <p><strong>③ 資料をつくらせる：アーティファクト</strong>（約10分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-n10-artifact">
+              <p class="vz-fig-title" id="cap-n10-artifact">資料づくり：アーティファクト</p>
+              <svg class="vz-svg" viewBox="0 0 360 258" role="img" aria-labelledby="n10-artifact-t n10-artifact-d">
+                <title id="n10-artifact-t">資料づくり：アーティファクト</title>
+                <desc id="n10-artifact-d">アーティファクトの流れ。ファイルをアップロードして読ませる。PDF、DOCX、テキスト、Markdown、XLSX、CSV、画像、コードファイル。Museが、文書、スプレッドシート、画像、ポッドキャスト、動くWebツールを作ったり、直したりする。できたものは、ライブラリに保存され、いつでも削除できる。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="78" rx="10"/>
+                <text class="t-b" x="22" y="28">読ませる（アップロード）</text>
+                <text class="t-sm" x="22" y="50">PDF・DOCX・テキスト・Markdown</text>
+                <text class="t-sm" x="22" y="70">XLSX・CSV・画像・コードファイル</text>
+                <line class="line" x1="180" y1="86" x2="180" y2="98" marker-end="url(#mk-s)"/>
+                <rect class="box-orange box-key" x="8" y="100" width="344" height="78" rx="10"/>
+                <text class="t-b" x="22" y="122">作らせる・直させる</text>
+                <text class="t-sm" x="22" y="144">文書・スプレッドシート・画像</text>
+                <text class="t-sm" x="22" y="164">ポッドキャスト・動くWebツール</text>
+                <line class="line" x1="180" y1="180" x2="180" y2="192" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="194" width="344" height="58" rx="10"/>
+                <text class="t-b" x="22" y="216">置き場所：ライブラリ</text>
+                <text class="t-sm" x="22" y="238">いつでも見て、削除できる</text>
+              </svg>
+              <figcaption>ファイルの種類は、公式ヘルプ「Museをアーティファクトと一緒に使用する方法」の記載です。大きなファイルは、時間がかかることがあります。</figcaption>
+            </figure>
+            <ul>
+              <li>例（公式ヘルプ）:「日本への旅行の日程を1ページにまとめて」「毎月の出費をトラッキングするダッシュボードを作成して」。<strong>PDFか、Wordか</strong>など、形式も書く</li>
+              <li>会話のファイルを覚えているので、「予算のスプレッドシートを更新して」と、<strong>再アップロードなしで頼める</strong></li>
+              <li>公式ヘルプは「Museはローカルでファイルの内容を処理します」とあるが、Museは<strong>Metaのクラウド上の専用PC（仮想マシン）</strong>で動き、そこに、共有した情報や一緒に作ったものを保存する（プライバシーのヘルプ）。<strong>アップロードしたファイルは、Museのクラウド環境に置かれる</strong>ものと考えて、入れてよいものだけ入れる。利用者が共有をオンにするか、共有リクエストを承認しない限り、外部の他者には共有されない（公式ヘルプ）</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>⚠ 注意:</strong> 生成した資料は、<strong>人が確かめてから</strong>使います。Museは間違えることがある、と公式ヘルプが書いています。<strong>他の人に送る資料</strong>には、「AIが作った」というノートを足せます（授業の提出物は、先生の指示に従います）。
+            </div>
+            <p><strong>④ スキルとアイデアタブ・使い方レシピ</strong>（約20分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-n10-recipes">
+              <p class="vz-fig-title" id="cap-n10-recipes">便利な使い方：公式の例から</p>
+              <svg class="vz-svg" viewBox="0 0 360 246" role="img" aria-labelledby="n10-recipes-t n10-recipes-d">
+                <title id="n10-recipes-t">便利な使い方：公式の例から</title>
+                <desc id="n10-recipes-d">便利な使い方の例。1 旅の日程を1ページにまとめる。2 毎月の出費を記録するダッシュボードを作る。3 調べ物を比較して、PDFにする。4 朝のニュースダイジェストを作る。5 インタラクティブな学習ガイドを作る。すべて、公式の説明に出てくる例。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="27" r="12"/><text class="t-b t-c t-w" x="30" y="32">1</text>
+                <text class="t-b" x="52" y="25">旅の日程を1ページに</text>
+                <text class="t-sm" x="52" y="43">ヘルプの例:「日本への旅行の日程を…」</text>
+                <rect class="box-orange" x="8" y="54" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="75" r="12"/><text class="t-b t-c t-w" x="30" y="80">2</text>
+                <text class="t-b" x="52" y="73">出費ダッシュボード</text>
+                <text class="t-sm" x="52" y="91">ヘルプの例:「毎月の出費をトラッキング」</text>
+                <rect class="box-white" x="8" y="102" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="123" r="12"/><text class="t-b t-c t-w" x="30" y="128">3</text>
+                <text class="t-b" x="52" y="121">調べ物をPDFに</text>
+                <text class="t-sm" x="52" y="139">ヘルプの例:「コーヒー豆を比較したPDF」</text>
+                <rect class="box-orange box-key" x="8" y="150" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="171" r="12"/><text class="t-b t-c t-w" x="30" y="176">4</text>
+                <text class="t-b" x="52" y="169">朝のニュースダイジェスト</text>
+                <text class="t-sm" x="52" y="187">スキルの例として、公式に書いてある</text>
+                <rect class="box-white" x="8" y="198" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="219" r="12"/><text class="t-b t-c t-w" x="30" y="224">5</text>
+                <text class="t-b" x="52" y="217">学習ガイドを作る</text>
+                <text class="t-sm" x="52" y="235">公式ブログの例: interactive study guide</text>
+              </svg>
+              <figcaption>どれも公式の説明にある例です。この授業では、個人情報を入れない形で試します。</figcaption>
+            </figure>
+            <ul>
+              <li><strong>スキル</strong>: ポッドキャスト、画像、調査のまとめ、文書の下書き、ダッシュボード、ウェブ閲覧など、Museに<strong>組み込まれた機能</strong>。<strong>別にインストールは不要</strong>で、頼むと自動で選ばれる。使われたスキルは、活動ログで見られる</li>
+              <li><strong>何ができるか分からない</strong>ときは: ①[アイデア]タブを見る　②「Muse、どんなことができる？」と聞く　③ダイジェスト・ポッドキャスト・画像・PDF・調査を試す（公式ヘルプ）</li>
+              <li>位置情報・ファイルなど、<strong>スキルによっては、情報へのアクセスが必要</strong>になる（例: 位置情報で「次に店で…」とリマインド）。必要なものだけ許可する</li>
+            </ul>
+            <pre class="md-preview">例1（授業用）: 毎朝、進級制作の分野のニュースを3件、1行ずつ、出典URLつきで教えて。
+              メールや予定表にはつながないで。
+例2（授業用）: 次の公開資料を、初心者向けに1ページへ要約して。分からない言葉には、
+              やさしい説明をつけて。
+例3（授業用）: 出費を記録する簡単なダッシュボードを、サンプルの数字で作って。
+              実際の金額は入れないで。</pre>
+            <div class="lesson-tip">
+              <strong>⚠ 注意:</strong> 例の3つは、<strong>個人情報が入らない形</strong>にしてあります。<strong>実際の収入・出費、友だちや家族の情報、学校の名簿</strong>は、入れないでください（公式ヘルプも、Museが保存する情報には「あなたや他の人に関する情報」が含まれると書いています）。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>安全な設定と、小さなタスクの体験（体験は任意）</h3>
+          <div class="timeline-body">
+            <p><strong>① 先に決める3つのルール</strong>（約5分）。体験する人も、しない人も、同じです。</p>
+            <ul>
+              <li><strong>個人のアカウントだけ</strong>。学校のアカウントやメールは使わない</li>
+              <li><strong>メール・予定表・写真・支払いは、つながない</strong>（コネクターは、今日は0個）。<strong>有料プランに入らない</strong></li>
+              <li><strong>18歳以上</strong>。電話番号やメールを入れたくない人は、体験しなくてよい</li>
+            </ul>
+            <p><strong>② 最初に見る設定</strong>（約10分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-n10-settings">
+              <p class="vz-fig-title" id="cap-n10-settings">最初に見る設定：3か所</p>
+              <svg class="vz-svg" viewBox="0 0 360 236" role="img" aria-labelledby="n10-settings-t n10-settings-d">
+                <title id="n10-settings-t">最初に見る設定：3か所</title>
+                <desc id="n10-settings-d">最初に見る設定の3か所。1 設定のアクセス許可の、コネクター。一部の操作で確認するか、常に確認するかを選ぶ。2 アクセス許可の、ウェブアクセスのデフォルト。同じく2段階。3 データコントロールの、AIモデルの改善に協力。最初はオンになっている。授業用の方針は、常に確認にして、データの使い方は自分で決めること。</desc>
+                <rect class="box-orange box-key" x="8" y="6" width="344" height="46" rx="10"/>
+                <circle class="dot" cx="30" cy="29" r="12"/><text class="t-b t-c t-w" x="30" y="34">1</text>
+                <text class="t-b" x="52" y="27">アクセス許可 → コネクター</text>
+                <text class="t-sm" x="52" y="45">「一部の操作で確認」か「常に確認」</text>
+                <rect class="box-orange box-key" x="8" y="58" width="344" height="46" rx="10"/>
+                <circle class="dot" cx="30" cy="81" r="12"/><text class="t-b t-c t-w" x="30" y="86">2</text>
+                <text class="t-b" x="52" y="79">アクセス許可 → ウェブ</text>
+                <text class="t-sm" x="52" y="97">「ウェブアクセスのデフォルト」も、同じ</text>
+                <rect class="box-orange box-key" x="8" y="110" width="344" height="46" rx="10"/>
+                <circle class="dot" cx="30" cy="133" r="12"/><text class="t-b t-c t-w" x="30" y="138">3</text>
+                <text class="t-b" x="52" y="131">データコントロール</text>
+                <text class="t-sm" x="52" y="149">「AIモデルの改善に協力」は、最初はオン</text>
+                <rect class="band" x="8" y="170" width="344" height="58" rx="10"/>
+                <text class="t-b" x="22" y="192">授業用の方針</text>
+                <text class="t-sm" x="22" y="212">「常に確認」にして、データの使い方は自分で決める</text>
+              </svg>
+              <figcaption>公式ヘルプ「Museがあなたのガイダンスと承認に基づいて機能する仕組み」「Museのデータを管理する方法」にある設定です。</figcaption>
+            </figure>
+            <ul>
+              <li><strong>[設定] → [アクセス許可]</strong>: コネクターと、ウェブアクセスのデフォルトを、<strong>「常に確認」</strong>にする（授業用の方針）。「Ask for some actions」だと、<strong>書き込みと重要な読み取り</strong>の前に確認される</li>
+              <li><strong>[設定] → [データコントロール]</strong>: 「AIモデルの改善にご協力ください」は、<strong>最初はオン</strong>。オフにすると、過去のやりとりにも適用される。オンでも、名前・メール・電話番号などの個人情報は削除され、アカウントとの関連付けは解除される、と公式は書いている。<strong>自分で決める</strong></li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>⚠ 注意:</strong> 設定の名前や場所は、<strong>アプリの更新で変わる</strong>ことがあります。見つからないときは、手を挙げてください。公式ヘルプの<strong>日本語の表記</strong>は、一部が英語のままです（例: Ask for some actions）。
+            </div>
+            <p><strong>③ A: 体験する人</strong>（約25分）。個人情報なしの小さなタスクを、1つ頼む。</p>
+            <pre class="md-preview">例: 毎朝、進級制作の分野（例: 地図、天気、ゲーム）のニュースを、3件だけ、
+    1行ずつ、出典URLつきで教えて。メールや予定表には、つながないで。
+    確認が要るときは、先に聞いて。</pre>
+            <ul>
+              <li>観察して、<strong>記録する</strong>: ①頼んだ文　②Museが<strong>確認してきたこと</strong>　③<strong>承認画面</strong>の選択肢（下の図）　④<strong>活動ログ</strong>と<strong>今後の予定</strong>の場所　⑤<strong>止める方法</strong>　⑥公式の説明と違ったこと</li>
+              <li>画面に、名前・電話番号・メールアドレスが出たら、<strong>撮影・共有しない</strong></li>
+              <li>手が止まったら、手を挙げる。<strong>うまくいかなくても、それも記録になります</strong></li>
+            </ul>
+            <p><strong>③ B: 体験しない人</strong>（約25分）。先生の画面（または、体験している人の画面）を見ながら、<strong>自分のAIエージェント</strong>（Claude Code／Codex CLI／Antigravity CLI）に、<strong>同じタスクの仕様</strong>を書かせる（実行はしない）。第8回の型②を使う。</p>
+            <pre class="md-preview">毎朝、決まった時刻に、公開されているニュースを3件だけ要約して届けるタスクの
+「仕様」を書いてください。まだ作らないでください。
+・目的 ・入力 ・出力 ・実行する時刻 ・人に確認する場面 ・止める方法
+・間違えたとき困らないための工夫
+最初に、私に質問があれば、選択肢で聞いてください。</pre>
+            <p><strong>④ 承認の画面を見る</strong>（約10分）。承認の前に、<strong>何をするのか</strong>を読みます。</p>
+            <figure class="vz-fig" aria-labelledby="cap-n10-approve">
+              <p class="vz-fig-title" id="cap-n10-approve">承認の5つの選択肢（範囲のちがい）</p>
+              <svg class="vz-svg" viewBox="0 0 360 246" role="img" aria-labelledby="n10-approve-t n10-approve-d">
+                <title id="n10-approve-t">承認の5つの選択肢（範囲のちがい）</title>
+                <desc id="n10-approve-d">承認の5つの選択肢と、それぞれが許す範囲の図。却下は、今回は何もしない。1回だけ許可は、今回に限り実行する。このタスクを許可は、タスク全体で同じ種類の操作をする。このサイトを許可は、今後このサイトで同じ種類の操作をする。常に許可は、今後このコネクターで同じ種類の操作をする。</desc>
+                <rect class="box-orange box-key" x="8" y="6" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="27" r="12"/><text class="t-b t-c t-w" x="30" y="32">1</text>
+                <text class="t-b" x="52" y="25">却下</text>
+                <text class="t-sm" x="52" y="43">今回は、Museは何もしない</text>
+                <rect class="box-orange" x="8" y="54" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="75" r="12"/><text class="t-b t-c t-w" x="30" y="80">2</text>
+                <text class="t-b" x="52" y="73">1回だけ許可</text>
+                <text class="t-sm" x="52" y="91">今回の、この1回だけ実行する</text>
+                <rect class="box-white" x="8" y="102" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="123" r="12"/><text class="t-b t-c t-w" x="30" y="128">3</text>
+                <text class="t-b" x="52" y="121">このタスクを許可</text>
+                <text class="t-sm" x="52" y="139">このタスクの間、同じ種類の操作</text>
+                <rect class="box-orange" x="8" y="150" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="171" r="12"/><text class="t-b t-c t-w" x="30" y="176">4</text>
+                <text class="t-b" x="52" y="169">このサイトを許可</text>
+                <text class="t-sm" x="52" y="187">今後、このサイトで同じ種類の操作</text>
+                <rect class="box-white" x="8" y="198" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="219" r="12"/><text class="t-b t-c t-w" x="30" y="224">5</text>
+                <text class="t-b" x="52" y="217">常に許可</text>
+                <text class="t-sm" x="52" y="235">今後、このコネクターで同じ種類の操作</text>
+              </svg>
+              <figcaption>「このタスク」と「このサイト」は、範囲の切り方がちがいます（タスクの間／そのサイトでずっと）。<strong>分からないときは「却下」</strong>（授業用の方針）。内容を確かめて、実行してよいときだけ「1回だけ許可」。承認の前に「タスクの詳細を見る」で中身を見られます。5つは公式ヘルプの一覧で、公式ブログによると、場面で出る選択肢は変わることがあります。</figcaption>
+            </figure>
+            <ol class="vz-steps">
+              <li class="vz-step"><img class="vz-step-img" src="images/week10-muse-approve.jpg" alt="学生が、スマートフォンの承認の画面を、真剣な顔で見ている。画面には、封筒の絵と、緑のチェックのボタン、灰色のバツのボタンがある。指を近づけて、押す前にじっくり確かめている。横では、小さなロボットが静かに待っている。" width="800" height="597" loading="lazy"><b>承認は、自分で決める</b>メール送信や購入の前に、内容を見て、許可か却下かを選ぶ</li>
+            </ol>
+            <ul>
+              <li>公式ヘルプ: 承認の前に、<strong>[タスクの詳細を見る]</strong>で、タスクの詳細を確認できる</li>
+              <li>公式ブログ: "the default allows for standard browsing of the web and stops for anything hard to undo"（既定では、ふつうのウェブ閲覧はできるが、元に戻しにくいことの前で止まる）。確認ばかりで、全部を許可してしまう「バナー盲目」を避ける設計、とも書いている</li>
+              <li>Museの設計は、<strong>実行する側と、許可する側を分ける</strong>（Sentinel。下の図）。ただし、<strong>許可を押すのは、人</strong></li>
+            </ul>
             <figure class="vz-fig" aria-labelledby="cap-n10-sentinel">
               <p class="vz-fig-title" id="cap-n10-sentinel">Museの設計：作業する側と、許可する側</p>
               <svg class="vz-svg" viewBox="0 0 360 330" role="img" aria-labelledby="n10-sentinel-t n10-sentinel-d">
@@ -176,87 +594,16 @@
                 <rect class="box-white" x="8" y="256" width="344" height="68" rx="10"/>
                 <text class="t-b" x="22" y="280">インターネット・つないだアプリ</text>
                 <text class="t-sm" x="22" y="300">許可された操作だけが、外に出る</text>
-                <text class="t-sm" x="22" y="316">メール送信・購入などは、あなたの承認が先</text>
+                <text class="t-sm" x="22" y="316">重要な操作は、あなたの承認が先</text>
               </svg>
-              <figcaption>Meta公式のブログと発表の内容を、この授業用に簡単にした図です。実際の仕組みは、公式の原文を見てください（参考リンク）。<strong>全部の操作を毎回確認するわけではありません</strong>（公式ブログは、低リスクの操作は割り込みなしで進む場合があると書いています）。</figcaption>
+              <figcaption>Meta公式のブログと発表の内容を、この授業用に簡単にした図です。実際の仕組みは、公式の原文を見てください（参考リンク）。<strong>全部の操作を毎回確認するわけではありません</strong>（公式ブログは、承認の数が多すぎないよう調整する仕組みがある、と書いています。要約）。</figcaption>
             </figure>
             <ul>
-              <li>Meta公式のブログの原文: "Sentinel is the sole permission authority for connector actions and network egress."（Sentinelだけが、アプリへの操作と、ネットワークの外へ出ることを許可する）／"Muse proposes actions, but only Sentinel can grant permission to perform action."（Museは操作を提案するだけで、許可できるのはSentinelだけ）</li>
-              <li>同じブログの原文: "The right mental model is two isolated security domains on one box, not an LLM powered agent with root."（1台の中に、分けられた2つの領域がある。管理者権限を持つAIではない）</li>
-              <li>Meta公式の発表（日本語）: 「メールの送信や商品の購入など重要な操作の前には利用者本人に確認します」「利用者は、Museが行った操作や今後行う予定の操作の履歴を確認できます」</li>
-              <li><strong>考えるポイント</strong>: <strong>「頼まれたAI」に、許可も任せると、何が起きるか</strong>。第5回の<strong>最小権限</strong>と、どうつながるか</li>
+              <li>Meta公式ブログの原文: "Sentinel is the sole permission authority for connector actions and network egress."／"Muse proposes actions, but only Sentinel can grant permission to perform action."</li>
             </ul>
-            <p><strong>② 各社の「承認」を見比べる</strong>（約15分）。公式の原文で、<strong>人が確認する場面</strong>を探す。</p>
-            <table class="schedule-table schedule-table--stack">
-              <thead><tr><th>サービス</th><th>公式の原文（確認する場面）</th></tr></thead>
-              <tbody>
-                <tr><td data-label="サービス"><strong>Muse</strong></td><td data-label="公式の原文">"Muse checks with the person before sensitive actions like sending an email or making a purchase."</td></tr>
-                <tr><td data-label="サービス"><strong>Grok Bot</strong></td><td data-label="公式の原文">"only come back when something needs your approval"</td></tr>
-                <tr><td data-label="サービス"><strong>Claude Duet</strong></td><td data-label="公式の原文">"checks with you before it acts on your behalf"</td></tr>
-                <tr><td data-label="サービス"><strong>dots</strong></td><td data-label="公式の原文">"You choose what it can do on its own, review its work, and give feedback or change direction as you go. You can pause it at any time."</td></tr>
-                <tr><td data-label="サービス"><strong>Tasks in Gemini</strong></td><td data-label="公式の原文">"Do not enter sign-in info, payment details, or info you may find sensitive directly into the task thread."（公式ヘルプの注意）</td></tr>
-              </tbody>
-            </table>
-            <ul>
-              <li>上の表に引いた原文で<strong>「実行の前に人へ確認する」とはっきり書いてある</strong>のは、<strong>Muse・Grok Bot・Claude Duet</strong>。<strong>dots</strong>は「自分で任せる範囲を選び、結果を確認し、一時停止できる」という書き方で、<strong>必ず承認が要る</strong>とは書いていない。<strong>Tasks in Gemini</strong>のこの原文は「機密情報を入れない」という<strong>注意</strong>だが、同じヘルプに「タスクによっては、完了前に確認を求めることがある」（"Some tasks may require your confirmation before Gemini completes them."）とも、購入のときは「1タップの承認が先」とも書いてある（リリースノート）。<strong>Autopilot</strong>の公式ブログにも、「何に承認が要るかを自分で決める」（"decide what requires approval"）とある。<strong>承認の場面は、サービスごとに違う</strong>ので、同じだと思わない。<strong>書いていないこと</strong>は、分からないままにする（例: 「承認なしで動く範囲が、どこまでか」は、各社の画面で確かめるまで言えない）</li>
-              <li>Muse公式ブログは、<strong>AIは間違うし、読んだデータで攻撃されることもある</strong>という前提で、被害を小さくする設計にした、と書いている。<strong>「間違う前提で作る」</strong>は、自分の作品を作るときにも使える</li>
-            </ul>
-            <p><strong>③ 第9回とつなぐ</strong>（約15分）。Workerを公開URLに置いたとき、<strong>公開URLは誰でも開ける</strong>ことを確かめた。動き続けるエージェントに仕事を頼むときも、同じ質問をする。</p>
-            <ul>
-              <li><strong>誰が</strong>それを動かせるか（頼む人、頼まれたAI、第三者）</li>
-              <li><strong>何を</strong>渡したか（アカウント、メール、予定、支払い）。渡したものは、<strong>後から取り戻せるか</strong>（公式は「接続を解除してもよい」と書くが、<strong>すでに取得した情報が消えるかは、サービスごとに違う</strong>。dotsのヘルプには、接続を解除しても、すでに取得した情報は削除されない、とある）</li>
-              <li><strong>どこで止めるか</strong>（一時停止、接続の解除、削除）</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="timeline-block timeline-block--break">
-          <div class="timeline-header">
-            <span class="timeline-time">休憩</span>
-            <span class="timeline-duration">10分</span>
-          </div>
-        </div>
-
-        <div class="timeline-block">
-          <div class="timeline-header">
-            <span class="timeline-time">2限 前半</span>
-            <span class="timeline-duration">約50分</span>
-          </div>
-          <h3>小さな定期タスクで、承認・履歴・止め方を観察する（体験は任意）</h3>
-          <div class="timeline-body">
-            <p><strong>① 先に決める3つのルール</strong>（約5分）。<strong>体験する人も、しない人も、同じルール</strong>です。</p>
-            <ul>
-              <li><strong>個人のアカウントだけ</strong>。学校のアカウントや、学校のメールは使わない（Tasks in Geminiは、学校・職場のアカウントでは使えない、と公式ヘルプにある）</li>
-              <li><strong>メール・予定表・写真・支払いは、つながない</strong>。公開されている情報だけを使うタスクにする</li>
-              <li><strong>18歳以上</strong>の人だけ（Museの規約。本校の学生は全員、18歳以上）。登録に電話番号やメールが必要になる。<strong>入れたくない人は、体験しなくてよい</strong></li>
-            </ul>
-            <p><strong>② 頼むタスクを決める</strong>（約10分）。<strong>公開情報だけ</strong>で、<strong>間違っても困らない</strong>仕事にする。</p>
-            <pre class="md-preview">例: 毎朝、自分の進級制作の分野（例: 地図、天気、ゲーム）の
-    ニュースを、3件だけ、1行ずつの要約で、教えてください。
-    出典のURLも付けてください。
-    メールや予定表には、つながないでください。</pre>
-            <p><strong>③ A: 体験する人</strong>（約25分）。MuseかTasks in Geminiのどちらか1つで、タスクを頼む。</p>
-            <ul>
-              <li><strong>Muse</strong>: iOS・Android・muse.ai。登録は、電話番号またはメール。日本の公式発表によると、基本の機能の多くは無料</li>
-              <li><strong>Tasks in Gemini</strong>: 個人のGoogleアカウントで、Geminiの画面。公式ヘルプに、Chat と Task を切り替える場所がある、と書いてある（<strong>学生の画面に出るかは、未確認</strong>）</li>
-              <li>観察して、<strong>記録する</strong>（下の「観察メモ」）: ①頼んだ文 ②AIが、<strong>確認してきたこと</strong>（あれば）③<strong>実行の履歴</strong>がどこで見られるか ④<strong>止める方法</strong>がどこにあるか ⑤<strong>思っていたのと違ったこと</strong></li>
-              <li>画面に、名前・電話番号・メールアドレスが出たら、<strong>撮影・共有はしない</strong></li>
-              <li>手が止まったら、手を挙げる。<strong>うまくいかなくても、それも記録になります</strong>（公式で確認できなかったことの例になる）</li>
-            </ul>
-            <p><strong>③ B: 体験しない人</strong>（約25分）。先生の画面（または、体験している人の画面）を見ながら、<strong>自分のAIエージェント</strong>（Claude Code／Codex CLI／Antigravity CLI）に、<strong>同じタスクの仕様</strong>を書かせる（<strong>実行はしない</strong>）。第8回の型②（計画だけ立てさせる）を使う。</p>
-            <pre class="md-preview">毎朝、決まった時刻に、公開されているニュースを3件だけ
-要約して届けるタスクの「仕様」を書いてください。まだ作らないでください。
-・目的 ・入力（どの情報を読むか） ・出力 ・実行する時刻
-・人に確認する場面 ・止める方法 ・間違えたとき困らないための工夫
-最初に、私に質問があれば、選択肢で聞いてください。</pre>
-            <p><strong>④ 観察メモをそろえる</strong>（約10分）。体験した人もしない人も、<strong>次の表を、1行ずつ</strong>埋める（自分のノートに）。</p>
-            <pre class="md-preview">・使ったもの（Muse／Tasks in Gemini／先生の画面／仕様だけ）
-・頼んだ文
-・AIが人に確認してきたこと（なければ「なし」）
-・実行の履歴は、どこで見られたか
-・止める方法は、どこにあったか
-・公式の説明と、違っていたこと
-・いちばん「こわい」と思ったこと</pre>
+            <div class="lesson-tip">
+              <strong>⚠ 注意:</strong> 「許可」を押すと、<strong>その操作は実行されます</strong>（授業での説明: 確認のための仮の画面ではありません）。内容が分からない・思っていたのと違うときは、<strong>却下</strong>してください。「常に許可」は、<strong>授業では選びません</strong>（今後、同じ種類の操作が、確認なしで動くため）。
+            </div>
           </div>
         </div>
 
@@ -265,14 +612,106 @@
             <span class="timeline-time">2限 後半</span>
             <span class="timeline-duration">約30分</span>
           </div>
-          <h3>自分の進級制作に、専属のエージェントを置くなら：設計シートを書く</h3>
+          <h3>見る・止める・消す：注意点を、自分のルールにする</h3>
           <div class="timeline-body">
-            <p><strong>① 設計シートの5項目を知る</strong>（約5分）。これは、<strong>この授業の整理で、公式の分類ではありません</strong>。</p>
-            <figure class="vz-fig" aria-labelledby="cap-n10-sheet">
-              <p class="vz-fig-title" id="cap-n10-sheet">設計シートの5項目</p>
+            <p><strong>① 見る・止める・切る・忘れさせる・消す</strong>（約10分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-n10-stop">
+              <p class="vz-fig-title" id="cap-n10-stop">見る・止める・切る・忘れさせる・消す</p>
+              <svg class="vz-svg" viewBox="0 0 360 294" role="img" aria-labelledby="n10-stop-t n10-stop-d">
+                <title id="n10-stop-t">見る・止める・切る・忘れさせる・消す</title>
+                <desc id="n10-stop-d">Museを見る、止める、切る、忘れさせる、消すの5段階。見るは、アバター、活動ログ、今後の予定。止めるは、ブラウザーをコントロールで一時停止、タスクを停止。切るは、コネクターを切断する。ただし、記憶には残ることがある。忘れさせるは、忘れてと頼むと可能な限り削除する。全部消すは、リセット。元に戻せない。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="27" r="12"/><text class="t-b t-c t-w" x="30" y="32">1</text>
+                <text class="t-b" x="52" y="25">見る</text>
+                <text class="t-sm" x="52" y="43">アバター・活動ログ・今後の予定</text>
+                <line class="line" x1="180" y1="51" x2="180" y2="63" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="66" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="87" r="12"/><text class="t-b t-c t-w" x="30" y="92">2</text>
+                <text class="t-b" x="52" y="85">止める</text>
+                <text class="t-sm" x="52" y="103">ブラウザーの一時停止・タスクの停止</text>
+                <line class="line" x1="180" y1="111" x2="180" y2="123" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="126" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="147" r="12"/><text class="t-b t-c t-w" x="30" y="152">3</text>
+                <text class="t-b" x="52" y="145">切る</text>
+                <text class="t-sm" x="52" y="163">コネクターを切断（記憶には残ることがある）</text>
+                <line class="line" x1="180" y1="171" x2="180" y2="183" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="186" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="207" r="12"/><text class="t-b t-c t-w" x="30" y="212">4</text>
+                <text class="t-b" x="52" y="205">忘れさせる</text>
+                <text class="t-sm" x="52" y="223">「〇〇を忘れて」（可能な限り削除）</text>
+                <line class="line" x1="180" y1="231" x2="180" y2="243" marker-end="url(#mk-s)"/>
+                <rect class="box-orange box-key" x="8" y="246" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="267" r="12"/><text class="t-b t-c t-w" x="30" y="272">5</text>
+                <text class="t-b" x="52" y="265">全部消す</text>
+                <text class="t-sm" x="52" y="283">リセット（元に戻せない）</text>
+              </svg>
+              <figcaption>下に行くほど強い操作です。メールを送るなど、すでに実行したものは、元に戻せません（公式ヘルプ）。</figcaption>
+            </figure>
+            <ol class="vz-steps">
+              <li class="vz-step"><img class="vz-step-img" src="images/week10-muse-safe.jpg" alt="学生が、大きな盾と鍵穴の前で、小さな鍵とチェック表を持っている。まわりには、大きさのちがう3つのドアがあり、1つは少し開き、2つは閉じている。どのドアを開けるかを、学生が決めている。左右には、小さなロボットが静かに待っている。" width="800" height="597" loading="lazy"><b>何を開けるかは、自分で決める</b>つなぐもの・許すものは、必要な分だけにする</li>
+            </ol>
+            <ul>
+              <li><strong>止める</strong>: ブラウザーを使っているとき、<strong>[ブラウザーをコントロール]</strong>で一時停止、<strong>[タスクを停止]</strong>で終了（公式ヘルプ）</li>
+              <li><strong>切る</strong>: 接続を解除すると、データ交換は止まる。ただし、<strong>それまでに使った情報は、記憶や会話履歴に残っている可能性</strong>がある（公式）</li>
+              <li><strong>忘れさせる</strong>: 「〇〇を忘れて」。「可能な限り削除」する、と公式は書いている（<strong>完全とは書いていません</strong>）</li>
+              <li><strong>消す</strong>: チャット・サイドチャット・ファイルは個別に削除できる。<strong>リセット</strong>は、すべてを完全に削除し、<strong>元に戻せない</strong></li>
+            </ul>
+            <p><strong>② 注意点のまとめ</strong>（約10分）。全部、公式の説明にあることです。</p>
+            <figure class="vz-fig" aria-labelledby="cap-n10-caution5">
+              <p class="vz-fig-title" id="cap-n10-caution5">注意の5つの基本</p>
+              <svg class="vz-svg" viewBox="0 0 360 246" role="img" aria-labelledby="n10-caution5-t n10-caution5-d">
+                <title id="n10-caution5-t">注意の5つの基本</title>
+                <desc id="n10-caution5-d">注意の5つの基本。1 責任はあなた。承認するのも、間違いを直すのも、あなた。2 小さい所から。リスクの少ないタスクで慣れる。3 権限は必要な分だけ。つなぐのも許すのも少なめにして、定期的に見直す。4 戻せないものがある。送信、購入、リセットは元に戻らない。5 公式の入口だけ。にせ物のサイトや、パスワードを聞くリンクに注意。</desc>
+                <rect class="box-orange box-key" x="8" y="6" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="27" r="12"/><text class="t-b t-c t-w" x="30" y="32">1</text>
+                <text class="t-b" x="52" y="25">責任は、あなた</text>
+                <text class="t-sm" x="52" y="43">承認するのも、間違いを直すのも、あなた</text>
+                <rect class="box-orange" x="8" y="54" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="75" r="12"/><text class="t-b t-c t-w" x="30" y="80">2</text>
+                <text class="t-b" x="52" y="73">小さい所から</text>
+                <text class="t-sm" x="52" y="91">リスクの少ないタスクで、慣れる</text>
+                <rect class="box-white" x="8" y="102" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="123" r="12"/><text class="t-b t-c t-w" x="30" y="128">3</text>
+                <text class="t-b" x="52" y="121">権限は、必要な分だけ</text>
+                <text class="t-sm" x="52" y="139">つなぐ・許すは、少なめに。定期的に見直す</text>
+                <rect class="box-orange" x="8" y="150" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="171" r="12"/><text class="t-b t-c t-w" x="30" y="176">4</text>
+                <text class="t-b" x="52" y="169">戻せないものがある</text>
+                <text class="t-sm" x="52" y="187">送信・購入・リセットは、元に戻らない</text>
+                <rect class="box-white" x="8" y="198" width="344" height="42" rx="10"/>
+                <circle class="dot" cx="30" cy="219" r="12"/><text class="t-b t-c t-w" x="30" y="224">5</text>
+                <text class="t-b" x="52" y="217">公式の入口だけ</text>
+                <text class="t-sm" x="52" y="235">にせのサイトや、パスワード要求に注意</text>
+              </svg>
+              <figcaption>公式ヘルプと、Muse公式サイトの注意をもとに、この授業用にまとめました（確認日 2026-11-19）。</figcaption>
+            </figure>
+            <table class="schedule-table schedule-table--stack">
+              <thead><tr><th>注意</th><th>公式に書いてあること（要約）</th><th>授業では</th></tr></thead>
+              <tbody>
+                <tr><td data-label="注意"><strong>責任は自分</strong></td><td data-label="公式">完璧な自動システムは存在しない。承認する責任は、あなたにある</td><td data-label="授業では">承認を、ゆっくり読む</td></tr>
+                <tr><td data-label="注意"><strong>間違える</strong></td><td data-label="公式">Museは間違えたり、予期せぬ行動をとったりすることがある</td><td data-label="授業では">リスクの少ないタスクから</td></tr>
+                <tr><td data-label="注意"><strong>元に戻せない</strong></td><td data-label="公式">メール送信などは、元に戻せない。リセットも元に戻せない</td><td data-label="授業では">送る前・消す前に、確認</td></tr>
+                <tr><td data-label="注意"><strong>購入</strong></td><td data-label="公式">承認なしでは、購入やお金の移動はしない。承認の前に、購入内容と店の規約を確認</td><td data-label="授業では">授業では、購入しない</td></tr>
+                <tr><td data-label="注意"><strong>「常に許可」</strong></td><td data-label="公式">今後、同じ種類の操作が、確認なしで動く</td><td data-label="授業では">授業では、選ばない</td></tr>
+                <tr><td data-label="注意"><strong>AI改善への利用</strong></td><td data-label="公式">最初はオン。個人情報は削除される、とあるが、設定は自分で決める</td><td data-label="授業では">授業前に、自分で決める</td></tr>
+                <tr><td data-label="注意"><strong>他の人の情報</strong></td><td data-label="公式">保存される情報には、「あなたや他の人に関する情報」も含まれる</td><td data-label="授業では">友だち・家族・名簿は入れない</td></tr>
+                <tr><td data-label="注意"><strong>コネクター</strong></td><td data-label="公式">解除しても、使った情報は残ることがある。自作のコネクターは、Metaが確認しない</td><td data-label="授業では">授業では、つながない</td></tr>
+                <tr><td data-label="注意"><strong>悪い指示</strong></td><td data-label="公式">ウェブ・メール・ファイルに、AIを操る指示が混ざることがある（プロンプトインジェクション）</td><td data-label="授業では">知らない資料を、読ませない</td></tr>
+                <tr><td data-label="注意"><strong>にせのMuse</strong></td><td data-label="公式">にせのサイトやアプリ、パスワードを聞くリンクに注意</td><td data-label="授業では">公式の入口だけ</td></tr>
+                <tr><td data-label="注意"><strong>Chrome拡張</strong></td><td data-label="公式">Museの動きが、Googleのアカウントや閲覧履歴に表示され、広告やおすすめに影響することがある</td><td data-label="授業では">授業では、使わない</td></tr>
+                <tr><td data-label="注意"><strong>年齢・無料</strong></td><td data-label="公式">18歳以上。無料は、予告なく変更・中止されることがある</td><td data-label="授業では">いまの条件、と考える</td></tr>
+                <tr><td data-label="注意"><strong>日本で未確認</strong></td><td data-label="公式">音声・アバター・独自メールは別途案内。Mac・WhatsApp・円の料金・日本の有料は、確認できず</td><td data-label="授業では">公式を、自分で確かめる</td></tr>
+              </tbody>
+            </table>
+            <ul>
+              <li>「授業では」の列は、<strong>この授業の方針</strong>で、公式の指示ではありません。自分で使うときは、自分で決めます</li>
+            </ul>
+            <p><strong>③ 自分のMuse利用ルールを書く</strong>（約10分）。第8回の型①（先に質問させる）で、<strong>自分がMuseを使うなら（または使わないなら）</strong>の5項目を作る。</p>
+<figure class="vz-fig" aria-labelledby="cap-n10-sheet">
+              <p class="vz-fig-title" id="cap-n10-sheet">自分のMuse利用ルール：5項目</p>
               <svg class="vz-svg" viewBox="0 0 360 286" role="img" aria-labelledby="n10-sheet-t n10-sheet-d">
-                <title id="n10-sheet-t">設計シートの5項目</title>
-                <desc id="n10-sheet-d">専属のエージェントを置くときに決める5つのこと。1つ目は目標。2つ目は任せる仕事。3つ目は承認が要る操作。4つ目は渡す権限。5つ目は止める条件。</desc>
+                <title id="n10-sheet-t">自分のMuse利用ルール：5項目</title>
+                <desc id="n10-sheet-d">Museを使うときに、自分で決めておく5つのこと。1つ目は目標。2つ目は任せる仕事。3つ目は承認が要る操作。4つ目は渡す権限。5つ目は止める条件。</desc>
                 <rect class="box-white" x="8" y="6" width="344" height="48" rx="10"/>
                 <circle class="dot" cx="30" cy="30" r="12"/><text class="t-b t-c t-w" x="30" y="35">1</text>
                 <text class="t-b" x="52" y="26">目標</text><text class="t-sm" x="52" y="45">何のために置くか。1文で</text>
@@ -291,20 +730,16 @@
               </svg>
               <figcaption>太い枠の3と4が、今日いちばん考える場所です。<strong>承認が要る操作</strong>と<strong>渡す権限</strong>は、<strong>人が決める</strong>ところです。</figcaption>
             </figure>
-            <p><strong>② AIエージェントと、設計シートを書く</strong>（約20分）。第8回の型①（先に質問させる）で、<strong>自分の進級制作</strong>（または第7回の題材）に、<strong>専属のエージェントを置くなら</strong>のシートを作る。</p>
-            <pre class="md-preview">私の進級制作に、専属のAIエージェントを置くとしたら、
-設計シートを作りたいです。まだ、何も作らないでください。
+            <pre class="md-preview">私がMuseを使うとしたら、利用ルールを作りたいです。まだ、何も設定しないでください。
 次の5項目を、順番に、私に質問して決めてください。
 質問は、1回に1つ。選択肢で聞いてください。
 1. 目標  2. 任せる仕事  3. 承認が要る操作  4. 渡す権限  5. 止める条件
 最後に、私が決めたことだけを、表にしてください。
 私が決めていないことは、「未定」と書いてください。</pre>
             <ul>
-              <li>書いたあと、<strong>3（承認が要る操作）と4（渡す権限）</strong>を、自分の目で読む。<strong>AIが決めたことが、混ざっていないか</strong>（「未定」のところを、AIが勝手に埋めていないか）</li>
-              <li>隣の人に、<strong>3つの質問</strong>をしてもらう: ①これを渡して、いちばん困るのは何か ②止める条件は、あなたが見ていないときも効くか ③<strong>第9回の公開URLと、つながっているところはあるか</strong></li>
+              <li>書いたあと、<strong>3（承認が要る操作）と4（渡す権限）</strong>を、自分の目で読む。<strong>AIが決めたことが、混ざっていないか</strong></li>
+              <li>隣の人に、<strong>3つの質問</strong>をしてもらう: ①これを渡して、いちばん困るのは何か　②止める条件は、見ていないときも効くか　③<strong>「戻せない」操作は、どれか</strong></li>
             </ul>
-            <p><strong>③ 今日の見方を、1文にする</strong>（約5分）。</p>
-            <pre class="md-preview">動き続けるAIに任せるとき、私が人として決めることは、（　　　）です。</pre>
           </div>
         </div>
 
@@ -318,12 +753,12 @@
             <ul>
               <li>今日の記録を、自分のノート（またはリポジトリ）に残す（約5分）。<strong>名前・電話番号・メールアドレス・パスワード・トークンは書かない</strong>:</li>
             </ul>
-            <pre class="md-preview">・観察メモ（2限前半の7項目）
-・設計シート（5項目。「未定」は未定のまま）
-・「私が人として決めることは、（　　）です」の1文
+            <pre class="md-preview">・観察メモ（体験した人: 2限前半の6項目。しない人: 仕様）
+・自分のMuse利用ルール（5項目。「未定」は未定のまま）
+・注意点のうち、いちばん大事だと思ったもの（1つ）
 ・公式で確かめられなかったこと（あれば、1つ）</pre>
             <ul>
-              <li>次回（第11回）：授業計画では「進級制作にクラウド機能を統合②：実装」ですが、<strong>前回までの予定（第10回の設計）を、今日の内容に差し替えた</strong>ため、<strong>進め方は、先生が決めて、次回の前に連絡します</strong>（<a href="../natural-language-dev-2.html">授業計画一覧</a>）。第9回の記録（公開URL、NeonかD1かの理由）は、残しておいてください</li>
+              <li>次回（第11回）：授業計画では「進級制作にクラウド機能を統合②：実装」ですが、<strong>第10回の内容を差し替えた</strong>ため、<strong>進め方は、先生が決めて、次回の前に連絡します</strong>（<a href="../natural-language-dev-2.html">授業計画一覧</a>）。第9回の記録（公開URL、NeonかD1かの理由）は、残しておいてください</li>
               <li>「今日の話で、<strong>いちばん、自分で決めたい</strong>と思ったこと」を一言メモして退出</li>
             </ul>
           </div>
@@ -338,21 +773,21 @@
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong>今日の記録（観察メモ、設計シート、1文）を残す</strong>
+            <strong>今日の記録（観察メモ、自分のMuse利用ルール、注意点の1つ）を残す</strong>
             <p>次の回の材料になる。<strong>個人情報とパスワードは書かない</strong>。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
-            <strong>体験したサービスで、接続を解除する・タスクを止める・アカウントを使わなくなる場合の手順を、確かめる</strong>
-            <p>体験した人だけ。<strong>止め方が分かる</strong>ことまでが、体験です。画面の出方が、今日の説明と違ったら、メモして次回に教えてください。</p>
+            <strong>体験した人: 設定の画面で、アクセス許可・データコントロール・活動ログ・止め方の場所を、もう一度確かめる</strong>
+            <p>画面の出方が、今日の説明と違ったら、メモして次回に教えてください。使わなくなるなら、<strong>リセットやアカウントの扱い</strong>も、公式ヘルプで確かめておく。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
-            <strong>公式の説明で、日本での提供が「未確認」だったサービスを、1つ選んで、公式のページで調べる</strong>
+            <strong>「公式で確認できず」だった項目（日本での有料プラン、Mac・WhatsApp、無料の上限）を、1つ選んで、公式のページで調べる</strong>
             <p>書いてあったら、<strong>ページの名前と日付</strong>をメモする。見つからなければ、<strong>見つからなかった</strong>ことも記録になる。</p>
           </div>
         </div>
@@ -361,19 +796,24 @@
 
     <div class="syllabus-section">
       <h2>参考リンク</h2>
-      <p class="lesson-note">確認日は 2026-11-18 です。公式のページは英語が多く、条件や画面は数週間で変わることがあります。</p>
+      <p class="lesson-note">確認日は 2026-11-19 です。ヘルプは日本語、ブログとFAQは英語です。条件や画面は数週間で変わることがあります。</p>
       <ul>
-        <li><a href="https://about.fb.com/ja/news/2026/10/muse-personal-ai-agent-launches-in-japan/" target="_blank" rel="noopener">Meta、パーソナルAIエージェント「Muse」を日本で提供開始（Meta公式、日本語）</a> — 日本での提供開始、無料と有料、承認</li>
-        <li><a href="https://about.fb.com/news/2026/09/introducing-muse-personal-ai-agent/" target="_blank" rel="noopener">Introducing Muse: The World’s First Personal AI Agent Built for Everyone（Meta公式）</a> — 専用のクラウドPC、Sentinel、承認、操作の記録</li>
+        <li><a href="https://www.meta.com/ja-jp/help/superintelligence/1331373868832401/" target="_blank" rel="noopener">Museの利用を始める方法（Metaヘルプセンター）</a> — 始め方、頼み方のアドバイス、無料と上限</li>
+        <li><a href="https://www.meta.com/ja-jp/help/superintelligence/1385290430137537/" target="_blank" rel="noopener">Museがあなたのガイダンスと承認に基づいて機能する仕組み（Metaヘルプセンター）</a> — 承認、アクセス許可、止める・戻す・リセット</li>
+        <li><a href="https://www.meta.com/ja-jp/help/superintelligence/1047255454427887/" target="_blank" rel="noopener">Museによるプライバシー、安全性、セキュリティの扱い（Metaヘルプセンター）</a> — データ、広告との関係、悪い指示への対策、削除と「忘れる」</li>
+        <li><a href="https://www.meta.com/ja-jp/help/superintelligence/2225571704857152/" target="_blank" rel="noopener">Museのデータを管理する方法（Metaヘルプセンター）</a> — AIモデル改善の設定、データの場所と削除</li>
+        <li><a href="https://www.meta.com/ja-jp/help/superintelligence/1687253048996149/" target="_blank" rel="noopener">Museとコネクターの連携（Metaヘルプセンター）</a> — コネクター、接続と解除、カスタムコネクター</li>
+        <li><a href="https://www.meta.com/ja-jp/help/superintelligence/2124746764949121/" target="_blank" rel="noopener">Museエージェントのウェブ閲覧方法（Metaヘルプセンター）</a> — ブラウザー、停止、Chrome拡張機能</li>
+        <li><a href="https://www.meta.com/ja-jp/help/superintelligence/2074655449783957/" target="_blank" rel="noopener">Museをアーティファクトと一緒に使用する方法（Metaヘルプセンター）</a> — ファイルの種類、資料づくり</li>
+        <li><a href="https://www.meta.com/ja-jp/help/superintelligence/2797651547267109/" target="_blank" rel="noopener">Museはスキルをどのように活用しているのか（Metaヘルプセンター）</a> — スキル、アイデアタブ</li>
+        <li><a href="https://www.meta.com/ja-jp/help/superintelligence/995796179982326/" target="_blank" rel="noopener">Museの性格と記憶をカスタマイズする方法（Metaヘルプセンター）</a> — 名前・性格・メモリー、他のAIからのインポート</li>
+        <li><a href="https://www.meta.com/ja-jp/help/subscriptions/1021145227643680/" target="_blank" rel="noopener">Museサブスクリプションについて（Metaヘルプセンター）</a> — 無料と有料（$20／$100）、条件</li>
+        <li><a href="https://about.fb.com/ja/news/2026/10/muse-personal-ai-agent-launches-in-japan/" target="_blank" rel="noopener">Meta、パーソナルAIエージェント「Muse」を日本で提供開始（Meta公式）</a> — 日本での提供開始（2026-10-23）</li>
+        <li><a href="https://muse.ai/security-and-privacy" target="_blank" rel="noopener">Muse Keeps Your Data Safe: Security & Privacy By Design（Muse公式）</a> — 安全・プライバシーのFAQ、にせのMuseへの注意</li>
+        <li><a href="https://muse.ai/blog/how-we-designed-muse" target="_blank" rel="noopener">How We Designed Muse（Muse公式ブログ）</a> — 設計の考え方、承認の既定、活動の見える化</li>
         <li><a href="https://muse.ai/blog/security-and-safety-for-ai-agents-our-approach-with-muse" target="_blank" rel="noopener">How We Built Safety Into Muse（Muse公式ブログ）</a> — 「動かす側」と「許可する側」を分ける設計の原文</li>
-        <li><a href="https://muse.ai/terms" target="_blank" rel="noopener">Muse利用規約の補足条項（Muse公式、日本語）</a> — 18歳未満は利用不可、料金、無料の変更</li>
-        <li><a href="https://help.openai.com/en/articles/20001530-getting-started-with-your-dot" target="_blank" rel="noopener">Getting started with your dot（OpenAI Help Center）</a> — dotsの説明、対象、接続、一時停止</li>
-        <li><a href="https://x.ai/news/introducing-grok-bot" target="_blank" rel="noopener">Introducing Grok Bot（xAI公式）</a> — Botの説明、承認</li>
-        <li><a href="https://x.ai/news/grok-bot-more-plans" target="_blank" rel="noopener">Grok Bot is now included with more plans（xAI公式）</a> — 対象のプラン</li>
-        <li><a href="https://support.google.com/gemini/answer/17094507?hl=en" target="_blank" rel="noopener">Manage your tasks &amp; workflows in Gemini Apps（Gemini Apps Help）</a> — Tasks in Geminiの対象国、個人アカウントのみ、入れてはいけない情報</li>
-        <li><a href="https://support.google.com/gemini/answer/17171264?hl=en" target="_blank" rel="noopener">Gemini Apps’ release updates &amp; improvements（Gemini Apps Help）</a> — 2026年11月17日の更新（Tasks in Geminiが日本でも無料）</li>
-        <li><a href="https://techcommunity.microsoft.com/blog/microsoft-copilot-blog/autopilot-meet-your-trusted-personal-teammate/4572611" target="_blank" rel="noopener">Autopilot: meet your trusted personal teammate（Microsoft Tech Community）</a> — Autopilotの説明、Frontierでの提供</li>
-        <li><a href="https://claude.com/resources/articles/claude-duet" target="_blank" rel="noopener">Introducing Claude Duet（Claude公式）</a> — 研究プレビュー、待機リスト、米国から</li>
+        <li><a href="https://muse.ai/terms" target="_blank" rel="noopener">Muse利用規約の補足条項（Muse公式、日本語）</a> — 18歳未満は利用不可、無料の変更・中止</li>
+        <li>ほかのサービス（dots・Grok Bot・Tasks in Gemini・Autopilot・Claude Duet）の出典は、「ほかのサービスは？」の折りたたみの中にあります。</li>
         <li><a href="week05.html">第5回 スコアを保存して守ろう（本サイト）</a> — 秘密の値と最小権限</li>
         <li><a href="week08.html">第8回 指示の4つの型（本サイト）</a> — 今日使った型①②</li>
         <li><a href="week09.html">第9回 Cloudflare WorkersとD1に触れてみよう（本サイト）</a> — 公開URLは誰でも開ける</li>
