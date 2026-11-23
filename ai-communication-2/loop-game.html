@@ -9,7 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="icon" type="image/svg+xml" href="../favicon.svg">
   <link rel="stylesheet" href="../styles.css?v=26">
-  <!-- 第10回「プロンプトからループへ」で、「ループは、1周の大きさ・止める条件・人が見る場所の3つを決めて設計する」を1人で体験するためのゲーム。ルールで動く練習用AI「ミミ」が相手で、本物のagyやBuildには接続しない。入力内容はどこにも送信・保存しない（再読み込みで最初から）。ミミの動きは「こうなりやすい」を練習用に単純化して決めたもので、本物のAIの動きそのものではない。「ループの3つの決めごと」は第10回の授業用の整理で、公式の分類ではない。ループの語は2026年6月ごろから広まった新しい言葉で、定義は決まっていない -->
+  <!-- 第10回「プロンプトからループへ」で、「ループは、1周の大きさ・止める条件・人が見る場所の3つを決めて設計する」を1人で体験するためのゲーム。ルールで動く練習用AI「ミミ」が相手で、本物のagyやBuildには接続しない。入力内容はどこにも送信・保存しない（再読み込みで最初から）。ミミの動きは「こうなりやすい」を練習用に単純化して決めたもので、本物のAIの動きそのものではない。「ループの3つの決めごと」は第10回の授業用の整理で、公式の分類ではない。ループの語は2026年に広まった新しい言葉で、定義は決まっていない -->
   <style>
     .ph-note { background: #fff8e6; border: 1px solid #e8c766; border-radius: 6px; padding: .7rem 1rem; margin: 0 0 1.2rem; font-size: .9rem; line-height: 1.7; }
     .ph-bar { display: flex; flex-wrap: wrap; gap: .4rem .8rem; align-items: center; justify-content: space-between; background: #2e2447; color: #fff; border-radius: 8px; padding: .6rem .9rem; margin-bottom: 1rem; position: sticky; top: 0; z-index: 5; }
@@ -173,7 +173,7 @@
       }
       var extras = ['色をカラフルにしました。（頼まれていない）', '動くアニメーションを足しました。（頼まれていない）', 'ボタンを3つ増やしました。（頼まれていない）', '「準備OK」の表示を作り直しました。（頼まれていない）', '設定の画面を足しました。（頼まれていない）'];
       var broke = n >= 7;
-      return { n: n, pass: broke ? 3 : 4, msg: (broke ? '「準備OK」を作り直したので、C（準備OK）が崩れました。' : extras[Math.min(n - 4, extras.length - 1)]), extra: true, broke: broke };
+      return { n: n, pass: broke ? 3 : 4, marks: broke ? '◎◎✕◎' : null, msg: (broke ? '「準備OK」を作り直したので、C（準備OK）が崩れました。' : extras[Math.min(n - 4, extras.length - 1)]), extra: true, broke: broke };
     }
     function judgeStop(n) {
       if (n < 3) return { code: 'early', stars: 1, text: 'まだ、A〜Dが全部◎になっていません。ここで止めると、未完成のままです。' };
@@ -225,6 +225,7 @@
       var caught = d.human !== 'none';
       var notes = [stoppedBy];
       var stars, summary;
+      if (reached && d.stop === 'allok') notes.push('今回は、3周で「全部◎」になったので止まりました。もし◎にならない場合は、回数の上限がないので、止まらずに続きます。上限も決めておくと安心です。');
       if (reached) {
         if (caught) {
           stars = 3;
@@ -303,7 +304,7 @@
     $('phR2').textContent = S.s2Best == null ? '―' : LOGIC.starsText(S.s2Best);
   }
   function lapHtml(l, cls) {
-    return '<li class="ph-lap ' + (cls || '') + '"><span class="ph-lap-n">' + l.n + '周目</span><span class="ph-marks" aria-label="A〜Dの結果">' + LOGIC.marks(l.pass) + '</span> ' + esc(l.msg) + '</li>';
+    return '<li class="ph-lap ' + (cls || '') + '"><span class="ph-lap-n">' + l.n + '周目</span><span class="ph-marks" aria-label="A〜Dの結果">' + (l.marks || LOGIC.marks(l.pass)) + '</span> ' + esc(l.msg) + '</li>';
   }
   function checksHtml() {
     return '<p class="ph-label">確かめ方（今回の持ち物チェックページ）</p><ul style="margin:.2rem 0 .6rem;padding-left:1.2rem;font-size:.9rem;line-height:1.7">' +
@@ -332,7 +333,7 @@
     if (restart || !S.s1) S.s1 = { n: 0, done: false, laps: [], res: null };
     var s = S.s1;
     var h = '<div class="ph-card ph-pop"><h2>ステージ1 止める条件がないループ</h2>';
-    h += mimi('「持ち物チェックページを、確かめ方A〜Dが全部◎になるまで直して」と頼まれました。止める条件は、<strong>まだ決まっていません</strong>。「もう1周」を押すと、わたしが1周まわします。<strong>ここで止める、と思ったら止めてください。</strong>');
+    h += mimi('「持ち物チェックページを、よくしておいて」と頼まれました。確かめ方A〜Dは、<strong>あなたが画面で見るための基準</strong>です。止める条件は、<strong>まだ決まっていません</strong>。「もう1周」を押すと、わたしが1周まわします。<strong>ここで止める、と思ったら止めてください。</strong>');
     h += checksHtml();
     h += '<ul class="ph-laps" id="phLaps">' + s.laps.map(function (l) { return lapHtml(l, l.broke ? 'ph-lap--bad' : (l.pass === 4 && !l.extra ? 'ph-lap--ok' : '')); }).join('') + '</ul>';
     if (!s.done) {
@@ -341,6 +342,7 @@
       if (atCap) h += '<div class="ph-feedback ph-feedback--bad"><strong class="ph-verdict">練習のため、ここまで</strong>' + LOGIC.DEMO_CAP + '周で、強制的に止めます。（止める条件がないと、このまま続きます）</div>';
     } else {
       var r = s.res;
+      if (s.n >= LOGIC.DEMO_CAP) h += '<div class="ph-feedback ph-feedback--bad"><strong class="ph-verdict">練習のため、' + LOGIC.DEMO_CAP + '周で強制的に止めました</strong>あなたが止めたのではなく、練習用の上限で止まっています。（止める条件がないと、このまま続きます）</div>';
       h += '<div class="ph-feedback ph-feedback--' + (r.stars === 3 ? 'good' : (r.stars === 2 ? 'mid' : 'bad')) + '"><strong class="ph-verdict">' + LOGIC.starsText(r.stars) + '</strong>' + esc(r.text) + '</div>';
       h += '<p style="font-size:.92rem;line-height:1.75">気づくこと: ループは、<strong>まわすのは簡単でも、止める所を決めておかないと、できたあとも、まわり続けます</strong>。次の「ステージ2」で、止める条件を設計します。</p>';
       h += '<div class="ph-row"><button type="button" class="ph-btn" id="phRetry1">もう一度</button><button type="button" class="ph-btn ph-btn--sub" id="phTo2">ステージ2へ</button><button type="button" class="ph-btn ph-btn--ghost" data-home="1">ステージ選びに戻る</button></div>';
@@ -425,7 +427,7 @@
         h += '<div class="ph-row">' + LOGIC.SLOTS.map(function (sl) { return '<button type="button" class="ph-btn ph-btn--ghost" data-hole="' + ho.id + '" data-pick="' + sl.key + '">' + esc(sl.label) + '</button>'; }).join('') + '</div>';
       } else {
         var j = LOGIC.judgeHole(ho.id, ans);
-        h += '<div class="ph-feedback ph-feedback--' + (j.ok ? 'good' : 'bad') + '"><strong class="ph-verdict">' + (j.ok ? '正解' : 'おしい') + '</strong>' + (j.ok ? '' : 'あなたが選んだのは「' + esc(LOGIC.slotOf(ans).label) + '」。先に直したいのは、「' + esc(LOGIC.slotOf(j.hole).label) + '」です。<br>') + esc(j.why) + '</div>';
+        h += '<div class="ph-feedback ph-feedback--' + (j.ok ? 'good' : 'bad') + '" id="phFb-' + ho.id + '" tabindex="-1"><strong class="ph-verdict">' + (j.ok ? '正解' : 'おしい') + '</strong>' + (j.ok ? '' : 'あなたが選んだのは「' + esc(LOGIC.slotOf(ans).label) + '」。先に直したいのは、「' + esc(LOGIC.slotOf(j.hole).label) + '」です。<br>') + esc(j.why) + '</div>';
       }
       h += '</div>';
     });
@@ -441,6 +443,7 @@
       var y = window.scrollY;
       stage3();
       window.scrollTo(0, y);
+      var fb = $('phFb-' + id); if (fb) fb.focus({ preventScroll: true });
       say(LOGIC.judgeHole(id, S.holeAns[id]).ok ? '正解' : 'おしい');
     }; });
     if ($('phRes3')) $('phRes3').onclick = results;

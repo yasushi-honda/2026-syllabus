@@ -160,7 +160,7 @@
             </figure>
             <ul>
               <li><strong>プロンプト</strong>は、AIへの<strong>1回の頼み方</strong>。<strong>ループ</strong>は、「頼む→結果を見る→直して、また頼む」を<strong>何周かまわす、全体の設計</strong>。第5〜9回で練習してきた「指示を重ねて作品を育てる」は、すでにループだった</li>
-              <li>公式の資料でも、エージェントは<strong>「文脈を集める→行動する→確かめる→くり返す」</strong>の流れで動く、と書かれている（Anthropicの公式ブログ。原文は<code>gather context -> take action -> verify work -> repeat</code>。確認日 2026-11-24）。「ループ」は、この<strong>くり返しの設計</strong>の話</li>
+              <li>公式の資料でも、エージェントは<strong>「文脈を集める→行動する→確かめる→くり返す」</strong>の流れで動くことが多い、と書かれている（Anthropicの公式ブログ。原文は<code>gather context -> take action -> verify work -> repeat</code>。確認日 2026-11-24）。「ループ」は、この<strong>くり返しの設計</strong>の話</li>
             </ul>
             <figure class="vz-fig" aria-labelledby="cap-a10-lap">
               <p class="vz-fig-title" id="cap-a10-lap">1周の中身</p>
@@ -194,8 +194,8 @@
                 <details class="vz-more">
                   <summary>公式資料で確かめたこと（確認日 2026-11-24）</summary>
                   <ul>
-                    <li>Anthropic「Building agents with the Claude Agent SDK」: <code>gather context -> take action -> verify work -> repeat</code>（Claude Codeが動く流れとして書かれている）</li>
-                    <li>Claude Agent SDKの公式ドキュメント「エージェントループの仕組み」: 回数の上限（<code>max_turns</code>）と、費用の上限（<code>max_budget_usd</code>）を設定できる。どちらも<strong>既定は無制限</strong>で、上限がないと、AIが「終わり」と判断するまで続く、と書かれている（英語版の原文で確認）</li>
+                    <li>Anthropic「Building agents with the Claude Agent SDK」: <code>gather context -> take action -> verify work -> repeat</code>（Claude Codeと、エージェント一般の流れとして書かれている）</li>
+                    <li>Claude Agent SDKの公式ドキュメント「エージェントループの仕組み」: 回数の上限（<code>max_turns</code>）と、費用の上限（<code>max_budget_usd</code>）を設定できる。どちらも<strong>既定は無制限</strong>で、上限がないと、AIが「終わり」と判断するまで続き、広い頼み方では長引くことがある、と書かれている（英語版の原文で確認）。なお、ここでの回数は「ターン」（ツール呼び出しを伴う1往復）で、授業の「周」とは数え方が違う</li>
                     <li>誰が最初にこの言葉を使ったか、いつ広まったかは、記事によって書き方が違う。この授業では、出どころを断定しない</li>
                   </ul>
                 </details>
@@ -210,13 +210,13 @@
                 <rect class="box-purple" x="8" y="8" width="344" height="92" rx="10"/>
                 <text class="t-b" x="22" y="30">① 1周の大きさ</text>
                 <text class="t-sm" x="22" y="52">直す所を1つに絞る</text>
-                <text class="t-sm" x="22" y="72">大きすぎると、直した所が別の所を壊す</text>
+                <text class="t-sm" x="22" y="72">大きすぎると、別の所を壊すことがある</text>
                 <text class="t-sm" x="22" y="90">小さすぎると、終わらない</text>
                 <rect class="box-purple" x="8" y="110" width="344" height="92" rx="10"/>
                 <text class="t-b" x="22" y="132">② 止める条件</text>
                 <text class="t-sm" x="22" y="154">画面で「できた／できない」と言える形</text>
                 <text class="t-sm" x="22" y="174">＋ 回数の上限（例: 3周まで）</text>
-                <text class="t-sm" x="22" y="192">「いい感じになるまで」は、止まらない</text>
+                <text class="t-sm" x="22" y="192">「いい感じになるまで」は、止まらないことがある</text>
                 <rect class="box-white box-key" x="8" y="212" width="344" height="92" rx="10"/>
                 <text class="t-b" x="22" y="234">③ 人が見る場所</text>
                 <text class="t-sm" x="22" y="256">AIの「できました」を、そのまま信じない</text>
@@ -229,7 +229,7 @@
             <ul>
               <li><strong>1周の大きさ</strong>——第9回の「今日の目標は1つだけ」「足さないものを書く」は、これだった</li>
               <li><strong>止める条件</strong>——第8〜9回の「確かめ方（画面を見て、できた／できないと言える形）」は、これだった。ここに、<strong>回数の上限</strong>（例: 2周まで）を足す</li>
-              <li><strong>人が見る場所</strong>——第9回の「結果を◎△✕で見る」は、これだった。AIは、確かめていないことを「できました」と言うことがある。<strong>最後は人が見る</strong></li>
+              <li><strong>人が見る場所</strong>——第9回の「結果を◎△✕で見る」は、これだった。AIは、確かめていないことを「できました」と言うことがある（授業での経験則で、公式の記述ではない）。<strong>最後は人が見る</strong></li>
               <li>自分の第9回の2周を、この3つに当てはめて、指示メモに<strong>1行ずつ</strong>書く（例:「1周の大きさ: 目標を1つにした。止める条件: 確かめ方を満たしたら。人が見る場所: 毎回、プレビューで」）。決めていなかったものは、「決めていなかった」と書く</li>
             </ul>
           </div>
