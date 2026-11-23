@@ -14,11 +14,12 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
+# アップロード（build）とデプロイ（deploy）を別のジョブに分けている。
+# 同じジョブの中で upload-pages-artifact の直後に deploy-pages を動かすと、
+# 成果物の検索がまだ追いつかず「No artifacts named "github-pages"」で失敗することがある
+# （actions/deploy-pages の issue #451。2026-11-24 にこのリポジトリでも3回連続で発生）。
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -29,6 +30,14 @@ jobs:
         uses: actions/upload-pages-artifact@v5
         with:
           path: '.'
+
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
