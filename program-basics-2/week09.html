@@ -541,12 +541,12 @@ startButton.addEventListener("click", function () {
             <p><strong><code>commit</code>・<code>push</code>と公開URLの確認（10分）</strong></p>
             <ul>
               <li>前期第4回と同じ手順で、<code>game.html</code>（EC班は<code>shop.html</code>）を<code>commit</code>・<code>push</code>する（コミットメッセージ例: <code>個人制作②: マスのクリックでスコアが増える</code>／<code>個人制作②: カートと合計金額</code>）</li>
-              <li>GitHub Pagesに公開しているリポジトリなら、公開URLの末尾に<code>/game.html</code>（EC班は<code>/shop.html</code>）を付けると、ブラウザで見られる（反映に1〜数分かかることがある）。<strong>第10回は互いの作品を見せ合うので、公開URLで動くところまで確認しておく</strong></li>
+              <li>GitHub Pagesに公開しているリポジトリなら、公開URLの末尾に<code>/game.html</code>（EC班は<code>/shop.html</code>）を付けると、ブラウザで見られる（反映に1〜数分かかることがある）。<strong>第10回は保存を試すので、公開URLで動くところまで確認しておくとよい</strong></li>
             </ul>
             <p><strong><code>plan.md</code>に記録する（10分）</strong></p>
             <ul>
               <li><code>plan.md</code>の<strong>「5. 制作の予定」</strong>の第9回の欄を、<strong>実際にできたこと</strong>に書き換える（例: 「当たり判定とスコアまで。タイマーは途中」）。できなかったことも1行書く</li>
-              <li>第10回は「中間相互レビュー」。<strong>人に見せたい点</strong>（見てほしい動き）と、<strong>聞きたいこと</strong>を1行ずつ、第10回の欄に書く</li>
+              <li>第10回は、作品に<strong>保存</strong>（<code>localStorage</code>）を入れる回。<code>plan.md</code>の第10回の欄に、<strong>何を保存したいか</strong>（例: ハイスコア、カートの中身）を1行書く。できる人向けの任意の見せ合いコーナーもあるので、見せたい人は「見てほしい動き」も1行書く</li>
               <li><code>plan.md</code>も<code>commit</code>・<code>push</code>する</li>
             </ul>
           </div>
@@ -560,8 +560,8 @@ startButton.addEventListener("click", function () {
           <h3>次回予告と今日の振り返り</h3>
           <div class="timeline-body">
             <ul>
-              <!-- 親ページ program-basics-2.html Week 10 「中間相互レビュー」と同期 -->
-              <li>次回（第10回）: <strong>中間相互レビュー</strong>——互いの作品を見せ合い、フィードバックを交換する。他者のコードを読む経験と、改善点を言葉にする練習。今日動くようになった部分が、見せる中心になる</li>
+              <!-- 親ページ program-basics-2.html Week 10 「個人制作 保存機能（localStorage）」と同期 -->
+              <li>次回（第10回）: <strong>個人制作 保存機能（localStorage）</strong>——作品のデータを保存し、再読み込みしても残るようにする（ゲーム班はハイスコア、EC班はカート）。できる人は、互いの作品を見せ合う任意の見せ合いコーナーにも参加できる。今日動くようになった部分に、保存を足す</li>
               <li>今日のキーワード「<strong><code>addEventListener</code></strong>」「<strong>データを変えて、画面を作り直す</strong>」「<strong>当たり判定／合計の計算</strong>」を口に出して言えるか確認して退出</li>
             </ul>
           </div>
@@ -583,8 +583,8 @@ startButton.addEventListener("click", function () {
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
-            <strong>第10回で見せる準備をする</strong>
-            <p>公開URLで動くことを確認し、<code>plan.md</code>の第10回の欄に「見てほしい動き」と「聞きたいこと」を書いておく。画面が崩れる所があれば、見せる前に直しておく。</p>
+            <strong>第10回の準備をする</strong>
+            <p>公開URLで動くことを確認し、<code>plan.md</code>の第10回の欄に「何を保存したいか」を書いておく。画面が崩れる所があれば、直しておく。見せ合いコーナーに出たい人は、「見てほしい動き」も1行書いておく（任意）。</p>
           </div>
         </div>
       </div>
@@ -612,7 +612,7 @@ startButton.addEventListener("click", function () {
       </a>
       <a href="week10.html" class="lesson-nav-item" style="text-align:right">
         <span class="lesson-nav-label">次の回</span>
-        <span class="lesson-nav-title">第10回 中間相互レビュー</span>
+        <span class="lesson-nav-title">第10回 個人制作 保存機能（localStorage）</span>
       </a>
     </nav>
 

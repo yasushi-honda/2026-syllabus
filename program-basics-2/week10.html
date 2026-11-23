@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>第10回 中間相互レビュー | プログラム基礎 II</title>
+  <title>第10回 個人制作 保存機能（localStorage） | プログラム基礎 II</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
@@ -13,7 +13,7 @@
 <body>
   <div class="grain-overlay"></div>
 
-  <!-- 公式情報確認: 2026-11-24（参考リンクのMDN 3ページの生存とタイトルを確認。外部サービスの操作手順は扱わない。レビューの型「いいね・質問・提案」は授業用の整理で、公式の分類ではない。見本コード（読む練習用）は、Nodeで実行して、本文に書いた動き（f(0)は800、f(1)は1100で「送料無料」が出る）になることを確認済み。第6〜9回の授業結果は未反映） -->
+  <!-- 公式情報確認: 2026-11-24（参考リンクのMDN 3ページ（Window.localStorage、JSON.stringify、JSON.parse）の生存とタイトルを確認。外部サービスの操作手順は扱わない。①教材コード（ゲーム班のハイスコア保存とリセット、EC班のカート保存とカートを空にする）は、第8回の骨組み・データ、第9回のコードに本文の変更を当てたページを作り、ブラウザで実行して確認済み（再読み込みしてもハイスコア・カートが残る、リセットで消える、壊れた文字列でJSON.parseがSyntaxErrorになる）。②「保存される場所はアドレスごとに別」は、ブラウザの仕様（同じオリジン＝同じ保管庫）の説明。Codespacesのプレビューと公開URLが別の保管庫になること、同じ公開サイトの中の作品が同じ保管庫を使うことがある点は、本文に書いた。③見せ合いコーナーは、先生の判断（2026-11-24）で「できる人がいれば」の任意に縮めた（第10回の初版は中間相互レビューが主で、負担が大きかったため）。「いいね・質問」は授業用の整理で公式の分類ではない。④第6〜9回の授業結果は未反映） -->
   <header class="page-header page-header--blue">
     <div class="container">
       <nav class="breadcrumb">
@@ -25,7 +25,7 @@
       </nav>
       <div class="page-title-area">
         <div>
-          <h1 class="page-title">中間相互レビュー</h1>
+          <h1 class="page-title">個人制作 保存機能（localStorage）</h1>
           <div class="page-meta-badges">
             <span class="page-badge">Week 10</span>
             <span class="page-badge">火曜 1・2限</span>
@@ -58,15 +58,15 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">互いの作品を見せ合い、<strong>フィードバックを交換</strong>する。<strong>他者のコードを読む</strong>経験をして、<strong>改善点を言葉にする</strong>。もらった意見は、自分で選んで、1つだけ直す</div>
+          <div class="lesson-overview-value">作品のデータを<strong><code>localStorage</code>で保存</strong>し、<strong>再読み込みしても残る</strong>ようにする。ゲーム班は<strong>ハイスコア</strong>、EC班は<strong>カートの中身</strong>。<strong>データが変わったときに保存し、開いたときに読み込む</strong></div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
-          <div class="lesson-overview-value">中間相互レビュー / フィードバック / コードを読む / いいね・質問・提案 / 説明し返し / 意見の仕分け</div>
+          <div class="lesson-overview-value"><code>localStorage</code> / <code>setItem</code> / <code>getItem</code> / <code>removeItem</code> / <code>JSON.stringify</code> / <code>JSON.parse</code> / キー（保存の名前） / 保存と読み込みのタイミング</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">必要な準備</div>
-          <div class="lesson-overview-value">第9回までに作った<strong><code>game.html</code>（EC班は<code>shop.html</code>）</strong>と、<strong><code>plan.md</code></strong>の第10回の欄（「見てほしい動き」と「聞きたいこと」）。公開URLで動く状態だと見せやすい。動かない人も、<strong>できたところまで</strong>を見せてよい</div>
+          <div class="lesson-overview-value">第9回で作った<strong><code>game.html</code>（EC班は<code>shop.html</code>）</strong>と、<strong><code>plan.md</code></strong>の第10回の欄（「何を保存したいか」）。動かない人は、<strong>1限前半の「追いつき」の時間</strong>で直す。前期第4回の<strong><code>localStorage</code></strong>（<code>list.html</code>）の復習になる</div>
         </div>
       </div>
     </div>
@@ -74,10 +74,10 @@
     <div class="syllabus-section">
       <h2>この回のゴール</h2>
       <ul>
-        <li>他の人の作品を<strong>動かして</strong>、<strong>コードを読んで</strong>、何をしているかを自分の言葉で説明できる</li>
-        <li>意見を<strong>「いいね（具体的に）・質問・提案（1つ）」</strong>の形で、相手に伝えられる</li>
-        <li>もらった意見を<strong>「すぐ直す・次回以降・やらない」</strong>に仕分けて、理由を書ける</li>
-        <li>「すぐ直す」を1つだけ直して、<code>push</code>できる</li>
+        <li><code>localStorage</code>に<strong>保存する所</strong>と<strong>読み込む所</strong>を、自分の作品の中で見つけて、書ける</li>
+        <li>数は<code>Number(...)</code>、配列は<code>JSON.stringify</code>／<code>JSON.parse</code>と、<strong>データの種類で書き方が変わる</strong>ことを説明できる</li>
+        <li>ゲーム班は<strong>ハイスコア</strong>、EC班は<strong>カートの中身</strong>が、再読み込みしても残る</li>
+        <li>保存を<strong>消す</strong>（<code>removeItem</code>）方法を知り、<code>push</code>して公開URLでも確かめられる</li>
       </ul>
     </div>
 
@@ -92,97 +92,89 @@
             <span class="timeline-time">1限 前半</span>
             <span class="timeline-duration">約40分</span>
           </div>
-          <h3>見せる準備をし、意見の言い方を知る</h3>
+          <h3>第9回に追いつき、保存の考え方を知る</h3>
           <div class="timeline-body">
-            <p><strong>見せる準備（10分）</strong></p>
+            <p><strong>環境を整えて、第9回に追いつく（15分）</strong></p>
             <ul>
-              <li>第9回の<code>game.html</code>（EC班は<code>shop.html</code>）と<code>plan.md</code>が<code>push</code>できているかをGitHub上で確認する。終わっていない人は、今日の2限後半に<code>push</code>する</li>
-              <li><code>python3 -m http.server 8000</code>を起動し、第1回（前期）と同じ手順で「ポート」タブ→「エディターでプレビュー」→ Simple Browserを開いておく。開くファイルは、アドレスバーの<strong>末尾だけ</strong>を<code>/game.html</code>（EC班は<code>/shop.html</code>）に書き換える</li>
-              <li><code>plan.md</code>の第10回の欄の<strong>「見てほしい動き」と「聞きたいこと」</strong>を読み直す。書いていない人は、今ここで1行ずつ書く</li>
-              <li>人に見せる画面に、<strong>パスワードや個人情報が写っていない</strong>ことを確かめる</li>
+              <li><code>python3 -m http.server 8000</code>を起動し、第1回（前期）と同じ手順で「ポート」タブ→「エディターでプレビュー」→ Simple Browserを開く。開くファイルは、アドレスバーの<strong>末尾だけ</strong>を<code>/game.html</code>（EC班は<code>/shop.html</code>）に書き換える</li>
+              <li><strong>第9回のコードが動いている人</strong>: マスを押すとスコアが増える（EC班は、ボタンでカートが増えて合計が変わる）ことを確かめ、<code>plan.md</code>の第10回の欄に「何を保存したいか」を1行書く（例:「ハイスコアを保存」「カートを残す」）</li>
+              <li><strong>動かない人・途中の人</strong>: <a href="week09.html">第9回のページ</a>のコードと「うまく動かないときの確認」を見て、動くところまで進める。<code>Console</code>の赤い文字の行番号から見る（第7回の道具1）。分からないときは、隣の人か講師に声をかける。<strong>今日の最初の15分は、そのための時間</strong></li>
+              <li>動いたら、一度<code>commit</code>しておく（このあと保存を足して、戻したくなったときのため）</li>
             </ul>
-            <figure class="vz-fig" aria-labelledby="cap-w10-map">
-              <p class="vz-fig-title" id="cap-w10-map">今日の地図</p>
-              <svg class="vz-svg" viewBox="0 0 360 300" role="img" aria-labelledby="w10-map-t w10-map-d">
-                <title id="w10-map-t">今日の流れ</title>
-                <desc id="w10-map-d">1 見せる準備と、意見の型を知る、2 グループで見せ合う、3 ペアでコードを説明し返す、4 もらった意見を仕分ける、5 1つ直してpushする、の順に進む。</desc>
-                <rect class="box-blue" x="8" y="8" width="344" height="36" rx="10"/>
-                <text class="t-b" x="22" y="32">① 見せる準備・意見の型を知る</text>
-                <line class="line" x1="180" y1="46" x2="180" y2="52" marker-end="url(#mk-s)"/>
-                <rect class="box-blue" x="8" y="54" width="344" height="36" rx="10"/>
-                <text class="t-b" x="22" y="78">② グループで見せ合う</text>
-                <line class="line" x1="180" y1="92" x2="180" y2="98" marker-end="url(#mk-s)"/>
-                <rect class="box-blue" x="8" y="100" width="344" height="36" rx="10"/>
-                <text class="t-b" x="22" y="124">③ ペアで、コードを説明し返す</text>
-                <line class="line" x1="180" y1="138" x2="180" y2="144" marker-end="url(#mk-s)"/>
-                <rect class="box-blue" x="8" y="146" width="344" height="36" rx="10"/>
-                <text class="t-b" x="22" y="170">④ もらった意見を仕分ける</text>
-                <line class="line" x1="180" y1="184" x2="180" y2="190" marker-end="url(#mk-s)"/>
-                <rect class="box-white box-key" x="8" y="192" width="344" height="36" rx="10"/>
-                <text class="t-b" x="22" y="216">⑤ 1つ直して、push</text>
-                <rect class="band" x="8" y="244" width="344" height="40" rx="10"/>
-                <text class="t-c" x="180" y="269">見せるのも、読むのも、直すのも、人の作品が材料</text>
-              </svg>
-              <figcaption>今日は新しい書き方は出てきません。これまでに書いたコードを、人と読み合う回です。</figcaption>
-            </figure>
-            <p><strong>意見の型：いいね・質問・提案（15分）</strong></p>
+            <p><strong>保存の考え方：いつ保存して、いつ読み込むか（25分）</strong></p>
             <ul>
-              <li>意見は、次の<strong>3つの順</strong>で伝える。この型は授業用の整理で、公式の分類ではない</li>
+              <li>前期第4回で、<code>localStorage</code>に配列を保存して、再読み込みしても残る<code>list.html</code>を作った。今日は、<strong>同じ仕組みを、第9回の作品に入れる</strong></li>
+              <li>考えることは2つだけ。<strong>① いつ保存するか → データが変わったとき。② いつ読み込むか → ファイルを開いた直後に1回だけ</strong></li>
             </ul>
-            <figure class="vz-fig" aria-labelledby="cap-w10-fb">
-              <p class="vz-fig-title" id="cap-w10-fb">意見の型：3つの順</p>
-              <svg class="vz-svg" viewBox="0 0 360 290" role="img" aria-labelledby="w10-fb-t w10-fb-d">
-                <title id="w10-fb-t">いいね・質問・提案の3つ</title>
-                <desc id="w10-fb-d">1 いいね。具体的に1つ。2 質問。分からなかった所を1つ。3 提案。直すなら、1つだけ。</desc>
-                <rect class="box-blue" x="8" y="8" width="344" height="68" rx="10"/>
-                <text class="t-b" x="22" y="30">① いいね（具体的に1つ）</text>
-                <text class="t-sm" x="22" y="52">「ボタンを押すと合計がすぐ変わるのが分かりやすい」</text>
-                <text class="t-sm" x="22" y="68">× 「すごい」「いい感じ」だけ</text>
-                <rect class="box-blue" x="8" y="86" width="344" height="68" rx="10"/>
-                <text class="t-b" x="22" y="108">② 質問（分からなかった所を1つ）</text>
-                <text class="t-sm" x="22" y="130">「この関数は、何のために呼んでいるの？」</text>
-                <text class="t-sm" x="22" y="146">× 「これ間違ってない？」</text>
-                <rect class="box-white box-key" x="8" y="164" width="344" height="68" rx="10"/>
-                <text class="t-b" x="22" y="186">③ 提案（直すなら、1つだけ）</text>
-                <text class="t-sm" x="22" y="208">「数字の1000に名前を付けると、意味が分かる」</text>
-                <text class="t-sm" x="22" y="224">× 「全部書き直したほうがいい」</text>
-                <rect class="band" x="8" y="244" width="344" height="36" rx="8"/>
-                <text class="t-c" x="180" y="267">人ではなく、コードや動きについて言う</text>
+            <figure class="vz-fig" aria-labelledby="cap-w10-flow">
+              <p class="vz-fig-title" id="cap-w10-flow">保存と読み込みのタイミング</p>
+              <svg class="vz-svg" viewBox="0 0 360 300" role="img" aria-labelledby="w10-flow-t w10-flow-d">
+                <title id="w10-flow-t">開いたときに読み込み、変わったときに保存する流れ</title>
+                <desc id="w10-flow-d">1 ファイルを開く、2 localStorageから読み込む（なければ初期値）、3 クリックなどでデータが変わる、4 変わったデータを保存する、5 画面を作り直す、の順に進む。再読み込みすると、また1から始まり、保存したものが読み込まれる。</desc>
+                <rect class="box-blue" x="8" y="8" width="344" height="44" rx="10"/>
+                <text class="t-b" x="22" y="28">① ファイルを開く</text>
+                <text class="t-sm" x="22" y="44">再読み込みも、ここから</text>
+                <line class="line" x1="180" y1="54" x2="180" y2="60" marker-end="url(#mk-s)"/>
+                <rect class="box-white box-key" x="8" y="62" width="344" height="44" rx="10"/>
+                <text class="t-b" x="22" y="82">② 読み込む（最初に1回）</text>
+                <text class="t-sm" x="22" y="98">なければ、初期値（0 や 空の配列）</text>
+                <line class="line" x1="180" y1="108" x2="180" y2="114" marker-end="url(#mk-s)"/>
+                <rect class="box-blue" x="8" y="116" width="344" height="44" rx="10"/>
+                <text class="t-b" x="22" y="136">③ データが変わる</text>
+                <text class="t-sm" x="22" y="152">スコアが増える・カートに入る</text>
+                <line class="line" x1="180" y1="162" x2="180" y2="168" marker-end="url(#mk-s)"/>
+                <rect class="box-white box-key" x="8" y="170" width="344" height="44" rx="10"/>
+                <text class="t-b" x="22" y="190">④ 保存する（変わるたびに）</text>
+                <text class="t-sm" x="22" y="206">setItem で、ブラウザに書く</text>
+                <line class="line" x1="180" y1="216" x2="180" y2="222" marker-end="url(#mk-s)"/>
+                <rect class="box-blue" x="8" y="224" width="344" height="36" rx="10"/>
+                <text class="t-b" x="22" y="247">⑤ 画面を作り直す（第9回と同じ）</text>
+                <rect class="band" x="8" y="268" width="344" height="24" rx="8"/>
+                <text class="t-c t-sm" x="180" y="285">②と④を足すだけ。ほかは第9回のまま</text>
               </svg>
-              <figcaption>上の3つが言えれば、レビューは成り立ちます。「直すかどうか」を決めるのは、作った本人です。</figcaption>
+              <figcaption>第9回の「データを変えて、画面を作り直す」の流れに、<strong>②と④を足す</strong>だけです。</figcaption>
             </figure>
             <ul>
-              <li>見る観点は3つ。<strong>動き</strong>（押したら思いどおりに動くか）、<strong>コード</strong>（読んで何をしているか分かるか）、<strong>使う人</strong>（初めて見る人が迷わないか）。1回のレビューで、全部を見なくてよい</li>
-              <li>他の人のコードは、<strong>書き換えない</strong>。気づいたことは、口で伝える。直すのは、作った本人</li>
+              <li><strong>保存のコードは3つ</strong>（前期第4回と同じ）。<code>localStorage.setItem("名前", 値)</code>で<strong>書く</strong>、<code>localStorage.getItem("名前")</code>で<strong>読む</strong>、<code>localStorage.removeItem("名前")</code>で<strong>消す</strong>。この「名前」を<strong>キー</strong>と呼ぶ</li>
+              <li><code>localStorage</code>が覚えられるのは<strong>文字列だけ</strong>。だから、<strong>数</strong>は読み込んだあとで<code>Number(...)</code>で数に戻し、<strong>配列</strong>は<code>JSON.stringify</code>で文字列にして保存し、<code>JSON.parse</code>で配列に戻す（前期第4回の復習）</li>
+              <li><strong>まだ何も保存されていないとき</strong>、<code>getItem</code>は<code>null</code>を返す。そのときは、初期値（数なら<code>0</code>、配列なら<code>[]</code>）を使う</li>
             </ul>
-            <p><strong>見本のコードを読む練習（15分）</strong></p>
-            <ul>
-              <li>次のコードは、読みにくい所をわざと入れた見本。<strong>実行しなくてよい</strong>。コードを読んで、<strong>何をしているか</strong>を、隣の人と1分ずつ説明し合う。そのあと、「いいね・質問・提案」を1つずつ書く</li>
-              <li>
-                <button class="copy-md-btn" data-md-source="sample-w10">
-                  <span class="btn-icon"></span> 見本のコードをコピー
-                </button>
-<pre id="sample-w10" class="md-preview">const a = [
-  { n: "マグ", p: 800 },
-  { n: "ノート", p: 300 },
-  { n: "ペン", p: 150 }
-];
-let t = 0;
-
-function f(x) {
-  t = t + a[x].p;
-  if (t &gt;= 1000) {
-    console.log("送料無料");
-  }
-  return t;
-}
-
-f(0);
-f(1);</pre>
-              </li>
-              <li>読むときの手がかり: ① <code>a</code>、<code>n</code>、<code>p</code>、<code>t</code>、<code>f</code>は、それぞれ何か。② <code>1000</code>は何の数字か。③ <code>f(0)</code>と<code>f(1)</code>を呼ぶと、<code>t</code>はいくつになるか（答え: <code>800</code>、そして<code>1100</code>。1100のときに「送料無料」が出る）</li>
-              <li>提案の例: <code>a</code>を<code>products</code>、<code>p</code>を<code>price</code>、<code>t</code>を<code>total</code>に変える。<code>1000</code>に<code>freeShippingLine</code>のような名前を付ける。名前を変えても、動きは変わらない</li>
-            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-w10-two">
+              <p class="vz-fig-title" id="cap-w10-two">ゲーム班とEC班で、書き方を比べる</p>
+              <svg class="vz-svg" viewBox="0 0 360 290" role="img" aria-labelledby="w10-two-t w10-two-d">
+                <title id="w10-two-t">ゲーム班とEC班の保存の違い</title>
+                <desc id="w10-two-d">ゲーム班はハイスコアという数を保存する。読み込むときはNumberで数に戻す。EC班はカートという配列を保存する。保存するときはJSON.stringify、読み込むときはJSON.parseを使う。</desc>
+                <rect class="box-blue" x="8" y="8" width="168" height="34" rx="10"/>
+                <text class="t-b t-c" x="92" y="30">ゲーム班</text>
+                <rect class="box-blue" x="184" y="8" width="168" height="34" rx="10"/>
+                <text class="t-b t-c" x="268" y="30">EC班</text>
+                <rect class="box-white" x="8" y="52" width="168" height="48" rx="10"/>
+                <text class="t-b t-c" x="92" y="73">保存するもの</text>
+                <text class="t-sm t-c" x="92" y="91">ハイスコア（数）</text>
+                <rect class="box-white" x="184" y="52" width="168" height="48" rx="10"/>
+                <text class="t-b t-c" x="268" y="73">保存するもの</text>
+                <text class="t-sm t-c" x="268" y="91">カート（配列）</text>
+                <rect class="box-white box-key" x="8" y="108" width="168" height="62" rx="10"/>
+                <text class="t-b t-c" x="92" y="130">書くとき</text>
+                <text class="t-sm t-c" x="92" y="150">そのまま</text>
+                <text class="t-sm t-c" x="92" y="165">setItem</text>
+                <rect class="box-white box-key" x="184" y="108" width="168" height="62" rx="10"/>
+                <text class="t-b t-c" x="268" y="130">書くとき</text>
+                <text class="t-sm t-c" x="268" y="150">JSON.stringify</text>
+                <text class="t-sm t-c" x="268" y="165">してから setItem</text>
+                <rect class="box-white box-key" x="8" y="178" width="168" height="62" rx="10"/>
+                <text class="t-b t-c" x="92" y="200">読むとき</text>
+                <text class="t-sm t-c" x="92" y="220">Number(...) で</text>
+                <text class="t-sm t-c" x="92" y="235">数に戻す</text>
+                <rect class="box-white box-key" x="184" y="178" width="168" height="62" rx="10"/>
+                <text class="t-b t-c" x="268" y="200">読むとき</text>
+                <text class="t-sm t-c" x="268" y="220">JSON.parse で</text>
+                <text class="t-sm t-c" x="268" y="235">配列に戻す</text>
+                <rect class="band" x="8" y="250" width="344" height="32" rx="10"/>
+                <text class="t-c t-sm" x="180" y="271">どちらも「開いたとき読む・変わったとき書く」</text>
+              </svg>
+              <figcaption>道具は違っても、形は同じ。「読む → 使う → 変わったら書く」です。</figcaption>
+            </figure>
           </div>
         </div>
 
@@ -191,67 +183,91 @@ f(1);</pre>
             <span class="timeline-time">1限 後半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>グループで作品を見せ合い、コードを読み合う</h3>
+          <h3>作品に、保存と読み込みを足す</h3>
           <div class="timeline-body">
-            <p><strong>進め方を確認する（5分）</strong></p>
+            <p><strong>保存のコードを足す（30分）</strong></p>
             <ul>
-              <li><strong>3〜4人のグループ</strong>を作る（なるべく、ゲーム班とEC班が混ざるようにする。同じ班でもよい）</li>
-              <li>見せる人の<strong>画面を、みんなで囲む</strong>。公開URLやリポジトリの権限は、使わなくてよい（画面を見せるだけでよい）</li>
-              <li>1人あたり約11分（3人のグループは、約15分）。時間は、タイマーを1つ決めて計る</li>
+              <li>第9回のコードに、<strong>数か所だけ足す</strong>（全部を書き直さない）。自分のジャンルのぶんだけ行う。1か所足すたびに、保存・再読み込みで、<code>Console</code>に赤い文字が出ていないか確かめる</li>
+              <li>
+                <details class="vz-more" open>
+                  <summary>ゲーム班：ハイスコアを保存する（3か所）</summary>
+                  <p><strong>① 読み込む</strong>——コードの<strong>上のほう</strong>の、<code>let score = 0;</code>の<strong>すぐ上</strong>に足す。<code>"game-hiscore"</code>が、保存の名前（キー）。まだ保存されていないとき（<code>null</code>）は、<code>Number(null)</code>が<code>0</code>になるので、そのまま<code>0</code>から始まる。念のため<code>|| 0</code>も付ける</p>
+                  <button class="copy-md-btn" data-md-source="s-game-1">
+                    <span class="btn-icon"></span> ①読み込みのコードをコピー
+                  </button>
+<pre id="s-game-1" class="md-preview">const hiKey = "game-hiscore";
+let hiscore = Number(localStorage.getItem(hiKey)) || 0;</pre>
+                  <p><strong>② 保存する</strong>——<code>hit</code>関数の中の、<code>score = score + 1;</code>の<strong>すぐ下</strong>に足す。スコアがハイスコアを<strong>超えたときだけ</strong>、ハイスコアを更新して、保存する</p>
+                  <button class="copy-md-btn" data-md-source="s-game-2">
+                    <span class="btn-icon"></span> ②保存のコードをコピー
+                  </button>
+<pre id="s-game-2" class="md-preview">      if (score &gt; hiscore) {
+        hiscore = score;
+        localStorage.setItem(hiKey, hiscore);
+      }</pre>
+                  <p><strong>③ 画面に出す</strong>——<code>render</code>の最後の行、<code>scoreText.textContent = ...;</code>を、次に置き換える</p>
+                  <button class="copy-md-btn" data-md-source="s-game-3">
+                    <span class="btn-icon"></span> ③画面に出すコードをコピー
+                  </button>
+<pre id="s-game-3" class="md-preview">  scoreText.textContent = `スコア: ${score}　ハイスコア: ${hiscore}`;</pre>
+                </details>
+              </li>
+              <li>
+                <details class="vz-more" open>
+                  <summary>EC班：カートを保存する（3か所）</summary>
+                  <p><strong>① 読み込む</strong>——<code>const cart = [];</code>の<strong>1行を消して</strong>、次に置き換える。<code>loadCart</code>は、保存されたカートを読んで返す関数。まだ何もない（<code>null</code>）ときは、空の配列<code>[]</code>を返す。<code>saveCart</code>は、今の<code>cart</code>を文字列にして保存する関数</p>
+                  <button class="copy-md-btn" data-md-source="s-ec-1">
+                    <span class="btn-icon"></span> ①読み込みと保存の関数をコピー
+                  </button>
+<pre id="s-ec-1" class="md-preview">const cartKey = "shop-cart";
+
+function loadCart() {
+  const saved = localStorage.getItem(cartKey);
+  if (saved === null) {
+    return [];
+  }
+  return JSON.parse(saved);
+}
+
+function saveCart() {
+  localStorage.setItem(cartKey, JSON.stringify(cart));
+}
+
+const cart = loadCart();</pre>
+                  <p><strong>② 保存する</strong>——「カートに入れる」ボタンの処理の、<code>cart.push(products[i]);</code>の<strong>すぐ下</strong>に、1行足す</p>
+                  <button class="copy-md-btn" data-md-source="s-ec-2">
+                    <span class="btn-icon"></span> ②保存の1行をコピー
+                  </button>
+<pre id="s-ec-2" class="md-preview">    saveCart();</pre>
+                  <p><strong>③ 画面に出す</strong>——一番下の<code>showCart();</code>が、ファイルを開いた直後に、<strong>読み込んだカート</strong>を画面に出す（第9回のまま。変えない）。第9回で足した「取り消す」ボタンがある人は、<code>cart.splice(i, 1);</code>の<strong>すぐ下</strong>にも<code>saveCart();</code>を足す（足さないと、取り消しが保存されない）</p>
+                </details>
+              </li>
+              <li>保存して、再読み込みする。<strong>ゲーム班</strong>は、いくつか当ててスコアを増やしてから再読み込みして、<strong>スコアは0に戻るが、ハイスコアは残っている</strong>ことを見る。<strong>EC班</strong>は、商品を2〜3個カートに入れてから再読み込みして、<strong>カートの一覧と合計が、そのまま残っている</strong>ことを見る</li>
             </ul>
-            <p><strong>1人ずつ、見せて読む（45分）</strong></p>
-            <figure class="vz-fig" aria-labelledby="cap-w10-turn">
-              <p class="vz-fig-title" id="cap-w10-turn">1人あたり約11分の使い方</p>
-              <svg class="vz-svg" viewBox="0 0 360 290" role="img" aria-labelledby="w10-turn-t w10-turn-d">
-                <title id="w10-turn-t">1人分の時間の使い方</title>
-                <desc id="w10-turn-d">1 作者が動きを見せる、2 見る人が操作する、3 コードを一緒に読む、4 意見を伝える、5 作者がplan.mdに書く、の順。</desc>
-                <rect class="box-blue" x="8" y="8" width="344" height="40" rx="10"/>
-                <text class="t-b" x="22" y="33">① 作者が見せる（2分）</text>
-                <line class="line" x1="180" y1="50" x2="180" y2="56" marker-end="url(#mk-s)"/>
-                <rect class="box-blue" x="8" y="58" width="344" height="40" rx="10"/>
-                <text class="t-b" x="22" y="83">② 見る人が操作する（2分）</text>
-                <line class="line" x1="180" y1="100" x2="180" y2="106" marker-end="url(#mk-s)"/>
-                <rect class="box-blue" x="8" y="108" width="344" height="40" rx="10"/>
-                <text class="t-b" x="22" y="133">③ コードを一緒に読む（3分）</text>
-                <line class="line" x1="180" y1="150" x2="180" y2="156" marker-end="url(#mk-s)"/>
-                <rect class="box-white box-key" x="8" y="158" width="344" height="40" rx="10"/>
-                <text class="t-b" x="22" y="183">④ いいね・質問・提案（3分）</text>
-                <line class="line" x1="180" y1="200" x2="180" y2="206" marker-end="url(#mk-s)"/>
-                <rect class="box-blue" x="8" y="208" width="344" height="40" rx="10"/>
-                <text class="t-b" x="22" y="233">⑤ 作者が plan.md に書く（1分）</text>
-                <rect class="band" x="8" y="258" width="344" height="24" rx="8"/>
-                <text class="t-c t-sm" x="180" y="275">時間が余ったら、②③を長くする</text>
-              </svg>
-              <figcaption>作者は、「見てほしい動き」と「聞きたいこと」を、最初に1行ずつ言います。</figcaption>
-            </figure>
+            <p><strong>保存された中身を見る（10分）</strong></p>
             <ul>
-              <li><strong>② 見る人が操作する</strong>: 作者ではなく、<strong>見る人</strong>がマスやボタンを押す。作者が気づいていない動きが見つかる。思いどおりに動かない所があれば、そのまま伝える</li>
-              <li><strong>③ コードを一緒に読む</strong>: 次の順に探すと、読みやすい。<strong>データ</strong>（<code>characters</code>や<code>products</code>）→ <strong>画面を作る関数</strong>（<code>render</code>や<code>showCart</code>）→ <strong>クリックの処理</strong>（<code>addEventListener</code>）。見る人は、「この行は何をしているの？」と聞いてよい</li>
+              <li><code>F12</code>で開発者ツールを開き、<strong><code>Application</code>（アプリケーション）</strong>タブ→左の「<strong>Local storage</strong>（ローカル ストレージ）」→サイトのアドレス、と開くと、<strong>キー（名前）と値</strong>の一覧が見える。<code>game-hiscore</code>や<code>shop-cart</code>が見つかれば成功。EC班の値は、<code>[{"name":"マグ","price":800}, ...]</code>のような<strong>文字列</strong>になっている（<code>JSON.stringify</code>の結果）</li>
+              <li><code>Application</code>タブが見つからない人は、<code>Console</code>タブに、<code>localStorage.getItem("game-hiscore")</code>（EC班は<code>localStorage.getItem("shop-cart")</code>）と書いて<code>Enter</code>。保存された値が出る</li>
+              <li>ここで考える: 保存されているのは、<strong>画面ではなく、データ</strong>。画面は、読み込んだデータから、毎回作り直している（第9回の形）</li>
             </ul>
-            <figure class="vz-fig" aria-labelledby="cap-w10-read">
-              <p class="vz-fig-title" id="cap-w10-read">コードを読む順番</p>
-              <svg class="vz-svg" viewBox="0 0 360 250" role="img" aria-labelledby="w10-read-t w10-read-d">
-                <title id="w10-read-t">コードを読む3つの場所</title>
-                <desc id="w10-read-d">1 データ（characters、products）、2 画面を作る関数（render、showCart）、3 クリックの処理（addEventListener）の順に読む。</desc>
-                <rect class="box-blue" x="8" y="8" width="344" height="56" rx="10"/>
-                <text class="t-b" x="22" y="30">① データ</text>
-                <text class="t-sm" x="22" y="52"><tspan>characters ／ products ／ cart ／ score</tspan></text>
-                <line class="line" x1="180" y1="66" x2="180" y2="76" marker-end="url(#mk-s)"/>
-                <rect class="box-blue" x="8" y="78" width="344" height="56" rx="10"/>
-                <text class="t-b" x="22" y="100">② 画面を作る関数</text>
-                <text class="t-sm" x="22" y="122">render ／ showCart</text>
-                <line class="line" x1="180" y1="136" x2="180" y2="146" marker-end="url(#mk-s)"/>
-                <rect class="box-white box-key" x="8" y="148" width="344" height="56" rx="10"/>
-                <text class="t-b" x="22" y="170">③ クリックの処理</text>
-                <text class="t-sm" x="22" y="192">addEventListener の中身</text>
-                <rect class="band" x="8" y="214" width="344" height="30" rx="8"/>
-                <text class="t-c t-sm" x="180" y="234">分からない行に、印を付けて聞く</text>
-              </svg>
-              <figcaption>第9回で作った「クリック → データを変える → 画面を作り直す」の形が、見つけられるはずです。</figcaption>
-            </figure>
+            <p><strong>試して、壊してみる（10分）</strong></p>
             <ul>
-              <li><strong>④ いいね・質問・提案</strong>: 見た人全員が、1つずつ言う。「提案」は<strong>1つだけ</strong>。同じ提案が重なったら、重なったと言うだけでよい</li>
-              <li><strong>⑤ 作者が<code>plan.md</code>に書く</strong>: もらった意見を、<strong>言われたまま</strong>、第10回の欄に書き写す（仕分けは、あとでやる。今は、直さない）</li>
+              <li><strong>消し方を知る</strong>: <code>Console</code>に<code>localStorage.removeItem("game-hiscore")</code>（EC班は<code>"shop-cart"</code>）と書いて<code>Enter</code>、再読み込みする。<strong>保存が消えて、最初の状態</strong>に戻る。<strong><code>localStorage.clear()</code>は使わない</strong>（そのサイトの保存が<strong>全部</strong>消える。前期第4回の<code>list.html</code>の<code>favorites</code>なども、同じ保管庫にあると、一緒に消えることがある）</li>
+              <li><strong>壊れた保存を見る（EC班）</strong>: <code>Console</code>に<code>localStorage.setItem("shop-cart", "これはJSONではない")</code>と書いて<code>Enter</code>、再読み込みする。<code>Console</code>に<code>SyntaxError</code>が出て、<strong>画面が出なくなる</strong>。これは、<code>JSON.parse</code>が、文字列を配列に戻せなかったため。<code>localStorage.removeItem("shop-cart")</code>で消せば、直る</li>
+              <li><strong>考えてみる</strong>: カートに商品を入れてから、<code>products</code>の<code>price</code>を書き換えて再読み込みすると、<strong>カートの中の価格は、古いまま</strong>になる。なぜか（保存したのは、入れたときの<strong>コピー</strong>）。本物のお店は、どうしていると思うか、隣の人と1分だけ話す</li>
+              <li>
+                <details class="vz-more">
+                  <summary>うまく動かないときの確認</summary>
+                  <ul>
+                    <li><code>F12</code>で<code>Console</code>タブを開き、<strong>赤い文字の行番号</strong>から見る（第7回の道具1）</li>
+                    <li>再読み込みしても、ハイスコア（カート）が<strong>0（空）に戻る</strong>ときは、<code>setItem</code>の行が<strong>動いているか</strong>見る。<code>if (score &gt; hiscore)</code>の中に書けているか、<code>saveCart();</code>が<code>cart.push(...)</code>の下にあるか。<code>console.log("保存した");</code>を、その行の前後に書いて、<code>Console</code>に出るか見る（第7回の道具2）</li>
+                    <li><code>setItem</code>と<code>getItem</code>の<strong>キー（名前）が1文字でも違う</strong>と、別のものとして扱われる。<code>hiKey</code>や<code>cartKey</code>の<strong>つづり</strong>を見る</li>
+                    <li>ゲーム班で、ハイスコアが<code>NaN</code>や空になるときは、<code>Number(localStorage.getItem(hiKey)) || 0</code>の<code>Number(...)</code>が書けているか見る</li>
+                    <li>EC班で<code>Cannot read properties of null</code>や<code>SyntaxError</code>が出るときは、<code>loadCart</code>の<code>if (saved === null)</code>があるか、保存された値が壊れていないか（<code>removeItem</code>で消して試す）を見る</li>
+                    <li><code>cartKey</code>がまだ無いと言われるときは、<code>const cartKey = ...</code>を、<code>loadCart</code>を呼ぶ行より<strong>上</strong>に置く</li>
+                  </ul>
+                </details>
+              </li>
             </ul>
           </div>
         </div>
@@ -268,56 +284,71 @@ f(1);</pre>
             <span class="timeline-time">2限 前半</span>
             <span class="timeline-duration">約50分</span>
           </div>
-          <h3>人のコードを説明し返し、もらった意見を仕分ける</h3>
+          <h3>保存を自分の作品に広げる（任意の見せ合いコーナーつき）</h3>
           <div class="timeline-body">
-            <p><strong>ペアで「説明し返し」（25分）</strong></p>
+            <p><strong>自分の企画に合わせて、保存を1つ足す（30分）</strong></p>
             <ul>
-              <li>グループの中で、<strong>2人組</strong>を作る（3人のグループは、<strong>A→B→C→A</strong>の輪になり、「説明する人」が次の人のコードを読む。1人約8分で、3回まわす）。相手の<code>game.html</code>（EC班は<code>shop.html</code>）の中から、<strong>関数を1つ</strong>選ぶ（例: <code>render</code>、<code>showCart</code>、<code>hit</code>）</li>
-              <li>選んだ関数が<strong>何をしているか</strong>を、<strong>自分の言葉</strong>で相手に説明する。「この関数は、＿＿を受け取って、＿＿を変えて、＿＿を返す（または、画面に出す）」の形で話すとよい</li>
-              <li>作者は、<strong>合っているか</strong>を答える。ずれていたら、「どこで読み違えたか」を一緒に探す。読み違えた所は、<strong>コードが分かりにくい所</strong>かもしれない</li>
-              <li>役割を交代して、もう1回やる（2人組は1人12分ずつ）</li>
+              <li><code>plan.md</code>の<strong>「3. 必要な機能」</strong>を見て、<strong>保存したいもの</strong>を1つ決める。先にやった保存（ハイスコア・カート）に、<strong>消す操作</strong>を足すのが、最初の1つとしておすすめ。保存を試すとき、消せないと、やり直しにくい</li>
+              <li><strong>1回に1つだけ</strong>足して、足すたびに保存・再読み込みで確かめる。うまくいかなくなったら、動いていた状態の<code>commit</code>に戻れる</li>
               <li>
-                <details class="vz-more">
-                  <summary>コードが読めなかったときの確認</summary>
-                  <ul>
-                    <li>1行ずつではなく、<strong>関数の最初と最後</strong>から見る。何を受け取り、何を変えているかが分かる</li>
-                    <li>値を見たいときは、<strong>作者に</strong><code>console.log</code>を1行足してもらい、見終わったら消してもらう（読む人は、他の人のファイルを書き換えない）</li>
-                    <li>分からない行は、そのまま作者に聞いてよい。<strong>聞くことは、レビューの一部</strong></li>
-                    <li>AI（Copilot Chat・Gemini）に説明を頼んでもよい。ただし、他の人のコードを貼る前に、<strong>作者の許可</strong>をもらい、<strong>APIキーや個人情報が入っていないか</strong>を見る。返ってきた説明は、<strong>作者に確かめる</strong>。AIの説明も、間違っていることがある</li>
-                  </ul>
-                </details>
+                <p><strong>ゲーム班の例：ハイスコアを消すボタン</strong>。①HTMLの<code>&lt;button class="start"&gt;</code>の行の<strong>すぐ下</strong>に、ボタンを1つ足す</p>
+                <button class="copy-md-btn" data-md-source="a-game-html">
+                  <span class="btn-icon"></span> ボタンのHTMLをコピー
+                </button>
+<pre id="a-game-html" class="md-preview">  &lt;button id="reset"&gt;ハイスコアを消す&lt;/button&gt;</pre>
+                <p>②コードの一番下の<code>render();</code>の<strong>すぐ上</strong>に、クリックの処理を足す</p>
+                <button class="copy-md-btn" data-md-source="a-game-js">
+                  <span class="btn-icon"></span> クリックの処理をコピー
+                </button>
+<pre id="a-game-js" class="md-preview">document.getElementById("reset").addEventListener("click", function () {
+  localStorage.removeItem(hiKey);
+  hiscore = 0;
+  render();
+});</pre>
+                <p><code>removeItem</code>で保存を消し、<code>hiscore</code>を<code>0</code>に戻して、<code>render()</code>で画面を作り直す。<strong>消えるのはハイスコアだけ</strong>で、今のスコアはそのまま</p>
+              </li>
+              <li>
+                <p><strong>EC班の例：カートを空にするボタン</strong>。①HTMLの、カートの欄（<code>&lt;div class="cart"&gt;...&lt;/div&gt;</code>）の<strong>すぐ下</strong>に、ボタンを1つ足す</p>
+                <button class="copy-md-btn" data-md-source="a-ec-html">
+                  <span class="btn-icon"></span> ボタンのHTMLをコピー
+                </button>
+<pre id="a-ec-html" class="md-preview">  &lt;button id="clear-cart"&gt;カートを空にする&lt;/button&gt;</pre>
+                <p>②コードの一番下の<code>showCart();</code>の<strong>すぐ上</strong>に、クリックの処理を足す</p>
+                <button class="copy-md-btn" data-md-source="a-ec-js">
+                  <span class="btn-icon"></span> クリックの処理をコピー
+                </button>
+<pre id="a-ec-js" class="md-preview">document.getElementById("clear-cart").addEventListener("click", function () {
+  cart.length = 0;
+  localStorage.removeItem(cartKey);
+  showCart();
+});</pre>
+                <p><code>cart.length = 0</code>は、<strong>配列を空にする</strong>書き方（長さを0にする）。<code>removeItem</code>で保存も消して、<code>showCart()</code>で画面を作り直す</p>
+              </li>
+              <li>消す操作ができたら、<code>plan.md</code>から、<strong>もう1つ</strong>保存したいものを選んでもよい（例: ゲーム班は「最後に遊んだときのスコア」、EC班は「お気に入りに入れた商品」）。<strong>キー（名前）は、作品ごとに、ほかと重ならない名前</strong>にする。同じ公開サイトの中の別の作品が、同じ保管庫を使っていることがあるため</li>
+              <li>書き方が分からないときは、<strong>今日足したコードをまねる</strong>。「読む → 使う → 変わったら書く」の形は、どの保存でも同じ</li>
+            </ul>
+            <p><strong>AIに相談するときのルール</strong></p>
+            <ul>
+              <li>Codespacesの<strong>Copilot Chat</strong>（使える人）か、ブラウザの別タブで開いた<strong>Gemini</strong>（<a href="https://gemini.google.com/" target="_blank" rel="noopener">gemini.google.com</a>）に、<strong>今のコードを貼って</strong>、<strong>1回に頼むのは1つの変更だけ</strong>にする。返ってきたコードは、<strong>読んでから貼る</strong>。貼る前に、<strong>APIキーや個人情報が入っていないか</strong>を見る</li>
+              <li>
+                <button class="copy-md-btn" data-md-source="prompt-w10">
+                  <span class="btn-icon"></span> 依頼文の例をコピー
+                </button>
+<pre id="prompt-w10" class="md-preview">次のHTMLとJavaScriptは、localStorageでデータを保存する作品です。
+（ゲーム班:ハイスコアを保存／EC班:カートを保存）。
+やりたい変更は、次の1つだけです。
+（例:最後に遊んだときのスコアも保存して、画面に出す／カートの商品数が10個を超えたら入れられないようにする）
+変更したい部分だけを教えてください。保存の名前（キー）は、既存のものと重ならないようにしてください。理由も1行で説明してください。
+
+（ここに、game.html または shop.html の中身を貼り付ける）</pre>
               </li>
             </ul>
-            <p><strong>もらった意見を仕分ける（25分）</strong></p>
+            <p><strong>任意の見せ合いコーナー（約20分。「できる人がいれば」）</strong></p>
             <ul>
-              <li><code>plan.md</code>の第10回の欄に書き写した意見を、<strong>3つに仕分ける</strong>。仕分けは、自分で決める</li>
-            </ul>
-            <figure class="vz-fig" aria-labelledby="cap-w10-sort">
-              <p class="vz-fig-title" id="cap-w10-sort">意見の仕分け</p>
-              <svg class="vz-svg" viewBox="0 0 360 290" role="img" aria-labelledby="w10-sort-t w10-sort-d">
-                <title id="w10-sort-t">もらった意見の3つの仕分け</title>
-                <desc id="w10-sort-d">1 すぐ直す。今日1つ。2 次回以降。第11回などで。3 やらない。理由を1行書く。</desc>
-                <rect class="box-white box-key" x="8" y="8" width="344" height="68" rx="10"/>
-                <text class="t-b" x="22" y="30">① すぐ直す（今日、1つだけ）</text>
-                <text class="t-sm" x="22" y="52">小さくて、効果が分かるもの</text>
-                <text class="t-sm" x="22" y="68">例: 名前を分かりやすくする</text>
-                <rect class="box-blue" x="8" y="86" width="344" height="68" rx="10"/>
-                <text class="t-b" x="22" y="108">② 次回以降（第11回の欄へ）</text>
-                <text class="t-sm" x="22" y="130">大きい、または、時間が足りないもの</text>
-                <text class="t-sm" x="22" y="146">例: 検索・絞り込み、タイマー</text>
-                <rect class="box-blue" x="8" y="164" width="344" height="68" rx="10"/>
-                <text class="t-b" x="22" y="186">③ やらない（理由を1行）</text>
-                <text class="t-sm" x="22" y="208">自分の企画と合わないもの</text>
-                <text class="t-sm" x="22" y="224">例: 「ねらいが違うので、しない」</text>
-                <rect class="band" x="8" y="244" width="344" height="36" rx="8"/>
-                <text class="t-c" x="180" y="267">全部は直さない。決めるのは、作った本人</text>
-              </svg>
-              <figcaption>「やらない」と決めるのも、立派な判断です。理由を1行書いておきます。</figcaption>
-            </figure>
-            <ul>
-              <li>仕分けた結果を、<code>plan.md</code>の第10回の欄に、<code>すぐ直す:</code> <code>次回以降:</code> <code>やらない（理由）:</code>の3行にして書く</li>
-              <li><strong>第11回の欄</strong>（親ページの計画では、ゲーム班はレベルアップ・タイマー、EC班は検索・絞り込み）も、もらった意見を見て、書き直してよい</li>
-              <li>意見が1つもらえなかった人は、<strong>自分で自分のコードを見て</strong>、「いいね・質問・提案」を1つずつ書く</li>
+              <li><strong>今日の作業が一区切りついた人だけ</strong>、参加する。<strong>参加しなくてよい</strong>。作業を続けたい人は、そのまま続ける</li>
+              <li>参加する人は、<strong>2〜3人</strong>で集まり、1人2〜3分で、作品を見せる。<strong>再読み込みしても、残ること</strong>を、実際にやって見せる</li>
+              <li>見る人は、<strong>「いいね（具体的に1つ）・質問（1つ）」</strong>だけ伝える（提案は、したい人だけ。この型は授業用の整理で、公式の分類ではない）。他の人のコードは書き換えない</li>
+              <li>見てもらうと、自分では気づかなかった動き（例: ハイスコアを更新した直後の表示）が、見つかることがある。もらった一言は、<code>plan.md</code>に1行、写しておく</li>
             </ul>
           </div>
         </div>
@@ -327,19 +358,41 @@ f(1);</pre>
             <span class="timeline-time">2限 後半</span>
             <span class="timeline-duration">約30分</span>
           </div>
-          <h3>「すぐ直す」を1つ直して、<code>push</code>する</h3>
+          <h3>公開URLでも確かめ、<code>push</code>して、<code>plan.md</code>に記録する</h3>
           <div class="timeline-body">
-            <p><strong>1つだけ直す（20分）</strong></p>
+            <p><strong>公開URLで確かめる（10分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-w10-store">
+              <p class="vz-fig-title" id="cap-w10-store">保存される場所は、アドレスごとに別</p>
+              <svg class="vz-svg" viewBox="0 0 360 250" role="img" aria-labelledby="w10-store-t w10-store-d">
+                <title id="w10-store-t">プレビューと公開URLは別の保管庫</title>
+                <desc id="w10-store-d">Codespacesのプレビューと、GitHub Pagesの公開URLは、アドレスが違うので、localStorageの保管庫も別。プレビューで保存したハイスコアは、公開URLには出ない。公開URLでは、また一から始まる。</desc>
+                <rect class="box-blue" x="8" y="8" width="344" height="86" rx="10"/>
+                <text class="t-b" x="22" y="30">Codespacesのプレビュー</text>
+                <text class="t-sm" x="22" y="52">アドレス: …app.github.dev の形</text>
+                <text class="t-sm" x="22" y="72">ここで保存したものは、この保管庫の中</text>
+                <rect class="box-white box-key" x="8" y="104" width="344" height="86" rx="10"/>
+                <text class="t-b" x="22" y="126">GitHub Pagesの公開URL</text>
+                <text class="t-sm" x="22" y="148">アドレス: …github.io の形</text>
+                <text class="t-sm" x="22" y="168">別の保管庫。最初は空から始まる</text>
+                <rect class="band" x="8" y="202" width="344" height="40" rx="8"/>
+                <text class="t-c t-sm" x="180" y="226">プレビューの保存は、公開URLには出ない</text>
+              </svg>
+              <figcaption>同じコードでも、<strong>開いた場所が違えば、保存されたものは別</strong>です。見た人の端末にも、あなたの保存は届きません。</figcaption>
+            </figure>
             <ul>
-              <li>「すぐ直す」から、<strong>1つだけ</strong>選んで直す。直したら、保存・再読み込みで動かして確かめる</li>
-              <li>名前を変えるときは、<strong>同じ名前を使っている所を全部</strong>変える（変え忘れると、<code>Console</code>に赤い文字が出ることもあれば、<code>NaN</code>のように、エラーなしで表示がおかしくなることもある。直したあとは、<strong>動きを実際に押して</strong>確かめる）。エディターの検索（<code>Ctrl</code>+<code>F</code>、Macは<code>Command</code>+<code>F</code>）で、変える名前を探すと見つけやすい</li>
-              <li>動かなくなったら、<code>Console</code>の赤い文字の行番号から見る（第7回の道具1）。戻したいときは、直す前に<code>commit</code>しておけば、元に戻せる</li>
-              <li>早く終わった人は、<strong>相手の作品に書いた自分の提案</strong>が、自分のコードにも当てはまらないか見る</li>
+              <li>GitHub Pagesに公開しているリポジトリなら、公開URLの末尾に<code>/game.html</code>（EC班は<code>/shop.html</code>）を付けて開く（反映に1〜数分かかることがある）。<strong>公開URLで、もう一度、保存→再読み込み</strong>を試す。最初は空（ハイスコア0、カートなし）から始まるのが、正しい</li>
+              <li>保存は<strong>そのブラウザの中だけ</strong>。スマホで開いても、PCで保存した分は見えない（スマホ確認は第12回）。「みんなで共有するランキング」は、保存の仕組みではできない（サーバーが必要で、今は扱わない）</li>
             </ul>
             <p><strong><code>commit</code>・<code>push</code>する（10分）</strong></p>
             <ul>
-              <li>前期第4回と同じ手順で、<code>game.html</code>（EC班は<code>shop.html</code>）と<code>plan.md</code>を<code>commit</code>・<code>push</code>する（コミットメッセージ例: <code>レビューの意見をもとに、変数名を分かりやすくした</code>）</li>
+              <li>前期第4回と同じ手順で、<code>game.html</code>（EC班は<code>shop.html</code>）と<code>plan.md</code>を<code>commit</code>・<code>push</code>する（コミットメッセージ例: <code>個人制作: ハイスコアをlocalStorageで保存する</code>／<code>個人制作: カートをlocalStorageで保存する</code>）</li>
               <li><code>push</code>後に、GitHub上でファイルが見えることを確認する</li>
+            </ul>
+            <p><strong><code>plan.md</code>に記録する（10分）</strong></p>
+            <ul>
+              <li><code>plan.md</code>の<strong>「5. 制作の予定」</strong>の第10回の欄を、<strong>実際にできたこと</strong>に書き換える（例:「ハイスコアの保存まで。消すボタンは途中」）。できなかったことも1行書く</li>
+              <li>第11回の欄に、<strong>次に作る機能を1つ</strong>書く（親ページの計画では、ゲーム班はレベルアップ・タイマー、EC班は検索・絞り込み。<strong>自分の企画が優先</strong>）</li>
+              <li>見せ合いコーナーに出た人は、もらった一言も、1行書く</li>
             </ul>
           </div>
         </div>
@@ -353,8 +406,8 @@ f(1);</pre>
           <div class="timeline-body">
             <ul>
               <!-- 親ページ program-basics-2.html Week 11 「個人制作③ 仕上げ機能」と同期 -->
-              <li>次回（第11回）: <strong>個人制作③ 仕上げ機能</strong>——追加機能を実装する（ゲーム班はレベルアップ・タイマー、EC班は検索・絞り込み）。今日の「次回以降」の仕分けが、第11回で何を作るかの材料になる</li>
-              <li>今日のキーワード「<strong>いいね・質問・提案</strong>」「<strong>説明し返し</strong>」「<strong>意見の仕分け</strong>」を口に出して言えるか確認して退出</li>
+              <li>次回（第11回）: <strong>個人制作③ 仕上げ機能</strong>——追加機能を実装する（ゲーム班はレベルアップ・タイマー、EC班は検索・絞り込み）。今日の保存が入っていると、<strong>ハイスコアの更新や、検索した結果の保存</strong>などにも広げやすい</li>
+              <li>今日のキーワード「<strong><code>setItem</code>／<code>getItem</code>／<code>removeItem</code></strong>」「<strong>開いたとき読む・変わったとき書く</strong>」「<strong>数は<code>Number</code>、配列は<code>JSON</code></strong>」を口に出して言えるか確認して退出</li>
             </ul>
           </div>
         </div>
@@ -368,15 +421,15 @@ f(1);</pre>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
-            <strong><code>plan.md</code>の意見の仕分けを完成させ、<code>push</code>する</strong>
-            <p>授業内で終わらなかった人は、家で仕上げる。<code>plan.md</code>の第10回の欄に、もらった意見・仕分け（すぐ直す／次回以降／やらない（理由））・直した1つが入っている状態にする。<code>push</code>後に、GitHub上で確認する。</p>
+            <strong><code>game.html</code>（EC班は<code>shop.html</code>）と<code>plan.md</code>を<code>push</code>する</strong>
+            <p>授業内で終わらなかった人は、家で<code>push</code>まで済ませる。<code>push</code>後に、GitHub上でファイルが見えることを確認する。保存まで届かなかった場合は、できたところまででよいので、<code>plan.md</code>の第10回の欄に「どこまでできたか」を書いておく。</p>
           </div>
         </div>
         <div class="lesson-task">
           <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
           <div>
-            <strong>第11回で作る機能を1つ決めておく</strong>
-            <p><code>plan.md</code>の第11回の欄に、「次回に作る機能を1つ」と「それができたと言える画面の様子」を1行で書く（例:「検索の欄に文字を入れると、一致する商品だけが出る」）。</p>
+            <strong>公開URLで、保存を確かめる</strong>
+            <p>公開URLで、保存→再読み込みを試して、残ることを確かめる。画面が崩れる所があれば、直しておく。第11回の欄に、次に作る機能を1つ書いておく。</p>
           </div>
         </div>
       </div>
@@ -385,9 +438,9 @@ f(1);</pre>
     <div class="syllabus-section">
       <h2>参考リンク</h2>
       <ul>
-        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Functions" target="_blank" rel="noopener">MDN — 関数</a> — 処理に名前を付けてまとめる（関数を読むときの復習）</li>
-        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/EventTarget/addEventListener" target="_blank" rel="noopener">MDN — EventTarget: addEventListener() メソッド</a> — クリックを受け取る（復習）</li>
-        <li><a href="https://developer.mozilla.org/ja/docs/Learn_web_development/Core/Scripting/Debugging_JavaScript" target="_blank" rel="noopener">MDN — JavaScript のデバッグとエラー処理</a> — 動かないときの調べ方</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/Window/localStorage" target="_blank" rel="noopener">MDN — Window: localStorage プロパティ</a> — 保存・読み込み・削除（<code>setItem</code>、<code>getItem</code>、<code>removeItem</code>）</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify" target="_blank" rel="noopener">MDN — JSON.stringify()</a> — 配列・オブジェクトを文字列に変換する</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse" target="_blank" rel="noopener">MDN — JSON.parse()</a> — 文字列を元のデータに戻す</li>
       </ul>
     </div>
 
