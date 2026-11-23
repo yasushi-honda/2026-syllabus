@@ -85,6 +85,36 @@
       <h2>授業の流れ</h2>
       <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
 
+      <figure class="vz-fig" aria-labelledby="cap-w10-map">
+        <p class="vz-fig-title" id="cap-w10-map">今日の地図</p>
+        <svg class="vz-svg" viewBox="0 0 360 330" role="img" aria-labelledby="w10-map-t w10-map-d">
+          <title id="w10-map-t">今日の地図</title>
+          <desc id="w10-map-d">1 第9回に追いつく（15分）、2 保存の考え方を知る（25分）、3 保存のコードを足して試す（50分）、4 保存を自分の作品に広げる。できる人は任意の見せ合い（50分）、5 記録して、pushして、公開URLで確かめる（30分）、の順に進む。休憩は3と4のあいだ。最後にまとめが10分ある。</desc>
+          <rect class="box-blue" x="8" y="8" width="344" height="48" rx="10"/>
+          <text class="t-b" x="22" y="28">① 第9回に追いつく（15分）</text>
+          <text class="t-sm" x="22" y="46">動かない人は、ここで動かす</text>
+          <line class="line" x1="180" y1="58" x2="180" y2="66" marker-end="url(#mk-s)"/>
+          <rect class="box-blue" x="8" y="68" width="344" height="48" rx="10"/>
+          <text class="t-b" x="22" y="88">② 保存の考え方（25分）</text>
+          <text class="t-sm" x="22" y="106">いつ保存する？ いつ読み込む？</text>
+          <line class="line" x1="180" y1="118" x2="180" y2="126" marker-end="url(#mk-s)"/>
+          <rect class="box-white box-key" x="8" y="128" width="344" height="48" rx="10"/>
+          <text class="t-b" x="22" y="148">③ コードを足して、試す（50分）</text>
+          <text class="t-sm" x="22" y="166">ハイスコア／カート。消す・壊す</text>
+          <line class="line" x1="180" y1="178" x2="180" y2="186" marker-end="url(#mk-s)"/>
+          <rect class="box-blue" x="8" y="188" width="344" height="48" rx="10"/>
+          <text class="t-b" x="22" y="208">④ 広げる（50分）</text>
+          <text class="t-sm" x="22" y="226">消すボタン＋任意の見せ合い</text>
+          <line class="line" x1="180" y1="238" x2="180" y2="246" marker-end="url(#mk-s)"/>
+          <rect class="box-blue" x="8" y="248" width="344" height="48" rx="10"/>
+          <text class="t-b" x="22" y="268">⑤ 記録・push・公開URL（30分）</text>
+          <text class="t-sm" x="22" y="286">公開URLでも、残るか確かめる</text>
+          <rect class="band" x="8" y="302" width="344" height="24" rx="8"/>
+          <text class="t-c t-sm" x="180" y="319">休憩10分は③④のあいだ。最後にまとめ10分</text>
+        </svg>
+        <figcaption>今日の主役は③です。①②は準備、④⑤は広げて確かめる時間です。</figcaption>
+      </figure>
+
       <div class="timeline">
 
         <div class="timeline-block">
@@ -102,6 +132,11 @@
               <li>動いたら、一度<code>commit</code>しておく（このあと保存を足して、戻したくなったときのため）</li>
             </ul>
             <p><strong>保存の考え方：いつ保存して、いつ読み込むか（25分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-w10-locker">
+              <p class="vz-fig-title" id="cap-w10-locker">ブラウザの中の、小さな保管庫</p>
+              <img class="vz-fig-img" src="images/week10-locker.jpg" alt="ブラウザの窓のような枠の中に、引き出しのたくさんある木の棚が置かれている。1つの引き出しが開いていて、金色のトロフィーと小さな買い物かごが入っている。" width="800" height="597" loading="lazy">
+              <figcaption><code>localStorage</code>は、ブラウザの中にある、小さな保管庫です。ハイスコアやカートを、引き出しにしまっておけます（絵のイメージ）。</figcaption>
+            </figure>
             <ul>
               <li><a href="week04.html">第4回</a>で、<code>localStorage</code>に配列を保存して、再読み込みしても残る<code>list.html</code>を作った。今日は、<strong>同じ仕組みを、第9回の作品に入れる</strong></li>
               <li>考えることは2つだけ。<strong>① いつ保存するか → データが変わったとき。② いつ読み込むか → ファイルを開いた直後に1回だけ</strong></li>
@@ -139,9 +174,32 @@
               <li><code>localStorage</code>が覚えられるのは<strong>文字列だけ</strong>。だから、<strong>数</strong>は読み込んだあとで<code>Number(...)</code>で数に戻し、<strong>配列</strong>は<code>JSON.stringify</code>で文字列にして保存し、<code>JSON.parse</code>で配列に戻す（<a href="week04.html">第4回</a>の復習）</li>
               <li><strong>まだ何も保存されていないとき</strong>、<code>getItem</code>は<code>null</code>を返す。そのときは、初期値（数なら<code>0</code>、配列なら<code>[]</code>）を使う</li>
             </ul>
+            <figure class="vz-fig" aria-labelledby="cap-w10-ops">
+              <p class="vz-fig-title" id="cap-w10-ops">localStorageの3つの操作</p>
+              <svg class="vz-svg" viewBox="0 0 360 320" role="img" aria-labelledby="w10-ops-t w10-ops-d">
+                <title id="w10-ops-t">setItem、getItem、removeItemの3つの操作</title>
+                <desc id="w10-ops-d">localStorageはブラウザの中の保管庫で、サイトごとに別（同じサイトの中のページは共有）。setItemはキー（名前）をつけて入れる。getItemはキーで取り出す。何もなければnullが返る。removeItemはキーで捨てる。clearは全部消えるので使わない。</desc>
+                <rect class="box-white box-key" x="8" y="8" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="30">保管庫（localStorage）</text>
+                <text class="t-sm" x="22" y="48">サイトごとに別。同じサイトの中は共有</text>
+                <rect class="box-blue" x="8" y="68" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="90">setItem（キー, 値）</text>
+                <text class="t-sm" x="22" y="110">名前をつけて、入れる（書く）</text>
+                <rect class="box-blue" x="8" y="128" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="150">getItem（キー）</text>
+                <text class="t-sm" x="22" y="170">名前で、取り出す。無ければ null</text>
+                <rect class="box-blue" x="8" y="188" width="344" height="52" rx="10"/>
+                <text class="t-b" x="22" y="210">removeItem（キー）</text>
+                <text class="t-sm" x="22" y="230">名前で、捨てる（消す）</text>
+                <rect class="band" x="8" y="250" width="344" height="60" rx="8"/>
+                <text class="t-c t-sm" x="180" y="272">キー＝名前の札。作品ごとに、重ならない名前に</text>
+                <text class="t-c t-sm" x="180" y="294">clear() は全部消えるので、使わない</text>
+              </svg>
+              <figcaption>同じアカウントの公開サイト（<code>…github.io</code>）の中の別の作品は、同じ保管庫を使います。だから、キーの名前を作品ごとに変えます。</figcaption>
+            </figure>
             <figure class="vz-fig" aria-labelledby="cap-w10-two">
               <p class="vz-fig-title" id="cap-w10-two">ゲーム班とEC班で、書き方を比べる</p>
-              <svg class="vz-svg" viewBox="0 0 360 290" role="img" aria-labelledby="w10-two-t w10-two-d">
+              <svg class="vz-svg" viewBox="0 0 360 304" role="img" aria-labelledby="w10-two-t w10-two-d">
                 <title id="w10-two-t">ゲーム班とEC班の保存の違い</title>
                 <desc id="w10-two-d">ゲーム班はハイスコアという数を保存する。読み込むときはNumberで数に戻す。EC班はカートという配列を保存する。保存するときはJSON.stringify、読み込むときはJSON.parseを使う。</desc>
                 <rect class="box-blue" x="8" y="8" width="168" height="34" rx="10"/>
@@ -154,24 +212,24 @@
                 <rect class="box-white" x="184" y="52" width="168" height="48" rx="10"/>
                 <text class="t-b t-c" x="268" y="73">保存するもの</text>
                 <text class="t-sm t-c" x="268" y="91">カート（配列）</text>
-                <rect class="box-white box-key" x="8" y="108" width="168" height="62" rx="10"/>
+                <rect class="box-white box-key" x="8" y="108" width="168" height="70" rx="10"/>
                 <text class="t-b t-c" x="92" y="130">書くとき</text>
                 <text class="t-sm t-c" x="92" y="150">そのまま</text>
-                <text class="t-sm t-c" x="92" y="165">setItem</text>
-                <rect class="box-white box-key" x="184" y="108" width="168" height="62" rx="10"/>
+                <text class="t-sm t-c" x="92" y="170">setItem</text>
+                <rect class="box-white box-key" x="184" y="108" width="168" height="70" rx="10"/>
                 <text class="t-b t-c" x="268" y="130">書くとき</text>
                 <text class="t-sm t-c" x="268" y="150">JSON.stringify</text>
-                <text class="t-sm t-c" x="268" y="165">してから setItem</text>
-                <rect class="box-white box-key" x="8" y="178" width="168" height="62" rx="10"/>
-                <text class="t-b t-c" x="92" y="200">読むとき</text>
-                <text class="t-sm t-c" x="92" y="220">Number(...) で</text>
-                <text class="t-sm t-c" x="92" y="235">数に戻す</text>
-                <rect class="box-white box-key" x="184" y="178" width="168" height="62" rx="10"/>
-                <text class="t-b t-c" x="268" y="200">読むとき</text>
-                <text class="t-sm t-c" x="268" y="220">JSON.parse で</text>
-                <text class="t-sm t-c" x="268" y="235">配列に戻す</text>
-                <rect class="band" x="8" y="250" width="344" height="32" rx="10"/>
-                <text class="t-c t-sm" x="180" y="271">どちらも「開いたとき読む・変わったとき書く」</text>
+                <text class="t-sm t-c" x="268" y="170">してから setItem</text>
+                <rect class="box-white box-key" x="8" y="188" width="168" height="70" rx="10"/>
+                <text class="t-b t-c" x="92" y="210">読むとき</text>
+                <text class="t-sm t-c" x="92" y="230">Number(...) で</text>
+                <text class="t-sm t-c" x="92" y="250">数に戻す</text>
+                <rect class="box-white box-key" x="184" y="188" width="168" height="70" rx="10"/>
+                <text class="t-b t-c" x="268" y="210">読むとき</text>
+                <text class="t-sm t-c" x="268" y="230">JSON.parse で</text>
+                <text class="t-sm t-c" x="268" y="250">配列に戻す</text>
+                <rect class="band" x="8" y="266" width="344" height="32" rx="10"/>
+                <text class="t-c t-sm" x="180" y="287">どちらも「開いたとき読む・変わったとき書く」</text>
               </svg>
               <figcaption>道具は違っても、形は同じ。「読む → 使う → 変わったら書く」です。</figcaption>
             </figure>
@@ -186,6 +244,44 @@
           <h3>作品に、保存と読み込みを足す</h3>
           <div class="timeline-body">
             <p><strong>保存のコードを足す（30分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-w10-where">
+              <p class="vz-fig-title" id="cap-w10-where">コードを足す場所（3か所ずつ）</p>
+              <svg class="vz-svg" viewBox="0 0 360 340" role="img" aria-labelledby="w10-where-t w10-where-d">
+                <title id="w10-where-t">ゲーム班とEC班の、コードを足す場所</title>
+                <desc id="w10-where-d">ゲーム班は、1 上のほうに読み込みを足す、2 hit関数の中に保存を足す、3 renderの最後の行を置き換える。EC班は、1 const cart = []の1行を置き換える、2 pushの下にsaveCartを足す、3 変えない。一番下の呼び出しshowCart();は第9回のまま。ただし、取り消しボタンを作った人は、showCartの中のspliceの下にもsaveCartを足す。</desc>
+                <rect class="box-blue" x="8" y="8" width="168" height="34" rx="10"/>
+                <text class="t-b t-c" x="92" y="30">ゲーム班</text>
+                <rect class="box-blue" x="184" y="8" width="168" height="34" rx="10"/>
+                <text class="t-b t-c" x="268" y="30">EC班</text>
+                <rect class="box-white" x="8" y="52" width="168" height="72" rx="10"/>
+                <text class="t-b t-c" x="92" y="74">① 足す</text>
+                <text class="t-sm t-c" x="92" y="94">上のほうに</text>
+                <text class="t-sm t-c" x="92" y="112">読み込みを</text>
+                <rect class="box-white" x="184" y="52" width="168" height="72" rx="10"/>
+                <text class="t-b t-c" x="268" y="74">① 置き換える</text>
+                <text class="t-sm t-c" x="268" y="94">cartの1行を</text>
+                <text class="t-sm t-c" x="268" y="112">読み込みに</text>
+                <rect class="box-white box-key" x="8" y="132" width="168" height="72" rx="10"/>
+                <text class="t-b t-c" x="92" y="154">② 足す</text>
+                <text class="t-sm t-c" x="92" y="174">hitの中に</text>
+                <text class="t-sm t-c" x="92" y="192">保存を</text>
+                <rect class="box-white box-key" x="184" y="132" width="168" height="72" rx="10"/>
+                <text class="t-b t-c" x="268" y="154">② 足す</text>
+                <text class="t-sm t-c" x="268" y="174">pushの下に</text>
+                <text class="t-sm t-c" x="268" y="192">saveCart();</text>
+                <rect class="box-white" x="8" y="212" width="168" height="72" rx="10"/>
+                <text class="t-b t-c" x="92" y="234">③ 置き換える</text>
+                <text class="t-sm t-c" x="92" y="254">renderの最後の</text>
+                <text class="t-sm t-c" x="92" y="272">行を</text>
+                <rect class="box-white" x="184" y="212" width="168" height="72" rx="10"/>
+                <text class="t-b t-c" x="268" y="234">③ 変えない</text>
+                <text class="t-sm t-c" x="268" y="254">最後の呼び出し</text>
+                <text class="t-sm t-c" x="268" y="272">showCart();</text>
+                <rect class="band" x="8" y="296" width="344" height="36" rx="8"/>
+                <text class="t-c t-sm" x="180" y="319">足す・置き換える・変えない、を見分ける</text>
+              </svg>
+              <figcaption>③で変えないのは、一番下の<code>showCart();</code>の<strong>呼び出し</strong>だけです。EC班は、第9回で「取り消す」ボタンを作った人だけ、<code>showCart</code>の中の<code>cart.splice(i, 1);</code>の下にも<code>saveCart();</code>を足します。</figcaption>
+            </figure>
             <ul>
               <li>第9回のコードに、<strong>数か所だけ足す</strong>（全部を書き直さない）。自分のジャンルのぶんだけ行う。1か所足すたびに、保存・再読み込みで、<code>Console</code>に赤い文字が出ていないか確かめる</li>
               <li>
@@ -244,6 +340,11 @@ const cart = loadCart();</pre>
               </li>
               <li>保存して、再読み込みする。<strong>ゲーム班</strong>は、いくつか当ててスコアを増やしてから再読み込みして、<strong>スコアは0に戻るが、ハイスコアは残っている</strong>ことを見る。<strong>EC班</strong>は、商品を2〜3個カートに入れてから再読み込みして、<strong>カートの一覧と合計が、そのまま残っている</strong>ことを見る</li>
             </ul>
+            <figure class="vz-fig" aria-labelledby="cap-w10-stay">
+              <p class="vz-fig-title" id="cap-w10-stay">閉じて開き直しても、残っている</p>
+              <img class="vz-fig-img" src="images/week10-stay.jpg" alt="2つの場面が矢印でつながっている。左: 学生がノートパソコンを閉じようとしている。右: 同じ学生がノートパソコンを開き直していて、右の机の上には、金色のトロフィーと小さな買い物かごが置かれている。" width="800" height="597" loading="lazy">
+              <figcaption>保存が入っていると、再読み込みしても、ハイスコアやカートが残ります（絵のイメージ）。</figcaption>
+            </figure>
             <p><strong>保存された中身を見る（10分）</strong></p>
             <ul>
               <li><code>F12</code>で開発者ツールを開き、<strong><code>Application</code>（アプリケーション）</strong>タブ→左の「<strong>Local storage</strong>（ローカル ストレージ）」→<strong>プレビューのアドレス</strong>（<code>…app.github.dev</code>の形のもの。いくつか並ぶことがある）、と開くと、<strong>キー（名前）と値</strong>の一覧が見える。<code>game-hiscore</code>や<code>shop-cart</code>が見つかれば成功。EC班の値は、<code>[{"name":"マグ","price":800}, ...]</code>のような<strong>文字列</strong>になっている（<code>JSON.stringify</code>の結果）</li>
