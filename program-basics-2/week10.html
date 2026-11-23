@@ -272,16 +272,16 @@ f(1);</pre>
           <div class="timeline-body">
             <p><strong>ペアで「説明し返し」（25分）</strong></p>
             <ul>
-              <li>グループの中で、<strong>2人組</strong>を作る。相手の<code>game.html</code>（EC班は<code>shop.html</code>）の中から、<strong>関数を1つ</strong>選ぶ（例: <code>render</code>、<code>showCart</code>、<code>hit</code>）</li>
+              <li>グループの中で、<strong>2人組</strong>を作る（3人のグループは、<strong>A→B→C→A</strong>の輪になり、「説明する人」が次の人のコードを読む。1人約8分で、3回まわす）。相手の<code>game.html</code>（EC班は<code>shop.html</code>）の中から、<strong>関数を1つ</strong>選ぶ（例: <code>render</code>、<code>showCart</code>、<code>hit</code>）</li>
               <li>選んだ関数が<strong>何をしているか</strong>を、<strong>自分の言葉</strong>で相手に説明する。「この関数は、＿＿を受け取って、＿＿を変えて、＿＿を返す（または、画面に出す）」の形で話すとよい</li>
               <li>作者は、<strong>合っているか</strong>を答える。ずれていたら、「どこで読み違えたか」を一緒に探す。読み違えた所は、<strong>コードが分かりにくい所</strong>かもしれない</li>
-              <li>役割を交代して、もう1回やる（1人12分ずつ）</li>
+              <li>役割を交代して、もう1回やる（2人組は1人12分ずつ）</li>
               <li>
                 <details class="vz-more">
                   <summary>コードが読めなかったときの確認</summary>
                   <ul>
                     <li>1行ずつではなく、<strong>関数の最初と最後</strong>から見る。何を受け取り、何を変えているかが分かる</li>
-                    <li><code>console.log</code>を1行足して、値を見てもよい（足すのは、見るだけ。自分のファイルでは、見終わったら消す）</li>
+                    <li>値を見たいときは、<strong>作者に</strong><code>console.log</code>を1行足してもらい、見終わったら消してもらう（読む人は、他の人のファイルを書き換えない）</li>
                     <li>分からない行は、そのまま作者に聞いてよい。<strong>聞くことは、レビューの一部</strong></li>
                     <li>AI（Copilot Chat・Gemini）に説明を頼んでもよい。ただし、返ってきた説明は、<strong>作者に確かめる</strong>。AIの説明も、間違っていることがある</li>
                   </ul>
@@ -332,7 +332,7 @@ f(1);</pre>
             <p><strong>1つだけ直す（20分）</strong></p>
             <ul>
               <li>「すぐ直す」から、<strong>1つだけ</strong>選んで直す。直したら、保存・再読み込みで動かして確かめる</li>
-              <li>名前を変えるときは、<strong>同じ名前を使っている所を全部</strong>変える（変え忘れると、<code>Console</code>に赤い文字が出る）。エディターの検索（<code>Ctrl</code>+<code>F</code>、Macは<code>Command</code>+<code>F</code>）で、変える名前を探すと見つけやすい</li>
+              <li>名前を変えるときは、<strong>同じ名前を使っている所を全部</strong>変える（変え忘れると、<code>Console</code>に赤い文字が出ることもあれば、<code>NaN</code>のように、エラーなしで表示がおかしくなることもある。直したあとは、<strong>動きを実際に押して</strong>確かめる）。エディターの検索（<code>Ctrl</code>+<code>F</code>、Macは<code>Command</code>+<code>F</code>）で、変える名前を探すと見つけやすい</li>
               <li>動かなくなったら、<code>Console</code>の赤い文字の行番号から見る（第7回の道具1）。戻したいときは、直す前に<code>commit</code>しておけば、元に戻せる</li>
               <li>早く終わった人は、<strong>相手の作品に書いた自分の提案</strong>が、自分のコードにも当てはまらないか見る</li>
             </ul>
