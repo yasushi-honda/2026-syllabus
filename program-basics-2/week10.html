@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第10回 中間相互レビュー | プログラム基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=26">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <!-- 公式情報確認: 2026-11-24（参考リンクのMDN 3ページの生存とタイトルを確認。外部サービスの操作手順は扱わない。レビューの型「いいね・質問・提案」は授業用の整理で、公式の分類ではない。見本コード（読む練習用）は、Nodeで実行して、本文に書いた動き（f(0)は800、f(1)は1100で「送料無料」が出る）になることを確認済み。第6〜9回の授業結果は未反映） -->
+  <header class="page-header page-header--blue">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../program-basics-2.html">プログラム基礎 II</a>
+        <span>/</span>
+        <span>第10回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">中間相互レビュー</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 10</span>
+            <span class="page-badge">火曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-blue">
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
+
+    <div class="qr-box qr-box--pc">
+      <a class="qr-box__zoom" href="qr/week10-page.svg" target="_blank" rel="noopener" aria-label="QRコードを大きく表示する">
+        <img class="qr-box__img" src="qr/week10-page.svg" alt="この第10回のページを開くQRコード。スマートフォンのカメラで読み取ると、このページが開く。" width="180" height="180">
+      </a>
+      <div class="qr-box__body">
+        <p class="qr-box__heading">📱 スマホで開く</p>
+        <p class="qr-box__text">教室の画面を見ながら、自分のスマートフォンで、このページを開けます。スマートフォンの<strong>カメラ</strong>で、このQRコードを読み取ってください。QRコードを押すと、大きく表示されます。</p>
+      </div>
+    </div>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">互いの作品を見せ合い、<strong>フィードバックを交換</strong>する。<strong>他者のコードを読む</strong>経験をして、<strong>改善点を言葉にする</strong>。もらった意見は、自分で選んで、1つだけ直す</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">中間相互レビュー / フィードバック / コードを読む / いいね・質問・提案 / 説明し返し / 意見の仕分け</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第9回までに作った<strong><code>game.html</code>（EC班は<code>shop.html</code>）</strong>と、<strong><code>plan.md</code></strong>の第10回の欄（「見てほしい動き」と「聞きたいこと」）。公開URLで動く状態だと見せやすい。動かない人も、<strong>できたところまで</strong>を見せてよい</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>他の人の作品を<strong>動かして</strong>、<strong>コードを読んで</strong>、何をしているかを自分の言葉で説明できる</li>
+        <li>意見を<strong>「いいね（具体的に）・質問・提案（1つ）」</strong>の形で、相手に伝えられる</li>
+        <li>もらった意見を<strong>「すぐ直す・次回以降・やらない」</strong>に仕分けて、理由を書ける</li>
+        <li>「すぐ直す」を1つだけ直して、<code>push</code>できる</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>見せる準備をし、意見の言い方を知る</h3>
+          <div class="timeline-body">
+            <p><strong>見せる準備（10分）</strong></p>
+            <ul>
+              <li>第9回の<code>game.html</code>（EC班は<code>shop.html</code>）と<code>plan.md</code>が<code>push</code>できているかをGitHub上で確認する。終わっていない人は、今日の2限後半に<code>push</code>する</li>
+              <li><code>python3 -m http.server 8000</code>を起動し、第1回（前期）と同じ手順で「ポート」タブ→「エディターでプレビュー」→ Simple Browserを開いておく。開くファイルは、アドレスバーの<strong>末尾だけ</strong>を<code>/game.html</code>（EC班は<code>/shop.html</code>）に書き換える</li>
+              <li><code>plan.md</code>の第10回の欄の<strong>「見てほしい動き」と「聞きたいこと」</strong>を読み直す。書いていない人は、今ここで1行ずつ書く</li>
+              <li>人に見せる画面に、<strong>パスワードや個人情報が写っていない</strong>ことを確かめる</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-w10-map">
+              <p class="vz-fig-title" id="cap-w10-map">今日の地図</p>
+              <svg class="vz-svg" viewBox="0 0 360 300" role="img" aria-labelledby="w10-map-t w10-map-d">
+                <title id="w10-map-t">今日の流れ</title>
+                <desc id="w10-map-d">1 見せる準備、2 レビューの型を知る、3 グループで見せ合う、4 ペアで説明し返す、5 意見を仕分ける、6 1つ直してpushする、の順に進む。</desc>
+                <rect class="box-blue" x="8" y="8" width="344" height="36" rx="10"/>
+                <text class="t-b" x="22" y="32">① 見せる準備・意見の型を知る</text>
+                <line class="line" x1="180" y1="46" x2="180" y2="52" marker-end="url(#mk-s)"/>
+                <rect class="box-blue" x="8" y="54" width="344" height="36" rx="10"/>
+                <text class="t-b" x="22" y="78">② グループで見せ合う</text>
+                <line class="line" x1="180" y1="92" x2="180" y2="98" marker-end="url(#mk-s)"/>
+                <rect class="box-blue" x="8" y="100" width="344" height="36" rx="10"/>
+                <text class="t-b" x="22" y="124">③ ペアで、コードを説明し返す</text>
+                <line class="line" x1="180" y1="138" x2="180" y2="144" marker-end="url(#mk-s)"/>
+                <rect class="box-blue" x="8" y="146" width="344" height="36" rx="10"/>
+                <text class="t-b" x="22" y="170">④ もらった意見を仕分ける</text>
+                <line class="line" x1="180" y1="184" x2="180" y2="190" marker-end="url(#mk-s)"/>
+                <rect class="box-white box-key" x="8" y="192" width="344" height="36" rx="10"/>
+                <text class="t-b" x="22" y="216">⑤ 1つ直して、push</text>
+                <rect class="band" x="8" y="244" width="344" height="40" rx="10"/>
+                <text class="t-c" x="180" y="269">見せるのも、読むのも、直すのも、人の作品が材料</text>
+              </svg>
+              <figcaption>今日は新しい書き方は出てきません。これまでに書いたコードを、人と読み合う回です。</figcaption>
+            </figure>
+            <p><strong>意見の型：いいね・質問・提案（15分）</strong></p>
+            <ul>
+              <li>意見は、次の<strong>3つの順</strong>で伝える。この型は授業用の整理で、公式の分類ではない</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-w10-fb">
+              <p class="vz-fig-title" id="cap-w10-fb">意見の型：3つの順</p>
+              <svg class="vz-svg" viewBox="0 0 360 290" role="img" aria-labelledby="w10-fb-t w10-fb-d">
+                <title id="w10-fb-t">いいね・質問・提案の3つ</title>
+                <desc id="w10-fb-d">1 いいね。具体的に1つ。2 質問。分からなかった所を1つ。3 提案。直すなら、1つだけ。</desc>
+                <rect class="box-blue" x="8" y="8" width="344" height="68" rx="10"/>
+                <text class="t-b" x="22" y="30">① いいね（具体的に1つ）</text>
+                <text class="t-sm" x="22" y="52">「ボタンを押すと合計がすぐ変わるのが分かりやすい」</text>
+                <text class="t-sm" x="22" y="68">× 「すごい」「いい感じ」だけ</text>
+                <rect class="box-blue" x="8" y="86" width="344" height="68" rx="10"/>
+                <text class="t-b" x="22" y="108">② 質問（分からなかった所を1つ）</text>
+                <text class="t-sm" x="22" y="130">「この関数は、何のために呼んでいるの？」</text>
+                <text class="t-sm" x="22" y="146">× 「これ間違ってない？」</text>
+                <rect class="box-white box-key" x="8" y="164" width="344" height="68" rx="10"/>
+                <text class="t-b" x="22" y="186">③ 提案（直すなら、1つだけ）</text>
+                <text class="t-sm" x="22" y="208">「数字の1000に名前を付けると、意味が分かる」</text>
+                <text class="t-sm" x="22" y="224">× 「全部書き直したほうがいい」</text>
+                <rect class="band" x="8" y="244" width="344" height="36" rx="8"/>
+                <text class="t-c" x="180" y="267">人ではなく、コードや動きについて言う</text>
+              </svg>
+              <figcaption>上の3つが言えれば、レビューは成り立ちます。「直すかどうか」を決めるのは、作った本人です。</figcaption>
+            </figure>
+            <ul>
+              <li>見る観点は3つ。<strong>動き</strong>（押したら思いどおりに動くか）、<strong>コード</strong>（読んで何をしているか分かるか）、<strong>使う人</strong>（初めて見る人が迷わないか）。1回のレビューで、全部を見なくてよい</li>
+              <li>他の人のコードは、<strong>書き換えない</strong>。気づいたことは、口で伝える。直すのは、作った本人</li>
+            </ul>
+            <p><strong>見本のコードを読む練習（15分）</strong></p>
+            <ul>
+              <li>次のコードは、読みにくい所をわざと入れた見本。<strong>実行しなくてよい</strong>。コードを読んで、<strong>何をしているか</strong>を、隣の人と1分ずつ説明し合う。そのあと、「いいね・質問・提案」を1つずつ書く</li>
+              <li>
+                <button class="copy-md-btn" data-md-source="sample-w10">
+                  <span class="btn-icon"></span> 見本のコードをコピー
+                </button>
+<pre id="sample-w10" class="md-preview">const a = [
+  { n: "マグ", p: 800 },
+  { n: "ノート", p: 300 },
+  { n: "ペン", p: 150 }
+];
+let t = 0;
+
+function f(x) {
+  t = t + a[x].p;
+  if (t &gt;= 1000) {
+    console.log("送料無料");
+  }
+  return t;
+}
+
+f(0);
+f(1);</pre>
+              </li>
+              <li>読むときの手がかり: ① <code>a</code>、<code>n</code>、<code>p</code>、<code>t</code>、<code>f</code>は、それぞれ何か。② <code>1000</code>は何の数字か。③ <code>f(0)</code>と<code>f(1)</code>を呼ぶと、<code>t</code>はいくつになるか（答え: <code>800</code>、そして<code>1100</code>。1100のときに「送料無料」が出る）</li>
+              <li>提案の例: <code>a</code>を<code>products</code>、<code>p</code>を<code>price</code>、<code>t</code>を<code>total</code>に変える。<code>1000</code>に<code>freeShippingLine</code>のような名前を付ける。名前を変えても、動きは変わらない</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>グループで作品を見せ合い、コードを読み合う</h3>
+          <div class="timeline-body">
+            <p><strong>進め方を確認する（5分）</strong></p>
+            <ul>
+              <li><strong>3〜4人のグループ</strong>を作る（なるべく、ゲーム班とEC班が混ざるようにする。同じ班でもよい）</li>
+              <li>見せる人の<strong>画面を、みんなで囲む</strong>。公開URLやリポジトリの権限は、使わなくてよい（画面を見せるだけでよい）</li>
+              <li>1人あたり約11分（3人のグループは、約15分）。時間は、タイマーを1つ決めて計る</li>
+            </ul>
+            <p><strong>1人ずつ、見せて読む（45分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-w10-turn">
+              <p class="vz-fig-title" id="cap-w10-turn">1人あたり約11分の使い方</p>
+              <svg class="vz-svg" viewBox="0 0 360 290" role="img" aria-labelledby="w10-turn-t w10-turn-d">
+                <title id="w10-turn-t">1人分の時間の使い方</title>
+                <desc id="w10-turn-d">1 作者が動きを見せる、2 見る人が操作する、3 コードを一緒に読む、4 意見を伝える、5 作者がplan.mdに書く、の順。</desc>
+                <rect class="box-blue" x="8" y="8" width="344" height="40" rx="10"/>
+                <text class="t-b" x="22" y="33">① 作者が見せる（2分）</text>
+                <line class="line" x1="180" y1="50" x2="180" y2="56" marker-end="url(#mk-s)"/>
+                <rect class="box-blue" x="8" y="58" width="344" height="40" rx="10"/>
+                <text class="t-b" x="22" y="83">② 見る人が操作する（2分）</text>
+                <line class="line" x1="180" y1="100" x2="180" y2="106" marker-end="url(#mk-s)"/>
+                <rect class="box-blue" x="8" y="108" width="344" height="40" rx="10"/>
+                <text class="t-b" x="22" y="133">③ コードを一緒に読む（3分）</text>
+                <line class="line" x1="180" y1="150" x2="180" y2="156" marker-end="url(#mk-s)"/>
+                <rect class="box-white box-key" x="8" y="158" width="344" height="40" rx="10"/>
+                <text class="t-b" x="22" y="183">④ いいね・質問・提案（3分）</text>
+                <line class="line" x1="180" y1="200" x2="180" y2="206" marker-end="url(#mk-s)"/>
+                <rect class="box-blue" x="8" y="208" width="344" height="40" rx="10"/>
+                <text class="t-b" x="22" y="233">⑤ 作者が plan.md に書く（1分）</text>
+                <rect class="band" x="8" y="258" width="344" height="24" rx="8"/>
+                <text class="t-c t-sm" x="180" y="275">時間が余ったら、②③を長くする</text>
+              </svg>
+              <figcaption>作者は、「見てほしい動き」と「聞きたいこと」を、最初に1行ずつ言います。</figcaption>
+            </figure>
+            <ul>
+              <li><strong>② 見る人が操作する</strong>: 作者ではなく、<strong>見る人</strong>がマスやボタンを押す。作者が気づいていない動きが見つかる。思いどおりに動かない所があれば、そのまま伝える</li>
+              <li><strong>③ コードを一緒に読む</strong>: 次の順に探すと、読みやすい。<strong>データ</strong>（<code>characters</code>や<code>products</code>）→ <strong>画面を作る関数</strong>（<code>render</code>や<code>showCart</code>）→ <strong>クリックの処理</strong>（<code>addEventListener</code>）。見る人は、「この行は何をしているの？」と聞いてよい</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-w10-read">
+              <p class="vz-fig-title" id="cap-w10-read">コードを読む順番</p>
+              <svg class="vz-svg" viewBox="0 0 360 250" role="img" aria-labelledby="w10-read-t w10-read-d">
+                <title id="w10-read-t">コードを読む3つの場所</title>
+                <desc id="w10-read-d">1 データ（characters、products）、2 画面を作る関数（render、showCart）、3 クリックの処理（addEventListener）の順に読む。</desc>
+                <rect class="box-blue" x="8" y="8" width="344" height="56" rx="10"/>
+                <text class="t-b" x="22" y="30">① データ</text>
+                <text class="t-sm" x="22" y="52"><tspan>characters ／ products ／ cart ／ score</tspan></text>
+                <line class="line" x1="180" y1="66" x2="180" y2="76" marker-end="url(#mk-s)"/>
+                <rect class="box-blue" x="8" y="78" width="344" height="56" rx="10"/>
+                <text class="t-b" x="22" y="100">② 画面を作る関数</text>
+                <text class="t-sm" x="22" y="122">render ／ showCart</text>
+                <line class="line" x1="180" y1="136" x2="180" y2="146" marker-end="url(#mk-s)"/>
+                <rect class="box-white box-key" x="8" y="148" width="344" height="56" rx="10"/>
+                <text class="t-b" x="22" y="170">③ クリックの処理</text>
+                <text class="t-sm" x="22" y="192">addEventListener の中身</text>
+                <rect class="band" x="8" y="214" width="344" height="30" rx="8"/>
+                <text class="t-c t-sm" x="180" y="234">分からない行に、印を付けて聞く</text>
+              </svg>
+              <figcaption>第9回で作った「クリック → データを変える → 画面を作り直す」の形が、見つけられるはずです。</figcaption>
+            </figure>
+            <ul>
+              <li><strong>④ いいね・質問・提案</strong>: 見た人全員が、1つずつ言う。「提案」は<strong>1つだけ</strong>。同じ提案が重なったら、重なったと言うだけでよい</li>
+              <li><strong>⑤ 作者が<code>plan.md</code>に書く</strong>: もらった意見を、<strong>言われたまま</strong>、第10回の欄に書き写す（仕分けは、あとでやる。今は、直さない）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>人のコードを説明し返し、もらった意見を仕分ける</h3>
+          <div class="timeline-body">
+            <p><strong>ペアで「説明し返し」（25分）</strong></p>
+            <ul>
+              <li>グループの中で、<strong>2人組</strong>を作る。相手の<code>game.html</code>（EC班は<code>shop.html</code>）の中から、<strong>関数を1つ</strong>選ぶ（例: <code>render</code>、<code>showCart</code>、<code>hit</code>）</li>
+              <li>選んだ関数が<strong>何をしているか</strong>を、<strong>自分の言葉</strong>で相手に説明する。「この関数は、＿＿を受け取って、＿＿を変えて、＿＿を返す（または、画面に出す）」の形で話すとよい</li>
+              <li>作者は、<strong>合っているか</strong>を答える。ずれていたら、「どこで読み違えたか」を一緒に探す。読み違えた所は、<strong>コードが分かりにくい所</strong>かもしれない</li>
+              <li>役割を交代して、もう1回やる（1人12分ずつ）</li>
+              <li>
+                <details class="vz-more">
+                  <summary>コードが読めなかったときの確認</summary>
+                  <ul>
+                    <li>1行ずつではなく、<strong>関数の最初と最後</strong>から見る。何を受け取り、何を変えているかが分かる</li>
+                    <li><code>console.log</code>を1行足して、値を見てもよい（足すのは、見るだけ。自分のファイルでは、見終わったら消す）</li>
+                    <li>分からない行は、そのまま作者に聞いてよい。<strong>聞くことは、レビューの一部</strong></li>
+                    <li>AI（Copilot Chat・Gemini）に説明を頼んでもよい。ただし、返ってきた説明は、<strong>作者に確かめる</strong>。AIの説明も、間違っていることがある</li>
+                  </ul>
+                </details>
+              </li>
+            </ul>
+            <p><strong>もらった意見を仕分ける（25分）</strong></p>
+            <ul>
+              <li><code>plan.md</code>の第10回の欄に書き写した意見を、<strong>3つに仕分ける</strong>。仕分けは、自分で決める</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-w10-sort">
+              <p class="vz-fig-title" id="cap-w10-sort">意見の仕分け</p>
+              <svg class="vz-svg" viewBox="0 0 360 290" role="img" aria-labelledby="w10-sort-t w10-sort-d">
+                <title id="w10-sort-t">もらった意見の3つの仕分け</title>
+                <desc id="w10-sort-d">1 すぐ直す。今日1つ。2 次回以降。第11回などで。3 やらない。理由を1行書く。</desc>
+                <rect class="box-white box-key" x="8" y="8" width="344" height="68" rx="10"/>
+                <text class="t-b" x="22" y="30">① すぐ直す（今日、1つだけ）</text>
+                <text class="t-sm" x="22" y="52">小さくて、効果が分かるもの</text>
+                <text class="t-sm" x="22" y="68">例: 名前を分かりやすくする</text>
+                <rect class="box-blue" x="8" y="86" width="344" height="68" rx="10"/>
+                <text class="t-b" x="22" y="108">② 次回以降（第11回の欄へ）</text>
+                <text class="t-sm" x="22" y="130">大きい、または、時間が足りないもの</text>
+                <text class="t-sm" x="22" y="146">例: 検索・絞り込み、タイマー</text>
+                <rect class="box-blue" x="8" y="164" width="344" height="68" rx="10"/>
+                <text class="t-b" x="22" y="186">③ やらない（理由を1行）</text>
+                <text class="t-sm" x="22" y="208">自分の企画と合わないもの</text>
+                <text class="t-sm" x="22" y="224">例: 「ねらいが違うので、しない」</text>
+                <rect class="band" x="8" y="244" width="344" height="36" rx="8"/>
+                <text class="t-c" x="180" y="267">全部は直さない。決めるのは、作った本人</text>
+              </svg>
+              <figcaption>「やらない」と決めるのも、立派な判断です。理由を1行書いておきます。</figcaption>
+            </figure>
+            <ul>
+              <li>仕分けた結果を、<code>plan.md</code>の第10回の欄に、<code>すぐ直す:</code> <code>次回以降:</code> <code>やらない（理由）:</code>の3行にして書く</li>
+              <li><strong>第11回の欄</strong>（親ページの計画では、ゲーム班はレベルアップ・タイマー、EC班は検索・絞り込み）も、もらった意見を見て、書き直してよい</li>
+              <li>意見が1つもらえなかった人は、<strong>自分で自分のコードを見て</strong>、「いいね・質問・提案」を1つずつ書く</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>「すぐ直す」を1つ直して、<code>push</code>する</h3>
+          <div class="timeline-body">
+            <p><strong>1つだけ直す（20分）</strong></p>
+            <ul>
+              <li>「すぐ直す」から、<strong>1つだけ</strong>選んで直す。直したら、保存・再読み込みで動かして確かめる</li>
+              <li>名前を変えるときは、<strong>同じ名前を使っている所を全部</strong>変える（変え忘れると、<code>Console</code>に赤い文字が出る）。エディターの検索（<code>Ctrl</code>+<code>F</code>、Macは<code>Command</code>+<code>F</code>）で、変える名前を探すと見つけやすい</li>
+              <li>動かなくなったら、<code>Console</code>の赤い文字の行番号から見る（第7回の道具1）。戻したいときは、直す前に<code>commit</code>しておけば、元に戻せる</li>
+              <li>早く終わった人は、<strong>相手の作品に書いた自分の提案</strong>が、自分のコードにも当てはまらないか見る</li>
+            </ul>
+            <p><strong><code>commit</code>・<code>push</code>する（10分）</strong></p>
+            <ul>
+              <li>前期第4回と同じ手順で、<code>game.html</code>（EC班は<code>shop.html</code>）と<code>plan.md</code>を<code>commit</code>・<code>push</code>する（コミットメッセージ例: <code>レビューの意見をもとに、変数名を分かりやすくした</code>）</li>
+              <li><code>push</code>後に、GitHub上でファイルが見えることを確認する</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ program-basics-2.html Week 11 「個人制作③ 仕上げ機能」と同期 -->
+              <li>次回（第11回）: <strong>個人制作③ 仕上げ機能</strong>——追加機能を実装する（ゲーム班はレベルアップ・タイマー、EC班は検索・絞り込み）。今日の「次回以降」の仕分けが、第11回で何を作るかの材料になる</li>
+              <li>今日のキーワード「<strong>いいね・質問・提案</strong>」「<strong>説明し返し</strong>」「<strong>意見の仕分け</strong>」を口に出して言えるか確認して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong><code>plan.md</code>の意見の仕分けを完成させ、<code>push</code>する</strong>
+            <p>授業内で終わらなかった人は、家で仕上げる。<code>plan.md</code>の第10回の欄に、もらった意見・仕分け（すぐ直す／次回以降／やらない（理由））・直した1つが入っている状態にする。<code>push</code>後に、GitHub上で確認する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>第11回で作る機能を1つ決めておく</strong>
+            <p><code>plan.md</code>の第11回の欄に、「次回に作る機能を1つ」と「それができたと言える画面の様子」を1行で書く（例:「検索の欄に文字を入れると、一致する商品だけが出る」）。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Functions" target="_blank" rel="noopener">MDN — 関数</a> — 処理に名前を付けてまとめる（関数を読むときの復習）</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Web/API/EventTarget/addEventListener" target="_blank" rel="noopener">MDN — EventTarget: addEventListener() メソッド</a> — クリックを受け取る（復習）</li>
+        <li><a href="https://developer.mozilla.org/ja/docs/Learn_web_development/Core/Scripting/Debugging_JavaScript" target="_blank" rel="noopener">MDN — JavaScript のデバッグとエラー処理</a> — 動かないときの調べ方</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week09.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第9回 個人制作② インタラクション</span>
+      </a>
+      <a href="../program-basics-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">プログラム基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第11回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js?v=5"></script>
+</body>
+</html>

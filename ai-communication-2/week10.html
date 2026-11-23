@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第10回 中間相互レビュー・振り返り | AIコミュニケーション基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=26">
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <!-- 公式情報確認: 2026-11-24（この回は外部サービスの新しい操作や主張を扱わない。参考リンク2本（Gemini Notebookヘルプ「チャットを使用する」、Antigravity CLIの実行モード）は第9回と同じもので、生存とタイトルを確認。①「見せ方カード」「聞き手の3つ」「工夫の4つの分け方（計画の書き方／送り方／頼み先の選び方／確かめ方）」は授業用の整理で、公式の分類ではない。②第2〜9回のテーマ名は親ページ ai-communication-2.html から逐語で取った。③第8〜9回の授業結果（所要時間、◎△✕の伝わり方、Buildで版を戻せるか）は未反映。この回は、各自の対話ログ・指示メモ（点検・短い計画・結果①②・頼み先のメモ）があることを前提に書いた） -->
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication-2.html">AIコミュニケーション基礎 II</a>
+        <span>/</span>
+        <span>第10回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">中間相互レビュー・振り返り</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 10</span>
+            <span class="page-badge">火曜 3・4限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-purple">
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
+
+    <div class="qr-box qr-box--pc">
+      <a class="qr-box__zoom" href="qr/week10-page.svg" target="_blank" rel="noopener" aria-label="QRコードを大きく表示する">
+        <img class="qr-box__img" src="qr/week10-page.svg" alt="この第10回のページを開くQRコード。スマートフォンのカメラで読み取ると、このページが開く。" width="180" height="180">
+      </a>
+      <div class="qr-box__body">
+        <p class="qr-box__heading">📱 スマホで開く</p>
+        <p class="qr-box__text">教室の画面を見ながら、自分のスマートフォンで、このページを開けます。スマートフォンの<strong>カメラ</strong>で、このQRコードを読み取ってください。QRコードを押すと、大きく表示されます。</p>
+      </div>
+    </div>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">AIとの<strong>やりとりの記録を見せ合い</strong>、<strong>コミュニケーションの工夫を共有</strong>する中間相互レビュー。自分の記録から場面を1つ選んで伝え、人の工夫を1つ取り入れる。第2〜9回を<strong>振り返り</strong>、後半の目標を決める</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">中間相互レビュー / 見せ方カード / 工夫の共有 / 対話ログ / 頼み先のメモ / 振り返り（◎△✕） / 短い計画</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">第8〜9回の<strong>対話ログ</strong>と、「agyへの指示メモ」（企画メモ・計画・点検・結果①②・頼み先のメモ）。第9回の課題「<strong>見せたい記録を1つ選ぶ</strong>」の続き。作品（<code>sakuhin-N.html</code>、またはBuildの作品）も、すぐ開ける状態にしておく。選べていない人は、1限前半で選ぶ</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>自分の対話ログから場面を1つ選び、<strong>どう頼み、何が返り、自分がどうしたか</strong>を、他の人に説明できる</li>
+        <li>人の記録を見て、<strong>まねしたい工夫</strong>・質問・別の頼み方の提案を、具体的に伝えられる</li>
+        <li>人の工夫を<strong>1つ以上</strong>取り入れて、<strong>頼み先のメモ</strong>を書き直せる</li>
+        <li>第2〜9回を振り返り、<strong>できるようになったこと・まだのこと</strong>から、第11回の目標を<strong>短い計画</strong>に書ける</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <figure class="vz-fig" aria-labelledby="cap-a10-map">
+        <p class="vz-fig-title" id="cap-a10-map">今日の地図</p>
+        <svg class="vz-svg" viewBox="0 0 360 330" role="img" aria-labelledby="a10-map-t a10-map-d">
+          <title id="a10-map-t">今日の地図</title>
+          <desc id="a10-map-d">1 見せる前の点検と、場面を選ぶ。2 見せ方カードを書く。3 グループで見せ合う。4 クラスで工夫を集め、第2〜9回を振り返る。5 頼み先のメモを書き直し、第11回の目標を決める、の順に進む。</desc>
+          <rect class="box-purple" x="8" y="8" width="344" height="48" rx="10"/>
+          <text class="t-b" x="22" y="28">① 点検して、場面を選ぶ</text>
+          <text class="t-sm" x="22" y="46">実名・APIキーを消す。見せる場面を1つ</text>
+          <line class="line" x1="180" y1="58" x2="180" y2="66" marker-end="url(#mk-s)"/>
+          <rect class="box-purple" x="8" y="68" width="344" height="48" rx="10"/>
+          <text class="t-b" x="22" y="88">② 見せ方カードを書く</text>
+          <text class="t-sm" x="22" y="106">場面・頼んだ文・返ってきたもの・自分がしたこと・学び</text>
+          <line class="line" x1="180" y1="118" x2="180" y2="126" marker-end="url(#mk-s)"/>
+          <rect class="box-purple" x="8" y="128" width="344" height="48" rx="10"/>
+          <text class="t-b" x="22" y="148">③ グループで見せ合う</text>
+          <text class="t-sm" x="22" y="166">聞き手は、工夫・質問・提案を1つずつ</text>
+          <line class="line" x1="180" y1="178" x2="180" y2="186" marker-end="url(#mk-s)"/>
+          <rect class="box-purple" x="8" y="188" width="344" height="48" rx="10"/>
+          <text class="t-b" x="22" y="208">④ 工夫を集め、第2〜9回を振り返る</text>
+          <text class="t-sm" x="22" y="226">クラスで共有。◎△✕で自己評価</text>
+          <line class="line" x1="180" y1="238" x2="180" y2="246" marker-end="url(#mk-s)"/>
+          <rect class="box-white box-key" x="8" y="248" width="344" height="48" rx="10"/>
+          <text class="t-b" x="22" y="268">⑤ メモを書き直し、次の目標を決める</text>
+          <text class="t-sm" x="22" y="286">人の工夫を1つ入れる。第11回の短い計画</text>
+          <rect class="band" x="8" y="302" width="344" height="24" rx="8"/>
+          <text class="t-c" x="180" y="319">見せるのは、うまさではなく、工夫</text>
+        </svg>
+        <figcaption>失敗した場面も、立派な材料です。「どう直したか」が、人の役に立ちます。</figcaption>
+      </figure>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>見せる場面を選び、見せ方カードを書く</h3>
+          <div class="timeline-body">
+            <p><strong>見せる前の点検（10分）</strong></p>
+            <ul>
+              <li>対話ログと指示メモを開く。<strong>人に見せるので、先に消すものを探す</strong>——実名、他人の個人情報、メールアドレス、<strong>APIキー</strong>。見つけたら、見せるものから外すか、<code>＊＊＊</code>に書き換える</li>
+              <li><strong>agyを選んでいる人</strong>: 停止していたCodespaceを<strong>再開（resume）</strong>する——「Create codespace」で新規作成しない（resumeで動かないときは、講師に声をかける）。<code>python3 -m http.server 8000</code>を実行し、「ポート」タブ→<strong>「エディターでプレビュー」</strong>でSimple Browserを開く。agyで再ログインを求められたら、第2回と同じ手順で再認証する</li>
+              <li><strong>Buildを選んでいる人</strong>: <a href="https://aistudio.google.com/" target="_blank" rel="noopener">Google AI Studio</a>（学校のアカウント）で、作品を開いておく（見つからないときは、講師に声をかける）</li>
+            </ul>
+            <p><strong>見せる場面を1つ選ぶ（5分）</strong></p>
+            <ul>
+              <li>第9回の課題で選んだ場面があれば、それを使う。選べていない人は、対話ログを読み返して<strong>1つ</strong>選ぶ</li>
+              <li>うまくいった場面でも、失敗した場面でもよい。選ぶ目安は、<strong>「自分の頼み方や、直し方に、工夫があった場面」</strong>。1つに絞る</li>
+            </ul>
+            <p><strong>「見せ方カード」を書く（25分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-a10-card">
+              <p class="vz-fig-title" id="cap-a10-card">見せ方カード：5行</p>
+              <svg class="vz-svg" viewBox="0 0 360 330" role="img" aria-labelledby="a10-card-t a10-card-d">
+                <title id="a10-card-t">見せ方カードの5行</title>
+                <desc id="a10-card-d">1 場面、2 頼んだ文、3 返ってきたもの、4 自分がしたこと、5 学び、の5行を書く。</desc>
+                <rect class="box-purple" x="8" y="8" width="344" height="48" rx="10"/>
+                <text class="t-b" x="22" y="28">① 場面</text>
+                <text class="t-sm" x="22" y="46">何をしようとしていたか</text>
+                <rect class="box-purple" x="8" y="64" width="344" height="48" rx="10"/>
+                <text class="t-b" x="22" y="84">② 頼んだ文</text>
+                <text class="t-sm" x="22" y="102">AIに送った言葉（短くしてよい）</text>
+                <rect class="box-purple" x="8" y="120" width="344" height="48" rx="10"/>
+                <text class="t-b" x="22" y="140">③ 返ってきたもの</text>
+                <text class="t-sm" x="22" y="158">思ったとおり？ ずれた？ どこが？</text>
+                <rect class="box-purple" x="8" y="176" width="344" height="48" rx="10"/>
+                <text class="t-b" x="22" y="196">④ 自分がしたこと</text>
+                <text class="t-sm" x="22" y="214">頼み直した・計画を直した・自分で直した</text>
+                <rect class="box-white box-key" x="8" y="232" width="344" height="48" rx="10"/>
+                <text class="t-b" x="22" y="252">⑤ 学び</text>
+                <text class="t-sm" x="22" y="270">次から、こうする（1行）</text>
+                <rect class="band" x="8" y="290" width="344" height="30" rx="8"/>
+                <text class="t-c t-sm" x="180" y="310">自分の言葉で、短く</text>
+              </svg>
+              <figcaption>この5行は、授業用の整理で、公式の型ではありません。書きにくい行は、空けてよい。</figcaption>
+            </figure>
+            <ul>
+              <li>
+                <p>型をコピーして、指示メモの下に貼り、自分の内容に書き換える</p>
+                <button class="copy-md-btn" data-md-source="card-w10">
+                  <span class="btn-icon"></span> 見せ方カードの型をコピー
+                </button>
+<pre id="card-w10" class="md-preview">【見せ方カード（第10回）】
+① 場面:（何をしようとしていたか）
+② 頼んだ文:（AIに送った言葉。短くしてよい）
+③ 返ってきたもの:（思ったとおりか、ずれたか。どこが）
+④ 自分がしたこと:（頼み直した／計画を直した／自分で直した）
+⑤ 学び:（次から、こうする。1行）</pre>
+              </li>
+              <li>書けたら、<strong>1分で話す練習</strong>を、1人でする。②の「頼んだ文」は、<strong>画面に出して見せられる</strong>ようにしておく</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>グループで記録を見せ合い、工夫を持ち帰る</h3>
+          <div class="timeline-body">
+            <p><strong>進め方を確認する（5分）</strong></p>
+            <ul>
+              <li><strong>3〜4人のグループ</strong>を作る（なるべく、道具やテーマが違う人と組む）。1人あたり約11分（3人のグループは、約15分）。時間は、タイマーを1つ決めて計る</li>
+              <li>見せる人の<strong>画面を、みんなで囲む</strong>。作品のデモは、あってもなくてもよい。中心は、<strong>カードの5行と、やりとりの記録</strong></li>
+            </ul>
+            <p><strong>1人ずつ、見せて聞く（45分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-a10-listen">
+              <p class="vz-fig-title" id="cap-a10-listen">聞き手の3つ</p>
+              <svg class="vz-svg" viewBox="0 0 360 290" role="img" aria-labelledby="a10-listen-t a10-listen-d">
+                <title id="a10-listen-t">聞き手が伝える3つ</title>
+                <desc id="a10-listen-d">1 まねしたい工夫。どこが使えそうか、具体的に1つ。2 質問。分からなかった所を1つ。3 別の頼み方の提案。1つだけ。</desc>
+                <rect class="box-purple" x="8" y="8" width="344" height="68" rx="10"/>
+                <text class="t-b" x="22" y="30">① まねしたい工夫（1つ）</text>
+                <text class="t-sm" x="22" y="52">「確かめ方を画面の言葉で書いていたのが使えそう」</text>
+                <text class="t-sm" x="22" y="68">× 「すごい」だけ</text>
+                <rect class="box-purple" x="8" y="86" width="344" height="68" rx="10"/>
+                <text class="t-b" x="22" y="108">② 質問（1つ）</text>
+                <text class="t-sm" x="22" y="130">「ずれたとき、どこを見て原因を決めたの？」</text>
+                <text class="t-sm" x="22" y="146">× 「それ、失敗じゃない？」</text>
+                <rect class="box-white box-key" x="8" y="164" width="344" height="68" rx="10"/>
+                <text class="t-b" x="22" y="186">③ 別の頼み方の提案（1つ）</text>
+                <text class="t-sm" x="22" y="208">「先に相談で、確かめ方を直してから送ると？」</text>
+                <text class="t-sm" x="22" y="224">× 「最初からやり直して」</text>
+                <rect class="band" x="8" y="244" width="344" height="36" rx="8"/>
+                <text class="t-c" x="180" y="267">人ではなく、頼み方について言う</text>
+              </svg>
+              <figcaption>提案は、「こうしなさい」ではなく、「こういう方法もある」。採るかどうかは、本人が決めます。</figcaption>
+            </figure>
+            <ul>
+              <li>1人の流れ: <strong>見せ方カードを読む（3分）→ やりとりの記録を画面で見せる（2分）→ 聞き手が、工夫・質問・提案を1つずつ（4分）→ 本人が、もらった言葉を自分のメモに書き写す（2分）</strong></li>
+              <li>本人は、聞いたことを<strong>その場で直さない</strong>。まず書き写すだけ。取り入れるかどうかは、このあとの時間に決める</li>
+              <li>聞き手は、<strong>自分のカードに使えそうな工夫</strong>を、自分のメモにも書き留める（人の名前は、書かなくてよい）</li>
+              <li>実名やAPIキーが画面に出てしまったら、すぐに画面を切り替えて、講師に伝える</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>クラスで工夫を集め、第2〜9回を振り返る</h3>
+          <div class="timeline-body">
+            <p><strong>クラスで、工夫を集める（25分）</strong></p>
+            <ul>
+              <li>グループごとに、<strong>「まねしたい工夫」を1つ</strong>選び、1人がクラスに伝える（グループで1分）。<strong>人の名前は出さず</strong>、工夫の中身を言う</li>
+              <li>講師が、出てきた工夫を<strong>4つの箱</strong>に分けて板書する。自分のメモに、近いものを写す</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-a10-box">
+              <p class="vz-fig-title" id="cap-a10-box">工夫を分ける、4つの箱</p>
+              <svg class="vz-svg" viewBox="0 0 360 250" role="img" aria-labelledby="a10-box-t a10-box-d">
+                <title id="a10-box-t">工夫の4つの分け方</title>
+                <desc id="a10-box-d">計画の書き方、送り方、頼み先の選び方、確かめ方の4つの箱に、集まった工夫を分ける。</desc>
+                <rect class="box-purple" x="8" y="8" width="168" height="84" rx="10"/>
+                <text class="t-b" x="20" y="32">計画の書き方</text>
+                <text class="t-sm" x="20" y="54">足さないものを書く</text>
+                <text class="t-sm" x="20" y="72">目標を1つに絞る</text>
+                <rect class="box-purple" x="184" y="8" width="168" height="84" rx="10"/>
+                <text class="t-b" x="196" y="32">送り方</text>
+                <text class="t-sm" x="196" y="54">ファイル名を書く</text>
+                <text class="t-sm" x="196" y="72">計画を最後に貼る</text>
+                <rect class="box-purple" x="8" y="100" width="168" height="84" rx="10"/>
+                <text class="t-b" x="20" y="124">頼み先の選び方</text>
+                <text class="t-sm" x="20" y="146">相談／資料の整理／作る</text>
+                <text class="t-sm" x="20" y="164">の使い分け</text>
+                <rect class="box-white box-key" x="184" y="100" width="168" height="84" rx="10"/>
+                <text class="t-b" x="196" y="124">確かめ方</text>
+                <text class="t-sm" x="196" y="146">画面で「できた／できない」</text>
+                <text class="t-sm" x="196" y="164">と言える形にする</text>
+                <rect class="band" x="8" y="198" width="344" height="40" rx="8"/>
+                <text class="t-c" x="180" y="223">4つは授業用の整理。箱に入らない工夫も大事</text>
+              </svg>
+              <figcaption>箱に分けると、「自分に足りない箱」が見えてきます。</figcaption>
+            </figure>
+            <p><strong>第2〜9回を振り返る（25分）</strong></p>
+            <ul>
+              <li>これまでの回で学んだことを、<strong>自分でどのくらいできるか</strong>、◎（人に説明できる）・△（やればできる）・✕（まだ難しい）で書く。点数ではなく、<strong>次に何を練習するか</strong>を決めるためのもの</li>
+            </ul>
+            <figure class="vz-fig" aria-labelledby="cap-a10-past">
+              <p class="vz-fig-title" id="cap-a10-past">第2〜9回の地図</p>
+              <svg class="vz-svg" viewBox="0 0 360 270" role="img" aria-labelledby="a10-past-t a10-past-d">
+                <title id="a10-past-t">第2回から第9回までの3つのまとまり</title>
+                <desc id="a10-past-d">第2〜4回は、道具と指示の基本。第5〜7回は、AIエージェントに指示する。第8〜9回は、自分の作品を育てる。</desc>
+                <rect class="box-purple" x="8" y="8" width="344" height="68" rx="10"/>
+                <text class="t-b" x="22" y="30">第2〜4回　道具と指示の基本</text>
+                <text class="t-sm" x="22" y="52">学習ガイド／agyの使い方／良い指示・悪い指示</text>
+                <line class="line" x1="180" y1="78" x2="180" y2="88" marker-end="url(#mk-s)"/>
+                <rect class="box-purple" x="8" y="90" width="344" height="68" rx="10"/>
+                <text class="t-b" x="22" y="112">第5〜7回　AIエージェントに指示する</text>
+                <text class="t-sm" x="22" y="134">指示する①②／すれ違いワーク</text>
+                <line class="line" x1="180" y1="160" x2="180" y2="170" marker-end="url(#mk-s)"/>
+                <rect class="box-white box-key" x="8" y="172" width="344" height="68" rx="10"/>
+                <text class="t-b" x="22" y="194">第8〜9回　自分の作品を育てる</text>
+                <text class="t-sm" x="22" y="216">計画→最小版／点検・頼み先を選ぶ</text>
+                <rect class="band" x="8" y="248" width="344" height="16" rx="8"/>
+              </svg>
+              <figcaption>前半の8回は、後半（第11〜14回）の作品づくりの土台になっています。</figcaption>
+            </figure>
+            <table class="schedule-table schedule-table--stack">
+              <thead>
+                <tr><th>回</th><th>テーマ（親ページの題）</th><th>自己評価（◎△✕）</th></tr>
+              </thead>
+              <tbody>
+                <tr><td data-label="回">第2回</td><td data-label="テーマ">学習ガイドで理解するAntigravity CLI</td><td data-label="自己評価">　</td></tr>
+                <tr><td data-label="回">第3回</td><td data-label="テーマ">agyをもっと使いこなす</td><td data-label="自己評価">　</td></tr>
+                <tr><td data-label="回">第4回</td><td data-label="テーマ">良い指示・悪い指示を見分ける</td><td data-label="自己評価">　</td></tr>
+                <tr><td data-label="回">第5回</td><td data-label="テーマ">AIエージェントに指示する①</td><td data-label="自己評価">　</td></tr>
+                <tr><td data-label="回">第6回</td><td data-label="テーマ">AIエージェントに指示する②</td><td data-label="自己評価">　</td></tr>
+                <tr><td data-label="回">第7回</td><td data-label="テーマ">🔧すれ違いワーク</td><td data-label="自己評価">　</td></tr>
+                <tr><td data-label="回">第8回</td><td data-label="テーマ">自分の作品を決めて、最小版をつくる</td><td data-label="自己評価">　</td></tr>
+                <tr><td data-label="回">第9回</td><td data-label="テーマ">自分のプロジェクトを育てる①</td><td data-label="自己評価">　</td></tr>
+              </tbody>
+            </table>
+            <ul>
+              <li>この表は、指示メモの下に<strong>自分で写して</strong>書く（コピーボタンは付けない。自分の言葉で書くため）。◎や✕の<strong>理由を、1〜2回分だけ</strong>1行で添える</li>
+              <li>欠席した回は、「欠席」と書き、✕としてよい。後半の回に必要な内容は、講師に聞く</li>
+              <li>✕と△の中から、<strong>後半で練習したいもの</strong>を1つ選ぶ（このあと、第11回の目標に使う）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>人の工夫を取り入れ、第11回の目標を決める</h3>
+          <div class="timeline-body">
+            <p><strong>頼み先のメモを書き直す（15分）</strong></p>
+            <ul>
+              <li>第9回に書き直した<strong>頼み先のメモ</strong>を開く。今日、人から聞いた<strong>工夫を1つ以上</strong>選んで、取り入れて書き直す（3つの頼み先——相談・資料の整理・作る——のどれに足してもよい）</li>
+              <li>書き直した所には、<strong>「誰の工夫か」ではなく「どんな工夫を、なぜ入れたか」</strong>を1行添える（人の名前は書かなくてよい）</li>
+              <li>取り入れない工夫があってもよい。「なぜ今回は入れないか」を1行書く</li>
+            </ul>
+            <p><strong>第11回の目標を、短い計画に書く（15分）</strong></p>
+            <ul>
+              <li>振り返りの✕・△から選んだものと、人からもらった提案を材料に、<strong>第11回に作品をどうするか</strong>を決める。目標は<strong>1つだけ</strong>（直す／足す／言葉を整える）</li>
+              <li>
+                <p>短い計画に書く（型は第9回と同じ）</p>
+                <button class="copy-md-btn" data-md-source="plan-short-w10">
+                  <span class="btn-icon"></span> 短い計画の型をコピー
+                </button>
+<pre id="plan-short-w10" class="md-preview">【第11回の目標】（直す／足す／言葉を整える、のどれか。1つだけ）
+【足さないもの】（今回は触らないこと）
+【確かめ方】（画面を見て「できた／できない」と言える形）</pre>
+              </li>
+              <li>書けたら、<strong>確かめ方が画面で言えるか</strong>を見る。言えなければ、直す。第11回の最初に、この計画から始める</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>次回予告と今日の振り返り</h3>
+          <div class="timeline-body">
+            <ul>
+              <!-- 親ページ ai-communication-2.html Week 11 「自分のプロジェクトを育てる②」と同期 -->
+              <li>次回（第11回）: <strong>自分のプロジェクトを育てる②</strong>——継続制作、機能追加。今日書いた<strong>第11回の短い計画</strong>が、そのまま出発点になる</li>
+              <li>今日のキーワード「<strong>見せ方カード</strong>」「<strong>人の工夫を1つ取り入れる</strong>」「<strong>振り返り（◎△✕）</strong>」を口に出して言えるか確認して退出</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>指示メモを完成させる</strong>
+            <p>授業内で書ききれなかった人は家で仕上げる。指示メモには、見せ方カード・もらった言葉・第2〜9回の振り返り（◎△✕）・書き直した頼み先のメモ・第11回の短い計画が入っている状態にする。人に見せた記録に、実名やAPIキーが残っていないかも、もう一度見る。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>人の工夫を、実際に1回試す</strong>
+            <p>今日取り入れた工夫を、家で作品に1回試してみる。結果を、対話ログに1行書いておく（うまくいかなくてもよい。第11回で使える）。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="https://support.google.com/gemininotebook/answer/16179559?hl=ja" target="_blank" rel="noopener">Gemini Notebook ヘルプ — Gemini Notebook でチャットを使用する</a> — Notebookのチャットの公式説明（振り返り用）</li>
+        <li><a href="https://antigravity.google/docs/cli/modes/" target="_blank" rel="noopener">Antigravity CLI — Choose an execution mode（公式）</a> — <code>default</code>と<code>plan</code>を含む実行モードの公式解説（振り返り用）</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week09.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第9回 自分のプロジェクトを育てる①</span>
+      </a>
+      <a href="../ai-communication-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AIコミュニケーション基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第11回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js?v=5"></script>
+</body>
+</html>
