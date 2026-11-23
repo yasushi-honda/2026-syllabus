@@ -89,7 +89,7 @@
         <p class="vz-fig-title" id="cap-w10-map">今日の地図</p>
         <svg class="vz-svg" viewBox="0 0 360 330" role="img" aria-labelledby="w10-map-t w10-map-d">
           <title id="w10-map-t">今日の地図</title>
-          <desc id="w10-map-d">1 第9回に追いつく（15分）、2 保存の考え方を知る（25分）、3 保存のコードを足して試す（50分）、4 保存を自分の作品に広げる。できる人は任意の見せ合い（50分）、5 記録して、pushして、公開URLで確かめる（30分）、の順に進む。休憩は3と4のあいだ。</desc>
+          <desc id="w10-map-d">1 第9回に追いつく（15分）、2 保存の考え方を知る（25分）、3 保存のコードを足して試す（50分）、4 保存を自分の作品に広げる。できる人は任意の見せ合い（50分）、5 記録して、pushして、公開URLで確かめる（30分）、の順に進む。休憩は3と4のあいだ。最後にまとめが10分ある。</desc>
           <rect class="box-blue" x="8" y="8" width="344" height="48" rx="10"/>
           <text class="t-b" x="22" y="28">① 第9回に追いつく（15分）</text>
           <text class="t-sm" x="22" y="46">動かない人は、ここで動かす</text>
@@ -110,7 +110,7 @@
           <text class="t-b" x="22" y="268">⑤ 記録・push・公開URL（30分）</text>
           <text class="t-sm" x="22" y="286">公開URLでも、残るか確かめる</text>
           <rect class="band" x="8" y="302" width="344" height="24" rx="8"/>
-          <text class="t-c t-sm" x="180" y="319">③と④のあいだに、休憩10分</text>
+          <text class="t-c t-sm" x="180" y="319">休憩10分は③④のあいだ。最後にまとめ10分</text>
         </svg>
         <figcaption>今日の主役は③です。①②は準備、④⑤は広げて確かめる時間です。</figcaption>
       </figure>
@@ -178,10 +178,10 @@
               <p class="vz-fig-title" id="cap-w10-ops">localStorageの3つの操作</p>
               <svg class="vz-svg" viewBox="0 0 360 320" role="img" aria-labelledby="w10-ops-t w10-ops-d">
                 <title id="w10-ops-t">setItem、getItem、removeItemの3つの操作</title>
-                <desc id="w10-ops-d">localStorageはブラウザの中の保管庫。setItemはキー（名前）をつけて入れる。getItemはキーで取り出す。何もなければnullが返る。removeItemはキーで捨てる。clearは全部消えるので使わない。</desc>
+                <desc id="w10-ops-d">localStorageはブラウザの中の保管庫で、サイトごとに別（同じサイトの中のページは共有）。setItemはキー（名前）をつけて入れる。getItemはキーで取り出す。何もなければnullが返る。removeItemはキーで捨てる。clearは全部消えるので使わない。</desc>
                 <rect class="box-white box-key" x="8" y="8" width="344" height="50" rx="10"/>
                 <text class="t-b" x="22" y="30">保管庫（localStorage）</text>
-                <text class="t-sm" x="22" y="48">ブラウザの中。アドレスごとに別</text>
+                <text class="t-sm" x="22" y="48">サイトごとに別。同じサイトの中は共有</text>
                 <rect class="box-blue" x="8" y="68" width="344" height="52" rx="10"/>
                 <text class="t-b" x="22" y="90">setItem（キー, 値）</text>
                 <text class="t-sm" x="22" y="110">名前をつけて、入れる（書く）</text>
@@ -248,7 +248,7 @@
               <p class="vz-fig-title" id="cap-w10-where">コードを足す場所（3か所ずつ）</p>
               <svg class="vz-svg" viewBox="0 0 360 340" role="img" aria-labelledby="w10-where-t w10-where-d">
                 <title id="w10-where-t">ゲーム班とEC班の、コードを足す場所</title>
-                <desc id="w10-where-d">ゲーム班は、1 上のほうに読み込みを足す、2 hit関数の中に保存を足す、3 renderの最後の行を置き換える。EC班は、1 const cart = []の1行を置き換える、2 pushの下にsaveCartを足す、3 変えない。showCartは第9回のまま。取り消しボタンを作った人だけspliceの下にもsaveCartを足す。</desc>
+                <desc id="w10-where-d">ゲーム班は、1 上のほうに読み込みを足す、2 hit関数の中に保存を足す、3 renderの最後の行を置き換える。EC班は、1 const cart = []の1行を置き換える、2 pushの下にsaveCartを足す、3 変えない。一番下の呼び出しshowCart();は第9回のまま。ただし、取り消しボタンを作った人は、showCartの中のspliceの下にもsaveCartを足す。</desc>
                 <rect class="box-blue" x="8" y="8" width="168" height="34" rx="10"/>
                 <text class="t-b t-c" x="92" y="30">ゲーム班</text>
                 <rect class="box-blue" x="184" y="8" width="168" height="34" rx="10"/>
@@ -275,12 +275,12 @@
                 <text class="t-sm t-c" x="92" y="272">行を</text>
                 <rect class="box-white" x="184" y="212" width="168" height="72" rx="10"/>
                 <text class="t-b t-c" x="268" y="234">③ 変えない</text>
-                <text class="t-sm t-c" x="268" y="254">showCartは</text>
-                <text class="t-sm t-c" x="268" y="272">第9回のまま</text>
+                <text class="t-sm t-c" x="268" y="254">最後の呼び出し</text>
+                <text class="t-sm t-c" x="268" y="272">showCart();</text>
                 <rect class="band" x="8" y="296" width="344" height="36" rx="8"/>
                 <text class="t-c t-sm" x="180" y="319">足す・置き換える・変えない、を見分ける</text>
               </svg>
-              <figcaption>EC班は、第9回で「取り消す」ボタンを作った人だけ、<code>cart.splice(i, 1);</code>の下にも<code>saveCart();</code>を足します。</figcaption>
+              <figcaption>③で変えないのは、一番下の<code>showCart();</code>の<strong>呼び出し</strong>だけです。EC班は、第9回で「取り消す」ボタンを作った人だけ、<code>showCart</code>の中の<code>cart.splice(i, 1);</code>の下にも<code>saveCart();</code>を足します。</figcaption>
             </figure>
             <ul>
               <li>第9回のコードに、<strong>数か所だけ足す</strong>（全部を書き直さない）。自分のジャンルのぶんだけ行う。1か所足すたびに、保存・再読み込みで、<code>Console</code>に赤い文字が出ていないか確かめる</li>

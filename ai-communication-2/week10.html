@@ -294,7 +294,7 @@
               <p class="vz-fig-title" id="cap-a10-graph">遊んだあとで見る：1周の大きさと、◎の数</p>
               <svg class="vz-svg" viewBox="0 0 360 384" role="img" aria-labelledby="a10-graph-t a10-graph-d">
                 <title id="a10-graph-t">1周が小さいときと大きいときの、◎の数の変わり方</title>
-                <desc id="a10-graph-d">ゲームの練習用AIミミの設定。確かめ方A〜Dのうち、◎がいくつあるかを、1周ごとに示す。始めは1つ。1周が小さいと、2、3、4と増えて、3周目で全部◎になる。1周が大きいと、3、2、3、2、3、2とゆれて、一度も4にならず、練習用に8周まで続く。ミミの単純な設定で、本物のAIの動きではない。</desc>
+                <desc id="a10-graph-d">ゲームの練習用AIミミの設定。確かめ方A〜Dのうち、◎がいくつあるかを、1周ごとに示す。始めは1つ。1周が小さいと、2、3、4と増えて、3周目で全部◎になる。1周が大きいと、3、2、3、2、3、2とゆれて、一度も4にならない（6周分を表示）。止める条件が「全部◎と言うまで（上限なし）」だと、練習用に8周で強制的に止まる。ミミの単純な設定で、本物のAIの動きではない。</desc>
                 <text class="t-b" x="22" y="22">1周を小さく（直す所を1つ）</text>
                 <rect class="box-purple" x="40" y="94" width="36" height="40" rx="4"/>
                 <text class="t-c t-b" x="58" y="86">2</text>
@@ -308,7 +308,7 @@
                 <line class="line" x1="30" y1="54" x2="340" y2="54" stroke-dasharray="4 3"/>
                 <text class="t-sm" x="196" y="84">3周目で、全部◎（4）</text>
                 <text class="t-b" x="22" y="190">1周を大きく（まとめて直す）</text>
-                <text class="t-sm" x="22" y="212">4に届かない。8周まで続く</text>
+                <text class="t-sm" x="22" y="212">4に届かない（6周分を表示）</text>
                 <rect class="box-purple" x="40" y="250" width="36" height="60" rx="4"/>
                 <text class="t-c t-b" x="58" y="242">3</text>
                 <text class="t-c t-sm" x="58" y="330">1</text>
@@ -332,7 +332,7 @@
                 <text class="t-c t-sm" x="180" y="352">棒の数字＝◎の数（A〜Dのうち）。下の数字＝周</text>
                 <text class="t-c t-sm" x="180" y="372">ミミの単純な設定で、本物のAIとは違う</text>
               </svg>
-              <figcaption>ゲームの<strong>ステージ2</strong>で、自分が選んだ組み合わせと見比べてください。破線は「全部◎（4）」の線です。</figcaption>
+              <figcaption>ゲームの<strong>ステージ2</strong>で、自分が選んだ組み合わせと見比べてください。破線は「全部◎（4）」の線です。止める条件が「全部◎と言うまで（上限なし）」だと、4にならないまま<strong>8周まで</strong>続きます（練習用の上限）。「2周で止める」「5周で止める」を選ぶと、そこで止まります。</figcaption>
             </figure>
             <p><strong>見せる場面を選び、周回ログにする（20分）</strong></p>
             <ul>
