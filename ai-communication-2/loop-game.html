@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ループハンター（1人用の練習ゲーム） | AIコミュニケーション基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=26">
+  <!-- 第10回「プロンプトからループへ」で、「ループは、1周の大きさ・止める条件・人が見る場所の3つを決めて設計する」を1人で体験するためのゲーム。ルールで動く練習用AI「ミミ」が相手で、本物のagyやBuildには接続しない。入力内容はどこにも送信・保存しない（再読み込みで最初から）。ミミの動きは「こうなりやすい」を練習用に単純化して決めたもので、本物のAIの動きそのものではない。「ループの3つの決めごと」は第10回の授業用の整理で、公式の分類ではない。ループの語は2026年6月ごろから広まった新しい言葉で、定義は決まっていない -->
+  <style>
+    .ph-note { background: #fff8e6; border: 1px solid #e8c766; border-radius: 6px; padding: .7rem 1rem; margin: 0 0 1.2rem; font-size: .9rem; line-height: 1.7; }
+    .ph-bar { display: flex; flex-wrap: wrap; gap: .4rem .8rem; align-items: center; justify-content: space-between; background: #2e2447; color: #fff; border-radius: 8px; padding: .6rem .9rem; margin-bottom: 1rem; position: sticky; top: 0; z-index: 5; }
+    .ph-bar strong { font-size: 1.05rem; }
+    .ph-btn { display: inline-block; padding: .5rem .95rem; border: 0; border-radius: 6px; background: #5b3d9a; color: #fff; font-weight: 600; font-size: .92rem; cursor: pointer; font-family: inherit; line-height: 1.4; }
+    .ph-btn:hover:not(:disabled) { background: #46307a; }
+    .ph-btn:disabled { background: #b9b3c8; cursor: not-allowed; }
+    .ph-btn--sub { background: #4a4a5e; }
+    .ph-btn--sub:hover:not(:disabled) { background: #33333f; }
+    .ph-btn--stop { background: #b42318; }
+    .ph-btn--stop:hover:not(:disabled) { background: #8f1b12; }
+    .ph-btn--ghost { background: #fff; color: #46307a; border: 2px solid #5b3d9a; }
+    .ph-btn--ghost:hover:not(:disabled) { background: #f1ecfa; }
+    .ph-btn:focus-visible, .ph-opt:focus-visible, .ph-stage:focus-visible { outline: 3px solid #ffb000; outline-offset: 2px; }
+    .ph-row { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin: .6rem 0; }
+    .ph-card { background: #fff; border: 1px solid #d9d4c7; border-radius: 10px; padding: 1rem 1.1rem; margin-bottom: 1rem; }
+    .ph-card h2 { font-size: 1.1rem; margin: 0 0 .5rem; border: 0; padding: 0; }
+    .ph-card h3 { font-size: 1rem; margin: .8rem 0 .4rem; }
+    .ph-stages { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: .8rem; margin: .8rem 0 1rem; }
+    .ph-stage { text-align: left; background: #fff; border: 2px solid #d6cbee; border-radius: 10px; padding: .9rem 1rem; cursor: pointer; font-family: inherit; font-size: .9rem; line-height: 1.6; color: inherit; }
+    .ph-stage:hover { border-color: #5b3d9a; background: #faf7ff; }
+    .ph-stage-title { display: block; font-size: 1.05rem; font-weight: 700; margin: .3rem 0 .2rem; }
+    .ph-stage-num { display: inline-block; background: #5b3d9a; color: #fff; border-radius: 999px; padding: 0 .6rem; font-size: .8rem; font-weight: 700; }
+    .ph-mimi { display: flex; gap: .6rem; align-items: flex-start; margin: .6rem 0; }
+    .ph-mimi-face { flex: 0 0 auto; font-size: 1.8rem; line-height: 1; }
+    .ph-bubble { background: #f1ecfa; border: 1px solid #d6cbee; border-radius: 10px; padding: .55rem .8rem; font-size: .92rem; line-height: 1.7; min-width: 0; }
+    .ph-pop { animation: phPop .35s ease-out; }
+    @keyframes phPop { from { transform: scale(.96); opacity: .3; } to { transform: scale(1); opacity: 1; } }
+    .ph-opts { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: .7rem; margin: .6rem 0; }
+    .ph-opt { text-align: left; background: #fff; border: 2px solid #d9d4c7; border-radius: 10px; padding: .6rem; cursor: pointer; font-family: inherit; font-size: .86rem; color: inherit; line-height: 1.55; }
+    .ph-opt:hover:not(:disabled) { border-color: #5b3d9a; }
+    .ph-opt[aria-pressed="true"] { border-color: #2f6db5; box-shadow: 0 0 0 3px #b9d3f0; }
+    .ph-opt-head { font-weight: 700; margin-bottom: .3rem; }
+    .ph-slot { margin: .8rem 0; }
+    .ph-slot h3 { margin: 0 0 .3rem; }
+    .ph-feedback { border-radius: 8px; padding: .7rem .9rem; margin: .6rem 0; font-size: .92rem; line-height: 1.75; }
+    .ph-feedback--good { background: #eaf7ee; border: 1.5px solid #1a7f37; }
+    .ph-feedback--mid { background: #fff8e6; border: 1.5px solid #c99700; }
+    .ph-feedback--bad { background: #ffefed; border: 1.5px solid #c4382c; }
+    .ph-feedback strong.ph-verdict { display: block; font-size: 1rem; margin-bottom: .2rem; }
+    .ph-stars { color: #b07800; font-weight: 700; letter-spacing: .1em; }
+    .ph-hidden { display: none !important; }
+    .ph-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .ph-laps { list-style: none; padding: 0; margin: .5rem 0; display: grid; gap: .45rem; }
+    .ph-lap { border: 1px solid #d6cbee; border-radius: 8px; padding: .45rem .7rem; font-size: .9rem; line-height: 1.6; background: #faf7ff; }
+    .ph-lap--bad { border-color: #c4382c; background: #ffefed; }
+    .ph-lap--ok { border-color: #1a7f37; background: #eaf7ee; }
+    .ph-lap-n { font-weight: 800; color: #46307a; margin-right: .4rem; }
+    .ph-marks { font-family: 'JetBrains Mono', monospace; letter-spacing: .15em; font-weight: 700; }
+    .ph-label { font-size: .82rem; font-weight: 700; color: #5a5470; margin: .7rem 0 .2rem; }
+    .ph-want { background: #eef6ff; border: 1px solid #b9d3f0; border-radius: 8px; padding: .55rem .8rem; line-height: 1.7; font-size: .93rem; margin: .5rem 0; }
+    .ph-design { background: #faf7ff; border: 1px solid #d6cbee; border-radius: 10px; padding: .6rem .8rem; margin: .5rem 0; }
+    .ph-design dt { font-weight: 700; font-size: .86rem; color: #46307a; margin-top: .45rem; }
+    .ph-design dt:first-child { margin-top: 0; }
+    .ph-design dd { margin: .1rem 0 0; font-size: .92rem; line-height: 1.6; }
+    .ph-cmp { width: 100%; border-collapse: collapse; font-size: .92rem; margin: .5rem 0; }
+    .ph-cmp th, .ph-cmp td { border: 1px solid #d6cbee; padding: .4rem .55rem; text-align: left; vertical-align: top; }
+    .ph-cmp th { background: #f1ecfa; }
+    .ph-copybox { background: #faf7ff; border: 1px solid #d6cbee; border-radius: 8px; padding: .6rem .8rem; font-size: .9rem; line-height: 1.75; white-space: pre-wrap; }
+    @media (prefers-reduced-motion: reduce) { .ph-pop { animation: none; } }
+    @media (max-width: 480px) { .ph-card { padding: .85rem .8rem; } .ph-opts { grid-template-columns: minmax(0, 1fr); } }
+  </style>
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--purple">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-communication-2.html">AIコミュニケーション基礎 II</a>
+        <span>/</span>
+        <a href="week10.html">第10回</a>
+        <span>/</span>
+        <span>ループハンター</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">ループハンター</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">1人用の練習ゲーム</span>
+            <span class="page-badge">第10回 ループの設計</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-purple">
+
+    <div class="ph-note">
+      これは<strong>練習用のゲーム</strong>です。相手は、決まったルールで動く練習用AI「<strong>ミミ</strong>」🤖です。<strong>本物のagyやAI Studio Buildではありません</strong>。ミミの動きは、「こうなりやすい」を<strong>わかりやすく単純にした</strong>もので、本物のAIは、ミミとは違う動き方をします。入力した内容は<strong>どこにも送信・保存されません</strong>（ページを再読み込みすると最初からになります）。<br>
+      「ループの3つの決めごと」（1周の大きさ・止める条件・人が見る場所）は、<a href="week10.html">第10回</a>で使う<strong>授業用の整理</strong>で、公式の分類ではありません。「ループ」という言い方は2026年に広まった新しい言葉で、<strong>定義は決まっていません</strong>。
+    </div>
+
+    <div class="ph-bar">
+      <span>ステージ1 <strong id="phR1">―</strong></span>
+      <span>ステージ2 最高 <strong id="phR2">―</strong></span>
+      <span><button class="ph-btn ph-btn--sub" type="button" id="phHomeBtn">ステージを選ぶ</button></span>
+    </div>
+    <div class="ph-sr" aria-live="polite" id="phLive"></div>
+
+    <section id="phView"></section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+<script>
+(function () {
+  'use strict';
+
+  // ============================================================
+  // 判定ロジック（画面から分けてある。検査用に window.__loophunter で公開）
+  // ============================================================
+  // ==LOGIC-START==
+  var LOGIC = (function () {
+    // 確かめ方A〜D（ミミが画面で確かめられる）と、E（ミミが確かめられない）
+    var CHECKS = [
+      { id: 'A', text: '持ち物が一覧で出る' },
+      { id: 'B', text: 'チェックを入れると線が引かれる' },
+      { id: 'C', text: '全部チェックすると「準備OK」と出る' },
+      { id: 'D', text: '文字が読める大きさ' }
+    ];
+    var CHECK_E = 'スマホの幅で見られる';
+    var DEMO_CAP = 8; // デモのための強制終了の周回数
+
+    // 「ADのうち、いくつが◎か」（1周ごと）
+    function passSmall(n) { return Math.min(4, 1 + n); }
+    function passBig(n) { return n === 0 ? 1 : (n % 2 === 1 ? 3 : 2); }
+    function passOf(size, n) { return size === 'small' ? passSmall(n) : passBig(n); }
+
+    function marks(k) {
+      var s = '';
+      for (var i = 0; i < 4; i++) s += i < k ? '◎' : '✕';
+      return s;
+    }
+
+    function lapMessage(size, n) {
+      if (size === 'small') {
+        if (n === 1) return 'B（チェックで線が引かれる）を直しました。';
+        if (n === 2) return 'C（「準備OK」の表示）を直しました。';
+        if (n === 3) return 'D（文字の大きさ）を直しました。A〜Dが全部◎です。';
+        return '（ここから先は、もう直す所がありません）';
+      }
+      if (n === 1) return 'A〜Dを、一度に大きく直しました。3つが◎になりました。';
+      if (n % 2 === 0) return 'Dを直そうとして、Cがまた壊れました。（直した所が、ほかに影響した）';
+      return 'Cを直しました。Dはまだです。';
+    }
+
+    // ---- ステージ1: 止める条件がないループ ----
+    function stage1Lap(n) {
+      if (n <= 3) {
+        var p = passSmall(n);
+        return { n: n, pass: p, msg: lapMessage('small', n), extra: false, broke: false };
+      }
+      var extras = ['色をカラフルにしました。（頼まれていない）', '動くアニメーションを足しました。（頼まれていない）', 'ボタンを3つ増やしました。（頼まれていない）', '「準備OK」の表示を作り直しました。（頼まれていない）', '設定の画面を足しました。（頼まれていない）'];
+      var broke = n >= 7;
+      return { n: n, pass: broke ? 3 : 4, msg: (broke ? '「準備OK」を作り直したので、C（準備OK）が崩れました。' : extras[Math.min(n - 4, extras.length - 1)]), extra: true, broke: broke };
+    }
+    function judgeStop(n) {
+      if (n < 3) return { code: 'early', stars: 1, text: 'まだ、A〜Dが全部◎になっていません。ここで止めると、未完成のままです。' };
+      if (n === 3) return { code: 'best', stars: 3, text: '3周目で、A〜Dが全部◎になった所で止めました。余計な変更は、入っていません。' };
+      if (n < 7) return { code: 'extra', stars: 2, text: '3周目でできていたのに、あと' + (n - 3) + '周まわしました。頼んでいない変更が' + (n - 3) + '件入っています。確かめ直す手間が増えます。' };
+      return { code: 'broke', stars: 1, text: 'まわし続けて、できていた所（C）が崩れました。止める条件がないと、できたあとも「もっとよく」しようとします。' };
+    }
+
+    // ---- ステージ2: ループを設計する ----
+    var SLOTS = [
+      { key: 'size', label: '1周の大きさ', options: [
+        { id: 'small', head: '1周で、1つだけ直す', body: '直す所を1つに絞って、1周まわす。' },
+        { id: 'big', head: '1周で、全部まとめて直す', body: 'A〜Dを一度に直させる。' } ] },
+      { key: 'stop', label: '止める条件', options: [
+        { id: 'two', head: '2周まわしたら止める', body: '回数だけで決める。' },
+        { id: 'allok', head: 'ミミが「全部◎」と言うまで', body: '回数の上限は決めない。' },
+        { id: 'allokcap', head: '「全部◎」か、5周で止める', body: 'どちらか先に来たほうで止める。' } ] },
+      { key: 'human', label: '人が見る場所', options: [
+        { id: 'none', head: '見ない', body: 'ミミの報告を、そのまま受け取る。' },
+        { id: 'end', head: '止まったあとに、人が見る', body: '最後に、自分の目で画面を確かめる。' },
+        { id: 'every', head: '毎周、人が見る', body: '1周ごとに、画面を見て確かめる。' } ] }
+    ];
+    function slotOf(key) { return SLOTS.filter(function (s) { return s.key === key; })[0]; }
+    function optionHead(key, id) {
+      var o = slotOf(key).options.filter(function (x) { return x.id === id; })[0];
+      return o ? o.head : '';
+    }
+
+    function simulate(d) {
+      var laps = [];
+      var n = 0, stoppedBy = '', demoCap = false;
+      while (true) {
+        n++;
+        var pass = passOf(d.size, n);
+        laps.push({ n: n, pass: pass, marks: marks(pass), msg: lapMessage(d.size, n), regress: pass < passOf(d.size, n - 1) });
+        var mimiAllOk = pass === 4;
+        if (d.stop === 'two' && n === 2) { stoppedBy = '2周まわしたので止まりました。'; break; }
+        if (d.stop === 'allok' && mimiAllOk) { stoppedBy = 'ミミが「全部◎」と言ったので止まりました。'; break; }
+        if (d.stop === 'allokcap' && mimiAllOk) { stoppedBy = 'ミミが「全部◎」と言ったので止まりました。'; break; }
+        if (d.stop === 'allokcap' && n === 5) { stoppedBy = '5周になったので止まりました。'; break; }
+        if (n >= DEMO_CAP) { demoCap = true; stoppedBy = '練習のため、' + DEMO_CAP + '周で強制的に止めました。（止める条件が決まっていないと、このまま続きます）'; break; }
+      }
+      var reached = laps[laps.length - 1].pass === 4;
+      var looks = d.human === 'none' ? 0 : (d.human === 'every' ? n : 1);
+      var noticed = null;
+      if (d.human === 'every') {
+        for (var i = 0; i < laps.length; i++) { if (laps[i].regress) { noticed = laps[i].n; break; } }
+      }
+      var caught = d.human !== 'none';
+      var notes = [stoppedBy];
+      var stars, summary;
+      if (reached) {
+        if (caught) {
+          stars = 3;
+          summary = 'A〜Dが◎になり、人が画面を見て、E（' + CHECK_E + '）の崩れも見つけて直せました。';
+          notes.push('Eは、ミミが画面を実際に見ていないのに「◎」と報告していました。人が見た所で、見つかりました。');
+        } else {
+          stars = 1;
+          summary = 'ミミは「全部◎」と報告しましたが、E（' + CHECK_E + '）は崩れたままです。誰も見なかったので、気づけませんでした。';
+          notes.push('人が見る場所がないと、ミミの「できました」が、本当かどうかが分かりません。');
+        }
+      } else {
+        if (demoCap) {
+          stars = 1;
+          summary = 'A〜Dが全部◎にならないまま、止まらずに続いてしまいました。';
+          notes.push('「全部◎」だけで止めると、◎にならないときは、止まりません。');
+        } else if (caught) {
+          stars = 2;
+          summary = 'まだ全部◎ではありませんが、人が見て、「未完成で止まった」と分かりました。';
+        } else {
+          stars = 1;
+          summary = 'まだ全部◎ではないのに止まりました。誰も見ていないので、未完成のまま、気づけません。';
+        }
+        if (d.size === 'big') notes.push('1周で全部まとめて直すと、直した所が別の所に影響して、◎が増えたり減ったりしやすくなります。（ミミの設定）');
+        if (d.stop === 'two') notes.push('2周では、足りませんでした。回数だけで決めると、足りないことがあります。');
+      }
+      if (noticed) notes.push('毎周見ていたので、' + noticed + '周目で「◎が減った」と気づけました。');
+      notes.push('人が見た回数: ' + looks + '回');
+      return { laps: laps, reached: reached, demoCap: demoCap, looks: looks, caught: caught, stars: stars, summary: summary, notes: notes };
+    }
+
+    // ---- ステージ3: ループの設計の穴を見抜く ----
+    var HOLES = [
+      { id: 'h1', hole: 'size', design: { size: '1周で、画面・データ・見た目を全部まとめて直させる', stop: '「全部◎」か、5周で止める', human: '止まったあとに、人が見る' }, why: '1周が大きすぎます。まとめて直すと、直した所がほかに影響して、◎が増えたり減ったりします。直す所を1つに絞ると、崩れた原因が分かりやすくなります。' },
+      { id: 'h2', hole: 'stop', design: { size: '1周で、1つだけ直す', stop: 'ミミが「もう十分」と言うまで（回数の上限はなし）', human: '毎周、人が見る' }, why: '止める条件があいまいで、上限もありません。「もう十分」は人によって違い、AIは終わりにしないこともあります。「全部◎」のような画面で言える条件と、回数の上限を決めます。' },
+      { id: 'h3', hole: 'human', design: { size: '1周で、1つだけ直す', stop: '「全部◎」か、5周で止める', human: '見ない（ミミの報告を、そのまま受け取る）' }, why: '人が見る場所がありません。ミミは、確かめていない所も「◎」と言うことがあります。最後に、自分の目で画面を見る場所を決めます。' },
+      { id: 'h4', hole: 'stop', design: { size: '1周で、1つだけ直す', stop: '2周まわしたら止める', human: '止まったあとに、人が見る' }, why: '止める条件が、回数だけで短すぎます。直す所が3つ残っていても、2周で止まります。回数だけでなく、「全部◎」という条件も組み合わせます。' }
+    ];
+    function judgeHole(holeId, slotKey) {
+      var h = HOLES.filter(function (x) { return x.id === holeId; })[0];
+      return { ok: h.hole === slotKey, hole: h.hole, why: h.why };
+    }
+
+    function starsText(n) { return '★★★'.slice(0, n) + '☆☆☆'.slice(0, 3 - n); }
+
+    return { CHECKS: CHECKS, CHECK_E: CHECK_E, DEMO_CAP: DEMO_CAP, SLOTS: SLOTS, HOLES: HOLES, passOf: passOf, marks: marks, stage1Lap: stage1Lap, judgeStop: judgeStop, simulate: simulate, optionHead: optionHead, slotOf: slotOf, judgeHole: judgeHole, starsText: starsText };
+  })();
+  // ==LOGIC-END==
+
+  // ============================================================
+  // 画面
+  // ============================================================
+  var S = {
+    s1: null,          // { n, done, stars }
+    s1Stars: null,
+    design: { size: null, stop: null, human: null },
+    s2Best: null,      // 最高の星
+    s2Tried: 0,
+    holeAns: {}, holeHits: 0
+  };
+  var nextFresh = true;
+
+  function $(id) { return document.getElementById(id); }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function say(msg) { var l = $('phLive'); l.textContent = ''; setTimeout(function () { l.textContent = msg; }, 30); }
+  function mimi(html) { return '<div class="ph-mimi"><span class="ph-mimi-face" aria-hidden="true">🤖</span><div class="ph-bubble"><strong>ミミ:</strong> ' + html + '</div></div>'; }
+  function scrollTopOfView() { var v = $('phView'); if (v.getBoundingClientRect().top < 0) v.scrollIntoView({ block: 'start' }); }
+  function view(html) {
+    var v = $('phView');
+    v.innerHTML = html;
+    var t = v.querySelector('h2');
+    if (t) { t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: !nextFresh }); }
+    nextFresh = false;
+  }
+  function updateBar() {
+    $('phR1').textContent = S.s1Stars == null ? '―' : LOGIC.starsText(S.s1Stars);
+    $('phR2').textContent = S.s2Best == null ? '―' : LOGIC.starsText(S.s2Best);
+  }
+  function lapHtml(l, cls) {
+    return '<li class="ph-lap ' + (cls || '') + '"><span class="ph-lap-n">' + l.n + '周目</span><span class="ph-marks" aria-label="A〜Dの結果">' + LOGIC.marks(l.pass) + '</span> ' + esc(l.msg) + '</li>';
+  }
+  function checksHtml() {
+    return '<p class="ph-label">確かめ方（今回の持ち物チェックページ）</p><ul style="margin:.2rem 0 .6rem;padding-left:1.2rem;font-size:.9rem;line-height:1.7">' +
+      LOGIC.CHECKS.map(function (c) { return '<li><b>' + c.id + '</b> ' + esc(c.text) + '</li>'; }).join('') +
+      '<li><b>E</b> ' + esc(LOGIC.CHECK_E) + '（<strong>ミミは画面を実際に見られません</strong>。いつも「◎」と言います）</li></ul>';
+  }
+
+  function home() {
+    var holeDone = Object.keys(S.holeAns).length === LOGIC.HOLES.length;
+    var h = '<div class="ph-card ph-pop"><h2>ステージを選ぶ</h2>';
+    h += mimi('こんにちは、ミミです。わたしは、<strong>言われた回数だけ、何度でも直し続ける</strong>練習用AIです。「持ち物チェックページ」を、ループでまわして直す場面で、<strong>何を決めておくと、うまくまわるか</strong>を体験してください。1→2→3の順がおすすめです。');
+    h += '<div class="ph-stages">';
+    h += '<button type="button" class="ph-stage" data-st="1"><span class="ph-stage-num">ステージ1</span> <span class="ph-stage-title">止める条件がないループ</span><span>ミミに、まわし続けてもらう。どこで止める？</span><br><span class="ph-stars">' + (S.s1Stars == null ? '未プレイ' : LOGIC.starsText(S.s1Stars)) + '</span></button>';
+    h += '<button type="button" class="ph-stage" data-st="2"><span class="ph-stage-num">ステージ2</span> <span class="ph-stage-title">ループを設計する</span><span>3つの決めごとを選んで、まわす</span><br><span class="ph-stars">' + (S.s2Best == null ? '未プレイ' : LOGIC.starsText(S.s2Best) + '（' + S.s2Tried + '回ためした）') + '</span></button>';
+    h += '<button type="button" class="ph-stage" data-st="3"><span class="ph-stage-num">ステージ3</span> <span class="ph-stage-title">設計の穴を見抜く</span><span>穴のあるループを4つ。どこが穴？</span><br><span class="ph-stars">' + (holeDone ? S.holeHits + ' / ' + LOGIC.HOLES.length + ' 正解' : '未プレイ') + '</span></button>';
+    h += '</div>';
+    h += '<div class="ph-row"><button type="button" class="ph-btn ph-btn--ghost" id="phRes">結果と、気づきのコピーを見る</button></div></div>';
+    view(h);
+    document.querySelectorAll('[data-st]').forEach(function (b) { b.onclick = function () { nextFresh = true; [null, stage1, stage2, stage3][+b.dataset.st](true); scrollTopOfView(); }; });
+    $('phRes').onclick = results;
+    updateBar();
+  }
+
+  // ---------- ステージ1 ----------
+  function stage1(restart) {
+    if (restart || !S.s1) S.s1 = { n: 0, done: false, laps: [], res: null };
+    var s = S.s1;
+    var h = '<div class="ph-card ph-pop"><h2>ステージ1 止める条件がないループ</h2>';
+    h += mimi('「持ち物チェックページを、確かめ方A〜Dが全部◎になるまで直して」と頼まれました。止める条件は、<strong>まだ決まっていません</strong>。「もう1周」を押すと、わたしが1周まわします。<strong>ここで止める、と思ったら止めてください。</strong>');
+    h += checksHtml();
+    h += '<ul class="ph-laps" id="phLaps">' + s.laps.map(function (l) { return lapHtml(l, l.broke ? 'ph-lap--bad' : (l.pass === 4 && !l.extra ? 'ph-lap--ok' : '')); }).join('') + '</ul>';
+    if (!s.done) {
+      var atCap = s.n >= LOGIC.DEMO_CAP;
+      h += '<div class="ph-row"><button type="button" class="ph-btn" id="phLap"' + (atCap ? ' disabled' : '') + '>もう1周まわす</button><button type="button" class="ph-btn ph-btn--stop" id="phStop"' + (s.n === 0 ? ' disabled' : '') + '>ここで止める</button></div>';
+      if (atCap) h += '<div class="ph-feedback ph-feedback--bad"><strong class="ph-verdict">練習のため、ここまで</strong>' + LOGIC.DEMO_CAP + '周で、強制的に止めます。（止める条件がないと、このまま続きます）</div>';
+    } else {
+      var r = s.res;
+      h += '<div class="ph-feedback ph-feedback--' + (r.stars === 3 ? 'good' : (r.stars === 2 ? 'mid' : 'bad')) + '"><strong class="ph-verdict">' + LOGIC.starsText(r.stars) + '</strong>' + esc(r.text) + '</div>';
+      h += '<p style="font-size:.92rem;line-height:1.75">気づくこと: ループは、<strong>まわすのは簡単でも、止める所を決めておかないと、できたあとも、まわり続けます</strong>。次の「ステージ2」で、止める条件を設計します。</p>';
+      h += '<div class="ph-row"><button type="button" class="ph-btn" id="phRetry1">もう一度</button><button type="button" class="ph-btn ph-btn--sub" id="phTo2">ステージ2へ</button><button type="button" class="ph-btn ph-btn--ghost" data-home="1">ステージ選びに戻る</button></div>';
+    }
+    h += '</div>';
+    view(h);
+    updateBar();
+    if ($('phLap')) $('phLap').onclick = function () {
+      s.n++;
+      var l = LOGIC.stage1Lap(s.n);
+      s.laps.push(l);
+      if (s.n >= LOGIC.DEMO_CAP) { finish1(); return; }
+      say(s.n + '周目。' + l.msg);
+      nextFresh = false; stage1(false);
+      var b = $('phLap'); if (b && !b.disabled) b.focus({ preventScroll: true });
+    };
+    if ($('phStop')) $('phStop').onclick = finish1;
+    if ($('phRetry1')) $('phRetry1').onclick = function () { nextFresh = true; stage1(true); };
+    if ($('phTo2')) $('phTo2').onclick = function () { nextFresh = true; stage2(); scrollTopOfView(); };
+    wireCommon();
+  }
+  function finish1() {
+    var s = S.s1;
+    s.done = true;
+    s.res = LOGIC.judgeStop(s.n);
+    if (S.s1Stars == null || s.res.stars > S.s1Stars) S.s1Stars = s.res.stars;
+    nextFresh = true; stage1(false);
+  }
+
+  // ---------- ステージ2 ----------
+  function stage2() {
+    var d = S.design;
+    var h = '<div class="ph-card ph-pop"><h2>ステージ2 ループを設計する</h2>';
+    h += mimi('3つの決めごとを選んでください。選び終わったら、わたしがまわします。<strong>ミミは、決められた周回しか、止まれません</strong>。');
+    h += checksHtml();
+    LOGIC.SLOTS.forEach(function (sl) {
+      h += '<div class="ph-slot"><h3>' + esc(sl.label) + '</h3><div class="ph-opts">';
+      sl.options.forEach(function (o) {
+        h += '<button type="button" class="ph-opt" data-slot="' + sl.key + '" data-opt="' + o.id + '" aria-pressed="' + (d[sl.key] === o.id ? 'true' : 'false') + '"><div class="ph-opt-head">' + esc(o.head) + '</div>' + esc(o.body) + '</button>';
+      });
+      h += '</div></div>';
+    });
+    var ready = LOGIC.SLOTS.every(function (sl) { return d[sl.key]; });
+    h += '<div class="ph-row"><button type="button" class="ph-btn" id="phRun"' + (ready ? '' : ' disabled') + '>この設計でまわす</button><button type="button" class="ph-btn ph-btn--ghost" data-home="1">ステージ選びに戻る</button></div>';
+    if (!ready) h += '<p style="font-size:.88rem">3つとも選ぶと、まわせます。</p>';
+    h += '</div>';
+    view(h);
+    updateBar();
+    document.querySelectorAll('[data-slot]').forEach(function (b) { b.onclick = function () { S.design[b.dataset.slot] = b.dataset.opt; stage2(); var again = document.querySelector('[data-slot="' + b.dataset.slot + '"][data-opt="' + b.dataset.opt + '"]'); if (again) again.focus({ preventScroll: true }); }; });
+    if ($('phRun')) $('phRun').onclick = run2;
+    wireCommon();
+  }
+  function run2() {
+    var d = S.design;
+    var r = LOGIC.simulate(d);
+    S.s2Tried++;
+    if (S.s2Best == null || r.stars > S.s2Best) S.s2Best = r.stars;
+    var h = '<div class="ph-card ph-pop"><h2>ステージ2 結果</h2>';
+    h += '<dl class="ph-design">' + LOGIC.SLOTS.map(function (sl) { return '<dt>' + esc(sl.label) + '</dt><dd>' + esc(LOGIC.optionHead(sl.key, d[sl.key])) + '</dd>'; }).join('') + '</dl>';
+    h += '<ul class="ph-laps">' + r.laps.map(function (l) { return lapHtml(l, l.regress ? 'ph-lap--bad' : (l.pass === 4 ? 'ph-lap--ok' : '')); }).join('') + '</ul>';
+    h += '<div class="ph-feedback ph-feedback--' + (r.stars === 3 ? 'good' : (r.stars === 2 ? 'mid' : 'bad')) + '"><strong class="ph-verdict">' + LOGIC.starsText(r.stars) + '</strong>' + esc(r.summary) + '</div>';
+    h += '<ul style="font-size:.9rem;line-height:1.75;padding-left:1.2rem">' + r.notes.map(function (n) { return '<li>' + esc(n) + '</li>'; }).join('') + '</ul>';
+    h += '<div class="ph-row"><button type="button" class="ph-btn" id="phAgain2">設計を変えて、もう一度</button><button type="button" class="ph-btn ph-btn--sub" id="phTo3">ステージ3へ</button><button type="button" class="ph-btn ph-btn--ghost" data-home="1">ステージ選びに戻る</button></div></div>';
+    nextFresh = true;
+    view(h);
+    updateBar();
+    say('結果。' + r.summary);
+    $('phAgain2').onclick = function () { nextFresh = true; stage2(); scrollTopOfView(); };
+    $('phTo3').onclick = function () { nextFresh = true; stage3(); scrollTopOfView(); };
+    wireCommon();
+  }
+
+  // ---------- ステージ3 ----------
+  function stage3() {
+    var h = '<div class="ph-card ph-pop"><h2>ステージ3 設計の穴を見抜く</h2>';
+    h += mimi('穴のあるループが4つあります。<strong>3つの決めごとのうち、先に直したいのは、どれ</strong>ですか？');
+    LOGIC.HOLES.forEach(function (ho, i) {
+      var ans = S.holeAns[ho.id];
+      h += '<div class="ph-card" style="margin:.7rem 0"><h3 style="margin-top:0">設計' + (i + 1) + '</h3><dl class="ph-design">';
+      h += '<dt>1周の大きさ</dt><dd>' + esc(ho.design.size) + '</dd><dt>止める条件</dt><dd>' + esc(ho.design.stop) + '</dd><dt>人が見る場所</dt><dd>' + esc(ho.design.human) + '</dd></dl>';
+      if (!ans) {
+        h += '<div class="ph-row">' + LOGIC.SLOTS.map(function (sl) { return '<button type="button" class="ph-btn ph-btn--ghost" data-hole="' + ho.id + '" data-pick="' + sl.key + '">' + esc(sl.label) + '</button>'; }).join('') + '</div>';
+      } else {
+        var j = LOGIC.judgeHole(ho.id, ans);
+        h += '<div class="ph-feedback ph-feedback--' + (j.ok ? 'good' : 'bad') + '"><strong class="ph-verdict">' + (j.ok ? '正解' : 'おしい') + '</strong>' + (j.ok ? '' : 'あなたが選んだのは「' + esc(LOGIC.slotOf(ans).label) + '」。先に直したいのは、「' + esc(LOGIC.slotOf(j.hole).label) + '」です。<br>') + esc(j.why) + '</div>';
+      }
+      h += '</div>';
+    });
+    var done = Object.keys(S.holeAns).length === LOGIC.HOLES.length;
+    if (done) h += '<p><strong>' + S.holeHits + ' / ' + LOGIC.HOLES.length + ' 正解</strong></p>';
+    h += '<div class="ph-row">' + (done ? '<button type="button" class="ph-btn" id="phRes3">結果と、気づきのコピーを見る</button><button type="button" class="ph-btn ph-btn--sub" id="phRetry3">もう一度</button>' : '') + '<button type="button" class="ph-btn ph-btn--ghost" data-home="1">ステージ選びに戻る</button></div></div>';
+    view(h);
+    updateBar();
+    document.querySelectorAll('[data-hole]').forEach(function (b) { b.onclick = function () {
+      var id = b.dataset.hole;
+      S.holeAns[id] = b.dataset.pick;
+      S.holeHits = LOGIC.HOLES.filter(function (x) { return S.holeAns[x.id] && LOGIC.judgeHole(x.id, S.holeAns[x.id]).ok; }).length;
+      var y = window.scrollY;
+      stage3();
+      window.scrollTo(0, y);
+      say(LOGIC.judgeHole(id, S.holeAns[id]).ok ? '正解' : 'おしい');
+    }; });
+    if ($('phRes3')) $('phRes3').onclick = results;
+    if ($('phRetry3')) $('phRetry3').onclick = function () { S.holeAns = {}; S.holeHits = 0; nextFresh = true; stage3(); };
+    wireCommon();
+  }
+
+  // ---------- 結果 ----------
+  function noteText() {
+    var r1 = S.s1Stars == null ? '（未プレイ）' : LOGIC.starsText(S.s1Stars);
+    var r2 = S.s2Best == null ? '（未プレイ）' : LOGIC.starsText(S.s2Best);
+    var r3 = Object.keys(S.holeAns).length < LOGIC.HOLES.length ? '（未プレイ）' : S.holeHits + ' / ' + LOGIC.HOLES.length;
+    return '【ループハンターの気づき】\n止める条件がないループ（ステージ1）: ' + r1 + '\nループの設計（ステージ2・最高）: ' + r2 + '\n設計の穴を見抜く（ステージ3）: ' + r3 + '\n自分の作品のループで、先に決めておきたいのは: （1周の大きさ／止める条件／人が見る場所のうち、特に＿＿。理由は＿＿）\n※ミミは練習用のAIで、本物のagyやBuildの動きそのものではない。';
+  }
+  function results() {
+    var h = '<div class="ph-card ph-pop"><h2>結果</h2>';
+    h += '<table class="ph-cmp"><thead><tr><th>ステージ</th><th>結果</th></tr></thead><tbody>';
+    h += '<tr><td>1 止める条件がないループ</td><td>' + (S.s1Stars == null ? '未プレイ' : LOGIC.starsText(S.s1Stars)) + '</td></tr>';
+    h += '<tr><td>2 ループを設計する（最高）</td><td>' + (S.s2Best == null ? '未プレイ' : LOGIC.starsText(S.s2Best)) + '</td></tr>';
+    h += '<tr><td>3 設計の穴を見抜く</td><td>' + (Object.keys(S.holeAns).length < LOGIC.HOLES.length ? '未プレイ' : S.holeHits + ' / ' + LOGIC.HOLES.length + ' 正解') + '</td></tr></tbody></table>';
+    h += '<div class="ph-feedback ph-feedback--mid"><strong class="ph-verdict">ここまでの見立て</strong>ミミは、言われた回数だけ直し続ける練習用AIです。<strong>1周を小さくする・止める条件を画面で言える形にして上限も決める・人が見る場所を決める</strong>と、うまくまわりやすくなります。本物のAIは、ミミとは違う動き方をしますが、<strong>止める所と、人が見る所を、先に決めておく</strong>考え方は、<a href="week10.html">第10回</a>で、自分の作品に使います。</div>';
+    h += '<h3>指示メモに貼る、気づきのメモ</h3><div class="ph-copybox" id="phNote">' + esc(noteText()) + '</div>';
+    h += '<div class="ph-row"><button type="button" class="ph-btn" id="phCopy">気づきのメモをコピー</button><span id="phCopyMsg" style="font-size:.88rem"></span></div>';
+    h += '<div class="ph-row"><button type="button" class="ph-btn ph-btn--sub" data-home="1">ステージ選びに戻る</button><a class="ph-btn ph-btn--ghost" href="week10.html" style="text-decoration:none">第10回のページへ戻る</a></div></div>';
+    nextFresh = true;
+    view(h);
+    $('phCopy').onclick = copyNote;
+    wireCommon();
+  }
+  function copyNote() {
+    var t = noteText();
+    var done = function (ok) { $('phCopyMsg').textContent = ok ? 'コピーしました' : 'コピーできませんでした。上の文を選択してコピーしてください'; };
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(t).then(function () { done(true); }, function () { fallback(); });
+      } else fallback();
+    } catch (e) { fallback(); }
+    function fallback() {
+      try {
+        var ta = document.createElement('textarea');
+        ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        var ok = document.execCommand('copy');
+        document.body.removeChild(ta); done(ok);
+      } catch (e2) { done(false); }
+    }
+  }
+
+  function wireCommon() {
+    document.querySelectorAll('[data-home]').forEach(function (b) { b.onclick = function () { nextFresh = true; home(); scrollTopOfView(); }; });
+  }
+
+  $('phHomeBtn').onclick = function () { nextFresh = true; home(); };
+  // 検査用（ページの動作には使わない）
+  window.__loophunter = { LOGIC: LOGIC, state: S };
+  home();
+})();
+</script>
+</body>
+</html>
