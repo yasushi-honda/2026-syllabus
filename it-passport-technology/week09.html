@@ -72,7 +72,7 @@
       <div class="lesson-overview-grid">
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">テーマ</div>
-          <div class="lesson-overview-value">カフェのお客さんの名簿とメニューを整えるAさんと一緒に、ソフトウェアとデータベースを学ぶ。パソコンを動かす基本のソフト（<span translate="no">OS</span>）、ファイルの整理、表計算、無料で公開されているソフト（<span translate="no">OSS</span>）、見やすい作り方（<span translate="no">情報デザイン</span>・<span translate="no">ユニバーサルデザイン</span>）、データを整理してためる仕組み（<span translate="no">データベース</span>・<span translate="no">DBMS</span>）、そして写真や音声を小さくする<span translate="no">圧縮</span>。最後に、これまでの範囲を混ぜた<strong>ミニ模試</strong>で、次回の中間テストに備える</div>
+          <div class="lesson-overview-value">カフェのお客さんの名簿とメニューを整えるAさんと一緒に、ソフトウェアとデータベースを学ぶ。パソコンを動かす基本のソフト（<span translate="no">OS</span>）、ファイルの整理、表計算、ソースコードが公開されているソフト（<span translate="no">OSS</span>）、見やすい作り方（<span translate="no">情報デザイン</span>・<span translate="no">ユニバーサルデザイン</span>）、データを整理してためる仕組み（<span translate="no">データベース</span>・<span translate="no">DBMS</span>）、そして写真や音声を小さくする<span translate="no">圧縮</span>。最後に、これまでの範囲を混ぜた<strong>ミニ模試</strong>で、次回の中間テストに備える</div>
         </div>
         <div class="lesson-overview-card">
           <div class="lesson-overview-label">キーワード</div>
@@ -102,7 +102,7 @@
     <div class="syllabus-section">
       <h2>この回のゴール</h2>
       <ul>
-        <li><span translate="no">OS</span>が何をするものかを説明できる。<span translate="no">仮想記憶</span>・<span translate="no">絶対パス</span>・<span translate="no">相対パス</span>の意味を言える。表計算で、<strong>相対参照</strong>と<strong>絶対参照</strong>（<span translate="no">$</span>）の違いが分かる</li>
+        <li><span translate="no">OS</span>が何をするものかを説明できる。<span translate="no">仮想記憶</span>・<span translate="no">絶対パス</span>・<span translate="no">相対パス</span>の意味を言える。表計算で、<strong><span translate="no">相対参照</span></strong>と<strong><span translate="no">絶対参照</span></strong>（<span translate="no">$</span>）の違いが分かる</li>
         <li><span translate="no">OSS</span>の特徴（ソースコードの公開・再配布の自由・無保証）を言える</li>
         <li><span translate="no">情報デザイン</span>の四つの原則（近接・整列・反復・対比）と、<span translate="no">ユニバーサルデザイン</span>の考え方を、例で言える</li>
         <li><span translate="no">データベース</span>の<span translate="no">主キー</span>・<span translate="no">外部キー</span>・<span translate="no">インデックス</span>・<span translate="no">トランザクション</span>が何かを説明できる。<span translate="no">可逆圧縮</span>と<span translate="no">非可逆圧縮</span>の違いを言える</li>
@@ -290,9 +290,9 @@
               <table class="schedule-table">
                 <thead><tr><th>書き方</th><th>名前</th><th>コピーすると</th></tr></thead>
                 <tbody>
-                  <tr><td><span translate="no">B4</span></td><td><strong>相対参照</strong></td><td>コピー先に合わせて、<strong>ずれる</strong>（下にコピーすると、B5、B6…）</td></tr>
+                  <tr><td><span translate="no">B4</span></td><td><strong><span translate="no">相対参照</span></strong></td><td>コピー先に合わせて、<strong>ずれる</strong>（下にコピーすると、B5、B6…）</td></tr>
                   <tr><td><span translate="no">B$1</span></td><td>行を固定（複合参照）</td><td>行（1）は<strong>動かない</strong>。列だけずれる</td></tr>
-                  <tr><td><span translate="no">$B$1</span></td><td><strong>絶対参照</strong></td><td>行も列も<strong>動かない</strong>。いつも、B1を指す</td></tr>
+                  <tr><td><span translate="no">$B$1</span></td><td><strong><span translate="no">絶対参照</span></strong></td><td>行も列も<strong>動かない</strong>。いつも、B1を指す</td></tr>
                 </tbody>
               </table>
             </div>
@@ -337,8 +337,8 @@
               </section>
               <section class="vz-field vz-f-st">
                 <h4>無保証の原則</h4>
-                <p>使って困っても、<strong>作った人は責任を負わない</strong>。</p>
-                <ul class="vz-tags"><li>自分の責任で使う</li></ul>
+                <p><strong>品質などを保証しない</strong>のが原則。</p>
+                <ul class="vz-tags"><li>ライセンスで、保証しないと書かれる</li></ul>
               </section>
             </div>
             <p><span translate="no">OSS</span>の種類は、<span translate="no">OS</span>（例：<span translate="no">Linux</span>）・通信系・オフィス系・<span translate="no">データベース管理システム</span>・応用ソフトウェアなど、いろいろ（シラバス）。<strong>ただし、無料とは限らない</strong>。<span translate="no">OSS</span>ごとに<strong>ライセンス</strong>（利用許諾条件）が決まっていて、使う前に確認する。ライセンスの代表として、シラバスは<span translate="no">GPL</span>（<span translate="no">GNU General Public License</span>）と<strong><span translate="no">コピーレフト</span></strong>を用語例に挙げている。<span translate="no">コピーレフト</span>は、一般に、改造したものも、同じ自由な条件で配ることを求める考え方。細かい違いは、今日は扱わない。</p>
@@ -438,7 +438,7 @@
 
             <p><strong>② <span translate="no">データベース</span>：データを整理して、ためる（約11分、教科書 p.276-）</strong></p>
             <p>Aさんの困りごと2。名簿の表計算が、数千行になった。同じお客さんが2回入っていたり、探すのに時間がかかったりする。たくさんのデータを、<strong>整理して、取り出しやすいようにためたもの</strong>が<strong><span translate="no">データベース</span></strong>。その<span translate="no">データベース</span>を管理するソフトが<strong><span translate="no">DBMS</span></strong>（<span translate="no">Database Management System</span>、データベース管理システム）。シラバスは、<span translate="no">DBMS</span>を、データを構造的にためて、一貫性を保ち、効率よく取り出すための機能をもつもの、と説明している。</p>
-            <p>代表的な形が、<strong>表（<span translate="no">テーブル</span>）の形</strong>でデータを管理する<strong>関係データベース</strong>（<span translate="no">RDBMS</span>）。表の1行を<strong><span translate="no">レコード</span></strong>、1列を<strong><span translate="no">フィールド</span></strong>（項目）という。シラバスは、表の形でない<span translate="no">NoSQL</span>（<span translate="no">キーバリューストア</span>・<span translate="no">ドキュメント指向データベース</span>・<span translate="no">グラフ指向データベース</span>）も用語例に挙げている。今日は、名前だけ。</p>
+            <p>代表的な形が、<strong>表（<span translate="no">テーブル</span>）の形</strong>でデータを管理する<strong>関係データベース</strong>。それを管理するソフトが、<span translate="no">RDBMS</span>（関係データベース管理システム）。表の1行を<strong><span translate="no">レコード</span></strong>、1列を<strong><span translate="no">フィールド</span></strong>（項目）という。シラバスは、表の形でない<span translate="no">NoSQL</span>（<span translate="no">キーバリューストア</span>・<span translate="no">ドキュメント指向データベース</span>・<span translate="no">グラフ指向データベース</span>）も用語例に挙げている。今日は、名前だけ。</p>
             <figure class="vz-fig" aria-labelledby="cap-w9-db">
               <p class="vz-fig-title" id="cap-w9-db">2つの表を、お客さんの番号でつなぐ</p>
               <svg class="vz-svg" viewBox="0 0 360 232" role="img" aria-labelledby="w9-db-t w9-db-d">
@@ -476,10 +476,10 @@
             <p><strong>探す：<span translate="no">インデックス</span></strong>。数千行から、特定のお客さんを探すとき、毎回、先頭から全部を見ると遅い。本の索引のように、探す項目の<strong>目次</strong>（<span translate="no">インデックス</span>）を作っておくと、速く探せる。次の過去問は、この言葉を問う。</p>
             <div class="exam-q">
               <p class="exam-q-text">【例題④】問65　DBMSにおいて，データの検索を高速に行う目的で，必要に応じて設定して利用する情報はどれか。</p>
-              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>インデックス</span></div>
-              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>外部キー</span></div>
-              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>主キー</span></div>
-              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>スキーマ</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span><span translate="no">インデックス</span></span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span><span translate="no">外部キー</span></span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span><span translate="no">主キー</span></span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span><span translate="no">スキーマ</span></span></div>
               <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問65（<span translate="no">テクノロジ系</span>。問題文・選択肢は原文のまま）</p>
               <details class="exam-q-answer">
                 <summary>自分で選んだあとに、答えと解説を見る</summary>
@@ -583,7 +583,7 @@
             <div class="demo-cta demo-cta--amber">
               <p class="demo-cta__heading">🎮 ゲーム②：用語シューティング ステージ2（約10分）</p>
               <p class="demo-cta__body">今日の用語（<span translate="no">データベース</span>・<span translate="no">DBMS</span>・<span translate="no">主キー</span>・<span translate="no">外部キー</span>・<span translate="no">インデックス</span>・<span translate="no">トランザクション</span>・<span translate="no">可逆圧縮</span>・<span translate="no">非可逆圧縮</span>）と、前回までの<span translate="no">稼働率</span>・<span translate="no">損益分岐点</span>を、ゲームで確かめる。画面の「意味」を読んで、合う用語の的を撃つ。点数は記録されない。</p>
-              <p class="demo-cta__body"><strong>進め方：</strong>1回は約2分。<strong>目標は「ランク<span translate="no">A</span>以上」（10問中8問以上）</strong>。何度でも挑戦してよい。終わったら、間違えた用語の一覧を<a href="#sec-terms">用語カード</a>で確かめて、もう一度遊ぶ。</p>
+              <p class="demo-cta__body"><strong>進め方：</strong>1回は約2分。<strong>目標は「ランク<span translate="no">A</span>以上」（10問中8問以上）</strong>。何度でも挑戦してよい。終わったら、最後の画面の間違えた用語の一覧（意味つき）を読んで、もう一度遊ぶ。今日の用語は<a href="#sec-terms">用語カード</a>でも確かめられる。</p>
               <a href="term-shooter.html?w=9&amp;stage=2" class="demo-cta__link">→ ステージ2を始める</a>
               <div class="qr-box qr-box--inline qr-box--pc">
                 <a class="qr-box__zoom" href="qr/week09-game-stage2.svg" target="_blank" rel="noopener" aria-label="QRコードを大きく表示する">
@@ -636,7 +636,7 @@
                 <ul class="vz-tags"><li>→ 問い方に、線を引く</li></ul>
               </section>
             </div>
-            <p>ミニ模試の10問は、次のとおり、これまでの回につながっている。間違えた問題は、その回のページの用語カードと練習クイズで確かめる（○は、授業で扱った用語。△は、つながる分野を学んだが、その用語は授業で扱っていない）。</p>
+            <p>ミニ模試の10問は、次のとおり、これまでの回につながっている。間違えた問題は、○は、その回のページの用語カードと練習クイズで確かめる。△は、つながる分野は学んだが、その用語は授業で扱っていないので、<strong>フォームの結果の画面の解説</strong>で意味を確かめ、回のページは背景の復習に使う（○は、授業で扱った用語）。</p>
             <div class="table-wrap">
               <table class="schedule-table">
                 <thead><tr><th>問</th><th>出題の内容</th><th>つながる回</th><th>授業で</th></tr></thead>
@@ -741,7 +741,7 @@
             </div>
             <div class="quiz-feedback" hidden>
               <p class="quiz-result"></p>
-              <p>送料のセルB1は、複写しても動かさない（絶対参照）ので、<span translate="no">B$1</span>と書く。価格の<span translate="no">B4</span>は、複写すると下のセルにずれてほしいので、<span translate="no">B4</span>のまま（相対参照）。アは、複写すると送料がB2・B3にずれてしまう。ウ・エは、価格が動かない。</p>
+              <p>送料のセルB1は、下に複写しても行が動かないようにしたいので、行を固定した<span translate="no">B$1</span>と書く（行だけを固定する書き方で、複合参照という）。価格の<span translate="no">B4</span>は、複写すると下のセルにずれてほしいので、<span translate="no">B4</span>のまま（相対参照）。アは、複写すると送料がB2・B3にずれてしまう。ウ・エは、価格が動かない。</p>
               <button type="button" class="quiz-retry">もう一度</button>
             </div>
           </div>
@@ -837,7 +837,7 @@
           <span class="lesson-task-badge lesson-task-badge--required">必須</span>
           <div>
             <strong>第10回（中間テスト）の準備：ミニ模試の間違いを確かめる</strong>
-            <p>今日のミニ模試で間違えた問題を、「<a href="#blk-4">採点と、誤答の確認</a>」の表で、つながる回のページを開いて確かめる。次回は、IPA公開過去問を使った本番形式の中間テスト（120分を目安）。第10回の授業の最後に、覚えた用語をフォームで提出する。</p>
+            <p>今日のミニ模試で間違えた問題を、「<a href="#blk-4">採点と、誤答の確認</a>」の表を見て、○はつながる回のページで、△はフォームの結果の画面の解説で確かめる。次回は、IPA公開過去問を使った本番形式の中間テスト（120分を目安）。第10回の授業の最後に、覚えた用語をフォームで提出する。</p>
           </div>
         </div>
         <div class="lesson-task">
