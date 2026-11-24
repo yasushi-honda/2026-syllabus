@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第9回 ソフトウェアとデータベース：使いやすさとデータ活用 | ITパスポート テクノロジー系</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=26">
+</head>
+<body data-furigana="furigana/week09.json">
+  <!-- 公式情報確認: 2026-11-25 (IPA「ITパスポート試験シラバス Ver.6.5」の「オペレーティングシステム」「ファイルシステム」「オフィスツール」「オープンソースソフトウェア」「情報デザイン」「マルチメディア技術」「データベース方式・設計・操作」「トランザクション処理」「標準化関連」「データ利活用」の用語例・活用例を、PDFからテキスト化して原文照合。令和7年度 公開問題 問61・62・65・72・76（本文の例題）と、ミニ模試の10問（問67・68・69・70・71・73・74・77・83・91）は、問題冊子（画像PDF）のページ画像を目視して原文転記し、解答例PDFで正答を照合）。
+       本文のやさしい言い換え（公的資料の逐語引用ではない）: OSの役割・仮想記憶・絶対パス/相対パス・相対参照/絶対参照・OSSの特徴・コピーレフト・LATCH・シグニファイア・ユニバーサルデザイン・標準化の説明・主キー/外部キー・正規化・選択/射影/結合・インデックス・トランザクション・可逆圧縮/非可逆圧縮の説明（シラバスは用語例と活用例だけを書いており、定義文はほとんど書いていない）。確認テスト・練習クイズ・フォームの解説は、この言い換えのまま。
+       案内用図記号（ピクトグラム）がJISで決められていること: 国土交通省「案内用図記号（JIS Z8210）」のページ（mlit.go.jp/sogoseisaku/barrierfree/sosei_barrierfree_tk_000145.html）で確認（確認日2026-11-25）。個々の図記号の内容や最新の改正の細部は書かない。
+       書かなかったこと: 正規化の手順（第1〜第3正規形）・SQLの文法・ACID特性とデッドロックの詳しい説明（名前だけ）・NoSQLの詳細（名前だけ）・E-R図の描き方・音声や動画の符号化の詳細・ハフマン法などの圧縮アルゴリズム・OSのプロセス管理の詳細・OSSライセンスの細かい違い。令和7年度の公開問題で、OS・DBMS・情報デザイン・表計算を直接問う問（問61・62・65・72・76）は例題にした。 -->
+  <!-- 挿絵4枚（images/week09-story-1〜4.jpg）は、画像生成AI（Gemini 3.1 Flash Image）で作った架空の場面のイラスト（2026-11-25）。画像内に文字・実在の人物や企業のロゴは含めない。Aさん=第2〜8回と同じ設定の架空の人物（画風は毎回少し違う）。カフェも架空 -->
+  <!-- 用語カードの12語は、フォーム「ITパスポート 第9回 今回覚えた用語」の選択肢と一致。ゲーム term-shooter.html の第9回データ（TERM_SETS[9]）は、stage1=OS・仮想記憶・絶対パス・OSS・情報デザイン・ユニバーサルデザイン・ピクトグラム、stage2=データベース・DBMS・主キー・外部キー・インデックス・トランザクション・可逆圧縮・非可逆圧縮に、前回までの稼働率・損益分岐点の復習を加えたもの -->
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--amber">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../it-passport-technology.html">ITパスポート テクノロジー系</a>
+        <span>/</span>
+        <span>第9回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">ソフトウェアと<wbr>データベース：<wbr>使いやすさと<wbr>データ活用</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 9</span>
+            <span class="page-badge">水曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-amber">
+
+    <div class="message-box">このページはブラウザの翻訳機能で母語に翻訳できます。ただし、試験に出る主な専門用語（例: <span translate="no">OS</span>、<span translate="no">データベース</span>、<span translate="no">ユニバーサルデザイン</span>）は翻訳されないように設定しています。<strong>本番のITパスポート試験は日本語で行われる</strong>ので、専門用語は日本語のまま覚えてください。</div>
+
+    <!-- 図解の矢印の部品（画面には表示されない） -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-sm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="4.5" markerHeight="4.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
+
+    <div class="qr-box qr-box--pc">
+      <a class="qr-box__zoom" href="qr/week09-page.svg" target="_blank" rel="noopener" aria-label="QRコードを大きく表示する">
+        <img class="qr-box__img" src="qr/week09-page.svg" alt="この第9回のページを開くQRコード。スマートフォンのカメラで読み取ると、このページが開く。" width="180" height="180">
+      </a>
+      <div class="qr-box__body">
+        <p class="qr-box__heading">📱 スマホで開く</p>
+        <p class="qr-box__text">教室の画面を見ながら、自分のスマートフォンで、このページを開けます。スマートフォンの<strong>カメラ</strong>で、このQRコードを読み取ってください。QRコードを押すと、大きく表示されます。</p>
+        <p class="qr-box__text">スマートフォンでも、ブラウザの翻訳が使えます。ゲームも、スマートフォンで遊べます。</p>
+      </div>
+    </div>
+
+    <div class="demo-cta demo-cta--amber">
+      <p class="demo-cta__heading">🎮 用語シューティング（1人用のゲーム）</p>
+      <p class="demo-cta__body">画面に出る<strong>「意味」に合う用語</strong>の的を撃つゲームです。授業の中で2回（ステージ1・ステージ2）遊びます。点数は記録されません。試験の点数とも関係なく、用語を覚えるための練習です。ゲームの画面も、ブラウザの翻訳で意味を母語にできます（用語は日本語のまま表示されます）。音は初めは出ません。</p>
+      <a href="term-shooter.html?w=9" class="demo-cta__link">→ ゲームを開く</a>
+    </div>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">カフェのお客さんの名簿とメニューを整えるAさんと一緒に、ソフトウェアとデータベースを学ぶ。パソコンを動かす基本のソフト（<span translate="no">OS</span>）、ファイルの整理、表計算、無料で公開されているソフト（<span translate="no">OSS</span>）、見やすい作り方（<span translate="no">情報デザイン</span>・<span translate="no">ユニバーサルデザイン</span>）、データを整理してためる仕組み（<span translate="no">データベース</span>・<span translate="no">DBMS</span>）、そして写真や音声を小さくする<span translate="no">圧縮</span>。最後に、これまでの範囲を混ぜた<strong>ミニ模試</strong>で、次回の中間テストに備える</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value"><span translate="no">OS</span> / <span translate="no">仮想記憶</span> / <span translate="no">絶対パス</span> / <span translate="no">OSS</span> / <span translate="no">情報デザイン</span> / <span translate="no">ユニバーサルデザイン</span> / <span translate="no">データベース</span> / <span translate="no">DBMS</span> / <span translate="no">主キー</span> / <span translate="no">トランザクション</span> / <span translate="no">可逆圧縮</span> / <span translate="no">非可逆圧縮</span></div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">教科書（学研「ITパスポートをひとつひとつわかりやすく。」）のテクノロジ系 p.276-313 を読んでおく（ストラテジ系 p.028-032・p.060-063 も少し使う）。授業の最初に復習テスト、2限後半にミニ模試、最後に確認テスト（1回目と、任意の2回目）と用語カードのフォームを使う（学校のGoogleアカウント）。ゲームは、スマートフォンでもパソコンでも遊べる</div>
+        </div>
+      </div>
+    </div>
+
+    <nav aria-label="このページの目次">
+      <ul class="vz-jump">
+        <li><a class="vz-chip" href="#sec-flow">授業の流れ</a></li>
+        <li><a class="vz-chip" href="#sec-terms">用語カード</a></li>
+        <li><a class="vz-chip" href="#sec-quiz">練習クイズ</a></li>
+        <li><a class="vz-chip" href="#sec-optional">任意の取り組み</a></li>
+        <li><a class="vz-chip" href="#sec-tip">就活ワンポイント</a></li>
+        <li><a class="vz-chip" href="#sec-tasks">課題</a></li>
+        <li><a class="vz-chip" href="#sec-refs">参考リンク</a></li>
+        <li><a class="vz-chip vz-chip--cta" href="FORM_TERMS" target="_blank" rel="noopener">第9回 今回覚えた用語を提出する ↗</a></li>
+        <li><a class="vz-chip vz-chip--cta" href="https://script.google.com/a/macros/i-seifu.jp/s/AKfycbwquVX4xkXNy47RkGjCUz6Xmc4GFaPLpPkSVuW6z--m5Yth88yilipCYUSanlTpQF9P/exec" target="_blank" rel="noopener">自分の成績を見る ↗</a></li>
+      </ul>
+    </nav>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li><span translate="no">OS</span>が何をするものかを説明できる。<span translate="no">仮想記憶</span>・<span translate="no">絶対パス</span>・<span translate="no">相対パス</span>の意味を言える。表計算で、<strong>相対参照</strong>と<strong>絶対参照</strong>（<span translate="no">$</span>）の違いが分かる</li>
+        <li><span translate="no">OSS</span>の特徴（ソースコードの公開・再配布の自由・無保証）を言える</li>
+        <li><span translate="no">情報デザイン</span>の四つの原則（近接・整列・反復・対比）と、<span translate="no">ユニバーサルデザイン</span>の考え方を、例で言える</li>
+        <li><span translate="no">データベース</span>の<span translate="no">主キー</span>・<span translate="no">外部キー</span>・<span translate="no">インデックス</span>・<span translate="no">トランザクション</span>が何かを説明できる。<span translate="no">可逆圧縮</span>と<span translate="no">非可逆圧縮</span>の違いを言える</li>
+        <li>過去問（令和7年度）の5問を、問い方の型を使って解く。<strong>ミニ模試</strong>（10問・約12分）で、本番の「1問約1.2分」の感覚をつかむ</li>
+      </ul>
+    </div>
+
+    <div class="syllabus-section" id="sec-flow">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。休憩10分は授業時間に含めません。🎮のブロックは、ゲームで遊ぶ時間です。</p>
+
+      <div class="vz-timebar">
+        <p class="vz-fig-title">180分の流れ（ブロックを押すと、その内容へ移動）</p>
+        <ol class="vz-timebar-track">
+          <li style="--w:40"><a class="vz-seg" href="#blk-1"><span class="vz-seg-time">40分</span><span class="vz-seg-name">復習テスト<br>OS</span></a></li>
+          <li style="--w:50"><a class="vz-seg" href="#blk-2"><span class="vz-seg-time">50分</span><span class="vz-seg-name">ファイル・表計算<br>🎮ゲーム①</span></a></li>
+          <li style="--w:10"><a class="vz-seg vz-seg--break"><span class="vz-seg-time">休憩</span><span class="vz-seg-name">10分</span></a></li>
+          <li style="--w:50"><a class="vz-seg" href="#blk-3"><span class="vz-seg-time">50分</span><span class="vz-seg-name">データベース<br>🎮ゲーム②</span></a></li>
+          <li style="--w:30"><a class="vz-seg" href="#blk-4"><span class="vz-seg-time">30分</span><span class="vz-seg-name">ミニ模試<br>確認テスト1回目</span></a></li>
+          <li style="--w:10"><a class="vz-seg" href="#blk-5"><span class="vz-seg-time">10分</span><span class="vz-seg-name">まとめ</span></a></li>
+        </ol>
+        <p class="vz-timebar-note">授業時間の合計は 40 + 50 + 50 + 30 + 10 = 180分（休憩を除く）</p>
+      </div>
+
+      <div class="timeline">
+
+        <!-- ================= 1限 前半 ================= -->
+        <div class="timeline-block" id="blk-1">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回の復習テスト → 名簿とメニューのストーリー → 今日の地図 → <span translate="no">OS</span>（テクノロジ系：ソフトウェア 教科書 p.276-）</h3>
+          <div class="timeline-body">
+
+            <p><strong>前回の復習テスト（約10分：テスト約5分＋解説の確認約5分）</strong></p>
+            <p>前回（第8回）の内容を、1週間たって、どれだけ覚えているかを確かめる5問（約5分）。前回の確認テストは、どの問題も正答率が高かった。そのため、<span translate="no">稼働率</span>・<span translate="no">並列</span>・<span translate="no">フェールセーフ</span>などを、<strong>数字や聞き方を変えて</strong>出している。<span translate="no">損益分岐点</span>も1問入れている（前々回の内容）。<strong>点数を競うものではない</strong>。覚えていることと、忘れていることを、自分で知るためのテスト。送信すると、点数と、正解・解説が表示される。そのあと、間違えた問題の解説を読む。分からないところは、隣の人か先生に聞く。</p>
+            <div class="vz-cta">
+              <a class="vz-btn vz-btn--ext" href="FORM_RECAP" target="_blank" rel="noopener">第9回 復習テスト（前回分）を受ける（Googleフォーム）</a>
+            </div>
+
+            <p><strong>今日のストーリー：名簿とメニューを、整える（約8分）</strong></p>
+            <p>駅前のカフェを開いたAさん（架空の話）は、前回、レジが止まる夜を乗り越えた。今回は、お店の「毎日の仕事」を、パソコンで楽にしたい。ところが、小さな困りごとが、次々に出てくる。</p>
+            <ol class="vz-steps">
+              <li class="vz-step"><img class="vz-step-img" src="images/week09-story-1.jpg" alt="朝のカフェの事務室で、お店のパソコンが更新の画面で再起動している。デスクトップにはたくさんのファイルのアイコンが散らばっていて、Aさんが、必要なファイルを探して困っている。" width="800" height="597" loading="lazy"><b>1. パソコンの更新と、ファイルが見つからない</b>朝、パソコンが更新で再起動した。昨日の売上のファイルが、どこにあるか分からない。パソコンを動かす基本のソフト（<strong><span translate="no">OS</span></strong>）と、ファイルの整理（<strong>ファイル管理</strong>）の話。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week09-story-2.jpg" alt="Aさんが、パソコンの画面いっぱいの長い表（名簿）を見て困っている。同じお客さんの行が2つあり、探すのが大変そう。" width="800" height="597" loading="lazy"><b>2. 名簿が、数千行になった</b>お客さんのポイントカードの名簿を、表計算で管理してきた。行が増えて、同じお客さんが2回入っていて、探すのも大変。表計算と、<strong><span translate="no">データベース</span></strong>の話。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week09-story-3.jpg" alt="カフェのメニュー表の前で、年配のお客さんは小さい文字が読みにくそうにしている。絵のマークで書かれた案内を見た外国人のお客さんは、笑顔になっている。" width="800" height="597" loading="lazy"><b>3. メニューが、読みにくい</b>文字が小さい。日本語が読めないお客さんもいる。絵のマークで伝えたらどうか。<strong><span translate="no">情報デザイン</span></strong>と<strong><span translate="no">ユニバーサルデザイン</span></strong>の話。</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week09-story-4.jpg" alt="お店のホームページに大きな写真を載せたら、スマートフォンで開くのが遅くて、お客さんが困っている。写真を小さくしたら、軽く開いて、Aさんが喜んでいる。" width="800" height="597" loading="lazy"><b>4. ホームページの写真が、重い</b>写真を載せたら、スマートフォンで開くのが遅い。写真を小さくする<strong><span translate="no">圧縮</span></strong>の話。</li>
+            </ol>
+            <p class="lesson-note">1は1限前半・1限後半、2〜4は1限後半と2限前半で学ぶ。順番に、Aさんの困りごとを解決していく。</p>
+
+            <p><strong>今日の地図（約4分）</strong></p>
+            <figure class="vz-fig" aria-labelledby="cap-w9-map">
+              <p class="vz-fig-title" id="cap-w9-map"><span translate="no">OS</span>から、データの活用まで</p>
+              <svg class="vz-svg" viewBox="0 0 360 288" role="img" aria-labelledby="w9-map-t w9-map-d">
+                <title id="w9-map-t">今日の地図：OSから、データの活用まで</title>
+                <desc id="w9-map-d">上から順に、1 OSとファイル管理、2 表計算とOSS、3 情報デザインとユニバーサルデザイン、4 データベースとDBMS（主キー・インデックス・トランザクション）、5 情報メディアと圧縮（可逆圧縮・非可逆圧縮）。最後にミニ模試。</desc>
+                <line class="line" x1="22" y1="30" x2="22" y2="258"/>
+                <rect class="box-white" x="2" y="6" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="30" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="35">1</text>
+                <text class="t-b" x="44" y="27">パソコンを動かす基本のソフト</text>
+                <text class="t-sm" x="44" y="45" translate="no">OS・仮想記憶・ファイル管理</text>
+                <rect class="box-white" x="2" y="62" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="86" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="91">2</text>
+                <text class="t-b" x="44" y="83">仕事で使うソフト</text>
+                <text class="t-sm" x="44" y="101" translate="no">表計算・OSS</text>
+                <rect class="box-white" x="2" y="118" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="142" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="147">3</text>
+                <text class="t-b" x="44" y="139">見やすく、使いやすく</text>
+                <text class="t-sm" x="44" y="157" translate="no">情報デザイン・ユニバーサルデザイン</text>
+                <rect class="box-white" x="2" y="174" width="356" height="48" rx="8"/>
+                <circle class="dot" cx="22" cy="198" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="203">4</text>
+                <text class="t-b" x="44" y="195">データをためて、取り出す</text>
+                <text class="t-sm" x="44" y="213" translate="no">データベース・DBMS・トランザクション</text>
+                <rect class="box-white" x="2" y="230" width="356" height="48" rx="8"/>
+                <circle class="dot-orange" cx="22" cy="254" r="13"/>
+                <text class="t-w t-b t-c" x="22" y="259">5</text>
+                <text class="t-b" x="44" y="251">写真・音声を小さくする</text>
+                <text class="t-sm" x="44" y="269" translate="no">情報メディア・可逆圧縮・非可逆圧縮</text>
+              </svg>
+              <figcaption>1・2は1限、3は1限後半と2限前半、4・5は2限前半で学ぶ。2限後半は、ミニ模試と確認テスト。</figcaption>
+            </figure>
+
+            <p><strong>① <span translate="no">OS</span>：パソコンを動かす基本のソフト（約18分、教科書 p.276-）</strong></p>
+            <p>パソコンやスマートフォンには、キーボードや画面などの<strong>ハードウェア</strong>と、表計算やブラウザなどの<strong>アプリケーションソフトウェア</strong>がある。この2つの間に入って、ハードウェアを管理し、アプリが動けるようにするのが、<strong><span translate="no">OS</span></strong>（<span translate="no">Operating System</span>、基本ソフトウェア）。IPAのシラバスは、<span translate="no">OS</span>の必要性を、利用者やアプリに、ハードウェアやソフトウェアの資源を<strong>効率的に提供するための制御・管理の機能</strong>をもつこと、と説明している（確認日：2026-11-25）。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w9-os">
+              <p class="vz-fig-title" id="cap-w9-os"><span translate="no">OS</span>の位置：ハードウェアとアプリの間</p>
+              <svg class="vz-svg" viewBox="0 0 360 230" role="img" aria-labelledby="w9-os-t w9-os-d">
+                <title id="w9-os-t">OSの位置：ハードウェアとアプリの間</title>
+                <desc id="w9-os-d">3段の図。上の段は、アプリケーションソフトウェア（表計算・ブラウザ・ゲーム）。真ん中の段は、OS（ユーザー管理・ファイル管理・入出力管理・資源管理）。下の段は、ハードウェア（CPU・主記憶・補助記憶・入出力装置）。アプリはOSに頼み、OSがハードウェアを動かす。</desc>
+                <rect class="box-white" x="2" y="6" width="356" height="56" rx="8"/>
+                <text class="t-b t-c" x="180" y="28">アプリケーションソフトウェア</text>
+                <text class="t-sm t-c" x="180" y="48">表計算・ブラウザ・ゲーム</text>
+                <rect class="box-orange" x="2" y="84" width="356" height="62" rx="8"/>
+                <text class="t-b t-c" x="180" y="106" translate="no">OS</text>
+                <text class="t-sm t-c" x="180" y="126">ユーザー管理・ファイル管理・入出力管理・資源管理</text>
+                <rect class="box-blue" x="2" y="168" width="356" height="56" rx="8"/>
+                <text class="t-b t-c" x="180" y="190">ハードウェア</text>
+                <text class="t-sm t-c" x="180" y="210">CPU・主記憶・補助記憶・入出力装置</text>
+                <line class="line-orange" x1="180" y1="62" x2="180" y2="82" marker-end="url(#mk-sm)"/>
+                <line class="line-orange" x1="180" y1="146" x2="180" y2="166" marker-end="url(#mk-sm)"/>
+              </svg>
+              <figcaption>アプリは、<span translate="no">OS</span>に頼む。<span translate="no">OS</span>が、ハードウェアを動かす。だから、アプリを作る人は、ハードウェアの細かい違いを気にしなくてよい。</figcaption>
+            </figure>
+            <div class="table-wrap">
+              <table class="schedule-table">
+                <thead><tr><th><span translate="no">OS</span>の機能（シラバスの書き方）</th><th>どんな仕事か（やさしい言い換え）</th><th>Aさんのお店でたとえると</th></tr></thead>
+                <tbody>
+                  <tr><td>ユーザー管理</td><td>使う人の登録（アカウント）と、使える範囲（アクセス権）の管理</td><td>店長はレジの設定を変えられるが、アルバイトは売上を見るだけ</td></tr>
+                  <tr><td>ファイル管理</td><td>ファイルの保存場所と、読み書きの管理</td><td>売上のファイルを、フォルダに整理して、探せるようにする</td></tr>
+                  <tr><td>入出力管理</td><td>キーボード・画面・プリンタなどとのやり取りの管理</td><td>レシートを、プリンタに出す</td></tr>
+                  <tr><td>資源管理</td><td>主記憶などの使い方の管理（<span translate="no">仮想記憶</span>など）</td><td>同時に動く複数のアプリに、主記憶を上手に分ける</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="lesson-note">表の「たとえ」は、この教材の説明用。シラバスの用語例・活用例には、「ユーザー<span translate="no">ID</span>の登録・抹消の管理」「ユーザー別のアクセス権の管理」「<span translate="no">仮想記憶</span>」がある。</p>
+            <p><strong><span translate="no">OS</span>の種類</strong>：シラバスは、<span translate="no">Windows</span>・<span translate="no">Mac OS</span>・<span translate="no">Chrome OS</span>・<span translate="no">UNIX</span>・<span translate="no">Linux</span>・<span translate="no">iOS</span>・<span translate="no">Android</span>など、複数の種類があることを挙げている。<span translate="no">OS</span>が違うと、同じアプリが動かなかったり、ファイルの形式が合わなかったりする。シラバスは、「異種の<span translate="no">OS</span>間でデータのやり取りを行う際に生じる問題」も範囲に入れている。</p>
+
+            <p><strong><span translate="no">仮想記憶</span>（かそうきおく）：主記憶より大きく使う工夫</strong>。プログラムは、主記憶（第7回）の上で動く。ところが、同時に動かすアプリが増えると、主記憶が足りなくなる。そこで<span translate="no">OS</span>は、補助記憶（<span translate="no">HDD</span>・<span translate="no">SSD</span>）の一部も使って、<strong>主記憶の物理的な容量に制約されない、論理的な（見かけの）アドレス空間</strong>を、プログラムに用意する。これが<strong><span translate="no">仮想記憶</span></strong>。次の過去問は、この言葉を問う。</p>
+            <div class="exam-q">
+              <p class="exam-q-text">【例題①】問62　OSの仮想記憶方式に関する次の記述中のa～cに入れる字句の適切な組合せはどれか。<br>プログラムの実行時に，コンピュータのaの装置のbな容量に制約されない，cなアドレス空間を提供する。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>a：主記憶　b：物理的　c：論理的</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>a：主記憶　b：論理的　c：物理的</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>a：補助記憶　b：物理的　c：論理的</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>a：補助記憶　b：論理的　c：物理的</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問62（<span translate="no">テクノロジ系</span>。問題文・選択肢は原文のまま。表は、見やすいように、1行ずつに書き直した）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：ア</strong>（型：空欄の言葉を、意味でつなぐ。「制約されない」の前に来るのは、<strong>実際の</strong>大きさ＝物理的）。<span translate="no">仮想記憶</span>は、<strong>主記憶</strong>の<strong>物理的</strong>な容量（実際の大きさ）に制約されない、<strong>論理的</strong>（見かけ）なアドレス空間をつくる。「物理的」は実際の機械の大きさ、「論理的」は<span translate="no">OS</span>が見せる見かけの大きさ、と覚える。</p>
+              </details>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= 1限 後半 ================= -->
+        <div class="timeline-block" id="blk-2">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>ファイル管理 → 表計算 → <span translate="no">OSS</span> → <span translate="no">情報デザイン</span> → 🎮ゲーム①（テクノロジ系：ソフトウェア・情報デザイン 教科書 p.276-）</h3>
+          <div class="timeline-body">
+
+            <p><strong>① ファイル管理とバックアップ（約10分）</strong></p>
+            <p>Aさんの困りごと1の続き。昨日の売上のファイルが見つからないのは、ファイルを<strong>フォルダ（ディレクトリ）</strong>に整理していなかったから。フォルダは、木の枝のように、入れ子になっている。いちばん上のフォルダを<strong><span translate="no">ルートディレクトリ</span></strong>、いま開いているフォルダを<strong><span translate="no">カレントディレクトリ</span></strong>と呼ぶ（シラバスの用語例）。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w9-path">
+              <p class="vz-fig-title" id="cap-w9-path">フォルダの木と、<span translate="no">絶対パス</span>・<span translate="no">相対パス</span></p>
+              <svg class="vz-svg" viewBox="0 0 360 250" role="img" aria-labelledby="w9-path-t w9-path-d">
+                <title id="w9-path-t">フォルダの木と、絶対パス・相対パス</title>
+                <desc id="w9-path-d">いちばん上にルートディレクトリ（/）。その下に cafe フォルダ。cafe の下に menu フォルダと sales フォルダ。sales の下に uriage.xlsx ファイル。カレントディレクトリは cafe。絶対パスは /cafe/sales/uriage.xlsx。相対パスは sales/uriage.xlsx。</desc>
+                <rect class="box-white" x="130" y="4" width="100" height="30" rx="8"/>
+                <text class="t-b t-c" x="180" y="24" translate="no">/（ルート）</text>
+                <line class="line" x1="180" y1="34" x2="180" y2="52"/>
+                <rect class="box-orange" x="130" y="52" width="100" height="30" rx="8"/>
+                <text class="t-b t-c" x="180" y="72" translate="no">cafe</text>
+                <text class="t-sm" x="236" y="72">← カレント</text>
+                <line class="line" x1="180" y1="82" x2="180" y2="96"/>
+                <line class="line" x1="90" y1="96" x2="270" y2="96"/>
+                <line class="line" x1="90" y1="96" x2="90" y2="110"/>
+                <line class="line" x1="270" y1="96" x2="270" y2="110"/>
+                <rect class="box-white" x="40" y="110" width="100" height="30" rx="8"/>
+                <text class="t-b t-c" x="90" y="130" translate="no">menu</text>
+                <rect class="box-white" x="220" y="110" width="100" height="30" rx="8"/>
+                <text class="t-b t-c" x="270" y="130" translate="no">sales</text>
+                <line class="line" x1="270" y1="140" x2="270" y2="158"/>
+                <rect class="box-blue" x="205" y="158" width="130" height="30" rx="8"/>
+                <text class="t-b t-c" x="270" y="178" translate="no">uriage.xlsx</text>
+                <rect class="box-white" x="2" y="198" width="356" height="46" rx="8"/>
+                <text class="t-sm" x="12" y="216"><tspan class="t-b">絶対パス</tspan>（ルートから）：<tspan translate="no">/cafe/sales/uriage.xlsx</tspan></text>
+                <text class="t-sm" x="12" y="236"><tspan class="t-b">相対パス</tspan>（カレントから）：<tspan translate="no">sales/uriage.xlsx</tspan></text>
+              </svg>
+              <figcaption>場所の書き方は2つ。<strong>ルートから全部</strong>書くのが<span translate="no">絶対パス</span>、<strong>いま開いている場所から</strong>書くのが<span translate="no">相対パス</span>。<span translate="no">.xlsx</span>のような、名前の最後の部分を<strong><span translate="no">ファイル拡張子</span></strong>という（ファイルの種類を表す）。</figcaption>
+            </figure>
+            <p>ファイル管理には、ほかにも、複数の人が同じファイルを使う<strong>ファイル共有</strong>と、「誰が読める・書ける」を決める<strong>アクセス権設定</strong>がある（シラバスの活用例）。ファイルの保存を繰り返すと、1つのファイルがディスクの中で細かく分かれて置かれることがある。これを<strong><span translate="no">フラグメンテーション</span></strong>という（シラバスの用語例）。</p>
+            <p><strong>バックアップ</strong>：誤操作や故障で、ファイルが壊れたときのために、<strong>写しを別の場所に保存</strong>しておくこと。何日分の写しを残すかを決める<strong>世代管理</strong>という考え方がある（例：今日・昨日・先週の3つを残す）。長く保管するために、まとめて保存することは<strong><span translate="no">アーカイブ</span></strong>（シラバスの用語例）。バックアップの写しも、元のファイルと同じ場所に置くと、一緒に壊れる。別の場所に置く。</p>
+
+            <p><strong>② 表計算（約15分、教科書 p.276-）</strong></p>
+            <p>Aさんは、お客さんの名簿や、毎日の売上を、表計算ソフトで管理している。シラバスは、表計算の基本機能として、<strong>セルの参照</strong>・四則演算の指定・<strong>代表的な関数</strong>・データの並べ替えや検索・<strong>グラフの作成</strong>・ピボットテーブルの利用を、活用例に挙げている。</p>
+            <p>試験で特に出るのが、式を<strong>コピー（複写）</strong>したとき、セルの参照が、どう動くか。</p>
+            <div class="table-wrap">
+              <table class="schedule-table">
+                <thead><tr><th>書き方</th><th>名前</th><th>コピーすると</th></tr></thead>
+                <tbody>
+                  <tr><td><span translate="no">B4</span></td><td><strong>相対参照</strong></td><td>コピー先に合わせて、<strong>ずれる</strong>（下にコピーすると、B5、B6…）</td></tr>
+                  <tr><td><span translate="no">B$1</span></td><td>行を固定（複合参照）</td><td>行（1）は<strong>動かない</strong>。列だけずれる</td></tr>
+                  <tr><td><span translate="no">$B$1</span></td><td><strong>絶対参照</strong></td><td>行も列も<strong>動かない</strong>。いつも、B1を指す</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="lesson-note">「<span translate="no">$</span>」は、「ここは固定する」の印。この表の名前や言い方は、この教材の説明用（シラバスの活用例は「セルの参照やセルへの代入」とだけ書いている）。</p>
+            <p>例：Aさんは、税抜価格の表から、税込価格を計算したい。消費税率は、セルB1に1つだけ書いてあり、どの商品の計算でも、同じB1を使いたい。</p>
+            <div class="table-wrap">
+              <table class="schedule-table">
+                <thead><tr><th>セル</th><th>商品名</th><th>税抜価格（B列）</th><th>C列に入れる式</th></tr></thead>
+                <tbody>
+                  <tr><td>4行目</td><td>商品X</td><td>200</td><td><span translate="no">=B4*(1+B$1)</span></td></tr>
+                  <tr><td>5行目</td><td>商品Y</td><td>500</td><td><span translate="no">=B5*(1+B$1)</span></td></tr>
+                  <tr><td>6行目</td><td>商品Z</td><td>100</td><td><span translate="no">=B6*(1+B$1)</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>C4の式を、C5・C6にコピーすると、<span translate="no">B4</span>は、B5・B6にずれる（税抜価格は、行ごとに変わってほしい）。<span translate="no">B$1</span>は、行が固定なので、B1のまま動かない（税率は、いつも同じセルを使いたい）。次の過去問は、この形。</p>
+            <div class="exam-q">
+              <p class="exam-q-text">【例題②】問76　商品の税込価格を計算する表計算のワークシートがある。セルB1には消費税率が入力されており，セルB4～B6には税抜価格が入力されている。セルC4～C6に税込価格を表示するために，セルC4に式を入力し，セルC5，C6に複写する。セルC4に入力する式はどれか。ここで，セルB1は，パーセント形式で表示している。（表：B1＝10%。B4＝商品X 200円，B5＝商品Y 500円，B6＝商品Z 100円）</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>B$4*(1+B$1)</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>B$4*(1+B1)</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>B4*(1+B$1)</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>B4*(1+B1)</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問76（<span translate="no">テクノロジ系</span>。問題文・選択肢は原文のまま。ワークシートの図は、文字で書き直した）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：ウ</strong>（型：コピーしたとき、<strong>動いてほしいものと、動いてほしくないもの</strong>に分ける）。税抜価格（<span translate="no">B4</span>）は、C5のとき<span translate="no">B5</span>、C6のとき<span translate="no">B6</span>と、<strong>ずれてほしい</strong>ので、<span translate="no">$</span>を付けない。税率（<span translate="no">B1</span>）は、どの行でも<strong>B1のまま</strong>にしたいので、行を固定する<span translate="no">B$1</span>にする。アは、<span translate="no">B$4</span>で、税抜価格も固定されてしまう。イ・エは、<span translate="no">B1</span>に<span translate="no">$</span>がなく、C5にコピーすると<span translate="no">B2</span>にずれてしまう。</p>
+              </details>
+            </div>
+
+            <p><strong>③ <span translate="no">OSS</span>：ソースコードが公開されているソフト（約5分）</strong></p>
+            <p>Aさんは、お店のパソコンで、お金をかけずに使えるソフトを探している。<strong><span translate="no">OSS</span></strong>（<span translate="no">Open Source Software</span>）は、設計図にあたる<strong>ソースコード</strong>が公開されていて、決められた条件のもとで、自由に使い、直し、配れるソフト。IPAのシラバスは、<span translate="no">OSS</span>の特徴を、次のように挙げている（確認日：2026-11-25）。</p>
+            <div class="vz-fields">
+              <section class="vz-field vz-f-st">
+                <h4>ソースコードの公開</h4>
+                <p>設計図（ソースコード）を、<strong>誰でも見られる</strong>。</p>
+                <ul class="vz-tags"><li>だから、中身を確かめられる</li></ul>
+              </section>
+              <section class="vz-field vz-f-st">
+                <h4>再配布の制限の禁止</h4>
+                <p>直したものを、<strong>自由に配ってよい</strong>。</p>
+                <ul class="vz-tags"><li>配ることを、禁止できない</li></ul>
+              </section>
+              <section class="vz-field vz-f-st">
+                <h4>無保証の原則</h4>
+                <p>使って困っても、<strong>作った人は責任を負わない</strong>。</p>
+                <ul class="vz-tags"><li>自分の責任で使う</li></ul>
+              </section>
+            </div>
+            <p><span translate="no">OSS</span>の種類は、<span translate="no">OS</span>（例：<span translate="no">Linux</span>）・通信系・オフィス系・<span translate="no">データベース管理システム</span>・応用ソフトウェアなど、いろいろ（シラバス）。<strong>ただし、無料とは限らない</strong>。<span translate="no">OSS</span>ごとに<strong>ライセンス</strong>（利用許諾条件）が決まっていて、使う前に確認する。ライセンスの代表として、シラバスは<span translate="no">GPL</span>（<span translate="no">GNU General Public License</span>）と<strong><span translate="no">コピーレフト</span></strong>を用語例に挙げている。<span translate="no">コピーレフト</span>は、一般に、改造したものも、同じ自由な条件で配ることを求める考え方。細かい違いは、今日は扱わない。</p>
+
+            <p><strong>④ <span translate="no">情報デザイン</span>と<span translate="no">ユニバーサルデザイン</span>：伝わるように、整える（約10分、教科書 p.276-）</strong></p>
+            <p>Aさんの困りごと3。メニュー表の文字が小さく、情報がごちゃごちゃで、読みにくい。<strong><span translate="no">情報デザイン</span></strong>は、情報を<strong>分かりやすく整理して、正確に伝える</strong>ための考え方と方法。シラバスは、デザインの原則として<strong>近接・整列・反復・対比</strong>の4つを用語例に挙げている。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w9-4p">
+              <p class="vz-fig-title" id="cap-w9-4p">デザインの四つの原則（メニュー表で考える）</p>
+              <div class="vz-fields">
+                <section class="vz-field vz-f-st">
+                  <h4><span translate="no">近接</span></h4>
+                  <p>関連するものを、<strong>近づけて</strong>グループにする。</p>
+                  <ul class="vz-tags"><li>例：コーヒーの種類を、1か所にまとめる</li></ul>
+                </section>
+                <section class="vz-field vz-f-st">
+                  <h4><span translate="no">整列</span></h4>
+                  <p>決めたルールで、<strong>そろえて</strong>置く。</p>
+                  <ul class="vz-tags"><li>例：値段を、右にそろえる</li></ul>
+                </section>
+                <section class="vz-field vz-f-st">
+                  <h4><span translate="no">反復</span></h4>
+                  <p>同じ種類には、同じデザインを<strong>繰り返す</strong>。</p>
+                  <ul class="vz-tags"><li>例：見出しは、いつも同じ色・大きさ</li></ul>
+                </section>
+                <section class="vz-field vz-f-st">
+                  <h4><span translate="no">対比</span></h4>
+                  <p>大きさや強さの<strong>違いをはっきり</strong>させる。</p>
+                  <ul class="vz-tags"><li>例：おすすめだけ、大きく太く</li></ul>
+                </section>
+              </div>
+              <figcaption>例は、この教材の説明用。次の過去問は、4つの原則の意味を、そのまま聞く。</figcaption>
+            </figure>
+            <div class="exam-q">
+              <p class="exam-q-text">【例題③】問72　見る人に意図が伝わりやすいデザインにするための四つの原則に関する次の記述中のa，bに入れる字句の適切な組合せはどれか。<br>〔四つの原則〕<br>近接：互いに関連する要素は近づけてグループにする。<br>a：要素を意図したルールに基づき配置する。<br>反復：要素ごとにデザインルールを繰り返す。<br>b：要素ごとの大小や強弱などの違いを明確にする。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>a：整列　b：価値</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>a：整列　b：対比</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>a：操作　b：価値</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>a：操作　b：対比</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問72（<span translate="no">テクノロジ系</span>。問題文・選択肢は原文のまま。表は、見やすいように、1行ずつに書き直した）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：イ</strong>（型：四つの原則の名前を、説明から思い出す）。aは「ルールに基づいて配置する」＝<strong>整列</strong>。bは「大小や強弱の違いを明確にする」＝<strong>対比</strong>。「操作」と「価値」は、四つの原則にない言葉。</p>
+              </details>
+            </div>
+            <p>シラバスは、ほかに、情報の整理の軸を表す<strong><span translate="no">LATCH</span></strong>の法則（<span translate="no">Location</span>＝場所、<span translate="no">Alphabet</span>＝五十音やアルファベット順、<span translate="no">Time</span>＝時間、<span translate="no">Category</span>＝分類、<span translate="no">Hierarchy</span>＝階層・大きさの順）、操作のしかたを伝える手がかりの<strong><span translate="no">シグニファイア</span></strong>（例：押せそうに見えるボタンの形）、使う人の体験全体を考える<strong><span translate="no">UXデザイン</span></strong>も、用語例に挙げている。今日は、名前と、おおまかな意味だけ。</p>
+            <p><strong><span translate="no">ユニバーサルデザイン</span>：できるだけ多くの人に</strong>。もう一つ、Aさんの困りごと3の続き。日本語が読めないお客さんも、年配のお客さんも、同じメニューで困らないようにしたい。<strong><span translate="no">ユニバーサルデザイン</span></strong>は、年齢や文化、障害の有無や能力の違いなどにかかわらず、<strong>できるだけ多くの人が快適に使えること</strong>を目指す考え方（シラバス）。用語例は3つ。<strong><span translate="no">アクセシビリティ</span></strong>（誰でも使える・読める度合い）、<strong><span translate="no">ピクトグラム</span></strong>（絵で意味を伝える記号。例：非常口のマーク）、<strong><span translate="no">インフォグラフィック</span></strong>（情報を図やグラフで見せる表現）。Aさんのメニューには、飲み物の絵のマークと、大きめの文字を足す。</p>
+
+            <div class="demo-cta demo-cta--amber">
+              <p class="demo-cta__heading">🎮 ゲーム①：用語シューティング ステージ1（約10分）</p>
+              <p class="demo-cta__body">ここまでに出た用語（<span translate="no">OS</span>・<span translate="no">仮想記憶</span>・<span translate="no">絶対パス</span>・<span translate="no">OSS</span>・<span translate="no">情報デザイン</span>・<span translate="no">ユニバーサルデザイン</span>・<span translate="no">ピクトグラム</span>）を、ゲームで確かめる。画面の「意味」を読んで、合う用語の的を撃つ。点数は記録されない。最初は音が出ない。間違えた用語は、最後の画面に一覧が出る。</p>
+              <p class="demo-cta__body"><strong>進め方：</strong>1回は約2分。<strong>目標は「ランク<span translate="no">A</span>以上」（7問中6問以上）</strong>。終わったら、間違えた用語の一覧を、下の<a href="#sec-terms">用語カード</a>で確かめて、もう一度遊ぶ。ページを開くと、「スタート」ボタンが出る。翻訳を使う人は、翻訳してから押す。</p>
+              <a href="term-shooter.html?w=9&amp;stage=1" class="demo-cta__link">→ ステージ1を始める</a>
+              <div class="qr-box qr-box--inline qr-box--pc">
+                <a class="qr-box__zoom" href="qr/week09-game-stage1.svg" target="_blank" rel="noopener" aria-label="QRコードを大きく表示する">
+                  <img class="qr-box__img" src="qr/week09-game-stage1.svg" alt="ゲーム ステージ1を開くQRコード。スマートフォンのカメラで読み取ると、ゲームが開く。" width="150" height="150">
+                </a>
+                <div class="qr-box__body">
+                  <p class="qr-box__heading">📱 スマホで遊ぶ</p>
+                  <p class="qr-box__text">スマートフォンのカメラで、このQRコードを読み取ると、ステージ1が開く。押すと、大きく表示される。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <!-- ================= 2限 前半 ================= -->
+        <div class="timeline-block" id="blk-3">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>標準化 → <span translate="no">データベース</span> → <span translate="no">DBMS</span> → データ活用 → <span translate="no">情報メディア</span>と<span translate="no">圧縮</span> → 🎮ゲーム②（テクノロジ系 p.276-313、ストラテジ系 p.028-032・p.060-063）</h3>
+          <div class="timeline-body">
+
+            <p><strong>① 標準化：みんなが同じ決まりを使う（約5分、教科書 p.060-063）</strong></p>
+            <p>メニューの絵のマーク（<span translate="no">ピクトグラム</span>）は、お店ごとに違う絵だと、かえって分からない。USBの形も、QRコードも、同じ決まりがあるから、どの機器でも使える。このような<strong>決まりを、みんなでそろえること</strong>を<strong>標準化</strong>という。シラバスは、標準化の意義を、互換性の確保などのために、<span translate="no">ISO</span>や<span translate="no">IEC</span>といった標準化団体や業界団体が標準化を行っていること、と説明している（確認日：2026-11-25）。</p>
+            <div class="table-wrap">
+              <table class="schedule-table">
+                <thead><tr><th>用語</th><th>おおまかな意味（やさしい言い換え）</th></tr></thead>
+                <tbody>
+                  <tr><td><span translate="no">デファクトスタンダード</span></td><td>市場で広く使われて、<strong>事実上</strong>の標準になったもの</td></tr>
+                  <tr><td><span translate="no">デジュレスタンダード</span></td><td><strong>公的な機関</strong>が、正式に決めた標準</td></tr>
+                  <tr><td><span translate="no">フォーラム標準</span></td><td>関係する企業などが集まって、<strong>グループで</strong>決めた標準</td></tr>
+                  <tr><td><span translate="no">ISO</span>・<span translate="no">IEC</span>・<span translate="no">JIS</span></td><td>国際標準化機構・国際電気標準会議・日本産業規格（日本の標準）</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>IT（情報技術）の標準化の例として、シラバスは、コネクタの形・通信方式・コード表現と、<strong>バーコード・<span translate="no">JAN</span>コード・<span translate="no">QR</span>コード</strong>を挙げている。<span translate="no">ピクトグラム</span>のうち、<strong>案内用図記号</strong>は、日本産業規格（<span translate="no">JIS Z 8210</span>）で決められている（国土交通省のページで確認、確認日：2026-11-25。個々の図記号の内容は、今日は扱わない）。</p>
+            <p class="lesson-note">表の言い換えは、この教材の説明用。シラバスは、用語例を挙げているだけで、定義文は書いていない。</p>
+
+            <p><strong>② <span translate="no">データベース</span>：データを整理して、ためる（約11分、教科書 p.276-）</strong></p>
+            <p>Aさんの困りごと2。名簿の表計算が、数千行になった。同じお客さんが2回入っていたり、探すのに時間がかかったりする。たくさんのデータを、<strong>整理して、取り出しやすいようにためたもの</strong>が<strong><span translate="no">データベース</span></strong>。その<span translate="no">データベース</span>を管理するソフトが<strong><span translate="no">DBMS</span></strong>（<span translate="no">Database Management System</span>、データベース管理システム）。シラバスは、<span translate="no">DBMS</span>を、データを構造的にためて、一貫性を保ち、効率よく取り出すための機能をもつもの、と説明している。</p>
+            <p>代表的な形が、<strong>表（<span translate="no">テーブル</span>）の形</strong>でデータを管理する<strong>関係データベース</strong>（<span translate="no">RDBMS</span>）。表の1行を<strong><span translate="no">レコード</span></strong>、1列を<strong><span translate="no">フィールド</span></strong>（項目）という。シラバスは、表の形でない<span translate="no">NoSQL</span>（<span translate="no">キーバリューストア</span>・<span translate="no">ドキュメント指向データベース</span>・<span translate="no">グラフ指向データベース</span>）も用語例に挙げている。今日は、名前だけ。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w9-db">
+              <p class="vz-fig-title" id="cap-w9-db">2つの表を、お客さんの番号でつなぐ</p>
+              <svg class="vz-svg" viewBox="0 0 360 232" role="img" aria-labelledby="w9-db-t w9-db-d">
+                <title id="w9-db-t">2つの表を、お客さんの番号でつなぐ</title>
+                <desc id="w9-db-d">左に顧客表。項目は顧客番号と名前。行は、101 お客A、102 お客B、103 お客C。顧客番号が主キー。右に注文表。項目は注文番号と顧客番号と品名。行は、1 101 ラテ、2 103 紅茶、3 101 ケーキ。注文番号が主キー、顧客番号が外部キーで、顧客表の顧客番号を指す。</desc>
+                <text class="t-b" x="4" y="18">顧客表</text>
+                <rect class="box-white" x="2" y="26" width="132" height="108" rx="8"/>
+                <rect class="box-orange" x="4" y="30" width="62" height="24" rx="6"/>
+                <text class="t-sm" x="9" y="46" translate="no">顧客番号</text>
+                <text class="t-sm" x="78" y="46">名前</text>
+                <text class="t-sm" x="9" y="72">101</text><text class="t-sm" x="78" y="72">お客A</text>
+                <text class="t-sm" x="9" y="96">102</text><text class="t-sm" x="78" y="96">お客B</text>
+                <text class="t-sm" x="9" y="120">103</text><text class="t-sm" x="78" y="120">お客C</text>
+                <text class="t-b" x="170" y="18">注文表</text>
+                <rect class="box-white" x="168" y="26" width="190" height="108" rx="8"/>
+                <rect class="box-blue" x="170" y="30" width="62" height="24" rx="6"/>
+                <rect class="box-orange" x="236" y="30" width="62" height="24" rx="6"/>
+                <text class="t-sm" x="175" y="46" translate="no">注文番号</text>
+                <text class="t-sm" x="241" y="46" translate="no">顧客番号</text>
+                <text class="t-sm" x="306" y="46">品名</text>
+                <text class="t-sm" x="175" y="72">1</text><text class="t-sm" x="241" y="72">101</text><text class="t-sm" x="306" y="72">ラテ</text>
+                <text class="t-sm" x="175" y="96">2</text><text class="t-sm" x="241" y="96">103</text><text class="t-sm" x="306" y="96">紅茶</text>
+                <text class="t-sm" x="175" y="120">3</text><text class="t-sm" x="241" y="120">101</text><text class="t-sm" x="306" y="120">ケーキ</text>
+                <rect class="box-white" x="2" y="146" width="356" height="84" rx="8"/>
+                <text class="t-sm" x="12" y="166"><tspan class="t-b" translate="no">主キー</tspan>：行を<tspan class="t-b">1つに特定</tspan>する項目（重複しない）</text>
+                <text class="t-sm" x="12" y="186"><tspan class="t-b" translate="no">外部キー</tspan>：<tspan class="t-b">ほかの表の主キー</tspan>を指す項目</text>
+                <text class="t-sm" x="12" y="206">注文表の顧客番号は、顧客表の顧客番号を指す</text>
+                <text class="t-sm" x="12" y="224">橙色＝つなぐ項目　青＝注文表の主キー</text>
+              </svg>
+              <figcaption>同じお客さんの名前を、注文のたびに書かない。<strong>番号だけ</strong>を書いて、名前は顧客表で1回だけ持つ。これで、名前の書き間違いや、直し忘れが減る。</figcaption>
+            </figure>
+            <p>この「同じデータを、何度も書かない」整理の考え方が、<strong>正規化</strong>。シラバスは、正規化の必要性までを範囲にして、詳細な内容は問わないと書いている。<span translate="no">主キー</span>があると、同じお客さんが2回入るのも防ぎやすい。ほかの用語例は、<span translate="no">E-R</span>図（データの関連を図で表す）、<span translate="no">コード設計</span>、<span translate="no">データクレンジング</span>（誤りや重複を直す）など。名前だけ知っておく。</p>
+
+            <p><strong>③ <span translate="no">DBMS</span>の働き：探す、変える、守る（約13分）</strong></p>
+            <p><strong>探す：<span translate="no">インデックス</span></strong>。数千行から、特定のお客さんを探すとき、毎回、先頭から全部を見ると遅い。本の索引のように、探す項目の<strong>目次</strong>（<span translate="no">インデックス</span>）を作っておくと、速く探せる。次の過去問は、この言葉を問う。</p>
+            <div class="exam-q">
+              <p class="exam-q-text">【例題④】問65　DBMSにおいて，データの検索を高速に行う目的で，必要に応じて設定して利用する情報はどれか。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>インデックス</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>外部キー</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>主キー</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>スキーマ</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問65（<span translate="no">テクノロジ系</span>。問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：ア</strong>（型：問題文のキーワードに合う用語を選ぶ。「検索を高速に」）。<span translate="no">インデックス</span>は、検索を速くするための索引。<span translate="no">外部キー</span>は、表どうしをつなぐ項目。<span translate="no">主キー</span>は、行を1つに特定する項目。<span translate="no">スキーマ</span>は、データベースの構造の定義（どんな表と項目があるか）。</p>
+              </details>
+            </div>
+            <p><strong>変える・取り出す：データ操作</strong>。関係データベースの代表的な操作として、シラバスは、<strong>挿入・更新・選択・射影・結合</strong>を挙げている（<span translate="no">SQL</span>の文法は問わない）。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w9-op">
+              <p class="vz-fig-title" id="cap-w9-op">取り出す3つの操作（上の2つの表で考える）</p>
+              <div class="vz-fields">
+                <section class="vz-field vz-f-st">
+                  <h4><span translate="no">選択</span></h4>
+                  <p>条件に合う<strong>行</strong>を取り出す。</p>
+                  <ul class="vz-tags"><li>例：顧客番号101の注文だけ</li></ul>
+                </section>
+                <section class="vz-field vz-f-st">
+                  <h4><span translate="no">射影</span></h4>
+                  <p>必要な<strong>列</strong>だけを取り出す。</p>
+                  <ul class="vz-tags"><li>例：品名の列だけ</li></ul>
+                </section>
+                <section class="vz-field vz-f-st">
+                  <h4><span translate="no">結合</span></h4>
+                  <p>共通の項目で、<strong>表をつなぐ</strong>。</p>
+                  <ul class="vz-tags"><li>例：注文表と顧客表を、顧客番号でつなぐ</li></ul>
+                </section>
+              </div>
+              <figcaption>選択は「行」、射影は「列」、結合は「表と表」。例は、この教材の説明用。</figcaption>
+            </figure>
+            <p><strong>守る：<span translate="no">トランザクション</span>と、障害からの回復</strong>。2人が同時に、最後の1個の予約を取ろうとしたら、どうなるか。データがずれたり、途中で止まって、中途半端に書き換わったりすると困る。そこで、<span translate="no">DBMS</span>は、データを守る仕組みをもつ。</p>
+            <div class="vz-fields">
+              <section class="vz-field vz-f-st">
+                <h4><span translate="no">トランザクション</span></h4>
+                <p>ひとまとまりの処理。<strong>全部成功したら確定、途中で失敗したら元に戻す</strong>。</p>
+                <ul class="vz-tags"><li>例：お金を引いて、足す、の2つで1組</li></ul>
+              </section>
+              <section class="vz-field vz-f-st">
+                <h4>同時実行制御（排他制御）</h4>
+                <p>複数の人が同時に使っても、<strong>データがずれない</strong>ようにする。</p>
+                <ul class="vz-tags"><li>例：誰かが書き換え中は、ほかの人を待たせる</li></ul>
+              </section>
+              <section class="vz-field vz-f-st">
+                <h4>障害回復（リカバリ）</h4>
+                <p>故障のあと、データを<strong>元の正しい状態に戻す</strong>。</p>
+                <ul class="vz-tags"><li>例：<span translate="no">ロールバック</span>（処理の前に戻す）</li></ul>
+              </section>
+            </div>
+            <p class="lesson-note">シラバスの用語例：<span translate="no">トランザクション</span>・<span translate="no">ACID特性</span>・<span translate="no">デッドロック</span>・<span translate="no">2相コミットメント</span>、<span translate="no">チェックポイント</span>・<span translate="no">バックワードリカバリ（ロールバック）</span>・<span translate="no">フォワードリカバリ（ロールフォワード）</span>。今日は、<span translate="no">トランザクション</span>と<span translate="no">ロールバック</span>だけ詳しく。ほかは、名前だけ。例は、この教材の説明用。</p>
+            <div class="exam-q">
+              <p class="exam-q-text">【例題⑤】問61　DBMSのトランザクションに関する記述として，適切なものはどれか。</p>
+              <div class="exam-q-choice"><span class="exam-q-mark">ア</span><span>あるデータベースの内容を他のデータベースに複製し，内容の同期をとる。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">イ</span><span>データベースに対して行った操作を，順次記録する。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">ウ</span><span>データベースに対する一連の処理が全て成功したら変更結果を確定し，途中で失敗したら処理前の状態に戻す。</span></div>
+              <div class="exam-q-choice"><span class="exam-q-mark">エ</span><span>データベースの表の索引を作成し，検索時には索引を使用する。</span></div>
+              <p class="exam-q-source">出典：令和7年度 ITパスポート試験 公開問題 問61（<span translate="no">テクノロジ系</span>。問題文・選択肢は原文のまま）</p>
+              <details class="exam-q-answer">
+                <summary>自分で選んだあとに、答えと解説を見る</summary>
+                <p><strong>正解：ウ</strong>（型：用語の意味を、言い換えと照らし合わせる）。<span translate="no">トランザクション</span>は、「一連の処理が、全部成功したら確定、途中で失敗したら元に戻す」ひとまとまり。アは、第8回で学んだ<span translate="no">レプリケーション</span>。イは、操作の記録（ログ）。エは、<span translate="no">インデックス</span>。</p>
+              </details>
+            </div>
+
+            <p><strong>④ データを、仕事に活かす（約4分、教科書 p.028-032）</strong></p>
+            <p>Aさんの名簿のようなデータは、集めて終わりではない。使って、<strong>お店の仕事を良くする</strong>ために集める（例：どの曜日に、どの飲み物が売れるか）。ただし、使う前に、データを<strong>きれいに整える</strong>必要がある。シラバスは、データ利活用のための簡単な前処理として、<strong>データの名寄せ</strong>（同じ人や同じものを、1つにまとめる）・<strong>欠損値</strong>（空欄）や<strong>外れ値・異常値</strong>（極端な値）の処理を挙げている。ほかに、集めた大量のデータは<strong><span translate="no">ビッグデータ</span></strong>、それを見やすく分析する仕組みは<strong><span translate="no">BI</span></strong>（<span translate="no">Business Intelligence</span>）という（名前だけ）。お客さんの名前や電話番号は<strong>個人情報</strong>。第2回で学んだ個人情報保護法に注意して、必要なものだけを集め、大切に守る。</p>
+
+            <p><strong>⑤ <span translate="no">情報メディア</span>と<span translate="no">圧縮</span>：写真や音を、小さくする（約7分）</strong></p>
+            <p>Aさんの困りごと4。ホームページに載せた写真が大きくて、スマートフォンで開くのが遅い。教科書に、この内容の章はない。IPAのシラバスの<strong>マルチメディア技術</strong>（用語例）から、おおまかに確認する（確認日：2026-11-25）。文字に加えて、音声・画像・動画を、<strong>デジタル化</strong>して、コンピュータの中で一緒に扱えるようにすることを、マルチメディアという。</p>
+            <div class="table-wrap">
+              <table class="schedule-table">
+                <thead><tr><th>メディア</th><th>シラバスの用語例（一部）</th><th>おおまかな意味</th></tr></thead>
+                <tbody>
+                  <tr><td>音声</td><td><span translate="no">PCM</span>・<span translate="no">WAV</span>・<span translate="no">MP3</span>・<span translate="no">AAC</span></td><td>音を、数字にして保存する（<span translate="no">PCM</span>は、音をデジタルにする方法の名前）</td></tr>
+                  <tr><td>静止画</td><td><span translate="no">ラスターデータ</span>・<span translate="no">ベクターデータ</span>・<span translate="no">JPEG</span>・<span translate="no">GIF</span>・<span translate="no">PNG</span></td><td>ラスターは、点（画素）の集まり。ベクターは、線や図形を式で表す</td></tr>
+                  <tr><td>動画</td><td><span translate="no">フレーム</span>・<span translate="no">フレームレート</span>・<span translate="no">MPEG</span>・<span translate="no">MP4</span></td><td>たくさんの静止画（フレーム）を、続けて見せる。1秒に何枚かが、フレームレート</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>音声・画像・動画は、データの量が大きい。そこで、<strong><span translate="no">圧縮</span></strong>して小さくし、保存する場所と、ネットワークで送る量を減らす（シラバスは、圧縮の目的を「データ保存、ネットワーク負荷の軽減」と書いている）。圧縮には、2つの種類がある。</p>
+            <figure class="vz-fig" aria-labelledby="cap-w9-cmp">
+              <p class="vz-fig-title" id="cap-w9-cmp"><span translate="no">可逆圧縮</span>と<span translate="no">非可逆圧縮</span></p>
+              <svg class="vz-svg" viewBox="0 0 360 196" role="img" aria-labelledby="w9-cmp-t w9-cmp-d">
+                <title id="w9-cmp-t">可逆圧縮と非可逆圧縮</title>
+                <desc id="w9-cmp-d">上の段は可逆圧縮。元のデータを圧縮して小さくし、伸ばすと、元と完全に同じデータに戻る。例はZIPやPNG。下の段は非可逆圧縮。元のデータを圧縮してより小さくし、伸ばしても、元とは少し違うデータになる。例はJPEGやMP3。</desc>
+                <text class="t-b" x="4" y="18" translate="no">可逆圧縮</text>
+                <rect class="box-white" x="2" y="26" width="104" height="44" rx="8"/><text class="t-sm t-c" x="54" y="44">元の</text><text class="t-sm t-c" x="54" y="60">データ</text>
+                <rect class="box-orange" x="128" y="26" width="104" height="44" rx="8"/><text class="t-sm t-c" x="180" y="44">圧縮すると</text><text class="t-sm t-c" x="180" y="60">小さい</text>
+                <rect class="box-white" x="254" y="26" width="104" height="44" rx="8"/><text class="t-sm t-c" x="306" y="44">伸ばすと</text><text class="t-sm t-c" x="306" y="60">元と同じ</text>
+                <line class="line-orange" x1="106" y1="48" x2="126" y2="48" marker-end="url(#mk-sm)"/>
+                <line class="line-orange" x1="232" y1="48" x2="252" y2="48" marker-end="url(#mk-sm)"/>
+                <text class="t-sm" x="4" y="86">例：<tspan translate="no">ZIP・PNG</tspan>（一般に）</text>
+                <text class="t-b" x="4" y="116" translate="no">非可逆圧縮</text>
+                <rect class="box-white" x="2" y="124" width="104" height="44" rx="8"/><text class="t-sm t-c" x="54" y="142">元の</text><text class="t-sm t-c" x="54" y="158">データ</text>
+                <rect class="box-orange" x="128" y="124" width="104" height="44" rx="8"/><text class="t-sm t-c" x="180" y="142">圧縮すると</text><text class="t-sm t-c" x="180" y="158">もっと小さい</text>
+                <rect class="box-white" x="254" y="124" width="104" height="44" rx="8"/><text class="t-sm t-c" x="306" y="142">伸ばすと</text><text class="t-sm t-c" x="306" y="158">元と少し違う</text>
+                <line class="line-orange" x1="106" y1="146" x2="126" y2="146" marker-end="url(#mk-sm)"/>
+                <line class="line-orange" x1="232" y1="146" x2="252" y2="146" marker-end="url(#mk-sm)"/>
+                <text class="t-sm" x="4" y="184">例：<tspan translate="no">JPEG・MP3</tspan>（一般に）</text>
+              </svg>
+              <figcaption><strong>元に完全に戻せる</strong>のが<span translate="no">可逆圧縮</span>、<strong>戻せないが、より小さくできる</strong>のが<span translate="no">非可逆圧縮</span>。例は、一般によく知られた使われ方で、圧縮の設定によって違うことがある。</figcaption>
+            </figure>
+            <p>Aさんの写真は、<span translate="no">JPEG</span>などの<span translate="no">非可逆圧縮</span>で小さくすると、見た目はあまり変わらずに、ホームページが軽く開く。シラバスは、ほかに、<span translate="no">ZIP</span>・<span translate="no">圧縮率</span>・<span translate="no">ランレングス法</span>・<span translate="no">ハフマン法</span>も用語例に挙げている。今日は、名前だけ。</p>
+
+            <div class="demo-cta demo-cta--amber">
+              <p class="demo-cta__heading">🎮 ゲーム②：用語シューティング ステージ2（約10分）</p>
+              <p class="demo-cta__body">今日の用語（<span translate="no">データベース</span>・<span translate="no">DBMS</span>・<span translate="no">主キー</span>・<span translate="no">外部キー</span>・<span translate="no">インデックス</span>・<span translate="no">トランザクション</span>・<span translate="no">可逆圧縮</span>・<span translate="no">非可逆圧縮</span>）と、前回までの<span translate="no">稼働率</span>・<span translate="no">損益分岐点</span>を、ゲームで確かめる。画面の「意味」を読んで、合う用語の的を撃つ。点数は記録されない。</p>
+              <p class="demo-cta__body"><strong>進め方：</strong>1回は約2分。<strong>目標は「ランク<span translate="no">A</span>以上」（10問中8問以上）</strong>。何度でも挑戦してよい。終わったら、間違えた用語の一覧を<a href="#sec-terms">用語カード</a>で確かめて、もう一度遊ぶ。</p>
+              <a href="term-shooter.html?w=9&amp;stage=2" class="demo-cta__link">→ ステージ2を始める</a>
+              <div class="qr-box qr-box--inline qr-box--pc">
+                <a class="qr-box__zoom" href="qr/week09-game-stage2.svg" target="_blank" rel="noopener" aria-label="QRコードを大きく表示する">
+                  <img class="qr-box__img" src="qr/week09-game-stage2.svg" alt="ゲーム ステージ2を開くQRコード。スマートフォンのカメラで読み取ると、ゲームが開く。" width="150" height="150">
+                </a>
+                <div class="qr-box__body">
+                  <p class="qr-box__heading">📱 スマホで遊ぶ</p>
+                  <p class="qr-box__text">スマートフォンのカメラで、このQRコードを読み取ると、ステージ2が開く。押すと、大きく表示される。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= 2限 後半 ================= -->
+        <div class="timeline-block" id="blk-4">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>ミニ模試（10問・約12分） → 採点と誤答の確認（約8分） → 確認テスト（1回目）（約10分）</h3>
+          <div class="timeline-body">
+
+            <p><strong>ミニ模試（約12分）</strong>：来週は、中間テスト（第10回）。その前の練習として、<strong>本番と同じ形式で、時間を計って</strong>解く。10問を約12分で解く（本番は、1問あたり約1.2分）。問題は、令和7年度ITパスポート試験の公開問題（IPA）から、第2〜7回で学んだ分野（セキュリティ・通信・コンピュータ）を混ぜて選んだ。<strong>授業で名前を出していない用語も、少し入っている</strong>（本番も、同じ）。点数は成績には使わない。</p>
+            <ul>
+              <li>分からない問題で、止まらない。<strong>1問に1分半以上かけない</strong>。後回しにして、最後まで進む（本番の画面にも、「後で見直す」のチェックがある）</li>
+              <li>選択肢を、<strong>消していく</strong>。「絶対に違う」ものを消すと、残りが少なくなる</li>
+              <li>知らない言葉があっても、知っている言葉から、意味を考える</li>
+            </ul>
+            <p class="lesson-note">フォームには、時間を計る機能はない。先生が、始まりと終わりを知らせる。送信すると、点数と、正解・解説が表示される。</p>
+            <div class="vz-cta">
+              <a class="vz-btn vz-btn--ext" href="FORM_MOCK" target="_blank" rel="noopener">第9回 ミニ模試（10問・約12分）を受ける（Googleフォーム）</a>
+            </div>
+
+            <p><strong>採点と、誤答の確認（約8分）</strong>：結果の画面で、<strong>間違えた問題</strong>の解説を読む。間違えた理由を、次の3つに分ける。</p>
+            <div class="vz-fields">
+              <section class="vz-field vz-f-st">
+                <h4>① 知らない言葉</h4>
+                <p>用語の意味を、知らなかった。</p>
+                <ul class="vz-tags"><li>→ 用語カードに足して、覚える</li></ul>
+              </section>
+              <section class="vz-field vz-f-st">
+                <h4>② 知っていたが、混ざった</h4>
+                <p>似た用語と、取り違えた。</p>
+                <ul class="vz-tags"><li>→ 違いを、1行で言えるようにする</li></ul>
+              </section>
+              <section class="vz-field vz-f-st">
+                <h4>③ 問題文の読み違い</h4>
+                <p>「誤っているもの」を、「正しいもの」と読んだなど。</p>
+                <ul class="vz-tags"><li>→ 問い方に、線を引く</li></ul>
+              </section>
+            </div>
+            <p>ミニ模試の10問は、次のとおり、これまでの回につながっている。間違えた問題は、その回のページの用語カードと練習クイズで確かめる（○は、授業で扱った用語。△は、つながる分野を学んだが、その用語は授業で扱っていない）。</p>
+            <div class="table-wrap">
+              <table class="schedule-table">
+                <thead><tr><th>問</th><th>出題の内容</th><th>つながる回</th><th>授業で</th></tr></thead>
+                <tbody>
+                  <tr><td>1</td><td>攻撃の名前と説明の組合せ（問73）</td><td><a href="week02.html">第2回</a></td><td>△</td></tr>
+                  <tr><td>2</td><td>脆弱性とセキュリティパッチ（問70）</td><td><a href="week02.html">第2回</a></td><td>△</td></tr>
+                  <tr><td>3</td><td><span translate="no">CSIRT</span>の活動（問68）</td><td><a href="week03.html">第3回</a></td><td>△</td></tr>
+                  <tr><td>4</td><td>リスク対応（問91）</td><td><a href="week03.html">第3回</a></td><td>○</td></tr>
+                  <tr><td>5</td><td><span translate="no">ISMS</span>と<span translate="no">PDCA</span>（問83）</td><td><a href="week03.html">第3回</a></td><td>△</td></tr>
+                  <tr><td>6</td><td>バイオメトリクス認証（問69）</td><td><a href="week04.html">第4回</a></td><td>△</td></tr>
+                  <tr><td>7</td><td>電波の性質（問71）</td><td><a href="week05.html">第5回</a>・<a href="week06.html">第6回</a></td><td>△</td></tr>
+                  <tr><td>8</td><td>デジタルフォレンジックス（問74）</td><td><a href="week02.html">第2回</a>・<a href="week03.html">第3回</a></td><td>△</td></tr>
+                  <tr><td>9</td><td><span translate="no">GPU</span>（問67）</td><td><a href="week07.html">第7回</a></td><td>○</td></tr>
+                  <tr><td>10</td><td><span translate="no">IDS</span>（問77）</td><td><a href="week02.html">第2回</a>・<a href="week03.html">第3回</a></td><td>△</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="lesson-note">この表の「つながる回」「授業で」は、この教材の整理（第2〜8回のページの本文を検索して確認）。第8回の範囲は、公開問題が授業で使用済みのため、入れていない。</p>
+
+            <p><strong>確認テスト（1回目）（約10分）</strong></p>
+            <p>今日の内容の5問（<span translate="no">OS</span>・表計算・<span translate="no">ユニバーサルデザイン</span>・<span translate="no">主キー</span>・<span translate="no">圧縮</span>）。<strong>点数を競うものではない</strong>。今、どこまで分かっているかを、自分で知るためのテスト。分からない問題は、思い出せる範囲で答える。送信すると、点数と、正解・解説が表示される。</p>
+            <div class="vz-cta">
+              <a class="vz-btn vz-btn--ext" href="FORM_Q1" target="_blank" rel="noopener">第9回 確認テスト（1回目）を受ける（Googleフォーム）</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= まとめ ================= -->
+        <div class="timeline-block" id="blk-5">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>振り返り → 用語カードの提出・次回（中間テスト）の予告</h3>
+          <div class="timeline-body">
+            <ul>
+              <li><strong>振り返り</strong>（約3分）：1回目の結果の画面で、<strong>点数を覚えて</strong>、<strong>間違えた問題の解説</strong>を読む。分からないところは、隣の人に聞く、または、このページの<a href="#sec-terms">用語カード</a>・<a href="#sec-quiz">練習クイズ</a>・<a href="term-shooter.html?w=9">ゲーム</a>で確かめる</li>
+              <li><strong>確認テスト（2回目）は任意</strong>：時間がある人、確かめたい人は、<a href="#sec-optional">下の「任意の取り組み」</a>から受ける</li>
+              <li><strong>用語カード</strong>：今回覚えた用語にチェックを入れて、フォームで提出する（約3分）</li>
+              <li>質問と、次回までの課題の確認（約1分）。読むだけの<a href="#sec-tip">「就活ワンポイント」</a>もある。自分の点数の推移は、<a href="#sec-optional">「任意の取り組み」</a>の「自分の成績を見る」から、いつでも見られる</li>
+              <li>次回（第10回）：<strong>中間テスト＋本番の予行演習①</strong>——IPA公開過去問を使った本番形式のテスト（Googleフォーム、120分を目安）。テストの進め方の詳しい案内は、授業で行う。今日のミニ模試で間違えた問題は、次回までに、つながる回のページで確かめておく</li>
+            </ul>
+            <div class="vz-cta">
+              <a class="vz-btn vz-btn--ext" href="FORM_TERMS" target="_blank" rel="noopener">第9回 今回覚えた用語を提出する（Googleフォーム）</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-terms">
+      <h2>用語カード（今日の用語）</h2>
+      <p class="lesson-note">用語カードは、今日の授業で出る用語と、その意味のリスト。授業の最後に、フォームで<strong>今回覚えた用語</strong>にチェックを入れて提出する。用語は日本語のまま覚える。試験は日本語で行われる。</p>
+      <div class="table-wrap">
+        <table class="schedule-table">
+          <thead><tr><th>用語</th><th>意味</th></tr></thead>
+          <tbody>
+            <tr><td><span translate="no">オペレーティングシステム</span>（<span translate="no">OS</span>）</td><td>ハードウェアやソフトウェアを管理し、アプリケーションが動けるようにする基本ソフトウェア。ユーザー管理・ファイル管理・入出力管理・資源管理などをする</td></tr>
+            <tr><td><span translate="no">仮想記憶</span></td><td>補助記憶の一部も使って、主記憶の物理的な容量に制約されない、論理的な（見かけの）アドレス空間を使えるようにする仕組み</td></tr>
+            <tr><td><span translate="no">絶対パス</span></td><td>最上位のフォルダ（ルートディレクトリ）から書く、ファイルの場所の表し方。いま開いている場所（カレントディレクトリ）から書く方法は、相対パス</td></tr>
+            <tr><td><span translate="no">OSS</span></td><td>ソースコードが公開されていて、ライセンスの条件のもとで、自由に使い・直し・配れるソフトウェア。無保証が原則（無料とは限らない）</td></tr>
+            <tr><td><span translate="no">情報デザイン</span></td><td>情報を、分かりやすく整理して、正確に伝えるための考え方と方法。デザインの原則に、近接・整列・反復・対比がある</td></tr>
+            <tr><td><span translate="no">ユニバーサルデザイン</span></td><td>年齢や国籍、障害の有無などにかかわらず、できるだけ多くの人が快適に使えることを目指す考え方（例：ピクトグラム）</td></tr>
+            <tr><td><span translate="no">データベース</span></td><td>たくさんのデータを整理して、取り出しやすいようにためたもの。表の形でためるのが関係データベース</td></tr>
+            <tr><td><span translate="no">DBMS</span></td><td>データベース管理システム。データベースを管理し、検索・更新・データを守る機能をもつソフトウェア</td></tr>
+            <tr><td><span translate="no">主キー</span></td><td>表の行を、1つに特定できる項目（重複しない）。ほかの表の主キーを指す項目は、外部キー</td></tr>
+            <tr><td><span translate="no">トランザクション</span></td><td>ひとまとまりの処理。全部成功したら変更を確定し、途中で失敗したら処理の前の状態に戻す</td></tr>
+            <tr><td><span translate="no">可逆圧縮</span></td><td>圧縮したデータを、元のデータに完全に戻せる圧縮（例：<span translate="no">ZIP</span>）</td></tr>
+            <tr><td><span translate="no">非可逆圧縮</span></td><td>元のデータには完全には戻せないが、より小さくできる圧縮（例：<span translate="no">JPEG</span>の写真）</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-quiz">
+      <h2>練習クイズ（サイト内・記録なし）</h2>
+      <p class="lesson-note">確認テストの内容を、自分のペースで練習するためのクイズ（確認テストと同じ内容）。回答はこのページの中で判定されるだけで、どこにも送信・保存されず、成績にも含まれない。何度でも試せる。</p>
+
+        <div class="quiz-set">
+          <div class="quiz" aria-live="polite" data-answer="ア">
+            <p class="quiz-q"><span class="quiz-q-num">Q1</span>コンピュータのハードウェアやソフトウェアを管理し，アプリケーションソフトウェアが効率よく動けるようにする基本ソフトウェアはどれか。</p>
+            <div class="quiz-choices">
+              <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span><span translate="no">OS</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span><span translate="no">DBMS</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span>表計算ソフト</span></button>
+              <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span><span translate="no">Web</span>ブラウザ</span></button>
+            </div>
+            <div class="quiz-feedback" hidden>
+              <p class="quiz-result"></p>
+              <p><span translate="no">OS</span>（オペレーティングシステム）は、ハードウェアやソフトウェアの資源を管理し、アプリケーションが使えるようにする基本ソフトウェア。<span translate="no">DBMS</span>はデータベースを管理するソフト、表計算ソフトと<span translate="no">Web</span>ブラウザはアプリケーションソフトウェア。</p>
+              <button type="button" class="quiz-retry">もう一度</button>
+            </div>
+          </div>
+          <div class="quiz" aria-live="polite" data-answer="イ">
+            <p class="quiz-q"><span class="quiz-q-num">Q2</span>セルB1に送料（円）が入力されており，セルB4～B6に商品の価格（円）が入力されている。セルC4に「価格＋送料」を表示するために式を入力し，セルC5，C6に複写する。セルC4に入力する式はどれか。</p>
+            <div class="quiz-choices">
+              <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span><span translate="no">B4+B1</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span><span translate="no">B4+B$1</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span><span translate="no">B$4+B1</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span><span translate="no">B$4+B$1</span></span></button>
+            </div>
+            <div class="quiz-feedback" hidden>
+              <p class="quiz-result"></p>
+              <p>送料のセルB1は、複写しても動かさない（絶対参照）ので、<span translate="no">B$1</span>と書く。価格の<span translate="no">B4</span>は、複写すると下のセルにずれてほしいので、<span translate="no">B4</span>のまま（相対参照）。アは、複写すると送料がB2・B3にずれてしまう。ウ・エは、価格が動かない。</p>
+              <button type="button" class="quiz-retry">もう一度</button>
+            </div>
+          </div>
+          <div class="quiz" aria-live="polite" data-answer="ウ">
+            <p class="quiz-q"><span class="quiz-q-num">Q3</span>年齢や国籍，障害の有無などにかかわらず，できるだけ多くの人が使いやすいように，製品・施設・情報を設計する考え方はどれか。</p>
+            <div class="quiz-choices">
+              <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span><span translate="no">UXデザイン</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span><span translate="no">シグニファイア</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span><span translate="no">ユニバーサルデザイン</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span><span translate="no">ピクトグラム</span></span></button>
+            </div>
+            <div class="quiz-feedback" hidden>
+              <p class="quiz-result"></p>
+              <p><span translate="no">ユニバーサルデザイン</span>は、できるだけ多くの人が使いやすいようにする考え方。<span translate="no">ピクトグラム</span>は、絵で意味を伝える記号（<span translate="no">ユニバーサルデザイン</span>の手段の一つ）。<span translate="no">シグニファイア</span>は、操作のしかたを伝える手がかり。<span translate="no">UXデザイン</span>は、使う人の体験全体を設計すること。</p>
+              <button type="button" class="quiz-retry">もう一度</button>
+            </div>
+          </div>
+          <div class="quiz" aria-live="polite" data-answer="エ">
+            <p class="quiz-q"><span class="quiz-q-num">Q4</span>関係データベースの表（テーブル）で，行（レコード）を1つに特定できる項目（重複しない値）はどれか。</p>
+            <div class="quiz-choices">
+              <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span><span translate="no">外部キー</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span><span translate="no">インデックス</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span><span translate="no">スキーマ</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span><span translate="no">主キー</span></span></button>
+            </div>
+            <div class="quiz-feedback" hidden>
+              <p class="quiz-result"></p>
+              <p><span translate="no">主キー</span>は、表の中で行を1つに特定できる項目（重複しない・空にならない）。<span translate="no">外部キー</span>は、ほかの表の主キーを参照する項目。<span translate="no">インデックス</span>は、検索を速くするための仕組み。<span translate="no">スキーマ</span>は、データベースの構造の定義。</p>
+              <button type="button" class="quiz-retry">もう一度</button>
+            </div>
+          </div>
+          <div class="quiz" aria-live="polite" data-answer="ア">
+            <p class="quiz-q"><span class="quiz-q-num">Q5</span>圧縮したデータを，元のデータに完全に戻せる圧縮の方法はどれか。</p>
+            <div class="quiz-choices">
+              <button type="button" class="quiz-choice" data-choice="ア"><span class="quiz-choice-mark">ア</span><span><span translate="no">可逆圧縮</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="イ"><span class="quiz-choice-mark">イ</span><span><span translate="no">非可逆圧縮</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="ウ"><span class="quiz-choice-mark">ウ</span><span><span translate="no">ストリーミング</span></span></button>
+              <button type="button" class="quiz-choice" data-choice="エ"><span class="quiz-choice-mark">エ</span><span><span translate="no">ラスターデータ</span></span></button>
+            </div>
+            <div class="quiz-feedback" hidden>
+              <p class="quiz-result"></p>
+              <p><span translate="no">可逆圧縮</span>は、元のデータに完全に戻せる圧縮（<span translate="no">ZIP</span>など）。<span translate="no">非可逆圧縮</span>は、元には完全には戻せないが、小さくできる（<span translate="no">JPEG</span>など）。<span translate="no">ストリーミング</span>は、データを受け取りながら再生する方式。<span translate="no">ラスターデータ</span>は、点（画素）の集まりで画像を表す形式。</p>
+              <button type="button" class="quiz-retry">もう一度</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-optional">
+      <h2>任意の取り組み</h2>
+      <p class="lesson-note">必須ではありません。時間があるとき、確かめたいときに使います。</p>
+      <h3>用語シューティング（ゲーム）</h3>
+      <p>授業で遊んだゲームを、何度でも遊べます。間違えた用語の一覧を見て、用語カードで確かめると、覚えやすくなります。</p>
+      <div class="vz-cta">
+        <a class="vz-btn" href="term-shooter.html?w=9">用語シューティングを遊ぶ</a>
+      </div>
+      <h3>確認テスト（2回目）</h3>
+      <p>1回目と同じ5問です（問題の順番は違います）。受けたら、結果の画面の点数を、1回目の点数と自分で比べます。1回目の点数を、覚えておきます。</p>
+      <div class="vz-cta">
+        <a class="vz-btn vz-btn--ext" href="FORM_Q2" target="_blank" rel="noopener">第9回 確認テスト（2回目・任意）を受ける（Googleフォーム）</a>
+      </div>
+      <h3>自分の成績を見る</h3>
+      <p>診断テスト・復習テスト・確認テストの点数の推移と、次に復習するとよい用語を見られます。学校のGoogleアカウントでログインすると、自分の分だけが表示されます。</p>
+      <div class="vz-cta">
+        <a class="vz-btn vz-btn--ext" href="https://script.google.com/a/macros/i-seifu.jp/s/AKfycbwquVX4xkXNy47RkGjCUz6Xmc4GFaPLpPkSVuW6z--m5Yth88yilipCYUSanlTpQF9P/exec" target="_blank" rel="noopener">自分の成績を見る（学校のGoogleアカウント）</a>
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-tip">
+      <h2>就活ワンポイント（任意）</h2>
+      <p class="lesson-note">授業時間には含めない、読むだけのコラム。成績にも含まれない。今日の言葉を、面接で使う練習。</p>
+      <h3>面接で「お客様のデータを、どう守りますか」と聞かれたら</h3>
+      <p>ITの仕事でも、お店のアルバイトでも、お客さんの名前や電話番号などのデータを扱うことがある。そのとき、どう守るかを、短く説明する練習になる。答えは、<strong>3つの順番</strong>で話すと、分かりやすくなる（一つの考え方）。下の吹き出しが、順に現れる。</p>
+      <div><button type="button" class="tip-ctl" data-target="tip-chat-1" aria-pressed="false">動きを止めて、全部を表示する</button></div>
+      <div class="tip-chat" id="tip-chat-1" role="group" aria-label="面接の会話の例。面接官の質問のあと、結論、理由、まとめの順に答える">
+        <div class="tip-b tip-b--q"><span class="tip-tag">面接官</span>お客様の情報を、データベースで管理するとき、気をつけることは何ですか。</div>
+        <div class="tip-b"><span class="tip-tag">① 結論</span>見られる人を、必要な人だけに限ることと、バックアップを取ることに、気をつけます。</div>
+        <div class="tip-b"><span class="tip-tag">② 理由</span>授業で、<span translate="no">OS</span>や<span translate="no">データベース</span>には、使える人と範囲を決めるアクセス権の仕組みがあると学びました。また、故障に備えて、写しを別の場所に保存する<span translate="no">バックアップ</span>が大切だと学びました。</div>
+        <div class="tip-b"><span class="tip-tag">③ まとめ</span>お客様の大切な情報を預かる責任を意識して、決まりを守って、丁寧に扱いたいです。</div>
+      </div>
+      <ul>
+        <li><strong>例文は一例</strong>。自分が実際に学んだこと、したことを話す。していないことは、言わない。</li>
+        <li>用語を、日本語のまま使えて、しかも「見られる人を限る」のような<strong>やさしい言い方</strong>で言い換えられると、<span translate="no">IT</span>に詳しくない人にも伝わる。</li>
+        <li>「<span translate="no">バックアップ</span>を、別の場所に取る」のように、<strong>具体的に何をするか</strong>を言えると、説得力が出る。</li>
+      </ul>
+      <p class="lesson-note">答え方の順番（結論・理由・まとめ）は、この教材の一つの考え方で、公式のルールではない。<span translate="no">IPA</span>は、ITパスポート試験の合格について、「就職活動において、自らの知識を証明し、自己アピールに役立ちます」と紹介している（<span translate="no">IPA</span><a href="https://www3.jitec.ipa.go.jp/JitesCbt/html/about/merit.html" target="_blank" rel="noopener">「合格のメリット」</a>、確認日：2026-11-10。留学生向けに書かれた説明ではない）。</p>
+    </div>
+
+    <div class="syllabus-section" id="sec-tasks">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>第10回（中間テスト）の準備：ミニ模試の間違いを確かめる</strong>
+            <p>今日のミニ模試で間違えた問題を、「<a href="#blk-4">採点と、誤答の確認</a>」の表で、つながる回のページを開いて確かめる。次回は、IPA公開過去問を使った本番形式の中間テスト（120分を目安）。第10回の授業の最後に、覚えた用語をフォームで提出する。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>練習クイズとゲームで、間違えた用語を確かめる</strong>
+            <p>練習クイズは、全問正解になるまで繰り返す。ゲームは、最後の画面の「間違えた用語」の一覧を見て、用語カードで確かめる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">任意</span>
+          <div>
+            <strong>教科書の章末確認問題</strong>
+            <p>今日の範囲（テクノロジ系 p.276-313、章末確認問題は p.294・p.314）を、自分のペースで解く。授業では、同じ範囲を確認テストで確かめる。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>自分のスマートフォンの中を、<span translate="no">OS</span>とアプリに分けてみる</strong>
+            <p>自分のスマートフォンの<span translate="no">OS</span>の名前（<span translate="no">iOS</span>か<span translate="no">Android</span>か）と、よく使うアプリを3つ、メモに書く。写真のフォルダに、写真が何枚あるか、1枚が何メガバイトくらいかも見て、<span translate="no">圧縮</span>されているかを考えてみる。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section" id="sec-refs">
+      <h2>参考リンク</h2>
+      <ul class="vz-links">
+        <li><a class="vz-link" href="https://www.ipa.go.jp/shiken/syllabus/omgdg50000005kn1-att/syllabus_ip_ver6_5.pdf" target="_blank" rel="noopener"><b>ITパスポート試験シラバス（PDF、Ver.6.5）</b><span><span translate="no">IPA</span>。「オペレーティングシステム」「ファイルシステム」「オープンソースソフトウェア」「情報デザイン」「マルチメディア技術」「データベース」「標準化関連」の用語例で、試験での用語の書き方を確かめる</span></a></li>
+        <li><a class="vz-link" href="https://www3.jitec.ipa.go.jp/JitesCbt/html/about/merit.html" target="_blank" rel="noopener"><b>【ITパスポート試験】合格のメリット</b><span><span translate="no">IPA</span>。就活ワンポイントで紹介した記述の出典</span></a></li>
+        <li><a class="vz-link" href="https://www.ipa.go.jp/shiken/mondai-kaiotu/index.html" target="_blank" rel="noopener"><b>過去問題 | 試験情報 | IPA</b><span>公開問題と解答例の一覧。法令に特別の定めがある場合を除き、許諾・使用料は不要（IPA公式）。この授業では、年度と問番号を出典として書く</span></a></li>
+        <li><a class="vz-link" href="https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2025r07_ip_qs.pdf" target="_blank" rel="noopener"><b>令和7年度 ITパスポート試験 公開問題（PDF）</b><span>例題とミニ模試の出典（問61・62・65・72・76、問67〜71・73・74・77・83・91）</span></a></li>
+        <li><a class="vz-link" href="https://www3.jitec.ipa.go.jp/JitesCbt/html/openinfo/pdf/questions/2025r07_ip_ans.pdf" target="_blank" rel="noopener"><b>令和7年度 ITパスポート試験 公開問題 解答例（PDF）</b><span>例題とミニ模試の正答の確認</span></a></li>
+        <li><a class="vz-link" href="https://www.mlit.go.jp/sogoseisaku/barrierfree/sosei_barrierfree_tk_000145.html" target="_blank" rel="noopener"><b>案内用図記号（JIS Z8210）</b><span>国土交通省。ピクトグラム（案内用図記号）がJISで決められていることの出典</span></a></li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week08.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第8回 止まらないシステムを作る</span>
+      </a>
+      <a href="../it-passport-technology.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">ITパスポート テクノロジー系</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第10回（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js?v=5"></script>
+</body>
+</html>
