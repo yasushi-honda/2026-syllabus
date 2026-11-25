@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第11回 先輩に聞く：卒業進級制作の最終審査に向けて | AI活用プログラミング基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=26">
+  <!-- 第11回（2026-11-25作成、先生の指示）。3年生（システム科）の先輩の話・チーム巡回・フォームでのアウトプット、2限は卒業進級制作。外部サービスの事実は扱わない。フォームは先生が作りClassroomで案内するためURLは載せない。挿絵2枚（nano-banana、文字なし。week11-talk/visit.jpg）。「先輩に見せる3つ」「アドバイスを作業にする流れ」は授業用の整理。 -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--orange">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-programming-2.html">AI活用プログラミング基礎 II</a>
+        <span>/</span>
+        <span>第11回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">先輩に聞く：卒業進級制作の最終審査に向けて</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 11</span>
+            <span class="page-badge">木曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-orange">
+
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
+
+    <div class="qr-box qr-box--pc">
+      <a class="qr-box__zoom" href="qr/week11-page.svg" target="_blank" rel="noopener" aria-label="QRコードを大きく表示する">
+        <img class="qr-box__img" src="qr/week11-page.svg" alt="この第11回のページを開くQRコード。スマートフォンのカメラで読み取ると、このページが開く。" width="180" height="180">
+      </a>
+      <div class="qr-box__body">
+        <p class="qr-box__heading">📱 スマホで開く</p>
+        <p class="qr-box__text">教室の画面を見ながら、自分のスマートフォンで、このページを開けます。スマートフォンの<strong>カメラ</strong>で、このQRコードを読み取ってください。QRコードを押すと、大きく表示されます。</p>
+      </div>
+    </div>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">3年生（システム科）の先輩が、<strong>卒業進級制作の最終審査前の心構えや制作のアドバイス</strong>を、ざっくばらんに話す（約10〜15分）。そのあと先輩が<strong>各チームを回り</strong>、企画書と今の状況を見て、質問にも自由に答える。先輩が帰ったあと、<strong>Googleフォーム</strong>でアウトプットする。2限は、アドバイスを受けて、<strong>チームで卒業進級制作に取り組む</strong></div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">先輩の話 / 企画書と今の状況を見てもらう / 質問タイム / フォームでアウトプット / アドバイスを作業に変える / チームで制作</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">チームの<strong>企画書</strong>と、<strong>今の状況が分かるもの</strong>（動く画面、リポジトリ）をすぐ開けること。メモ用の紙かノート。Classroomにログインできること（フォームを開くため）。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>先輩の話から、<strong>自分たちの卒業進級制作に使えること</strong>を、メモに書き出せる</li>
+        <li>自分たちの<strong>企画書と今の状況</strong>を、先輩に短く説明でき、<strong>聞きたいこと</strong>を質問できる</li>
+        <li>フォームに、<strong>聞いたこと・自分たちに当てはまること</strong>を書ける</li>
+        <li>もらったアドバイスから、<strong>今日やること</strong>をチームで選び、分担して進められる</li>
+      </ul>
+      <div class="lesson-tip">
+        <strong>先輩は、もうすぐ卒業します。</strong>今日は、直接聞ける機会です。遠慮せずに、聞きたいことを聞いてください。<strong>先輩に今後してもらえるとありがたいこと</strong>も、あとでフォームに書けます。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>準備し、先輩の話を聞き、質問する</h3>
+          <div class="timeline-body">
+            <figure class="vz-fig" aria-labelledby="cap-a11-map">
+              <p class="vz-fig-title" id="cap-a11-map">今日の流れ：聞く → 見てもらう → 書く → 作る</p>
+              <svg class="vz-svg" viewBox="0 0 360 252" role="img" aria-labelledby="a11-map-t a11-map-d">
+                <title id="a11-map-t">今日の流れ：聞く → 見てもらう → 書く → 作る</title>
+                <desc id="a11-map-d">1 先輩の話を聞く。1限の前半。2 先輩がチームを回り、企画書と今の状況を見てもらう。1限の後半。3 Googleフォームで、聞いたことを書く。2限の前半。4 アドバイスを受けて、チームで卒業進級制作に取り組む。2限。</desc>
+                <rect class="box-orange" x="8" y="6" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="28">1 先輩の話を聞く</text>
+                <text class="t-sm" x="22" y="47">話を聞き、全体に質問する</text>
+                <text class="t-sm" x="342" y="28" text-anchor="end">1限前半</text>
+                <line class="line" x1="180" y1="58" x2="180" y2="66" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="68" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="90">2 チームを回ってもらう</text>
+                <text class="t-sm" x="22" y="109">企画書と今の状況を見てもらう</text>
+                <text class="t-sm" x="342" y="90" text-anchor="end">1限後半</text>
+                <line class="line" x1="180" y1="120" x2="180" y2="128" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="130" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="152">3 フォームで書く</text>
+                <text class="t-sm" x="22" y="171">聞いたことをアウトプット</text>
+                <text class="t-sm" x="342" y="152" text-anchor="end">2限前半</text>
+                <line class="line" x1="180" y1="182" x2="180" y2="190" marker-end="url(#mk-s)"/>
+                <rect class="box-orange box-key" x="8" y="192" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="214">4 チームで制作する</text>
+                <text class="t-sm" x="22" y="233">アドバイスを、作業に変える</text>
+                <text class="t-sm" x="342" y="214" text-anchor="end">2限</text>
+              </svg>
+              <figcaption>先輩の話は、聞くだけで終わらせず、2限の作業につなげます。</figcaption>
+            </figure>
+
+            <p><strong>① 見てもらう準備</strong>（約5分）</p>
+            <ul>
+              <li>チームで、<strong>企画書</strong>と、<strong>今の状況</strong>（動く画面・リポジトリ）をすぐ開けるようにする</li>
+              <li>先輩に<strong>聞きたいこと</strong>を、チームで1〜2個メモする。たとえば:
+                <ul>
+                  <li>最終審査で、<strong>よく聞かれること</strong>は何か</li>
+                  <li>審査の前に、<strong>やっておけばよかったこと</strong>は何か</li>
+                  <li>チームで進めるとき、<strong>困ったこと</strong>と、どう乗り越えたか</li>
+                  <li>AIを使うとき、<strong>気をつけていたこと</strong>は何か</li>
+                </ul>
+              </li>
+            </ul>
+
+            <p><strong>② 先輩の話</strong>（約10〜15分）</p>
+            <ol class="vz-steps">
+              <li class="vz-step"><img class="vz-step-img" src="images/week11-talk.jpg" alt="教室の前に、先輩の学生が立って、身ぶりをまじえて話している。1年生の学生たちが、机でメモを取りながら聞いている。" width="800" height="597" loading="lazy"><b>先輩の話を聞く</b>聞きながら、メモを取る（絵の例）</li>
+            </ol>
+            <ul>
+              <li>最終審査の前の<strong>心構え</strong>や、卒業進級制作での<strong>アドバイス</strong>を、ざっくばらんに聞く（話の内容は、先輩が決めます）</li>
+              <li>聞きながら、<strong>「自分たちの作品にも使えそう」</strong>と思ったことを、そのまま<strong>メモ</strong>する。あとでフォームを書くときに使う</li>
+            </ul>
+
+            <p><strong>③ 全体への質問タイム</strong>（約15〜20分、自由。先輩の話の長さに合わせて、40分に収める）</p>
+            <ul>
+              <li>聞きたいことを、<strong>手を挙げて自由に</strong>質問する。チームで考えた質問を使ってもよい</li>
+              <li>質問は、<strong>他のチームの人にも役に立つ</strong>ことがあります。答えもメモしておく</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>先輩がチームを回る：企画書と今の状況を見てもらう</h3>
+          <div class="timeline-body">
+            <figure class="vz-fig" aria-labelledby="cap-a11-three">
+              <p class="vz-fig-title" id="cap-a11-three">先輩に見せる3つ</p>
+              <svg class="vz-svg" viewBox="0 0 360 196" role="img" aria-labelledby="a11-three-t a11-three-d">
+                <title id="a11-three-t">先輩に見せる3つ</title>
+                <desc id="a11-three-d">先輩に見せるものは3つ。1 企画書。何を作るか。2 今の状況。動く画面やリポジトリ。3 困っていること。ここを聞きたい、を1つ。</desc>
+                <rect class="box-orange" x="8" y="6" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="28">1 企画書</text>
+                <text class="t-sm" x="22" y="47">何を、誰のために作るか</text>
+                <text class="t-sm" x="342" y="28" text-anchor="end">最初</text>
+                <line class="line" x1="180" y1="58" x2="180" y2="66" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="68" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="90">2 今の状況</text>
+                <text class="t-sm" x="22" y="109">動く画面・リポジトリを開いておく</text>
+                <text class="t-sm" x="342" y="90" text-anchor="end">次に</text>
+                <line class="line" x1="180" y1="120" x2="180" y2="128" marker-end="url(#mk-s)"/>
+                <rect class="box-orange box-key" x="8" y="130" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="152">3 困っていること</text>
+                <text class="t-sm" x="22" y="171">「ここを聞きたい」を1つ</text>
+                <text class="t-sm" x="342" y="152" text-anchor="end">最後に</text>
+              </svg>
+              <figcaption>1チームに使える時間は、先生の案内に従います。<strong>3つは授業用の整理で、決まった形式ではありません</strong>。</figcaption>
+            </figure>
+            <ol class="vz-steps">
+              <li class="vz-step"><img class="vz-step-img" src="images/week11-visit.jpg" alt="先輩の学生が、チームの机の横にかがんで、ノートパソコンの画面を一緒に見ている。チームの学生たちが、画面を指さして説明している。机の上には、企画書の紙がある。" width="800" height="597" loading="lazy"><b>チームを回って見てもらう</b>企画書と今の状況を、先輩に見せる（絵の例）</li>
+            </ol>
+            <ul>
+              <li>先輩が<strong>各チームを回って</strong>、企画書と今の状況を見ます。順番と1チームの時間は、先生の案内に従う</li>
+              <li>見てもらうときは、<strong>企画書 → 今の状況 → 困っていること</strong>の順に話す。言われたことは、<strong>チームのメモ</strong>に残す（だれか1人が書く係）</li>
+              <li><strong>先輩を待っている間</strong>は、自分たちの卒業進級制作を進める。先輩が来たら、手を止めて見てもらう</li>
+              <li>最後に、<strong>お礼</strong>を伝える。<strong>先輩に今後してもらえるとありがたいこと</strong>（たとえば、後輩の質問に答えてもらう、など）も、この時間に直接聞いてよい</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>見せるのは、完成品でなくて構いません。</strong>途中の状態を見てもらうほうが、役に立つアドバイスがもらえることが多いです。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>フォームで書き、アドバイスを今日の作業に変える</h3>
+          <div class="timeline-body">
+            <p><strong>① Googleフォームでアウトプット</strong>（約10分）</p>
+            <ul>
+              <li><strong>先生がClassroomで案内するGoogleフォーム</strong>に答える（フォームの場所と、答え方の単位（一人ひとりか、チームか）は、先生の案内に従う）</li>
+              <li>質問は、たとえば次のようなものです（<strong>実際の質問は、先生のフォームに従う</strong>）:</li>
+            </ul>
+            <ol>
+              <li>先輩の話で、<strong>心に残ったアドバイス</strong>を1つ</li>
+              <li>それは、<strong>自分（自分たちのチーム）のどこに当てはまる</strong>か</li>
+              <li>最終審査までに、<strong>やること</strong>を1つ</li>
+              <li><strong>卒業前の先輩に、今後してもらえるとありがたいこと</strong></li>
+              <li>先輩への<strong>お礼</strong>の一言</li>
+            </ol>
+            <div class="lesson-tip">
+              <strong>書くのは、感想・アドバイス・お願いだけ。</strong>個人情報（住所・電話番号など）や、人を責める言い方は書きません。
+            </div>
+
+            <p><strong>② アドバイスを、今日の作業に変える</strong>（約10分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-a11-flow">
+              <p class="vz-fig-title" id="cap-a11-flow">アドバイスを、今日の作業に変える</p>
+              <svg class="vz-svg" viewBox="0 0 360 246" role="img" aria-labelledby="a11-flow-t a11-flow-d">
+                <title id="a11-flow-t">アドバイスを、今日の作業に変える</title>
+                <desc id="a11-flow-d">1 先輩の言葉を、メモに書く。2 チームで話して、今日やることを1から3個選ぶ。3 分担を決める。4 作業して、進んだ分をコミット・プッシュで残す。チームのメモに書くのは、このあとの成果を残す時間。</desc>
+                <rect class="box-orange" x="8" y="6" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="28">1 メモする</text>
+                <text class="t-sm" x="22" y="47">先輩の言葉を、そのまま書く</text>
+                <line class="line" x1="180" y1="58" x2="180" y2="66" marker-end="url(#mk-s)"/>
+                <rect class="box-orange box-key" x="8" y="68" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="90">2 今日やることを選ぶ</text>
+                <text class="t-sm" x="22" y="109">チームで、1〜3個まで</text>
+                <line class="line" x1="180" y1="120" x2="180" y2="128" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="130" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="152">3 分担を決める</text>
+                <text class="t-sm" x="22" y="171">だれが、どこを進めるか</text>
+                <line class="line" x1="180" y1="182" x2="180" y2="190" marker-end="url(#mk-s)"/>
+                <rect class="box-orange" x="8" y="192" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="214">4 作業して、残す</text>
+                <text class="t-sm" x="22" y="233">進んだ分をコミット・プッシュ</text>
+              </svg>
+              <figcaption>選ぶのは<strong>1〜3個</strong>。多すぎると、どれも終わりません。</figcaption>
+            </figure>
+            <ul>
+              <li>メモを見ながら、チームで<strong>今日やること</strong>を<strong>1〜3個</strong>選び、<strong>分担</strong>する（企画書の直し、動く部分の改善、審査での説明の練習など）</li>
+            </ul>
+
+            <p><strong>③ チームで、卒業進級制作に取り組む</strong>（約30分）</p>
+            <ul>
+              <li>選んだことを進める。AIエージェントを使うときは、<strong>第10回と同じ</strong>く、<strong>小さく頼み、出てきたものは人が確かめる</strong>（<a href="week10.html">第10回</a>）</li>
+              <li><strong>困ったときの頼り先</strong>: ①まず<strong>チームの人</strong>に聞く　②それでも分からなければ<strong>先生</strong>を呼ぶ（先生が席をまわります）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>チームで制作を続け、成果を残す</h3>
+          <div class="timeline-body">
+            <ul>
+              <li><strong>制作</strong>（約20分）: つづきを進める。区切りのいいところで手を止める</li>
+              <li><strong>成果を残す</strong>（約10分）: 進んだ分を<strong>コミット・プッシュ</strong>する。チームのメモ（<code>NOTES.md</code>か、手元のメモ）に、<strong>もらったアドバイス</strong>と、<strong>今日進んだこと</strong>、<strong>次にやること</strong>を書く。やり方が分からない人や、チームでGitの共有に困っている人は、先生へ</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>動かなくても大丈夫。</strong>止まったところを書いておけば、次回はそこから始められます。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>今日のアドバイスを振り返り、次回を知る</h3>
+          <div class="timeline-body">
+            <figure class="vz-fig" aria-labelledby="cap-a11-wrap">
+              <p class="vz-fig-title" id="cap-a11-wrap">今日の一言メモ（3つ）</p>
+              <svg class="vz-svg" viewBox="0 0 360 132" role="img" aria-labelledby="a11-wrap-t a11-wrap-d">
+                <title id="a11-wrap-t">今日の一言メモ（3つ）</title>
+                <desc id="a11-wrap-d">今日の一言メモ。1 いちばん役に立った先輩のアドバイス。2 自分たちのチームが、次にやること。3 任意。先輩へのお礼や、今後してほしいこと。</desc>
+                <rect class="box-orange box-key" x="8" y="6" width="344" height="46" rx="10"/>
+                <text class="t-b" x="22" y="27">いちばん役に立ったアドバイス</text>
+                <text class="t-sm" x="22" y="44">一言で</text>
+                <rect class="box-white" x="8" y="62" width="168" height="62" rx="10"/>
+                <text class="t-b" x="22" y="86">次にやること</text>
+                <text class="t-sm" x="22" y="108">チームで一言</text>
+                <rect class="box-white" x="184" y="62" width="168" height="62" rx="10"/>
+                <text class="t-b" x="198" y="86">先輩へ（任意）</text>
+                <text class="t-sm" x="198" y="108">お礼・お願い</text>
+              </svg>
+              <figcaption>フォームに書いたことと同じで構いません。</figcaption>
+            </figure>
+            <ul>
+              <li><strong>先生のひとこと</strong>（約3分）: 先輩のアドバイスを、残りの回にどうつなげるか</li>
+              <li><strong>一言メモ</strong>（約4分）: <strong>いちばん役に立ったアドバイス</strong>、チームが<strong>次にやること</strong>を、一言ずつ。先輩へのお礼やお願いは、書きたい人だけ（フォームと同じでよい）</li>
+              <li>次回（第12回、約1分）：<strong>仕上げ①</strong>——取り組んできた成果物の最終調整（<a href="../ai-programming-2.html">授業計画一覧</a>）</li>
+              <li>メモが残っているか、最後に確かめて退出（約2分）</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>先輩のアドバイスと、今日進んだこと、次にやることを、メモに残しておく</strong>
+            <p>リポジトリの<code>NOTES.md</code>か、手元のメモでよい。次回の最初に開きます。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>Googleフォームが未提出なら、出す</strong>
+            <p>授業の時間内に書ききれなかった人は、次回までに出します。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <ul>
+        <li><a href="week10.html">第10回 進級制作に小さな改善を加える①（本サイト）</a> — 小さく頼み、人が確かめる。ループを回す前に決める4つ</li>
+        <li><a href="week09.html">第9回 進級制作とAIエージェントをつなげよう（本サイト）</a> — 論文の話、次の一歩のメモ、困ったときの道具</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week10.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第10回 進級制作に小さな改善を加える①</span>
+      </a>
+      <a href="../ai-programming-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AI活用プログラミング基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第12回 仕上げ①（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js?v=5"></script>
+</body>
+</html>
