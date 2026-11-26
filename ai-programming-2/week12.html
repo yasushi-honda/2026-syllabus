@@ -214,7 +214,7 @@
             </figure>
             <ul>
               <li>公開すると、<strong>URLを知る人は誰でも開けます</strong>。公開してよいか、チームで確認する</li>
-              <li><strong>登録の前</strong>に、Renderの<strong>利用規約とプライバシーポリシー</strong>（2026-07-10更新）を読む。使えるのは<strong>16歳以上</strong>（利用規約）で、本校の学生は全員18歳以上なので、問題ありません。規約には、サーバー上のデータが<strong>いつでも消されることがある</strong>、とも書かれている。<strong>大事なデータの置き場所には、しません</strong></li>
+              <li><strong>登録の前</strong>に、Renderの<strong>利用規約とプライバシーポリシー</strong>（2026-07-10更新）を読む。<strong>16歳未満は使えない</strong>（利用規約）。本校の学生は全員18歳以上なので、この年齢の条項には当てはまりません。規約には、サーバー上のデータは、Renderの判断で、<strong>いつでも消されたり変えられたりすることがある</strong>（責任は負わない）という条項もある。<strong>大事なデータの置き場所には、しません</strong></li>
               <li>APIキーなどの<strong>秘密</strong>は、コードに書かず、<strong>環境変数</strong>（Renderの画面の「Environment Variables」）に入れる。画面にも「secrets (such as API keys)」を入れる欄、とある</li>
               <li>Renderに渡すときは、<strong>チームの了解</strong>を取る。<strong>非公開のリポジトリは、Public Git Repository（公開リポジトリ向けの方法）では使えない</strong>と考えられます（公式の説明から）（Git Provider なら連携できるが、先生と確認する）。<strong>非公開のものを、このために公開に変えません</strong>（それまでの履歴も、公開されてしまう）</li>
             </ul>
@@ -310,7 +310,7 @@
             </figure>
             <figure style="margin:1.4rem 0">
               <a href="images/week12-render-12.jpg" target="_blank" rel="noopener"><img src="images/week12-render-12.jpg" alt="設定の最後。Environment Variablesの欄は、注釈で「なし」。左下の「Deploy web service」のボタンがオレンジの枠で囲まれ、「できたら押す」と書かれている。" style="width:100%;height:auto;border:1px solid #d8d2c4;border-radius:8px" loading="lazy"></a>
-              <figcaption><strong>手順 12　環境変数と Deploy</strong><br><strong>Environment Variables</strong> は、なければ空欄でよい（学生のメモ）。APIキーなどがあれば、コードではなくここに入れる（公式: 環境変数は、サービスの Environment の画面に設定する。ローカルの <code>.env</code> を使っている作品も、Render では、この画面に入れ直す）。<strong>Deploy web service</strong> を押す（注釈: 「できたら押す」）。下の金額が <strong>$7</strong> のままなら、押さずに戻る<br><span style="font-size:0.85em">（画像を押すと、大きく開きます）</span></figcaption>
+              <figcaption><strong>手順 12　環境変数と Deploy</strong><br><strong>Environment Variables</strong> は、なければ空欄でよい（学生のメモ）。APIキーなどがあれば、コードではなくここに入れる（公式: 環境変数は、サービスの Environment の画面で設定する。ローカルで <code>.env</code> を使っている作品は、<code>.env</code> を Git に上げず、この画面で設定する。画面には、<code>.env</code> から取り込む機能もある）。<strong>Deploy web service</strong> を押す（注釈: 「できたら押す」）。下の金額が <strong>$7</strong> のままなら、押さずに戻る<br><span style="font-size:0.85em">（画像を押すと、大きく開きます）</span></figcaption>
             </figure>
             <figure style="margin:1.4rem 0">
               <a href="images/week12-render-13.jpg" target="_blank" rel="noopener"><img src="images/week12-render-13.jpg" alt="デプロイが始まった画面。上に紫色の帯で「Your free instance will spin down with inactivity, which can delay requests by 50 seconds or more.」と出ている。Statusは「Building」。下のログの欄の下に、注釈で「終わったら、最後にURLが出る」と書かれている。名前の部分は黒い四角で隠してある。" style="width:100%;height:auto;border:1px solid #d8d2c4;border-radius:8px" loading="lazy"></a>
