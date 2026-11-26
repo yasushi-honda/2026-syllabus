@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第12回 仕上げ①：最終調整と、Renderで公開してみよう（任意） | AI活用プログラミング基礎 II</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="stylesheet" href="../styles.css?v=26">
+  <!-- 第12回（2026-11-26作成。12限の学生が、Renderの使い方を画面つきでチャットで提案してくれたのを受けて、先生の指示で次の木曜12限に取り入れた）。親ページの第12回「仕上げ①」の最終調整は残し、Renderで公開してみる部分は任意。学生の画像は、アカウント名・リポジトリ名を黒塗りしてある（先生が本人に使うことを伝える）。ページ・コメント・コミットに、学生の名前や学籍番号、リポジトリ名を書かない。 -->
+  <!-- 公式情報確認: 2026-11-26（render.com/docs を生取得）。/docs/free: 「Render grants 750 Free instance hours to each workspace per calendar month」「Render spins down a Free web service that goes 15 minutes without receiving any inbound traffic.」「This process takes about one minute.」ファイルは再デプロイ・再起動・スピンダウンで失われる、永続ディスク・Shellは使えない、「Render might restart a Free web service at any time.」「Do not use them for production applications.」WebSocketは使える。/pricing: Hobby「$0/month + compute」、Free $0・512MB、次は $7/月（0.5 CPU）。無料インスタンス作成にカード登録が必要かは書かれていない（未確認）。/docs/web-services: 「Use this method only to deploy a public repository you don't belong to.」「Render does not support auto-deploys or pull request previews for services that use it.」Build例 npm install、Start例 npm start、ポートは PORT（既定10000）、0.0.0.0 にバインド、公開URLは onrender.com のサブドメイン。/docs/deploys: 「Services that use a prebuilt Docker image or a public Git repository URL must be deployed manually.」/docs/github: 「Render automatically redeploys your service with every push to its linked branch」。画面（学生のスクリーンショット。デプロイ中の画面には「Your free instance will spin down with inactivity, which can delay requests by 50 seconds or more.」とも出る）には「PR Previews and Auto-Deploy are available only for repositories configured with Blueprints」とあるが、公式docsに同じ文言は見つからなかった（未確認）。サインイン方法の一覧、年齢条項（render.com/terms は本文が取れなかった）、学校ネットワークでの表示、Build/Start Commandの学生メモ（「同じ文字書く（ランダム）」）の意味は未確認。 -->
+</head>
+<body>
+  <div class="grain-overlay"></div>
+
+  <header class="page-header page-header--orange">
+    <div class="container">
+      <nav class="breadcrumb">
+        <a href="../index.html">シラバス一覧</a>
+        <span>/</span>
+        <a href="../ai-programming-2.html">AI活用プログラミング基礎 II</a>
+        <span>/</span>
+        <span>第12回</span>
+      </nav>
+      <div class="page-title-area">
+        <div>
+          <h1 class="page-title">仕上げ①：最終調整と、<wbr>Renderで公開してみよう（任意）</h1>
+          <div class="page-meta-badges">
+            <span class="page-badge">Week 12</span>
+            <span class="page-badge">木曜 1・2限</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container syllabus-content theme-orange">
+
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <marker id="mk-s" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#3d5a73"/></marker>
+      </defs>
+    </svg>
+
+    <div class="qr-box qr-box--pc">
+      <a class="qr-box__zoom" href="qr/week12-page.svg" target="_blank" rel="noopener" aria-label="QRコードを大きく表示する">
+        <img class="qr-box__img" src="qr/week12-page.svg" alt="この第12回のページを開くQRコード。スマートフォンのカメラで読み取ると、このページが開く。" width="180" height="180">
+      </a>
+      <div class="qr-box__body">
+        <p class="qr-box__heading">📱 スマホで開く</p>
+        <p class="qr-box__text">教室の画面を見ながら、自分のスマートフォンで、このページを開けます。スマートフォンの<strong>カメラ</strong>で、このQRコードを読み取ってください。QRコードを押すと、大きく表示されます。</p>
+      </div>
+    </div>
+
+    <div class="lesson-overview">
+      <div class="lesson-overview-grid">
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">テーマ</div>
+          <div class="lesson-overview-value">取り組んできた成果物（卒業進級制作、または個人制作）の<strong>最終調整</strong>を進める。そのうえで、12限の学生の提案をもとに、希望するチームは、<strong>Render</strong>の無料プランで、作品を<strong>公開してみる</strong>（任意）。無料プランの<strong>制限</strong>と、公開すると<strong>誰でもアクセスできる</strong>ことを先に確認し、公開前に、秘密の情報を載せていないか点検する</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">キーワード</div>
+          <div class="lesson-overview-value">最終調整 / Render / Web Service / 無料プランの制限 / 公開前の4つの点検 / Git Provider と Public Git Repository</div>
+        </div>
+        <div class="lesson-overview-card">
+          <div class="lesson-overview-label">必要な準備</div>
+          <div class="lesson-overview-value">進級制作（または個人制作）のGitHubリポジトリを開けること。Renderを試すチームは、<strong>サーバー（Node）で動く作品</strong>があるとよい。<strong>クレジットカードの登録を求められたら、先に進まず先生へ</strong>。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>この回のゴール</h2>
+      <ul>
+        <li>前回の先輩の話を、<strong>自分の作品の最終調整</strong>に使える</li>
+        <li><strong>GitHub Pages</strong>と<strong>Render</strong>の違いと、Renderの無料プランの<strong>制限</strong>を、1文で言える</li>
+        <li>公開する前に、<strong>4つの点検</strong>（公開してよいか・秘密・個人情報・Free）をできる</li>
+        <li>（任意）作品を<strong>Renderで公開</strong>し、動いたか・動かない原因を<strong>記録</strong>できる</li>
+      </ul>
+      <div class="lesson-tip">
+        <strong>この回の手順は、12限の学生が、画面つきで教えてくれた内容がもとです。</strong>画面の手書きの文字も、その学生のものです（名前は載せていません）。Renderの画面は変わりやすいので、<strong>自分の画面と見比べながら</strong>進めます。
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>授業の流れ</h2>
+      <p class="lesson-note">2コマ連続（90分 + 90分 = 計180分）。途中休憩あり。</p>
+
+      <div class="timeline">
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 前半</span>
+            <span class="timeline-duration">約40分</span>
+          </div>
+          <h3>前回を振り返り、Renderを知る</h3>
+          <div class="timeline-body">
+            <figure class="vz-fig" aria-labelledby="cap-a12-map">
+              <p class="vz-fig-title" id="cap-a12-map">今日の流れ：知る → 試す → 残す</p>
+              <svg class="vz-svg" viewBox="0 0 360 248" role="img" aria-labelledby="a12-map-t a12-map-d">
+                <title id="a12-map-t">今日の流れ：知る → 試す → 残す</title>
+                <desc id="a12-map-d">1 前回の先輩の話を、作品にどう使うかを振り返る。1限の前半。2 Renderを知る。なぜ必要か、無料の制限、公開前の点検。1限の前半。3 試す。Renderで公開してみるチームは公開し、それ以外のチームは最終調整を続ける。1限の後半から2限。4 結果を残す。動いたか、動かなかった原因は何かをメモする。2限の後半。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="28">1 前回から今日へ</text>
+                <text class="t-sm" x="22" y="47">先輩の話を、作品にどう使うか</text>
+                <text class="t-sm" x="342" y="28" text-anchor="end">1限前半</text>
+                <line class="line" x1="180" y1="58" x2="180" y2="66" marker-end="url(#mk-s)"/>
+                <rect class="box-orange box-key" x="8" y="68" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="90">2 Renderを知る</text>
+                <text class="t-sm" x="22" y="109">なぜ・制限・公開前の点検</text>
+                <text class="t-sm" x="342" y="90" text-anchor="end">1限前半</text>
+                <line class="line" x1="180" y1="120" x2="180" y2="128" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="130" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="152">3 試す（任意）</text>
+                <text class="t-sm" x="22" y="171">Renderチームは公開してみる</text>
+                <text class="t-sm" x="342" y="152" text-anchor="end">1限後半〜</text>
+                <line class="line" x1="180" y1="182" x2="180" y2="190" marker-end="url(#mk-s)"/>
+                <rect class="box-white" x="8" y="192" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="214">4 結果を残す</text>
+                <text class="t-sm" x="22" y="233">動いた／動かない原因をメモ</text>
+                <text class="t-sm" x="342" y="214" text-anchor="end">2限後半</text>
+              </svg>
+              <figcaption>Renderを試すのは<strong>任意</strong>です。試さないチームは、最終調整を続けます。</figcaption>
+            </figure>
+
+            <p><strong>① 前回の振り返りと、今日の目標</strong>（約5分）</p>
+            <ul>
+              <li>前回の先輩の話で、<strong>自分の作品に使えそうなこと</strong>を、一言で言う（前回のメモを見てよい）</li>
+              <li>今日は、<strong>最終調整</strong>を進める。希望するチームは、<strong>Renderで公開してみる</strong>（任意）</li>
+            </ul>
+
+            <p><strong>② Renderとは、なぜ必要か</strong>（約10分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-a12-vs">
+              <p class="vz-fig-title" id="cap-a12-vs">GitHub Pages と Render の違い</p>
+              <svg class="vz-svg" viewBox="0 0 360 184" role="img" aria-labelledby="a12-vs-t a12-vs-d">
+                <title id="a12-vs-t">GitHub Pages と Render の違い</title>
+                <desc id="a12-vs-d">GitHub Pagesは、HTML、CSS、JavaScriptのファイルをそのまま見せる、静的な公開。Renderは、サーバーも動かせる。NodeやWebSocketを使う作品も試せる。どちらが上ということではなく、作品に合う方を選ぶ。</desc>
+                <rect class="box-white" x="8" y="6" width="168" height="120" rx="10"/>
+                <text class="t-b" x="20" y="28">GitHub Pages</text>
+                <text class="t-sm" x="20" y="50">HTML・CSS・JSの</text>
+                <text class="t-sm" x="20" y="68">ファイルを、</text>
+                <text class="t-sm" x="20" y="86">そのまま見せる</text>
+                <text class="t-sm" x="20" y="104">（静的な公開）</text>
+                <rect class="box-orange box-key" x="184" y="6" width="168" height="120" rx="10"/>
+                <text class="t-b" x="196" y="28">Render</text>
+                <text class="t-sm" x="196" y="50">サーバーも</text>
+                <text class="t-sm" x="196" y="68">動かせる</text>
+                <text class="t-sm" x="196" y="86">Node・WebSocket</text>
+                <text class="t-sm" x="196" y="104">の作品も試せる</text>
+                <rect class="band" x="8" y="136" width="344" height="40" rx="10"/>
+                <text class="t-b" x="22" y="161">どちらが上、ではなく、作品に合う方</text>
+              </svg>
+              <figcaption>GitHub Pagesは「静的ファイル専用のホスティング」と、公式（GitHub Docs）にあります。</figcaption>
+            </figure>
+            <ul>
+              <li><strong>GitHub Pages</strong>は、HTML・CSS・JavaScriptの<strong>静的なファイル</strong>を見せる公開（GitHub Docs）。<strong>サーバーのプログラム</strong>（Node）や<strong>WebSocket</strong>を使う作品は、そのままでは動かせない</li>
+              <li><strong>Render</strong>は、サーバーも動かして公開できるサービス（<strong>Web Service</strong>）。無料のFreeでも、WebSocketは使える（公式）。公開すると、<code>onrender.com</code>のURLができる</li>
+              <li>「作品がサーバーを必要とするか」を、チームで確かめる。<strong>必要でないなら、無理に使わなくてよい</strong></li>
+            </ul>
+
+            <p><strong>③ 無料プランの制限</strong>（約10分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-a12-free">
+              <p class="vz-fig-title" id="cap-a12-free">無料プラン（Free）の4つの制限</p>
+              <svg class="vz-svg" viewBox="0 0 360 248" role="img" aria-labelledby="a12-free-t a12-free-d">
+                <title id="a12-free-t">無料プラン（Free）の4つの制限</title>
+                <desc id="a12-free-d">無料のWeb Serviceの制限。1 15分間アクセスがないと止まり、再び開くと起動に約1分かかる。2 月に750時間まで。超えると翌月まで止まる。3 ファイルは、再デプロイ、再起動、停止のたびに消える。4 いつでも再起動されることがあり、本番の用途には使わないよう、公式が注意している。</desc>
+                <rect class="box-orange box-key" x="8" y="6" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="28">15分アクセスがないと止まる</text>
+                <text class="t-sm" x="22" y="47">再び開くと、起動に約1分かかる</text>
+                <text class="t-sm" x="342" y="28" text-anchor="end">止まる</text>
+                <rect class="box-white" x="8" y="68" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="90">月に750時間まで</text>
+                <text class="t-sm" x="22" y="109">超えると、翌月まで止まる</text>
+                <text class="t-sm" x="342" y="90" text-anchor="end">時間</text>
+                <rect class="box-white" x="8" y="130" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="152">ファイルが消える</text>
+                <text class="t-sm" x="22" y="171">再デプロイ・再起動・停止のたびに</text>
+                <text class="t-sm" x="342" y="152" text-anchor="end">消える</text>
+                <rect class="box-white" x="8" y="192" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="214">いつでも再起動される</text>
+                <text class="t-sm" x="22" y="233">本番の用途には、使わないよう公式が注意</text>
+                <text class="t-sm" x="342" y="214" text-anchor="end">再起動</text>
+              </svg>
+              <figcaption>出典: Render Docs「Free」（確認日 2026-11-26）。数字は変わることがあります。</figcaption>
+            </figure>
+            <ul>
+              <li>公式の説明: <strong>「Render spins down a Free web service that goes 15 minutes without receiving any inbound traffic.」</strong>（15分アクセスがないと止まる）、再び開くと<strong>「about one minute」</strong>かかる。Renderの画面にも「Your free instance will spin down with inactivity, which can delay requests by 50 seconds or more.」と出る（手順 13の画面）</li>
+              <li><strong>「Do not use them for production applications.」</strong>（本番用途には使わないでください）。だから、<strong>最終審査の本番は、いつもの方法で動かせる準備をしておく</strong>。Renderは、予備や、試しの公開として使う</li>
+              <li>数字や条件は、<strong>変わることがあります</strong>（確認日 2026-11-26）。クレジットカードの登録が要るかどうかは、<strong>公式のページに書かれておらず、未確認</strong>です</li>
+            </ul>
+
+            <p><strong>④ 公開前の点検</strong>（約10分）</p>
+            <figure class="vz-fig" aria-labelledby="cap-a12-check">
+              <p class="vz-fig-title" id="cap-a12-check">公開前の4つの点検</p>
+              <svg class="vz-svg" viewBox="0 0 360 248" role="img" aria-labelledby="a12-check-t a12-check-d">
+                <title id="a12-check-t">公開前の4つの点検</title>
+                <desc id="a12-check-d">1 公開してよいか。公開リポジトリで、URLは誰でも開ける。2 秘密を書いていないか。APIキー、環境変数のファイル、パスワードは、コードに書かない。3 個人情報がないか。名前、住所、メールなどを、画面にも出さない。4 無料プランを選んだか。金額の表示が月7ドルのままなら、選び直す。</desc>
+                <rect class="box-white" x="8" y="6" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="28">1 公開してよいか</text>
+                <text class="t-sm" x="22" y="47">公開リポジトリ。URLは誰でも開ける</text>
+                <rect class="box-white" x="8" y="68" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="90">2 秘密を書いていないか</text>
+                <text class="t-sm" x="22" y="109">APIキー・.env・パスワードは、コードに書かない</text>
+                <rect class="box-white" x="8" y="130" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="152">3 個人情報がないか</text>
+                <text class="t-sm" x="22" y="171">名前・住所・メールなどを、画面にも出さない</text>
+                <rect class="box-orange box-key" x="8" y="192" width="344" height="50" rx="10"/>
+                <text class="t-b" x="22" y="214">4 無料（Free）を選んだか</text>
+                <text class="t-sm" x="22" y="233">金額の表示が $7/月のままなら、選び直す</text>
+              </svg>
+              <figcaption><strong>4つの点検は、この授業用の整理</strong>です（公式の分類ではありません）。</figcaption>
+            </figure>
+            <ul>
+              <li>公開すると、<strong>URLを知る人は誰でも開けます</strong>。公開してよいか、チームで確認する</li>
+              <li>APIキーなどの<strong>秘密</strong>は、コードに書かず、<strong>環境変数</strong>（Renderの画面の「Environment Variables」）に入れる。画面にも「secrets (such as API keys)」を入れる欄、とある</li>
+              <li>Renderに渡すときは、<strong>チームの了解</strong>を取る（<strong>非公開のコードは、この方法では使えません</strong>。後述）</li>
+            </ul>
+
+            <p><strong>⑤ 進め方を選ぶ</strong>（約5分）</p>
+            <ul>
+              <li><strong>Renderチーム</strong>: 作品がサーバーを必要とし、公開して試したい。1限後半から、下の手順で進める</li>
+              <li><strong>最終調整チーム</strong>: Renderは使わない。最終審査に向けた最終調整を、1限後半から続ける</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">1限 後半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>ワーク①：Renderにつなぐ（最終調整チームは最終調整）</h3>
+          <div class="timeline-body">
+            <p><strong>Renderチーム</strong>（約50分）</p>
+            <ul>
+              <li><strong>① サインインから Connect まで</strong>（約20分）: 下の画像の手順 1〜9 を、自分の画面と見比べながら進める</li>
+              <li><strong>② 設定</strong>（約20分）: 手順 10〜12。特に、<strong>Compute は Free</strong>（初めは $7/月）</li>
+              <li><strong>③ Deploy と確認</strong>（約10分）: <strong>Deploy web service</strong> を押す（手順 12）。手順 13 の画面の<strong>ログ</strong>を見て、終わったら出る<strong>URL</strong>を開く</li>
+              <li>先生が席をまわって、<strong>画面と選択</strong>（特に Compute）を確認します</li>
+            </ul>
+            <p class="lesson-note">手順の画像は、学生の画面です。黒い四角は、アカウントやリポジトリの名前を隠した部分です。</p>
+            <figure class="vz-fig" aria-labelledby="cap-a12-src">
+              <p class="vz-fig-title" id="cap-a12-src">ソースの渡し方：2通り</p>
+              <svg class="vz-svg" viewBox="0 0 360 194" role="img" aria-labelledby="a12-src-t a12-src-d">
+                <title id="a12-src-t">ソースの渡し方：2通り</title>
+                <desc id="a12-src-d">Git Provider、GitHub連携。pushすると自動で再デプロイされる。公式の標準の方法。Public Git Repository。URLを貼るだけで、自動デプロイはなく、手動で更新する。公式は、自分が属していない公開リポジトリのための方法と説明している。今日の画像の手順は、後者のPublic URLの方法。</desc>
+                <rect class="box-white" x="8" y="6" width="168" height="130" rx="10"/>
+                <text class="t-b" x="20" y="28">Git Provider</text>
+                <text class="t-sm" x="20" y="48">（GitHub連携）</text>
+                <text class="t-sm" x="20" y="70">pushすると</text>
+                <text class="t-sm" x="20" y="88">自動で再デプロイ</text>
+                <text class="t-sm" x="20" y="106">（公式の標準）</text>
+                <rect class="box-orange box-key" x="184" y="6" width="168" height="130" rx="10"/>
+                <text class="t-b" x="196" y="28">Public Git</text>
+                <text class="t-b" x="196" y="46">Repository</text>
+                <text class="t-sm" x="196" y="68">URLを貼るだけ</text>
+                <text class="t-sm" x="196" y="88">自動デプロイなし</text>
+                <text class="t-sm" x="196" y="106">手動で更新する</text>
+                <rect class="band" x="8" y="146" width="344" height="40" rx="10"/>
+                <text class="t-b" x="22" y="171">今日の画像の手順は、右（Public URL）</text>
+              </svg>
+              <figcaption>公式: Public Git Repositoryは「自分が属していない公開リポジトリ」向けで、自動デプロイは使えません（確認日 2026-11-26）。</figcaption>
+            </figure>
+            <ol class="vz-steps">
+              <li class="vz-step"><img class="vz-step-img" src="images/week12-render-01.jpg" alt="Renderのトップページ。大きな見出しの下の「Start for free」のボタンが青い手書きの円で囲まれ、その横に手書きで「サインイン」と書かれている。" width="1200" height="567" loading="lazy"><b>Start for free</b>トップページの <strong>Start for free</strong> を押す（手書き: 「サインイン」）</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week12-render-02.jpg" alt="Renderのサインイン画面。「Continue with GitHub」のボタンの右に、手書きで「GitHub以外もある」と書かれている。その下に「Sign in with another method」がある。" width="1200" height="567" loading="lazy"><b>サインイン</b><strong>GitHub以外の方法</strong>もある（手書き）。画面の「Sign in with another method」から選ぶ。使える方法の一覧は、公式で確認できていない（未確認）</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week12-render-03.jpg" alt="Renderのダッシュボードの「Overview」画面。右上の「New」のボタンが青い手書きの円で囲まれ、矢印が付いている。" width="1200" height="567" loading="lazy"><b>ダッシュボードの New</b>ダッシュボード右上の <strong>New</strong> を押す</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week12-render-04.jpg" alt="「New」を押したメニュー。「Static Site」「Web Service」などが並び、「Web Service」が青い手書きの円で囲まれ、矢印が付いている。" width="1200" height="567" loading="lazy"><b>Web Service</b>メニューから <strong>Web Service</strong> を選ぶ</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week12-render-09.jpg" alt="「Create a new Static Site」の画面。Static Sites、Web Services、Private Services、Background Workersなどのカードが並ぶ。" width="1200" height="567" loading="lazy"><b>右上にNewが無いとき</b>この画面が出ることもある。<strong>Web Services</strong> のカードの「New Web Service」を押す。以降は同じ（学生のメモ）</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week12-render-05.jpg" alt="「New Web Service」の画面。上の「Git Provider」「Public Git Repository」「Existing Image」のタブのうち、「Public Git Repository」が青い手書きの円で囲まれ、矢印が付いている。" width="1200" height="567" loading="lazy"><b>Public Git Repository</b><strong>Public Git Repository</strong> のタブを選ぶ（学生の手順）。<strong>公式の標準は左の Git Provider</strong>（GitHub連携。pushで自動デプロイ）。上の図を見る。画像の黒い四角は、リポジトリ名を隠した部分</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week12-render-06.jpg" alt="Public Git Repositoryのタブ。URLを入れる欄があり、その下に手書きで「GitHubのリンクいれる」と書かれ、欄を指す矢印がある。" width="1200" height="567" loading="lazy"><b>URLを入れる欄</b>欄に、<strong>GitHubのリポジトリのURL</strong>を入れる（手書き: 「GitHubのリンクいれる」）</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week12-render-07.jpg" alt="GitHubのリポジトリの画面。緑の「Code」のボタンを押して開いたメニューに、HTTPSのURLの欄が出ていて、青い手書きの円で囲まれ、手書きで「これ」と書かれている。名前の部分は黒い四角で隠してある。" width="1200" height="567" loading="lazy"><b>GitHubでURLをコピー</b>GitHubで <strong>Code → HTTPS</strong> のURLをコピーする（手書き: 「これ」）。名前は隠してある</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week12-render-08.jpg" alt="URLを入れた画面。右の「Connect」のボタンが青い手書きの円で囲まれ、矢印が付いている。URLは黒い四角で隠してある。" width="1200" height="567" loading="lazy"><b>Connect</b><strong>Connect</strong> を押す。画面には「PR Previews and Auto-Deploy are available only for repositories configured with Blueprints」とある。この方法は<strong>手動デプロイのみ</strong>（公式）</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week12-render-10.jpg" alt="設定の画面（上半分）。Name、Project、Language、Branch、Regionの欄がある。手書きで、Projectは「なし」、Languageは「Node」、Branchは「main」、Regionは「Singapore」と書かれている。リポジトリ名は黒い四角で隠してある。" width="1200" height="567" loading="lazy"><b>設定（1）</b><strong>Name</strong>、<strong>Project</strong>=なし、<strong>Language</strong>=Node、<strong>Branch</strong>=main、<strong>Region</strong>=Singapore（学生の画面）、<strong>Root Directory</strong>=なし。Regionは自分の画面で確認する</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week12-render-11.jpg" alt="設定の画面（下半分）。Root Directoryは手書きで「なし」。Start Commandの欄に手書きで「同じ文字書く（ランダム）」。Computeの欄では、月0ドルのFreeの行が青い手書きの円で囲まれ、「これえらぶ」と書かれている。初めは月7ドルの行が選ばれている。" width="1200" height="567" loading="lazy"><b>設定（2）：Compute</b><strong>Compute は、$0 / month の Free を選ぶ</strong>（初めは <strong>$7 / month</strong> が選ばれている）。Build Command・Start Command は自分の作品の起動の仕方に合わせる（公式の例: <code>npm install</code>／<code>npm start</code>）。学生のメモの意味は確認中（未確認）</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week12-render-12.jpg" alt="設定の最後。Environment Variablesの欄は、手書きで「なし」。左下の「Deploy web service」のボタンが青い手書きの円で囲まれ、「できたらおす」と書かれている。" width="1200" height="567" loading="lazy"><b>環境変数と Deploy</b><strong>Environment Variables</strong> は、なければ空欄でよい（学生のメモ）。APIキーなどがあれば、コードではなくここに入れる。<strong>Deploy web service</strong> を押す（手書き: 「できたらおす」）。下の金額が <strong>$7</strong> のままなら、押さずに戻る</li>
+              <li class="vz-step"><img class="vz-step-img" src="images/week12-render-13.jpg" alt="デプロイが始まった画面。上に紫色の帯で「Your free instance will spin down with inactivity, which can delay requests by 50 seconds or more.」と出ている。Statusは「Building」。下のログの欄の下に、手書きで「おわったらさいごにURLが出る」と書かれている。名前の部分は黒い四角で隠してある。" width="1200" height="567" loading="lazy"><b>デプロイ中の画面</b><strong>Deploy</strong> を押すと、この画面になる。Statusが <strong>Building</strong> の間は、ログを見て待つ（手書き: 「おわったらさいごにURLが出る」）。上の帯には「Your free instance will spin down with inactivity, which can delay requests by 50 seconds or more.」とある（無料のインスタンスは、使われないと止まり、再開に<strong>50秒以上</strong>かかることがある）</li>
+            </ol>
+            <div class="lesson-tip">
+              <strong>止まる合図:</strong> ①<strong>クレジットカードの登録</strong>や<strong>Upgrade</strong>を求められた ②金額が <strong>$7/月</strong> のまま ③公開してよいか迷う。この3つは、<strong>先に進まず、先生を呼びます</strong>。
+            </div>
+            <p><strong>最終調整チーム</strong>（約50分）</p>
+            <ul>
+              <li>前回のメモを見ながら、<strong>最終審査までにやること</strong>を進める。AIエージェントを使うときは、<strong>小さく頼み、出てきたものは人が確かめる</strong>（<a href="week10.html">第10回</a>）</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="timeline-block timeline-block--break">
+          <div class="timeline-header">
+            <span class="timeline-time">休憩</span>
+            <span class="timeline-duration">10分</span>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 前半</span>
+            <span class="timeline-duration">約50分</span>
+          </div>
+          <h3>ワーク②：公開して確かめる（最終調整チームは最終調整）</h3>
+          <div class="timeline-body">
+            <p><strong>Renderチーム</strong>（約50分）</p>
+            <ul>
+              <li><strong>① ログとURLを確認</strong>（約15分）: 失敗したときは、<strong>ログの最後</strong>の文を読む。AIエージェントに頼むときは、<strong>ログの全文を貼って</strong>原因を聞き、直したら、人が確かめる</li>
+              <li><strong>② 別の画面で開く</strong>（約10分）: スマホや、隣の人のPCで、公開URLを開いてもらう（<strong>URLは、チームの外へ広げない</strong>）</li>
+              <li><strong>③ 15分あけて、もう一度開く</strong>（約25分）: しばらく何も開かずに待つ（<strong>待つ間は、最終調整</strong>）。もう一度開いて、<strong>再び動くまでの時間</strong>をはかる（公式: 約1分）</li>
+            </ul>
+            <p><strong>つまずきやすい点</strong>（公式で確認できたもの。確認日 2026-11-26）</p>
+            <ul>
+              <li><strong>ポート</strong>: サーバーは、<code>PORT</code>という環境変数のポートで、<code>0.0.0.0</code>に待ち受ける必要がある（既定は10000）。作品のコードが別のポートに固定されていないか、確認する</li>
+              <li><strong>ファイルの保存</strong>: 無料のWeb Serviceでは、<strong>ファイルは、再デプロイ・再起動・停止で消えます</strong>。ゲームの記録などをファイルに書く作りは、消えるものとして扱う</li>
+              <li><strong>更新のしかた</strong>: <strong>Public Git Repository</strong>で作ったサービスは、<strong>自動デプロイが使えず、手動で更新</strong>します（公式）。コードを直したら、<strong>手動で Deploy</strong> を押す。<strong>Git Provider</strong>（GitHub連携）で作ると、pushで自動デプロイ（公式）。連携のしかたは、<strong>授業前に確認できていません（未確認）</strong></li>
+            </ul>
+            <p><strong>最終調整チーム</strong>（約50分）: 最終審査までにやることを続ける。</p>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">2限 後半</span>
+            <span class="timeline-duration">約30分</span>
+          </div>
+          <h3>結果を残す</h3>
+          <div class="timeline-body">
+            <ul>
+              <li><strong>結果のメモ</strong>（約10分）: <strong>動いた</strong>か、<strong>動かなかった</strong>か。動かなかったなら、<strong>原因</strong>（ログの文、ポート、コマンド、など）と、次にやること。個人情報・パスワードは書かない</li>
+              <li><strong>共有</strong>（約10分）: 動いたチームは、<strong>つまずいたところと、直し方</strong>を、近くのチームに伝える（公開URLは、チームの外へ広げない）。最終調整チームは、進んだことを共有する</li>
+              <li><strong>コミット・プッシュ</strong>（約10分）: 進んだ分を<strong>コミットして、プッシュ</strong>する。やり方が分からない人や、チームでGitの共有に困っている人は、先生へ</li>
+            </ul>
+            <div class="lesson-tip">
+              <strong>動かなくても大丈夫。</strong>公開は、<strong>試すこと</strong>が目的です。原因のメモが、そのまま次回の出発点になります。
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-block">
+          <div class="timeline-header">
+            <span class="timeline-time">まとめ</span>
+            <span class="timeline-duration">約10分</span>
+          </div>
+          <h3>今日の結果を振り返り、次回を知る</h3>
+          <div class="timeline-body">
+            <figure class="vz-fig" aria-labelledby="cap-a12-wrap">
+              <p class="vz-fig-title" id="cap-a12-wrap">今日の一言メモ（3つ）</p>
+              <svg class="vz-svg" viewBox="0 0 360 132" role="img" aria-labelledby="a12-wrap-t a12-wrap-d">
+                <title id="a12-wrap-t">今日の一言メモ（3つ）</title>
+                <desc id="a12-wrap-d">今日の一言メモ。1 Renderで公開してみたか。動いたか、動かなかったか。理由を一言。2 一番つまずいたところ。3 最終審査までにやること。</desc>
+                <rect class="box-orange box-key" x="8" y="6" width="344" height="46" rx="10"/>
+                <text class="t-b" x="22" y="27">公開は、動いた？ 動かなかった？</text>
+                <text class="t-sm" x="22" y="44">原因・気づきを一言で</text>
+                <rect class="box-white" x="8" y="62" width="168" height="62" rx="10"/>
+                <text class="t-b" x="22" y="86">つまずいた所</text>
+                <text class="t-sm" x="22" y="108">一言</text>
+                <rect class="box-white" x="184" y="62" width="168" height="62" rx="10"/>
+                <text class="t-b" x="198" y="86">最終審査まで</text>
+                <text class="t-sm" x="198" y="108">やること</text>
+              </svg>
+              <figcaption>試さなかったチームは、最終調整で進んだことを書きます。個人情報・パスワードは書きません。</figcaption>
+            </figure>
+            <ul>
+              <li><strong>先生のひとこと</strong>（約3分）: 今日の公開の結果を、最終審査にどうつなげるか</li>
+              <li><strong>一言メモ</strong>（約4分）: 公開は<strong>動いた・動かなかった</strong>と理由、<strong>つまずいたところ</strong>、<strong>最終審査までにやること</strong>を、一言ずつ</li>
+              <li>次回（第13回、約1分）：<strong>発表準備</strong>——発表用の資料・メモ作りに着手（<a href="../ai-programming-2.html">授業計画一覧</a>）。最終審査の日程に合わせて、内容を調整することがあります</li>
+              <li>メモが残っているか、最後に確かめて退出（約2分）</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>課題・次回までにやること</h2>
+      <div class="lesson-tasks">
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--required">必須</span>
+          <div>
+            <strong>今日の結果（公開は動いた・動かなかったと理由、最終審査までにやること）を、メモに残す</strong>
+            <p>次の回の最初に開きます。<strong>個人情報とパスワードは書かない</strong>。</p>
+          </div>
+        </div>
+        <div class="lesson-task">
+          <span class="lesson-task-badge lesson-task-badge--optional">推奨</span>
+          <div>
+            <strong>Renderを試した人は、料金が発生していないか、ダッシュボードで確かめる</strong>
+            <p>Computeが Free のままか、<strong>Upgrade や支払い方法の登録をしていないか</strong>を確認する。分からなければ、次回、先生へ。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="syllabus-section">
+      <h2>参考リンク</h2>
+      <p class="lesson-note">すべて<strong>公式のページ</strong>です（確認日 2026-11-26）。内容と画面は、変わることがあります。</p>
+      <ul>
+        <li><a href="https://render.com/docs/free" target="_blank" rel="noopener">Free（Render Docs）</a> — 無料のWeb Serviceの制限</li>
+        <li><a href="https://render.com/pricing" target="_blank" rel="noopener">Pricing（Render）</a> — プランとCompute（Free・$7/月）</li>
+        <li><a href="https://render.com/docs/web-services" target="_blank" rel="noopener">Web Services（Render Docs）</a> — Build Command・Start Command・Public Git Repository・ポート</li>
+        <li><a href="https://render.com/docs/deploys" target="_blank" rel="noopener">Deploys（Render Docs）</a> — 自動デプロイと手動デプロイ</li>
+        <li><a href="https://render.com/docs/websocket" target="_blank" rel="noopener">WebSockets（Render Docs）</a></li>
+        <li><a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages" target="_blank" rel="noopener">About GitHub Pages（GitHub Docs）</a> — 静的なサイトのホスティング</li>
+        <li><a href="week11.html">第11回 先輩に聞く：卒業進級制作の最終審査に向けて（本サイト）</a></li>
+        <li><a href="week10.html">第10回 進級制作に小さな改善を加える①（本サイト）</a> — 小さく頼み、人が確かめる</li>
+      </ul>
+    </div>
+
+    <nav class="lesson-nav">
+      <a href="week11.html" class="lesson-nav-item">
+        <span class="lesson-nav-label">前の回</span>
+        <span class="lesson-nav-title">第11回 先輩に聞く：卒業進級制作の最終審査に向けて</span>
+      </a>
+      <a href="../ai-programming-2.html" class="lesson-nav-item lesson-nav-item--center">
+        <span class="lesson-nav-label">授業計画一覧</span>
+        <span class="lesson-nav-title">AI活用プログラミング基礎 II</span>
+      </a>
+      <div class="lesson-nav-item lesson-nav-item--disabled" style="text-align:right">
+        <span class="lesson-nav-label">次の回</span>
+        <span class="lesson-nav-title">第13回 発表準備（準備中）</span>
+      </div>
+    </nav>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2026 本田 康志 — 清風情報工科学院 シラバス</p>
+    </div>
+  </footer>
+
+  <script src="../app.js?v=5"></script>
+</body>
+</html>
